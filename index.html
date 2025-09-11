@@ -33,13 +33,27 @@
             min-height: 100vh;
             margin: 0;
             color: #ccc;
+            position: relative; /* Обязательно для позиционирования overlay */
         }
+        
+        /* Новый элемент для полупрозрачной подложки */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
         .container {
             text-align: center;
             padding: 30px;
             border-radius: 12px;
-            background-color: rgba(0, 0, 0, 0.5); /* Черный с прозрачностью 50% */
-            backdrop-filter: blur(10px); /* Применяем размытие к фону */
+            position: relative; /* Чтобы контейнер был выше overlay */
+            z-index: 1; /* Поднимаем контейнер на передний план */
         }
         h1 {
             color: #fff;
@@ -47,7 +61,7 @@
         }
         h1 .s-rotated {
             display: inline-block;
-            transform: rotate(-70deg);
+            transform: rotate(-75deg);
         }
         .link-button {
             display: flex;
@@ -88,7 +102,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="overlay"></div> <div class="container">
         <img src="pixelmlogo.png" alt="MORSTRIX Logo">
         <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
