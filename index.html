@@ -65,7 +65,7 @@
         }
 
         .link-block {
-            margin-bottom: 40px; /* Відступ між блоками кнопки і опису */
+            margin-bottom: 20px; /* Збільшено відступ між блоками */
         }
 
         .link-button {
@@ -75,7 +75,7 @@
             align-items: center;
             width: 250px;
             padding: 15px 25px;
-            margin: 0px auto 10px auto; /* Зменшено нижній відступ */
+            margin: 0 auto 10px auto; /* Зменшено нижній відступ */
             
             background-color: #347860;
             background-image: 
@@ -143,7 +143,22 @@
             display: block;
             width: 250px;
             padding: 10px;
-            margin: 0 auto;
+            margin: 0 auto 20px auto; /* Додано нижній відступ */
+            font-size: 0.8em;
+            color: #ffffff;
+            line-height: 1.2;
+            
+            border: 2px solid #216c00;
+            box-shadow:
+                -1px -1px 0px 0px #35ab00,
+                1px 1px 0px 0px #216c00;
+        }
+
+        .info-block {
+            display: block;
+            width: 250px;
+            padding: 10px;
+            margin: 0 auto 40px auto; /* Збільшений відступ для розділення */
             font-size: 0.8em;
             color: #ffffff;
             line-height: 1.2;
@@ -162,25 +177,28 @@
         </div>
         <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
-        <div class="link-block">
-            <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
-                <span class="button-main-text">instagram</span>
-            </a>
-            <span class="button-description-box">DIGITAL MAGAZINE</span>
+        <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
+            <span class="button-main-text">instagram</span>
+        </a>
+        <span class="button-description-box">DIGITAL MAGAZINE</span>
+        <div class="info-block">
+            <span class="button-main-text">info</span>
         </div>
         
-        <div class="link-block">
-            <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
-                <span class="button-main-text">telegram</span>
-            </a>
-            <span class="button-description-box">FORUM</span>
+        <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
+            <span class="button-main-text">telegram</span>
+        </a>
+        <span class="button-description-box">FORUM</span>
+        <div class="info-block">
+            <span class="button-main-text">info</span>
         </div>
         
-        <div class="link-block">
-            <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
-                <span class="button-main-text">telegram bot</span>
-            </a>
-            <span class="button-description-box">МОДЕРАТОР</span>
+        <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
+            <span class="button-main-text">telegram bot</span>
+        </a>
+        <span class="button-description-box">МОДЕРАТОР</span>
+        <div class="info-block">
+            <span class="button-main-text">info</span>
         </div>
     </div>
 </body>
