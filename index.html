@@ -45,19 +45,27 @@
             position: relative;
             border-radius: 50%;
             overflow: hidden;
-            
-            border: 3px solid transparent;
-            border-image: conic-gradient(
+            border: none;
+            box-shadow: 0 0 15px 5px rgba(128, 0, 128, 0.8);
+            margin-bottom: 20px;
+        }
+        .avatar-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: conic-gradient(
                 from 0deg,
                 #6495ED,
                 #9400D3,
                 #8B4513,
                 #228B22,
                 #6495ED
-            ) 1;
-            
-            box-shadow: 0 0 15px 5px rgba(128, 0, 128, 0.8);
-            margin-bottom: 20px;
+            );
+            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
         }
         h1 {
             color: #990000;
@@ -75,22 +83,18 @@
             width: 250px;
             padding: 15px 25px;
             margin: 15px auto;
-            
             background-color: #2a8500;
             background-image: 
                 radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%),
                 radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%);
             background-size: 8px 8px;
             background-position: 0 0, 4px 4px;
-            
             color: #0e0e0e;
             text-decoration: none;
             transition: background-color 0.3s ease;
             font-size: 1.1em;
             font-weight: 600;
-            
             border: none;
-            
             box-shadow:
                 -2px -2px 0px 0px #35ab00, 
                 2px 2px 0px 0px #216c00,
@@ -106,7 +110,6 @@
                 0px 0px 0px 0px #216c00,
                 0px 0px 0px 0px #35ab00,
                 inset 0 0 0 1px #35ab00;
-            
             background-image: 
                 radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%),
                 radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%);
@@ -128,7 +131,7 @@
             display: block;
             margin: 0;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
         .button-main-text {
             font-size: 1.1em;
