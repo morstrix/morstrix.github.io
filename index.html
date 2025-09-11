@@ -32,7 +32,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: #ffffff;
+            color: #9e0000;
         }
         .container {
             text-align: center;
@@ -46,12 +46,14 @@
             border-radius: 50%;
             overflow: hidden;
             box-shadow: 
+                /* Зовнішній світіння */
                 0 0 15px 5px rgba(128, 0, 128, 0.8),
-                inset 0 0 10px 2px rgba(128, 0, 128, 0.5);
+                /* Внутрішній контур */
+                inset 0 0 0 3px #800080; /* або інший колір, який тобі подобається */
             margin-bottom: 20px;
         }
         h1 {
-            color: #0c0c0c;
+            color: #990000;
             margin-bottom: 20px;
         }
         h1 .s-rotated {
@@ -69,26 +71,29 @@
             background-color: #2a8500;
             color: #0e0e0e;
             text-decoration: none;
-            border-radius: 8px;
+            /* Забираємо border-radius, бо у ретро-стилі кути зазвичай гострі */
+            /* border-radius: 8px; */
             transition: background-color 0.3s ease;
             font-size: 1.1em;
             font-weight: 600;
             
+            /* Нова стилізація для імітації ретро-контуру */
+            border: 2px solid transparent; /* Базовий прозорий бордер */
             box-shadow:
                 -2px -2px 0px #35ab00,
-                2px 2px 0px #216c00;
-            border: 2px solid #2a8500;
+                2px 2px 0px #216c00,
+                0 0 0 2px #35ab00; /* Цей шар створює "внутрішній" контур */
             
-            background-image: repeating-linear-gradient(
-                45deg,
-                rgba(0, 0, 0, 0.1) 0px,
-                rgba(0, 0, 0, 0.1) 1px,
-                transparent 1px,
-                transparent 2px
-            );
+            /* Замість цього ефекту, використаємо простіший, який більше схожий на пікселі */
+            /* background-image: none; */
         }
         .link-button:hover {
-            background-color: #2a8500;
+            background-color: #35ab00; /* Трохи світліший колір при наведенні */
+            /* Можна також змінити тіні для ефекту "натискання" */
+            box-shadow:
+                -1px -1px 0px #216c00,
+                1px 1px 0px #35ab00,
+                0 0 0 2px #35ab00;
         }
         img {
             max-width: 250px; 
