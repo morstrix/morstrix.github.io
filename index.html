@@ -56,13 +56,18 @@
             margin-bottom: 20px;
         }
         h1 {
-            color: #347860;
+            color: #ffffff; /* Змінено колір на білий */
             margin-bottom: 20px;
         }
         h1 .s-rotated {
             display: inline-block;
             transform: rotate(-75deg);
         }
+
+        .link-block {
+            margin-bottom: 40px; /* Відступ між блоками кнопки і опису */
+        }
+
         .link-button {
             display: flex;
             flex-direction: column;
@@ -70,7 +75,7 @@
             align-items: center;
             width: 250px;
             padding: 15px 25px;
-            margin: 40px auto;
+            margin: 0px auto 10px auto; /* Зменшено нижній відступ */
             
             background-color: #347860;
             background-image: 
@@ -92,7 +97,8 @@
                 2px 2px 0px 0px #216c00,
                 4px 4px 0px 0px #216c00,
                 -4px -4px 0px 0px #35ab00,
-                inset 0 0 0 1px #35ab00;
+                inset 0 0 5px 2px rgba(53, 171, 0, 0.5), /* Внутрішній градієнтний ефект */
+                inset 0 0 10px 4px rgba(33, 108, 0, 0.4);
         }
         .link-button:hover {
             background-color: #35ab00;
@@ -101,7 +107,8 @@
                 1px 1px 0px 0px #35ab00,
                 0px 0px 0px 0px #216c00,
                 0px 0px 0px 0px #35ab00,
-                inset 0 0 0 1px #35ab00;
+                inset 0 0 5px 2px rgba(33, 108, 0, 0.5),
+                inset 0 0 10px 4px rgba(53, 171, 0, 0.4);
             
             background-image: 
                 radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%),
@@ -116,7 +123,8 @@
                 1px 1px 0px 0px #35ab00,
                 0 0 0 0 #216c00,
                 0 0 0 0 #35ab00,
-                inset 0 0 0 1px #35ab00;
+                inset 0 0 5px 2px rgba(33, 108, 0, 0.5),
+                inset 0 0 10px 4px rgba(53, 171, 0, 0.4);
         }
         img {
             max-width: 250px; 
@@ -130,26 +138,17 @@
             font-size: 1.1em;
             line-height: 1.2;
         }
-        .button-description {
+
+        .button-description-box {
             display: block;
+            width: 250px;
+            padding: 10px;
+            margin: 0 auto;
             font-size: 0.8em;
             color: #ffffff;
-            margin-top: 10px;
             line-height: 1.2;
-            padding: 5px;
-            position: relative;
-        }
-
-        .button-description::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            
             border: 2px solid #216c00;
-            border-radius: 6px;
-            box-sizing: border-box;
             box-shadow:
                 -1px -1px 0px 0px #35ab00,
                 1px 1px 0px 0px #216c00;
@@ -163,20 +162,26 @@
         </div>
         <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
-        <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
-            <span class="button-main-text">instagram</span>
-            <span class="button-description">DIGITAL MAGAZINE</span>
-        </a>
+        <div class="link-block">
+            <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
+                <span class="button-main-text">instagram</span>
+            </a>
+            <span class="button-description-box">DIGITAL MAGAZINE</span>
+        </div>
         
-        <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
-            <span class="button-main-text">telegram</span>
-            <span class="button-description">FORUM</span>
-        </a>
+        <div class="link-block">
+            <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
+                <span class="button-main-text">telegram</span>
+            </a>
+            <span class="button-description-box">FORUM</span>
+        </div>
         
-        <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
-            <span class="button-main-text">telegram bot</span>
-            <span class="button-description">МОДЕРАТОР</span>
-        </a>
+        <div class="link-block">
+            <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
+                <span class="button-main-text">telegram bot</span>
+            </a>
+            <span class="button-description-box">МОДЕРАТОР</span>
+        </div>
     </div>
 </body>
 </html>
