@@ -41,13 +41,13 @@
             background-color: rgba(0, 0, 0, 0.2); 
         }
         .avatar-container {
-            /* Позиціонування для псевдоелемента */
             position: relative;
-            z-index: 1; /* Гарантуємо, що контур буде над зображенням */
-            /* ... інші стилі, які були */
-            
-            /* Прибираємо box-shadow, який створював контур */
+            z-index: 1;
             box-shadow: 0 0 15px 5px rgba(128, 0, 128, 0.8);
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
         .avatar-container::before {
@@ -58,14 +58,13 @@
             right: 0;
             bottom: 0;
             border-radius: 50%;
-            padding: 3px; /* Товщина контуру */
-            /* Твій градієнт, який ти описував */
+            padding: 3px;
             background: linear-gradient(
                 45deg,
-                #6495ED, /* синій */
-                #9400D3, /* фіолетовий */
-                #8B4513, /* коричневий */
-                #228B22 /* зелений */
+                #6495ED,
+                #9400D3,
+                #8B4513,
+                #228B22
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -91,25 +90,38 @@
             background-color: #2a8500;
             color: #0e0e0e;
             text-decoration: none;
-            /* Забираємо border-radius, бо у ретро-стилі кути зазвичай гострі */
-            /* border-radius: 8px; */
             transition: background-color 0.3s ease;
             font-size: 1.1em;
             font-weight: 600;
             
-            /* Нова стилізація для імітації ретро-контуру */
-            border: 2px solid transparent; /* Базовий прозорий бордер */
+            border: 2px solid transparent;
             box-shadow:
                 -2px -2px 0px #35ab00,
                 2px 2px 0px #216c00,
-                0 0 0 2px #35ab00; /* Цей шар створює "внутрішній" контур */
+                0 0 0 2px #35ab00;
             
-            /* Замість цього ефекту, використаємо простіший, який більше схожий на пікселі */
-            /* background-image: none; */
+            /* Піксельна текстура */
+            background-image: linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.1) 25%,
+                transparent 25%,
+                transparent 75%,
+                rgba(0, 0, 0, 0.1) 75%,
+                rgba(0, 0, 0, 0.1)
+            ), 
+            linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.1) 25%,
+                transparent 25%,
+                transparent 75%,
+                rgba(0, 0, 0, 0.1) 75%,
+                rgba(0, 0, 0, 0.1)
+            );
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
         }
         .link-button:hover {
-            background-color: #35ab00; /* Трохи світліший колір при наведенні */
-            /* Можна також змінити тіні для ефекту "натискання" */
+            background-color: #35ab00;
             box-shadow:
                 -1px -1px 0px #216c00,
                 1px 1px 0px #35ab00,
@@ -119,7 +131,9 @@
             max-width: 250px; 
             height: auto;
             display: block;
-            margin: 0; 
+            margin: 0;
+            position: relative;
+            z-index: 2;
         }
         .button-main-text {
             font-size: 1.1em;
