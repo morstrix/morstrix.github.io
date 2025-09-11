@@ -38,9 +38,9 @@
             text-align: center;
             padding: 30px;
             border-radius: 12px;
-            background-color: rgba(128, 0, 128, 0.2); /* Фиолетовый с прозрачностью */
-            /* backdrop-filter: blur(10px); /* Убираем это свойство */
-            /* -webkit-backdrop-filter: blur(10px); /* И это тоже */
+            background-color: rgba(0, 0, 0, 0.5); /* Фон контейнера */
+            -webkit-mask-image: repeating-linear-gradient(45deg, black, black 10px, transparent 10px, transparent 20px);
+            mask-image: repeating-linear-gradient(45deg, black, black 10px, transparent 10px, transparent 20px);
         }
         h1 {
             color: #fff;
