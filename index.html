@@ -33,27 +33,14 @@
             min-height: 100vh;
             margin: 0;
             color: #ccc;
-            position: relative; /* Обязательно для позиционирования overlay */
         }
-        
-        /* Новый элемент для полупрозрачной подложки */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
         .container {
             text-align: center;
             padding: 30px;
             border-radius: 12px;
-            position: relative; /* Чтобы контейнер был выше overlay */
-            z-index: 1; /* Поднимаем контейнер на передний план */
+            background-color: rgba(0, 0, 0, 0.5); /* Фон, через который просвечивает сетка */
+            backdrop-filter: blur(10px); /* Размытие для фона, который позади контейнера */
+            -webkit-backdrop-filter: blur(10px);
         }
         h1 {
             color: #fff;
@@ -102,7 +89,7 @@
     </style>
 </head>
 <body>
-    <div class="overlay"></div> <div class="container">
+    <div class="container">
         <img src="pixelmlogo.png" alt="MORSTRIX Logo">
         <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
