@@ -39,18 +39,22 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background-color: rgba(0, 0, 0, 0.1); /* СДЕЛАНО БОЛЕЕ ПРОЗРАЧНЫМ */
+            background-color: transparent; /* ФОН СТАЛ ПОЛНОСТЬЮ ПРОЗРАЧНЫМ */
             backdrop-filter: blur(10px);
         }
         h1 {
             color: #fff;
             margin-bottom: 20px;
         }
+        h1 .s-rotated {
+            display: inline-block;
+            transform: rotate(45deg);
+        }
         .link-button {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* Центрирование содержимого по горизонтали */
+            align-items: center;
             width: 250px;
             padding: 15px 25px;
             margin: 15px auto;
@@ -87,7 +91,7 @@
 <body>
     <div class="container">
         <img src="pixelmlogo.png" alt="MORSTRIX Logo">
-        <h1>morsᔕtri𒉽</h1>
+        <h1>mor<span class="s-rotated">s</span>trix</h1>
         
         <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
             <span class="button-main-text">instagram</span>
