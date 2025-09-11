@@ -70,6 +70,33 @@
             display: block;
             margin: 0 auto 20px auto; 
         }
+
+        /* Новые стили для описания кнопок */
+        .link-button {
+            display: block;
+            width: 250px;
+            padding: 15px 25px;
+            margin: 15px auto;
+            background-color: #8a2be2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
+            font-weight: 600;
+            /* Добавлено для расположения элементов внутри */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .button-description {
+            display: block;
+            font-size: 0.8em;
+            color: #c0c0c0;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body>
@@ -77,11 +104,19 @@
         <img src="pixelmlogo.png" alt="MORSTRIX Logo">
         <h1>MORSTRIX</h1>
         
-        <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">DIGITAL MAGAZINE</a>
+        <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
+            INSTAGRAM
+        </a>
         
-        <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">ꜰ ☻‌ ʀ ᴜ ʍ</a>
+        <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
+            <div>TELEGRAM</div>
+            <span class="button-description">FORUM</span>
+        </a>
         
-        <a href="https://t.me/morstrixbot" class="link-button" target="_blank">ʍ☻дᴇᴘᴀᴛɵᴘ</a>
+        <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
+            <div>TELEGRAM</div>
+            <span class="button-description">МОДЕРАТОР HELPER BOT</span>
+        </a>
         
     </div>
 </body>
