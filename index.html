@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>morstrix.gritspark</title>
+    <title>MORSTRIX</title>
     
     <meta property="og:title" content="MORSTRIX">
     <meta property="og:description" content="ʍɵ‌ʀᔕᴛʀɪ𒉽">
@@ -39,7 +39,7 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background-color: rgba(0, 0, 0, 0.7); /* ИЗМЕНЁННЫЙ СТИЛЬ */
+            background-color: rgba(0, 0, 0, 0.1); /* СДЕЛАНО БОЛЕЕ ПРОЗРАЧНЫМ */
             backdrop-filter: blur(10px);
         }
         h1 {
@@ -47,9 +47,10 @@
             margin-bottom: 20px;
         }
         .link-button {
-            display: flex; /* ИЗМЕНЁННЫЙ СТИЛЬ */
-            flex-direction: column; /* ИЗМЕНЁННЫЙ СТИЛЬ */
-            justify-content: center; /* ИЗМЕНЁННЫЙ СТИЛЬ */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Центрирование содержимого по горизонтали */
             width: 250px;
             padding: 15px 25px;
             margin: 15px auto;
@@ -70,6 +71,10 @@
             display: block;
             margin: 0 auto 20px auto; 
         }
+        .button-main-text {
+            font-size: 1.1em;
+            line-height: 1.2;
+        }
         .button-description {
             display: block;
             font-size: 0.8em;
@@ -85,17 +90,17 @@
         <h1>ʍɵ‌ʀᔕᴛʀɪ𒉽</h1>
         
         <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
-            <div>instagram</div>
+            <span class="button-main-text">instagram</span>
             <span class="button-description">DIGITAL MAGAZINE</span>
         </a>
         
         <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
-            <div>telegram</div>
+            <span class="button-main-text">telegram</span>
             <span class="button-description">FORUM</span>
         </a>
         
         <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
-            <div>telegram bot</div>
+            <span class="button-main-text">telegram bot</span>
             <span class="button-description">МОДЕРАТОР</span>
         </a>
         
