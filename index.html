@@ -41,18 +41,36 @@
             background-color: rgba(0, 0, 0, 0.2); 
         }
         .avatar-container {
-            display: inline-block;
+            /* Позиціонування для псевдоелемента */
             position: relative;
+            z-index: 1; /* Гарантуємо, що контур буде над зображенням */
+            /* ... інші стилі, які були */
+            
+            /* Прибираємо box-shadow, який створював контур */
+            box-shadow: 0 0 15px 5px rgba(128, 0, 128, 0.8);
+        }
+
+        .avatar-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             border-radius: 50%;
-            overflow: hidden;
-            /* Залишаємо світіння, яке було */
-            box-shadow: 
-                0 0 15px 5px rgba(128, 0, 128, 0.8),
-                /* Додаємо нові шари тіней, щоб імітувати градієнт */
-                inset 0 0 0 3px #800080, /* Основний фіолетовий контур */
-                inset 0 0 0 6px #5d2b7d, /* Додаткові шари для ефекту градієнта */
-                inset 0 0 0 9px #3e1b5c;
-            margin-bottom: 20px;
+            padding: 3px; /* Товщина контуру */
+            /* Твій градієнт, який ти описував */
+            background: linear-gradient(
+                45deg,
+                #6495ED, /* синій */
+                #9400D3, /* фіолетовий */
+                #8B4513, /* коричневий */
+                #228B22 /* зелений */
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
         }
         h1 {
             color: #990000;
