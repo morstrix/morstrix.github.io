@@ -38,9 +38,8 @@
             text-align: center;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background-color: transparent;
-            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.5); /* Черный с прозрачностью 50% */
+            backdrop-filter: blur(10px); /* Применяем размытие к фону */
         }
         h1 {
             color: #fff;
@@ -48,7 +47,7 @@
         }
         h1 .s-rotated {
             display: inline-block;
-            transform: rotate(-75deg); /* Поворачиваем на -75 градусов, чтобы она лежала на боку */
+            transform: rotate(-70deg);
         }
         .link-button {
             display: flex;
@@ -91,7 +90,7 @@
 <body>
     <div class="container">
         <img src="pixelmlogo.png" alt="MORSTRIX Logo">
-        <h1>MOR <span class="s-rotated">S</span>TRIX</h1>
+        <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
         <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
             <span class="button-main-text">instagram</span>
@@ -107,7 +106,6 @@
             <span class="button-main-text">telegram bot</span>
             <span class="button-description">МОДЕРАТОР</span>
         </a>
-        
     </div>
 </body>
 </html>
