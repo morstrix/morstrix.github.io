@@ -34,11 +34,12 @@
             margin: 0;
             color: #ccc;
         }
-       .container {
+        .container {
             text-align: center;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.2); /* ИЗМЕНЁННЫЙ СТИЛЬ */
             backdrop-filter: blur(10px);
         }
         h1 {
@@ -46,7 +47,9 @@
             margin-bottom: 20px;
         }
         .link-button {
-            display: block;
+            display: flex; /* ИЗМЕНЁННЫЙ СТИЛЬ */
+            flex-direction: column; /* ИЗМЕНЁННЫЙ СТИЛЬ */
+            justify-content: center; /* ИЗМЕНЁННЫЙ СТИЛЬ */
             width: 250px;
             padding: 15px 25px;
             margin: 15px auto;
@@ -61,34 +64,12 @@
         .link-button:hover {
             background-color: #6a1ba1;
         }
-
-        /* CSS для вашего логотипа - теперь он будет меньше и по центру */
         img {
             max-width: 250px; 
             height: auto;
             display: block;
             margin: 0 auto 20px auto; 
         }
-
-        /* Новые стили для описания кнопок */
-        .link-button {
-            display: block;
-            width: 250px;
-            padding: 15px 25px;
-            margin: 15px auto;
-            background-color: #8a2be2;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-            font-size: 1.1em;
-            font-weight: 600;
-            /* Добавлено для расположения элементов внутри */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
         .button-description {
             display: block;
             font-size: 0.8em;
