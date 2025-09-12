@@ -46,22 +46,19 @@
             border-radius: 50%;
             overflow: hidden;
             
-            /* Видаляємо всі обводки та тіні */
             box-shadow: none;
-
             margin-bottom: 20px;
         }
 
-        /* Стилі для зображення аватарки, що стане клікабельною, але без переходу */
         .avatar-link {
             display: inline-block;
             border-radius: 50%;
             overflow: hidden;
-            cursor: pointer; /* Змінюємо курсор, щоб показати, що елемент клікабельний */
+            cursor: pointer;
         }
         
         .avatar-link:active {
-            transform: scale(0.98); /* Невеликий ефект натискання */
+            transform: scale(0.98);
         }
 
         h1 {
@@ -151,9 +148,9 @@
 
         .button-sub-text {
             font-size: 0.8em;
-            color: #ccc; /* Сірий колір, як ти просив */
+            color: #ccc;
             line-height: 1.2;
-            margin-top: 5px; /* Невеликий відступ від основного тексту */
+            margin-top: 5px;
         }
 
         .info-block {
@@ -165,10 +162,15 @@
             color: #ffffff;
             line-height: 1.2;
             
+            /* Нові стилі для 3D ефекту */
             border: 2px solid #216c00;
             box-shadow:
-                -1px -1px 0px 0px #35ab00,
-                1px 1px 0px 0px #216c00;
+                -2px -2px 0px 0px #35ab00, 
+                2px 2px 0px 0px #216c00,
+                4px 4px 0px 0px #216c00,
+                -4px -4px 0px 0px #35ab00,
+                inset 0 0 10px 5px rgba(53, 171, 0, 0.5), /* Внутрішня тінь */
+                inset 0 0 20px 10px rgba(33, 108, 0, 0.4); /* Глибока внутрішня тінь */
         }
     </style>
 </head>
