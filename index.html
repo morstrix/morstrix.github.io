@@ -46,17 +46,26 @@
             border-radius: 50%;
             overflow: hidden;
             
-            box-shadow: 
-                0 0 15px 5px rgba(128, 0, 128, 0.8),
-                inset 0 0 10px 5px #6495ED,
-                inset 0 0 20px 10px #9400D3,
-                inset 0 0 30px 15px #8B4513,
-                inset 0 0 40px 20px #228B22;
+            /* Видаляємо всі обводки та тіні */
+            box-shadow: none;
 
             margin-bottom: 20px;
         }
+
+        /* Стилі для зображення аватарки, що стане клікабельною, але без переходу */
+        .avatar-link {
+            display: inline-block;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer; /* Змінюємо курсор, щоб показати, що елемент клікабельний */
+        }
+        
+        .avatar-link:active {
+            transform: scale(0.98); /* Невеликий ефект натискання */
+        }
+
         h1 {
-            color: #ffffff; /* Змінено колір на білий */
+            color: #ffffff;
             margin-bottom: 20px;
         }
         h1 .s-rotated {
@@ -65,7 +74,7 @@
         }
 
         .link-block {
-            margin-bottom: 20px; /* Збільшено відступ між блоками */
+            margin-bottom: 20px;
         }
 
         .link-button {
@@ -75,7 +84,7 @@
             align-items: center;
             width: 250px;
             padding: 15px 25px;
-            margin: 0 auto 10px auto; /* Зменшено нижній відступ */
+            margin: 0 auto 10px auto;
             
             background-color: #347860;
             background-image: 
@@ -97,7 +106,7 @@
                 2px 2px 0px 0px #216c00,
                 4px 4px 0px 0px #216c00,
                 -4px -4px 0px 0px #35ab00,
-                inset 0 0 5px 2px rgba(53, 171, 0, 0.5), /* Внутрішній градієнтний ефект */
+                inset 0 0 5px 2px rgba(53, 171, 0, 0.5),
                 inset 0 0 10px 4px rgba(33, 108, 0, 0.4);
         }
         .link-button:hover {
@@ -134,31 +143,24 @@
             position: relative;
             z-index: 1;
         }
+
         .button-main-text {
             font-size: 1.1em;
             line-height: 1.2;
         }
 
-        .button-description-box {
-            display: block;
-            width: 250px;
-            padding: 10px;
-            margin: 0 auto 20px auto; /* Додано нижній відступ */
+        .button-sub-text {
             font-size: 0.8em;
-            color: #ffffff;
+            color: #ccc; /* Сірий колір, як ти просив */
             line-height: 1.2;
-            
-            border: 2px solid #216c00;
-            box-shadow:
-                -1px -1px 0px 0px #35ab00,
-                1px 1px 0px 0px #216c00;
+            margin-top: 5px; /* Невеликий відступ від основного тексту */
         }
 
         .info-block {
             display: block;
             width: 250px;
             padding: 10px;
-            margin: 0 auto 40px auto; /* Збільшений відступ для розділення */
+            margin: 0 auto 40px auto;
             font-size: 0.8em;
             color: #ffffff;
             line-height: 1.2;
@@ -173,30 +175,33 @@
 <body>
     <div class="container">
         <div class="avatar-container">
-            <img src="pixelmlogo.png" alt="MORSTRIX Logo">
+            <a href="#" class="avatar-link" onclick="return false;">
+                <img src="pixelmlogo.png" alt="MORSTRIX Logo">
+            </a>
         </div>
+        
         <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
         <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
             <span class="button-main-text">instagram</span>
+            <span class="button-sub-text">DIGITAL MAGAZINE</span>
         </a>
-        <span class="button-description-box">DIGITAL MAGAZINE</span>
         <div class="info-block">
             <span class="button-main-text">info</span>
         </div>
         
         <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
             <span class="button-main-text">telegram</span>
+            <span class="button-sub-text">FORUM</span>
         </a>
-        <span class="button-description-box">FORUM</span>
         <div class="info-block">
             <span class="button-main-text">info</span>
         </div>
         
         <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
             <span class="button-main-text">telegram bot</span>
+            <span class="button-sub-text">МОДЕРАТОР</span>
         </a>
-        <span class="button-description-box">МОДЕРАТОР</span>
         <div class="info-block">
             <span class="button-main-text">info</span>
         </div>
