@@ -73,18 +73,11 @@ body {
     display: block;
 }
 
-.site-title {
-    font-size: 3em;
+.main-title-image {
+    width: 400px; /* Установите размер, который вам нужен */
+    max-width: 90vw;
+    height: auto;
     margin-top: 20px;
-    white-space: nowrap;
-    color: var(--arrow-color);
-    text-shadow: 
-        -2px -2px 0 var(--arrow-shadow-color),
-        2px 2px 0 var(--arrow-shadow-color);
-}
-.site-title .s-rotated {
-    display: inline-block;
-    transform: rotate(180deg);
 }
 
 .arrow-container {
@@ -113,6 +106,16 @@ body {
     60% {
         transform: translateY(5px) rotate(180deg);
     }
+}
+
+.navigation-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    min-height: auto;
+    padding: 40px 20px;
 }
 
 .retro-button {
