@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const monsterButton = document.getElementById('monster-button');
+    const monsterImage = monsterButton.querySelector('.monster-image');
     
     // Удаляем старую логику переключения изображений, так как они теперь статичны.
     

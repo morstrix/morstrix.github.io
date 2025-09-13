@@ -7,6 +7,11 @@
     --info-box-color: #ffffff;
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
+    
+    /* Новые цвета для рамок */
+    --magazine-box-color: #c090a0; /* Тускло-розовый */
+    --forum-box-color: #008080; /* Насыщенный аквамариновый/темно-синий */
+    --helper-box-color: #004d00; /* Темно-зеленый */
 }
 
 body {
@@ -18,66 +23,54 @@ body {
     background-size: 30px 30px;
     margin: 0;
     color: var(--main-text-color);
-    /* Убираем скрытие overflow и добавляем авто скролл */
-    overflow-y: auto; 
+    overflow: hidden; 
 }
 
-/* Убираем horizontal-scroll-wrapper */
+.horizontal-scroll-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+    height: 100vh;
+    scroll-snap-type: x mandatory; 
+}
+
+.horizontal-scroll-wrapper::-webkit-scrollbar {
+    display: none; 
+}
 
 .site-section {
-    display: flex; /* Используем flexbox для центрирования контента */
+    flex: 0 0 100vw; 
+    height: 100vh;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh; /* Каждая секция занимает всю высоту экрана */
     padding: 20px;
     box-sizing: border-box;
-    scroll-snap-align: start; /* Для эффекта прокрутки по секциям */
+    scroll-snap-align: center;
 }
 
-/* Стили для заголовка */
-.site-title {
-    font-size: 2.5em;
-    text-align: center;
-    color: #ff00ff;
-    text-shadow: 
-        -2px -2px 0 var(--arrow-shadow-color),
-        2px 2px 0 var(--arrow-shadow-color);
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.s-rotated {
-    display: inline-block;
-    transform: rotate(180deg);
-}
-
-/* Стили для контейнера с кнопкой */
-.monster-button-container {
-    margin-bottom: 20px;
+/* Стили для первой секции */
+.monster-section {
     position: relative;
-    width: 200px; /* Фиксированный размер для контейнера */
-    height: 200px;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.monster-button-container {
+    width: 300px;
+    height: 300px;
+}
+
 .monster-button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.1s ease;
     width: 100%;
     height: 100%;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: none;
+    transition: transform 0.1s ease;
 }
 
 .monster-button:active {
@@ -86,17 +79,35 @@ body {
 
 .monster-image {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    image-rendering: pixelated; /* Для пиксельного эффекта */
+    height: auto;
+    display: block;
 }
 
-/* Стили для стрелки */
+/* Заголовок теперь под картинкой */
+.site-title {
+    color: #ffffff;
+    font-size: 3em;
+    margin-top: 20px;
+    white-space: nowrap;
+    color: #ff00ff;
+    text-shadow: 
+        -2px -2px 0 var(--arrow-shadow-color),
+        2px 2px 0 var(--arrow-shadow-color);
+}
+.site-title .s-rotated {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
+
+/* Стили для ретро-стрелки */
 .arrow-container {
     position: absolute;
-    bottom: 40px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    align-items: center;
 }
 
 .retro-arrow {
@@ -121,33 +132,43 @@ body {
     }
 }
 
-/* Стили для ретро-кнопок */
+/* Обновленные стили для ретро-кнопок */
 .retro-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: var(--button-green-dark);
-    color: var(--main-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 20px 30px;
+    text-align: center;
+    background-color: var(--button-green-dark); /* Темно-зеленая заливка */
+    color: #000000; /* Черный текст */
     text-decoration: none;
-    border: 2px solid var(--button-green-light);
-    box-shadow: \
-        4px 4px 0 0 var(--button-green-light);
     transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
+    border: none;
+    box-shadow: 
+        -4px -4px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light),
+        8px 8px 0 0 var(--button-green-light); /* Простая 3D-тень */
     position: relative;
     cursor: pointer;
 }
 
 .retro-button:hover {
     transform: translate(2px, 2px);
-    box-shadow: \
-        2px 2px 0 0 var(--button-green-light);
+    box-shadow: 
+        -2px -2px 0 0 var(--button-green-light),
+        2px 2px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light);
 }
 
 .retro-button:active {
     transform: translate(4px, 4px);
-    box-shadow: \
-        0px 0px 0 0 var(--button-green-light);
+    box-shadow: 
+        -1px -1px 0 0 var(--button-green-light),
+        1px 1px 0 0 var(--button-green-light),
+        2px 2px 0 0 var(--button-green-light);
 }
 
 /* Стили для информационных рамок */
@@ -160,26 +181,60 @@ body {
     min-height: 100px;
     padding: 20px;
     margin-top: 40px;
-    border: 2px solid var(--main-text-color);
-    background-color: var(--info-box-color);
-    color: #000;
-    box-shadow: 
-        4px 4px 0 0 var(--main-text-color),
-        8px 8px 0 0 var(--main-text-color);
-}
-
-.retro-info-box p {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    line-height: 1.5;
     font-size: 0.8em;
+    line-height: 1.5;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
 }
 
 .info-box-image {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
+}
+
+/* Новые стили для разных рамок */
+.magazine-info-box {
+    border-color: var(--magazine-box-color);
+    box-shadow:
+        -4px -4px 0px 0px var(--magazine-box-color), 
+        4px 4px 0px 0px var(--magazine-box-color),
+        8px 8px 0px 0px var(--magazine-box-color),
+        -8px -8px 0px 0px var(--magazine-box-color),
+        inset 0 0 10px 5px rgba(192, 144, 160, 0.5), /* Используем RGBa для тени */
+        inset 0 0 20px 10px rgba(192, 144, 160, 0.4);
+    color: var(--magazine-box-color);
+}
+
+.forum-info-box {
+    border-color: var(--forum-box-color);
+    box-shadow:
+        -4px -4px 0px 0px var(--forum-box-color), 
+        4px 4px 0px 0px var(--forum-box-color),
+        8px 8px 0px 0px var(--forum-box-color),
+        -8px -8px 0px 0px var(--forum-box-color),
+        inset 0 0 10px 5px rgba(0, 128, 128, 0.5),
+        inset 0 0 20px 10px rgba(0, 128, 128, 0.4);
+    color: var(--forum-box-color);
+}
+
+.helper-info-box {
+    border-color: var(--helper-box-color);
+    box-shadow:
+        -4px -4px 0px 0px var(--helper-box-color), 
+        4px 4px 0px 0px var(--helper-box-color),
+        8px 8px 0px 0px var(--helper-box-color),
+        -8px -8px 0px 0px var(--helper-box-color),
+        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
+        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
+    color: var(--helper-box-color);
+}
+
+.magazine-info-box p, .forum-info-box p, .helper-info-box p {
+    color: #fff; /* Делаем текст белым для всех рамок */
 }
 
 /* Стили для секций */
