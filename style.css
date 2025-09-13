@@ -23,32 +23,21 @@ body {
     background-size: 30px 30px;
     margin: 0;
     color: var(--main-text-color);
-    overflow: hidden; 
-}
-
-.horizontal-scroll-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
-    height: 100vh;
-    scroll-snap-type: x mandatory; 
-}
-
-.horizontal-scroll-wrapper::-webkit-scrollbar {
-    display: none; 
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
 }
 
 .site-section {
-    flex: 0 0 100vw; 
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
 }
 
 /* Стили для первой секции */
@@ -99,7 +88,6 @@ body {
     transform: rotate(180deg);
 }
 
-
 /* Стили для ретро-стрелки */
 .arrow-container {
     position: absolute;
@@ -116,19 +104,19 @@ body {
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-top: 25px solid var(--arrow-color);
-    transform: rotate(90deg); /* Поворот стрелки вниз */
+    transform: rotate(180deg);
     animation: bounce-down 1.5s infinite;
 }
 
 @keyframes bounce-down {
     0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0) rotate(90deg);
+        transform: translateY(0) rotate(180deg);
     }
     40% {
-        transform: translateY(10px) rotate(90deg);
+        transform: translateY(10px) rotate(180deg);
     }
     60% {
-        transform: translateY(5px) rotate(90deg);
+        transform: translateY(5px) rotate(180deg);
     }
 }
 
@@ -140,8 +128,8 @@ body {
     width: 300px;
     padding: 20px 30px;
     text-align: center;
-    background-color: var(--button-green-dark); /* Темно-зеленая заливка */
-    color: #000000; /* Черный текст */
+    background-color: var(--button-green-dark);
+    color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 1.1em;
@@ -150,7 +138,7 @@ body {
     box-shadow: 
         -4px -4px 0 0 var(--button-green-light),
         4px 4px 0 0 var(--button-green-light),
-        8px 8px 0 0 var(--button-green-light); /* Простая 3D-тень */
+        8px 8px 0 0 var(--button-green-light);
     position: relative;
     cursor: pointer;
 }
@@ -204,7 +192,7 @@ body {
         4px 4px 0px 0px var(--magazine-box-color),
         8px 8px 0px 0px var(--magazine-box-color),
         -8px -8px 0px 0px var(--magazine-box-color),
-        inset 0 0 10px 5px rgba(192, 144, 160, 0.5), /* Используем RGBa для тени */
+        inset 0 0 10px 5px rgba(192, 144, 160, 0.5),
         inset 0 0 20px 10px rgba(192, 144, 160, 0.4);
     color: var(--magazine-box-color);
 }
@@ -234,26 +222,18 @@ body {
 }
 
 .magazine-info-box p, .forum-info-box p, .helper-info-box p {
-    color: #fff; /* Делаем текст белым для всех рамок */
+    color: #fff;
 }
 
-/* Стили для секций */
-.monster-section {
-    background-color: #000;
-}
-
-.magazine-section {
-    background-color: #000;
-}
-
-.forum-section {
-    background-color: #000;
-}
-
-.helper-section {
-    background-color: #000;
-}
-
-.digital-magazine-button, .forum-button, .helper-button {
-    font-size: 1.3em;
+.magazine-image {
+    max-width: 300px;
+    height: auto;
+    margin-top: 20px;
+    border: 2px solid var(--magazine-box-color);
+    box-shadow: 
+        -4px -4px 0px 0px var(--magazine-box-color), 
+        4px 4px 0px 0px var(--magazine-box-color),
+        8px 8px 0px 0px var(--magazine-box-color),
+        -8px -8px 0px 0px var(--magazine-box-color);
+    image-rendering: pixelated;
 }
