@@ -7,206 +7,65 @@
     
     <meta property="og:title" content="MORSTRIX">
     <meta property="og:description" content="ʍɵ‌ʀᔕᴛʀɪ𒉽">
-    <meta property="og:image" content="https://morstrix.github.io/pixelmlogo.png">
+    <meta property="og:image" content="https://morstrix.github.io/MLOGO.png">
     <meta property="og:url" content="https://morstrix.github.io/">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MORSTRIX">
     <meta name="twitter:description" content="ʍɵ‌ʀᔕᴛʀɪ𒉽">
-    <meta name="twitter:image" content="https://morstrix.github.io/pixelmlogo.png">
+    <meta name="twitter:image" content="https://morstrix.github.io/MLOGO.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <style>
-        body {
-            font-family: 'Press Start 2P', cursive;
-            background-color: #000;
-            background-image: 
-                linear-gradient(to right, rgba(128, 0, 128, 0.7) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(128, 0, 128, 0.7) 1px, transparent 1px);
-            background-size: 30px 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: #3c9700;
-        }
-        .container {
-            text-align: center;
-            padding: 30px;
-            border-radius: 12px;
-            background-color: rgba(0, 0, 0, 0.2); 
-        }
-        .avatar-container {
-            display: inline-block;
-            position: relative;
-            border-radius: 50%;
-            overflow: hidden;
-            
-            box-shadow: none;
-            margin-bottom: 20px;
-        }
-
-        .avatar-link {
-            display: inline-block;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .avatar-link:active {
-            transform: scale(0.98);
-        }
-
-        h1 {
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        h1 .s-rotated {
-            display: inline-block;
-            transform: rotate(-75deg);
-        }
-
-        .link-block {
-            margin-bottom: 20px;
-        }
-
-        .link-button {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            padding: 15px 25px;
-            margin: 0 auto 10px auto;
-            
-            background-color: #347860;
-            background-image: 
-                radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%),
-                radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%);
-            background-size: 8px 8px;
-            background-position: 0 0, 4px 4px;
-            
-            color: #0e0e0e;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            font-size: 1.1em;
-            font-weight: 600;
-            
-            border: none;
-            
-            box-shadow:
-                -2px -2px 0px 0px #35ab00, 
-                2px 2px 0px 0px #216c00,
-                4px 4px 0px 0px #216c00,
-                -4px -4px 0px 0px #35ab00,
-                inset 0 0 5px 2px rgba(53, 171, 0, 0.5),
-                inset 0 0 10px 4px rgba(33, 108, 0, 0.4);
-        }
-        .link-button:hover {
-            background-color: #35ab00;
-            box-shadow:
-                -1px -1px 0px 0px #216c00,
-                1px 1px 0px 0px #35ab00,
-                0px 0px 0px 0px #216c00,
-                0px 0px 0px 0px #35ab00,
-                inset 0 0 5px 2px rgba(33, 108, 0, 0.5),
-                inset 0 0 10px 4px rgba(53, 171, 0, 0.4);
-            
-            background-image: 
-                radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%),
-                radial-gradient(rgba(0,0,0,0.1) 15%, transparent 15%);
-            background-size: 8px 8px;
-            background-position: 0 0, 4px 4px;
-        }
-        .link-button:active {
-            transform: translate(2px, 2px);
-            box-shadow:
-                -1px -1px 0px 0px #216c00,
-                1px 1px 0px 0px #35ab00,
-                0 0 0 0 #216c00,
-                0 0 0 0 #35ab00,
-                inset 0 0 5px 2px rgba(33, 108, 0, 0.5),
-                inset 0 0 10px 4px rgba(53, 171, 0, 0.4);
-        }
-        img {
-            max-width: 250px; 
-            height: auto;
-            display: block;
-            margin: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .button-main-text {
-            font-size: 1.1em;
-            line-height: 1.2;
-        }
-
-        .button-sub-text {
-            font-size: 0.8em;
-            color: #ccc;
-            line-height: 1.2;
-            margin-top: 5px;
-        }
-
-        .info-block {
-            display: block;
-            width: 250px;
-            padding: 10px;
-            margin: 0 auto 40px auto;
-            font-size: 0.8em;
-            color: #ffffff;
-            line-height: 1.2;
-            
-            /* Нові стилі для 3D ефекту */
-            border: 2px solid #216c00;
-            box-shadow:
-                -2px -2px 0px 0px #35ab00, 
-                2px 2px 0px 0px #216c00,
-                4px 4px 0px 0px #216c00,
-                -4px -4px 0px 0px #35ab00,
-                inset 0 0 10px 5px rgba(53, 171, 0, 0.5), /* Внутрішня тінь */
-                inset 0 0 20px 10px rgba(33, 108, 0, 0.4); /* Глибока внутрішня тінь */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="avatar-container">
-            <a href="#" class="avatar-link" onclick="return false;">
-                <img src="pixelmlogo.png" alt="MORSTRIX Logo">
-            </a>
-        </div>
-        
-        <h1>MOR<span class="s-rotated">S</span>TRIX</h1>
 
-        <a href="https://www.instagram.com/morstrix.gritspark" class="link-button" target="_blank">
-            <span class="button-main-text">instagram</span>
-            <span class="button-sub-text">DIGITAL MAGAZINE</span>
-        </a>
-        <div class="info-block">
-            <span class="button-main-text">info</span>
-        </div>
+    <div class="horizontal-scroll-wrapper">
         
-        <a href="https://t.me/+EAWKIhjtolsyYWVi" class="link-button" target="_blank">
-            <span class="button-main-text">telegram</span>
-            <span class="button-sub-text">FORUM</span>
-        </a>
-        <div class="info-block">
-            <span class="button-main-text">info</span>
-        </div>
-        
-        <a href="https://t.me/morstrixbot" class="link-button" target="_blank">
-            <span class="button-main-text">telegram bot</span>
-            <span class="button-sub-text">МОДЕРАТОР</span>
-        </a>
-        <div class="info-block">
-            <span class="button-main-text">info</span>
-        </div>
+        <section class="site-section monster-section">
+            <div class="monster-button-container">
+                <button id="monster-button" class="monster-button">
+                    <img src="MLOGO.gif" alt="MORSTRIX Logo" class="monster-image">
+                </button>
+            </div>
+            <h1 class="site-title">MOR<span class="s-rotated">S</span>TRIX</h1>
+            <div class="arrow-container">
+                <div class="retro-arrow"></div>
+            </div>
+        </section>
+
+        <section class="site-section magazine-section">
+            <a href="https://www.instagram.com/mors.trix/" target="_blank" class="retro-button digital-magazine-button">
+                DIGITAL MAGAZINE
+            </a>
+            <div class="retro-info-box">
+                <p>Instagram neurocomics replying to random case content<br><br>• andery synergy with viral memes</p>
+            </div>
+        </section>
+
+        <section class="site-section forum-section">
+            <a href="https://t.me/+7Xmj6pPB0mEyMDky" target="_blank" class="retro-button forum-button">
+                FORUM
+            </a>
+            <div class="retro-info-box">
+                <p>private club</p>
+            </div>
+        </section>
+
+        <section class="site-section helper-section">
+            <a href="https://t.me/morstrixbot" target="_blank" class="retro-button helper-button">
+                HELPER
+            </a>
+            <div class="retro-info-box">
+                <p>telegram bot:<br>💬 AI (trigger "ALO")<br>🔓 Auto Invite<br>🤬 Welcome<br>⚡️ Safe Link<br>🌤 8 AM / Kyiv: Synoptic patch<br>🌐 ⇨ 🇺🇸 Instant Language Flow<br>❓Support</p>
+            </div>
+        </section>
+
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
