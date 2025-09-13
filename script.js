@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Функция для переключения изображения
     function toggleMonsterImage() {
         const currentSrc = monsterImage.src;
-        // Проверяем, если текущий источник заканчивается на 'MLOGO.png'
-        if (currentSrc.endsWith('MLOGO.png')) {
+        // Проверяем, если текущий источник заканчивается на 'MLOGO.jpg'
+        if (currentSrc.endsWith('MLOGO.jpg')) {
             // Если да, меняем на 'MLOGO.gif'
             monsterImage.src = 'MLOGO.gif';
         } else {
-            // Иначе, возвращаем обратно на 'MLOGO.png'
-            monsterImage.src = 'MLOGO.png';
+            // Иначе, возвращаем обратно на 'MLOGO.jpg'
+            monsterImage.src = 'MLOGO.jpg';
         }
     }
 
