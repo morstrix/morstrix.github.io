@@ -144,37 +144,19 @@ body {
 
 .magazine-info-box {
     border-color: var(--magazine-box-color);
-    box-shadow:
-        -4px -4px 0px 0px var(--magazine-box-color), 
-        4px 4px 0px 0px var(--magazine-box-color),
-        8px 8px 0px 0px var(--magazine-box-color),
-        -8px -8px 0px 0px var(--magazine-box-color),
-        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
-        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
+    box-shadow: none;
     color: var(--magazine-box-color);
 }
 
 .forum-info-box {
     border-color: var(--forum-box-color);
-    box-shadow:
-        -4px -4px 0px 0px var(--forum-box-color), 
-        4px 4px 0px 0px var(--forum-box-color),
-        8px 8px 0px 0px var(--forum-box-color),
-        -8px -8px 0px 0px var(--forum-box-color),
-        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
-        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
+    box-shadow: none;
     color: var(--forum-box-color);
 }
 
 .helper-info-box {
     border-color: var(--helper-box-color);
-    box-shadow:
-        -4px -4px 0px 0px var(--helper-box-color), 
-        4px 4px 0px 0px var(--helper-box-color),
-        8px 8px 0px 0px var(--helper-box-color),
-        -8px -8px 0px 0px var(--helper-box-color),
-        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
-        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
+    box-shadow: none;
     color: var(--helper-box-color);
 }
 
@@ -185,12 +167,8 @@ body {
 .magazine-image {
     width: 300px;
     height: auto;
-    margin-top: 20px;
-    border: 2px solid var(--magazine-box-color);
-    box-shadow: 
-        -4px -4px 0px 0px var(--magazine-box-color), 
-        4px 4px 0px 0px var(--magazine-box-color),
-        8px 8px 0px 0px var(--magazine-box-color),
-        -8px -8px 0px 0px var(--magazine-box-color);
+    margin-top: 0;
+    border: none;
+    box-shadow: none;
     image-rendering: pixelated;
 }
