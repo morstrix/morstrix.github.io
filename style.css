@@ -41,6 +41,7 @@ body {
     width: clamp(150px, 50vw, 300px);
     height: auto;
     margin-top: 0;
+    margin-bottom: 40px;
 }
 
 .monster-button {
@@ -69,9 +70,9 @@ body {
 }
 
 .main-title-image {
-    width: clamp(150px, 60vw, 400px); /* Увеличиваем размер */
+    width: clamp(150px, 60vw, 400px);
     height: auto;
-    margin-top: 0; /* Убираем отрицательный отступ */
+    margin-top: 0;
 }
 
 .buttons-container {
@@ -80,7 +81,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 40px; /* Увеличиваем отступ сверху */
+    margin-top: 40px;
 }
 
 .retro-button {
@@ -93,7 +94,7 @@ body {
     color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 1.1em;
+    font-size: 1.65em;
     font-weight: 600;
     border: none;
     box-shadow: 
@@ -126,7 +127,7 @@ body {
     min-height: 100px;
     padding: 20px;
     margin-top: 40px;
-    font-size: 0.8em;
+    font-size: 1.2em;
     line-height: 1.5;
     background: rgba(0, 0, 0, 0.3);
     border: 2px solid;
@@ -148,8 +149,8 @@ body {
         4px 4px 0px 0px var(--magazine-box-color),
         8px 8px 0px 0px var(--magazine-box-color),
         -8px -8px 0px 0px var(--magazine-box-color),
-        inset 0 0 10px 5px rgba(192, 144, 160, 0.5),
-        inset 0 0 20px 10px rgba(192, 144, 160, 0.4);
+        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
+        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
     color: var(--magazine-box-color);
 }
 
@@ -160,8 +161,8 @@ body {
         4px 4px 0px 0px var(--forum-box-color),
         8px 8px 0px 0px var(--forum-box-color),
         -8px -8px 0px 0px var(--forum-box-color),
-        inset 0 0 10px 5px rgba(0, 128, 128, 0.5),
-        inset 0 0 20px 10px rgba(0, 128, 128, 0.4);
+        inset 0 0 10px 5px rgba(0, 77, 0, 0.5),
+        inset 0 0 20px 10px rgba(0, 77, 0, 0.4);
     color: var(--forum-box-color);
 }
 
