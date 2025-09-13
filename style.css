@@ -18,54 +18,66 @@ body {
     background-size: 30px 30px;
     margin: 0;
     color: var(--main-text-color);
-    overflow: hidden; 
+    /* Убираем скрытие overflow и добавляем авто скролл */
+    overflow-y: auto; 
 }
 
-.horizontal-scroll-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
-    height: 100vh;
-    scroll-snap-type: x mandatory; 
-}
-
-.horizontal-scroll-wrapper::-webkit-scrollbar {
-    display: none; 
-}
+/* Убираем horizontal-scroll-wrapper */
 
 .site-section {
-    flex: 0 0 100vw; 
-    height: 100vh;
-    display: flex;
+    display: flex; /* Используем flexbox для центрирования контента */
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100vw;
+    height: 100vh; /* Каждая секция занимает всю высоту экрана */
     padding: 20px;
     box-sizing: border-box;
-    scroll-snap-align: center;
+    scroll-snap-align: start; /* Для эффекта прокрутки по секциям */
 }
 
-/* Стили для первой секции */
-.monster-section {
+/* Стили для заголовка */
+.site-title {
+    font-size: 2.5em;
+    text-align: center;
+    color: #ff00ff;
+    text-shadow: 
+        -2px -2px 0 var(--arrow-shadow-color),
+        2px 2px 0 var(--arrow-shadow-color);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.s-rotated {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
+/* Стили для контейнера с кнопкой */
+.monster-button-container {
+    margin-bottom: 20px;
     position: relative;
+    width: 200px; /* Фиксированный размер для контейнера */
+    height: 200px;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.monster-button-container {
-    width: 300px;
-    height: 300px;
-}
-
 .monster-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s ease;
     width: 100%;
     height: 100%;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    background: none;
-    transition: transform 0.1s ease;
 }
 
 .monster-button:active {
@@ -74,112 +86,119 @@ body {
 
 .monster-image {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated; /* Для пиксельного эффекта */
 }
 
-/* Заголовок теперь под картинкой */
-.site-title {
-    color: #ffffff;
-    font-size: 3em;
-    margin-top: 20px;
-    white-space: nowrap;
-}
-.site-title .s-rotated {
-    display: inline-block;
-    transform: rotate(-75deg);
-}
-
-
-/* Стили для ретро-стрелки */
+/* Стили для стрелки */
 .arrow-container {
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    align-items: center;
 }
 
 .retro-arrow {
-    width: 50px;
-    height: 50px;
-    background-color: var(--arrow-color);
-    box-shadow: 
-        2px 2px 0px 0px #ab00ab,
-        -2px -2px 0px 0px #ab00ab,
-        4px 4px 0px 0px #700070,
-        -4px -4px 0px 0px #700070;
-    position: relative;
-    clip-path: polygon(0 50%, 75% 0, 75% 30%, 100% 30%, 100% 70%, 75% 70%, 75% 100%);
-    animation: bounce-right 1.5s infinite ease-in-out;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 25px solid var(--arrow-color);
+    transform: rotate(90deg); /* Поворот стрелки вниз */
+    animation: bounce-down 1.5s infinite;
 }
 
-@keyframes bounce-right {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(10px); }
+@keyframes bounce-down {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(90deg);
+    }
+    40% {
+        transform: translateY(10px) rotate(90deg);
+    }
+    60% {
+        transform: translateY(5px) rotate(90deg);
+    }
 }
 
-/* Обновленные стили для ретро-кнопок */
+/* Стили для ретро-кнопок */
 .retro-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    padding: 20px 30px;
-    text-align: center;
-    background-color: var(--button-green-dark); /* Темно-зеленая заливка */
-    color: #000000; /* Черный текст */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--button-green-dark);
+    color: var(--main-text-color);
     text-decoration: none;
+    border: 2px solid var(--button-green-light);
+    box-shadow: \
+        4px 4px 0 0 var(--button-green-light);
     transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
-    border: none;
-    box-shadow: 
-        -4px -4px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light),
-        8px 8px 0 0 var(--button-green-light); /* Простая 3D-тень */
     position: relative;
     cursor: pointer;
 }
 
 .retro-button:hover {
     transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 var(--button-green-light),
-        2px 2px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light);
+    box-shadow: \
+        2px 2px 0 0 var(--button-green-light);
 }
 
 .retro-button:active {
     transform: translate(4px, 4px);
-    box-shadow: 
-        -1px -1px 0 0 var(--button-green-light),
-        1px 1px 0 0 var(--button-green-light),
-        2px 2px 0 0 var(--button-green-light);
+    box-shadow: \
+        0px 0px 0 0 var(--button-green-light);
 }
 
 /* Стили для информационных рамок */
 .retro-info-box {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 300px;
     min-height: 100px;
     padding: 20px;
     margin-top: 40px;
-    font-size: 0.8em;
-    color: var(--info-box-color);
+    border: 2px solid var(--main-text-color);
+    background-color: var(--info-box-color);
+    color: #000;
+    box-shadow: 
+        4px 4px 0 0 var(--main-text-color),
+        8px 8px 0 0 var(--main-text-color);
+}
+
+.retro-info-box p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
     line-height: 1.5;
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid var(--button-green-dark);
-    box-shadow:
-        -4px -4px 0px 0px var(--button-green-light), 
-        4px 4px 0px 0px var(--button-green-dark),
-        8px 8px 0px 0px var(--button-green-dark),
-        -8px -8px 0px 0px var(--button-green-light),
-        inset 0 0 10px 5px rgba(53, 171, 0, 0.5),
-        inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
-    box-sizing: border-box;
-    white-space: pre-wrap;
+    font-size: 0.8em;
+}
+
+.info-box-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Стили для секций */
+.monster-section {
+    background-color: #000;
+}
+
+.magazine-section {
+    background-color: #000;
+}
+
+.forum-section {
+    background-color: #000;
+}
+
+.helper-section {
+    background-color: #000;
+}
+
+.digital-magazine-button, .forum-button, .helper-button {
+    font-size: 1.3em;
 }
