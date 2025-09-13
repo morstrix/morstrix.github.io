@@ -5,9 +5,11 @@
     --button-green-light: #216c00;
     --button-green-dark: #1a5100;
     --info-box-color: #ffffff;
+    --arrow-color: #ff00ff;
+    --arrow-shadow-color: #ff00ff;
     
-    --magazine-box-color: #004d00;
-    --forum-box-color: #004d00;
+    --magazine-box-color: #c090a0;
+    --forum-box-color: #008080;
     --helper-box-color: #004d00;
 }
 
@@ -41,7 +43,6 @@ body {
     width: clamp(150px, 50vw, 300px);
     height: auto;
     margin-top: 0;
-    margin-bottom: 40px;
 }
 
 .monster-button {
@@ -70,9 +71,13 @@ body {
 }
 
 .main-title-image {
-    width: clamp(150px, 60vw, 400px);
+    width: clamp(100px, 40vw, 200px);
     height: auto;
-    margin-top: 0;
+    margin-top: -20px;
+}
+
+.arrow-container {
+    display: none;
 }
 
 .buttons-container {
@@ -81,7 +86,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 .retro-button {
@@ -94,7 +99,7 @@ body {
     color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 1.65em;
+    font-size: 1.1em;
     font-weight: 600;
     border: none;
     box-shadow: 
@@ -118,6 +123,13 @@ body {
     box-shadow: none;
 }
 
+.site-header {
+    width: 100%;
+    padding-top: 20px; /* Отступ сверху для кнопки BACK */
+    box-sizing: border-box;
+    text-align: left;
+}
+
 .retro-info-box {
     display: flex;
     flex-direction: column;
@@ -127,10 +139,10 @@ body {
     min-height: 100px;
     padding: 20px;
     margin-top: 40px;
-    font-size: 1.2em;
+    font-size: 0.8em;
     line-height: 1.5;
     background: rgba(0, 0, 0, 0.3);
-    border: 2px solid;
+    border: 6px solid; /* Увеличиваем толщину рамки */
     box-sizing: border-box;
     white-space: pre-wrap;
     box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
@@ -165,7 +177,7 @@ body {
 }
 
 .magazine-image {
-    width: 300px;
+    width: 70%; /* Уменьшаем размер картинки */
     height: auto;
     margin-top: 0;
     border: none;
