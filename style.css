@@ -2,16 +2,15 @@
     --bg-color: #000;
     --grid-color: rgba(128, 0, 128, 0.7);
     --main-text-color: #3c9700;
-    --button-green-light: #216c00; /* Контур */
-    --button-green-dark: #1a5100; /* Заливка, чуть темнее контура */
+    --button-green-light: #216c00;
+    --button-green-dark: #1a5100;
     --info-box-color: #ffffff;
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     
-    /* Новые цвета для рамок */
-    --magazine-box-color: #c090a0; /* Тускло-розовый */
-    --forum-box-color: #008080; /* Насыщенный аквамариновый/темно-синий */
-    --helper-box-color: #004d00; /* Темно-зеленый */
+    --magazine-box-color: #c090a0;
+    --forum-box-color: #008080;
+    --helper-box-color: #004d00;
 }
 
 body {
@@ -26,6 +25,9 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     scroll-snap-type: y mandatory;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .site-section {
@@ -34,17 +36,16 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
     scroll-snap-align: start;
+    text-align: center;
 }
 
 /* Стили для первой секции */
 .monster-section {
     position: relative;
-    justify-content: center;
-    align-items: center;
 }
 
 .monster-button-container {
@@ -62,7 +63,7 @@ body {
     transition: transform 0.1s ease;
 }
 
-.monster-button:active {
+.monster-button:hover {
     transform: scale(0.95);
 }
 
@@ -72,13 +73,11 @@ body {
     display: block;
 }
 
-/* Заголовок теперь под картинкой */
 .site-title {
-    color: #ffffff;
     font-size: 3em;
     margin-top: 20px;
     white-space: nowrap;
-    color: #ff00ff;
+    color: var(--arrow-color);
     text-shadow: 
         -2px -2px 0 var(--arrow-shadow-color),
         2px 2px 0 var(--arrow-shadow-color);
@@ -88,12 +87,8 @@ body {
     transform: rotate(180deg);
 }
 
-/* Стили для ретро-стрелки */
 .arrow-container {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 20px;
     display: flex;
     align-items: center;
 }
@@ -120,12 +115,10 @@ body {
     }
 }
 
-/* Обновленные стили для ретро-кнопок */
 .retro-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
     padding: 20px 30px;
     text-align: center;
     background-color: var(--button-green-dark);
@@ -159,7 +152,6 @@ body {
         2px 2px 0 0 var(--button-green-light);
 }
 
-/* Стили для информационных рамок */
 .retro-info-box {
     display: flex;
     flex-direction: column;
@@ -184,7 +176,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Новые стили для разных рамок */
 .magazine-info-box {
     border-color: var(--magazine-box-color);
     box-shadow:
@@ -226,7 +217,7 @@ body {
 }
 
 .magazine-image {
-    max-width: 300px;
+    width: 300px;
     height: auto;
     margin-top: 20px;
     border: 2px solid var(--magazine-box-color);
