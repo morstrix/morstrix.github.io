@@ -42,6 +42,7 @@ body {
 .monster-button-container {
     width: clamp(150px, 50vw, 300px);
     height: auto;
+    margin-top: 0; /* Уменьшаем отступ сверху */
 }
 
 .monster-button {
@@ -58,6 +59,11 @@ body {
     transform: scale(0.95);
 }
 
+.monster-button:active {
+    transform: translate(8px, 8px);
+    box-shadow: none;
+}
+
 .monster-image {
     width: 100%;
     height: auto;
@@ -67,7 +73,7 @@ body {
 .main-title-image {
     width: clamp(200px, 80vw, 400px);
     height: auto;
-    margin-top: 20px;
+    margin-top: 10px; /* Уменьшаем отступ сверху */
 }
 
 .arrow-container {
@@ -79,8 +85,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px; /* Увеличил расстояние между кнопками */
-    margin-top: 20px; /* Уменьшил отступ сверху */
+    gap: 40px;
+    margin-top: 10px; /* Уменьшаем отступ сверху */
 }
 
 .retro-button {
@@ -113,8 +119,8 @@ body {
 }
 
 .retro-button:active {
-    transform: translate(8px, 8px); /* Сильное смещение при нажатии */
-    box-shadow: none; /* Убираем тень при нажатии */
+    transform: translate(8px, 8px);
+    box-shadow: none;
 }
 
 .retro-info-box {
