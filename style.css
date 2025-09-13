@@ -73,7 +73,7 @@ body {
 .main-title-image {
     width: clamp(200px, 80vw, 400px);
     height: auto;
-    margin-top: 5px; /* Уменьшаем отступ сверху в два раза */
+    margin-top: -20px; /* Отрицательный отступ для сильного сжатия */
 }
 
 .arrow-container {
@@ -86,7 +86,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 5px; /* Уменьшаем отступ сверху в два раза */
+    margin-top: 10px; /* Небольшой отступ между лого-текстом и кнопками */
 }
 
 .retro-button {
