@@ -8,8 +8,6 @@
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     
-    --magazine-box-color: #c090a0;
-    --forum-box-color: #008080;
     --helper-box-color: #004d00;
 }
 
@@ -86,7 +84,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 10px;
+    margin-top: 40px;
 }
 
 .retro-button {
@@ -125,9 +123,25 @@ body {
 
 .site-header {
     width: 100%;
-    padding-top: 20px; /* Отступ сверху для кнопки BACK */
+    padding-top: 20px;
     box-sizing: border-box;
     text-align: left;
+}
+
+.back-button {
+    background-color: #0000FF;
+    box-shadow: 
+        -4px -4px 0 0 #0000CC,
+        4px 4px 0 0 #0000CC,
+        8px 8px 0 0 #0000CC;
+}
+
+.back-button:hover {
+    background-color: #0000FF;
+    box-shadow: 
+        -2px -2px 0 0 #0000CC,
+        2px 2px 0 0 #0000CC,
+        4px 4px 0 0 #0000CC;
 }
 
 .retro-info-box {
@@ -142,7 +156,7 @@ body {
     font-size: 0.8em;
     line-height: 1.5;
     background: rgba(0, 0, 0, 0.3);
-    border: 6px solid; /* Увеличиваем толщину рамки */
+    border: 6px solid;
     box-sizing: border-box;
     white-space: pre-wrap;
     box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
@@ -154,22 +168,9 @@ body {
     margin-bottom: 10px;
 }
 
-.magazine-info-box {
-    border-color: var(--magazine-box-color);
-    box-shadow: none;
-    color: var(--magazine-box-color);
-}
-
-.forum-info-box {
-    border-color: var(--forum-box-color);
-    box-shadow: none;
-    color: var(--forum-box-color);
-}
-
-.helper-info-box {
+.magazine-info-box, .forum-info-box, .helper-info-box {
     border-color: var(--helper-box-color);
     box-shadow: none;
-    color: var(--helper-box-color);
 }
 
 .magazine-info-box p, .forum-info-box p, .helper-info-box p {
@@ -177,10 +178,14 @@ body {
 }
 
 .magazine-image {
-    width: 70%; /* Уменьшаем размер картинки */
+    width: 70%;
     height: auto;
     margin-top: 0;
     border: none;
     box-shadow: none;
     image-rendering: pixelated;
+}
+
+.magazine-button {
+    margin-top: 40px;
 }
