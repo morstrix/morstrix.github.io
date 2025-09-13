@@ -71,13 +71,9 @@ body {
 }
 
 .main-title-image {
-    width: clamp(100px, 40vw, 200px); /* Уменьшаем размер в два раза */
+    width: clamp(150px, 60vw, 400px); /* Увеличиваем размер */
     height: auto;
-    margin-top: -20px;
-}
-
-.arrow-container {
-    display: none;
+    margin-top: 0; /* Убираем отрицательный отступ */
 }
 
 .buttons-container {
@@ -86,7 +82,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 10px;
+    margin-top: 40px; /* Увеличиваем отступ сверху */
 }
 
 .retro-button {
