@@ -15,7 +15,7 @@
 
 body {
     font-family: 'Press Start 2P', cursive;
-    background-color: var(--bg-color);
+    background-color: #544b59;
     background-image: 
         linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
@@ -73,7 +73,7 @@ body {
 .main-title-image {
     width: clamp(100px, 40vw, 200px);
     height: auto;
-    margin-top: 20px; /* Увеличиваем отступ, чтобы лого не сливался */
+    margin-top: 20px;
 }
 
 .arrow-container {
@@ -95,7 +95,7 @@ body {
     align-items: center;
     padding: 20px 30px;
     text-align: center;
-    background-color: var(--button-green-dark); /* Теперь зелёный по умолчанию */
+    background-color: var(--button-green-dark);
     color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -130,7 +130,23 @@ body {
     text-align: left;
 }
 
-/* Переопределяем цвет только для кнопок-ссылок внутри "комнат" */
+.back-button {
+    background-color: #660000;
+    box-shadow: 
+        -4px -4px 0 0 #990000,
+        4px 4px 0 0 #990000,
+        8px 8px 0 0 #990000;
+}
+
+.back-button:hover {
+    background-color: #990000;
+    transform: translate(2px, 2px);
+    box-shadow: 
+        -2px -2px 0 0 #990000,
+        2px 2px 0 0 #990000,
+        4px 4px 0 0 #990000;
+}
+
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
     box-shadow: 
