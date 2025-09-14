@@ -9,6 +9,8 @@
     --arrow-shadow-color: #ff00ff;
     
     --helper-box-color: #004d00;
+    --link-button-color: #0000FF;
+    --link-button-shadow-color: #0000CC;
 }
 
 body {
@@ -93,27 +95,14 @@ body {
     align-items: center;
     padding: 20px 30px;
     text-align: center;
-    background-color: var(--button-green-dark);
     color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
     border: none;
-    box-shadow: 
-        -4px -4px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light),
-        8px 8px 0 0 var(--button-green-light);
     position: relative;
     cursor: pointer;
-}
-
-.retro-button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 var(--button-green-light),
-        2px 2px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light);
 }
 
 .retro-button:active {
@@ -129,19 +118,35 @@ body {
 }
 
 .back-button {
-    background-color: #0000FF;
+    background-color: var(--button-green-dark);
     box-shadow: 
-        -4px -4px 0 0 #0000CC,
-        4px 4px 0 0 #0000CC,
-        8px 8px 0 0 #0000CC;
+        -4px -4px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light),
+        8px 8px 0 0 var(--button-green-light);
 }
 
 .back-button:hover {
-    background-color: #0000FF;
+    transform: translate(2px, 2px);
     box-shadow: 
-        -2px -2px 0 0 #0000CC,
-        2px 2px 0 0 #0000CC,
-        4px 4px 0 0 #0000CC;
+        -2px -2px 0 0 var(--button-green-light),
+        2px 2px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light);
+}
+
+.digital-magazine-button, .forum-button, .helper-button {
+    background-color: var(--link-button-color);
+    box-shadow: 
+        -4px -4px 0 0 var(--link-button-shadow-color),
+        4px 4px 0 0 var(--link-button-shadow-color),
+        8px 8px 0 0 var(--link-button-shadow-color);
+}
+
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 
+        -2px -2px 0 0 var(--link-button-shadow-color),
+        2px 2px 0 0 var(--link-button-shadow-color),
+        4px 4px 0 0 var(--link-button-shadow-color);
 }
 
 .retro-info-box {
@@ -166,6 +171,7 @@ body {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
+    image-rendering: pixelated; /* Сохраняет пиксели для ретро-стиля */
 }
 
 .magazine-info-box, .forum-info-box, .helper-info-box {
@@ -175,15 +181,6 @@ body {
 
 .magazine-info-box p, .forum-info-box p, .helper-info-box p {
     color: #fff;
-}
-
-.magazine-image {
-    width: 70%;
-    height: auto;
-    margin-top: 0;
-    border: none;
-    box-shadow: none;
-    image-rendering: pixelated;
 }
 
 .magazine-button {
