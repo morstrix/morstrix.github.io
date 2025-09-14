@@ -73,7 +73,7 @@ body {
 .main-title-image {
     width: clamp(100px, 40vw, 200px);
     height: auto;
-    margin-top: -20px;
+    margin-top: 20px; /* Увеличиваем отступ, чтобы лого не сливался */
 }
 
 .arrow-container {
@@ -95,14 +95,27 @@ body {
     align-items: center;
     padding: 20px 30px;
     text-align: center;
+    background-color: var(--button-green-dark); /* Теперь зелёный по умолчанию */
     color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
     border: none;
+    box-shadow: 
+        -4px -4px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light),
+        8px 8px 0 0 var(--button-green-light);
     position: relative;
     cursor: pointer;
+}
+
+.retro-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 
+        -2px -2px 0 0 var(--button-green-light),
+        2px 2px 0 0 var(--button-green-light),
+        4px 4px 0 0 var(--button-green-light);
 }
 
 .retro-button:active {
@@ -117,22 +130,7 @@ body {
     text-align: left;
 }
 
-.back-button {
-    background-color: var(--button-green-dark);
-    box-shadow: 
-        -4px -4px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light),
-        8px 8px 0 0 var(--button-green-light);
-}
-
-.back-button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 var(--button-green-light),
-        2px 2px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light);
-}
-
+/* Переопределяем цвет только для кнопок-ссылок внутри "комнат" */
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
     box-shadow: 
@@ -171,7 +169,7 @@ body {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
-    image-rendering: pixelated; /* Сохраняет пиксели для ретро-стиля */
+    image-rendering: pixelated;
 }
 
 .magazine-info-box, .forum-info-box, .helper-info-box {
