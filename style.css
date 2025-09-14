@@ -40,7 +40,8 @@ body {
 }
 
 .monster-button-container {
-    width: clamp(150px, 50vw, 300px);
+    width: 100%;
+    max-width: 600px; /* Увеличил максимальную ширину */
     height: auto;
     margin-top: 0;
 }
