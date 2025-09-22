@@ -3,33 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MORSTRIX</title>
-    
-    <meta property="og:title" content="MORSTRIX">
-    <meta property="og:description" content="ʍɵ‌ʀᔕᴛʀɪ𒉽">
-    <meta property="og:image" content="https://morstrix.github.io/MLOGO.jpg">
-    <meta property="og:url" content="https://morstrix.github.io/">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MORSTRIX">
-    <meta name="twitter:description" content="ʍɵ‌ʀᔕᴛʀɪ𒉽">
-    <meta name="twitter:image" content="https://morstrix.github.io/MLOGO.jpg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Loading...</title>
     
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling if the GIF is larger than the viewport */
+        }
+        
+        .loader-gif {
+            width: 100%; /* Adjust size as needed, e.g., max-width: 500px; */
+            height: auto;
+            image-rendering: pixelated; /* To keep the retro look for GIFs */
+        }
+    </style>
 </head>
 <body>
-    <section class="site-section monster-section">
-        <div class="monster-button-container">
-            <a href="menu.html" class="monster-button">
-                <img src="ENTER.png" alt="Enter" class="monster-image">
-            </a>
-        </div>
-    </section>
+    <div class="loader-container">
+        <img src="AqCa.gif" alt="Loading..." class="loader-gif">
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.location.href = 'menu.html';
+            }, 3000); // Redirect after 3 seconds. Adjust this if your GIF is longer.
+        });
+    </script>
 </body>
 </html>
