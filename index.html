@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    
     <style>
         body {
             background-color: #000;
@@ -14,26 +19,29 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden; /* Prevent scrolling if the GIF is larger than the viewport */
+            overflow: hidden;
+            /* This is the key part that removes the grid background */
+            background-image: none;
         }
         
         .loader-gif {
-            width: 100%; /* Adjust size as needed, e.g., max-width: 500px; */
+            width: 100%;
             height: auto;
-            image-rendering: pixelated; /* To keep the retro look for GIFs */
+            image-rendering: pixelated;
         }
     </style>
 </head>
 <body>
     <div class="loader-container">
-        <img src="loading.gif" alt="Loading..." class="loader-gif">
+        <img src="AqCa.gif" alt="Loading..." class="loader-gif">
     </div>
 
     <script>
         window.addEventListener('load', () => {
+            // Wait for 3 seconds before redirecting. Adjust as needed.
             setTimeout(() => {
                 window.location.href = 'menu.html';
-            }, 3000); // Redirect after 3 seconds. Adjust this if your GIF is longer.
+            }, 3000);
         });
     </script>
 </body>
