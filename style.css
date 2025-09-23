@@ -1,16 +1,17 @@
 :root {
     --bg-color: #000;
-    --grid-color: rgba(128, 0, 128, 0.7);
+    --grid-color: rgba(255, 165, 0, 0.7); /* Оранжевый */
     --main-text-color: #3c9700;
-    --button-green-light: #216c00;
-    --button-green-dark: #1a5100;
+    --button-green-light: #2c592c; /* Тускло-зеленый */
+    --button-green-dark: #1f3d1f; /* Еще более тусклый */
     --info-box-color: #ffffff;
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     
     --helper-box-color: #004d00;
-    --link-button-color: #0000FF;
-    --link-button-shadow-color: #0000CC;
+    --link-button-color: #2c592c; /* Тускло-зеленый */
+    --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
+    --back-button-color: #555555;
 }
 
 body {
@@ -41,7 +42,7 @@ body {
 
 .monster-button-container {
     width: 100%;
-    max-width: 600px; /* Увеличил максимальную ширину */
+    max-width: 600px;
     height: auto;
     margin-top: 0;
 }
@@ -103,24 +104,18 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     border: none;
-    box-shadow: 
-        -4px -4px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light),
-        8px 8px 0 0 var(--button-green-light);
+    box-shadow: none; /* Убран 3D-эффект */
     position: relative;
     cursor: pointer;
 }
 
 .retro-button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 var(--button-green-light),
-        2px 2px 0 0 var(--button-green-light),
-        4px 4px 0 0 var(--button-green-light);
+    transform: translate(0);
+    box-shadow: none;
 }
 
 .retro-button:active {
-    transform: translate(8px, 8px);
+    transform: translate(0);
     box-shadow: none;
 }
 
@@ -132,36 +127,24 @@ body {
 }
 
 .back-button {
-    background-color: #660000;
-    box-shadow: 
-        -4px -4px 0 0 #990000,
-        4px 4px 0 0 #990000,
-        8px 8px 0 0 #990000;
+    background-color: var(--back-button-color); /* Новый цвет для кнопки "BACK" */
+    box-shadow: none;
 }
 
 .back-button:hover {
-    background-color: #990000;
-    transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 #990000,
-        2px 2px 0 0 #990000,
-        4px 4px 0 0 #990000;
+    background-color: var(--back-button-color);
+    transform: translate(0);
+    box-shadow: none;
 }
 
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
-    box-shadow: 
-        -4px -4px 0 0 var(--link-button-shadow-color),
-        4px 4px 0 0 var(--link-button-shadow-color),
-        8px 8px 0 0 var(--link-button-shadow-color);
+    box-shadow: none; /* Убран 3D-эффект */
 }
 
 .digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 
-        -2px -2px 0 0 var(--link-button-shadow-color),
-        2px 2px 0 0 var(--link-button-shadow-color),
-        4px 4px 0 0 var(--link-button-shadow-color);
+    transform: translate(0);
+    box-shadow: none;
 }
 
 .retro-info-box {
