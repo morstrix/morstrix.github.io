@@ -216,3 +216,7 @@ body {
     font-size: 1.5em;
     font-weight: 600;
 }
+
+.subfolder-link {
+    margin-left: 50px; /* или другое значение, чтобы создать отступ */
+}
