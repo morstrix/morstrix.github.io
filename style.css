@@ -12,7 +12,7 @@
     --link-button-color: #2c592c;
     --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
-    --line-color: #0000ff; /* Новый цвет для линии */
+    --line-color: #0000ff;
 }
 
 body {
@@ -205,7 +205,7 @@ body {
     text-decoration: none;
     color: var(--main-text-color);
     transition: all 0.2s ease;
-    position: relative; /* Добавил, чтобы позиционировать псевдоэлемент */
+    position: relative;
 }
 
 .folder-link:hover {
@@ -232,16 +232,6 @@ body {
 
 /* Стили для создания линии */
 .subfolder-link::before {
-    content: ''; /* Обязательное свойство для псевдоэлементов */
-    position: absolute; /* Позволяет точно позиционировать линию */
-    top: -40px; /* Отступ сверху */
-    left: -25px; /* Отступ слева */
-    width: 2px; /* Толщина линии */
-    height: 40px; /* Высота вертикальной части */
-    background-color: var(--line-color);
-}
-
-.subfolder-link::before {
     content: '';
     position: absolute;
     top: -40px;
@@ -249,15 +239,16 @@ body {
     width: 2px;
     height: 40px;
     background-color: var(--line-color);
+    display: block; /* Исправлено: делаем его блочным */
 }
 
-/* Добавляем горизонтальную часть линии */
 .subfolder-link::after {
     content: '';
     position: absolute;
-    top: -1px; /* Позиция по вертикали */
-    left: -25px; /* Позиция по горизонтали */
-    width: 25px; /* Длина горизонтальной части */
-    height: 2px; /* Толщина линии */
+    top: -1px;
+    left: -25px;
+    width: 25px;
+    height: 2px;
     background-color: var(--line-color);
+    display: block; /* Исправлено: делаем его блочным */
 }
