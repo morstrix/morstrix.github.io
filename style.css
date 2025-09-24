@@ -1,17 +1,18 @@
 :root {
     --bg-color: #000;
-    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый */
+    --grid-color: rgba(104, 56, 56, 0.79);
     --main-text-color: #3c9700;
-    --button-green-light: #2c592c; /* Тускло-зеленый */
-    --button-green-dark: #1f3d1f; /* Еще более тусклый */
+    --button-green-light: #2c592c;
+    --button-green-dark: #1f3d1f;
     --info-box-color: #ffffff;
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     
     --helper-box-color: #004d00;
-    --link-button-color: #2c592c; /* Тускло-зеленый */
-    --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
+    --link-button-color: #2c592c;
+    --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
+    --line-color: #0000ff; /* Новый цвет для линии */
 }
 
 body {
@@ -28,7 +29,6 @@ body {
     align-items: center;
 }
 
-/* Новый класс для удаления сетки */
 .no-grid {
     background-image: none;
 }
@@ -109,7 +109,7 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     border: none;
-    box-shadow: none; /* Убран 3D-эффект */
+    box-shadow: none;
     position: relative;
     cursor: pointer;
 }
@@ -132,7 +132,7 @@ body {
 }
 
 .back-button {
-    background-color: var(--back-button-color); /* Новый цвет для кнопки "BACK" */
+    background-color: var(--back-button-color);
     box-shadow: none;
 }
 
@@ -144,7 +144,7 @@ body {
 
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
-    box-shadow: none; /* Убран 3D-эффект */
+    box-shadow: none;
 }
 
 .digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
@@ -205,6 +205,7 @@ body {
     text-decoration: none;
     color: var(--main-text-color);
     transition: all 0.2s ease;
+    position: relative; /* Добавил, чтобы позиционировать псевдоэлемент */
 }
 
 .folder-link:hover {
@@ -222,10 +223,41 @@ body {
     font-weight: 600;
 }
 
-/* Измененный класс для уменьшения размера */
 .subfolder-link {
     margin-left: 50px;
-    transform: scale(0.7); /* Уменьшает размер на 30% */
+    transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
+}
+
+/* Стили для создания линии */
+.subfolder-link::before {
+    content: ''; /* Обязательное свойство для псевдоэлементов */
+    position: absolute; /* Позволяет точно позиционировать линию */
+    top: -40px; /* Отступ сверху */
+    left: -25px; /* Отступ слева */
+    width: 2px; /* Толщина линии */
+    height: 40px; /* Высота вертикальной части */
+    background-color: var(--line-color);
+}
+
+.subfolder-link::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -25px;
+    width: 2px;
+    height: 40px;
+    background-color: var(--line-color);
+}
+
+/* Добавляем горизонтальную часть линии */
+.subfolder-link::after {
+    content: '';
+    position: absolute;
+    top: -1px; /* Позиция по вертикали */
+    left: -25px; /* Позиция по горизонтали */
+    width: 25px; /* Длина горизонтальной части */
+    height: 2px; /* Толщина линии */
+    background-color: var(--line-color);
 }
