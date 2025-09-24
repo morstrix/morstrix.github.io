@@ -230,7 +230,6 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Стили для создания линии */
 .subfolder-link::before {
     content: '';
     position: absolute;
@@ -239,7 +238,7 @@ body {
     width: 2px;
     height: 40px;
     background-color: var(--line-color);
-    display: block; /* Исправлено: делаем его блочным */
+    display: block;
 }
 
 .subfolder-link::after {
@@ -250,5 +249,5 @@ body {
     width: 25px;
     height: 2px;
     background-color: var(--line-color);
-    display: block; /* Исправлено: делаем его блочным */
+    display: block;
 }
