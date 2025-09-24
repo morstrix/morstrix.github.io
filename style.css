@@ -124,7 +124,7 @@ body {
     text-align: left;
 }
 
-/* === ИСПРАВЛЕНО: Стили для крестика (красный квадрат) === */
+/* === ИЗМЕНЕННЫЕ СТИЛИ: Теперь для размещения back.png === */
 .back-button {
     /* Фиксированное позиционирование */
     position: fixed; 
@@ -132,22 +132,17 @@ body {
     right: 20px;
     z-index: 1000; 
     
-    /* Размеры и внешний вид */
+    /* Размеры и внешний вид контейнера (красный квадрат) */
     width: 45px; 
     height: 45px;
     
-    /* НОВОЕ: ИДЕАЛЬНОЕ ЦЕНТРИРОВАНИЕ FONT AWESOME */
+    /* Центрирование изображения внутри ссылки */
     display: flex;
     justify-content: center; /* Горизонтальное центрирование */
     align-items: center;     /* Вертикальное центрирование */
 
-    /* Размер иконки, чтобы она хорошо заполняла квадрат */
-    font-size: 2.5em; 
-    font-weight: 900; /* Для жирного вида */
-    
-    /* Цвета */
+    /* Цвета и рамка для контейнера */
     background-color: var(--back-cross-color); /* Красный фон */
-    color: var(--info-box-color); /* Белый крестик (отсюда) */
     border: 3px solid var(--info-box-color); /* Белая рамка */
     padding: 0; 
     
@@ -163,6 +158,17 @@ body {
 .back-button:active {
     transform: translate(2px, 2px);
     box-shadow: none;
+}
+
+/* === НОВЫЙ СТИЛЬ: Стиль для самого PNG-изображения (back.png) === */
+.custom-back-icon {
+    /* Задаем размер изображения в процентах от родителя (красного квадрата) */
+    width: 70%; 
+    height: 70%;
+    
+    /* Гарантируем, что изображение правильно масштабируется */
+    object-fit: contain; 
+    display: block;
 }
 
 .digital-magazine-button, .forum-button, .helper-button {
