@@ -267,18 +267,17 @@ body {
     transform: scale(1.05);
 }
 
-/* === ИЗМЕНЕНО ДЛЯ PNG === */
+/* === ИЗМЕНЕНО ДЛЯ FONT AWESOME === */
 .folder-icon {
-    /* font-size: 3em; <-- Удалено (было для Font Awesome) */
-    /* color: var(--button-green-light); <-- Удалено (было для Font Awesome) */
+    /* НОВЫЕ СВОЙСТВА ДЛЯ FONT AWESOME: */
+    font-size: 3em; /* Устанавливаем размер иконки */
+    color: var(--info-box-color); /* Используем белый цвет */
     
-    /* НОВЫЕ СВОЙСТВА ДЛЯ PNG: */
-    width: 60px; /* Размер иконки */
-    height: auto; /* Сохранит пропорции изображения */
+    width: 60px; /* Сохраняем ширину для правильного отступа */
+    text-align: center; /* Центрирование иконки в рамках 60px */
     margin-right: 15px;
     
-    /* Для ретро-стиля (если изображения пиксельные) */
-    image-rendering: pixelated; 
+    /* Удалены свойства: image-rendering, filter, height: auto; */
 }
 
 .folder-text {
