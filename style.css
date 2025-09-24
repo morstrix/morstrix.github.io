@@ -29,7 +29,6 @@ body {
     align-items: center;
 }
 
-/* 1. Убираем сетку на главной странице */
 .no-grid {
     background-image: none;
 }
@@ -110,7 +109,7 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     border: none;
-    box-shadow: none; /* Убран 3D-эффект */
+    box-shadow: none;
     position: relative;
     cursor: pointer;
 }
@@ -133,7 +132,7 @@ body {
 }
 
 .back-button {
-    background-color: var(--back-button-color); /* Новый цвет для кнопки "BACK" */
+    background-color: var(--back-button-color);
     box-shadow: none;
 }
 
@@ -145,7 +144,7 @@ body {
 
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
-    box-shadow: none; /* Убран 3D-эффект */
+    box-shadow: none;
 }
 
 .digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
@@ -200,12 +199,11 @@ body {
     margin-top: 40px;
 }
 
-/* 3. Добавляем позицию relative для контейнера, чтобы линия позиционировалась относительно него */
 .folder-container.with-line {
     position: relative;
 }
 
-/* 4. Создаем синюю линию с помощью псевдоэлемента на контейнере */
+/* ФИНАЛЬНЫЕ КОРРЕКТНЫЕ СТИЛИ ДЛЯ ЛИНИИ */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
@@ -213,13 +211,13 @@ body {
     background-color: var(--line-color);
     
     /* Вертикальная часть линии */
-    top: 102px; 
-    left: 20px; 
+    top: 75px; /* Начало от центра иконки FORUM */
+    left: 17px; /* Сдвиг, чтобы попасть на левый край иконки FORUM */
     width: 2px;
-    height: 40px; 
+    height: 70px; /* Достаточно, чтобы перекрыть GAP и дойти до +HELPER */
     
-    /* Горизонтальная часть линии: рисуем ее с помощью box-shadow */
-    box-shadow: -30px 38px 0 0 var(--line-color);
+    /* Горизонтальная часть линии: с помощью box-shadow */
+    box-shadow: 33px 68px 0 0 var(--line-color); /* Сдвиг вправо на 33px и вниз на 68px */
 }
 
 
@@ -246,10 +244,9 @@ body {
     font-weight: 600;
 }
 
-/* 2. Уменьшаем папку +HELPER на 30% и сдвигаем ее вправо */
 .subfolder-link {
     margin-left: 50px;
-    transform: scale(0.7);
+    transform: scale(0.7); /* ВОЗВРАЩАЕМ SCALE(0.7) */
     transform-origin: left center;
     transition: transform 0.2s ease;
 }
