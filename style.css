@@ -205,21 +205,21 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V12 (ФИНАЛЬНЫЙ) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V13 (ФИНАЛЬНЫЙ РАСЧЕТ) === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Вертикальный сдвиг: Горизонтальная часть на уровне +HELPER */
-    top: 130px;      
+    /* Вертикальный сдвиг: Горизонтальная часть на уровне +HELPER (150px - середина) */
+    top: 150px;      
     /* Горизонтальный сдвиг: Вертикальная линия в 10px от края */
     left: 10px;     
     
     /* Размеры: 
-       height: 42px (от 130px до 88px, середины FORUM) */
+       height: 62px (от 150px до 88px, середины FORUM) */
     width: 40px;    
-    height: 42px;   
+    height: 62px;   
     
     /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
@@ -233,11 +233,12 @@ body {
     align-items: center;
     text-decoration: none;
     color: var(--main-text-color);
+    /* Устанавливаем transition, чтобы анимация была плавной */
     transition: all 0.2s ease;
 }
 
 .folder-link:hover {
-    /* Это правило будет работать для MAGAZINE и FORUM */
+    /* MAGAZINE и FORUM - стандартное увеличение */
     transform: scale(1.05);
 }
 
@@ -253,13 +254,16 @@ body {
 }
 
 .subfolder-link {
+    /* Отступ для +HELPER */
     margin-left: 50px;
+    /* Базовое уменьшение размера */
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
 }
 
-/* НОВОЕ ПРАВИЛО: Отключаем анимацию при наведении для +HELPER */
+/* НОВОЕ ПРАВИЛО: Мягкая анимация для +HELPER */
 .subfolder-link:hover {
-    transform: scale(0.7);
+    /* Сохраняем базовое уменьшение (0.7) и добавляем небольшое увеличение (1.03) */
+    transform: scale(0.7) scale(1.03); 
 }
