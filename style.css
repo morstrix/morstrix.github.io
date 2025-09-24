@@ -1,6 +1,6 @@
 :root {
     --bg-color: #000;
-    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый */
+    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый (теперь не используется) */
     --main-text-color: #3c9700;
     --button-green-light: #2c592c; /* Тускло-зеленый */
     --button-green-dark: #1f3d1f; /* Еще более тусклый */
@@ -11,17 +11,15 @@
     --helper-box-color: #004d00;
     --link-button-color: #2c592c; /* Тускло-зеленый */
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
-    --back-button-color: #555555;
+    --back-button-color: #555555; /* Теперь не используется */
+    --back-cross-color: #ff0000; /* NEW: Чистый красный для кнопки BACK */
     --line-color: #0000ff; /* Синий цвет для линии */
 }
 
 body {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--bg-color);
-    background-image: 
-        linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 30px 30px;
+    /* Сетка удалена */
     margin: 0;
     color: var(--main-text-color);
     display: flex;
@@ -29,10 +27,7 @@ body {
     align-items: center;
 }
 
-/* Удаление сетки на главной странице */
-.no-grid {
-    background-image: none;
-}
+/* Класс .no-grid удален, так как сетка убрана из body */
 
 .site-section {
     display: flex;
@@ -132,20 +127,50 @@ body {
     text-align: left;
 }
 
+/* NEW: Стиль для "красного крестика" вместо кнопки BACK */
 .back-button {
-    background-color: var(--back-button-color);
-    box-shadow: none;
+    /* Фиксированное позиционирование */
+    position: fixed; 
+    top: 20px;
+    right: 20px;
+    z-index: 1000; 
+    
+    /* Размеры и внешний вид */
+    width: 45px; 
+    height: 45px;
+    line-height: 45px; /* Центрирование крестика по вертикали */
+    text-align: center;
+    font-size: 2.2em; /* Размер крестика */
+    font-weight: 900;
+    
+    /* Цвета */
+    background-color: var(--back-cross-color); /* Красный фон */
+    color: var(--info-box-color); /* Белый крестик */
+    border: 3px solid var(--info-box-color); /* Белая рамка */
+    padding: 0; 
+    
+    /* Убираем любые hover/active эффекты, которые могут сломать позиционирование */
+    transition: none; 
 }
 
 .back-button:hover {
-    background-color: var(--back-button-color);
-    transform: translate(0);
+    /* Небольшой эффект, чтобы показать интерактивность */
+    opacity: 0.8;
+    transform: none; 
+    box-shadow: none;
+}
+
+.back-button:active {
+    /* Эффект нажатия */
+    transform: translate(2px, 2px);
     box-shadow: none;
 }
 
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
     box-shadow: none;
+    /* NEW: Отступ между рамкой и кнопкой */
+    margin-top: 30px;
 }
 
 .digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
@@ -188,7 +213,7 @@ body {
 }
 
 .magazine-button {
-    margin-top: 40px;
+    margin-top: 40px; /* Этот класс, вероятно, должен быть удален/заменен на .digital-magazine-button */
 }
 
 .folder-container {
