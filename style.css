@@ -138,9 +138,14 @@ body {
     /* Размеры и внешний вид */
     width: 45px; 
     height: 45px;
-    line-height: 45px; /* Центрирование крестика по вертикали */
-    text-align: center;
-    font-size: 2.2em; /* Размер крестика */
+    
+    /* === ИДЕАЛЬНОЕ ЦЕНТРИРОВАНИЕ FONT AWESOME === */
+    display: flex;
+    justify-content: center; /* Горизонтальное центрирование */
+    align-items: center;     /* Вертикальное центрирование */
+
+    /* Увеличим размер иконки, чтобы она хорошо заполняла квадрат */
+    font-size: 2.5em; /* Увеличен размер для Square Xmark */
     font-weight: 900;
     
     /* Цвета */
@@ -267,17 +272,14 @@ body {
     transform: scale(1.05);
 }
 
-/* === ИЗМЕНЕНО ДЛЯ FONT AWESOME === */
+/* === СТИЛЬ ДЛЯ FONT AWESOME ИКОНОК ПАПОК (БЕЛЫЕ) === */
 .folder-icon {
-    /* НОВЫЕ СВОЙСТВА ДЛЯ FONT AWESOME: */
-    font-size: 3em; /* Устанавливаем размер иконки */
-    color: var(--info-box-color); /* Используем белый цвет */
+    font-size: 3em; 
+    color: var(--info-box-color); /* Белый цвет */
     
-    width: 60px; /* Сохраняем ширину для правильного отступа */
-    text-align: center; /* Центрирование иконки в рамках 60px */
+    width: 60px; 
+    text-align: center; 
     margin-right: 15px;
-    
-    /* Удалены свойства: image-rendering, filter, height: auto; */
 }
 
 .folder-text {
