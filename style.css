@@ -205,25 +205,38 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V7 (L-shape, с зазорами) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V8 (Двойной псевдоэлемент) === */
+
+/* 1. ВЕРТИКАЛЬНАЯ ЛИНИЯ (::before) */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* 1. Начинаем вертикальную часть под FORUM, но с отступом */
-    top: 70px;      /* 70px вниз от начала контейнера, чтобы оставить зазор */
-    left: 20px;     /* 20px вправо, чтобы не касаться иконки FORUM */
+    top: 45px;
+    left: 10px; 
     
-    /* 2. Размеры для L-формы */
-    width: 30px;    /* Длина горизонтальной части линии */
-    height: 40px;   /* Высота вертикальной части линии */
+    width: 2px;
+    height: 60px;
     
-    /* Рисуем линию с помощью границ */
-    border-left: 2px solid var(--line-color);
-    border-bottom: 2px solid var(--line-color);
+    background-color: var(--line-color);
+    border: none;
+}
+
+/* 2. ГОРИЗОНТАЛЬНАЯ ЛИНИЯ (::after) */
+.folder-container.with-line::after {
+    content: '';
+    position: absolute;
+    display: block;
     
-    background: none; 
+    top: 105px; 
+    left: 10px;
+    
+    width: 40px;
+    height: 2px;
+    
+    background-color: var(--line-color);
+    border: none;
 }
 
 .folder-link {
@@ -250,11 +263,8 @@ body {
 }
 
 .subfolder-link {
-    /* 3. Отступ для +HELPER: 
-       Должен быть больше, чем (left + width) линии. 
-       Линия заканчивается на 20px + 30px = 50px. 
-       Ставим отступ 60px для зазора в 10px. */
-    margin-left: 60px; 
+    /* Отступ для +HELPER */
+    margin-left: 55px;
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
