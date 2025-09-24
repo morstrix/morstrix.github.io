@@ -205,20 +205,21 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V11 (FORUM -> HELPER) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V12 (ФИНАЛЬНЫЙ) === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Вертикальный сдвиг: Сдвигаем вниз на 65px (высота элемента + gap) от старой позиции (65px) */
+    /* Вертикальный сдвиг: Горизонтальная часть на уровне +HELPER */
     top: 130px;      
-    /* Горизонтальный сдвиг: Уводим вертикальную линию максимально влево */
+    /* Горизонтальный сдвиг: Вертикальная линия в 10px от края */
     left: 10px;     
     
-    /* Размеры: */
-    width: 40px;    /* Длина горизонтальной части */
-    height: 48px;   /* Высота вертикальной части */
+    /* Размеры: 
+       height: 42px (от 130px до 88px, середины FORUM) */
+    width: 40px;    
+    height: 42px;   
     
     /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
@@ -236,6 +237,7 @@ body {
 }
 
 .folder-link:hover {
+    /* Это правило будет работать для MAGAZINE и FORUM */
     transform: scale(1.05);
 }
 
@@ -251,11 +253,13 @@ body {
 }
 
 .subfolder-link {
-    /* Отступ для +HELPER. Должен быть больше, чем (left + width) линии. 
-       10px (left) + 40px (width) = 50px. Используем 50px (или 55px для зазора). 
-       Оставляем 50px, как в вашей версии, для минимального зазора. */
-    margin-left: 50px; 
+    margin-left: 50px;
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
+}
+
+/* НОВОЕ ПРАВИЛО: Отключаем анимацию при наведении для +HELPER */
+.subfolder-link:hover {
+    transform: scale(0.7);
 }
