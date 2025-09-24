@@ -212,7 +212,7 @@ body {
     display: block;
     background-color: var(--line-color);
     
-    /* Вертикальная часть линии: позиция между FORUM и HELPER */
+    /* Вертикальная часть линии */
     top: 102px; 
     left: 20px; 
     width: 2px;
@@ -229,7 +229,6 @@ body {
     text-decoration: none;
     color: var(--main-text-color);
     transition: all 0.2s ease;
-    /* Здесь position: relative не нужен, так как линия позиционируется относительно .folder-container.with-line */
 }
 
 .folder-link:hover {
