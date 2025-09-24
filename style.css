@@ -267,10 +267,18 @@ body {
     transform: scale(1.05);
 }
 
+/* === ИЗМЕНЕНО ДЛЯ PNG === */
 .folder-icon {
-    font-size: 3em;
+    /* font-size: 3em; <-- Удалено (было для Font Awesome) */
+    /* color: var(--button-green-light); <-- Удалено (было для Font Awesome) */
+    
+    /* НОВЫЕ СВОЙСТВА ДЛЯ PNG: */
+    width: 60px; /* Размер иконки */
+    height: auto; /* Сохранит пропорции изображения */
     margin-right: 15px;
-    color: var(--button-green-light);
+    
+    /* Для ретро-стиля (если изображения пиксельные) */
+    image-rendering: pixelated; 
 }
 
 .folder-text {
