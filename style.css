@@ -205,24 +205,29 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V5 (Окончательная Версия) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V6 (От Forum к Helper, без касания) === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Вертикальный сдвиг: Опускаем горизонтальную часть ниже иконки FORUM */
-    top: 65px;      
-    /* Горизонтальный сдвиг: Уводим вертикальную линию максимально влево */
-    left: 10px;     
+    /* Вертикальный сдвиг: Позиционируем горизонтальную часть линии ПОД FORUM */
+    top: 60px;      
+    /* Горизонтальный сдвиг: Начинаем линию ПРАВЕЕ иконки FORUM */
+    left: 70px;     
     
-    /* Размеры для чистого соединения с +HELPER */
-    width: 40px;    /* Длина горизонтальной части */
-    height: 48px;   /* Высота вертикальной части */
+    /* Размеры для чистого соединения: 
+       Width: Горизонтальный участок до начала вертикальной линии
+       Height: Вертикальный участок до папки +HELPER */
+    width: 2px;     /* Делаем горизонтальную линию очень короткой (точка начала) */
+    height: 44px;   /* Высота вертикальной части */
     
     /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
     border-bottom: 2px solid var(--line-color);
+    
+    /* Дополнительно: Смещение, чтобы начать линию от центра папки FORUM */
+    transform: translateX(-50%); 
     
     background: none; 
 }
@@ -251,7 +256,7 @@ body {
 }
 
 .subfolder-link {
-    margin-left: 50px;
+    margin-left: 70px; /* Увеличенный отступ для правильного соединения */
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
