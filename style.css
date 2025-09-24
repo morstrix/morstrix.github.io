@@ -205,25 +205,24 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ С ОТСТУПАМИ === */
+/* === ФИНАЛЬНЫЙ КОД ЛИНИИ С УВЕЛИЧЕННЫМИ ОТСТУПАМИ === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Сдвигаем линию, чтобы создать отступы */
-    top: 75px;      /* Сдвинули вниз от папки FORUM (+5px) */
-    left: 22px;     /* Сдвинули вправо от папки FORUM (+5px) */
+    /* Добавляем еще больший отступ */
+    top: 78px;      /* Сдвигаем вниз от папки FORUM */
+    left: 25px;     /* Сдвигаем вправо от папки FORUM */
     
-    /* Корректируем размеры, чтобы линия не вылезала за пределы */
-    width: 28px;    /* Уменьшили ширину */
-    height: 60px;   /* Уменьшили высоту */
+    /* Корректируем размеры */
+    width: 25px;
+    height: 55px;
     
     /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
     border-bottom: 2px solid var(--line-color);
 }
-
 
 .folder-link {
     display: flex;
