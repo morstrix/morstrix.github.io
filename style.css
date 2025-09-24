@@ -205,20 +205,20 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V10 (FORUM -> HELPER, с зазорами) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V11 (FORUM -> HELPER) === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Вертикальный сдвиг: Позиционируем горизонтальную часть линии ПОД +HELPER */
+    /* Вертикальный сдвиг: Сдвигаем вниз на 65px (высота элемента + gap) от старой позиции (65px) */
     top: 130px;      
     /* Горизонтальный сдвиг: Уводим вертикальную линию максимально влево */
     left: 10px;     
     
-    /* Размеры: Вертикальная часть идет от середины FORUM до +HELPER */
-    width: 40px;    /* Длина горизонтальной части (до subfolder-link) */
-    height: 65px;   /* Высота вертикальной части (от 65px до 130px) */
+    /* Размеры: */
+    width: 40px;    /* Длина горизонтальной части */
+    height: 48px;   /* Высота вертикальной части */
     
     /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
@@ -252,8 +252,9 @@ body {
 
 .subfolder-link {
     /* Отступ для +HELPER. Должен быть больше, чем (left + width) линии. 
-       10px (left) + 40px (width) = 50px. Используем 55px для зазора. */
-    margin-left: 55px; 
+       10px (left) + 40px (width) = 50px. Используем 50px (или 55px для зазора). 
+       Оставляем 50px, как в вашей версии, для минимального зазора. */
+    margin-left: 50px; 
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
