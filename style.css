@@ -28,6 +28,11 @@ body {
     align-items: center;
 }
 
+/* Новый класс для удаления сетки */
+.no-grid {
+    background-image: none;
+}
+
 .site-section {
     display: flex;
     flex-direction: column;
@@ -217,6 +222,10 @@ body {
     font-weight: 600;
 }
 
+/* Измененный класс для уменьшения размера */
 .subfolder-link {
-    margin-left: 50px; /* или другое значение, чтобы создать отступ */
+    margin-left: 50px;
+    transform: scale(0.7); /* Уменьшает размер на 30% */
+    transform-origin: left center;
+    transition: transform 0.2s ease;
 }
