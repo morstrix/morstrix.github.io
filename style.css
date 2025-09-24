@@ -19,15 +19,12 @@
 body {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--bg-color);
-    /* Сетка удалена */
     margin: 0;
     color: var(--main-text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-/* Класс .no-grid удален, так как сетка убрана из body */
 
 .site-section {
     display: flex;
@@ -127,7 +124,7 @@ body {
     text-align: left;
 }
 
-/* NEW: Стиль для "красного крестика" вместо кнопки BACK */
+/* === ИСПРАВЛЕНО: Стили для крестика (красный квадрат) === */
 .back-button {
     /* Фиксированное позиционирование */
     position: fixed; 
@@ -139,34 +136,31 @@ body {
     width: 45px; 
     height: 45px;
     
-    /* === ИДЕАЛЬНОЕ ЦЕНТРИРОВАНИЕ FONT AWESOME === */
+    /* НОВОЕ: ИДЕАЛЬНОЕ ЦЕНТРИРОВАНИЕ FONT AWESOME */
     display: flex;
     justify-content: center; /* Горизонтальное центрирование */
     align-items: center;     /* Вертикальное центрирование */
 
-    /* Увеличим размер иконки, чтобы она хорошо заполняла квадрат */
-    font-size: 2.5em; /* Увеличен размер для Square Xmark */
-    font-weight: 900;
+    /* Размер иконки, чтобы она хорошо заполняла квадрат */
+    font-size: 2.5em; 
+    font-weight: 900; /* Для жирного вида */
     
     /* Цвета */
     background-color: var(--back-cross-color); /* Красный фон */
-    color: var(--info-box-color); /* Белый крестик */
+    color: var(--info-box-color); /* Белый крестик (отсюда) */
     border: 3px solid var(--info-box-color); /* Белая рамка */
     padding: 0; 
     
-    /* Убираем любые hover/active эффекты, которые могут сломать позиционирование */
     transition: none; 
 }
 
 .back-button:hover {
-    /* Небольшой эффект, чтобы показать интерактивность */
     opacity: 0.8;
     transform: none; 
     box-shadow: none;
 }
 
 .back-button:active {
-    /* Эффект нажатия */
     transform: translate(2px, 2px);
     box-shadow: none;
 }
@@ -174,7 +168,6 @@ body {
 .digital-magazine-button, .forum-button, .helper-button {
     background-color: var(--link-button-color);
     box-shadow: none;
-    /* NEW: Отступ между рамкой и кнопкой */
     margin-top: 30px;
 }
 
@@ -218,7 +211,7 @@ body {
 }
 
 .magazine-button {
-    margin-top: 40px; /* Этот класс, вероятно, должен быть удален/заменен на .digital-magazine-button */
+    margin-top: 40px;
 }
 
 .folder-container {
@@ -230,28 +223,21 @@ body {
     margin-top: 40px;
 }
 
-/* База для абсолютного позиционирования линии */
 .folder-container.with-line {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V13 (ФИНАЛЬНЫЙ РАСЧЕТ) === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
     
-    /* Вертикальный сдвиг: Горизонтальная часть на уровне +HELPER (150px - середина) */
     top: 120px;      
-    /* Горизонтальный сдвиг: Вертикальная линия в 10px от края */
     left: 20px;     
     
-    /* Размеры: 
-       height: 62px (от 150px до 88px, середины FORUM) */
     width: 23px;    
     height: 45px;   
     
-    /* Рисуем линию с помощью границ */
     border-left: 2px solid var(--line-color);
     border-bottom: 2px solid var(--line-color);
     
@@ -263,12 +249,10 @@ body {
     align-items: center;
     text-decoration: none;
     color: var(--main-text-color);
-    /* Устанавливаем transition, чтобы анимация была плавной */
     transition: all 0.2s ease;
 }
 
 .folder-link:hover {
-    /* MAGAZINE и FORUM - стандартное увеличение */
     transform: scale(1.05);
 }
 
@@ -288,16 +272,12 @@ body {
 }
 
 .subfolder-link {
-    /* Отступ для +HELPER */
     margin-left: 50px;
-    /* Базовое уменьшение размера */
     transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
 }
 
-/* НОВОЕ ПРАВИЛО: Мягкая анимация для +HELPER */
 .subfolder-link:hover {
-    /* Сохраняем базовое уменьшение (0.7) и добавляем небольшое увеличение (1.03) */
     transform: scale(0.7) scale(1.03); 
 }
