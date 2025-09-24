@@ -205,7 +205,7 @@ body {
     position: relative;
 }
 
-/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V8 (Двойной псевдоэлемент) === */
+/* === ИСПРАВЛЕННЫЙ КОД ЛИНИИ V9 (Двойной псевдоэлемент, точный расчет) === */
 
 /* 1. ВЕРТИКАЛЬНАЯ ЛИНИЯ (::before) */
 .folder-container.with-line::before {
@@ -213,14 +213,21 @@ body {
     position: absolute;
     display: block;
     
-    top: 45px;
+    /* Сдвиг линии: 
+       - Начинаем под иконкой FORUM, на уровне "ствола" папки FORUM.
+       - FORUM: ~45px. Отступ: ~20px. 
+       - Начинаем в 75px (середина FORUM)
+       - Заканчиваем в 140px (середина +HELPER)
+       - Высота: 140 - 75 = 65px */
+    top: 75px; 
     left: 10px; 
     
-    width: 2px;
-    height: 60px;
+    /* Размеры: */
+    width: 2px; /* Ширина вертикальной линии */
+    height: 65px; /* Высота для соединения центра FORUM и центра +HELPER */
     
     background-color: var(--line-color);
-    border: none;
+    border: none; 
 }
 
 /* 2. ГОРИЗОНТАЛЬНАЯ ЛИНИЯ (::after) */
@@ -229,11 +236,15 @@ body {
     position: absolute;
     display: block;
     
-    top: 105px; 
+    /* Сдвиг линии:
+       - Должна быть на уровне центра иконки +HELPER (top: 75px + 65px = 140px).
+       - Должна начинаться там же, где вертикальная линия (left: 10px). */
+    top: 140px; 
     left: 10px;
     
-    width: 40px;
-    height: 2px;
+    /* Размеры: */
+    width: 40px; /* Длина горизонтальной линии */
+    height: 2px; /* Высота горизонтальной линии */
     
     background-color: var(--line-color);
     border: none;
@@ -263,7 +274,8 @@ body {
 }
 
 .subfolder-link {
-    /* Отступ для +HELPER */
+    /* Отступ для +HELPER: Должен быть больше, чем (left + width) горизонтальной линии. 
+       10px (left) + 40px (width) = 50px. Используем 55px для зазора. */
     margin-left: 55px;
     transform: scale(0.7);
     transform-origin: left center;
