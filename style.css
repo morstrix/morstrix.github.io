@@ -12,7 +12,7 @@
     --link-button-color: #2c592c; /* Тускло-зеленый */
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
     --back-button-color: #555555;
-    --line-color: #0000ff; /* ДОБАВЛЕНА: Синий цвет для линии */
+    --line-color: #0000ff; /* Синий цвет для линии */
 }
 
 body {
@@ -205,21 +205,23 @@ body {
     position: relative;
 }
 
-/* ФИНАЛЬНЫЕ КОРРЕКТНЫЕ СТИЛИ ДЛЯ ЛИНИИ */
+/* === НОВЫЙ КОД ДЛЯ УГЛОВОЙ ЛИНИИ === */
 .folder-container.with-line::before {
     content: '';
     position: absolute;
     display: block;
-    background-color: var(--line-color);
     
-    /* Вертикальная часть линии */
-    top: 75px; /* Начало от центра иконки FORUM */
-    left: 17px; /* Сдвиг, чтобы попасть на левый край иконки FORUM */
-    width: 2px;
-    height: 70px; /* Длина для соединения с +HELPER */
+    /* Позиционирование верхнего левого угла "Г" */
+    top: 70px;  /* Вертикальное начало (от верха контейнера) */
+    left: 17px; /* Горизонтальное начало (отступ слева) */
     
-    /* Горизонтальная часть линии: с помощью box-shadow */
-    box-shadow: 33px 68px 0 0 var(--line-color); /* Сдвиг вправо на 33px и вниз на 68px */
+    /* Размеры линии */
+    width: 35px;  /* Длина горизонтальной части */
+    height: 70px; /* Длина вертикальной части */
+    
+    /* Рисуем линию с помощью границ */
+    border-left: 2px solid var(--line-color);
+    border-bottom: 2px solid var(--line-color);
 }
 
 .folder-link {
@@ -247,7 +249,7 @@ body {
 
 .subfolder-link {
     margin-left: 50px;
-    transform: scale(0.7); /* ВОЗВРАЩАЕМ SCALE(0.7) */
+    transform: scale(0.7);
     transform-origin: left center;
     transition: transform 0.2s ease;
 }
