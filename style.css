@@ -12,7 +12,7 @@
     --link-button-color: #2c592c; /* Тускло-зеленый */
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
     --back-button-color: #555555;
-    --line-color: #0000ff; /* Синий цвет для линии */
+    --line-color: #0000ff; /* ДОБАВЛЕНА: Синий цвет для линии */
 }
 
 body {
@@ -29,6 +29,7 @@ body {
     align-items: center;
 }
 
+/* Удаление сетки на главной странице */
 .no-grid {
     background-image: none;
 }
@@ -199,6 +200,7 @@ body {
     margin-top: 40px;
 }
 
+/* База для абсолютного позиционирования линии */
 .folder-container.with-line {
     position: relative;
 }
@@ -214,12 +216,11 @@ body {
     top: 75px; /* Начало от центра иконки FORUM */
     left: 17px; /* Сдвиг, чтобы попасть на левый край иконки FORUM */
     width: 2px;
-    height: 70px; /* Достаточно, чтобы перекрыть GAP и дойти до +HELPER */
+    height: 70px; /* Длина для соединения с +HELPER */
     
     /* Горизонтальная часть линии: с помощью box-shadow */
     box-shadow: 33px 68px 0 0 var(--line-color); /* Сдвиг вправо на 33px и вниз на 68px */
 }
-
 
 .folder-link {
     display: flex;
