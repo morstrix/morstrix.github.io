@@ -12,7 +12,7 @@
     --link-button-color: #2c592c; /* Тускло-зеленый */
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
     --back-button-color: #555555; /* Теперь не используется */
-    --back-cross-color: #10a100c8; /* NEW: Чистый красный для кнопки BACK */
+    --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
     
     --social-icon-color: #398900; /* NEW: Темно-красный, вишневый к пепельному */
 }
@@ -328,17 +328,12 @@ body {
     width: 35px;
     height: 35px;
     
-    border: none; /* Удаляем рамку */
-    border-radius: 50%;
-    
     display: flex;
     justify-content: center;
     align-items: center;
 
     transition: all 0.3s ease; 
     
-    /* NEW: Внешняя тень (box-shadow) */
-    box-shadow: 0 0 10px 3px var(--social-icon-color); 
 }
 
 .social-footer a:hover {
