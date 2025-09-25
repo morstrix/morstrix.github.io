@@ -1,18 +1,20 @@
 :root {
     --bg-color: #000;
-    --main-text-color: #3c9700; /* Ретро-зеленый */
-    --button-green-dark: #1f3d1f; /* Тускло-зеленый */
-    --back-cross-color: #000000c8; 
+    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый (теперь не используется) */
+    --main-text-color: #3c9700;
+    --button-green-light: #2c592c; /* Тускло-зеленый */
+    --button-green-dark: #1f3d1f; /* Еще более тусклый */
     --info-box-color: #ffffff;
-    --helper-box-color: #004d00;
-    --link-button-color: #2c592c; 
+    --arrow-color: #ff00ff;
+    --arrow-shadow-color: #ff00ff;
     
-    /* Соцсети: Пепельно-графитовый */
-    --social-icon-color: #808080; 
-    --social-icon-hover-shadow: #c0c0c0; 
-
-    /* NEW: Цвет жирной зеленой рамки для GAME-LOGO.jpg */
-    --logo-frame-color: #3c9700; 
+    --helper-box-color: #004d00;
+    --link-button-color: #2c592c; /* Тускло-зеленый */
+    --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
+    --back-button-color: #555555; /* Теперь не используется */
+    --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
+    
+    --social-icon-color: #398900; /* NEW: Темно-красный, вишневый к пепельному */
 }
 
 html {
@@ -24,22 +26,9 @@ body {
     background-color: var(--bg-color);
     margin: 0;
     color: var(--main-text-color);
+    
     height: 100%;
-    overflow: hidden; 
-}
-
-/* --- ОСНОВНЫЕ КОНТЕЙНЕРЫ --- */
-
-.main-container {
-    display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
-    align-items: center; 
-    height: 100%;
-    padding: 20px 0; 
-    box-sizing: border-box;
-    /* Убран большой отступ, т.к. mtext больше не 'fixed' */
-    padding-top: 20px; 
+    overflow: hidden; /* Запрещаем прокрутку на главной странице */
 }
 
 .site-section {
@@ -54,45 +43,78 @@ body {
     text-align: center;
 }
 
-/* --- ГЛАВНЫЙ ЛОГОТИП (GAME-LOGO.jpg) --- */
-
-.main-title-container {
-    width: 100%;
+/* НОВЫЙ КЛАСС для главного контейнера */
+.main-container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 40px; /* Отступ после логотипа перед папками */
+    flex-direction: column; /* Элементы идут друг под другом */
+    justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
+    align-items: center; /* Центрируем все по горизонтали */
+    height: 100%;
+    padding: 20px 0; /* Небольшой отступ сверху и снизу */
+    box-sizing: border-box;
 }
 
-.main-logo-link {
-    display: block; 
-    text-decoration: none;
+.monster-button-container {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin-top: 0;
+}
+
+.monster-button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
     cursor: pointer;
-    
-    /* Стили жирной зеленой рамки */
-    padding: 10px;
-    border: 5px solid var(--logo-frame-color); 
-    box-shadow: 0 0 15px 5px rgba(60, 151, 0, 0.7); 
+    background: none;
     transition: transform 0.1s ease;
 }
 
-.main-logo-link:active {
-    /* Эффект нажатия */
-    transform: scale(0.98); 
-    box-shadow: 0 0 5px 2px var(--logo-frame-color); 
+.monster-button:hover {
+    transform: scale(0.95);
+}
+
+.monster-button:active {
+    transform: translate(8px, 8px);
+    box-shadow: none;
+}
+
+.monster-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.main-title-container {
+    /* Добавляем контейнер для центрирования логотипа, если необходимо */
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .main-logo-image {
-    /* Адаптивный размер */
-    width: 90%; 
-    max-width: 300px; 
-    height: auto; 
+    width: 90%; /* Адаптивная ширина */
+    max-width: 350px; /* Ограничение максимального размера */
+    height: auto; /* Сохранение пропорций */
     display: block;
-    image-rendering: pixelated; 
-    /* Старые маргины удалены, т.к. теперь это часть ссылки */
-    margin: 0; 
+    margin: 0 auto 40px; /* Центрирование и отступ снизу */
+    image-rendering: -moz-crisp-edges; /* Для Firefox */
+    image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
 }
 
-/* --- ОБЩИЕ СТИЛИ ДЛЯ КНОПОК И ССЫЛОК --- */
+.arrow-container {
+    display: none;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+}
 
 .retro-button {
     display: flex;
@@ -103,24 +125,24 @@ body {
     background-color: var(--button-green-dark);
     color: #000000;
     text-decoration: none;
+    transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
     border: none;
     box-shadow: none;
+    position: relative;
     cursor: pointer;
 }
 
-.retro-button:hover, .retro-button:active {
-    transform: none;
+.retro-button:hover {
+    transform: translate(0);
     box-shadow: none;
 }
 
-.digital-magazine-button, .forum-button, .helper-button {
-    background-color: var(--link-button-color);
-    margin-top: 30px;
+.retro-button:active {
+    transform: translate(0);
+    box-shadow: none;
 }
-
-/* --- КНОПКА НАЗАД (close.jpg) --- */
 
 .site-header {
     width: 100%;
@@ -129,38 +151,55 @@ body {
     text-align: left;
 }
 
+/* === СТИЛИ ДЛЯ КНОПКИ НАЗАД (back.png) === */
 .back-button {
     position: fixed; 
     top: 20px;
     right: 20px;
     z-index: 1000; 
-    width: 60px; /* Увеличена ширина */
-    height: 60px; /* Увеличена высота */
+    
+    width: 45px; 
+    height: 45px;
+    
     display: flex;
     justify-content: center; 
     align-items: center;     
-    background-color: var(--back-cross-color); 
-    border: 3px solid var(--info-box-color); 
+
+    background-color: var(--back-cross-color); /* Красный фон */
+    border: 3px solid var(--info-box-color); /* Белая рамка */
     padding: 0; 
+    
     transition: none; 
 }
 
 .back-button:hover {
     opacity: 0.8;
+    transform: none; 
+    box-shadow: none;
 }
 
 .back-button:active {
     transform: translate(2px, 2px);
+    box-shadow: none;
 }
 
 .custom-back-icon {
-    width: 90%; /* Иконка занимает больше места внутри кнопки */
-    height: 90%;
+    width: 70%; 
+    height: 70%;
     object-fit: contain; 
     display: block;
 }
 
-/* --- ИНФОРМАЦИОННЫЕ БЛОКИ --- */
+.digital-magazine-button, .forum-button, .helper-button {
+    background-color: var(--link-button-color);
+    box-shadow: none;
+    margin-top: 30px;
+}
+
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
+    transform: translate(0);
+    box-shadow: none;
+}
 
 .retro-info-box {
     display: flex;
@@ -177,7 +216,7 @@ body {
     border: 6px solid;
     box-sizing: border-box;
     white-space: pre-wrap;
-    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.4); 
+    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
 }
 
 .info-box-image {
@@ -185,6 +224,13 @@ body {
     height: auto;
     margin-bottom: 10px;
     image-rendering: pixelated;
+}
+
+.info-box-video {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border: none;
 }
 
 .magazine-info-box, .forum-info-box, .helper-info-box {
@@ -196,27 +242,37 @@ body {
     color: #fff;
 }
 
-/* --- ПАПКИ/ССЫЛКИ --- */
+.magazine-button {
+    margin-top: 40px;
+}
+
+/* --- СТИЛИ ДЛЯ ПАПОК/ССЫЛОК (FOLDER LINKS) --- */
 
 .folder-container {
     display: flex;
+    /* МЕНЯЕМ: Располагаем элементы в столбец и центрируем */
     flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    width: 100%; 
+    justify-content: center; /* Центрируем по вертикали */
+    align-items: center; /* Центрируем по горизонтали */
+    width: 100%; /* Занимаем всю доступную ширину */
     max-width: 600px; 
     margin-top: 40px;
     padding: 0 10px; 
-    gap: 20px; 
+    gap: 20px; /* Расстояние между ссылками */
 }
+
+/* УДАЛЕНЫ СТИЛИ .folder-container.with-line::before (синяя полоса) */
 
 .folder-link {
     display: flex;
     align-items: center;
+    /* Центрируем всю ссылку в контейнере */
     justify-content: center; 
+    
     text-decoration: none;
     color: var(--main-text-color);
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
+    
     width: 100%; 
 }
 
@@ -224,12 +280,15 @@ body {
     transform: scale(1.05);
 }
 
+/* NEW: Стиль для круглых иконок-изображений */
 .custom-icon {
-    width: 80px; 
+    width: 80px; /* Увеличенный размер иконки (шире текста) */
     height: 80px;
-    border-radius: 50%; 
+    border-radius: 50%; /* Делаем круглым */
     object-fit: cover; 
     image-rendering: pixelated; 
+    
+    /* Отступ справа, чтобы разделить иконку и текст */
     margin-right: 25px; 
 }
 
@@ -241,7 +300,19 @@ body {
     width: auto;
 }
 
-/* --- СОЦИАЛЬНЫЕ ИКОНКИ (ПЕПЕЛЬНО-ГРАФИТОВЫЕ) --- */
+/* Удаляем старые стили для подпапки, т.к. теперь все в столбик */
+.subfolder-link {
+    margin-left: 0;
+    transform: none;
+    transform-origin: initial;
+}
+
+.subfolder-link:hover {
+    transform: scale(1.05); 
+}
+
+
+/* --- СТИЛИ ДЛЯ СОЦИАЛЬНЫХ ИКОНОК (SOCIAL ICONS) --- */
 
 .social-footer {
     display: flex;
@@ -252,35 +323,31 @@ body {
 }
 
 .social-footer a {
-    color: var(--social-icon-color); /* Ash Graphite Grey */
+    color: var(--social-icon-color); 
     font-size: 1.2em; 
     width: 35px;
     height: 35px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+
     transition: all 0.3s ease; 
+    
 }
 
 .social-footer a:hover {
     color: #fff; 
     transform: scale(1.1); 
-    box-shadow: 0 0 15px 5px var(--social-icon-hover-shadow); 
+    /* NEW: Увеличенная тень при наведении */
+    box-shadow: 0 0 15px 5px #ff0000; 
 }
 
-/* --- АДАПТАЦИЯ --- */
+/* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
 
 @media (max-width: 768px) {
-    .main-container {
-        padding-top: 20px; /* Скорректирован для мобильных */
-    }
-
-    .main-logo-link {
-        padding: 5px;
-        border-width: 3px;
-    }
     .main-logo-image {
-        max-width: 200px; 
+        max-width: 280px; 
         margin-bottom: 0; 
     }
 
@@ -290,7 +357,7 @@ body {
     }
     
     .custom-icon {
-        width: 60px; 
+        width: 60px; /* Адаптируем размер иконок */
         height: 60px;
         margin-right: 15px;
     }
@@ -308,15 +375,5 @@ body {
         width: 30px;
         height: 30px;
         font-size: 1.0em;
-    }
-
-    .back-button {
-        width: 45px; 
-        height: 45px;
-    }
-
-    .custom-back-icon {
-        width: 70%;
-        height: 70%;
     }
 }
