@@ -336,3 +336,10 @@ body {
     border-color: #fff;
     transform: scale(1.1); /* Немного увеличиваем иконку */
 }
+
+.info-box-video {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border: none; /* Убираем стандартную рамку, если она появится */
+}
