@@ -13,7 +13,13 @@
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
     --back-button-color: #555555; /* Теперь не используется */
     --back-cross-color: #ff0000; /* NEW: Чистый красный для кнопки BACK */
-    --line-color: #0000ff; /* Синий цвет для линии */
+    --line-color: #0000ff; /* Синий цвет для линии (УДАЛЯЕМ) */
+    
+    --social-icon-color: #961313; /* NEW: Темно-красный, вишневый к пепельному */
+}
+
+html {
+    height: 100%;
 }
 
 body {
@@ -21,234 +27,41 @@ body {
     background-color: var(--bg-color);
     margin: 0;
     color: var(--main-text-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.site-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    min-height: 90vh;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.monster-button-container {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin-top: 0;
-}
-
-.monster-button {
-    width: 100%;
+    
     height: 100%;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    background: none;
-    transition: transform 0.1s ease;
+    overflow: hidden; 
 }
 
-.monster-button:hover {
-    transform: scale(0.95);
-}
+/* ... (остальные стили, которые вы не меняли) ... */
 
-.monster-button:active {
-    transform: translate(8px, 8px);
-    box-shadow: none;
-}
+/* УДАЛЕНЫ стили для .site-section */
 
-.monster-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.main-title-image {
-    width: clamp(100px, 40vw, 200px);
-    height: auto;
-    margin-top: 20px;
-}
-
-.arrow-container {
-    display: none;
-}
-
-.buttons-container {
+.main-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.retro-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 30px;
-    text-align: center;
-    background-color: var(--button-green-dark);
-    color: #000000;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-size: 1.1em;
-    font-weight: 600;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    cursor: pointer;
-}
-
-.retro-button:hover {
-    transform: translate(0);
-    box-shadow: none;
-}
-
-.retro-button:active {
-    transform: translate(0);
-    box-shadow: none;
-}
-
-.site-header {
-    width: 100%;
-    padding-top: 20px;
+    height: 100%;
+    padding: 20px 0;
     box-sizing: border-box;
-    text-align: left;
 }
 
-/* === ИЗМЕНЕННЫЕ СТИЛИ: Теперь для размещения back.png === */
-.back-button {
-    /* Фиксированное позиционирование */
-    position: fixed; 
-    top: 20px;
-    right: 20px;
-    z-index: 1000; 
-    
-    /* Размеры и внешний вид контейнера (красный квадрат) */
-    width: 45px; 
-    height: 45px;
-    
-    /* Центрирование изображения внутри ссылки */
-    display: flex;
-    justify-content: center; /* Горизонтальное центрирование */
-    align-items: center;     /* Вертикальное центрирование */
-
-    /* Цвета и рамка для контейнера */
-    background-color: var(--back-cross-color); /* Красный фон */
-    border: 3px solid var(--info-box-color); /* Белая рамка */
-    padding: 0; 
-    
-    transition: none; 
-}
-
-.back-button:hover {
-    opacity: 0.8;
-    transform: none; 
-    box-shadow: none;
-}
-
-.back-button:active {
-    transform: translate(2px, 2px);
-    box-shadow: none;
-}
-
-/* === НОВЫЙ СТИЛЬ: Стиль для самого PNG-изображения (back.png) === */
-.custom-back-icon {
-    /* Задаем размер изображения в процентах от родителя (красного квадрата) */
-    width: 70%; 
-    height: 70%;
-    
-    /* Гарантируем, что изображение правильно масштабируется */
-    object-fit: contain; 
-    display: block;
-}
-
-.digital-magazine-button, .forum-button, .helper-button {
-    background-color: var(--link-button-color);
-    box-shadow: none;
-    margin-top: 30px;
-}
-
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
-    transform: translate(0);
-    box-shadow: none;
-}
-
-.retro-info-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    min-height: 100px;
-    padding: 20px;
-    margin-top: 40px;
-    font-size: 0.8em;
-    line-height: 1.5;
-    background: rgba(0, 0, 0, 0.3);
-    border: 6px solid;
-    box-sizing: border-box;
-    white-space: pre-wrap;
-    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
-}
-
-.info-box-image {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    image-rendering: pixelated;
-}
-
-.magazine-info-box, .forum-info-box, .helper-info-box {
-    border-color: var(--helper-box-color);
-    box-shadow: none;
-}
-
-.magazine-info-box p, .forum-info-box p, .helper-info-box p {
-    color: #fff;
-}
-
-.magazine-button {
-    margin-top: 40px;
-}
+/* --- СТИЛИ ДЛЯ ПАПОК/ССЫЛОК (FOLDER LINKS) --- */
 
 .folder-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
+    /* МЕНЯЕМ: Располагаем элементы в строку и раскидываем по горизонтали */
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center;
+    /* Устанавливаем максимальную ширину для центрирования и отступов по бокам */
+    width: 90%; 
+    max-width: 600px; 
     margin-top: 40px;
+    padding: 0 10px; /* Небольшой отступ от краев контейнера */
 }
 
-.folder-container.with-line {
-    position: relative;
-}
-
-.folder-container.with-line::before {
-    content: '';
-    position: absolute;
-    display: block;
-    
-    top: 120px;      
-    left: 20px;     
-    
-    width: 23px;    
-    height: 45px;   
-    
-    border-left: 2px solid var(--line-color);
-    border-bottom: 2px solid var(--line-color);
-    
-    background: none; 
-}
+/* УДАЛЯЕМ ВСЕ СТИЛИ СВЯЗАННЫЕ С .with-line::before (синяя полоса) */
 
 .folder-link {
     display: flex;
@@ -262,11 +75,40 @@ body {
     transform: scale(1.05);
 }
 
-/* === СТИЛЬ ДЛЯ FONT AWESOME ИКОНОК ПАПОК (БЕЛЫЕ) === */
+/* Выравнивание для FORUM: текст справа от иконки */
+.folder-link.align-left {
+    flex-direction: row; 
+    text-align: left;
+}
+
+/* Выравнивание для HELPER: иконка справа от текста */
+.folder-link.align-right {
+    flex-direction: row-reverse; /* Меняем порядок: текст, затем иконка */
+    text-align: right;
+}
+
+/* NEW: Стиль для маленьких круглых иконок (mlogoforum.jpg и robot.jpg) */
+.custom-icon {
+    width: 50px; /* Размер иконки */
+    height: 50px;
+    border-radius: 50%; /* Делаем круглым */
+    object-fit: cover; /* Гарантируем, что изображение покроет круг */
+    image-rendering: pixelated; 
+    
+    /* Отступ: для .align-left (FORUM) - справа, для .align-right (HELPER) - слева */
+    margin: 0 15px 0 0; 
+}
+
+/* Отдельный отступ для иконки HELPER (т.к. она справа от текста) */
+.align-right .custom-icon {
+    margin: 0 0 0 15px; 
+}
+
+
+/* --- СТИЛИ ДЛЯ FONT AWESOME ИКОНОК ПАПОК (для MAGAZINE) --- */
 .folder-icon {
     font-size: 3em; 
-    color: var(--info-box-color); /* Белый цвет */
-    
+    color: var(--info-box-color); 
     width: 60px; 
     text-align: center; 
     margin-right: 15px;
@@ -275,138 +117,98 @@ body {
 .folder-text {
     font-size: 1.5em;
     font-weight: 600;
+    white-space: nowrap; /* Чтобы текст не переносился */
 }
 
+/* Удаляем ненужные стили для подпапки */
 .subfolder-link {
-    margin-left: 50px;
-    transform: scale(0.7);
-    transform-origin: left center;
-    transition: transform 0.2s ease;
+    margin-left: 0;
+    transform: none;
+    transform-origin: initial;
 }
 
 .subfolder-link:hover {
-    transform: scale(0.7) scale(1.03); 
-}
-
-/* --- НОВЫЕ СТИЛИ --- */
-
-.main-logo-image {
-    width: 90%; /* Адаптивная ширина */
-    max-width: 350px; /* Ограничение максимального размера */
-    height: auto; /* Сохранение пропорций */
-    display: block;
-    margin: 0 auto 40px; /* Центрирование и отступ снизу */
-    image-rendering: -moz-crisp-edges; /* Для Firefox */
-    image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
+    transform: scale(1.05); 
 }
 
 #forum-link {
-    margin-top: 20px; /* Дополнительный отступ сверху в 20px */
+    margin-top: 0; 
 }
+
+
+/* --- СТИЛИ ДЛЯ СОЦИАЛЬНЫХ ИКОНОК (SOCIAL ICONS) --- */
 
 .social-footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 25px; /* Расстояние между иконками */
-    padding: 40px 0; /* Отступы сверху и снизу */
+    gap: 15px; /* Уменьшаем расстояние между иконками */
+    padding: 40px 0;
 }
 
 .social-footer a {
-    color: var(--main-text-color); /* Основной зеленый цвет */
-    font-size: 24px; /* Размер иконки */
+    color: var(--social-icon-color); /* Темно-красный цвет */
+    font-size: 1.2em; /* Делаем меньше */
     text-decoration: none;
     
-    /* Делаем круглую рамку */
-    border: 2px solid var(--main-text-color);
-    border-radius: 50%; /* Это свойство создает круг */
-    width: 50px;
-    height: 50px;
-
-    /* Центрируем иконку внутри круга */
+    /* Уменьшаем размер контейнера */
+    width: 35px;
+    height: 35px;
+    
+    /* Удаляем простую рамку */
+    border: none;
+    border-radius: 50%;
+    
     display: flex;
     justify-content: center;
     align-items: center;
 
-    transition: all 0.3s ease; /* Плавный переход для ховера */
+    transition: all 0.3s ease; 
+    
+    /* NEW: Градиентная обводка (border-image) */
+    border: 3px solid transparent; /* Обязательная толщина для border-image */
+    border-image: linear-gradient(45deg, #FF0000, rgba(0, 0, 0, 0.4)) 1;
 }
 
 .social-footer a:hover {
     color: #fff; /* Белый цвет при наведении */
-    border-color: #fff;
-    transform: scale(1.1); /* Немного увеличиваем иконку */
+    transform: scale(1.1); 
+    /* NEW: Градиентная обводка при наведении */
+    border-image: linear-gradient(45deg, #FF0000, rgba(0, 0, 0, 0.4)) 1; 
 }
 
-.info-box-video {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border: none; /* Убираем стандартную рамку, если она появится */
-}
-
-/* Добавьте это в самое начало вашего style.css */
-html {
-    height: 100%;
-}
-
-/* Измените существующий body */
-body {
-    font-family: 'Press Start 2P', cursive;
-    background-color: var(--bg-color);
-    margin: 0;
-    color: var(--main-text-color);
-    
-    /* Изменения здесь */
-    height: 100%;
-    overflow: hidden; /* Запрещаем прокрутку на главной странице */
-}
-
-/* Удалите или закомментируйте старый класс .site-section, он больше не нужен на главной */
-/* .site-section {
-    ...
-}
-*/
-
-/* НОВЫЙ КЛАСС для главного контейнера */
-.main-container {
-    display: flex;
-    flex-direction: column; /* Элементы идут друг под другом */
-    justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
-    align-items: center; /* Центрируем все по горизонтали */
-    height: 100%;
-    padding: 20px 0; /* Небольшой отступ сверху и снизу */
-    box-sizing: border-box;
-}
-
-/* --- СТИЛИ ДЛЯ АДАПТАЦИИ (МЕДИА-ЗАПРОС) --- */
-/* Эти стили сработают только на экранах меньше 768px */
+/* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 280px; /* Уменьшаем логотип */
-        margin-bottom: 0; /* Убираем нижний отступ, flexbox сам расставит */
+        max-width: 280px;
+        margin-bottom: 0;
     }
 
     .folder-container {
-        gap: 15px; /* Уменьшаем расстояние между папками */
-        margin-top: 0;
-    }
-
-    .folder-icon {
-        font-size: 2.5em; /* Уменьшаем иконки папок */
+        gap: 15px; 
+        margin-top: 20px;
     }
 
     .folder-text {
-        font-size: 1.2em; /* Уменьшаем текст папок */
+        font-size: 1.0em; 
+    }
+    
+    .custom-icon {
+        width: 40px; /* Уменьшаем размер иконок на мобильных */
+        height: 40px;
     }
 
-    /* Корректируем положение синей линии-соединителя */
-    .folder-container.with-line::before {
-        top: 100px;
-        height: 35px;
-    }
+    /* Удаляем корректировку положения синей линии-соединителя, т.к. ее нет */
 
     .social-footer {
-        padding-top: 0; /* Убираем лишний отступ */
+        padding-top: 20px; 
+        gap: 10px;
+    }
+    
+    .social-footer a {
+        width: 30px;
+        height: 30px;
+        font-size: 1.0em;
     }
 }
