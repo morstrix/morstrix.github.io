@@ -1,20 +1,15 @@
 :root {
     --bg-color: #000;
-    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый (теперь не используется) */
-    --main-text-color: #3c9700;
-    --button-green-light: #2c592c; /* Тускло-зеленый */
-    --button-green-dark: #1f3d1f; /* Еще более тусклый */
+    --main-text-color: #3c9700; /* Ретро-зеленый */
+    --button-green-dark: #1f3d1f; /* Тускло-зеленый */
+    --back-cross-color: #000000c8; 
     --info-box-color: #ffffff;
-    --arrow-color: #ff00ff;
-    --arrow-shadow-color: #ff00ff;
-    
     --helper-box-color: #004d00;
-    --link-button-color: #2c592c; /* Тускло-зеленый */
-    --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
-    --back-button-color: #555555; /* Теперь не используется */
-    --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
+    --link-button-color: #2c592c; 
     
-    --social-icon-color: #398900; /* NEW: Темно-красный, вишневый к пепельному */
+    /* NEW: Кислотно-темно-мянный для иконок соцсетей */
+    --social-icon-color: #8A008A; /* Dark Neon Magenta/Purple */
+    --social-icon-hover-shadow: #ff00ff; /* Acid Magenta Shadow */
 }
 
 html {
@@ -26,9 +21,20 @@ body {
     background-color: var(--bg-color);
     margin: 0;
     color: var(--main-text-color);
-    
     height: 100%;
-    overflow: hidden; /* Запрещаем прокрутку на главной странице */
+    overflow: hidden; 
+}
+
+/* --- ОСНОВНЫЕ КОНТЕЙНЕРЫ --- */
+
+.main-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: center; 
+    height: 100%;
+    padding: 20px 0; 
+    box-sizing: border-box;
 }
 
 .site-section {
@@ -43,78 +49,25 @@ body {
     text-align: center;
 }
 
-/* НОВЫЙ КЛАСС для главного контейнера */
-.main-container {
-    display: flex;
-    flex-direction: column; /* Элементы идут друг под другом */
-    justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
-    align-items: center; /* Центрируем все по горизонтали */
-    height: 100%;
-    padding: 20px 0; /* Небольшой отступ сверху и снизу */
-    box-sizing: border-box;
-}
-
-.monster-button-container {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin-top: 0;
-}
-
-.monster-button {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    background: none;
-    transition: transform 0.1s ease;
-}
-
-.monster-button:hover {
-    transform: scale(0.95);
-}
-
-.monster-button:active {
-    transform: translate(8px, 8px);
-    box-shadow: none;
-}
-
-.monster-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
+/* --- ЛОГОТИП (РАЗМЕР УМЕНЬШЕН) --- */
 
 .main-title-container {
-    /* Добавляем контейнер для центрирования логотипа, если необходимо */
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
 .main-logo-image {
-    width: 90%; /* Адаптивная ширина */
-    max-width: 350px; /* Ограничение максимального размера */
-    height: auto; /* Сохранение пропорций */
+    /* NEW: Уменьшено на 30% от старого max-width: 350px -> 245px */
+    width: 90%; 
+    max-width: 245px; 
+    height: auto; 
     display: block;
-    margin: 0 auto 40px; /* Центрирование и отступ снизу */
-    image-rendering: -moz-crisp-edges; /* Для Firefox */
-    image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
+    margin: 0 auto 30px; /* Центрирование и уменьшенный отступ снизу */
+    image-rendering: pixelated; 
 }
 
-.arrow-container {
-    display: none;
-}
-
-.buttons-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-top: 40px;
-}
+/* --- ОБЩИЕ СТИЛИ ДЛЯ КНОПОК И ССЫЛОК --- */
 
 .retro-button {
     display: flex;
@@ -125,24 +78,24 @@ body {
     background-color: var(--button-green-dark);
     color: #000000;
     text-decoration: none;
-    transition: all 0.2s ease;
     font-size: 1.1em;
     font-weight: 600;
     border: none;
     box-shadow: none;
-    position: relative;
     cursor: pointer;
 }
 
-.retro-button:hover {
-    transform: translate(0);
+.retro-button:hover, .retro-button:active {
+    transform: none;
     box-shadow: none;
 }
 
-.retro-button:active {
-    transform: translate(0);
-    box-shadow: none;
+.digital-magazine-button, .forum-button, .helper-button {
+    background-color: var(--link-button-color);
+    margin-top: 30px;
 }
+
+/* --- КНОПКА НАЗАД (back.png -> close.jpg) --- */
 
 .site-header {
     width: 100%;
@@ -151,36 +104,28 @@ body {
     text-align: left;
 }
 
-/* === СТИЛИ ДЛЯ КНОПКИ НАЗАД (back.png) === */
 .back-button {
     position: fixed; 
     top: 20px;
     right: 20px;
     z-index: 1000; 
-    
     width: 45px; 
     height: 45px;
-    
     display: flex;
     justify-content: center; 
     align-items: center;     
-
-    background-color: var(--back-cross-color); /* Красный фон */
-    border: 3px solid var(--info-box-color); /* Белая рамка */
+    background-color: var(--back-cross-color); 
+    border: 3px solid var(--info-box-color); 
     padding: 0; 
-    
     transition: none; 
 }
 
 .back-button:hover {
     opacity: 0.8;
-    transform: none; 
-    box-shadow: none;
 }
 
 .back-button:active {
     transform: translate(2px, 2px);
-    box-shadow: none;
 }
 
 .custom-back-icon {
@@ -190,16 +135,7 @@ body {
     display: block;
 }
 
-.digital-magazine-button, .forum-button, .helper-button {
-    background-color: var(--link-button-color);
-    box-shadow: none;
-    margin-top: 30px;
-}
-
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
-    transform: translate(0);
-    box-shadow: none;
-}
+/* --- ИНФОРМАЦИОННЫЕ БЛОКИ --- */
 
 .retro-info-box {
     display: flex;
@@ -216,7 +152,8 @@ body {
     border: 6px solid;
     box-sizing: border-box;
     white-space: pre-wrap;
-    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
+    /* Упрощенная, более чистая тень */
+    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.4); 
 }
 
 .info-box-image {
@@ -224,13 +161,6 @@ body {
     height: auto;
     margin-bottom: 10px;
     image-rendering: pixelated;
-}
-
-.info-box-video {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border: none;
 }
 
 .magazine-info-box, .forum-info-box, .helper-info-box {
@@ -242,37 +172,27 @@ body {
     color: #fff;
 }
 
-.magazine-button {
-    margin-top: 40px;
-}
-
-/* --- СТИЛИ ДЛЯ ПАПОК/ССЫЛОК (FOLDER LINKS) --- */
+/* --- ПАПКИ/ССЫЛКИ --- */
 
 .folder-container {
     display: flex;
-    /* МЕНЯЕМ: Располагаем элементы в столбец и центрируем */
     flex-direction: column; 
-    justify-content: center; /* Центрируем по вертикали */
-    align-items: center; /* Центрируем по горизонтали */
-    width: 100%; /* Занимаем всю доступную ширину */
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
     max-width: 600px; 
     margin-top: 40px;
     padding: 0 10px; 
-    gap: 20px; /* Расстояние между ссылками */
+    gap: 20px; 
 }
-
-/* УДАЛЕНЫ СТИЛИ .folder-container.with-line::before (синяя полоса) */
 
 .folder-link {
     display: flex;
     align-items: center;
-    /* Центрируем всю ссылку в контейнере */
     justify-content: center; 
-    
     text-decoration: none;
     color: var(--main-text-color);
-    transition: all 0.2s ease;
-    
+    transition: transform 0.2s ease;
     width: 100%; 
 }
 
@@ -280,15 +200,12 @@ body {
     transform: scale(1.05);
 }
 
-/* NEW: Стиль для круглых иконок-изображений */
 .custom-icon {
-    width: 80px; /* Увеличенный размер иконки (шире текста) */
+    width: 80px; 
     height: 80px;
-    border-radius: 50%; /* Делаем круглым */
+    border-radius: 50%; 
     object-fit: cover; 
     image-rendering: pixelated; 
-    
-    /* Отступ справа, чтобы разделить иконку и текст */
     margin-right: 25px; 
 }
 
@@ -300,19 +217,7 @@ body {
     width: auto;
 }
 
-/* Удаляем старые стили для подпапки, т.к. теперь все в столбик */
-.subfolder-link {
-    margin-left: 0;
-    transform: none;
-    transform-origin: initial;
-}
-
-.subfolder-link:hover {
-    transform: scale(1.05); 
-}
-
-
-/* --- СТИЛИ ДЛЯ СОЦИАЛЬНЫХ ИКОНОК (SOCIAL ICONS) --- */
+/* --- СОЦИАЛЬНЫЕ ИКОНКИ (КИСЛОТНО-ТЕМНО-МЯННЫЕ) --- */
 
 .social-footer {
     display: flex;
@@ -323,31 +228,28 @@ body {
 }
 
 .social-footer a {
-    color: var(--social-icon-color); 
+    color: var(--social-icon-color); /* Dark Neon Magenta */
     font-size: 1.2em; 
     width: 35px;
     height: 35px;
-    
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: all 0.3s ease; 
-    
 }
 
 .social-footer a:hover {
     color: #fff; 
     transform: scale(1.1); 
-    /* NEW: Увеличенная тень при наведении */
-    box-shadow: 0 0 15px 5px #ff0000; 
+    /* NEW: Кислотная тень, градиент убран */
+    box-shadow: 0 0 15px 5px var(--social-icon-hover-shadow); 
 }
 
-/* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
+/* --- АДАПТАЦИЯ --- */
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 280px; 
+        max-width: 171.5px; /* 70% от 245px */
         margin-bottom: 0; 
     }
 
@@ -357,7 +259,7 @@ body {
     }
     
     .custom-icon {
-        width: 60px; /* Адаптируем размер иконок */
+        width: 60px; 
         height: 60px;
         margin-right: 15px;
     }
