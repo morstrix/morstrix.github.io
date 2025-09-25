@@ -14,7 +14,7 @@
     --back-button-color: #555555; /* Теперь не используется */
     --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
     
-    --social-icon-color: #398900; /* NEW: Темно-красный, вишневый к пепельному */
+    --social-icon-color: #333333; /* ИЗМЕНЕНИЕ: ГРАФИТОВЫЙ ЦВЕТ ДЛЯ ИКОНОК */
 }
 
 html {
@@ -95,7 +95,7 @@ body {
 
 .main-logo-image {
     width: 90%; /* Адаптивная ширина */
-    max-width: 350px; /* Ограничение максимального размера */
+    max-width: 350px; /* Ограничение максимального размера (скромнее) */
     height: auto; /* Сохранение пропорций */
     display: block;
     margin: 0 auto 40px; /* Центрирование и отступ снизу */
@@ -323,7 +323,7 @@ body {
 }
 
 .social-footer a {
-    color: var(--social-icon-color); 
+    color: var(--social-icon-color); /* ИСПОЛЬЗУЕМ ГРАФИТОВЫЙ ЦВЕТ */
     font-size: 1.2em; 
     width: 35px;
     height: 35px;
@@ -337,7 +337,7 @@ body {
 }
 
 .social-footer a:hover {
-    color: #fff; 
+    color: #fff; /* Белый цвет при наведении */
     transform: scale(1.1); 
     /* NEW: Увеличенная тень при наведении */
     box-shadow: 0 0 15px 5px #ff0000; 
@@ -347,7 +347,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 280px; 
+        max-width: 280px; /* Адаптивный размер логотипа */
         margin-bottom: 0; 
     }
 
