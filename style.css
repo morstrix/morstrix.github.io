@@ -7,9 +7,9 @@
     --helper-box-color: #004d00;
     --link-button-color: #2c592c; 
     
-    /* NEW: Кислотно-темно-мянный для иконок соцсетей */
-    --social-icon-color: #8A008A; /* Dark Neon Magenta/Purple */
-    --social-icon-hover-shadow: #ff00ff; /* Acid Magenta Shadow */
+    /* NEW: Пепельно-графитовый для иконок соцсетей */
+    --social-icon-color: #808080; /* Ash Graphite Grey */
+    --social-icon-hover-shadow: #c0c0c0; /* Lighter Grey Shadow */
 }
 
 html {
@@ -25,6 +25,21 @@ body {
     overflow: hidden; 
 }
 
+/* NEW: Стили для закрепленного mtext */
+.top-mtext {
+    position: fixed; /* Закрепляет элемент относительно окна просмотра */
+    top: 0;          /* Прижимает к верхнему краю */
+    left: 0;         /* Прижимает к левому краю */
+    width: 100%;     /* Растягивает на всю ширину */
+    height: auto;
+    object-fit: cover; /* Сохраняет пропорции, заполняя доступное пространство */
+    z-index: 1001;   /* Выше других элементов, чтобы быть поверх */
+    display: block;  /* Убирает лишние отступы, если это inline-элемент */
+    margin: 0;       /* Убирает внешние отступы */
+    padding: 0;      /* Убирает внутренние отступы */
+}
+
+
 /* --- ОСНОВНЫЕ КОНТЕЙНЕРЫ --- */
 
 .main-container {
@@ -35,6 +50,7 @@ body {
     height: 100%;
     padding: 20px 0; 
     box-sizing: border-box;
+    padding-top: 100px; /* NEW: Добавляем отступ сверху для закрепленного mtext */
 }
 
 .site-section {
@@ -55,15 +71,15 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 0; /* NEW: Убираем верхний отступ, так как mtext уже над ним */
 }
 
 .main-logo-image {
-    /* NEW: Уменьшено на 30% от старого max-width: 350px -> 245px */
     width: 90%; 
     max-width: 245px; 
     height: auto; 
     display: block;
-    margin: 0 auto 30px; /* Центрирование и уменьшенный отступ снизу */
+    margin: 0 auto 30px; 
     image-rendering: pixelated; 
 }
 
@@ -109,8 +125,8 @@ body {
     top: 20px;
     right: 20px;
     z-index: 1000; 
-    width: 45px; 
-    height: 45px;
+    width: 60px; /* NEW: Увеличена ширина */
+    height: 60px; /* NEW: Увеличена высота */
     display: flex;
     justify-content: center; 
     align-items: center;     
@@ -129,8 +145,8 @@ body {
 }
 
 .custom-back-icon {
-    width: 70%; 
-    height: 70%;
+    width: 90%; /* NEW: Иконка занимает больше места внутри кнопки */
+    height: 90%;
     object-fit: contain; 
     display: block;
 }
@@ -152,7 +168,6 @@ body {
     border: 6px solid;
     box-sizing: border-box;
     white-space: pre-wrap;
-    /* Упрощенная, более чистая тень */
     box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.4); 
 }
 
@@ -217,7 +232,7 @@ body {
     width: auto;
 }
 
-/* --- СОЦИАЛЬНЫЕ ИКОНКИ (КИСЛОТНО-ТЕМНО-МЯННЫЕ) --- */
+/* --- СОЦИАЛЬНЫЕ ИКОНКИ (ПЕПЕЛЬНО-ГРАФИТОВЫЕ) --- */
 
 .social-footer {
     display: flex;
@@ -228,7 +243,7 @@ body {
 }
 
 .social-footer a {
-    color: var(--social-icon-color); /* Dark Neon Magenta */
+    color: var(--social-icon-color); /* Ash Graphite Grey */
     font-size: 1.2em; 
     width: 35px;
     height: 35px;
@@ -241,15 +256,18 @@ body {
 .social-footer a:hover {
     color: #fff; 
     transform: scale(1.1); 
-    /* NEW: Кислотная тень, градиент убран */
     box-shadow: 0 0 15px 5px var(--social-icon-hover-shadow); 
 }
 
 /* --- АДАПТАЦИЯ --- */
 
 @media (max-width: 768px) {
+    .main-container {
+        padding-top: 70px; /* Меньший отступ сверху для мобильных */
+    }
+
     .main-logo-image {
-        max-width: 171.5px; /* 70% от 245px */
+        max-width: 171.5px; 
         margin-bottom: 0; 
     }
 
@@ -277,5 +295,15 @@ body {
         width: 30px;
         height: 30px;
         font-size: 1.0em;
+    }
+
+    .back-button {
+        width: 45px; 
+        height: 45px;
+    }
+
+    .custom-back-icon {
+        width: 70%;
+        height: 70%;
     }
 }
