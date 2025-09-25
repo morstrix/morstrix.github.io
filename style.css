@@ -16,7 +16,6 @@
     
     --social-icon-color:  #444444c8;
 }
-// ... остальной код style.css без изменений
 
 html {
     height: 100%;
@@ -96,7 +95,7 @@ body {
 
 .main-logo-image {
     width: 90%; /* Адаптивная ширина */
-    max-width: 350px; /* Ограничение максимального размера (скромнее) */
+    max-width: 240px; /* ИЗМЕНЕНО: Ограничение максимального размера (было 350px) */
     height: auto; /* Сохранение пропорций */
     display: block;
     margin: 0 auto 40px; /* Центрирование и отступ снизу */
@@ -348,7 +347,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 280px; /* Адаптивный размер логотипа */
+        max-width: 190px; /* ИЗМЕНЕНО: Адаптивный размер логотипа (было 280px) */
         margin-bottom: 0; 
     }
 
