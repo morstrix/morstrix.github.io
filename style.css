@@ -7,9 +7,12 @@
     --helper-box-color: #004d00;
     --link-button-color: #2c592c; 
     
-    /* NEW: Пепельно-графитовый для иконок соцсетей */
-    --social-icon-color: #808080; /* Ash Graphite Grey */
-    --social-icon-hover-shadow: #c0c0c0; /* Lighter Grey Shadow */
+    /* Соцсети: Пепельно-графитовый */
+    --social-icon-color: #808080; 
+    --social-icon-hover-shadow: #c0c0c0; 
+
+    /* NEW: Цвет жирной зеленой рамки для GAME-LOGO.jpg */
+    --logo-frame-color: #3c9700; 
 }
 
 html {
@@ -25,21 +28,6 @@ body {
     overflow: hidden; 
 }
 
-/* NEW: Стили для закрепленного mtext */
-.top-mtext {
-    position: fixed; /* Закрепляет элемент относительно окна просмотра */
-    top: 0;          /* Прижимает к верхнему краю */
-    left: 0;         /* Прижимает к левому краю */
-    width: 100%;     /* Растягивает на всю ширину */
-    height: auto;
-    object-fit: cover; /* Сохраняет пропорции, заполняя доступное пространство */
-    z-index: 1001;   /* Выше других элементов, чтобы быть поверх */
-    display: block;  /* Убирает лишние отступы, если это inline-элемент */
-    margin: 0;       /* Убирает внешние отступы */
-    padding: 0;      /* Убирает внутренние отступы */
-}
-
-
 /* --- ОСНОВНЫЕ КОНТЕЙНЕРЫ --- */
 
 .main-container {
@@ -50,7 +38,8 @@ body {
     height: 100%;
     padding: 20px 0; 
     box-sizing: border-box;
-    padding-top: 100px; /* NEW: Добавляем отступ сверху для закрепленного mtext */
+    /* Убран большой отступ, т.к. mtext больше не 'fixed' */
+    padding-top: 20px; 
 }
 
 .site-section {
@@ -65,22 +54,42 @@ body {
     text-align: center;
 }
 
-/* --- ЛОГОТИП (РАЗМЕР УМЕНЬШЕН) --- */
+/* --- ГЛАВНЫЙ ЛОГОТИП (GAME-LOGO.jpg) --- */
 
 .main-title-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 0; /* NEW: Убираем верхний отступ, так как mtext уже над ним */
+    margin-bottom: 40px; /* Отступ после логотипа перед папками */
+}
+
+.main-logo-link {
+    display: block; 
+    text-decoration: none;
+    cursor: pointer;
+    
+    /* Стили жирной зеленой рамки */
+    padding: 10px;
+    border: 5px solid var(--logo-frame-color); 
+    box-shadow: 0 0 15px 5px rgba(60, 151, 0, 0.7); 
+    transition: transform 0.1s ease;
+}
+
+.main-logo-link:active {
+    /* Эффект нажатия */
+    transform: scale(0.98); 
+    box-shadow: 0 0 5px 2px var(--logo-frame-color); 
 }
 
 .main-logo-image {
+    /* Адаптивный размер */
     width: 90%; 
-    max-width: 245px; 
+    max-width: 300px; 
     height: auto; 
     display: block;
-    margin: 0 auto 30px; 
     image-rendering: pixelated; 
+    /* Старые маргины удалены, т.к. теперь это часть ссылки */
+    margin: 0; 
 }
 
 /* --- ОБЩИЕ СТИЛИ ДЛЯ КНОПОК И ССЫЛОК --- */
@@ -111,7 +120,7 @@ body {
     margin-top: 30px;
 }
 
-/* --- КНОПКА НАЗАД (back.png -> close.jpg) --- */
+/* --- КНОПКА НАЗАД (close.jpg) --- */
 
 .site-header {
     width: 100%;
@@ -125,8 +134,8 @@ body {
     top: 20px;
     right: 20px;
     z-index: 1000; 
-    width: 60px; /* NEW: Увеличена ширина */
-    height: 60px; /* NEW: Увеличена высота */
+    width: 60px; /* Увеличена ширина */
+    height: 60px; /* Увеличена высота */
     display: flex;
     justify-content: center; 
     align-items: center;     
@@ -145,7 +154,7 @@ body {
 }
 
 .custom-back-icon {
-    width: 90%; /* NEW: Иконка занимает больше места внутри кнопки */
+    width: 90%; /* Иконка занимает больше места внутри кнопки */
     height: 90%;
     object-fit: contain; 
     display: block;
@@ -263,11 +272,15 @@ body {
 
 @media (max-width: 768px) {
     .main-container {
-        padding-top: 70px; /* Меньший отступ сверху для мобильных */
+        padding-top: 20px; /* Скорректирован для мобильных */
     }
 
+    .main-logo-link {
+        padding: 5px;
+        border-width: 3px;
+    }
     .main-logo-image {
-        max-width: 171.5px; 
+        max-width: 200px; 
         margin-bottom: 0; 
     }
 
