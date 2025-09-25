@@ -1,7 +1,7 @@
 :root {
     --bg-color: #000;
     --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый (теперь не используется) */
-    --main-text-color: #3c9700;
+    --main-text-color: #368600;
     --button-green-light: #2c592c; /* Тускло-зеленый */
     --button-green-dark: #1f3d1f; /* Еще более тусклый */
     --info-box-color: #ffffff;
@@ -14,7 +14,7 @@
     --back-button-color: #555555; /* Теперь не используется */
     --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
     
-    --social-icon-color: var(--main-text-color); /* ИЗМЕНЕНИЕ: Используем основной текст. цвет */
+    --social-icon-color:  #444444c8;
 }
 // ... остальной код style.css без изменений
 
