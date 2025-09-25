@@ -16,7 +16,6 @@
     
     --social-icon-color:  var(--main-text-color); 
 }
-/* Здесь был невалидный комментарий, он удален */
 
 html {
     height: 100%;
@@ -29,7 +28,7 @@ body {
     color: var(--main-text-color);
     
     height: 100%;
-    overflow: hidden; /* Запрещаем прокрутку на главной странице */
+    overflow: hidden; 
 }
 
 .site-section {
@@ -44,78 +43,31 @@ body {
     text-align: center;
 }
 
-/* НОВЫЙ КЛАСС для главного контейнера */
 .main-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: center; 
     height: 100%;
-    padding: 5px 0;
+    padding: 5px 0; 
     box-sizing: border-box;
-    position: relative; /* Добавлено для позиционирования .bottom-utility-icons */
-}
-
-.monster-button-container {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin-top: 0;
-}
-
-.monster-button {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    background: none;
-    transition: transform 0.1s ease;
-}
-
-.monster-button:hover {
-    transform: scale(0.95);
-}
-
-.monster-button:active {
-    transform: translate(8px, 8px);
-    box-shadow: none;
-}
-
-.monster-image {
-    width: 100%;
-    height: auto;
-    display: block;
+    position: relative;
 }
 
 .main-title-container {
-    /* Добавляем контейнер для центрирования логотипа, если необходимо */
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
 .main-logo-image {
-    width: 90%;
-    max-width: 240px;
-    height: auto;
+    width: 90%; 
+    max-width: 240px; 
+    height: auto; 
     display: block;
-    margin: 0 auto 10px;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: pixelated;
-}
-
-.arrow-container {
-    display: none;
-}
-
-.buttons-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-top: 40px;
+    margin: 0 auto 10px; 
+    image-rendering: -moz-crisp-edges; 
+    image-rendering: pixelated; 
 }
 
 .retro-button {
@@ -228,13 +180,6 @@ body {
     image-rendering: pixelated;
 }
 
-.info-box-video {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border: none;
-}
-
 .magazine-info-box, .forum-info-box, .helper-info-box {
     border-color: var(--helper-box-color);
     box-shadow: none;
@@ -245,13 +190,8 @@ body {
     box-shadow: none;
 }
 
-
 .magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p {
     color: #fff;
-}
-
-.magazine-button {
-    margin-top: 40px;
 }
 
 /* --- СТИЛИ ДЛЯ ПАПОК/ССЫЛОК (FOLDER LINKS) --- */
@@ -259,13 +199,13 @@ body {
 .folder-container {
     display: flex;
     flex-direction: column; 
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
     max-width: 600px; 
-    margin-top: 20px;
+    margin-top: 20px; 
     padding: 0 10px; 
-    gap: 20px;
+    gap: 20px; 
 }
 
 .folder-link {
@@ -302,22 +242,11 @@ body {
     width: auto;
 }
 
-.subfolder-link {
-    margin-left: 0;
-    transform: none;
-    transform-origin: initial;
-}
-
-.subfolder-link:hover {
-    transform: scale(1.05); 
-}
-
-
-/* --- НОВЫЕ СТИЛИ ДЛЯ ИКОНКИ TRASH В УГЛУ --- */
+/* --- НОВЫЕ СТИЛИ ДЛЯ ИКОНКИ TRASH В УГЛУ (FIXED) --- */
 
 .bottom-utility-icons {
-    position: absolute;
-    bottom: 40px; /* Над местом, где был футер */
+    position: fixed; /* FIX: Закрепляем, чтобы всегда было видно */
+    bottom: 40px; 
     right: 20px; 
     display: flex;
     flex-direction: column; 
@@ -388,7 +317,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 190px;
+        max-width: 190px; 
         margin-bottom: 0; 
     }
 
