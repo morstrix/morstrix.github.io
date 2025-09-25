@@ -16,6 +16,7 @@
     
     --social-icon-color:  #444444c8;
 }
+/* Здесь был невалидный комментарий, он удален */
 
 html {
     height: 100%;
@@ -50,7 +51,7 @@ body {
     justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
     align-items: center; /* Центрируем все по горизонтали */
     height: 100%;
-    padding: 20px 0; /* Небольшой отступ сверху и снизу */
+    padding: 5px 0; /* ОПТИМИЗИРОВАНО: Уменьшен вертикальный отступ */
     box-sizing: border-box;
 }
 
@@ -95,10 +96,10 @@ body {
 
 .main-logo-image {
     width: 90%; /* Адаптивная ширина */
-    max-width: 240px; /* ИЗМЕНЕНО: Ограничение максимального размера (было 350px) */
+    max-width: 240px; /* ИЗМЕНЕНО: Логотип меньше на 30% */
     height: auto; /* Сохранение пропорций */
     display: block;
-    margin: 0 auto 40px; /* Центрирование и отступ снизу */
+    margin: 0 auto 10px; /* ОПТИМИЗИРОВАНО: Уменьшен отступ снизу */
     image-rendering: -moz-crisp-edges; /* Для Firefox */
     image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
 }
@@ -256,7 +257,7 @@ body {
     align-items: center; /* Центрируем по горизонтали */
     width: 100%; /* Занимаем всю доступную ширину */
     max-width: 600px; 
-    margin-top: 40px;
+    margin-top: 20px; /* ОПТИМИЗИРОВАНО: Уменьшен отступ сверху */
     padding: 0 10px; 
     gap: 20px; /* Расстояние между ссылками */
 }
@@ -319,7 +320,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px; 
-    padding: 40px 0;
+    padding: 20px 0; /* ОПТИМИЗИРОВАНО: Уменьшен вертикальный padding */
 }
 
 .social-footer a {
@@ -347,7 +348,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 190px; /* ИЗМЕНЕНО: Адаптивный размер логотипа (было 280px) */
+        max-width: 190px; /* ИЗМЕНЕНО: Адаптивный размер логотипа */
         margin-bottom: 0; 
     }
 
