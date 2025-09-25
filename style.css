@@ -287,3 +287,52 @@ body {
 .subfolder-link:hover {
     transform: scale(0.7) scale(1.03); 
 }
+
+/* --- НОВЫЕ СТИЛИ --- */
+
+.main-logo-image {
+    width: 90%; /* Адаптивная ширина */
+    max-width: 350px; /* Ограничение максимального размера */
+    height: auto; /* Сохранение пропорций */
+    display: block;
+    margin: 0 auto 40px; /* Центрирование и отступ снизу */
+    image-rendering: -moz-crisp-edges; /* Для Firefox */
+    image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
+}
+
+#forum-link {
+    margin-top: 20px; /* Дополнительный отступ сверху в 20px */
+}
+
+.social-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px; /* Расстояние между иконками */
+    padding: 40px 0; /* Отступы сверху и снизу */
+}
+
+.social-footer a {
+    color: var(--main-text-color); /* Основной зеленый цвет */
+    font-size: 24px; /* Размер иконки */
+    text-decoration: none;
+    
+    /* Делаем круглую рамку */
+    border: 2px solid var(--main-text-color);
+    border-radius: 50%; /* Это свойство создает круг */
+    width: 50px;
+    height: 50px;
+
+    /* Центрируем иконку внутри круга */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.3s ease; /* Плавный переход для ховера */
+}
+
+.social-footer a:hover {
+    color: #fff; /* Белый цвет при наведении */
+    border-color: #fff;
+    transform: scale(1.1); /* Немного увеличиваем иконку */
+}
