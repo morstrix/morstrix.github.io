@@ -12,9 +12,9 @@
     --link-button-color: #2c592c; /* Тускло-зеленый */
     --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
     --back-button-color: #555555; /* Теперь не используется */
-    --back-cross-color: #ff0000; /* NEW: Чистый красный для кнопки BACK */
+    --back-cross-color: #10a100c8; /* NEW: Чистый красный для кнопки BACK */
     
-    --social-icon-color: #961313; /* NEW: Темно-красный, вишневый к пепельному */
+    --social-icon-color: #398900; /* NEW: Темно-красный, вишневый к пепельному */
 }
 
 html {
