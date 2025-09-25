@@ -343,3 +343,70 @@ body {
     margin-bottom: 10px;
     border: none; /* Убираем стандартную рамку, если она появится */
 }
+
+/* Добавьте это в самое начало вашего style.css */
+html {
+    height: 100%;
+}
+
+/* Измените существующий body */
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: var(--bg-color);
+    margin: 0;
+    color: var(--main-text-color);
+    
+    /* Изменения здесь */
+    height: 100%;
+    overflow: hidden; /* Запрещаем прокрутку на главной странице */
+}
+
+/* Удалите или закомментируйте старый класс .site-section, он больше не нужен на главной */
+/* .site-section {
+    ...
+}
+*/
+
+/* НОВЫЙ КЛАСС для главного контейнера */
+.main-container {
+    display: flex;
+    flex-direction: column; /* Элементы идут друг под другом */
+    justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
+    align-items: center; /* Центрируем все по горизонтали */
+    height: 100%;
+    padding: 20px 0; /* Небольшой отступ сверху и снизу */
+    box-sizing: border-box;
+}
+
+/* --- СТИЛИ ДЛЯ АДАПТАЦИИ (МЕДИА-ЗАПРОС) --- */
+/* Эти стили сработают только на экранах меньше 768px */
+
+@media (max-width: 768px) {
+    .main-logo-image {
+        max-width: 280px; /* Уменьшаем логотип */
+        margin-bottom: 0; /* Убираем нижний отступ, flexbox сам расставит */
+    }
+
+    .folder-container {
+        gap: 15px; /* Уменьшаем расстояние между папками */
+        margin-top: 0;
+    }
+
+    .folder-icon {
+        font-size: 2.5em; /* Уменьшаем иконки папок */
+    }
+
+    .folder-text {
+        font-size: 1.2em; /* Уменьшаем текст папок */
+    }
+
+    /* Корректируем положение синей линии-соединителя */
+    .folder-container.with-line::before {
+        top: 100px;
+        height: 35px;
+    }
+
+    .social-footer {
+        padding-top: 0; /* Убираем лишний отступ */
+    }
+}
