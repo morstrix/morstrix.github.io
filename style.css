@@ -1,20 +1,20 @@
 :root {
     --bg-color: #000;
-    --grid-color: rgba(104, 56, 56, 0.79); /* Оранжевый (теперь не используется) */
+    --grid-color: rgba(104, 56, 56, 0.79);
     --main-text-color: #368600;
-    --button-green-light: #2c592c; /* Тускло-зеленый */
-    --button-green-dark: #1f3d1f; /* Еще более тусклый */
+    --button-green-light: #2c592c;
+    --button-green-dark: #1f3d1f;
     --info-box-color: #ffffff;
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     
     --helper-box-color: #004d00;
-    --link-button-color: #2c592c; /* Тускло-зеленый */
-    --link-button-shadow-color: #1f3d1f; /* Еще более тусклый */
-    --back-button-color: #555555; /* Теперь не используется */
-    --back-cross-color: #000000c8; /* NEW: Чистый красный для кнопки BACK */
+    --link-button-color: #2c592c;
+    --link-button-shadow-color: #1f3d1f;
+    --back-button-color: #555555;
+    --back-cross-color: #000000c8; 
     
-    --social-icon-color:  #444444c8;
+    --social-icon-color:  var(--main-text-color); 
 }
 /* Здесь был невалидный комментарий, он удален */
 
@@ -47,12 +47,13 @@ body {
 /* НОВЫЙ КЛАСС для главного контейнера */
 .main-container {
     display: flex;
-    flex-direction: column; /* Элементы идут друг под другом */
-    justify-content: space-between; /* Главное свойство: раскидывает элементы по краям */
-    align-items: center; /* Центрируем все по горизонтали */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     height: 100%;
-    padding: 5px 0; /* ОПТИМИЗИРОВАНО: Уменьшен вертикальный отступ */
+    padding: 5px 0;
     box-sizing: border-box;
+    position: relative; /* Добавлено для позиционирования .bottom-utility-icons */
 }
 
 .monster-button-container {
@@ -95,13 +96,13 @@ body {
 }
 
 .main-logo-image {
-    width: 90%; /* Адаптивная ширина */
-    max-width: 240px; /* ИЗМЕНЕНО: Логотип меньше на 30% */
-    height: auto; /* Сохранение пропорций */
+    width: 90%;
+    max-width: 240px;
+    height: auto;
     display: block;
-    margin: 0 auto 10px; /* ОПТИМИЗИРОВАНО: Уменьшен отступ снизу */
-    image-rendering: -moz-crisp-edges; /* Для Firefox */
-    image-rendering: pixelated; /* Стандарт для современных браузеров, сохраняет пиксели */
+    margin: 0 auto 10px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
 }
 
 .arrow-container {
@@ -166,8 +167,8 @@ body {
     justify-content: center; 
     align-items: center;     
 
-    background-color: var(--back-cross-color); /* Красный фон */
-    border: 3px solid var(--info-box-color); /* Белая рамка */
+    background-color: var(--back-cross-color); 
+    border: 3px solid var(--info-box-color); 
     padding: 0; 
     
     transition: none; 
@@ -191,13 +192,13 @@ body {
     display: block;
 }
 
-.digital-magazine-button, .forum-button, .helper-button {
+.digital-magazine-button, .forum-button, .helper-button, .shop-button {
     background-color: var(--link-button-color);
     box-shadow: none;
     margin-top: 30px;
 }
 
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover {
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover {
     transform: translate(0);
     box-shadow: none;
 }
@@ -239,7 +240,13 @@ body {
     box-shadow: none;
 }
 
-.magazine-info-box p, .forum-info-box p, .helper-info-box p {
+.shop-info-box {
+    border-color: var(--main-text-color); /* Зеленая рамка для SHOP */
+    box-shadow: none;
+}
+
+
+.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p {
     color: #fff;
 }
 
@@ -251,23 +258,19 @@ body {
 
 .folder-container {
     display: flex;
-    /* МЕНЯЕМ: Располагаем элементы в столбец и центрируем */
     flex-direction: column; 
-    justify-content: center; /* Центрируем по вертикали */
-    align-items: center; /* Центрируем по горизонтали */
-    width: 100%; /* Занимаем всю доступную ширину */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     max-width: 600px; 
-    margin-top: 20px; /* ОПТИМИЗИРОВАНО: Уменьшен отступ сверху */
+    margin-top: 20px;
     padding: 0 10px; 
-    gap: 20px; /* Расстояние между ссылками */
+    gap: 20px;
 }
-
-/* УДАЛЕНЫ СТИЛИ .folder-container.with-line::before (синяя полоса) */
 
 .folder-link {
     display: flex;
     align-items: center;
-    /* Центрируем всю ссылку в контейнере */
     justify-content: center; 
     
     text-decoration: none;
@@ -281,15 +284,13 @@ body {
     transform: scale(1.05);
 }
 
-/* NEW: Стиль для круглых иконок-изображений */
 .custom-icon {
-    width: 80px; /* Увеличенный размер иконки (шире текста) */
+    width: 80px; 
     height: 80px;
-    border-radius: 50%; /* Делаем круглым */
+    border-radius: 50%;
     object-fit: cover; 
     image-rendering: pixelated; 
     
-    /* Отступ справа, чтобы разделить иконку и текст */
     margin-right: 25px; 
 }
 
@@ -301,7 +302,6 @@ body {
     width: auto;
 }
 
-/* Удаляем старые стили для подпапки, т.к. теперь все в столбик */
 .subfolder-link {
     margin-left: 0;
     transform: none;
@@ -313,42 +313,82 @@ body {
 }
 
 
-/* --- СТИЛИ ДЛЯ СОЦИАЛЬНЫХ ИКОНОК (SOCIAL ICONS) --- */
+/* --- НОВЫЕ СТИЛИ ДЛЯ ИКОНКИ TRASH В УГЛУ --- */
 
-.social-footer {
+.bottom-utility-icons {
+    position: absolute;
+    bottom: 40px; /* Над местом, где был футер */
+    right: 20px; 
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    z-index: 50; 
+}
+
+.utility-icon-link {
+    color: #FF0000; /* Красный цвет для корзины */
+    font-size: 1.8em; 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; 
-    padding: 20px 0; /* ОПТИМИЗИРОВАНО: Уменьшен вертикальный padding */
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
 }
 
-.social-footer a {
-    color: var(--social-icon-color); /* ИСПОЛЬЗУЕМ ГРАФИТОВЫЙ ЦВЕТ */
-    font-size: 1.2em; 
-    width: 35px;
-    height: 35px;
+.utility-icon-link:hover {
+    transform: scale(1.2);
+    color: #fff;
+    filter: drop-shadow(0 0 8px #FF0000);
+}
+
+/* --- СТИЛИ ДЛЯ TRASH.HTML (Социальные иконки) --- */
+
+.trash-section {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.social-icons-row {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    border: 3px solid var(--main-text-color); /* Общая зеленая рамка вокруг блока */
+}
+
+.trash-social-icon {
+    font-size: 3em;
+    color: var(--main-text-color); /* Зеленый цвет иконки */
     
+    /* Делаем квадратной */
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    transition: all 0.3s ease; 
     
+    border: 1px solid var(--main-text-color); /* Тонкая зеленая рамка для каждой иконки */
+    
+    transition: all 0.2s ease;
 }
 
-.social-footer a:hover {
-    color: #fff; /* Белый цвет при наведении */
-    transform: scale(1.1); 
-    /* NEW: Увеличенная тень при наведении */
-    box-shadow: 0 0 15px 5px #ff0000; 
+.trash-social-icon:hover {
+    transform: scale(1.1);
+    background-color: var(--main-text-color); /* Инвертируем цвета при наведении */
+    color: #000;
 }
+
 
 /* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 190px; /* ИЗМЕНЕНО: Адаптивный размер логотипа */
+        max-width: 190px;
         margin-bottom: 0; 
     }
 
@@ -358,7 +398,7 @@ body {
     }
     
     .custom-icon {
-        width: 60px; /* Адаптируем размер иконок */
+        width: 60px;
         height: 60px;
         margin-right: 15px;
     }
@@ -366,15 +406,27 @@ body {
     .folder-text {
         font-size: 1.2em; 
     }
-
-    .social-footer {
-        padding-top: 20px; 
-        gap: 10px;
+    
+    /* Адаптация иконки TRASH */
+    .bottom-utility-icons {
+        bottom: 10px; 
+        right: 10px; 
     }
     
-    .social-footer a {
-        width: 30px;
-        height: 30px;
-        font-size: 1.0em;
+    .utility-icon-link {
+        font-size: 1.5em;
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Адаптация иконок в TRASH.HTML */
+    .social-icons-row {
+        gap: 15px;
+        padding: 10px;
+    }
+    .trash-social-icon {
+        font-size: 2em;
+        width: 40px;
+        height: 40px;
     }
 }
