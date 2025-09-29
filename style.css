@@ -144,16 +144,20 @@ body {
     display: block;
 }
 
+/* ОБНОВЛЕННЫЙ БЛОК ДЛЯ КНОПОК НА СТРАНИЦАХ */
 .digital-magazine-button, .forum-button, .helper-button, .shop-button {
     background-color: var(--link-button-color);
     box-shadow: none;
-    margin-top: 30px;
+    /* Убрали margin-top: 30px; отсюда, чтобы управлять им через .magazine-link-container */
 }
 
 .digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover {
     transform: translate(0);
     box-shadow: none;
 }
+
+/* УБРАЛИ: .digital-magazine-button { color: #AAAAAA; } - теперь эта кнопка снова ЧЕРНАЯ, как и .retro-button */
+
 
 .retro-info-box {
     display: flex;
@@ -167,7 +171,7 @@ body {
     font-size: 0.8em;
     line-height: 1.5;
     background: rgba(0, 0, 0, 0.3);
-    /* ИЗМЕНЕНИЕ: Убираем основную рамку */
+    /* Убрана рамка */
     border: none; 
     box-sizing: border-box;
     white-space: pre-wrap;
@@ -182,14 +186,12 @@ body {
     image-rendering: pixelated;
 }
 
-/* ИЗМЕНЕНИЕ: Удаляем специфичные настройки цвета рамки, оставляем только box-shadow: none; для отключения внутреннего свечения от родителя */
+/* Удаляем специфичные настройки цвета рамки, оставляем только box-shadow: none; для отключения внутреннего свечения от родителя */
 .magazine-info-box, .forum-info-box, .helper-info-box {
-    /* border-color: var(--helper-box-color); <-- Удалено */
     box-shadow: none; 
 }
 
 .shop-info-box {
-    /* border-color: var(--main-text-color); /* Зеленая рамка для SHOP */ <-- Удалено */
     box-shadow: none;
 }
 
@@ -197,8 +199,24 @@ body {
     color: #fff;
 }
 
+/* --- СТИЛИ ДЛЯ КНОПКИ JOURNAL (НА СТРАНИЦЕ MAGAZINE.HTML) --- */
+.magazine-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px; /* Отступ от инфо-бокса */
+}
+
+.magazine-sub-caption {
+    color: #AAAAAA; /* Серый цвет */
+    font-size: 0.65em; /* Меньший шрифт */
+    margin-top: 5px; /* Небольшой отступ от кнопки */
+    text-align: center;
+}
+/* --- КОНЕЦ СТИЛЕЙ JOURNAL --- */
+
+
 /* --- СТИЛИ ДЛЯ ПАПОК/ССЫЛОК (FOLDER LINKS) --- */
-/* ... (остальной код, связанный с папками, без изменений) ... */
 
 .folder-container {
     display: flex;
@@ -246,11 +264,53 @@ body {
     width: auto;
 }
 
-/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ FORUM (ОБНОВЛЕНО) --- */
+/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ JOURNAL (НА INDEX.HTML) --- */
+
+.magazine-folder-link {
+    /* Отключаем анимацию масштабирования и обеспечиваем центрирование */
+    justify-content: center;
+    padding-left: 0;
+    transition: none;
+}
+
+.magazine-folder-link:hover {
+    transform: none; 
+}
+
+.magazine-button-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%; 
+    max-width: 180px; 
+    height: 45px; 
+    overflow: hidden;
+    margin-left: 30px; 
+    transition: none; 
+}
+
+.magazine-button-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; 
+    image-rendering: pixelated;
+}
+
+
+/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ FORUM (Без текста) --- */
 
 .forum-folder-link {
     justify-content: center;
     padding-left: 0;
+    transition: none;
+}
+
+.forum-folder-link:hover {
+    transform: none; 
 }
 
 .forum-button-wrapper {
@@ -263,6 +323,7 @@ body {
     height: 45px; 
     overflow: hidden;
     margin-left: 30px; 
+    transition: none; 
 }
 
 .forum-button-image {
@@ -273,18 +334,6 @@ body {
     height: 100%;
     object-fit: fill; 
     image-rendering: pixelated;
-}
-
-.forum-button-text {
-    position: relative; 
-    z-index: 1; 
-    color: var(--main-text-color); 
-    font-size: 1.2em; 
-    text-align: center;
-    width: auto;
-    margin: 0; 
-    
-    text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000; 
 }
 
 /* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
@@ -310,18 +359,21 @@ body {
         font-size: 1.3em; 
     }
 
+    /* Адаптация для кнопки JOURNAL (на INDEX.HTML) */
+    .magazine-button-wrapper {
+        max-width: 150px; 
+        height: 40px;
+        margin-left: 20px; 
+    }
+
     /* Адаптация для кнопки FORUM */
     .forum-button-wrapper {
         max-width: 150px; 
         height: 40px;
         margin-left: 20px; 
     }
-
-    .forum-button-text {
-        font-size: 1em; 
-    }
     
-    .forum-folder-link {
+    .forum-folder-link, .magazine-folder-link {
         justify-content: center;
         padding-left: 0; 
     }
