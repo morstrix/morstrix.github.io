@@ -152,11 +152,16 @@ body {
 
 /* Стили для нижнего серого текста на главной странице */
 .button-sub-caption {
-    color: #AAAAAA; /* Серый цвет для нижнего текста */
+    color: #AAAAAA; /* Серый цвет для нижнего текста по умолчанию */
     font-size: 0.6em; /* Меньший шрифт */
     margin-top: 5px;
     display: block;
     text-align: center;
+}
+
+/* НОВЫЙ СТИЛЬ: ТЕМНО-КРАСНЫЙ ДЛЯ 'how to play?' */
+#forum-link .button-sub-caption {
+    color: #C00000; /* Темно-красный цвет */
 }
 
 /* ------------------------------------------- */
@@ -208,8 +213,7 @@ body {
     border: none;
     box-sizing: border-box;
     white-space: pre-wrap;
-    /* ВОТ ГДЕ СВЕЧЕНИЕ! */
-    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4); 
+    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
 }
 
 .info-box-image {
@@ -219,10 +223,7 @@ body {
     image-rendering: pixelated;
 }
 
-/* ПРАВИЛО, КОТОРОЕ УБИРАЛО СВЕЧЕНИЕ С FORUM. 
-   Я УДАЛИЛ ИЗ НЕГО `.forum-info-box` 
-*/
-.magazine-info-box, .helper-info-box {
+.magazine-info-box, .forum-info-box, .helper-info-box {
     box-shadow: none;
 }
 
