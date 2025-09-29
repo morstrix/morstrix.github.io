@@ -152,11 +152,16 @@ body {
 
 /* Стили для нижнего серого текста на главной странице */
 .button-sub-caption {
-    color: #AAAAAA; /* Серый цвет для нижнего текста */
+    color: #AAAAAA; /* Серый цвет для нижнего текста по умолчанию */
     font-size: 0.6em; /* Меньший шрифт */
     margin-top: 5px;
     display: block;
     text-align: center;
+}
+
+/* НОВЫЙ СТИЛЬ: ТЕМНО-КРАСНЫЙ ДЛЯ 'how to play?' */
+#forum-link .button-sub-caption {
+    color: #C00000; /* Темно-красный цвет */
 }
 
 /* ------------------------------------------- */
