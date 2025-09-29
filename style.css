@@ -211,6 +211,7 @@ body {
 .folder-link {
     display: flex;
     align-items: center;
+    /* Все ссылки должны быть отцентрированы, как в оригинале */
     justify-content: center; 
     
     text-decoration: none;
@@ -242,12 +243,12 @@ body {
     width: auto;
 }
 
-/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ FORUM --- */
+/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ FORUM (ОБНОВЛЕНО) --- */
 
 .forum-folder-link {
-    /* Чтобы иконка и кнопка располагались слева, как папка */
-    justify-content: flex-start;
-    padding-left: calc((600px - 100%) / 2 + 10px); /* Примерное выравнивание по левому краю */
+    /* Обеспечиваем центрирование, убирая лишние отступы, которые были в прошлой версии */
+    justify-content: center;
+    padding-left: 0;
 }
 
 .forum-button-wrapper {
@@ -255,12 +256,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Уменьшаем размер обертки, чтобы кнопка была меньше других текстовых блоков.
-       Например, 70% от стандартной ширины текста */
+    /* Уменьшаем размер обертки (~70% от обычного текста) */
     width: 70%; 
-    max-width: 180px; /* Фиксированный максимальный размер для контроля */
-    height: 45px; /* Высота, соответствующая изображению but.jpg */
+    max-width: 180px; 
+    height: 45px; 
     overflow: hidden;
+    /* Добавляем небольшой отступ, чтобы кнопка не прилипала к иконке */
+    margin-left: 30px; 
 }
 
 .forum-button-image {
@@ -269,20 +271,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: fill; /* Растягиваем изображение на всю обертку */
+    object-fit: fill; 
     image-rendering: pixelated;
 }
 
 .forum-button-text {
     /* Переопределяем стили для текста внутри кнопки */
-    position: relative; /* Поверх изображения */
+    position: relative; 
     z-index: 1; 
-    color: #fff; /* Белый или другой цвет, который будет виден на фоне but.jpg */
-    font-size: 1.2em; /* Немного меньше, чем .folder-text */
+    /* ТЕКСТ ТЕПЕРЬ ЗЕЛЕНЫЙ */
+    color: var(--main-text-color); 
+    font-size: 1.2em; 
     text-align: center;
     width: auto;
-    /* Убираем отступ, который может мешать центрированию */
     margin: 0; 
+    
+    /* ЭФФЕКТ "НА КНОПКЕ" */
+    /* Добавляем тень, имитирующую вдавленный или напечатанный текст */
+    text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000; 
 }
 
 /* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
@@ -310,8 +316,9 @@ body {
 
     /* Адаптация для кнопки FORUM */
     .forum-button-wrapper {
-        max-width: 150px; /* Меньше на мобильных */
+        max-width: 150px; 
         height: 40px;
+        margin-left: 20px; /* Адаптируем отступ */
     }
 
     .forum-button-text {
@@ -319,7 +326,6 @@ body {
     }
     
     .forum-folder-link {
-        /* Убираем padding, чтобы выравнивание работало по центру родителя .folder-container */
         justify-content: center;
         padding-left: 0; 
     }
