@@ -12,7 +12,7 @@
     --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
     --back-cross-color: #000000c8;
-    --social-icon-color: var(--main-text-color);
+    --social-icon-color:  var(--main-text-color);
 }
 
 html {
@@ -136,14 +136,16 @@ body {
     display: block;
 }
 
+/* Стили для кнопок на внутренних страницах */
 .digital-magazine-button, .forum-button, .helper-button, .shop-button {
     background-color: var(--link-button-color);
     box-shadow: none;
 }
 
+/* ИСПРАВЛЕНИЕ: Стили для многострочной кнопки 'INSTAGRAM ЖУРНАЛ' */
 .digital-magazine-button {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Вертикальное расположение текста */
     height: auto;
     padding: 15px 30px;
 }
@@ -197,6 +199,7 @@ body {
     margin-top: 30px;
 }
 
+/* НОВЫЙ СТИЛЬ: для зеленого текста 'ЖУРНАЛ' внутри кнопки */
 .magazine-button-label {
     color: var(--main-text-color);
     font-size: 0.8em;
@@ -279,7 +282,7 @@ body {
     height: 100%;
     object-fit: fill;
     image-rendering: pixelated;
-    /* Grayscale filter and transition */
+    /* НОВЫЙ СТИЛЬ: Делаем кнопку серой */
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
     transition: filter 0.3s ease;
