@@ -242,6 +242,49 @@ body {
     width: auto;
 }
 
+/* --- СТИЛИ ДЛЯ СПЕЦИАЛЬНОЙ КНОПКИ FORUM --- */
+
+.forum-folder-link {
+    /* Чтобы иконка и кнопка располагались слева, как папка */
+    justify-content: flex-start;
+    padding-left: calc((600px - 100%) / 2 + 10px); /* Примерное выравнивание по левому краю */
+}
+
+.forum-button-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Уменьшаем размер обертки, чтобы кнопка была меньше других текстовых блоков.
+       Например, 70% от стандартной ширины текста */
+    width: 70%; 
+    max-width: 180px; /* Фиксированный максимальный размер для контроля */
+    height: 45px; /* Высота, соответствующая изображению but.jpg */
+    overflow: hidden;
+}
+
+.forum-button-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Растягиваем изображение на всю обертку */
+    image-rendering: pixelated;
+}
+
+.forum-button-text {
+    /* Переопределяем стили для текста внутри кнопки */
+    position: relative; /* Поверх изображения */
+    z-index: 1; 
+    color: #fff; /* Белый или другой цвет, который будет виден на фоне but.jpg */
+    font-size: 1.2em; /* Немного меньше, чем .folder-text */
+    text-align: center;
+    width: auto;
+    /* Убираем отступ, который может мешать центрированию */
+    margin: 0; 
+}
+
 /* --- СТИЛИ ДЛЯ АДАПТАЦИИ --- */
 
 @media (max-width: 768px) {
@@ -263,5 +306,21 @@ body {
 
     .folder-text {
         font-size: 1.3em; 
+    }
+
+    /* Адаптация для кнопки FORUM */
+    .forum-button-wrapper {
+        max-width: 150px; /* Меньше на мобильных */
+        height: 40px;
+    }
+
+    .forum-button-text {
+        font-size: 1em; 
+    }
+    
+    .forum-folder-link {
+        /* Убираем padding, чтобы выравнивание работало по центру родителя .folder-container */
+        justify-content: center;
+        padding-left: 0; 
     }
 }
