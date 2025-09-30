@@ -137,31 +137,40 @@ body {
 }
 
 /* ------------------------------------------- */
-/* НОВЫЕ СТИЛИ ДЛЯ КНОПОК НА ГЛАВНОЙ СТРАНИЦЕ */
+/* НОВЫЕ СТИЛИ ДЛЯ ТЕКСТОВЫХ ССЫЛОК НА ГЛАВНОЙ */
 /* ------------------------------------------- */
 
-.main-button-link {
+.main-nav-link {
+    color: var(--main-text-color); /* Используем твой основной цвет */
+    text-decoration: none;
+    font-size: 1.5em; /* Делаем текст крупнее */
+    font-weight: 600;
+    text-align: center;
+    margin: 10px 0; /* Вертикальный отступ между ссылками */
+    padding: 10px;
+    transition: all 0.2s ease;
     display: flex;
-    flex-direction: column; /* Размещаем текст вертикально */
-    height: auto;
-    padding: 15px 30px;
-    margin: 10px 0; /* Отступ между кнопками */
-    width: 100%;
-    max-width: 280px; 
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Стили для нижнего серого текста на главной странице */
+.main-nav-link:hover {
+    color: #ffffff; /* Белый цвет при наведении для контраста */
+    text-shadow: 0 0 5px var(--main-text-color); /* Легкое свечение */
+}
+
+/* Стили для нижнего серого текста */
 .button-sub-caption {
-    color: #AAAAAA; /* Серый цвет для нижнего текста по умолчанию */
-    font-size: 0.6em; /* Меньший шрифт */
-    margin-top: 5px;
+    color: #AAAAAA; 
+    font-size: 0.6em; /* Размер относительно родителя .main-nav-link */
+    margin-top: 8px;
     display: block;
     text-align: center;
 }
 
-/* НОВЫЙ СТИЛЬ: ТЕМНО-КРАСНЫЙ ДЛЯ 'how to play?' */
+/* Темно-красный для 'how to play?' */
 #forum-link .button-sub-caption {
-    color: #C00000; /* Темно-красный цвет */
+    color: #C00000;
 }
 
 /* ------------------------------------------- */
@@ -185,7 +194,7 @@ body {
     box-shadow: none;
 }
 
-/* Стили для зеленого текста 'ЖУРНАЛ' внутри кнопки на magazine.html */
+/* Стили для зеленого текста 'ЖУРНАЛ' */
 .magazine-button-label {
     color: var(--main-text-color);
     font-size: 0.8em;
@@ -195,7 +204,7 @@ body {
 }
 
 /* ------------------------------------------- */
-/* ИНФО-БОКСЫ И ПАПКИ (TRASH ZONE) */
+/* ИНФО-БОКСЫ И ПАПКИ */
 /* ------------------------------------------- */
 
 .retro-info-box {
@@ -251,39 +260,6 @@ body {
     max-width: 600px;
     margin-top: 20px;
     padding: 0 10px;
-    gap: 10px; /* Уменьшаем отступ, так как кнопки теперь сами задают отступы */
-}
-
-/* TRASH ZONE - ОСТАЕТСЯ В СТИЛЕ ПАПКИ */
-.folder-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--main-text-color);
-    transition: all 0.2s ease;
-    width: 100%;
-}
-
-.folder-link:hover {
-    transform: scale(1.05);
-}
-
-.custom-icon {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    image-rendering: pixelated;
-    margin-right: 30px;
-}
-
-.folder-text {
-    font-size: 1.7em;
-    font-weight: 600;
-    white-space: nowrap;
-    text-align: left;
-    width: auto;
 }
 
 /* ------------------------------------------- */
@@ -297,21 +273,10 @@ body {
     }
 
     .folder-container {
-        gap: 10px;
         margin-top: 25px;
     }
-
-    .custom-icon {
-        width: 70px;
-        height: 70px;
-        margin-right: 20px;
-    }
-
-    .folder-text {
-        font-size: 1.3em;
-    }
     
-    .main-button-link {
-        max-width: 240px; 
+    .main-nav-link {
+        font-size: 1.3em;
     }
 }
