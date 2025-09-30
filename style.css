@@ -156,7 +156,6 @@ body {
 
 .main-nav-link:hover {
     color: #ffffff; /* Белый цвет при наведении для контраста */
-    text-shadow: 0 0 5px var(--main-text-color); /* Легкое свечение */
 }
 
 /* Стили для нижнего серого текста */
