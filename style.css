@@ -49,7 +49,7 @@ body {
     padding: 5px 0;
     box-sizing: border-box;
     position: relative;
-    /* Добавляем flex-grow для правильного распределения пространства под логотипом и кнопками */
+    /* Важно для прижатия иконок к низу */
     flex-grow: 1; 
 }
 
@@ -61,7 +61,7 @@ body {
 
 .main-logo-image {
     width: 90%;
-    max-width: 240px; /* УМЕНЬШЕНО: для меньшего логотипа */
+    max-width: 240px; /* ИСПРАВЛЕНО: для меньшего логотипа */
     height: auto;
     display: block;
     margin: 0 auto 15px;
@@ -175,16 +175,16 @@ body {
 }
 
 /* ------------------------------------------- */
-/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ */
+/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ (ДОБАВЛЕНО И ИСПРАВЛЕНО) */
 /* ------------------------------------------- */
 
 .social-links {
     display: flex;
-    flex-wrap: wrap; /* Для переноса на новую строку на маленьких экранах */
+    flex-wrap: wrap; 
     justify-content: center;
     align-items: center;
     gap: 15px; /* Расстояние между иконками */
-    margin-top: 30px; /* Отступ от навигационных ссылок */
+    margin-top: 30px; 
     margin-bottom: 20px;
 }
 
@@ -306,7 +306,7 @@ body {
     .main-nav-link {
         font-size: 1.3em;
     }
-
+    
     .social-links {
         gap: 10px;
         margin-top: 20px;
