@@ -180,13 +180,26 @@ body {
     image-rendering: pixelated; 
 }
 
-/* НОВЫЙ СТИЛЬ: Группировка текста и подписи (SUPPORT/FORUM) */
+/* Группировка текста и подписи (SUPPORT/FORUM) */
 .text-group {
     display: flex;
-    flex-direction: column; /* Основной текст над подписью */
+    flex-direction: column; 
     justify-content: center;
-    align-items: center; /* Центрирование текста внутри группы */
+    align-items: center; 
     line-height: 1.1; 
+}
+
+/* Стиль для кнопок-иконок ($, download) */
+.action-button-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 1.2em; 
+    color: var(--arrow-color); 
+    text-shadow: 0 0 5px var(--arrow-shadow-color);
+}
+.main-nav-link:hover .action-button-text {
+    color: #ffffff; 
+    text-shadow: 0 0 10px #ffffff;
 }
 
 /* ------------------------------------------- */
@@ -201,17 +214,35 @@ body {
     max-width: 700px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 15px; /* Промежуток между главными рядами */
+    gap: 10px; /* ЗМЕНШЕНО общий промежуток между главными рядами */
 }
 
-/* РЯДОК 1, 2, 5: SHOP, HELPER, SKLAD (Одиночний елемент по центру) */
-.row-single-center {
+/* НОВЫЙ РЯД: SHOP и HELPER APP (Два элемента в ряд) */
+.row-two-items-main {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
+    max-width: 450px;
+    gap: 20px;
+    margin-bottom: 5px; 
 }
-.row-single-center .main-nav-link {
-    min-width: 150px; 
+
+.link-two-main {
+    flex-basis: 50%; 
+    max-width: 200px;
+    flex-direction: column; 
+}
+
+/* НОВЫЙ РЯД: FORUM и SUPPORT (Два элемента в ряд) */
+.row-two-items-forum {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 700px; 
+    gap: 10px;
+    /* ЗМЕНЬШЕНО РАССТОЯНИЕ */
+    margin-top: 10px; 
+    margin-bottom: 10px; 
 }
 
 /* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
@@ -221,16 +252,15 @@ body {
     align-items: center;
     padding: 0;
     min-width: unset;
-    gap: 10px; /* Отступ между иконкой и текстовой группой */
-    font-size: 1.2em; /* Увеличим шрифт, чтобы было заметнее */
+    gap: 10px; 
+    font-size: 1.2em; 
 }
 .support-link .nav-image, .forum-link .nav-image {
-    margin-bottom: 0; /* Убираем вертикальный отступ */
-    max-width: 80px; /* Увеличим иконку для заметности */
+    margin-bottom: 0; 
+    max-width: 80px; 
 }
 
-
-/* FORUM: Текст СЛЕВА, Иконка СПРАВА (Прижат к правой стороне) */
+/* FORUM: Текст СЛЕВА, Иконка СПРАВА */
 .forum-link .text-group {
     order: 0; 
     align-items: flex-end; 
@@ -239,8 +269,7 @@ body {
     order: 1; 
 }
 
-
-/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА (Прижат к левой стороне) */
+/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА */
 .support-link .nav-image {
     order: 0; 
 }
@@ -249,46 +278,54 @@ body {
     align-items: flex-start; 
 }
 
+/* Установка ширины для Forum и Support внутри нового контейнера */
+.row-two-items-forum .main-nav-link {
+    width: 45%; 
+    max-width: 300px;
+}
 
-/* Асимметричное выравнивание рядов FORUM и SUPPORT */
-.row-forum, .row-support {
-    display: flex;
+/* SKLAD - Ближе к Ada/EX */
+.row-single-center.row-sklad {
+    display: flex; /* Сохраняем flex-контейнер, хотя там 1 элемент */
+    justify-content: center;
     width: 100%;
-    max-width: 700px; 
-    box-sizing: border-box;
-    /* Увеличим вертикальный отступ, чтобы разделить их */
-    margin-top: 25px; 
-    margin-bottom: 25px; 
+    /* ЗМЕНЬШЕНО РАССТОЯНИЕ */
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+}
+.row-sklad .main-nav-link {
+    min-width: 150px; 
 }
 
-/* FORUM - прижат к правой стороне */
-.row-forum {
-    justify-content: flex-end; 
-    padding-right: 20px; 
-}
-
-/* SUPPORT - прижат к левой стороне */
-.row-support {
-    justify-content: flex-start;
-    padding-left: 20px; 
-}
-
-
-/* РЯДОК 4: EX | ADA (Два елементи в ряд) */
-.row-two-items {
+/* РЯДОК ADA | EX */
+.row-two-items.row-insta {
     display: flex;
     justify-content: space-between; 
     align-items: flex-end; 
     width: 100%;
     max-width: 450px; 
     gap: 20px;
-    margin-top: 10px; 
-    margin-bottom: 10px; 
+    /* ЗМЕНЬШЕНО РАССТОЯНИЕ */
+    margin-top: 5px; 
+    margin-bottom: 5px; 
 }
 .row-two-items .main-nav-link {
     min-width: 100px;
 }
 
+/* ------------------------------------------- */
+/* УСТАРЕВШИЕ КЛАССЫ (Удалены из index.html, но оставлены для безопасности) */
+/* ------------------------------------------- */
+
+/* Устаревшие асимметричные row-forum и row-support (если бы были одиночными) */
+.row-forum, .row-support {
+    display: none; /* Скрываем старые контейнеры */
+}
+
+/* Устаревший row-single-center (Shop/Magazine были в нем) */
+.row-single-center {
+    display: none;
+}
 
 /* ------------------------------------------- */
 /* СОЦИАЛЬНЫЕ ССЫЛКИ И КНОПКИ (Без изменений) */
@@ -389,7 +426,7 @@ body {
 }
 
 /* ------------------------------------------- */
-/* НИЖНЯ СЕКЦІЯ (ВТРАТИЛА АКТУАЛЬНІСТЬ) */
+/* НИЖНЯЯ СЕКЦИЯ */
 /* ------------------------------------------- */
 
 .bottom-images {
@@ -433,22 +470,29 @@ body {
 @media (max-width: 768px) {
     
     .folder-container {
-        gap: 15px;
+        gap: 10px; /* ЗМЕНЬШЕНО для мобілки */
     }
     
-    /* SHOP, HELPER, SKLAD - вертикально, більший шрифт */
-    .row-single-center .main-nav-link {
-        min-width: unset;
+    /* SHOP/HELPER и FORUM/SUPPORT: на мобільних ідуть в колонку */
+    .row-two-items-main, .row-two-items-forum {
+        flex-direction: column;
+        gap: 10px;
+        max-width: 300px;
         width: 100%;
-        font-size: 1.1em;
+    }
+    
+    /* Елементи у нових рядах - займають всю ширину */
+    .row-two-items-main .link-two-main,
+    .row-two-items-forum .main-nav-link {
+        width: 100%;
         max-width: 300px;
     }
-
-    /* EX | ADA (Виправлення: тепер завжди горизонтально) */
+    
+    /* EX | ADA (Залишаємо горизонтально) */
     .row-two-items {
-        display: flex; /* Забезпечуємо Flexbox */
-        flex-direction: row; /* Навіть на мобільних пристроях, тримаємо їх в ряду */
-        justify-content: space-between; /* Розподіляємо по краях */
+        display: flex; 
+        flex-direction: row; 
+        justify-content: space-between; 
         align-items: center; 
         max-width: 300px;
         gap: 15px;
@@ -458,8 +502,17 @@ body {
     .row-two-items .main-nav-link {
         font-size: 1.1em;
         min-width: unset;
-        width: 45%; /* Даємо їм половину ширини контейнера */
+        width: 45%; 
     }
+
+    .row-single-center.row-sklad {
+        display: flex;
+        max-width: 300px;
+    }
+    .row-sklad .main-nav-link {
+        width: 100%;
+    }
+
 
     .nav-image {
         max-width: 60px;
@@ -468,5 +521,10 @@ body {
     .main-logo-image {
         max-width: 200px;
         margin-bottom: 5px;
+    }
+    
+    /* Убираем устаревшие классы, чтобы не мешали */
+    .row-single-center {
+        display: none !important; 
     }
 }
