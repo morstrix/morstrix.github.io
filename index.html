@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=1.9">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=2.0">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     
@@ -48,41 +48,39 @@
                     <span class="button-sub-caption">APP</span>
                 </a>
                 
-                <a href="helper.html" class="main-nav-link normal-content" id="helper-link">
-                    <img src="support.jpg" alt="Support Bot" class="nav-image" loading="lazy">
-                    SUPPORT
-                    <span class="button-sub-caption">BOT</span>
-                </a>
-                
-                <a href="forum.html" class="main-nav-link reverse-content" id="forum-link">
+                <a href="forum.html" class="main-nav-link" id="forum-link">
                     <img src="forum.jpg" alt="Forum Bot" class="nav-image" loading="lazy">
                     F O R U M
                     <span class="button-sub-caption">BOT</span>
                 </a>
                 
-            </div>
-    
-            <div class="bottom-group-container">
-                <div class="bottom-images">
-                    <div class="image-link">
-                        <img src="ex.jpg" alt="Ex Profile" class="bottom-image" loading="lazy">
-                        <a href="https://www.instagram.com/x.mrsv" target="_blank" class="retro-button image-button">ex</a>
-                    </div>
-                    <div class="image-link">
-                        <img src="moderator.jpg" alt="Moderator Room" class="bottom-image" loading="lazy">
-                        <a href="moderator.html" class="retro-button image-button">moderator</a>
-                    </div>
-                    <div class="image-link">
-                        <img src="a.jpg" alt="Ada Profile" class="bottom-image" loading="lazy">
-                        <a href="https://www.instagram.com/a.mrsva" target="_blank" class="retro-button image-button">ada</a>
-                    </div>
-                </div>
+                <a href="helper.html" class="main-nav-link" id="helper-link">
+                    <img src="support.jpg" alt="Support Bot" class="nav-image" loading="lazy">
+                    SUPPORT
+                    <span class="button-sub-caption">BOT</span>
+                </a>
                 
-                <a href="sklad.html" class="main-nav-link" id="sklad-link" style="margin-top: 40px; max-width: 300px;">
+                <a href="sklad.html" class="main-nav-link" id="sklad-link">
                     <img src="sklad.jpg" alt="Sklad Media" class="nav-image" loading="lazy">
                     SKLAD
                     <span class="button-sub-caption">MEDIA</span>
                 </a>
+                
+            </div>
+    
+            <div class="bottom-images">
+                <div class="image-link">
+                    <img src="ex.jpg" alt="Ex Profile" class="bottom-image" loading="lazy">
+                    <a href="https://www.instagram.com/x.mrsv" target="_blank" class="retro-button image-button">ex</a>
+                </div>
+                <div class="image-link">
+                    <img src="moderator.jpg" alt="Moderator Room" class="bottom-image" loading="lazy">
+                    <a href="moderator.html" class="retro-button image-button">moderator</a>
+                </div>
+                <div class="image-link">
+                    <img src="a.jpg" alt="Ada Profile" class="bottom-image" loading="lazy">
+                    <a href="https://www.instagram.com/a.mrsva" target="_blank" class="retro-button image-button">ada</a>
+                </div>
             </div>
             
         </main>
@@ -90,14 +88,26 @@
     
     <script>
         window.addEventListener('load', function() {
-            setTimeout(function() {
-                var splash = document.getElementById('splash-screen');
-                splash.style.opacity = '0';  // Плавне зникнення
+            var splash = document.getElementById('splash-screen');
+            var mainContent = document.getElementById('main-content');
+            
+            // 1. Перевіряємо, чи інтро вже було показано в цій сесії (sessionStorage)
+            if (sessionStorage.getItem('introPlayed')) {
+                // Якщо було, приховуємо інтро негайно і показуємо контент
+                splash.style.display = 'none';
+                mainContent.style.display = 'block';
+            } else {
+                // Якщо не було, показуємо інтро з затримкою
                 setTimeout(function() {
-                    splash.style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';  // Показуємо контент
-                }, 500);  // Час для transition (0.5 сек)
-            }, 2000);  // 2 секунди затримки
+                    splash.style.opacity = '0';  // Плавне зникнення
+                    setTimeout(function() {
+                        splash.style.display = 'none';
+                        mainContent.style.display = 'block';  // Показуємо контент
+                        // 2. Встановлюємо прапорець, що інтро було показано
+                        sessionStorage.setItem('introPlayed', 'true');
+                    }, 500);  // Час для transition (0.5 сек)
+                }, 2000);  // 2 секунди затримки
+            }
         });
     </script>
 </body>
