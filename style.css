@@ -137,52 +137,7 @@ body {
     display: block;
 }
 
-/* ------------------------------------------- */
-/* НОВЫЕ СТИЛИ ДЛЯ ТЕКСТОВЫХ ССЫЛОК НА ГЛАВНОЙ */
-/* ------------------------------------------- */
-
-.main-nav-link {
-    color: var(--main-text-color);
-    text-decoration: none;
-    font-size: 1.5em;
-    font-weight: 600;
-    text-align: center;
-    margin: 10px 0;
-    padding: 10px;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.main-nav-link:hover {
-    color: #ffffff;
-}
-
-/* Стили для нижнего серого текста */
-.button-sub-caption {
-    color: #AAAAAA; 
-    font-size: 0.6em;
-    margin-top: 8px;
-    display: block;
-    text-align: center;
-}
-
-/* Темно-красный для F O R U M (BOT) */
-#forum-link .button-sub-caption {
-    color: #C00000;
-}
-
-/* ------------------------------------------- */
-/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ */
-/* ------------------------------------------- */
-
-.social-links {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
+/* ---------------------------------...(truncated 983 characters)...5px;
     margin-top: 30px; 
     margin-bottom: 20px;
 }
@@ -308,4 +263,46 @@ body {
     .link-container {
         gap: 15px;
     }
+}
+
+/* Нові стилі для зображень в меню */
+.nav-image {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    image-rendering: pixelated; /* Для ретро-ефекту */
+}
+
+/* Нові стилі для нижньої секції з 3 зображеннями */
+.bottom-images {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+    flex-wrap: wrap; /* Для мобілок */
+}
+
+.image-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.bottom-image {
+    max-width: 150px; /* Трохи більші, ніж nav-image, для акценту */
+    height: auto;
+    margin-bottom: 10px;
+    image-rendering: pixelated;
+}
+
+.image-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: var(--link-button-color);
+    color: #000;
 }
