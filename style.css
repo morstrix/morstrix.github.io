@@ -151,7 +151,7 @@ body {
     color: #ffffff; 
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 0.8em; 
+    font-size: 0.8em; /* Стандартный размер текста ссылки */
     font-weight: 600;
     border: none; 
     box-shadow: none; 
@@ -168,20 +168,20 @@ body {
 
 .button-sub-caption {
     display: block;
-    font-size: 0.45em; 
-    margin-top: 2px;
+    font-size: 0.5em; /* Уменьшаем размер подписи */
+    margin-top: 0; /* Убираем верхний отступ */
     color: var(--main-text-color); 
 }
 
 .nav-image {
     max-width: 50px; 
     height: auto;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Стандартный отступ под иконкой для вертикальных ссылок */
     image-rendering: pixelated; 
 }
 
 /* ------------------------------------------- */
-/* НОВИЙ МАКЕТ FOLDER CONTAINER (Flexbox) */
+/* МАКЕТ FOLDER CONTAINER (Flexbox) */
 /* ------------------------------------------- */
 
 .folder-container {
@@ -192,10 +192,10 @@ body {
     max-width: 700px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 15px; /* Проміжок між головними рядами */
+    gap: 15px; /* Промежуток между главными рядами */
 }
 
-/* РЯДОК 1, 2, 5: SHOP, HELPER, SKLAD (Одиночний елемент по центру) */
+/* РЯДОК 1, 2, 5: SHOP, HELPER, SKLAD (Одиночный элемент по центру) */
 .row-single-center {
     display: flex;
     justify-content: center;
@@ -205,7 +205,7 @@ body {
     min-width: 150px; 
 }
 
-/* РЯДОК 3: SUPPORT | FORUM (Великий горизонтальний блок по центру) */
+/* РЯДОК 3: SUPPORT | FORUM (Великий горизонтальний блок по центру - ДИАЛОГ) */
 .row-support-forum {
     display: flex;
     justify-content: space-between;
@@ -226,10 +226,17 @@ body {
     align-items: center;
     justify-content: flex-start; 
     text-align: left;
-    gap: 10px;
+    gap: 8px; /* Уменьшили gap */
     padding: 0;
     min-width: unset; 
 }
+.support-link .nav-image {
+    margin-bottom: 0; /* Удаляем нижний отступ, чтобы подпись прилегала */
+}
+.support-link .button-sub-caption {
+    margin-top: 0; /* Убираем верхний отступ у подписи */
+}
+
 
 /* Стилі для FORUM (підпис ліворуч, картинка праворуч) */
 .forum-link.main-nav-link {
@@ -237,10 +244,17 @@ body {
     align-items: center;
     justify-content: flex-end; 
     text-align: right;
-    gap: 10px;
+    gap: 8px; /* Уменьшили gap */
     padding: 0;
     min-width: unset; 
 }
+.forum-link .nav-image {
+    margin-bottom: 0; /* Удаляем нижний отступ */
+}
+.forum-link .button-sub-caption {
+    margin-top: 0; /* Убираем верхний отступ у подписи */
+}
+
 
 /* РЯДОК 4: EX | ADA (Два елементи в ряд) */
 .row-two-items {
@@ -414,50 +428,58 @@ body {
 
     /* РЯД SUPPORT | FORUM */
     .row-support-forum {
-        /* Меняем: Оставляем горизонтально, но центрируем по ширине */
-        flex-direction: row; /* Оставляем горизонтально */
-        justify-content: center; /* Центрируем, если не max-width */
+        /* Оставляем горизонтально для парности, но центрируем */
+        flex-direction: row; 
+        justify-content: center; 
         border: none;
         box-shadow: none;
         padding: 0;
-        max-width: 350px; /* Увеличим немного max-width для лучшего вида */
+        max-width: 350px; 
         gap: 15px;
         margin-top: 5px;
         margin-bottom: 5px;
         box-sizing: border-box;
     }
     
-    /* SUPPORT та FORUM на мобілках стають горизонтальными, но используем центрирование */
+    /* SUPPORT та FORUM на мобілках */
     .support-link.main-nav-link, .forum-link.main-nav-link {
-        flex-direction: column !important; /* На мобилках они должны быть как и остальные - вертикально с картинкой сверху */
+        /* Делаем их вертикальными (иконка сверху, текст снизу), как остальные кнопки на мобильных */
+        flex-direction: column !important; 
         justify-content: center !important; 
+        align-items: center !important;
         text-align: center !important;
         min-width: unset;
         width: 100%;
         padding: 5px 0 !important;
         font-size: 1.1em;
     }
+    .support-link .nav-image, .forum-link .nav-image {
+        margin-bottom: 5px;
+    }
+    .support-link .button-sub-caption, .forum-link .button-sub-caption {
+        margin-top: 2px;
+    }
     
     /* РЯД EX | ADA */
     .row-two-items {
-        /* Меняем: Оставляем горизонтально, но центрируем по ширине */
-        flex-direction: row; /* Оставляем горизонтально */
-        justify-content: center; /* Центрируем, если не max-width */
-        max-width: 350px; /* Увеличим немного max-width для лучшего вида */
-        gap: 15px; /* Увеличим расстояние между ними, чтобы выглядело лучше */
+        /* Оставляем горизонтально */
+        flex-direction: row; 
+        justify-content: center; 
+        max-width: 350px; 
+        gap: 15px; 
         margin-top: 15px;
         margin-bottom: 15px;
         box-sizing: border-box;
     }
     
     .row-two-items .main-nav-link {
-        /* На мобилках они должны быть как и остальные - вертикально с картинкой сверху */
+        /* Делаем вертикальными, как обычные кнопки на мобильных */
         flex-direction: column;
         align-items: center;
         text-align: center;
         font-size: 1.1em;
         min-width: unset;
-        width: 50%; /* Чтобы они занимали половину доступного места */
+        width: 50%; 
     }
 
     .nav-image {
