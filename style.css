@@ -142,7 +142,7 @@ body {
 
 .main-nav-link {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column; /* По умолчанию: Иконка сверху, Текст снизу (для большинства) */
     justify-content: center;
     align-items: center;
     padding: 5px; 
@@ -168,29 +168,29 @@ body {
 
 .button-sub-caption {
     display: block;
-    font-size: 0.5em; /* Уменьшаем размер подписи */
-    margin-top: 0; /* Убираем верхний отступ */
+    font-size: 0.45em; 
+    margin-top: 2px;
     color: var(--main-text-color); 
-}
-
-/* Новый класс для группировки текста и подписи */
-.text-group {
-    display: flex;
-    flex-direction: column; /* Делаем текст вертикально (Основной текст над подписью) */
-    justify-content: center;
-    align-items: center; /* Центрируем текст внутри группы */
-    line-height: 1.1; /* Слегка уменьшаем межстрочный интервал */
 }
 
 .nav-image {
     max-width: 50px; 
     height: auto;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Отступ для вертикальных кнопок */
     image-rendering: pixelated; 
 }
 
+/* НОВЫЙ СТИЛЬ: Группировка текста и подписи (SUPPORT/FORUM) */
+.text-group {
+    display: flex;
+    flex-direction: column; /* Основной текст над подписью */
+    justify-content: center;
+    align-items: center; /* Центрирование текста внутри группы */
+    line-height: 1.1; 
+}
+
 /* ------------------------------------------- */
-/* НОВИЙ МАКЕТ FOLDER CONTAINER (Flexbox) */
+/* МАКЕТ FOLDER CONTAINER (Flexbox) */
 /* ------------------------------------------- */
 
 .folder-container {
@@ -201,7 +201,7 @@ body {
     max-width: 700px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 15px; /* Проміжок між головними рядами */
+    gap: 15px; /* Промежуток между главными рядами */
 }
 
 /* РЯДОК 1, 2, 5: SHOP, HELPER, SKLAD (Одиночний елемент по центру) */
@@ -214,48 +214,61 @@ body {
     min-width: 150px; 
 }
 
-/* РЯДОК 3: SUPPORT | FORUM (Великий горизонтальний блок по центру - ДИАЛОГ) */
-.row-support-forum {
-    display: flex;
-    justify-content: space-between;
+/* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
+.support-link.main-nav-link,
+.forum-link.main-nav-link {
+    flex-direction: row; /* На десктопе всегда горизонтально */
     align-items: center;
+    padding: 0;
+    min-width: unset;
+    gap: 10px; /* Отступ между иконкой и текстовой группой */
+}
+.support-link .nav-image, .forum-link .nav-image {
+    margin-bottom: 0; /* Убираем вертикальный отступ */
+}
+
+
+/* FORUM: Текст СЛЕВА, Иконка СПРАВА */
+.forum-link .text-group {
+    order: 0; /* Текст первый (СЛЕВА) */
+    align-items: flex-end; /* Выравнивание текста вправо для аккуратности */
+}
+.forum-link .nav-image {
+    order: 1; /* Иконка вторая (СПРАВА) */
+}
+
+
+/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА */
+.support-link .nav-image {
+    order: 0; /* Иконка первая (СЛЕВА) */
+}
+.support-link .text-group {
+    order: 1; /* Текст второй (СПРАВА) */
+    align-items: flex-start; /* Выравнивание текста влево для аккуратности */
+}
+
+
+/* Асимметричное выравнивание рядов FORUM и SUPPORT */
+.row-forum, .row-support {
+    display: flex;
     width: 100%;
-    max-width: 550px; 
-    margin-top: 15px; 
-    margin-bottom: 15px; 
-    padding: 15px 10px;
-    border: 3px solid var(--main-text-color); 
-    box-shadow: 0 0 10px rgba(54, 134, 0, 0.5); 
+    max-width: 700px; 
     box-sizing: border-box;
 }
 
-/* Стилі для SUPPORT (картинка ліворуч, текст-група праворуч) */
-.support-link.main-nav-link {
-    flex-direction: row; /* Главный контейнер - горизонтально */
-    align-items: center;
-    justify-content: flex-start; /* Прижимаем к левому краю контейнера */
-    text-align: left; 
-    gap: 15px; /* Увеличим отступ между иконкой и текстом */
-    padding: 0;
-    min-width: unset; 
-}
-.support-link .nav-image {
-    margin-bottom: 0; 
+/* FORUM - прижат к правой стороне */
+.row-forum {
+    justify-content: flex-end; 
+    padding-right: 20px; 
+    margin-top: 25px; 
 }
 
-
-/* Стилі для FORUM (текст-група ліворуч, картинка праворуч) */
-.forum-link.main-nav-link {
-    flex-direction: row-reverse; /* Главный контейнер - горизонтально, но в обратном порядке */
-    align-items: center;
-    justify-content: flex-end; /* Прижимаем к правому краю контейнера */
-    text-align: right;
-    gap: 15px; /* Увеличим отступ между текстом и иконкой */
-    padding: 0;
-    min-width: unset; 
-}
-.forum-link .nav-image {
-    margin-bottom: 0; 
+/* SUPPORT - прижат к левой стороне */
+.row-support {
+    justify-content: flex-start;
+    padding-left: 20px; 
+    margin-top: 20px; 
+    margin-bottom: 25px; 
 }
 
 
@@ -429,19 +442,14 @@ body {
         max-width: 300px;
     }
 
-    /* SUPPORT | FORUM (Вертикально по центру) */
-    .row-support-forum {
-        /* На мобилках они должны идти друг под другом, чтобы избежать слишком узкого вида */
-        flex-direction: column; 
-        border: none;
-        box-shadow: none;
+    /* Ряды FORUM и SUPPORT центрируем на мобилках */
+    .row-forum, .row-support {
+        justify-content: center; /* Центрируем ряды на мобилках */
         padding: 0;
-        max-width: 300px;
-        gap: 15px;
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    
+
     /* SUPPORT та FORUM на мобілках стають вертикальними */
     .support-link.main-nav-link, .forum-link.main-nav-link {
         flex-direction: column !important; /* Главный контейнер вертикально */
@@ -453,11 +461,15 @@ body {
         padding: 5px 0 !important;
         font-size: 1.1em;
     }
+    
+    /* Текстовая группа и иконка центрируются */
+    .support-link .text-group, .forum-link .text-group {
+        align-items: center;
+    }
+
     .support-link .nav-image, .forum-link .nav-image {
         margin-bottom: 5px;
-    }
-    .support-link .text-group, .forum-link .text-group {
-        align-items: center; /* Центрируем текст внутри группы */
+        order: unset; /* Сбрасываем порядок, чтобы иконка была сверху */
     }
     .support-link .button-sub-caption, .forum-link .button-sub-caption {
         margin-top: 2px;
