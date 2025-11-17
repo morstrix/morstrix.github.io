@@ -444,10 +444,12 @@ body {
         max-width: 300px;
     }
 
-    /* EX | ADA (Вертикально по центру) */
+    /* EX | ADA (Виправлення: тепер завжди горизонтально) */
     .row-two-items {
-        flex-direction: column;
-        align-items: center;
+        display: flex; /* Забезпечуємо Flexbox */
+        flex-direction: row; /* Навіть на мобільних пристроях, тримаємо їх в ряду */
+        justify-content: space-between; /* Розподіляємо по краях */
+        align-items: center; 
         max-width: 300px;
         gap: 15px;
         margin-top: 15px;
@@ -456,7 +458,7 @@ body {
     .row-two-items .main-nav-link {
         font-size: 1.1em;
         min-width: unset;
-        width: 100%;
+        width: 45%; /* Даємо їм половину ширини контейнера */
     }
 
     .nav-image {
