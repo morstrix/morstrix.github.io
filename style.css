@@ -412,21 +412,24 @@ body {
         max-width: 300px;
     }
 
-    /* SUPPORT | FORUM (Вертикально по центру) */
+    /* РЯД SUPPORT | FORUM */
     .row-support-forum {
-        flex-direction: column;
+        /* Меняем: Оставляем горизонтально, но центрируем по ширине */
+        flex-direction: row; /* Оставляем горизонтально */
+        justify-content: center; /* Центрируем, если не max-width */
         border: none;
         box-shadow: none;
         padding: 0;
-        max-width: 300px;
+        max-width: 350px; /* Увеличим немного max-width для лучшего вида */
         gap: 15px;
         margin-top: 5px;
         margin-bottom: 5px;
+        box-sizing: border-box;
     }
     
-    /* SUPPORT та FORUM на мобілках стають вертикальними */
+    /* SUPPORT та FORUM на мобілках стають горизонтальными, но используем центрирование */
     .support-link.main-nav-link, .forum-link.main-nav-link {
-        flex-direction: column !important;
+        flex-direction: column !important; /* На мобилках они должны быть как и остальные - вертикально с картинкой сверху */
         justify-content: center !important; 
         text-align: center !important;
         min-width: unset;
@@ -434,26 +437,27 @@ body {
         padding: 5px 0 !important;
         font-size: 1.1em;
     }
-    .support-link .nav-image, .forum-link .nav-image {
-        margin-bottom: 5px;
-    }
-    .support-link .button-sub-caption, .forum-link .button-sub-caption {
-        margin-top: 2px;
-    }
     
-    /* EX | ADA (Вертикально по центру) */
+    /* РЯД EX | ADA */
     .row-two-items {
-        flex-direction: column;
-        align-items: center;
-        max-width: 300px;
-        gap: 15px;
+        /* Меняем: Оставляем горизонтально, но центрируем по ширине */
+        flex-direction: row; /* Оставляем горизонтально */
+        justify-content: center; /* Центрируем, если не max-width */
+        max-width: 350px; /* Увеличим немного max-width для лучшего вида */
+        gap: 15px; /* Увеличим расстояние между ними, чтобы выглядело лучше */
         margin-top: 15px;
         margin-bottom: 15px;
+        box-sizing: border-box;
     }
+    
     .row-two-items .main-nav-link {
+        /* На мобилках они должны быть как и остальные - вертикально с картинкой сверху */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
         font-size: 1.1em;
         min-width: unset;
-        width: 100%;
+        width: 50%; /* Чтобы они занимали половину доступного места */
     }
 
     .nav-image {
