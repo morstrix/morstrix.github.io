@@ -183,9 +183,9 @@ body {
 /* НОВЫЙ СТИЛЬ: Группировка текста и подписи (SUPPORT/FORUM) */
 .text-group {
     display: flex;
-    flex-direction: column; /* Основной текст над подписью */
+    flex-direction: column; 
     justify-content: center;
-    align-items: center; /* Центрирование текста внутри группы */
+    align-items: center; 
     line-height: 1.1; 
 }
 
@@ -201,7 +201,7 @@ body {
     max-width: 700px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 15px; /* Промежуток между главными рядами */
+    gap: 15px; 
 }
 
 /* НОВЫЙ РЯД: SHOP и HELPER (Два элемента в ряд) */
@@ -231,16 +231,16 @@ body {
 /* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
 .support-link.main-nav-link,
 .forum-link.main-nav-link {
-    flex-direction: row; /* Всегда горизонтально */
+    flex-direction: row; 
     align-items: center;
     padding: 0;
     min-width: unset;
-    gap: 10px; /* Отступ между иконкой и текстовой группой */
-    font-size: 1.2em; /* Увеличим шрифт, чтобы было заметнее */
+    gap: 10px; 
+    font-size: 1.2em; 
 }
 .support-link .nav-image, .forum-link .nav-image {
-    margin-bottom: 0; /* Убираем вертикальный отступ */
-    max-width: 80px; /* Увеличим иконку для заметности */
+    margin-bottom: 0; 
+    max-width: 80px; 
 }
 
 
@@ -270,7 +270,6 @@ body {
     width: 100%;
     max-width: 700px; 
     box-sizing: border-box;
-    /* Увеличим вертикальный отступ, чтобы разделить их */
     margin-top: 25px; 
     margin-bottom: 25px; 
 }
@@ -447,25 +446,25 @@ body {
 @media (max-width: 768px) {
     
     .folder-container {
-        gap: 10px; /* Уменьшаем общий зазор */
+        gap: 10px; 
     }
     
-    /* НОВЫЙ РЯД: SHOP/HELPER: Убеждаемся, что они в ряду и сжимаются */
+    /* SHOP/HELPER: Остаются в ряду */
     .row-two-items-main {
-        flex-direction: row; /* Остаются в ряду */
+        flex-direction: row;
         justify-content: space-around;
         max-width: 100%; 
         width: 100%;
         gap: 5px; 
     }
     .row-two-items-main .main-nav-link {
-        font-size: 0.7em; /* Уменьшаем текст */
+        font-size: 0.7em; 
         padding: 5px 2px;
-        max-width: 120px; /* Ограничиваем максимальную ширину */
+        max-width: 120px; 
         width: 45%;
     }
     .row-two-items-main .nav-image {
-        max-width: 30px; /* Уменьшаем картинки */
+        max-width: 30px; 
     }
 
     /* FORUM и SUPPORT: Уменьшаем отступы между ними */
@@ -482,19 +481,21 @@ body {
         max-width: 300px;
     }
 
-    /* EX | ADA (Вертикально по центру) */
+    /* EX | ADA: ИСПРАВЛЕНО - СНОВА В ОДИН РЯД */
     .row-two-items {
-        flex-direction: column;
+        flex-direction: row; /* ИЗМЕНЕНИЕ: Теперь в ряд */
+        justify-content: space-around; 
         align-items: center;
-        max-width: 300px;
-        gap: 15px;
+        max-width: 300px; 
+        width: 100%;
+        gap: 10px; 
         margin-top: 15px;
         margin-bottom: 15px;
     }
     .row-two-items .main-nav-link {
-        font-size: 1.1em;
+        font-size: 0.9em; /* Чуть уменьшаем шрифт */
         min-width: unset;
-        width: 100%;
+        width: 45%; 
     }
 
     .nav-image {
