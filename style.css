@@ -12,7 +12,7 @@
     --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
     --back-cross-color: #000000c8;
-    --social-icon-color:  var(--main-text-color); /* Оригінальний колір */
+    --social-icon-color:  var(--main-text-color);
 }
 
 html {
@@ -25,7 +25,6 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Без overflow: hidden для скролу */
 }
 
 .site-section {
@@ -146,16 +145,16 @@ body {
     flex-direction: column; 
     justify-content: center;
     align-items: center;
-    padding: 5px; /* Зменшуємо відступи */
+    padding: 5px; 
     text-align: center;
-    background-color: transparent; /* ВИДАЛЯЄМО ЗЕЛЕНИЙ ФОН */
-    color: #ffffff; /* Робимо текст білим */
+    background-color: transparent; 
+    color: #ffffff; 
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 0.8em; /* Зменшуємо шрифт */
+    font-size: 0.8em; 
     font-weight: 600;
-    border: none; /* ВИДАЛЯЄМО РАМКУ */
-    box-shadow: none; /* ВИДАЛЯЄМО ТІНЬ */
+    border: none; 
+    box-shadow: none; 
     position: relative;
     cursor: pointer;
     min-width: 100px; 
@@ -164,40 +163,54 @@ body {
 .main-nav-link:hover {
     transform: none; 
     box-shadow: none;
-    color: var(--main-text-color); /* Підсвічування зеленим */
+    color: var(--main-text-color); 
 }
 
 .button-sub-caption {
     display: block;
-    font-size: 0.6em;
+    font-size: 0.45em; /* Зменшуємо розмір підпису */
     margin-top: 2px;
-    color: var(--main-text-color); /* Підзаголовок зеленим */
+    color: var(--main-text-color); 
 }
 
 .nav-image {
-    max-width: 50px; /* Зменшуємо зображення */
+    max-width: 50px; 
     height: auto;
     margin-bottom: 5px;
     image-rendering: pixelated; 
 }
 
-/* НОВІ СТИЛІ ДЛЯ МАКЕТУ GRID 3x2 */
+/* НОВІ СТИЛІ ДЛЯ МАКЕТУ FLEX (для контролю рядків) */
 .folder-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* ТРИ колонки */
-    gap: 10px 5px; /* Зменшуємо проміжки */
+    display: flex;
+    flex-direction: column; /* Основний потік - стовпчик */
     width: 100%;
     max-width: 650px; 
     margin-top: 10px; 
     padding: 0 10px;
 }
 
-/* Центруємо елементи в їхніх комірках (непарні/парні стилі більше не потрібні) */
-.folder-container a {
-    justify-self: center;
+.folder-row {
+    display: flex;
+    justify-content: space-evenly; /* Рівномірний розподіл */
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 10px; /* Відстань між рядами */
+    gap: 10px;
 }
 
-/* Прибираємо горизонтальне вирівнювання з попереднього кроку */
+.full-row-link {
+    max-width: 300px; /* Збільшуємо ширину для елементів, що стоять окремо */
+    flex-grow: 0; 
+    margin: 0 auto 10px; /* Центруємо */
+}
+
+.main-nav-link:not(.full-row-link) {
+    flex-grow: 1; 
+    max-width: 150px; 
+}
+
+/* Прибираємо реверсовані стилі, оскільки тепер все вертикально */
 .reverse-content, .normal-content {
     flex-direction: column !important; 
     text-align: center !important;
@@ -212,14 +225,6 @@ body {
 
 .reverse-content .button-sub-caption, .normal-content .button-sub-caption {
     margin-top: 2px;
-}
-
-/* Контейнер для нижніх елементів */
-.bottom-group-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
 }
 
 
@@ -250,10 +255,10 @@ body {
 /* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ */
 /* ------------------------------------------- */
 
-.digital-magazine-button, .forum-button, .helper-button, .shop-button, .insta-button, .media-button {
+.digital-magazine-button, .forum-button, .helper-button, .shop-button, .insta-button, .media-button, .link-button {
     background-color: var(--link-button-color);
     box-shadow: none;
-    color: #fff; /* Білий текст на внутрішніх кнопках */
+    color: #fff; 
 }
 
 .link-container {
@@ -261,7 +266,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 30px;
-    gap: 20px; /* Відстань між кнопками */
+    gap: 20px; 
 }
 
 .digital-magazine-button {
@@ -271,7 +276,7 @@ body {
     padding: 15px 30px;
 }
 
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover, .insta-button:hover, .media-button:hover {
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover, .insta-button:hover, .media-button:hover, .link-button:hover {
     transform: translate(0);
     box-shadow: none;
     background-color: var(--button-green-light);
@@ -306,11 +311,11 @@ body {
     image-rendering: pixelated;
 }
 
-.magazine-info-box, .forum-info-box, .helper-info-box, .shop-info-box, .insta-info-box, .sklad-info-box {
+.magazine-info-box, .forum-info-box, .helper-info-box, .shop-info-box, .insta-info-box, .sklad-info-box, .ex-info-box, .ada-info-box {
     box-shadow: none;
 }
 
-.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p {
+.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p, .ex-info-box p, .ada-info-box p {
     color: #fff;
 }
 
@@ -322,46 +327,17 @@ body {
 }
 
 /* ------------------------------------------- */
-/* НИЖНЯ СЕКЦІЯ (Ex, Moderator, Ada) */
+/* НИЖНЯ СЕКЦІЯ (ВТРАТИЛА АКТУАЛЬНІСТЬ) */
 /* ------------------------------------------- */
 
 .bottom-images {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 15px; /* Зменшуємо проміжок */
-    margin-top: 30px; /* Зменшуємо відступ */
-    margin-bottom: 10px;
-    width: 100%;
-    max-width: 800px;
-    flex-wrap: wrap; 
+    /* Видалено, але залишаємо для запобігання помилок, якщо десь залишилася HTML-розмітка */
+    display: none;
 }
 
 .image-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: none;
 }
-
-.bottom-image {
-    max-width: 80px; /* Значно зменшуємо зображення */
-    height: auto;
-    margin-bottom: 5px;
-    image-rendering: pixelated;
-}
-
-.image-button {
-    padding: 5px 10px; /* Зменшуємо кнопки */
-    font-size: 0.8em;
-    background-color: var(--button-green-dark); 
-    color: var(--main-text-color); /* Колір тексту кнопки */
-}
-
-.image-button:hover {
-    color: #fff;
-}
-
 
 /* ------------------------------------------- */
 /* SPLASH SCREEN */
@@ -400,14 +376,23 @@ body {
     }
 
     .folder-container {
-        grid-template-columns: 1fr 1fr; /* На мобілках 2 колонки */
-        gap: 15px 10px;
-        margin-top: 15px;
         max-width: 400px;
+        margin-top: 15px;
     }
     
+    .folder-row {
+        flex-direction: column; /* На мобілках кожен елемент в новому рядку */
+        gap: 15px;
+    }
+    
+    .main-nav-link, .full-row-link {
+        flex-grow: 1; 
+        max-width: 100% !important; /* Розтягуємо на всю ширину */
+        margin: 0 !important;
+    }
+
     .main-nav-link {
-        font-size: 1em; /* Трохи збільшуємо, щоб було читабельно */
+        font-size: 1em; 
         min-width: unset;
     }
     
@@ -426,19 +411,5 @@ body {
     
     .splash-logo {
         max-width: 80%; 
-    }
-    
-    .bottom-images {
-        margin-top: 20px;
-        gap: 10px;
-    }
-
-    .bottom-image {
-        max-width: 60px; 
-    }
-
-    .image-button {
-        font-size: 0.7em;
-        padding: 4px 8px;
     }
 }
