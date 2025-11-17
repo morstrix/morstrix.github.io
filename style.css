@@ -183,28 +183,10 @@ body {
 /* НОВЫЙ СТИЛЬ: Группировка текста и подписи (SUPPORT/FORUM) */
 .text-group {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column; /* Основной текст над подписью */
     justify-content: center;
-    align-items: center; 
+    align-items: center; /* Центрирование текста внутри группы */
     line-height: 1.1; 
-}
-
-/* НОВЫЙ СТИЛЬ: ИКОНКИ СЛЕВА ОТ КНОПКИ (Shop/Helper) */
-.main-link-group {
-    display: flex;
-    align-items: center; 
-    gap: 10px; 
-}
-
-.action-button-icon-left-standalone {
-    font-size: 1.8em; 
-    color: var(--arrow-color); 
-    text-shadow: 0 0 5px var(--arrow-shadow-color);
-    line-height: 1; 
-}
-.main-link-group:hover .action-button-icon-left-standalone {
-    color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff;
 }
 
 /* ------------------------------------------- */
@@ -219,51 +201,50 @@ body {
     max-width: 700px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 10px; 
+    gap: 15px; /* Промежуток между главными рядами */
 }
 
-/* РЯД 1: SHOP и HELPER APP */
+/* НОВЫЙ РЯД: SHOP и HELPER (Два элемента в ряд) */
 .row-two-items-main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
-    max-width: 450px;
+    max-width: 450px; 
     gap: 10px; 
-    margin-bottom: 5px; 
     margin-top: 10px;
+    margin-bottom: 10px;
 }
-.row-two-items-main .main-link-group {
-    width: 50%; 
-    justify-content: center; 
+.row-two-items-main .main-nav-link {
+    width: 45%; 
 }
 
-/* РЯД 2: FORUM и SUPPORT */
-.row-two-items-forum {
+/* РЯДОК 1, 2, 5: FORUM, SUPPORT, SKLAD (Одиночный элемент по центру) */
+.row-single-center {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    max-width: 700px; 
-    gap: 10px;
-    margin-top: 10px; 
-    margin-bottom: 10px; 
+}
+.row-single-center .main-nav-link {
+    min-width: 150px; 
 }
 
-/* Стилі для SUPPORT/FORUM */
+/* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
 .support-link.main-nav-link,
 .forum-link.main-nav-link {
-    flex-direction: row; 
+    flex-direction: row; /* Всегда горизонтально */
     align-items: center;
     padding: 0;
     min-width: unset;
-    gap: 10px; 
-    font-size: 1.2em; 
+    gap: 10px; /* Отступ между иконкой и текстовой группой */
+    font-size: 1.2em; /* Увеличим шрифт, чтобы было заметнее */
 }
 .support-link .nav-image, .forum-link .nav-image {
-    margin-bottom: 0; 
-    max-width: 80px; 
+    margin-bottom: 0; /* Убираем вертикальный отступ */
+    max-width: 80px; /* Увеличим иконку для заметности */
 }
 
-/* FORUM: Текст СЛЕВА, Иконка СПРАВА */
+
+/* FORUM: Текст СЛЕВА, Иконка СПРАВА (Прижат к правой стороне) */
 .forum-link .text-group {
     order: 0; 
     align-items: flex-end; 
@@ -272,7 +253,8 @@ body {
     order: 1; 
 }
 
-/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА */
+
+/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА (Прижат к левой стороне) */
 .support-link .nav-image {
     order: 0; 
 }
@@ -281,51 +263,182 @@ body {
     align-items: flex-start; 
 }
 
-/* Установка ширины для Forum и Support внутри нового контейнера */
-.row-two-items-forum .main-nav-link {
-    width: 45%; 
-    max-width: 300px;
-}
 
-/* СКЛАД (Стили для десктопа) */
-.row-single-center {
-    display: none; 
-}
-
-/* Новый класс для Sklad */
-.row-single-center.row-sklad {
-    display: flex; 
-    justify-content: center;
+/* Асимметричное выравнивание рядов FORUM и SUPPORT */
+.row-forum, .row-support {
+    display: flex;
     width: 100%;
-    margin-top: 5px; 
-    margin-bottom: 5px; 
-}
-.row-sklad .main-nav-link {
-    min-width: 150px; 
+    max-width: 700px; 
+    box-sizing: border-box;
+    /* Увеличим вертикальный отступ, чтобы разделить их */
+    margin-top: 25px; 
+    margin-bottom: 25px; 
 }
 
-/* РЯДОК ADA | EX */
-.row-two-items.row-insta {
+/* FORUM - прижат к правой стороне */
+.row-forum {
+    justify-content: flex-end; 
+    padding-right: 20px; 
+}
+
+/* SUPPORT - прижат к левой стороне */
+.row-support {
+    justify-content: flex-start;
+    padding-left: 20px; 
+}
+
+
+/* РЯДОК 4: EX | ADA (Два елементи в ряд) */
+.row-two-items {
     display: flex;
     justify-content: space-between; 
     align-items: flex-end; 
     width: 100%;
     max-width: 450px; 
     gap: 20px;
-    margin-top: 5px; 
-    margin-bottom: 5px; 
+    margin-top: 10px; 
+    margin-bottom: 10px; 
 }
 .row-two-items .main-nav-link {
     min-width: 100px;
 }
 
+
 /* ------------------------------------------- */
-/* УСТАРЕВШИЕ КЛАССЫ (Используются только для скрытия) */
+/* СОЦИАЛЬНЫЕ ССЫЛКИ И КНОПКИ (Без изменений) */
 /* ------------------------------------------- */
 
-.social-links, .bottom-images, .image-link {
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px; 
+    margin-bottom: 20px;
+}
+
+.social-icon {
+    font-size: 2.2em;
+    color: var(--social-icon-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.social-icon:hover {
+    color: #ffffff;
+}
+
+/* ------------------------------------------- */
+/* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ (Без изменений) */
+/* ------------------------------------------- */
+
+.digital-magazine-button, .forum-button, .helper-button, .shop-button, .insta-button, .media-button, .link-button {
+    background-color: var(--link-button-color);
+    box-shadow: none;
+    color: #fff; 
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px; 
+}
+
+.digital-magazine-button {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 15px 30px;
+}
+
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover, .insta-button:hover, .media-button:hover, .link-button:hover {
+    transform: translate(0);
+    box-shadow: none;
+    background-color: var(--button-green-light);
+}
+
+/* ------------------------------------------- */
+/* ИНФО-БОКСЫ И ПАПКИ (Без изменений) */
+/* ------------------------------------------- */
+
+.retro-info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    min-height: 100px;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 0.8em;
+    line-height: 1.5;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
+}
+
+.info-box-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    image-rendering: pixelated;
+}
+
+.magazine-info-box, .forum-info-box, .helper-info-box, .shop-info-box, .insta-info-box, .sklad-info-box, .ex-info-box, .ada-info-box {
+    box-shadow: none;
+}
+
+.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p, .ex-info-box p, .ada-info-box p {
+    color: #fff;
+}
+
+.magazine-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* ------------------------------------------- */
+/* НИЖНЯ СЕКЦІЯ (ВТРАТИЛА АКТУАЛЬНІСТЬ) */
+/* ------------------------------------------- */
+
+.bottom-images {
     display: none;
 }
+
+.image-link {
+    display: none;
+}
+
+/* ------------------------------------------- */
+/* SPLASH SCREEN (Без изменений) */
+/* ------------------------------------------- */
+
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease; 
+    opacity: 1;
+}
+
+.splash-logo {
+    max-width: 50%; 
+    height: auto;
+    image-rendering: pixelated;
+}
+
 
 /* ------------------------------------------- */
 /* АДАПТАЦИЯ (Для мобільних пристроїв) */
@@ -334,69 +447,49 @@ body {
 @media (max-width: 768px) {
     
     .folder-container {
-        gap: 8px; /* УМЕНЬШЕНО для плотности */
+        gap: 10px; /* Уменьшаем общий зазор */
     }
     
-    /* SHOP/HELPER: В ОДИН РЯД НА МОБИЛЬНОМ */
+    /* НОВЫЙ РЯД: SHOP/HELPER: Убеждаемся, что они в ряду и сжимаются */
     .row-two-items-main {
-        flex-direction: row; /* ИСПРАВЛЕНО: Теперь в ряд */
-        justify-content: space-around; /* Равномерно распределяем */
-        gap: 5px; /* Уменьшаем расстояние между ними */
+        flex-direction: row; /* Остаются в ряду */
+        justify-content: space-around;
         max-width: 100%; 
         width: 100%;
-        margin-top: 8px;
-        margin-bottom: 8px;
+        gap: 5px; 
     }
-    
-    /* Элементы SHOP/HELPER */
-    .row-two-items-main .main-link-group {
-        width: 48%; /* Делим пространство почти пополам */
-        max-width: 150px; 
-        flex-direction: row; 
-        justify-content: flex-start; /* Иконка слева */
-        gap: 5px;
-    }
-    /* Сама кнопка */
     .row-two-items-main .main-nav-link {
-        font-size: 0.7em; /* Чуть уменьшим шрифт */
-        padding: 2px; 
-        min-width: unset;
+        font-size: 0.7em; /* Уменьшаем текст */
+        padding: 5px 2px;
+        max-width: 120px; /* Ограничиваем максимальную ширину */
+        width: 45%;
     }
-    /* Иконки на кнопках */
     .row-two-items-main .nav-image {
-        max-width: 35px; /* Уменьшаем картинки */
-        margin-bottom: 2px;
-    }
-    /* Отдельно стоящие иконки */
-    .action-button-icon-left-standalone {
-        font-size: 1.2em; /* Уменьшаем иконки */
+        max-width: 30px; /* Уменьшаем картинки */
     }
 
-    /* FORUM/SUPPORT: Выстраиваем в колонку, чтобы избежать сжатия */
-    .row-two-items-forum {
-        flex-direction: column;
-        gap: 8px;
-        max-width: 300px;
-        width: 100%;
-        margin-top: 8px;
-        margin-bottom: 8px;
-    }
-
-    /* FORUM/SUPPORT: Кнопки на всю ширину */
-    .row-two-items-forum .main-nav-link {
-        width: 100%;
-        max-width: 300px;
-        font-size: 1.1em;
+    /* FORUM и SUPPORT: Уменьшаем отступы между ними */
+    .row-forum, .row-support {
+        margin-top: 15px; 
+        margin-bottom: 15px;
     }
     
+    /* SKLAD: Выравнивание и размер */
+    .row-single-center .main-nav-link {
+        min-width: unset;
+        width: 100%;
+        font-size: 1.1em;
+        max-width: 300px;
+    }
+
     /* EX | ADA (Вертикально по центру) */
-    .row-two-items.row-insta {
+    .row-two-items {
         flex-direction: column;
         align-items: center;
         max-width: 300px;
-        gap: 10px; 
-        margin-top: 10px;
-        margin-bottom: 10px;
+        gap: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
     .row-two-items .main-nav-link {
         font-size: 1.1em;
@@ -404,19 +497,6 @@ body {
         width: 100%;
     }
 
-    /* СКЛАД (Последний и по центру) */
-    .row-single-center.row-sklad {
-        order: 99; /* ОТПРАВЛЯЕМ В САМЫЙ НИЗ */
-        display: flex;
-        max-width: 300px;
-        margin-top: 15px; /* Отступ сверху от Ada/Ex */
-        margin-bottom: 15px; /* Отступ снизу */
-    }
-    .row-sklad .main-nav-link {
-        width: 100%;
-        font-size: 1.1em; 
-    }
-    
     .nav-image {
         max-width: 60px;
     }
