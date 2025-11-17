@@ -1,8 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="style.css?v=2.1">  </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ</title>
+    
+    <meta name="description" content="ᘏᗢ ⤬ ʜɪпᴘᴏщо">
+    <meta name="author" content="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏNᴇ">
+    
+    <meta property="og:title" content="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ">
+    <meta property="og:description" content="ᘏᗢ ⤬ ʜɪпᴘᴏщо">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://morstrix.github.io/">
+    <meta property="og:image" content="https://morstrix.github.io/GAME-LOGO.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://morstrix.github.io/GAME-LOGO.jpg">
+    <meta name="twitter:site" content="@your_twitter_handle"> 
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css?v=2.2">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
 <body>
+    
+    <div id="splash-screen">
+        <img src="GAME-LOGO.jpg" alt="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ Logo" class="splash-logo">
+    </div>
     
     <div id="main-content" style="display: none;">
         
@@ -66,29 +92,50 @@
                 </div>
                 
             </div>
-    
-            </main>
+            
+        </main>
     </div>
     
     <script>
-        window.addEventListener('load', function() {
+        // Використовуємо DOMContentLoaded для прискорення виконання
+        document.addEventListener('DOMContentLoaded', function() {
             var splash = document.getElementById('splash-screen');
             var mainContent = document.getElementById('main-content');
             
-            // 1. Перевіряємо, чи інтро вже було показано в цій сесії (sessionStorage)
+            // Якщо елементів немає, зупиняємось
+            if (!splash || !mainContent) {
+                console.error("Splash screen or main content element not found.");
+                return;
+            }
+            
+            // 1. Перевіряємо, чи інтро вже було показано в цій сесії
             if (sessionStorage.getItem('introPlayed')) {
+                // Якщо було, приховуємо інтро негайно і показуємо контент
                 splash.style.display = 'none';
                 mainContent.style.display = 'block';
             } else {
                 // Якщо не було, показуємо інтро з затримкою
+                
+                // !!! ДОДАТКОВА ГАРАНТІЯ: Якщо щось піде не так, показуємо контент через 3.5 секунди
+                var safetyTimeout = setTimeout(function() {
+                    splash.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    sessionStorage.setItem('introPlayed', 'true');
+                    console.warn("Splash screen fallback executed.");
+                }, 3500); 
+                
+                // Основна логіка: 2 секунди лого
                 setTimeout(function() {
-                    splash.style.opacity = '0';  // Плавне зникнення
+                    clearTimeout(safetyTimeout); // Зупиняємо safety-timeout
+                    
+                    splash.style.opacity = '0';  // Плавне зникнення (0.5 сек)
+                    
+                    // Після завершення transition
                     setTimeout(function() {
                         splash.style.display = 'none';
                         mainContent.style.display = 'block';  // Показуємо контент
-                        // 2. Встановлюємо прапорець, що інтро було показано
                         sessionStorage.setItem('introPlayed', 'true');
-                    }, 500);  // Час для transition (0.5 сек)
+                    }, 500); 
                 }, 2000);  // 2 секунди затримки
             }
         });
