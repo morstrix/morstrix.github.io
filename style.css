@@ -142,7 +142,7 @@ body {
 
 .main-nav-link {
     display: flex;
-    flex-direction: column; /* По умолчанию: Иконка сверху, Текст снизу (для большинства) */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     padding: 5px; 
@@ -176,7 +176,7 @@ body {
 .nav-image {
     max-width: 50px; 
     height: auto;
-    margin-bottom: 5px; /* Отступ для вертикальных кнопок */
+    margin-bottom: 5px;
     image-rendering: pixelated; 
 }
 
@@ -217,34 +217,36 @@ body {
 /* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
 .support-link.main-nav-link,
 .forum-link.main-nav-link {
-    flex-direction: row; /* На десктопе всегда горизонтально */
+    flex-direction: row; /* Всегда горизонтально */
     align-items: center;
     padding: 0;
     min-width: unset;
     gap: 10px; /* Отступ между иконкой и текстовой группой */
+    font-size: 1.2em; /* Увеличим шрифт, чтобы было заметнее */
 }
 .support-link .nav-image, .forum-link .nav-image {
     margin-bottom: 0; /* Убираем вертикальный отступ */
+    max-width: 80px; /* Увеличим иконку для заметности */
 }
 
 
-/* FORUM: Текст СЛЕВА, Иконка СПРАВА */
+/* FORUM: Текст СЛЕВА, Иконка СПРАВА (Прижат к правой стороне) */
 .forum-link .text-group {
-    order: 0; /* Текст первый (СЛЕВА) */
-    align-items: flex-end; /* Выравнивание текста вправо для аккуратности */
+    order: 0; 
+    align-items: flex-end; 
 }
 .forum-link .nav-image {
-    order: 1; /* Иконка вторая (СПРАВА) */
+    order: 1; 
 }
 
 
-/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА */
+/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА (Прижат к левой стороне) */
 .support-link .nav-image {
-    order: 0; /* Иконка первая (СЛЕВА) */
+    order: 0; 
 }
 .support-link .text-group {
-    order: 1; /* Текст второй (СПРАВА) */
-    align-items: flex-start; /* Выравнивание текста влево для аккуратности */
+    order: 1; 
+    align-items: flex-start; 
 }
 
 
@@ -254,21 +256,21 @@ body {
     width: 100%;
     max-width: 700px; 
     box-sizing: border-box;
+    /* Увеличим вертикальный отступ, чтобы разделить их */
+    margin-top: 25px; 
+    margin-bottom: 25px; 
 }
 
 /* FORUM - прижат к правой стороне */
 .row-forum {
     justify-content: flex-end; 
     padding-right: 20px; 
-    margin-top: 25px; 
 }
 
 /* SUPPORT - прижат к левой стороне */
 .row-support {
     justify-content: flex-start;
     padding-left: 20px; 
-    margin-top: 20px; 
-    margin-bottom: 25px; 
 }
 
 
@@ -442,39 +444,6 @@ body {
         max-width: 300px;
     }
 
-    /* Ряды FORUM и SUPPORT центрируем на мобилках */
-    .row-forum, .row-support {
-        justify-content: center; /* Центрируем ряды на мобилках */
-        padding: 0;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    /* SUPPORT та FORUM на мобілках стають вертикальними */
-    .support-link.main-nav-link, .forum-link.main-nav-link {
-        flex-direction: column !important; /* Главный контейнер вертикально */
-        justify-content: center !important; 
-        align-items: center !important;
-        text-align: center !important;
-        min-width: unset;
-        width: 100%;
-        padding: 5px 0 !important;
-        font-size: 1.1em;
-    }
-    
-    /* Текстовая группа и иконка центрируются */
-    .support-link .text-group, .forum-link .text-group {
-        align-items: center;
-    }
-
-    .support-link .nav-image, .forum-link .nav-image {
-        margin-bottom: 5px;
-        order: unset; /* Сбрасываем порядок, чтобы иконка была сверху */
-    }
-    .support-link .button-sub-caption, .forum-link .button-sub-caption {
-        margin-top: 2px;
-    }
-    
     /* EX | ADA (Вертикально по центру) */
     .row-two-items {
         flex-direction: column;
