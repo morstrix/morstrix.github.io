@@ -12,7 +12,7 @@
     --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
     --back-cross-color: #000000c8;
-    --social-icon-color:  var(--main-text-color);
+    --social-icon-color:  var(--main-text-color); /* Используем основной цвет текста */
 }
 
 html {
@@ -49,6 +49,8 @@ body {
     padding: 5px 0;
     box-sizing: border-box;
     position: relative;
+    /* Убедимся, что контейнер занимает достаточно места для иконок */
+    flex-grow: 1; 
 }
 
 .main-title-container {
@@ -59,7 +61,7 @@ body {
 
 .main-logo-image {
     width: 90%;
-    max-width: 280px;
+    max-width: 240px; /* Сделали логотип чуть меньше (было 280px) */
     height: auto;
     display: block;
     margin: 0 auto 15px;
@@ -167,10 +169,36 @@ body {
     text-align: center;
 }
 
-/* Темно-красный для 'how to play?' */
+/* Темно-красный для 'how to play?' - обновлено на 'BOT' */
 #forum-link .button-sub-caption {
     color: #C00000;
 }
+
+/* ------------------------------------------- */
+/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ */
+/* ------------------------------------------- */
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap; /* Для переноса на новую строку на маленьких экранах */
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Расстояние между иконками */
+    margin-top: 30px; /* Отступ от навигационных ссылок */
+    margin-bottom: 20px;
+}
+
+.social-icon {
+    font-size: 2.2em; /* Размер иконки */
+    color: var(--social-icon-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.social-icon:hover {
+    color: #ffffff; /* Белый цвет при наведении */
+}
+
 
 /* ------------------------------------------- */
 /* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ */
@@ -267,7 +295,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 220px;
+        max-width: 200px; /* Уменьшаем еще для мобильных */
         margin-bottom: 5px;
     }
 
@@ -277,5 +305,10 @@ body {
     
     .main-nav-link {
         font-size: 1.3em;
+    }
+
+    .social-links {
+        gap: 10px;
+        margin-top: 20px;
     }
 }
