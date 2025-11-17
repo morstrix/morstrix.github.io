@@ -12,7 +12,7 @@
     --link-button-shadow-color: #1f3d1f;
     --back-button-color: #555555;
     --back-cross-color: #000000c8;
-    --social-icon-color:  var(--main-text-color); /* Оригінальний колір, не змінював */
+    --social-icon-color:  var(--main-text-color); /* Оригінальний колір */
 }
 
 html {
@@ -25,7 +25,7 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Видалив overflow: hidden; щоб дозволити скрол і зробити нижні елементи видимими */
+    /* Видалив overflow: hidden; для дозволу скролу */
 }
 
 .site-section {
