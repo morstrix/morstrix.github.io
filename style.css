@@ -168,7 +168,7 @@ body {
 
 .button-sub-caption {
     display: block;
-    font-size: 0.45em; /* Зменшуємо розмір підпису */
+    font-size: 0.45em; 
     margin-top: 2px;
     color: var(--main-text-color); 
 }
@@ -180,51 +180,51 @@ body {
     image-rendering: pixelated; 
 }
 
-/* НОВІ СТИЛІ ДЛЯ МАКЕТУ FLEX (для контролю рядків) */
+/* НОВІ СТИЛІ ДЛЯ МАКЕТУ: Grid з 2 колонками */
 .folder-container {
-    display: flex;
-    flex-direction: column; /* Основний потік - стовпчик */
+    display: grid; /* Змінюємо на grid */
+    grid-template-columns: 1fr 1fr; /* Дві однакові колонки */
+    gap: 15px 10px; /* Вертикальний та горизонтальний проміжок між елементами */
     width: 100%;
     max-width: 650px; 
-    margin-top: 10px; 
+    margin-top: 20px;
     padding: 0 10px;
 }
 
-.folder-row {
-    display: flex;
-    justify-content: space-evenly; /* Рівномірний розподіл */
-    align-items: flex-start;
-    width: 100%;
-    margin-bottom: 10px; /* Відстань між рядами */
+/* ------------------------------------------- */
+/* Спеціальні стилі для горизонтального розташування тексту/картинки (як Forum/Support) */
+/* ------------------------------------------- */
+
+/* Стилі для Forum (підпис ліворуч, картинка праворуч) */
+.forum-link.main-nav-link {
+    flex-direction: row-reverse; /* Міняємо місцями: текст-картинка */
+    align-items: center;
+    justify-content: flex-end; /* Вирівнюємо до правого краю контейнера */
+    text-align: right;
     gap: 10px;
+    padding: 10px; 
+}
+.forum-link .nav-image {
+    margin-bottom: 0;
+}
+.forum-link .button-sub-caption {
+    margin-top: 0;
 }
 
-.full-row-link {
-    max-width: 300px; /* Збільшуємо ширину для елементів, що стоять окремо */
-    flex-grow: 0; 
-    margin: 0 auto 10px; /* Центруємо */
+/* Стилі для Support (картинка ліворуч, підпис праворуч) */
+.support-link.main-nav-link {
+    flex-direction: row; /* Картинка-текст */
+    align-items: center;
+    justify-content: flex-start; /* Вирівнюємо до лівого краю контейнера */
+    text-align: left;
+    gap: 10px;
+    padding: 10px; 
 }
-
-.main-nav-link:not(.full-row-link) {
-    flex-grow: 1; 
-    max-width: 150px; 
+.support-link .nav-image {
+    margin-bottom: 0;
 }
-
-/* Прибираємо реверсовані стилі, оскільки тепер все вертикально */
-.reverse-content, .normal-content {
-    flex-direction: column !important; 
-    text-align: center !important;
-    gap: 0 !important;
-    padding: 5px !important;
-    justify-content: center !important;
-}
-
-.reverse-content .nav-image, .normal-content .nav-image {
-    margin-bottom: 5px;
-}
-
-.reverse-content .button-sub-caption, .normal-content .button-sub-caption {
-    margin-top: 2px;
+.support-link .button-sub-caption {
+    margin-top: 0;
 }
 
 
@@ -331,7 +331,6 @@ body {
 /* ------------------------------------------- */
 
 .bottom-images {
-    /* Видалено, але залишаємо для запобігання помилок, якщо десь залишилася HTML-розмітка */
     display: none;
 }
 
@@ -376,26 +375,31 @@ body {
     }
 
     .folder-container {
-        max-width: 400px;
-        margin-top: 15px;
-    }
-    
-    .folder-row {
-        flex-direction: column; /* На мобілках кожен елемент в новому рядку */
+        grid-template-columns: 1fr; /* На мобілках знову один стовпчик */
         gap: 15px;
+        max-width: 350px; 
     }
     
-    .main-nav-link, .full-row-link {
-        flex-grow: 1; 
-        max-width: 100% !important; /* Розтягуємо на всю ширину */
-        margin: 0 !important;
-    }
-
     .main-nav-link {
         font-size: 1em; 
         min-width: unset;
+        flex-direction: column !important; /* На мобілках завжди стовпчиком */
+        text-align: center !important;
+        padding: 5px !important;
     }
     
+    .forum-link.main-nav-link, .support-link.main-nav-link {
+        justify-content: center !important; 
+    }
+
+    .forum-link .nav-image, .support-link .nav-image {
+        margin-bottom: 5px; 
+        margin-right: 0;
+    }
+    .forum-link .button-sub-caption, .support-link .button-image {
+        margin-top: 2px;
+    }
+
     .nav-image {
         max-width: 60px; 
     }

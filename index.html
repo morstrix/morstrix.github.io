@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=2.2">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=2.4">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     
@@ -36,60 +36,53 @@
     
             <div class="folder-container"> 
                 
-                <div class="folder-row">
-                    <a href="shop.html" class="main-nav-link full-row-link" id="shop-link">
-                        <img src="morstrix.jpg" alt="Shop Room" class="nav-image" loading="lazy">
-                        SHOP
-                        <span class="button-sub-caption">ROOM</span>
-                    </a>
-                </div>
+                <a href="shop.html" class="main-nav-link" id="shop-link">
+                    <img src="morstrix.jpg" alt="Shop Room" class="nav-image" loading="lazy">
+                    SHOP
+                    <span class="button-sub-caption">ROOM</span>
+                </a>
                 
-                <div class="folder-row">
-                    <a href="magazine.html" class="main-nav-link full-row-link" id="magazine-link">
-                        <img src="helper.jpg" alt="Helper App" class="nav-image" loading="lazy">
-                        HELPER
-                        <span class="button-sub-caption">APP</span>
-                    </a>
-                </div>
+                <a href="magazine.html" class="main-nav-link" id="magazine-link">
+                    <img src="helper.jpg" alt="Helper App" class="nav-image" loading="lazy">
+                    HELPER
+                    <span class="button-sub-caption">APP</span>
+                </a>
                 
-                <div class="folder-row">
-                    <a href="forum.html" class="main-nav-link" id="forum-link">
-                        <img src="forum.jpg" alt="Forum Bot" class="nav-image" loading="lazy">
-                        F O R U M
-                        <span class="button-sub-caption">BOT</span>
-                    </a>
-                    <a href="helper.html" class="main-nav-link" id="helper-link">
-                        <img src="support.jpg" alt="Support Bot" class="nav-image" loading="lazy">
-                        SUPPORT
-                        <span class="button-sub-caption">BOT</span>
-                    </a>
-                </div>
+                <a href="forum.html" class="main-nav-link forum-link" id="forum-link">
+                    F O R U M
+                    <span class="button-sub-caption">BOT</span>
+                    <img src="forum.jpg" alt="Forum Bot" class="nav-image" loading="lazy">
+                </a>
                 
-                <div class="folder-row">
-                    <a href="sklad.html" class="main-nav-link" id="sklad-link">
-                        <img src="sklad.jpg" alt="Sklad Media" class="nav-image" loading="lazy">
-                        SKLAD
-                        <span class="button-sub-caption">MEDIA</span>
-                    </a>
-                    <a href="moderator.html" class="main-nav-link" id="moderator-link">
-                        <img src="moderator.jpg" alt="Moderator Room" class="nav-image" loading="lazy">
-                        MODERATOR
-                        <span class="button-sub-caption">ROOM</span>
-                    </a>
-                </div>
+                <a href="helper.html" class="main-nav-link support-link" id="helper-link">
+                    <img src="support.jpg" alt="Support Bot" class="nav-image" loading="lazy">
+                    SUPPORT
+                    <span class="button-sub-caption">BOT</span>
+                </a>
                 
-                <div class="folder-row">
-                    <a href="ex.html" class="main-nav-link" id="ex-link">
-                        <img src="ex.jpg" alt="Ex Profile" class="nav-image" loading="lazy">
-                        EX
-                        <span class="button-sub-caption">ROOM</span>
-                    </a>
-                    <a href="ada.html" class="main-nav-link" id="ada-link">
-                        <img src="a.jpg" alt="Ada Profile" class="nav-image" loading="lazy">
-                        ADA
-                        <span class="button-sub-caption">ROOM</span>
-                    </a>
-                </div>
+                <a href="sklad.html" class="main-nav-link" id="sklad-link">
+                    <img src="sklad.jpg" alt="Sklad Media" class="nav-image" loading="lazy">
+                    SKLAD
+                    <span class="button-sub-caption">MEDIA</span>
+                </a>
+                
+                <a href="moderator.html" class="main-nav-link" id="moderator-link">
+                    <img src="moderator.jpg" alt="Moderator Room" class="nav-image" loading="lazy">
+                    MODERATOR
+                    <span class="button-sub-caption">ROOM</span>
+                </a>
+                
+                <a href="ex.html" class="main-nav-link" id="ex-link">
+                    <img src="ex.jpg" alt="Ex Profile" class="nav-image" loading="lazy">
+                    EX
+                    <span class="button-sub-caption">ROOM</span>
+                </a>
+                
+                <a href="ada.html" class="main-nav-link" id="ada-link">
+                    <img src="a.jpg" alt="Ada Profile" class="nav-image" loading="lazy">
+                    ADA
+                    <span class="button-sub-caption">ROOM</span>
+                </a>
                 
             </div>
             
@@ -97,46 +90,41 @@
     </div>
     
     <script>
-        // Використовуємо DOMContentLoaded для прискорення виконання
         document.addEventListener('DOMContentLoaded', function() {
             var splash = document.getElementById('splash-screen');
             var mainContent = document.getElementById('main-content');
             
-            // Якщо елементів немає, зупиняємось
             if (!splash || !mainContent) {
-                console.error("Splash screen or main content element not found.");
-                return;
+                if (mainContent) mainContent.style.display = 'block';
+                return; 
             }
             
-            // 1. Перевіряємо, чи інтро вже було показано в цій сесії
+            if (window.location.protocol === 'file:') {
+                splash.style.display = 'none';
+                mainContent.style.display = 'block';
+                return; 
+            }
+            
             if (sessionStorage.getItem('introPlayed')) {
-                // Якщо було, приховуємо інтро негайно і показуємо контент
                 splash.style.display = 'none';
                 mainContent.style.display = 'block';
             } else {
-                // Якщо не було, показуємо інтро з затримкою
-                
-                // !!! ДОДАТКОВА ГАРАНТІЯ: Якщо щось піде не так, показуємо контент через 3.5 секунди
                 var safetyTimeout = setTimeout(function() {
                     splash.style.display = 'none';
                     mainContent.style.display = 'block';
                     sessionStorage.setItem('introPlayed', 'true');
-                    console.warn("Splash screen fallback executed.");
                 }, 3500); 
                 
-                // Основна логіка: 2 секунди лого
                 setTimeout(function() {
-                    clearTimeout(safetyTimeout); // Зупиняємо safety-timeout
+                    clearTimeout(safetyTimeout); 
+                    splash.style.opacity = '0';  
                     
-                    splash.style.opacity = '0';  // Плавне зникнення (0.5 сек)
-                    
-                    // Після завершення transition
                     setTimeout(function() {
                         splash.style.display = 'none';
-                        mainContent.style.display = 'block';  // Показуємо контент
+                        mainContent.style.display = 'block';  
                         sessionStorage.setItem('introPlayed', 'true');
                     }, 500); 
-                }, 2000);  // 2 секунди затримки
+                }, 2000); 
             }
         });
     </script>
