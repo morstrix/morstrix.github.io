@@ -25,7 +25,7 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Видалив overflow: hidden; для дозволу скролу */
+    /* Без overflow: hidden для скролу */
 }
 
 .site-section {
@@ -60,7 +60,7 @@ body {
 
 .main-logo-image {
     width: 90%;
-    max-width: 240px; /* ИСПРАВЛЕНО: для меньшего логотипа */
+    max-width: 240px;
     height: auto;
     display: block;
     margin: 0 auto 15px;
@@ -75,7 +75,7 @@ body {
     padding: 20px 30px;
     text-align: center;
     background-color: var(--button-green-dark);
-    color: #000000; /* Верхний текст будет черным */
+    color: #000000;
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 1.1em;
@@ -142,12 +142,12 @@ body {
 /* ------------------------------------------- */
 
 .main-nav-link {
-    color: var(--main-text-color); /* Используем твой основной цвет */
+    color: var(--main-text-color);
     text-decoration: none;
-    font-size: 1.5em; /* Делаем текст крупнее */
+    font-size: 1.5em;
     font-weight: 600;
     text-align: center;
-    margin: 10px 0; /* Вертикальный отступ между ссылками */
+    margin: 10px 0;
     padding: 10px;
     transition: all 0.2s ease;
     display: flex;
@@ -156,13 +156,13 @@ body {
 }
 
 .main-nav-link:hover {
-    color: #ffffff; /* Белый цвет при наведении для контраста */
+    color: #ffffff;
 }
 
 /* Стили для нижнего серого текста */
 .button-sub-caption {
     color: #AAAAAA; 
-    font-size: 0.6em; /* Размер относительно родителя .main-nav-link */
+    font-size: 0.6em;
     margin-top: 8px;
     display: block;
     text-align: center;
@@ -174,7 +174,7 @@ body {
 }
 
 /* ------------------------------------------- */
-/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ (ИСПРАВЛЕНО) */
+/* СТИЛИ ДЛЯ ИКОНОК СОЦИАЛЬНЫХ СЕТЕЙ */
 /* ------------------------------------------- */
 
 .social-links {
@@ -182,30 +182,37 @@ body {
     flex-wrap: wrap; 
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Расстояние между иконками */
+    gap: 15px;
     margin-top: 30px; 
     margin-bottom: 20px;
 }
 
 .social-icon {
-    font-size: 2.2em; /* Размер иконки */
+    font-size: 2.2em;
     color: var(--social-icon-color);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .social-icon:hover {
-    color: #ffffff; /* Белый цвет при наведении */
+    color: #ffffff;
 }
-
 
 /* ------------------------------------------- */
 /* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ */
 /* ------------------------------------------- */
 
-.digital-magazine-button, .forum-button, .helper-button, .shop-button {
+.digital-magazine-button, .forum-button, .helper-button, .shop-button, .insta-button, .media-button {
     background-color: var(--link-button-color);
     box-shadow: none;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px; /* Відстань між кнопками */
 }
 
 .digital-magazine-button {
@@ -215,18 +222,9 @@ body {
     padding: 15px 30px;
 }
 
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover {
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover, .insta-button:hover, .media-button:hover {
     transform: translate(0);
     box-shadow: none;
-}
-
-/* Стили для зеленого текста 'ЖУРНАЛ' */
-.magazine-button-label {
-    color: var(--main-text-color);
-    font-size: 0.8em;
-    margin-top: 5px;
-    display: block;
-    text-align: center;
 }
 
 /* ------------------------------------------- */
@@ -258,15 +256,11 @@ body {
     image-rendering: pixelated;
 }
 
-.magazine-info-box, .forum-info-box, .helper-info-box {
+.magazine-info-box, .forum-info-box, .helper-info-box, .shop-info-box, .insta-info-box, .sklad-info-box {
     box-shadow: none;
 }
 
-.shop-info-box {
-    box-shadow: none;
-}
-
-.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p {
+.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p {
     color: #fff;
 }
 
@@ -294,7 +288,7 @@ body {
 
 @media (max-width: 768px) {
     .main-logo-image {
-        max-width: 200px; /* Уменьшаем еще для мобильных */
+        max-width: 200px;
         margin-bottom: 5px;
     }
 
@@ -309,5 +303,9 @@ body {
     .social-links {
         gap: 10px;
         margin-top: 20px;
+    }
+
+    .link-container {
+        gap: 15px;
     }
 }
