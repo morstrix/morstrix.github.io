@@ -7,7 +7,7 @@
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
-    --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
+    --info-box-color: #ffffff; /* Белый цвет теперь не используется для info-box */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
@@ -148,14 +148,14 @@ body {
 }
 
 .retro-info-box {
-    background-color: var(--bg-color); /* ИЗМЕНЕНИЕ: фон инфо-бокса теперь черный */
-    border: none; /* ИЗМЕНЕНИЕ: Убираем белую рамку */
-    box-shadow: none; /* ИЗМЕНЕНИЕ: Убираем тень, которая могла выглядеть как рамка */
+    background-color: var(--bg-color); /* ИЗМЕНЕНИЕ: фон инфо-бокса теперь черный (прозрачный) */
+    border: none; /* ИЗМЕНЕНИЕ: Убираем рамку */
+    box-shadow: none; /* ИЗМЕНЕНИЕ: Убираем тень */
     padding: 10px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--main-text-color); /* ИЗМЕНЕНИЕ: Текст становится зеленым */
+    color: var(--main-text-color); /* Текст теперь зеленый */
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -344,7 +344,8 @@ body {
     box-shadow: none;
 }
 
-/* --- СТРЕЛКИ УДАЛЕНЫ ПО ЗАПРОСУ ПОЛЬЗОВАТЕЛЯ --- */
+/* --- СТРЕЛКИ И СТАРАЯ СТИЛИЗАЦИЯ УДАЛЕНЫ --- */
+
 
 /* ------------------------------------------- */
 /* АДАПТАЦІЯ (Для мобільних пристроїв) */
@@ -372,8 +373,6 @@ body {
         max-width: 95%;
         padding: 8px;
     }
-    /* Горизонтальное центрирование ссылок сохраняется для лучшей читаемости, 
-       но вертикальное центрирование на Index.html отсутствует (main-section: flex-start) */
     .dialog-link.align-left, .dialog-link.align-right {
         margin: 5px auto; 
         align-self: center;
