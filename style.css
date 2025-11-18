@@ -3,14 +3,14 @@
     --grid-color: rgba(0, 150, 0, 0.1); /* Дуже тонка зелена сітка */
     --main-text-color: #368600; /* Зелений термінальний текст */
     
-    /* НОВІ СТИЛІ КНОПОК: ЧОРНИЙ ФОН, ЗЕЛЕНИЙ ОБВІД ТА ТІНЬ */
+    /* СТИЛІ КНОПОК */
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
-    --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
+    --link-button-shadow-color: var(--main-text-color); 
     
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
-    --back-button-color: #ff0000; /* ЗРОБИВ ЧЕРВОНИМ КОЛІР КНОПКИ НАЗАД */
+    --back-button-color: #ff0000; /* ЧЕРВОНИЙ КОЛІР КНОПКИ НАЗАД */
     --back-cross-color: #000000; /* Чорний хрестик */
     --social-icon-color:  var(--main-text-color);
 }
@@ -25,7 +25,8 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Ефект сітки CRT ВИДАЛЕНО, тепер фон ЧИСТО ЧОРНИЙ */
+    /* ВИДАЛЕНО: Ефект сітки CRT */
+    /* ВИДАЛЕНО: text-shadow (світіння тексту) */
 }
 
 /* ------------------------------------------- */
@@ -35,7 +36,7 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрируем контент по вертикали в комнатах */
+    justify-content: center; 
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
@@ -45,18 +46,18 @@ body {
 }
 
 .main-section {
-    justify-content: flex-start; /* На главной странице контент остается сверху */
+    justify-content: flex-start; 
     min-height: 100vh; 
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Вирівнювання до верху */
+    justify-content: flex-start; 
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0; /* Прибрав внутрішні відступи */
+    padding: 0; 
     box-sizing: border-box;
     position: relative;
     flex-grow: 1; 
@@ -67,16 +68,16 @@ body {
     padding: 10px 20px;
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-end; /* РОЗМІСТИВ КНОПКУ СПРАВА */
+    justify-content: flex-end; 
     align-items: center;
-    position: absolute; /* Фіксуємо його відносно батьківського елемента */
+    position: absolute; 
     top: 0;
     left: 0;
     z-index: 10;
 }
 
 .back-button {
-    background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
+    background-color: var(--back-button-color); 
     border: none;
     padding: 0; 
     width: 30px;
@@ -88,7 +89,7 @@ body {
     transition: all 0.1s ease;
     text-decoration: none;
     border-radius: 0;
-    margin-left: auto; /* Щоб притиснути до правого краю */
+    margin-left: auto; 
     margin-right: 0;
 }
 
@@ -101,7 +102,7 @@ body {
     width: 20px; 
     height: 20px; 
     image-rendering: pixelated; 
-    filter: invert(1); /* Робить чорний колір білим, якщо у вас чорний хрестик */
+    filter: invert(1); 
     background-color: transparent;
 }
 
@@ -117,8 +118,8 @@ body {
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: none; 
-    box-shadow: none; 
+    border: none; /* ВИДАЛЕНО: Зелена рамка */
+    box-shadow: none; /* ВИДАЛЕНО: Зелена тінь */
     transition: all 0.1s ease;
     display: inline-block;
     cursor: pointer;
@@ -129,10 +130,9 @@ body {
 
 .retro-button:hover {
     box-shadow: none;
-    transform: none;
+    transform: none; 
     color: #ffffff; 
-    /* Тимчасове світіння при ховері, щоб було видно */
-    text-shadow: 0 0 10px #ffffff;
+    text-shadow: 0 0 10px #ffffff; /* Залишаємо світіння тільки при наведенні */
 }
 
 /* Кнопка .APK */
@@ -142,16 +142,16 @@ body {
     font-size: 1em;
 }
 
-/* ГЛАВНЫЙ ИЗМЕНЯЕМЫЙ БЛОК: Убираем все рамки и фоны */
+/* ІНФО-БОКС: Усі рамки та тіні прибрано */
 .retro-info-box {
-    background-color: var(--bg-color); /* Черный фон, сливается с body */
+    background-color: var(--bg-color); 
     border: none; 
     box-shadow: none; 
     padding: 10px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--main-text-color); /* Текст теперь зеленый */
+    color: var(--main-text-color); 
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -159,9 +159,9 @@ body {
     position: relative; 
 }
 
-/* УДАЛЕНО: СТИЛИ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
+/* Приховуємо старі зображення */
 .info-box-image {
-    display: none; /* Прячем картинки, если они остались в HTML */
+    display: none; 
     width: 50px; 
     height: 50px;
     object-fit: contain; 
@@ -177,7 +177,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
+    margin-top: 20px; 
 }
 
 .main-logo-image {
@@ -224,7 +224,6 @@ body {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
-    /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -277,7 +276,6 @@ body {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
-    /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -350,7 +348,7 @@ body {
 
 
 /* ------------------------------------------- */
-/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) - ОНОВЛЕНО */
+/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) */
 /* ------------------------------------------- */
 
 .section-image {
@@ -360,8 +358,8 @@ body {
     object-fit: contain; 
     image-rendering: pixelated;
     margin: 10px auto 20px auto; 
-    border: none; 
-    box-shadow: none; 
+    border: none; /* ВИДАЛЕНО: Зелена рамка */
+    box-shadow: none; /* ВИДАЛЕНО: Тінь */
 }
 
 /* Налаштування для helper.html */
