@@ -22,22 +22,22 @@ body {
 
 .main-logo-image {
     width: 100%; /* Масштабируется по контейнеру */
-    max-width: 300px; /* Максимум 300px, чтобы не было слишком большим */
-    height: auto; /* Сохраняет пропорции */
-    image-rendering: pixelated; /* Для пиксель-арта */
+    max-width: 300px; /* Максимум 300px */
+    height: auto;
+    image-rendering: pixelated;
 }
 
-/* Остальной код как раньше, но с фиксами для диалога */
+/* БАЗОВИЙ ЛАЙАУТ */
 .site-section {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start; /* Диалог зліва */
+    align-items: center; /* Центр для десктопа, переопределим для мобильных */
     width: 100vw;
     min-height: 90vh;
     padding: 10px 20px;
     box-sizing: border-box;
-    text-align: left;
+    text-align: center;
 }
 
 .main-section {
@@ -49,7 +49,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center; /* Центр для десктопа */
     height: 100%;
     width: 100%;
     padding: 0;
@@ -101,6 +101,7 @@ body {
     background-color: transparent;
 }
 
+/* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
 .retro-button {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--link-button-color);
@@ -197,8 +198,14 @@ body {
     line-height: 1.1;
 }
 
-.dialog-style {
-    align-items: flex-start;
+/* ДІАЛОГОВИЙ СТИЛЬ */
+.folder-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Розтягує, щоб align-self працював */
+    width: 100%;
+    max-width: 600px; /* Обмеження ширини для центру */
+    margin: 0 auto; /* Центрування контейнера */
 }
 
 .dialog-link.main-nav-link {
@@ -227,7 +234,7 @@ body {
 .dialog-link.align-left {
     align-self: flex-start;
     margin-right: auto;
-    margin-left: 0 !important;
+    margin-left: 5%; /* Невеликий відступ для диалогу */
 }
 
 .dialog-link.align-left .nav-image {
@@ -243,7 +250,7 @@ body {
 .dialog-link.align-right {
     align-self: flex-end;
     margin-left: auto;
-    margin-right: 0 !important;
+    margin-right: 5%; /* Невеликий відступ для диалогу */
 }
 
 .dialog-link.align-right .text-group {
@@ -279,35 +286,39 @@ body {
     color: #ffffff;
 }
 
+/* МОБІЛЬНА АДАПТАЦІЯ */
 @media (max-width: 768px) {
     body {
         font-size: 0.9em;
     }
 
+    .site-section, .main-container {
+        align-items: stretch; /* Для диалогу на мобільних */
+    }
+
     .folder-container {
         gap: 10px;
-        align-items: flex-start !important;
     }
 
     .main-logo-image {
-        max-width: 200px; /* Зменшено для мобильных */
+        max-width: 200px;
     }
 
     .dialog-link.main-nav-link {
         font-size: 0.8em;
-        width: 95%;
-        max-width: 95%;
+        width: 90%;
+        max-width: 90%;
         padding: 8px;
     }
 
     .dialog-link.align-left {
-        margin-left: 0 !important;
+        margin-left: 5% !important;
         margin-right: auto;
         align-self: flex-start;
     }
 
     .dialog-link.align-right {
-        margin-right: 0 !important;
+        margin-right: 5% !important;
         margin-left: auto;
         align-self: flex-end;
     }
