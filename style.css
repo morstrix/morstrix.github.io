@@ -25,10 +25,7 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Ефект сітки CRT */
-    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 100% 2px;
-    /* ВИДАЛЕНО: text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); */
+    /* Ефект сітки CRT ВИДАЛЕНО, тепер фон ЧИСТО ЧОРНИЙ */
 }
 
 /* ------------------------------------------- */
@@ -120,8 +117,8 @@ body {
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: none; /* ВИДАЛЕНО: 3px solid var(--main-text-color); */
-    box-shadow: none; /* ВИДАЛЕНО: 6px 6px 0 var(--link-button-shadow-color); */
+    border: none; 
+    box-shadow: none; 
     transition: all 0.1s ease;
     display: inline-block;
     cursor: pointer;
@@ -131,8 +128,8 @@ body {
 }
 
 .retro-button:hover {
-    box-shadow: none; /* ВИДАЛЕНО: 3px 3px 0 var(--link-button-shadow-color); */
-    transform: none; /* ВИДАЛЕНО: translate(3px, 3px); */
+    box-shadow: none;
+    transform: none;
     color: #ffffff; 
     /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
@@ -148,8 +145,8 @@ body {
 /* ГЛАВНЫЙ ИЗМЕНЯЕМЫЙ БЛОК: Убираем все рамки и фоны */
 .retro-info-box {
     background-color: var(--bg-color); /* Черный фон, сливается с body */
-    border: none; /* УДАЛЕНО: Рамка */
-    box-shadow: none; /* УДАЛЕНО: Тень */
+    border: none; 
+    box-shadow: none; 
     padding: 10px;
     margin: 20px auto;
     width: 80%;
@@ -363,8 +360,8 @@ body {
     object-fit: contain; 
     image-rendering: pixelated;
     margin: 10px auto 20px auto; 
-    border: none; /* ВИДАЛЕНО: 1px solid var(--main-text-color); */
-    box-shadow: none; /* ВИДАЛЕНО: 0 0 5px var(--main-text-color); */
+    border: none; 
+    box-shadow: none; 
 }
 
 /* Налаштування для helper.html */
