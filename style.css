@@ -8,10 +8,10 @@
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
     --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
-    --arrow-color: #ff00ff;
-    --arrow-shadow-color: #ff00ff;
+    --arrow-color: #ff00ff; /* ЗМІННА КОЛЬОРУ СТРІЛКИ - БІЛЬШЕ НЕ ВИКОРИСТОВУЄТЬСЯ */
+    --arrow-shadow-color: #ff00ff; /* ЗМІННА ТІНІ СТРІЛКИ - БІЛЬШЕ НЕ ВИКОРИСТОВУЄТЬСЯ */
     --helper-box-color: #004d00;
-    --back-button-color: #ff0000; /* ЗРОБИВ ЧЕРВОНИМ КОЛІР КНОПКИ НАЗАД */
+    --back-button-color: #ff0000; /* ЧЕРВОНИЙ КОЛІР КНОПКИ НАЗАД */
     --back-cross-color: #000000; /* Чорний хрестик */
     --social-icon-color:  var(--main-text-color);
 }
@@ -157,7 +157,7 @@ body {
     font-size: 0.7em;
     line-height: 1.4;
     box-sizing: border-box;
-    position: relative; /* Щоб можна було розмістити стрілку */
+    position: relative; 
 }
 
 /* СТИЛЬ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX (ADA/EX) */
@@ -266,8 +266,8 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
-    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
+    border: none; 
+    box-shadow: none; 
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
@@ -344,34 +344,7 @@ body {
 }
 
 /* Стрілка для інфо-блоку (як приклад) */
-.retro-info-box::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 15px 0 15px 20px; /* Розмір стрілки */
-    border-color: transparent transparent transparent var(--arrow-color);
-    right: -20px; /* Зсув від краю */
-    z-index: 5;
-    text-shadow: 0 0 10px var(--arrow-shadow-color);
-}
-/* Стрілка для лівих елементів */
-.align-left .retro-info-box::after {
-    left: 100%;
-    right: auto;
-    border-width: 15px 0 15px 20px;
-    border-color: transparent transparent transparent var(--arrow-color);
-}
-/* Стрілка для правих елементів */
-.align-right .retro-info-box::after {
-    left: -20px;
-    right: auto;
-    border-width: 15px 20px 15px 0;
-    border-color: transparent var(--arrow-color) transparent transparent;
-}
+/* ПСЕВДОЕЛЕМЕНТИ СТРІЛОК ПОЛНОСТЬЮ УДАЛЕНЫ */
 
 
 /* ------------------------------------------- */
@@ -393,23 +366,16 @@ body {
         margin-bottom: 5px;
     }
     
-    /* ЗБЕРЕЖЕННЯ ДІАЛОГОВОГО СТИЛЮ на мобільних */
+    /* ДІАЛОГОВИЙ СТИЛЬ: Всі повідомлення займають повну ширину */
     .dialog-link.main-nav-link {
         font-size: 0.8em;
         width: 95%; 
         max-width: 95%;
         padding: 8px;
     }
-    /* Вирівнювання по краях, а не по центру */
-    .dialog-link.align-left {
-        align-self: flex-start;
-        margin-right: auto;
-        margin-left: 5px;
-    }
-    .dialog-link.align-right {
-        align-self: flex-end;
-        margin-left: auto;
-        margin-right: 5px;
+    .dialog-link.align-left, .dialog-link.align-right {
+        margin: 5px auto; 
+        align-self: center;
     }
     .dialog-link.align-left .text-group { align-items: flex-start; }
     .dialog-link.align-right .text-group { align-items: flex-end; }
