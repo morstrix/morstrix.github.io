@@ -22,75 +22,84 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=2.9">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     
     <div id="splash-screen">
-        <img src="GAME-LOGO.jpg" alt="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ Logo" class="splash-logo">
+        <img src="GAME-LOGO.jpg" alt="Logo" class="splash-logo">
     </div>
-    
-    <div id="main-content" style="display: none;">
-        
-        <main class="main-container">
-    
-            <div class="folder-container"> 
+
+    <section id="main-content" class="site-section main-section" style="display: none;">
+        <div class="main-container">
+
+            <div class="main-title-container">
+                <img src="GAME-LOGO.jpg" alt="Main Logo" class="main-logo-image">
+            </div>
+            
+            <div class="folder-container">
                 
-                <div class="row-two-items-main">
-                    <a href="shop.html" class="main-nav-link link-shop" id="shop-link">
-                        <img src="morstrix.jpg" alt="Shop Room" class="nav-image" loading="lazy">
-                        SHOP
-                    </a>
-                    <a href="magazine.html" class="main-nav-link link-helper" id="magazine-link">
-                        <img src="helper.jpg" alt="Helper App" class="nav-image" loading="lazy">
-                        helper
-                        <span class="button-sub-caption">ANDROID APP</span>
-                    </a>
-                </div>
-                
-                <div class="row-single-center row-forum">
-                    <a href="forum.html" class="main-nav-link forum-link" id="forum-link">
+                <div class="row-asymmetric-top">
+                    <a href="helper.html" class="main-nav-link room-link right-aligned">
                         <div class="text-group">
-                            F O R U M
+                            HELPER
+                            <span class="button-sub-caption">ROOM</span>
                         </div>
-                        <img src="forum.jpg" alt="Forum Bot" class="nav-image" loading="lazy">
+                        <img src="H.jpg" alt="Helper Icon" class="nav-image"> 
+                    </a>
+                    
+                    <a href="forum.html" class="main-nav-link room-link left-aligned">
+                        <img src="S.jpg" alt="Forum Icon" class="nav-image"> 
+                        <div class="text-group">
+                            FORUM
+                            <span class="button-sub-caption">CLUB</span>
+                        </div>
                     </a>
                 </div>
-                
-                <div class="row-single-center row-support">
-                    <a href="helper.html" class="main-nav-link support-link" id="helper-link">
-                        <img src="support.jpg" alt="Support Bot" class="nav-image" loading="lazy">
+
+                <div class="row-asymmetric-middle">
+                    <a href="support.html" class="main-nav-link room-link right-aligned">
                         <div class="text-group">
                             SUPPORT
-                            <span class="button-sub-caption">paint/ai bot</span>
+                            <span class="button-sub-caption">CONTACT</span>
+                        </div>
+                        <img src="K.jpg" alt="Support Icon" class="nav-image"> 
+                    </a>
+                    
+                    <a href="sklad.html" class="main-nav-link room-link left-aligned">
+                        <img src="MEDIA.jpg" alt="Sklad Icon" class="nav-image">
+                        <div class="text-group">
+                            SKLAD
+                            <span class="button-sub-caption">MEDIA</span>
                         </div>
                     </a>
                 </div>
                 
                 <div class="row-two-items">
-                    <a href="https://www.instagram.com/a.mrsva" target="_blank" class="main-nav-link link-two" id="ada-link">
-                        <img src="a.jpg" alt="Ada Profile" class="nav-image" loading="lazy">
-                        ᘏᗢ
+                    <a href="ex.html" class="main-nav-link">
+                        <img src="EX.jpg" alt="EX Folder" class="nav-image">
+                        EX
                     </a>
-                    <a href="https://www.instagram.com/x.mrsv" target="_blank" class="main-nav-link link-two" id="ex-link">
-                        <img src="x.jpg" alt="Ex Profile" class="nav-image" loading="lazy">
-                    EX
-                    </a>
-                </div>
-                
-                <div class="row-single-center">
-                    <a href="sklad.html" class="main-nav-link sklad-link" id="sklad-link">
-                        <img src="sklad.jpg" alt="Sklad Media" class="nav-image" loading="lazy">
-                        склад
+                    <a href="ada.html" class="main-nav-link">
+                        <img src="ADA.jpg" alt="ADA Folder" class="nav-image">
+                        ADA
                     </a>
                 </div>
                 
             </div>
             
-        </main>
-    </div>
-    
+            <div class="social-links">
+                <a href="https://github.com/morstrix" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="https://t.me/morstrix" target="_blank" class="social-icon"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.patreon.com/gritspark" target="_blank" class="social-icon"><i class="fab fa-patreon"></i></a>
+            </div>
+            
+        </div>
+    </section>
+
     <script>
+        // ... (JavaScript для Splash Screen - без змін)
         document.addEventListener('DOMContentLoaded', function() {
             var splash = document.getElementById('splash-screen');
             var mainContent = document.getElementById('main-content');

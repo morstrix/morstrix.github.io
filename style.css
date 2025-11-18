@@ -180,7 +180,7 @@ body {
     image-rendering: pixelated; 
 }
 
-/* НОВЫЙ СТИЛЬ: Группировка текста и подписи (SUPPORT/FORUM) */
+/* НОВЫЙ СТИЛЬ: Группировка текста и подписи */
 .text-group {
     display: flex;
     flex-direction: column; 
@@ -204,33 +204,8 @@ body {
     gap: 15px; 
 }
 
-/* НОВЫЙ РЯД: SHOP и HELPER (Два элемента в ряд) */
-.row-two-items-main {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 450px; 
-    gap: 10px; 
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.row-two-items-main .main-nav-link {
-    width: 45%; 
-}
-
-/* РЯДОК 1, 2, 5: FORUM, SUPPORT, SKLAD (Одиночный элемент по центру) */
-.row-single-center {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.row-single-center .main-nav-link {
-    min-width: 150px; 
-}
-
-/* Стилі для SUPPORT/FORUM (Горизонтальный макет: Иконка <-> Текст) */
-.support-link.main-nav-link,
-.forum-link.main-nav-link {
+/* СТИЛЬ АСИММЕТРИЧНОЙ ССЫЛКИ (Иконка <-> Текст) */
+.room-link.main-nav-link { 
     flex-direction: row; 
     align-items: center;
     padding: 0;
@@ -238,56 +213,55 @@ body {
     gap: 10px; 
     font-size: 1.2em; 
 }
-.support-link .nav-image, .forum-link .nav-image {
+.room-link .nav-image {
     margin-bottom: 0; 
     max-width: 80px; 
 }
 
-
-/* FORUM: Текст СЛЕВА, Иконка СПРАВА (Прижат к правой стороне) */
-.forum-link .text-group {
-    order: 0; 
-    align-items: flex-end; 
-}
-.forum-link .nav-image {
-    order: 1; 
-}
-
-
-/* SUPPORT: Иконка СЛЕВА, Текст СПРАВА (Прижат к левой стороне) */
-.support-link .nav-image {
+/* 1. СТИЛЬ HELPER/SUPPORT (Прижат к левой стороне - Иконка СЛЕВА) */
+.room-link.left-aligned .nav-image {
     order: 0; 
 }
-.support-link .text-group {
+.room-link.left-aligned .text-group {
     order: 1; 
     align-items: flex-start; 
 }
 
+/* 2. СТИЛЬ FORUM/SKLAD (Прижат к правой стороне - Иконка СПРАВА) */
+.room-link.right-aligned .text-group {
+    order: 0; 
+    align-items: flex-end; 
+}
+.room-link.right-aligned .nav-image {
+    order: 1; 
+}
 
-/* Асимметричное выравнивание рядов FORUM и SUPPORT */
-.row-forum, .row-support {
+
+/* РЯДЫ: HELPER и FORUM */
+.row-asymmetric-top {
     display: flex;
+    justify-content: space-between; 
     width: 100%;
     max-width: 700px; 
     box-sizing: border-box;
+    padding: 0 20px;
     margin-top: 25px; 
     margin-bottom: 25px; 
 }
 
-/* FORUM - прижат к правой стороне */
-.row-forum {
-    justify-content: flex-end; 
-    padding-right: 20px; 
+/* РЯДЫ: SUPPORT и SKLAD */
+.row-asymmetric-middle {
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+    max-width: 700px; 
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin-top: 25px; 
+    margin-bottom: 25px; 
 }
 
-/* SUPPORT - прижат к левой стороне */
-.row-support {
-    justify-content: flex-start;
-    padding-left: 20px; 
-}
-
-
-/* РЯДОК 4: EX | ADA (Два елементи в ряд) */
+/* РЯД: EX и ADA (Два элемента внизу) */
 .row-two-items {
     display: flex;
     justify-content: space-between; 
@@ -295,16 +269,15 @@ body {
     width: 100%;
     max-width: 450px; 
     gap: 20px;
-    margin-top: 10px; 
+    margin-top: 30px; 
     margin-bottom: 10px; 
 }
 .row-two-items .main-nav-link {
     min-width: 100px;
 }
 
-
 /* ------------------------------------------- */
-/* СОЦИАЛЬНЫЕ ССЫЛКИ И КНОПКИ (Без изменений) */
+/* СОЦИАЛЬНЫЕ ССЫЛКИ И КНОПКИ */
 /* ------------------------------------------- */
 
 .social-links {
@@ -327,10 +300,10 @@ body {
 }
 
 /* ------------------------------------------- */
-/* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ (Без изменений) */
+/* СТИЛИ ДЛЯ КНОПОК НА ВНУТРЕННИХ СТРАНИЦАХ */
 /* ------------------------------------------- */
 
-.digital-magazine-button, .forum-button, .helper-button, .shop-button, .insta-button, .media-button, .link-button {
+.digital-magazine-button, .forum-button, .helper-button, .insta-button, .media-button, .link-button {
     background-color: var(--link-button-color);
     box-shadow: none;
     color: #fff; 
@@ -351,7 +324,7 @@ body {
     padding: 15px 30px;
 }
 
-.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .shop-button:hover, .insta-button:hover, .media-button:hover, .link-button:hover {
+.digital-magazine-button:hover, .forum-button:hover, .helper-button:hover, .insta-button:hover, .media-button:hover, .link-button:hover {
     transform: translate(0);
     box-shadow: none;
     background-color: var(--button-green-light);
@@ -387,21 +360,20 @@ body {
     image-rendering: pixelated;
 }
 
-/* Убрано: box-shadow: none; для общих инфо-боксов. Оставляем только настройки текста. */
-.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p, .ex-info-box p, .ada-info-box p {
+.magazine-info-box p, .forum-info-box p, .helper-info-box p, .insta-info-box p, .sklad-info-box p, .ex-info-box p, .ada-info-box p {
     color: #fff;
 }
 
 
 /* ------------------------------------------- */
-/* НОВЫЕ СТИЛИ ДЛЯ HELPER.HTML (Карусель и APK кнопка) */
+/* СТИЛИ ДЛЯ HELPER.HTML (Карусель и APK кнопка) */
 /* ------------------------------------------- */
 
 /* Контейнер для карусели: барабанный вид */
 .carousel-container {
     display: flex;
     overflow-x: scroll; 
-    scroll-snap-type: x mandatory; /* Обеспечивает плавную прокрутку к элементам */
+    scroll-snap-type: x mandatory; 
     gap: 15px;
     padding: 10px 0;
     width: 90%;
@@ -440,11 +412,6 @@ body {
     image-rendering: pixelated;
 }
 
-.carousel-item-shop:hover {
-    opacity: 0.8; 
-    cursor: pointer;
-}
-
 /* Стиль для ретро кнопки Download APK */
 .download-apk-button {
     margin-top: 30px;
@@ -454,39 +421,6 @@ body {
 .download-apk-button:hover {
     background-color: var(--arrow-shadow-color);
     opacity: 0.9;
-}
-
-/* ------------------------------------------- */
-/* НОВЫЕ СТИЛИ ДЛЯ SHOP.HTML (Рамка и Кнопка Patreon) */
-/* ------------------------------------------- */
-
-/* Стиль для тускло-зеленой рамки в shop.html */
-.shop-info-box {
-    /* Добавляем внешнюю тень для эффекта рамки, перекрывая inset-тень базового .retro-info-box */
-    box-shadow: 0 0 10px 2px var(--main-text-color), 0 0 20px 5px rgba(54, 134, 0, 0.3);
-}
-
-/* Стиль для кнопки "ДАТИ ГРОШЕЙ" (Patreon) */
-.patreon-button {
-    background-color: #ff424d; /* Фирменный цвет Patreon */
-    box-shadow: 0 0 10px #ff424d;
-    color: #000;
-}
-.patreon-button:hover {
-    background-color: #e53946;
-    box-shadow: 0 0 15px #e53946;
-}
-
-/* ------------------------------------------- */
-/* НИЖНЯ СЕКЦІЯ (ВТРАТИЛА АКТУАЛЬНІСТЬ) */
-/* ------------------------------------------- */
-
-.bottom-images {
-    display: none;
-}
-
-.image-link {
-    display: none;
 }
 
 /* ------------------------------------------- */
@@ -525,39 +459,34 @@ body {
         gap: 10px; 
     }
     
-    /* SHOP/HELPER: Остаются в ряду */
-    .row-two-items-main {
-        flex-direction: row;
-        justify-content: space-around;
-        max-width: 100%; 
-        width: 100%;
-        gap: 5px; 
-    }
-    .row-two-items-main .main-nav-link {
-        font-size: 0.7em; 
-        padding: 5px 2px;
-        max-width: 120px; 
-        width: 45%;
-    }
-    .row-two-items-main .nav-image {
-        max-width: 30px; 
-    }
-
-    /* FORUM и SUPPORT: Уменьшаем отступы между ними */
-    .row-forum, .row-support {
-        margin-top: 15px; 
-        margin-bottom: 15px;
+    /* HELPER/FORUM/SUPPORT/SKLAD в один ряд для мобильных */
+    .row-asymmetric-top, .row-asymmetric-middle {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+        margin-top: 10px; 
+        margin-bottom: 10px;
     }
     
-    /* SKLAD: Выравнивание и размер */
-    .row-single-center .main-nav-link {
-        min-width: unset;
-        width: 100%;
+    .room-link.main-nav-link {
+        flex-direction: row; 
         font-size: 1.1em;
+        width: 90%;
         max-width: 300px;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 5px;
     }
-
-    /* EX | ADA: ИСПРАВЛЕНО - СНОВА В ОДИН РЯД */
+    
+    .room-link.left-aligned .nav-image { order: 0; }
+    .room-link.left-aligned .text-group { order: 1; align-items: flex-start; }
+    
+    .room-link.right-aligned .nav-image { order: 1; }
+    .room-link.right-aligned .text-group { order: 0; align-items: flex-end; }
+    
+    
+    /* EX | ADA: Снова в один ряд */
     .row-two-items {
         flex-direction: row; 
         justify-content: space-around; 
