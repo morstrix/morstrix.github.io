@@ -148,14 +148,14 @@ body {
 }
 
 .retro-info-box {
-    background-color: var(--info-box-color);
-    border: 3px solid var(--main-text-color);
-    box-shadow: 0 0 15px rgba(54, 134, 0, 0.7); 
+    background-color: var(--bg-color); /* ИЗМЕНЕНИЕ: фон инфо-бокса теперь черный */
+    border: none; /* ИЗМЕНЕНИЕ: Убираем белую рамку */
+    box-shadow: none; /* ИЗМЕНЕНИЕ: Убираем тень, которая могла выглядеть как рамка */
     padding: 10px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--bg-color); 
+    color: var(--main-text-color); /* ИЗМЕНЕНИЕ: Текст становится зеленым */
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -268,8 +268,8 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
-    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
+    border: none; 
+    box-shadow: none; 
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
@@ -335,7 +335,6 @@ body {
 /* EX | ADA також використовують нові стилі кнопок */
 .row-bottom-links .main-nav-link {
     min-width: 100px;
-    /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
     border: none; 
     box-shadow: none;
     background-color: var(--link-button-color); 
