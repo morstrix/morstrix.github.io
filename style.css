@@ -26,8 +26,10 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* ВИДАЛЕНО: Ефект сітки CRT */
-    /* ВИДАЛЕНО: text-shadow (світіння тексту) */
+    /* Ефект сітки CRT */
+    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 100% 2px;
+    text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); /* Сильніше світіння */
 }
 
 /* ------------------------------------------- */
@@ -162,8 +164,8 @@ body {
 /* ГЛАВНЫЙ ИЗМЕНЯЕМЫЙ БЛОК: Убираем все рамки и фоны */
 .retro-info-box {
     background-color: var(--bg-color); /* Черный фон, сливается с body */
-    border: none; 
-    box-shadow: none; 
+    border: none; /* УДАЛЕНО: Рамка */
+    box-shadow: none; /* УДАЛЕНО: Тень */
     padding: 10px;
     margin: 20px auto;
     width: 80%;
@@ -237,7 +239,6 @@ body {
     min-width: 80px; 
 }
 
-/* СТИЛЬ HOVER ДЛЯ ВСІХ ІНШИХ КНОПОК */
 .main-nav-link:hover {
     transform: none; 
     box-shadow: none;
@@ -283,14 +284,19 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; /* ЧИСТИЙ БЕЗ РАМКИ */
-    box-shadow: none; /* ЧИСТИЙ БЕЗ ТІНІ */
+    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
+    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
 }
 
-/* Стиль hover тут вже покритий .main-nav-link:hover */
+.dialog-link:hover {
+    transform: none; 
+    box-shadow: none;
+    color: #ffffff; 
+    text-shadow: 0 0 10px #ffffff;
+}
 
 .dialog-link .nav-image {
     max-width: 60px;
@@ -342,45 +348,22 @@ body {
     align-self: center;
 }
 
-/* EX | ADA також використовують чисті стилі кнопок */
+/* EX | ADA також використовують нові стилі кнопок */
 .row-bottom-links .main-nav-link {
     min-width: 100px;
+    /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
     border: none; 
     box-shadow: none;
     background-color: var(--link-button-color); 
+}
+.row-bottom-links .main-nav-link:hover {
+    transform: none; 
+    box-shadow: none;
 }
 
 /* СТРЕЛКИ УДАЛЕНЫ ПОЛНОСТЬЮ */
 .retro-info-box::after, .align-left .retro-info-box::after, .align-right .retro-info-box::after {
     content: none !important;
-}
-
-
-/* ------------------------------------------- */
-/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) */
-/* ------------------------------------------- */
-
-.section-image {
-    display: block; 
-    width: 100px; 
-    height: auto;
-    object-fit: contain; 
-    image-rendering: pixelated;
-    margin: 10px auto 20px auto; 
-    border: none; 
-    box-shadow: none; 
-}
-
-/* Налаштування для helper.html */
-.helper-section .section-image {
-    width: 120px; 
-    height: 120px;
-}
-
-/* Налаштування для forum.html */
-.forum-section .section-image {
-    width: 150px; 
-    height: 100px; 
 }
 
 
@@ -410,10 +393,25 @@ body {
         max-width: 95%;
         padding: 8px;
     }
+    
+    /* ВИДАЛЕНІ ПРАВИЛА, ЩО ЦЕНТРУЮТЬ ДІАЛОГОВІ БЛОКИ НА МОБІЛЬНИХ ПРИСТРОЯХ:
     .dialog-link.align-left, .dialog-link.align-right {
         margin: 5px auto; 
         align-self: center;
     }
+    Тепер вони успадкують вирівнювання з .align-left та .align-right
+    */
+    .dialog-link.align-left {
+        margin-right: auto;
+        margin-left: 10px;
+        align-self: flex-start;
+    }
+    .dialog-link.align-right {
+        margin-left: auto;
+        margin-right: 10px;
+        align-self: flex-end;
+    }
+    
     .dialog-link.align-left .text-group { align-items: flex-start; }
     .dialog-link.align-right .text-group { align-items: flex-end; }
     
