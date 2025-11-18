@@ -5,14 +5,14 @@
     
     /* НОВІ СТИЛІ КНОПОК: ЧОРНИЙ ФОН, ЗЕЛЕНИЙ ОБВІД ТА ТІНЬ */
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
-    --link-button-shadow-color: var(--main-text-color); /* Зелена тінь */
+    --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
     --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
-    --back-button-color: #555555;
-    --back-cross-color: #000000c8;
+    --back-button-color: #ff0000; /* ЗРОБИВ ЧЕРВОНИМ КОЛІР КНОПКИ НАЗАД */
+    --back-cross-color: #000000; /* Чорний хрестик */
     --social-icon-color:  var(--main-text-color);
 }
 
@@ -39,22 +39,27 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Вирівнювання до верху */
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
-    padding: 20px;
+    padding: 10px 20px; /* Зменшив верхній відступ */
     box-sizing: border-box;
     text-align: center;
+}
+
+.main-section {
+    min-height: 100vh; 
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; /* Вирівнювання до верху */
     align-items: center;
     height: 100%;
-    padding: 5px 0;
+    width: 100%;
+    padding: 0; /* Прибрав внутрішні відступи */
     box-sizing: border-box;
     position: relative;
     flex-grow: 1; 
@@ -65,12 +70,16 @@ body {
     padding: 10px 20px;
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-end; /* РОЗМІСТИВ КНОПКУ СПРАВА */
     align-items: center;
+    position: absolute; /* Фіксуємо його відносно батьківського елемента */
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 .back-button {
-    background-color: var(--back-button-color);
+    background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
     border: none;
     padding: 0; 
     width: 30px;
@@ -82,6 +91,8 @@ body {
     transition: all 0.1s ease;
     text-decoration: none;
     border-radius: 0;
+    margin-left: auto; /* Щоб притиснути до правого краю */
+    margin-right: 0;
 }
 
 .back-button:hover {
@@ -93,7 +104,8 @@ body {
     width: 20px; 
     height: 20px; 
     image-rendering: pixelated; 
-    filter: invert(1);
+    filter: invert(1); /* Робить чорний колір білим, якщо у вас чорний хрестик */
+    background-color: transparent;
 }
 
 
@@ -103,13 +115,13 @@ body {
 
 .retro-button {
     font-family: 'Press Start 2P', cursive;
-    background-color: var(--link-button-color); /* ЧОРНИЙ */
-    color: var(--main-text-color); /* ЗЕЛЕНИЙ ТЕКСТ */
+    background-color: var(--link-button-color); 
+    color: var(--main-text-color); 
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: 3px solid var(--main-text-color); /* ЗЕЛЕНИЙ ОБВІД */
-    box-shadow: 6px 6px 0 var(--link-button-shadow-color); /* ЗЕЛЕНА ТІНЬ */
+    border: 3px solid var(--main-text-color); 
+    box-shadow: 6px 6px 0 var(--link-button-shadow-color); 
     transition: all 0.1s ease;
     display: inline-block;
     cursor: pointer;
@@ -121,7 +133,7 @@ body {
 .retro-button:hover {
     box-shadow: 3px 3px 0 var(--link-button-shadow-color);
     transform: translate(3px, 3px);
-    color: #ffffff; /* Зміна кольору тексту при наведенні на білий */
+    color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -145,15 +157,7 @@ body {
     font-size: 0.7em;
     line-height: 1.4;
     box-sizing: border-box;
-}
-
-.info-box-image {
-    width: 100%;
-    height: auto;
-    border-bottom: 3px solid var(--main-text-color);
-    margin-bottom: 5px;
-    display: block;
-    image-rendering: pixelated; 
+    position: relative; /* Щоб можна було розмістити стрілку */
 }
 
 /* ------------------------------------------- */
@@ -164,6 +168,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
 }
 
 .main-logo-image {
@@ -194,7 +199,7 @@ body {
     padding: 5px; 
     text-align: center;
     background-color: transparent; 
-    color: var(--main-text-color); /* ЗЕЛЕНИЙ ТЕКСТ */
+    color: var(--main-text-color); 
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 0.8em; 
@@ -209,7 +214,7 @@ body {
 .main-nav-link:hover {
     transform: none; 
     box-shadow: none;
-    color: #ffffff; /* Зміна кольору тексту при наведенні на білий */
+    color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -249,18 +254,18 @@ body {
     width: auto; 
     max-width: 70%; 
     
-    background-color: var(--link-button-color); /* ЧОРНИЙ */
+    background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: 3px solid var(--main-text-color); /* ЗЕЛЕНИЙ ОБВІД */
-    box-shadow: 4px 4px 0 var(--link-button-shadow-color); /* ЗЕЛЕНА ТІНЬ */
+    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
+    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
 }
 
 .dialog-link:hover {
-    transform: translate(2px, 2px); 
-    box-shadow: 2px 2px 0 var(--link-button-shadow-color);
+    transform: none; 
+    box-shadow: none;
     color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
@@ -318,99 +323,44 @@ body {
 /* EX | ADA також використовують нові стилі кнопок */
 .row-bottom-links .main-nav-link {
     min-width: 100px;
-    border: 3px solid var(--main-text-color); 
-    box-shadow: 4px 4px 0 var(--link-button-shadow-color);
+    /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
+    border: none; 
+    box-shadow: none;
     background-color: var(--link-button-color); 
 }
 .row-bottom-links .main-nav-link:hover {
-    transform: translate(2px, 2px); 
-    box-shadow: 2px 2px 0 var(--link-button-shadow-color);
+    transform: none; 
+    box-shadow: none;
 }
 
-
-/* ------------------------------------------- */
-/* CAROUSEL STYLES (For helper.html) */
-/* ------------------------------------------- */
-
-.helper-section {
-    padding: 20px 0; 
-    min-height: 100vh;
-}
-
-.carousel-wrapper {
-    position: relative;
-    width: 95%;
-    max-width: 600px; 
-    margin: 30px auto;
-    display: flex;
-    align-items: center;
-}
-
-.carousel-container {
-    display: flex;
-    overflow-x: auto; 
-    scroll-snap-type: x mandatory; 
-    -webkit-overflow-scrolling: touch; 
-    gap: 10px; 
-    padding: 5px;
-    width: 100%;
-    
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-.carousel-container::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-item {
-    flex: 0 0 auto; 
-    width: 100%; 
-    scroll-snap-align: start; 
-}
-
-.carousel-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 3px solid var(--main-text-color);
-    box-shadow: 0 0 10px rgba(54, 134, 0, 0.5); 
-    image-rendering: pixelated; 
-}
-
-/* СТИЛІ КНОПОК КЕРУВАННЯ (PREV/NEXT) */
-.carousel-control {
+/* Стрілка для інфо-блоку (як приклад) */
+.retro-info-box::after {
+    content: '';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    
-    background-color: var(--link-button-color); /* ЧОРНИЙ */
-    color: var(--main-text-color);
-    border: 2px solid var(--main-text-color);
-    box-shadow: 4px 4px 0 var(--link-button-shadow-color); /* ЗЕЛЕНА ТІНЬ */
-    
-    padding: 10px;
-    cursor: pointer;
-    font-size: 1.2em;
-    z-index: 10;
-    line-height: 0; 
-    transition: all 0.1s ease;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 20px; /* Розмір стрілки */
+    border-color: transparent transparent transparent var(--arrow-color);
+    right: -20px; /* Зсув від краю */
+    z-index: 5;
+    text-shadow: 0 0 10px var(--arrow-shadow-color);
 }
-
-.carousel-control:hover {
-    box-shadow: 2px 2px 0 var(--link-button-shadow-color);
-    transform: translateY(-50%) translate(2px, 2px); 
+/* Стрілка для лівих елементів */
+.align-left .retro-info-box::after {
+    left: 100%;
+    right: auto;
+    border-width: 15px 0 15px 20px;
+    border-color: transparent transparent transparent var(--arrow-color);
 }
-
-.prev-btn {
-    left: -20px; 
-}
-
-.next-btn {
-    right: -20px; 
-}
-
-.carousel-control i {
-    color: var(--main-text-color); /* Іконки тепер зелені */
+/* Стрілка для правих елементів */
+.align-right .retro-info-box::after {
+    left: -20px;
+    right: auto;
+    border-width: 15px 20px 15px 0;
+    border-color: transparent var(--arrow-color) transparent transparent;
 }
 
 
