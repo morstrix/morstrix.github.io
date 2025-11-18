@@ -22,41 +22,9 @@
 
     <section class="site-section helper-section">
         
-        <div class="carousel-wrapper">
-            <button class="carousel-control prev-btn">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            
-            <div class="carousel-container">
-                <div class="carousel-item">
-                    <img src="info.jpg" alt="Info screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="seif.jpg" alt="Safe screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="chat.jpg" alt="Chat screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="notes.jpg" alt="Notes screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="push.jpg" alt="Push screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="calendar.jpg" alt="Calendar screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="paint.jpg" alt="Paint screen">
-                </div>
-                <div class="carousel-item">
-                    <img src="tetris.jpg" alt="Tetris screen">
-                </div>
-            </div>
-            
-            <button class="carousel-control next-btn">
-                <i class="fas fa-arrow-right"></i>
-            </button>
+        <div class="retro-info-box shop-info-box">
+            <img src="shop.jpg" alt="Shop Image" class="info-box-image"> 
+            <p>HELPER SHOP</p>
         </div>
         
         <a href="helper.apk" download class="retro-button download-apk-button">
@@ -64,31 +32,5 @@
         </a>
         
     </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const carouselContainer = document.querySelector('.carousel-container');
-            const prevBtn = document.querySelector('.prev-btn');
-            const nextBtn = document.querySelector('.next-btn');
-            
-            if (!carouselContainer || !prevBtn || !nextBtn) return;
-
-            function scrollCarousel(direction) {
-                // Отримуємо ширину одного елемента + відступ (gap)
-                const itemWidth = carouselContainer.querySelector('.carousel-item').offsetWidth;
-                const gap = parseFloat(window.getComputedStyle(carouselContainer).gap) || 0;
-                
-                const scrollAmount = itemWidth + gap;
-
-                carouselContainer.scrollBy({
-                    left: scrollAmount * direction, 
-                    behavior: 'smooth'
-                });
-            }
-
-            nextBtn.addEventListener('click', () => scrollCarousel(1));
-            prevBtn.addEventListener('click', () => scrollCarousel(-1));
-        });
-    </script>
-</body>
+    </body>
 </html>
