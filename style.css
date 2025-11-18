@@ -204,7 +204,7 @@ body {
     gap: 15px; 
 }
 
-/* СТИЛЬ АСИММЕТРИЧНОЙ ССЫЛКИ (Иконка <-> Текст) */
+/* ОБЩИЙ СТИЛЬ для асимметричных ссылок (например, HELPER, FORUM, SUPPORT, SKLAD) */
 .room-link.main-nav-link { 
     flex-direction: row; 
     align-items: center;
@@ -218,27 +218,27 @@ body {
     max-width: 80px; 
 }
 
-/* 1. СТИЛЬ HELPER/SUPPORT (Прижат к левой стороне - Иконка СЛЕВА) */
-.room-link.left-aligned .nav-image {
+/* СТИЛЬ для посилань з іконкою зліва (HELPER, SUPPORT) */
+.room-link.align-left .nav-image {
     order: 0; 
 }
-.room-link.left-aligned .text-group {
+.room-link.align-left .text-group {
     order: 1; 
     align-items: flex-start; 
 }
 
-/* 2. СТИЛЬ FORUM/SKLAD (Прижат к правой стороне - Иконка СПРАВА) */
-.room-link.right-aligned .text-group {
+/* СТИЛЬ для посилань з іконкою справа (FORUM, SKLAD) */
+.room-link.align-right .text-group {
     order: 0; 
     align-items: flex-end; 
 }
-.room-link.right-aligned .nav-image {
+.room-link.align-right .nav-image {
     order: 1; 
 }
 
 
 /* РЯДЫ: HELPER и FORUM */
-.row-asymmetric-top {
+.row-top-links { /* Універсальний клас для верхнього ряду */
     display: flex;
     justify-content: space-between; 
     width: 100%;
@@ -250,7 +250,7 @@ body {
 }
 
 /* РЯДЫ: SUPPORT и SKLAD */
-.row-asymmetric-middle {
+.row-middle-links { /* Універсальний клас для середнього ряду */
     display: flex;
     justify-content: space-between; 
     width: 100%;
@@ -262,7 +262,7 @@ body {
 }
 
 /* РЯД: EX и ADA (Два элемента внизу) */
-.row-two-items {
+.row-bottom-links { /* Універсальний клас для нижнього ряду */
     display: flex;
     justify-content: space-between; 
     align-items: flex-end; 
@@ -272,7 +272,7 @@ body {
     margin-top: 30px; 
     margin-bottom: 10px; 
 }
-.row-two-items .main-nav-link {
+.row-bottom-links .main-nav-link {
     min-width: 100px;
 }
 
@@ -459,8 +459,8 @@ body {
         gap: 10px; 
     }
     
-    /* HELPER/FORUM/SUPPORT/SKLAD в один ряд для мобильных */
-    .row-asymmetric-top, .row-asymmetric-middle {
+    /* Все асимметричные ссылки в один столбец для мобильных */
+    .row-top-links, .row-middle-links {
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -474,20 +474,21 @@ body {
         font-size: 1.1em;
         width: 90%;
         max-width: 300px;
-        justify-content: space-between;
+        justify-content: space-between; /* Распределяем элементы по краям */
         margin-bottom: 10px;
         padding: 5px;
     }
     
-    .room-link.left-aligned .nav-image { order: 0; }
-    .room-link.left-aligned .text-group { order: 1; align-items: flex-start; }
+    /* Переворачиваем порядок для align-right на мобильных, чтобы иконка была всегда справа */
+    .room-link.align-left .nav-image { order: 0; }
+    .room-link.align-left .text-group { order: 1; align-items: flex-start; }
     
-    .room-link.right-aligned .nav-image { order: 1; }
-    .room-link.right-aligned .text-group { order: 0; align-items: flex-end; }
+    .room-link.align-right .nav-image { order: 1; }
+    .room-link.align-right .text-group { order: 0; align-items: flex-end; }
     
     
     /* EX | ADA: Снова в один ряд */
-    .row-two-items {
+    .row-bottom-links {
         flex-direction: row; 
         justify-content: space-around; 
         align-items: center;
@@ -497,7 +498,7 @@ body {
         margin-top: 15px;
         margin-bottom: 15px;
     }
-    .row-two-items .main-nav-link {
+    .row-bottom-links .main-nav-link {
         font-size: 0.9em; 
         min-width: unset;
         width: 45%; 
