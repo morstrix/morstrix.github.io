@@ -44,7 +44,7 @@ body {
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
-    padding: 10px 20px; /* Зменшив верхній відступ */
+    padding: 10px 20px; 
     box-sizing: border-box;
     text-align: center;
 }
@@ -160,7 +160,7 @@ body {
     font-size: 0.7em;
     line-height: 1.4;
     box-sizing: border-box;
-    position: relative; /* Щоб можна було розмістити стрілку */
+    position: relative; 
 }
 
 /* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX (ADA/EX) */
@@ -345,36 +345,7 @@ body {
     box-shadow: none;
 }
 
-/* Стрілка для інфо-блоку (як приклад) */
-.retro-info-box::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 15px 0 15px 20px; /* Розмір стрілки */
-    border-color: transparent transparent transparent var(--arrow-color);
-    right: -20px; /* Зсув від краю */
-    z-index: 5;
-    text-shadow: 0 0 10px var(--arrow-shadow-color);
-}
-/* Стрілка для лівих елементів */
-.align-left .retro-info-box::after {
-    left: 100%;
-    right: auto;
-    border-width: 15px 0 15px 20px;
-    border-color: transparent transparent transparent var(--arrow-color);
-}
-/* Стрілка для правих елементів */
-.align-right .retro-info-box::after {
-    left: -20px;
-    right: auto;
-    border-width: 15px 20px 15px 0;
-    border-color: transparent var(--arrow-color) transparent transparent;
-}
-
+/* --- СТРЕЛКИ УДАЛЕНЫ ПО ЗАПРОСУ ПОЛЬЗОВАТЕЛЯ --- */
 
 /* ------------------------------------------- */
 /* АДАПТАЦІЯ (Для мобільних пристроїв) */
@@ -402,6 +373,8 @@ body {
         max-width: 95%;
         padding: 8px;
     }
+    /* Горизонтальное центрирование ссылок сохраняется для лучшей читаемости, 
+       но вертикальное центрирование на Index.html отсутствует (main-section: flex-start) */
     .dialog-link.align-left, .dialog-link.align-right {
         margin: 5px auto; 
         align-self: center;
