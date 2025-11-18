@@ -7,7 +7,6 @@
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
-    --info-box-color: #ffffff; /* Переменная не используется в retro-info-box */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
@@ -26,9 +25,9 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Ефект сітки CRT */
-    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 100% 2px;
+    /* Ефект сітки CRT: ЗАКОМЕНТОВАНО ДЛЯ ЧИСТО ЧОРНОГО ФОНУ */
+    /* background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 100% 2px; */
     text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); /* Сильніше світіння */
 }
 
@@ -39,7 +38,7 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрируем контент по вертикали в комнатах */
+    justify-content: center; /* Центруємо контент по вертикалі в кімнатах */
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
@@ -49,7 +48,7 @@ body {
 }
 
 .main-section {
-    justify-content: flex-start; /* На главной странице контент остается сверху */
+    justify-content: flex-start; /* На головній сторінці контент залишається зверху */
     min-height: 100vh; 
 }
 
@@ -154,7 +153,7 @@ body {
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--main-text-color); /* Текст теперь зеленый */
+    color: var(--main-text-color); /* Текст тепер зелений */
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -162,9 +161,9 @@ body {
     position: relative; 
 }
 
-/* УДАЛЕНО: СТИЛИ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
+/* УДАЛЕНО: СТИЛІ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
 .info-box-image {
-    display: none; /* Прячем картинки, если они остались в HTML */
+    display: none; /* Приховуємо картинки, якщо вони залишилися в HTML */
     width: 50px; 
     height: 50px;
     object-fit: contain; 
@@ -348,6 +347,37 @@ body {
 /* СТРЕЛКИ УДАЛЕНЫ ПОЛНОСТЬЮ */
 .retro-info-box::after, .align-left .retro-info-box::after, .align-right .retro-info-box::after {
     content: none !important;
+}
+
+
+/* ------------------------------------------- */
+/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) - НОВЕ */
+/* ------------------------------------------- */
+
+.section-image {
+    /* Знову робимо зображення видимими, якщо вони мають цей клас */
+    display: block; 
+    
+    /* Загальні стилі для зображень у секціях */
+    width: 100px; /* Або будь-який потрібний розмір */
+    height: auto;
+    object-fit: contain; 
+    image-rendering: pixelated;
+    margin: 10px auto 20px auto; /* Центрування та відступи */
+    border: 1px solid var(--main-text-color); /* Невелика зелена рамка */
+    box-shadow: 0 0 5px var(--main-text-color); /* Ефект світіння */
+}
+
+/* Налаштування для helper.html */
+.helper-section .section-image {
+    width: 120px; 
+    height: 120px;
+}
+
+/* Налаштування для forum.html */
+.forum-section .section-image {
+    width: 150px; 
+    height: 100px; 
 }
 
 
