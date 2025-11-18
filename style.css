@@ -25,10 +25,10 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Ефект сітки CRT: ЗАКОМЕНТОВАНО ДЛЯ ЧИСТО ЧОРНОГО ФОНУ */
-    /* background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 100% 2px; */
-    text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); /* Сильніше світіння */
+    /* Ефект сітки CRT */
+    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 100% 2px;
+    /* ВИДАЛЕНО: text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); */
 }
 
 /* ------------------------------------------- */
@@ -38,7 +38,7 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центруємо контент по вертикалі в кімнатах */
+    justify-content: center; /* Центрируем контент по вертикали в комнатах */
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
@@ -48,7 +48,7 @@ body {
 }
 
 .main-section {
-    justify-content: flex-start; /* На головній сторінці контент залишається зверху */
+    justify-content: flex-start; /* На главной странице контент остается сверху */
     min-height: 100vh; 
 }
 
@@ -120,8 +120,8 @@ body {
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: 3px solid var(--main-text-color); 
-    box-shadow: 6px 6px 0 var(--link-button-shadow-color); 
+    border: none; /* ВИДАЛЕНО: 3px solid var(--main-text-color); */
+    box-shadow: none; /* ВИДАЛЕНО: 6px 6px 0 var(--link-button-shadow-color); */
     transition: all 0.1s ease;
     display: inline-block;
     cursor: pointer;
@@ -131,9 +131,10 @@ body {
 }
 
 .retro-button:hover {
-    box-shadow: 3px 3px 0 var(--link-button-shadow-color);
-    transform: translate(3px, 3px);
+    box-shadow: none; /* ВИДАЛЕНО: 3px 3px 0 var(--link-button-shadow-color); */
+    transform: none; /* ВИДАЛЕНО: translate(3px, 3px); */
     color: #ffffff; 
+    /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -153,7 +154,7 @@ body {
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--main-text-color); /* Текст тепер зелений */
+    color: var(--main-text-color); /* Текст теперь зеленый */
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -161,9 +162,9 @@ body {
     position: relative; 
 }
 
-/* УДАЛЕНО: СТИЛІ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
+/* УДАЛЕНО: СТИЛИ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
 .info-box-image {
-    display: none; /* Приховуємо картинки, якщо вони залишилися в HTML */
+    display: none; /* Прячем картинки, если они остались в HTML */
     width: 50px; 
     height: 50px;
     object-fit: contain; 
@@ -226,6 +227,7 @@ body {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
+    /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -267,8 +269,8 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
-    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
+    border: none; 
+    box-shadow: none; 
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
@@ -278,6 +280,7 @@ body {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
+    /* Тимчасове світіння при ховері, щоб було видно */
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -334,7 +337,6 @@ body {
 /* EX | ADA також використовують нові стилі кнопок */
 .row-bottom-links .main-nav-link {
     min-width: 100px;
-    /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
     border: none; 
     box-shadow: none;
     background-color: var(--link-button-color); 
@@ -351,21 +353,18 @@ body {
 
 
 /* ------------------------------------------- */
-/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) - НОВЕ */
+/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ У "КІМНАТАХ" (HELPER, FORUM) - ОНОВЛЕНО */
 /* ------------------------------------------- */
 
 .section-image {
-    /* Знову робимо зображення видимими, якщо вони мають цей клас */
     display: block; 
-    
-    /* Загальні стилі для зображень у секціях */
-    width: 100px; /* Або будь-який потрібний розмір */
+    width: 100px; 
     height: auto;
     object-fit: contain; 
     image-rendering: pixelated;
-    margin: 10px auto 20px auto; /* Центрування та відступи */
-    border: 1px solid var(--main-text-color); /* Невелика зелена рамка */
-    box-shadow: 0 0 5px var(--main-text-color); /* Ефект світіння */
+    margin: 10px auto 20px auto; 
+    border: none; /* ВИДАЛЕНО: 1px solid var(--main-text-color); */
+    box-shadow: none; /* ВИДАЛЕНО: 0 0 5px var(--main-text-color); */
 }
 
 /* Налаштування для helper.html */
