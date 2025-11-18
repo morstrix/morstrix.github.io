@@ -1,10 +1,10 @@
 :root {
     --bg-color: #000;
     --grid-color: rgba(104, 56, 56, 0.79);
-    --main-text-color: #368600;
+    --main-text-color: #368600; /* Зелений термінальний текст */
     --button-green-light: #2c592c;
     --button-green-dark: #1f3d1f;
-    --info-box-color: #ffffff;
+    --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
@@ -25,7 +25,15 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
+    /* Ефект сітки CRT */
+    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 100% 2px;
+    text-shadow: 0 0 5px rgba(54, 134, 0, 0.5); /* CRT Світіння */
 }
+
+/* ------------------------------------------- */
+/* ОСНОВНИЙ ЛАЙАУТ */
+/* ------------------------------------------- */
 
 .site-section {
     display: flex;
@@ -33,7 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    min-height: 90vh;
+    min-height: 90vh; 
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
@@ -51,6 +59,105 @@ body {
     flex-grow: 1; 
 }
 
+/* ------------------------------------------- */
+/* ЗАГОЛОВОК ТА КНОПКА НАЗАД */
+/* ------------------------------------------- */
+
+.site-header {
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.back-button {
+    background-color: var(--back-button-color);
+    border: none;
+    padding: 0; 
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 0 #333;
+    transition: all 0.1s ease;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.back-button:hover {
+    box-shadow: 1px 1px 0 #333;
+    transform: translate(1px, 1px);
+}
+
+.custom-back-icon {
+    width: 20px; 
+    height: 20px; 
+    image-rendering: pixelated; 
+    filter: invert(1); /* Робить хрестик білим */
+}
+
+
+/* ------------------------------------------- */
+/* СТИЛІ РЕТРО-КНОПОК (Загальні) */
+/* ------------------------------------------- */
+
+.retro-button {
+    font-family: 'Press Start 2P', cursive;
+    background-color: var(--link-button-color);
+    color: var(--info-box-color);
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 10px 5px;
+    border: 3px solid var(--main-text-color);
+    box-shadow: 6px 6px 0 var(--link-button-shadow-color);
+    transition: all 0.1s ease;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 1;
+}
+
+.retro-button:hover {
+    box-shadow: 3px 3px 0 var(--link-button-shadow-color);
+    transform: translate(3px, 3px);
+}
+
+/* ------------------------------------------- */
+/* СТИЛІ ІНФОРМАЦІЙНИХ БЛОКІВ (Загальні) */
+/* ------------------------------------------- */
+
+.retro-info-box {
+    background-color: var(--info-box-color);
+    border: 3px solid var(--main-text-color);
+    box-shadow: 0 0 15px rgba(54, 134, 0, 0.7); 
+    padding: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 350px;
+    color: var(--bg-color); 
+    text-align: center;
+    font-size: 0.7em;
+    line-height: 1.4;
+    box-sizing: border-box;
+}
+
+.info-box-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 3px solid var(--main-text-color);
+    margin-bottom: 5px;
+    display: block;
+    image-rendering: pixelated; 
+}
+
+/* ------------------------------------------- */
+/* СТИЛІ ГОЛОВНОГО ІНДЕКСУ (Асиметричний макет) */
+/* ------------------------------------------- */
+
 .main-title-container {
     width: 100%;
     display: flex;
@@ -67,78 +174,16 @@ body {
     image-rendering: pixelated;
 }
 
-.retro-button {
+.folder-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column; 
     align-items: center;
-    padding: 20px 30px;
-    text-align: center;
-    background-color: var(--button-green-dark);
-    color: #000000;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-size: 1.1em;
-    font-weight: 600;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    cursor: pointer;
-}
-
-.retro-button:hover {
-    transform: translate(0);
-    box-shadow: none;
-}
-
-.retro-button:active {
-    transform: translate(0);
-    box-shadow: none;
-}
-
-.site-header {
     width: 100%;
-    padding-top: 20px;
-    box-sizing: border-box;
-    text-align: left;
+    max-width: 700px; 
+    margin-top: 20px;
+    padding: 0 10px;
+    gap: 15px; 
 }
-
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--back-cross-color);
-    border: 3px solid var(--info-box-color);
-    padding: 0;
-    transition: none;
-}
-
-.back-button:hover {
-    opacity: 0.8;
-    transform: none;
-    box-shadow: none;
-}
-
-.back-button:active {
-    transform: translate(2px, 2px);
-    box-shadow: none;
-}
-
-.custom-back-icon {
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
-    display: block;
-}
-
-/* ------------------------------------------- */
-/* СТИЛИ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (index.html) */
-/* ------------------------------------------- */
 
 .main-nav-link {
     display: flex;
@@ -180,7 +225,7 @@ body {
     image-rendering: pixelated; 
 }
 
-/* Группировка текста и подписи */
+/* Групування тексту та підпису */
 .text-group {
     display: flex;
     flex-direction: column; 
@@ -189,22 +234,7 @@ body {
     line-height: 1.1; 
 }
 
-/* ------------------------------------------- */
-/* МАКЕТ FOLDER CONTAINER (Flexbox) */
-/* ------------------------------------------- */
-
-.folder-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    width: 100%;
-    max-width: 700px; 
-    margin-top: 20px;
-    padding: 0 10px;
-    gap: 15px; 
-}
-
-/* Общий стиль для асимметричных ссылок (HELPER, FORUM, SUPPORT, SKLAD) */
+/* ЗАГАЛЬНИЙ СТИЛЬ для асиметричних посилань */
 .room-link.main-nav-link { 
     flex-direction: row; 
     align-items: center;
@@ -218,7 +248,7 @@ body {
     max-width: 80px; 
 }
 
-/* СТИЛЬ align-left: Иконка СЛЕВА, Текст СПРАВА (Прижат к левому краю контейнера) */
+/* СТИЛЬ align-left: Іконка ЗЛІВА, Текст СПРАВА */
 .room-link.align-left .nav-image {
     order: 0; 
 }
@@ -227,7 +257,7 @@ body {
     align-items: flex-start; 
 }
 
-/* СТИЛЬ align-right: Текст СЛЕВА, Иконка СПРАВА (Прижат к правому краю контейнера) */
+/* СТИЛЬ align-right: Текст ЗЛІВА, Іконка СПРАВА */
 .room-link.align-right .text-group {
     order: 0; 
     align-items: flex-end; 
@@ -236,9 +266,8 @@ body {
     order: 1; 
 }
 
-
-/* РЯДЫ: HELPER и FORUM */
-.row-asymmetric-top { 
+/* РЯДИ: HELPER, FORUM, SUPPORT, SKLAD */
+.row-asymmetric-top, .row-asymmetric-middle { 
     display: flex;
     justify-content: space-between; 
     width: 100%;
@@ -249,19 +278,7 @@ body {
     margin-bottom: 25px; 
 }
 
-/* РЯДЫ: SUPPORT и SKLAD */
-.row-asymmetric-middle { 
-    display: flex;
-    justify-content: space-between; 
-    width: 100%;
-    max-width: 700px; 
-    box-sizing: border-box;
-    padding: 0 20px;
-    margin-top: 25px; 
-    margin-bottom: 25px; 
-}
-
-/* РЯД: EX и ADA (Два элемента внизу) */
+/* РЯД: EX і ADA (Два елементи внизу) */
 .row-bottom-links { 
     display: flex;
     justify-content: space-between; 
@@ -276,64 +293,113 @@ body {
     min-width: 100px;
 }
 
-/* Удаленные/устаревшие классы */
-.row-two-items-main, .row-single-center, .row-forum, .row-support, .row-two-items, 
-.support-link.main-nav-link, .forum-link.main-nav-link, 
-.support-link .nav-image, .forum-link .nav-image, .forum-link .text-group, .support-link .text-group {
-    /* Сброс старых стилей, если они еще присутствуют в файлах */
-    /* В этом случае, я их полностью переопределил выше. */
-    /* Просто добавляю это, чтобы убедиться, что старые классы не конфликтуют */
+/* ------------------------------------------- */
+/* СТИЛІ ДЛЯ КАРУСЕЛІ (Для helper.html) */
+/* ------------------------------------------- */
+
+.helper-section {
+    padding: 20px 0; 
+    min-height: 100vh;
 }
 
-
-/* ------------------------------------------- */
-/* СОЦИАЛЬНЫЕ ССЫЛКИ (Удалены из HTML) */
-/* ------------------------------------------- */
-.social-links {
-    display: none; /* Скрываем блок соц. ссылок */
-}
-/* ... стили для кнопок на внутренних страницах и инфо-боксов остаются без изменений ... */
-
-.retro-info-box {
+.carousel-wrapper {
+    position: relative;
+    width: 95%;
+    max-width: 600px; 
+    margin: 30px auto;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 300px;
-    min-height: 100px;
-    padding: 20px;
-    margin-top: 40px;
-    font-size: 0.8em;
-    line-height: 1.5;
-    background: rgba(0, 0, 0, 0.3);
-    border: none;
-    box-sizing: border-box;
-    white-space: pre-wrap;
-    box-shadow: inset 0 0 10px 5px rgba(53, 171, 0, 0.5), inset 0 0 20px 10px rgba(33, 108, 0, 0.4);
 }
 
-.magazine-info-box p, .forum-info-box p, .helper-info-box p, .shop-info-box p, .insta-info-box p, .sklad-info-box p, .ex-info-box p, .ada-info-box p {
-    color: #fff;
+.carousel-container {
+    display: flex;
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory; /* Прив'язка до елементів */
+    -webkit-overflow-scrolling: touch; 
+    gap: 10px; /* Відстань між елементами */
+    padding: 5px;
+    width: 100%;
+    
+    /* Приховуємо стандартний скролбар */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+.carousel-container::-webkit-scrollbar {
+    display: none;
 }
 
+.carousel-item {
+    flex: 0 0 auto; 
+    width: 100%; /* Займає 100% контейнера, прокрутка по одному */
+    scroll-snap-align: start; 
+}
 
-/* SPLASH SCREEN (Удален из HTML) */
-#splash-screen {
-    display: none !important;
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 3px solid var(--main-text-color);
+    box-shadow: 0 0 10px rgba(54, 134, 0, 0.5); 
+    image-rendering: pixelated; 
+}
+
+/* СТИЛІ КНОПОК КЕРУВАННЯ (PREV/NEXT) */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--link-button-color);
+    color: var(--main-text-color);
+    border: 2px solid var(--main-text-color);
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    z-index: 10;
+    line-height: 0; 
+    
+    /* Ретро-тінь */
+    box-shadow: 4px 4px 0 var(--link-button-shadow-color);
+    transition: all 0.1s ease;
+}
+
+.carousel-control:hover {
+    box-shadow: 2px 2px 0 var(--link-button-shadow-color);
+    transform: translateY(-50%) translate(2px, 2px); 
+}
+
+.prev-btn {
+    left: -20px; 
+}
+
+.next-btn {
+    right: -20px; 
+}
+
+.carousel-control i {
+    color: #ffffff; 
 }
 
 
 /* ------------------------------------------- */
-/* АДАПТАЦИЯ (Для мобільних пристроїв) */
+/* АДАПТАЦІЯ (Для мобільних пристроїв) */
 /* ------------------------------------------- */
 
 @media (max-width: 768px) {
+    
+    body {
+        font-size: 0.9em; 
+    }
     
     .folder-container {
         gap: 10px; 
     }
     
-    /* Все асимметричные ссылки в один столбец для мобильных */
+    .main-logo-image {
+        max-width: 200px;
+        margin-bottom: 5px;
+    }
+    
+    /* АСИМЕТРИЧНИЙ ЛАЙАУТ: Все в один стовпець */
     .row-asymmetric-top, .row-asymmetric-middle {
         flex-direction: column;
         justify-content: center;
@@ -353,7 +419,7 @@ body {
         padding: 5px;
     }
     
-    /* На мобильных align-left имеет иконку слева, align-right - иконку справа */
+    /* На мобільних: лівий вирівняний - іконка зліва, правий вирівняний - іконка справа */
     .room-link.align-left .nav-image { order: 0; }
     .room-link.align-left .text-group { order: 1; align-items: flex-start; }
     
@@ -382,8 +448,19 @@ body {
         max-width: 60px;
     }
     
-    .main-logo-image {
-        max-width: 200px;
-        margin-bottom: 5px;
+    /* CAROUSEL MOBILE */
+    .carousel-wrapper {
+        margin: 20px auto;
+        width: 100%;
+    }
+    .prev-btn {
+        left: 0px; 
+        font-size: 1em;
+        padding: 8px;
+    }
+    .next-btn {
+        right: 0px;
+        font-size: 1em;
+        padding: 8px;
     }
 }

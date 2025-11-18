@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3.1"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -38,7 +38,7 @@
                 
                 <div class="row-asymmetric-top">
                     <a href="helper.html" class="main-nav-link room-link align-left">
-                        <img src="H.jpg" alt="Helper Icon" class="nav-image"> 
+                        <img src="helper.jpg" alt="Helper Icon" class="nav-image"> 
                         <div class="text-group">
                             HELPER
                             <span class="button-sub-caption">ROOM</span>
@@ -50,13 +50,13 @@
                             FORUM
                             <span class="button-sub-caption">CLUB</span>
                         </div>
-                        <img src="S.jpg" alt="Forum Icon" class="nav-image"> 
+                        <img src="forum.jpg" alt="Forum Icon" class="nav-image"> 
                     </a>
                 </div>
 
                 <div class="row-asymmetric-middle">
                     <a href="support.html" class="main-nav-link room-link align-left">
-                        <img src="K.jpg" alt="Support Icon" class="nav-image"> 
+                        <img src="support.jpg" alt="Support Icon" class="nav-image"> 
                         <div class="text-group">
                             SUPPORT
                             <span class="button-sub-caption">CONTACT</span>
@@ -68,36 +68,32 @@
                             SKLAD
                             <span class="button-sub-caption">MEDIA</span>
                         </div>
-                        <img src="MEDIA.jpg" alt="Sklad Icon" class="nav-image">
+                        <img src="sklad.jpg" alt="Sklad Icon" class="nav-image">
                     </a>
                 </div>
                 
                 <div class="row-bottom-links">
                     <a href="ex.html" class="main-nav-link">
-                        <img src="EX.jpg" alt="EX Folder" class="nav-image">
+                        <img src="x.jpg" alt="EX Folder" class="nav-image">
                         EX
                     </a>
                     <a href="ada.html" class="main-nav-link">
-                        <img src="ADA.jpg" alt="ADA Folder" class="nav-image">
+                        <img src="a.jpg" alt="ADA Folder" class="nav-image">
                         ADA
                     </a>
                 </div>
                 
             </div>
             
-            </div>
+        </div>
     </section>
 
     <script>
-        // Прибираємо логіку splash screen, оскільки його видалено
         document.addEventListener('DOMContentLoaded', function() {
-            // Прибрати 'introPlayed' з sessionStorage, якщо це потрібно для чистоти.
-            // sessionStorage.removeItem('introPlayed'); 
-            
-            // Замість складної логіки просто переконаємося, що контейнер відображається
             var mainContent = document.getElementById('main-content');
             if (mainContent) {
-                mainContent.style.display = 'flex'; // Flex для центрування
+                // Просто переконуємося, що основний контент відображається
+                mainContent.style.display = 'flex'; 
             }
         });
     </script>
