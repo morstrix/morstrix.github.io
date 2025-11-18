@@ -189,14 +189,15 @@ body {
 }
 
 /* ------------------------------------------- */
-/* СТИЛІ ГОЛОВНОГО ІНДЕКСУ (Діалоговий стиль) */
+/* СТИЛІ ЗОБРАЖЕНЬ (ВКЛЮЧАЮЧИ НОВЕ ЗМЕНШЕННЯ ДЛЯ КІМНАТ) */
 /* ------------------------------------------- */
 
-.main-title-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
+.section-image {
+    /* Новий стиль для зменшення зображень в кімнатах */
+    max-width: 33.33%; /* Зменшуємо до третини */
+    height: auto;
+    margin-bottom: 20px;
+    image-rendering: pixelated;
 }
 
 .main-logo-image {
@@ -206,6 +207,17 @@ body {
     display: block;
     margin: 0 auto 15px;
     image-rendering: pixelated;
+}
+
+/* ------------------------------------------- */
+/* СТИЛІ ГОЛОВНОГО ІНДЕКСУ (Діалоговий стиль) */
+/* ------------------------------------------- */
+
+.main-title-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
 }
 
 .folder-container {
@@ -394,13 +406,6 @@ body {
         padding: 8px;
     }
     
-    /* ВИДАЛЕНІ ПРАВИЛА, ЩО ЦЕНТРУЮТЬ ДІАЛОГОВІ БЛОКИ НА МОБІЛЬНИХ ПРИСТРОЯХ:
-    .dialog-link.align-left, .dialog-link.align-right {
-        margin: 5px auto; 
-        align-self: center;
-    }
-    Тепер вони успадкують вирівнювання з .align-left та .align-right
-    */
     .dialog-link.align-left {
         margin-right: auto;
         margin-left: 10px;
@@ -451,5 +456,10 @@ body {
         right: 0px;
         font-size: 1em;
         padding: 8px;
+    }
+    
+    /* Зменшення зображення для мобільних пристроїв */
+    .section-image {
+        max-width: 50%; /* На мобільних зробимо трохи більшим, щоб було видно */
     }
 }
