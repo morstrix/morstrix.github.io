@@ -8,10 +8,10 @@
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
     --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
-    --arrow-color: #ff00ff; /* ЗМІННА КОЛЬОРУ СТРІЛКИ - БІЛЬШЕ НЕ ВИКОРИСТОВУЄТЬСЯ */
-    --arrow-shadow-color: #ff00ff; /* ЗМІННА ТІНІ СТРІЛКИ - БІЛЬШЕ НЕ ВИКОРИСТОВУЄТЬСЯ */
+    --arrow-color: #ff00ff;
+    --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
-    --back-button-color: #ff0000; /* ЧЕРВОНИЙ КОЛІР КНОПКИ НАЗАД */
+    --back-button-color: #ff0000; /* ЗРОБИВ ЧЕРВОНИМ КОЛІР КНОПКИ НАЗАД */
     --back-cross-color: #000000; /* Чорний хрестик */
     --social-icon-color:  var(--main-text-color);
 }
@@ -39,7 +39,8 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Вирівнювання до верху */
+    /* ИЗМЕНЕНИЕ: ВЕРТИКАЛЬНОЕ ЦЕНТРИРОВАНИЕ КОНТЕНТА В КОМНАТАХ */
+    justify-content: center; 
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
@@ -49,6 +50,8 @@ body {
 }
 
 .main-section {
+    /* ПЕРЕОПРЕДЕЛЕНИЕ: ОСТАВЛЯЕМ КОНТЕНТ ГЛАВНОЙ СТРАНИЦЫ СВЕРХУ */
+    justify-content: flex-start; 
     min-height: 100vh; 
 }
 
@@ -157,10 +160,10 @@ body {
     font-size: 0.7em;
     line-height: 1.4;
     box-sizing: border-box;
-    position: relative; 
+    position: relative; /* Щоб можна було розмістити стрілку */
 }
 
-/* СТИЛЬ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX (ADA/EX) */
+/* СТИЛІ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX (ADA/EX) */
 .info-box-image {
     width: 50px; /* Фіксований розмір */
     height: 50px;
@@ -168,7 +171,6 @@ body {
     image-rendering: pixelated;
     margin-bottom: 5px;
 }
-
 
 /* ------------------------------------------- */
 /* СТИЛІ ГОЛОВНОГО ІНДЕКСУ (Діалоговий стиль) */
@@ -178,7 +180,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 0; /* ПРИБРАВ ВІДСТУП ЗВЕРХУ */
+    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
 }
 
 .main-logo-image {
@@ -266,8 +268,8 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; 
-    box-shadow: none; 
+    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
+    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
     
     font-size: 0.9em; 
     transition: all 0.1s ease;
@@ -344,7 +346,34 @@ body {
 }
 
 /* Стрілка для інфо-блоку (як приклад) */
-/* ПСЕВДОЕЛЕМЕНТИ СТРІЛОК ПОЛНОСТЬЮ УДАЛЕНЫ */
+.retro-info-box::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 20px; /* Розмір стрілки */
+    border-color: transparent transparent transparent var(--arrow-color);
+    right: -20px; /* Зсув від краю */
+    z-index: 5;
+    text-shadow: 0 0 10px var(--arrow-shadow-color);
+}
+/* Стрілка для лівих елементів */
+.align-left .retro-info-box::after {
+    left: 100%;
+    right: auto;
+    border-width: 15px 0 15px 20px;
+    border-color: transparent transparent transparent var(--arrow-color);
+}
+/* Стрілка для правих елементів */
+.align-right .retro-info-box::after {
+    left: -20px;
+    right: auto;
+    border-width: 15px 20px 15px 0;
+    border-color: transparent var(--arrow-color) transparent transparent;
+}
 
 
 /* ------------------------------------------- */
