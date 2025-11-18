@@ -10,8 +10,6 @@
     
     <meta property="og:title" content="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ">
     <meta property="og:description" content="ᘏᗢ ⤬ ʜɪпᴘᴏщо">
-    <meta property="og:title" content="ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ">
-    <meta property="og:description" content="ᘏᗢ ⤬ ʜɪпᴘᴏщо">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://morstrix.github.io/">
     <meta property="og:image" content="https://morstrix.github.io/GAME-LOGO.jpg">
@@ -29,11 +27,7 @@
 </head>
 <body>
     
-    <div id="splash-screen">
-        <img src="GAME-LOGO.jpg" alt="Logo" class="splash-logo">
-    </div>
-
-    <section id="main-content" class="site-section main-section" style="display: none;">
+    <section id="main-content" class="site-section main-section">
         <div class="main-container">
 
             <div class="main-title-container">
@@ -42,7 +36,7 @@
             
             <div class="folder-container">
                 
-                <div class="row-top-links">
+                <div class="row-asymmetric-top">
                     <a href="helper.html" class="main-nav-link room-link align-left">
                         <img src="H.jpg" alt="Helper Icon" class="nav-image"> 
                         <div class="text-group">
@@ -60,7 +54,7 @@
                     </a>
                 </div>
 
-                <div class="row-middle-links">
+                <div class="row-asymmetric-middle">
                     <a href="support.html" class="main-nav-link room-link align-left">
                         <img src="K.jpg" alt="Support Icon" class="nav-image"> 
                         <div class="text-group">
@@ -91,51 +85,19 @@
                 
             </div>
             
-            <div class="social-links">
-                <a href="https://github.com/morstrix" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-                <a href="https://t.me/morstrix" target="_blank" class="social-icon"><i class="fab fa-telegram-plane"></i></a>
-                <a href="https://www.patreon.com/gritspark" target="_blank" class="social-icon"><i class="fab fa-patreon"></i></a>
             </div>
-            
-        </div>
     </section>
 
     <script>
+        // Прибираємо логіку splash screen, оскільки його видалено
         document.addEventListener('DOMContentLoaded', function() {
-            var splash = document.getElementById('splash-screen');
+            // Прибрати 'introPlayed' з sessionStorage, якщо це потрібно для чистоти.
+            // sessionStorage.removeItem('introPlayed'); 
+            
+            // Замість складної логіки просто переконаємося, що контейнер відображається
             var mainContent = document.getElementById('main-content');
-            
-            if (!splash || !mainContent) {
-                if (mainContent) mainContent.style.display = 'block';
-                return; 
-            }
-            
-            if (window.location.protocol === 'file:') {
-                splash.style.display = 'none';
-                mainContent.style.display = 'block';
-                return; 
-            }
-            
-            if (sessionStorage.getItem('introPlayed')) {
-                splash.style.display = 'none';
-                mainContent.style.display = 'block';
-            } else {
-                var safetyTimeout = setTimeout(function() {
-                    splash.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    sessionStorage.setItem('introPlayed', 'true');
-                }, 3500); 
-                
-                setTimeout(function() {
-                    clearTimeout(safetyTimeout); 
-                    splash.style.opacity = '0';  
-                    
-                    setTimeout(function() {
-                        splash.style.display = 'none';
-                        mainContent.style.display = 'block';  
-                        sessionStorage.setItem('introPlayed', 'true');
-                    }, 500); 
-                }, 2000); 
+            if (mainContent) {
+                mainContent.style.display = 'flex'; // Flex для центрування
             }
         });
     </script>
