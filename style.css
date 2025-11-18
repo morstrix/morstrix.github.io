@@ -1,13 +1,11 @@
 :root {
     --bg-color: #000; /* ЧИСТИЙ ЧОРНИЙ ФОН */
-    --grid-color: rgba(0, 150, 0, 0.1); /* Дуже тонка зелена сітка */
     --main-text-color: #368600; /* Зелений термінальний текст */
     
     /* НОВІ СТИЛІ КНОПОК: ЧОРНИЙ ФОН, ЗЕЛЕНИЙ ОБВІД ТА ТІНЬ */
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
     
-    --info-box-color: #ffffff; /* Переменная не используется в retro-info-box */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
     --helper-box-color: #004d00;
@@ -26,10 +24,7 @@ body {
     margin: 0;
     color: var(--main-text-color);
     height: 100%;
-    /* Ефект сітки CRT */
-    background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 100% 2px;
-    text-shadow: 0 0 8px rgba(54, 134, 0, 0.8); /* Сильніше світіння */
+    /* Убрали CRT-эффект и свечение */
 }
 
 /* ------------------------------------------- */
@@ -39,7 +34,7 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрируем контент по вертикали в комнатах */
+    justify-content: flex-start; /* Убрали центрирование, контент сверху */
     align-items: center;
     width: 100vw;
     min-height: 90vh; 
@@ -49,7 +44,7 @@ body {
 }
 
 .main-section {
-    justify-content: flex-start; /* На главной странице контент остается сверху */
+    justify-content: flex-start; /* На главной: сверху, без центрирования */
     min-height: 100vh; 
 }
 
@@ -60,7 +55,7 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0; /* Прибрав внутрішні відступи */
+    padding: 0; 
     box-sizing: border-box;
     position: relative;
     flex-grow: 1; 
@@ -73,14 +68,14 @@ body {
     display: flex;
     justify-content: flex-end; /* РОЗМІСТИВ КНОПКУ СПРАВА */
     align-items: center;
-    position: absolute; /* Фіксуємо його відносно батьківського елемента */
+    position: absolute; 
     top: 0;
     left: 0;
     z-index: 10;
 }
 
 .back-button {
-    background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
+    background-color: var(--back-button-color); 
     border: none;
     padding: 0; 
     width: 30px;
@@ -92,7 +87,7 @@ body {
     transition: all 0.1s ease;
     text-decoration: none;
     border-radius: 0;
-    margin-left: auto; /* Щоб притиснути до правого краю */
+    margin-left: auto; 
     margin-right: 0;
 }
 
@@ -105,16 +100,15 @@ body {
     width: 20px; 
     height: 20px; 
     image-rendering: pixelated; 
-    filter: invert(1); /* Робить чорний колір білим, якщо у вас чорний хрестик */
+    filter: invert(1); 
     background-color: transparent;
 }
-
 
 /* ------------------------------------------- */
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ (СТИЛІ ТЕРМІНАЛУ) */
 /* ------------------------------------------- */
 
-/* БАЗОВИЙ СТИЛЬ КНОПОК (Для внутрішньої навігації та тих, що не мають зеленої рамки) */
+/* БАЗОВИЙ СТИЛЬ КНОПОК */
 .retro-button {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--link-button-color); 
@@ -122,9 +116,9 @@ body {
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: none; /* ЧИСТИЙ БЕЗ РАМКИ */
-    box-shadow: none; /* ЧИСТИЙ БЕЗ ТІНІ */
-    transition: all 0.1s ease;
+    border: none; 
+    box-shadow: none; 
+    transition: color 0.1s ease; /* Только смена цвета */
     display: inline-block;
     cursor: pointer;
     text-align: center;
@@ -132,26 +126,24 @@ body {
     line-height: 1;
 }
 
-/* СТИЛЬ ДЛЯ ЗОВНІШНІХ КНОПОК (З ЗЕЛЕНОЮ РАМКОЮ) */
+/* СТИЛЬ ДЛЯ ЗОВНІШНІХ КНОПОК */
 .external-link-button {
-    border: 3px solid var(--main-text-color); /* ЗЕЛЕНА РАМКА */
-    box-shadow: 6px 6px 0 var(--link-button-shadow-color); /* ЗЕЛЕНА ТІНЬ */
+    border: 3px solid var(--main-text-color); 
+    box-shadow: 6px 6px 0 var(--link-button-shadow-color); 
 }
 
-/* СТИЛЬ HOVER ДЛЯ ЗОВНІШНІХ КНОПОК */
+/* HOVER ДЛЯ ЗОВНІШНІХ КНОПОК */
 .external-link-button:hover {
     box-shadow: 3px 3px 0 var(--link-button-shadow-color);
     transform: translate(3px, 3px);
     color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff;
 }
 
-/* СТИЛЬ HOVER ДЛЯ ВСІХ ІНШИХ КНОПОК (ТІЛЬКИ СВІТІННЯ) */
+/* HOVER ДЛЯ ІНШИХ КНОПОК */
 .retro-button:hover {
     box-shadow: none;
     transform: none;
     color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff;
 }
 
 /* Кнопка .APK */
@@ -161,74 +153,17 @@ body {
     font-size: 1em;
 }
 
-/* ГЛАВНЫЙ ИЗМЕНЯЕМЫЙ БЛОК: Убираем все рамки и фоны */
+/* ГЛАВНЫЙ ИЗМЕНЯЕМЫЙ БЛОК */
 .retro-info-box {
-    background-color: var(--bg-color); /* Черный фон, сливается с body */
-    border: none; /* УДАЛЕНО: Рамка */
-    box-shadow: none; /* УДАЛЕНО: Тень */
+    background-color: var(--bg-color); 
+    border: none; 
+    box-shadow: none; 
     padding: 10px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--main-text-color); /* Текст теперь зеленый */
+    color: var(--main-text-color); 
     text-align: center;
-    font-size: 0.7em;
-    line-height: 1.4;
-    box-sizing: border-box;
-    position: relative; 
-}
-
-/* УДАЛЕНО: СТИЛИ ДЛЯ ЗОБРАЖЕНЬ В INFO-BOX */
-.info-box-image {
-    display: none; /* Прячем картинки, если они остались в HTML */
-    width: 50px; 
-    height: 50px;
-    object-fit: contain; 
-    image-rendering: pixelated;
-    margin-bottom: 5px;
-}
-
-/* ------------------------------------------- */
-/* СТИЛІ ЗОБРАЖЕНЬ (ВКЛЮЧАЮЧИ НОВЕ ЗМЕНШЕННЯ ДЛЯ КІМНАТ) */
-/* ------------------------------------------- */
-
-.section-image {
-    /* Новий стиль для зменшення зображень в кімнатах */
-    max-width: 33.33%; /* Зменшуємо до третини */
-    height: auto;
-    margin-bottom: 20px;
-    image-rendering: pixelated;
-}
-
-.main-logo-image {
-    width: 90%;
-    max-width: 240px;
-    height: auto;
-    display: block;
-    margin: 0 auto 15px;
-    image-rendering: pixelated;
-}
-
-/* ------------------------------------------- */
-/* СТИЛІ ГОЛОВНОГО ІНДЕКСУ (Діалоговий стиль) */
-/* ------------------------------------------- */
-
-.main-title-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; /* Невеликий відступ від самого верху сторінки */
-}
-
-.folder-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    width: 100%;
-    max-width: 600px; 
-    margin-top: 20px;
-    padding: 0 10px;
-    gap: 15px; 
 }
 
 .main-nav-link {
@@ -241,7 +176,7 @@ body {
     background-color: transparent; 
     color: var(--main-text-color); 
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
     font-size: 0.8em; 
     font-weight: 600;
     border: none; 
@@ -255,7 +190,6 @@ body {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff;
 }
 
 .button-sub-caption {
@@ -296,25 +230,23 @@ body {
     
     background-color: var(--link-button-color); 
     color: var(--main-text-color); 
-    border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
-    box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
+    border: none; 
+    box-shadow: none; 
     
     font-size: 0.9em; 
-    transition: all 0.1s ease;
+    transition: color 0.1s ease;
 }
 
 .dialog-link:hover {
     transform: none; 
     box-shadow: none;
     color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff;
 }
 
 .dialog-link .nav-image {
     max-width: 60px;
     margin-bottom: 0;
 }
-
 
 /* ЛІВЕ ПОВІДОМЛЕННЯ (HELPER, SUPPORT) */
 .dialog-link.align-left {
@@ -346,7 +278,6 @@ body {
     order: 1;
 }
 
-
 /* EX | ADA: Внизу по центру */
 .row-bottom-links { 
     display: flex;
@@ -363,7 +294,6 @@ body {
 /* EX | ADA також використовують нові стилі кнопок */
 .row-bottom-links .main-nav-link {
     min-width: 100px;
-    /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
     border: none; 
     box-shadow: none;
     background-color: var(--link-button-color); 
@@ -372,12 +302,6 @@ body {
     transform: none; 
     box-shadow: none;
 }
-
-/* СТРЕЛКИ УДАЛЕНЫ ПОЛНОСТЬЮ */
-.retro-info-box::after, .align-left .retro-info-box::after, .align-right .retro-info-box::after {
-    content: none !important;
-}
-
 
 /* ------------------------------------------- */
 /* АДАПТАЦІЯ (Для мобільних пристроїв) */
@@ -398,28 +322,41 @@ body {
         margin-bottom: 5px;
     }
     
-    /* ДІАЛОГОВИЙ СТИЛЬ: Всі повідомлення займають повну ширину */
+    /* ДІАЛОГОВИЙ СТИЛЬ: Всі повідомлення займають повну ширину, как чат */
     .dialog-link.main-nav-link {
         font-size: 0.8em;
-        width: 95%; 
-        max-width: 95%;
+        width: 90%; 
+        max-width: 90%;
         padding: 8px;
     }
     
     .dialog-link.align-left {
         margin-right: auto;
-        margin-left: 10px;
+        margin-left: 5%; /* Сдвиг слева для диалога */
         align-self: flex-start;
     }
     .dialog-link.align-right {
         margin-left: auto;
-        margin-right: 10px;
+        margin-right: 5%; /* Сдвиг справа для диалога */
         align-self: flex-end;
     }
     
     .dialog-link.align-left .text-group { align-items: flex-start; }
     .dialog-link.align-right .text-group { align-items: flex-end; }
     
+    /* Для комнат: имитация диалога (выравнивание слева/справа) */
+    .helper-section, .support-section { /* Левый диалог */
+        align-items: flex-start;
+    }
+    .forum-section, .sklad-section { /* Правый диалог */
+        align-items: flex-end;
+    }
+    .retro-info-box {
+        text-align: left; /* Для левых */
+    }
+    .forum-info-box, .sklad-info-box {
+        text-align: right; /* Для правых */
+    }
     
     /* EX | ADA: В один ряд */
     .row-bottom-links {
@@ -442,24 +379,8 @@ body {
         max-width: 60px;
     }
     
-    /* CAROUSEL MOBILE */
-    .carousel-wrapper {
-        margin: 20px auto;
-        width: 100%;
-    }
-    .prev-btn {
-        left: 0px; 
-        font-size: 1em;
-        padding: 8px;
-    }
-    .next-btn {
-        right: 0px;
-        font-size: 1em;
-        padding: 8px;
-    }
-    
     /* Зменшення зображення для мобільних пристроїв */
     .section-image {
-        max-width: 50%; /* На мобільних зробимо трохи більшим, щоб було видно */
+        max-width: 50%; 
     }
 }
