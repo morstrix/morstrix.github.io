@@ -2,11 +2,11 @@
     --bg-color: #000; /* ЧИСТИЙ ЧОРНИЙ ФОН */
     --grid-color: rgba(0, 150, 0, 0.1); /* Дуже тонка зелена сітка */
     --main-text-color: #368600; /* Зелений термінальний текст */
-
+    
     /* НОВІ СТИЛІ КНОПОК: ЧОРНИЙ ФОН, ЗЕЛЕНИЙ ОБВІД ТА ТІНЬ */
     --link-button-color: var(--bg-color); /* Чорний фон кнопки */
     --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
-
+    
     --info-box-color: #ffffff; /* Білий фон для інформаційного блоку */
     --arrow-color: #ff00ff;
     --arrow-shadow-color: #ff00ff;
@@ -42,14 +42,14 @@ body {
     justify-content: flex-start; /* Вирівнювання до верху */
     align-items: center;
     width: 100vw;
-    min-height: 90vh;
+    min-height: 90vh; 
     padding: 10px 20px; /* Зменшив верхній відступ */
     box-sizing: border-box;
     text-align: center;
 }
 
 .main-section {
-    min-height: 100vh;
+    min-height: 100vh; 
 }
 
 .main-container {
@@ -62,7 +62,7 @@ body {
     padding: 0; /* Прибрав внутрішні відступи */
     box-sizing: border-box;
     position: relative;
-    flex-grow: 1;
+    flex-grow: 1; 
 }
 
 .site-header {
@@ -81,7 +81,7 @@ body {
 .back-button {
     background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
     border: none;
-    padding: 0;
+    padding: 0; 
     width: 30px;
     height: 30px;
     display: flex;
@@ -101,9 +101,9 @@ body {
 }
 
 .custom-back-icon {
-    width: 20px;
-    height: 20px;
-    image-rendering: pixelated;
+    width: 20px; 
+    height: 20px; 
+    image-rendering: pixelated; 
     filter: invert(1); /* Робить чорний колір білим, якщо у вас чорний хрестик */
     background-color: transparent;
 }
@@ -115,13 +115,13 @@ body {
 
 .retro-button {
     font-family: 'Press Start 2P', cursive;
-    background-color: var(--link-button-color);
-    color: var(--main-text-color);
+    background-color: var(--link-button-color); 
+    color: var(--main-text-color); 
     text-decoration: none;
     padding: 10px 15px;
     margin: 10px 5px;
-    border: 3px solid var(--main-text-color);
-    box-shadow: 6px 6px 0 var(--link-button-shadow-color);
+    border: 3px solid var(--main-text-color); 
+    box-shadow: 6px 6px 0 var(--link-button-shadow-color); 
     transition: all 0.1s ease;
     display: inline-block;
     cursor: pointer;
@@ -133,7 +133,7 @@ body {
 .retro-button:hover {
     box-shadow: 3px 3px 0 var(--link-button-shadow-color);
     transform: translate(3px, 3px);
-    color: #ffffff;
+    color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -147,12 +147,12 @@ body {
 .retro-info-box {
     background-color: var(--info-box-color);
     border: 3px solid var(--main-text-color);
-    box-shadow: 0 0 15px rgba(54, 134, 0, 0.7);
+    box-shadow: 0 0 15px rgba(54, 134, 0, 0.7); 
     padding: 10px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    color: var(--bg-color);
+    color: var(--bg-color); 
     text-align: center;
     font-size: 0.7em;
     line-height: 1.4;
@@ -178,7 +178,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 10px; /* Зменшив відступ від верху */
+    margin-top: 0; /* ПРИБРАВ ВІДСТУП ЗВЕРХУ */
 }
 
 .main-logo-image {
@@ -192,62 +192,62 @@ body {
 
 .folder-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 600px; 
     margin-top: 20px;
     padding: 0 10px;
-    gap: 15px;
+    gap: 15px; 
 }
 
 .main-nav-link {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 5px; 
     text-align: center;
-    background-color: transparent;
-    color: var(--main-text-color);
+    background-color: transparent; 
+    color: var(--main-text-color); 
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 0.8em;
+    font-size: 0.8em; 
     font-weight: 600;
-    border: none;
-    box-shadow: none;
+    border: none; 
+    box-shadow: none; 
     position: relative;
     cursor: pointer;
-    min-width: 80px;
+    min-width: 80px; 
 }
 
 .main-nav-link:hover {
-    transform: none;
+    transform: none; 
     box-shadow: none;
-    color: #ffffff;
+    color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
 
 .button-sub-caption {
     display: block;
-    font-size: 0.45em;
+    font-size: 0.45em; 
     margin-top: 2px;
-    color: var(--main-text-color);
+    color: var(--main-text-color); 
 }
 
 .nav-image {
-    max-width: 50px;
+    max-width: 50px; 
     height: auto;
     margin-bottom: 5px;
-    image-rendering: pixelated;
+    image-rendering: pixelated; 
 }
 
 .text-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     justify-content: center;
-    align-items: center;
-    line-height: 1.1;
+    align-items: center; 
+    line-height: 1.1; 
 }
 
 /* СТИЛІ ДЛЯ ДІАЛОГОВИХ КНОПОК */
@@ -256,27 +256,27 @@ body {
     align-items: flex-start;
 }
 
-.dialog-link.main-nav-link {
-    flex-direction: row;
+.dialog-link.main-nav-link { 
+    flex-direction: row; 
     align-items: center;
     padding: 10px;
     min-width: unset;
-    width: auto;
-    max-width: 70%;
-
-    background-color: var(--link-button-color);
-    color: var(--main-text-color);
+    width: auto; 
+    max-width: 70%; 
+    
+    background-color: var(--link-button-color); 
+    color: var(--main-text-color); 
     border: none; /* ВИДАЛИВ ЗЕЛЕНУ РАМКУ */
     box-shadow: none; /* ВИДАЛИВ ЗЕЛЕНУ ТІНЬ */
-
-    font-size: 0.9em;
+    
+    font-size: 0.9em; 
     transition: all 0.1s ease;
 }
 
 .dialog-link:hover {
-    transform: none;
+    transform: none; 
     box-shadow: none;
-    color: #ffffff;
+    color: #ffffff; 
     text-shadow: 0 0 10px #ffffff;
 }
 
@@ -297,7 +297,7 @@ body {
 }
 .dialog-link.align-left .text-group {
     order: 1;
-    align-items: flex-start;
+    align-items: flex-start; 
     margin-left: 10px;
 }
 
@@ -308,8 +308,8 @@ body {
     margin-right: 10px;
 }
 .dialog-link.align-right .text-group {
-    order: 0;
-    align-items: flex-end;
+    order: 0; 
+    align-items: flex-end; 
     margin-right: 10px;
 }
 .dialog-link.align-right .nav-image {
@@ -318,15 +318,15 @@ body {
 
 
 /* EX | ADA: Внизу по центру */
-.row-bottom-links {
+.row-bottom-links { 
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: space-between; 
+    align-items: flex-end; 
     width: 100%;
-    max-width: 450px;
+    max-width: 450px; 
     gap: 20px;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: 30px; 
+    margin-bottom: 10px; 
     align-self: center;
 }
 
@@ -334,12 +334,12 @@ body {
 .row-bottom-links .main-nav-link {
     min-width: 100px;
     /* ВИДАЛИВ РАМКИ ТА ТІНЬ */
-    border: none;
+    border: none; 
     box-shadow: none;
-    background-color: var(--link-button-color);
+    background-color: var(--link-button-color); 
 }
 .row-bottom-links .main-nav-link:hover {
-    transform: none;
+    transform: none; 
     box-shadow: none;
 }
 
@@ -379,76 +379,70 @@ body {
 /* ------------------------------------------- */
 
 @media (max-width: 768px) {
-
+    
     body {
-        font-size: 0.9em;
+        font-size: 0.9em; 
     }
-
+    
     .folder-container {
-        gap: 10px;
+        gap: 10px; 
     }
-
+    
     .main-logo-image {
         max-width: 200px;
         margin-bottom: 5px;
     }
-
+    
     /* ЗБЕРЕЖЕННЯ ДІАЛОГОВОГО СТИЛЮ на мобільних */
     .dialog-link.main-nav-link {
         font-size: 0.8em;
-        width: 95%; /* Займає майже всю ширину */
+        width: 95%; 
         max-width: 95%;
         padding: 8px;
-        /* Зберігаємо flex-direction: row, align-items: center, order: 0/1 з десктопу */
-        min-width: unset;
-        box-sizing: border-box;
     }
-
-    /* Збереження вирівнювання діалогу (ліворуч/праворуч) */
+    /* Вирівнювання по краях, а не по центру */
     .dialog-link.align-left {
-        align-self: flex-start; /* Зліва */
+        align-self: flex-start;
         margin-right: auto;
-        margin-left: 5px; /* Трохи відсунути від краю */
+        margin-left: 5px;
     }
     .dialog-link.align-right {
-        align-self: flex-end; /* Справа */
+        align-self: flex-end;
         margin-left: auto;
-        margin-right: 5px; /* Трохи відсунути від краю */
+        margin-right: 5px;
     }
-
-    .dialog-link .nav-image {
-        max-width: 40px; /* Зменшуємо зображення для кращої компактності */
-    }
-
-
+    .dialog-link.align-left .text-group { align-items: flex-start; }
+    .dialog-link.align-right .text-group { align-items: flex-end; }
+    
+    
     /* EX | ADA: В один ряд */
     .row-bottom-links {
-        flex-direction: row;
-        justify-content: space-around;
+        flex-direction: row; 
+        justify-content: space-around; 
         align-items: center;
-        max-width: 300px;
+        max-width: 300px; 
         width: 100%;
-        gap: 10px;
+        gap: 10px; 
         margin-top: 15px;
         margin-bottom: 15px;
     }
     .row-bottom-links .main-nav-link {
-        font-size: 0.9em;
+        font-size: 0.9em; 
         min-width: unset;
-        width: 45%;
+        width: 45%; 
     }
 
     .nav-image {
         max-width: 60px;
     }
-
+    
     /* CAROUSEL MOBILE */
     .carousel-wrapper {
         margin: 20px auto;
         width: 100%;
     }
     .prev-btn {
-        left: 0px;
+        left: 0px; 
         font-size: 1em;
         padding: 8px;
     }
