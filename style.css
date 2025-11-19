@@ -1,9 +1,9 @@
 :root {
     --bg-color: #000; /* ЧИСТИЙ ЧОРНИЙ ФОН */
     --main-text-color: #368600; /* Зелений термінальний текст */
-    --link-button-color: var(--bg-color); /* Чорний фон кнопки */
-    --link-button-shadow-color: var(--main-text-color); /* Зелена тінь для ховеру */
-    --back-button-color: #ff0000; /* ЧЕРВОНИЙ для кнопки назад */
+    --link-button-color: var(--bg-color); 
+    --link-button-shadow-color: var(--main-text-color); 
+    --back-button-color: #ff0000; /* НАСИЧЕНО ЧЕРВОНИЙ для кнопки назад */
     --social-icon-color: var(--main-text-color);
 }
 
@@ -14,42 +14,39 @@ html {
 body {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--bg-color);
-    margin: 0; /* Прибираємо відступ зверху */
+    margin: 0;
     color: var(--main-text-color);
     height: 100%;
     overflow-x: hidden;
-    /* Без CRT и свечения */
 }
 
 .main-logo-image {
-    width: 100%;
-    max-width: 250px; /* Зменшено максимальну ширину */
+    width: 100%; 
+    max-width: 300px;
     height: auto;
     image-rendering: pixelated;
-    margin-top: 0; /* Прибираємо відступ зверху */
 }
 
 /* БАЗОВИЙ ЛАЙАУТ */
 .site-section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрування вмісту по горизонталі */
+    align-items: center; /* Центр по горизонталі */
     width: 100vw;
-    min-height: 100vh; /* Повна висота для кращого центрування */
-    padding: 0 20px; 
+    min-height: 100vh; /* Повна висота для центрування */
+    padding: 10px 20px;
     box-sizing: border-box;
     text-align: center;
 }
 
 .main-section {
-    justify-content: flex-start; /* На головній сторінці логотип вгорі */
-    min-height: 100vh;
+    justify-content: flex-start; /* Головна сторінка починається зверху */
 }
 
-/* Центрування для ВНУТРІШНІХ СТОРІНОК (КІМНАТ) */
+/* Примусове вертикальне центрування для всіх "КІМНАТ" */
 .helper-section, .forum-section, .support-section, .sklad-section, .ada-section, .ex-section {
     justify-content: center; /* Центрування вмісту по вертикалі */
-    padding-top: 50px; /* Додатковий відступ зверху, щоб не конфліктувати з кнопкою назад */
+    padding-top: 50px; /* Відступ, щоб не перекривати кнопку назад */
 }
 
 .main-container {
@@ -59,14 +56,10 @@ body {
     align-items: center; 
     height: 100%;
     width: 100%;
-    padding-top: 10px; /* Невеликий відступ під логотипом */
+    padding: 0;
     box-sizing: border-box;
     position: relative;
     flex-grow: 1;
-}
-
-.main-title-container {
-    margin-top: 0; /* Прибираємо відступ над логотипом */
 }
 
 .site-header {
@@ -82,13 +75,14 @@ body {
     z-index: 10;
 }
 
+/* ЗБІЛЬШЕННЯ ТА ПОЧЕРВОНІННЯ КНОПКИ НАЗАД */
 .back-button {
     background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
-    color: #ffffff; /* Колір для значка 'X' */
+    color: #ffffff; /* Білий колір для Хрестика */
     border: none;
     padding: 0;
-    width: 40px; /* ЗБІЛЬШЕНО РОЗМІР */
-    height: 40px; /* ЗБІЛЬШЕНО РОЗМІР */
+    width: 45px; /* ЗБІЛЬШЕНО РОЗМІР (45px) */
+    height: 45px; /* ЗБІЛЬШЕНО РОЗМІР (45px) */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,12 +92,17 @@ body {
     border-radius: 0;
     margin-left: auto;
     margin-right: 0;
-    font-size: 20px; /* Розмір хрестика FontAwesome */
+    font-size: 26px; /* РОБИМО ХРЕСТИК ВЕЛИКИМ І ЖИРНИМ */
 }
 
 .back-button:hover {
     box-shadow: 1px 1px 0 #333;
     transform: translate(1px, 1px);
+}
+
+/* ПРИБИРАЄМО СТАРІ СТИЛІ КАРТИНКИ "close.jpg" */
+.custom-back-icon {
+    display: none; 
 }
 
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
@@ -211,7 +210,6 @@ body {
     width: 100%;
     max-width: 600px; 
     margin: 0 auto; 
-    gap: 20px;
 }
 
 .dialog-link.main-nav-link {
@@ -298,50 +296,43 @@ body {
         font-size: 0.9em;
     }
 
-    .site-section, .main-container {
-        align-items: center; /* Центруємо навіть на мобільних */
+    .site-section {
+        align-items: center !important; 
     }
 
     .folder-container {
-        gap: 15px;
+        gap: 10px;
+        align-items: center; 
     }
-
-    .main-logo-image {
-        max-width: 200px;
-    }
-
+    
     .dialog-link.main-nav-link {
         font-size: 0.8em;
         width: 90%;
         max-width: 90%;
         padding: 8px;
-    }
-    
-    /* ЗБЕРІГАЄМО ВИРІВНЮВАННЯ ПО КРАЯХ НА МОБІЛЬНИХ ДЛЯ ГОЛОВНОЇ */
-    .dialog-link.align-left {
-        margin-left: 5% !important;
-        margin-right: auto;
-        align-self: flex-start;
+        align-self: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
-    .dialog-link.align-right {
-        margin-right: 5% !important;
-        margin-left: auto;
-        align-self: flex-end;
+    .dialog-link.align-left .text-group,
+    .dialog-link.align-right .text-group {
+        align-items: center; 
     }
 
-    /* Примусово центруємо вміст внутрішніх сторінок */
+    /* ПРИМУСОВЕ ЦЕНТРУВАННЯ ДЛЯ ВСІХ КІМНАТ НА МОБІЛЬНИХ */
     .helper-section, .support-section, .forum-section, .sklad-section, .ada-section, .ex-section {
         align-items: center !important; 
+        text-align: center !important;
     }
 
     .retro-info-box {
-        text-align: center; /* Центруємо текст в інфо-боксах */
+        text-align: center !important;
         max-width: 90%;
     }
 
     .forum-info-box, .sklad-info-box {
-        text-align: center;
+        text-align: center !important;
     }
 
     .row-bottom-links {
