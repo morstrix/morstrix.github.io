@@ -14,17 +14,18 @@ html {
 body {
     font-family: 'Press Start 2P', cursive;
     background-color: var(--bg-color);
-    margin: 0;
+    margin: 0; /* Видаляємо відступ з body */
     color: var(--main-text-color);
     height: 100%;
-    /* Без CRT и свечения */
+    overflow-x: hidden; /* Запобігає горизонтальному скролу */
 }
 
 .main-logo-image {
-    width: 100%; /* Масштабируется по контейнеру */
-    max-width: 300px; /* Максимум 300px */
+    width: 100%; 
+    max-width: 250px; /* Зменшено максимальну ширину */
     height: auto;
     image-rendering: pixelated;
+    margin-top: 0; /* Прибираємо відступ зверху */
 }
 
 /* БАЗОВИЙ ЛАЙАУТ */
@@ -32,10 +33,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center; /* Центр для десктопа, переопределим для мобильных */
+    align-items: center; 
     width: 100vw;
-    min-height: 90vh;
-    padding: 10px 20px;
+    min-height: 100vh; /* Залишаємо 100vh для повної висоти */
+    padding: 0 20px; /* Прибираємо padding-top/bottom */
     box-sizing: border-box;
     text-align: center;
 }
@@ -49,13 +50,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center; /* Центр для десктопа */
+    align-items: center; 
     height: 100%;
     width: 100%;
-    padding: 0;
+    padding: 10px 0 0 0; /* Невеликий відступ зверху для візуального комфорту */
     box-sizing: border-box;
     position: relative;
     flex-grow: 1;
+}
+
+.main-title-container {
+    margin-top: 0; /* Прибираємо відступ над логотипом */
 }
 
 .site-header {
@@ -65,7 +70,7 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    position: absolute;
+    position: absolute; /* Фіксуємо кнопку назад */
     top: 0;
     left: 0;
     z-index: 10;
@@ -202,10 +207,11 @@ body {
 .folder-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Розтягує, щоб align-self працював */
+    align-items: stretch; 
     width: 100%;
-    max-width: 600px; /* Обмеження ширини для центру */
-    margin: 0 auto; /* Центрування контейнера */
+    max-width: 600px; 
+    margin: 0 auto; 
+    gap: 20px; /* Додав простір між елементами */
 }
 
 .dialog-link.main-nav-link {
@@ -234,7 +240,7 @@ body {
 .dialog-link.align-left {
     align-self: flex-start;
     margin-right: auto;
-    margin-left: 5%; /* Невеликий відступ для диалогу */
+    margin-left: 5%; 
 }
 
 .dialog-link.align-left .nav-image {
@@ -250,7 +256,7 @@ body {
 .dialog-link.align-right {
     align-self: flex-end;
     margin-left: auto;
-    margin-right: 5%; /* Невеликий відступ для диалогу */
+    margin-right: 5%; 
 }
 
 .dialog-link.align-right .text-group {
@@ -297,7 +303,7 @@ body {
     }
 
     .folder-container {
-        gap: 10px;
+        gap: 15px; /* Збільшено простір для мобільних */
     }
 
     .main-logo-image {
@@ -310,7 +316,8 @@ body {
         max-width: 90%;
         padding: 8px;
     }
-
+    
+    /* ЗБЕРІГАЄМО ВИРІВНЮВАННЯ ПО КРАЯХ НА МОБІЛЬНИХ */
     .dialog-link.align-left {
         margin-left: 5% !important;
         margin-right: auto;
