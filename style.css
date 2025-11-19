@@ -3,7 +3,7 @@
     --main-text-color: #368600; /* Зелений термінальний текст */
     --link-button-color: var(--bg-color); 
     --link-button-shadow-color: var(--main-text-color); 
-    --back-button-color: #ff0000; /* НАСИЧЕНО ЧЕРВОНИЙ для кнопки назад */
+    --back-button-color: #ff0000; /* Це більше не використовується для кнопки, але залишаю для консистентності */
     --social-icon-color: var(--main-text-color);
 }
 
@@ -75,34 +75,33 @@ body {
     z-index: 10;
 }
 
-/* ЗБІЛЬШЕННЯ ТА ПОЧЕРВОНІННЯ КНОПКИ НАЗАД */
+/* СТИЛІ ДЛЯ КНОПКИ "НАЗАД" З ТВОЇМ ЗОБРАЖЕННЯМ */
 .back-button {
-    background-color: var(--back-button-color); /* ЧЕРВОНИЙ ФОН */
-    color: #ffffff; /* Білий колір для Хрестика */
+    background-color: transparent; /* Робимо фон прозорим */
     border: none;
     padding: 0;
-    width: 45px; /* ЗБІЛЬШЕНО РОЗМІР (45px) */
-    height: 45px; /* ЗБІЛЬШЕНО РОЗМІР (45px) */
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px 0 #333;
-    transition: all 0.1s ease;
+    transition: transform 0.1s ease;
     text-decoration: none;
     border-radius: 0;
     margin-left: auto;
     margin-right: 0;
-    font-size: 26px; /* РОБИМО ХРЕСТИК ВЕЛИКИМ І ЖИРНИМ */
+    /* Прибираємо старі тіні та стилі кнопки, залишаємо для зображення */
 }
 
 .back-button:hover {
-    box-shadow: 1px 1px 0 #333;
-    transform: translate(1px, 1px);
+    transform: scale(1.05); /* Легке збільшення при наведенні */
 }
 
-/* ПРИБИРАЄМО СТАРІ СТИЛІ КАРТИНКИ "close.jpg" */
+/* Стилі для твого зображення close.jpg */
 .custom-back-icon {
-    display: none; 
+    display: block; /* Робимо зображення видимим */
+    width: 50px; /* Великий розмір для хрестика */
+    height: 50px; /* Великий розмір для хрестика */
+    image-rendering: pixelated; /* Зберігаємо піксельний вигляд */
+    filter: drop-shadow(2px 2px 0 #333); /* Додаємо тінь для об'ємності */
 }
 
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
