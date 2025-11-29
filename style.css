@@ -101,26 +101,27 @@ body {
     filter: drop-shadow(2px 2px 0 #333); 
 }
 
-/* СТИЛІ ДЛЯ КВАДРАТНИХ СОЦІАЛЬНИХ ІКОНОК */
+/* ФІКС: СТИЛІ ДЛЯ ЗМЕНШЕНИХ КВАДРАТНИХ СОЦІАЛЬНИХ ІКОНОК (ЗМЕНШЕНО НА 35%) */
 .social-icons-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
-    gap: 20px; 
+    gap: 15px; /* Зменшимо відстань між іконками, щоб відповідати новому розміру */
 }
 
 .social-icon-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px; 
-    height: 50px;
+    width: 32.5px; /* ЗМІНЕНО: 50px зменшено на 35% */
+    height: 32.5px; /* ЗМІНЕНО: 50px зменшено на 35% */
     color: var(--social-icon-color); 
     border: 3px solid var(--social-icon-color); 
     box-shadow: 6px 6px 0 var(--link-button-shadow-color);
     transition: all 0.1s ease;
     text-decoration: none;
+    font-size: 1.2em; /* Зменшуємо розмір шрифту всередині, щоб відповідати контейнеру */
 }
 
 .social-icon-link:hover {
@@ -128,6 +129,7 @@ body {
     box-shadow: 3px 3px 0 var(--link-button-shadow-color);
     transform: translate(3px, 3px);
 }
+/* КІНЕЦЬ ФІКСУ СОЦІАЛЬНИХ ІКОНОК */
 
 
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
@@ -284,7 +286,6 @@ body {
     margin: 8px 0; /* Вертикальний відступ між кнопками, горизонтальний - нуль */
     box-sizing: border-box;
 }
-/* КІНЕЦЬ НОВИХ СТИЛІВ ДЛЯ СТОВПЧИКА */
 
 
 /* ВНУТРІШНІЙ ПОРЯДОК ІКОНОК/ТЕКСТУ (СВАП) */
@@ -349,6 +350,12 @@ body {
 
     .main-logo-image {
         max-width: 150px;
+    }
+    
+    /* ЗМЕНШЕННЯ СОЦІАЛЬНИХ ІКОНОК НА МОБІЛЬНИХ ТЕЖ */
+    .social-icon-link {
+        width: 32.5px;
+        height: 32.5px;
     }
 
     .folder-container {
