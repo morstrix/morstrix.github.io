@@ -20,10 +20,9 @@ body {
     overflow-x: hidden;
 }
 
-/* ЗМЕНШЕНО НА 40% */
 .main-logo-image {
     width: 100%; 
-    max-width: 180px; /* ЗМІНЕНО: 300px зменшено на 40% */
+    max-width: 180px; /* Зменшено на 40% (180px) */
     height: auto;
     image-rendering: pixelated;
 }
@@ -265,6 +264,28 @@ body {
     margin-bottom: 0;
 }
 
+/* НОВІ СТИЛІ: КНОПКИ В КІМНАТАХ (EX, ADA, SKLAD) В СТОВПЧИК */
+.ex-section .link-container,
+.ada-section .link-container,
+.sklad-section .link-container {
+    display: flex;
+    flex-direction: column; /* Кнопки в стовпчик */
+    align-items: center; /* Центрування кнопок по горизонталі */
+    width: 100%;
+    max-width: 350px; /* Обмеження ширини контейнера для кращого вигляду */
+    margin: 20px auto 0; /* Відступ зверху, центрування контейнера */
+}
+
+/* Забезпечення повної ширини кнопок всередині контейнера та правильних відступів */
+.ex-section .link-container .retro-button,
+.ada-section .link-container .retro-button,
+.sklad-section .link-container .retro-button {
+    width: 100%;
+    margin: 8px 0; /* Вертикальний відступ між кнопками, горизонтальний - нуль */
+    box-sizing: border-box;
+}
+/* КІНЕЦЬ НОВИХ СТИЛІВ ДЛЯ СТОВПЧИКА */
+
 
 /* ВНУТРІШНІЙ ПОРЯДОК ІКОНОК/ТЕКСТУ (СВАП) */
 .dialog-link.align-left .nav-image {
@@ -326,8 +347,8 @@ body {
         font-size: 0.9em;
     }
 
-    .main-logo-image { /* ЗМЕНШЕНО НА МОБІЛЬНИХ ТЕЖ */
-        max-width: 150px; /* Приблизно на 40% менше від початкових 250px для мобільних */
+    .main-logo-image {
+        max-width: 150px;
     }
 
     .folder-container {
