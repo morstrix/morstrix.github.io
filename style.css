@@ -20,9 +20,10 @@ body {
     overflow-x: hidden;
 }
 
+/* ЗМЕНШЕНО НА 40% */
 .main-logo-image {
     width: 100%; 
-    max-width: 300px;
+    max-width: 180px; /* ЗМІНЕНО: 300px зменшено на 40% */
     height: auto;
     image-rendering: pixelated;
 }
@@ -218,7 +219,6 @@ body {
     height: auto;
     margin-bottom: 5px;
     image-rendering: pixelated;
-    /* ВИКОРИСТОВУЄМО drop-shadow ДЛЯ КОЛІРНОГО ФІЛЬТРА */
     filter: drop-shadow(0 0 0 var(--main-text-color));
 }
 
@@ -326,6 +326,10 @@ body {
         font-size: 0.9em;
     }
 
+    .main-logo-image { /* ЗМЕНШЕНО НА МОБІЛЬНИХ ТЕЖ */
+        max-width: 150px; /* Приблизно на 40% менше від початкових 250px для мобільних */
+    }
+
     .folder-container {
         gap: 10px;
     }
@@ -336,7 +340,6 @@ body {
         padding: 10px; 
     }
 
-    /* ФІКС ВІДСТУПУ: ЗМЕНШЕННЯ ДО 3PX НА МОБІЛЬНИХ */
     .dialog-link.align-left .text-group {
         margin-left: 3px; 
     }
@@ -344,7 +347,6 @@ body {
         margin-right: 3px; 
     }
 
-    /* ФІКС РОЗМІРУ ІКОНКИ НА МОБІЛЬНИХ */
     .dialog-link .nav-image {
         max-width: 45px; 
     }
