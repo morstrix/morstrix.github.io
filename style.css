@@ -20,40 +20,48 @@ body {
     overflow-x: hidden;
 }
 
-/* ЗМЕНШЕНО НА 30% (300px * 0.7 = 210px) */
+/* ЗМЕНШЕНО НА 30% */
 .main-logo-image {
     width: 100%; 
-    max-width: 210px; /* Оновлена максимальна ширина */
+    max-width: 210px; /* Оновлена максимальна ширина: 300px * 0.7 = 210px */
     height: auto;
     image-rendering: pixelated;
 }
 
-/* СТИЛІ ДЛЯ НОВИХ СОЦІАЛЬНИХ ІКОНОК ПІД ЛОГОТИПОМ */
+/* НОВИЙ БЛОК ДЛЯ СОЦІАЛЬНИХ ІКОНОК */
 .social-icons-bar {
     display: flex;
     justify-content: center; /* Центрування по горизонталі */
     align-items: center;
     gap: 20px; /* Простір між іконками */
     margin-top: 15px; /* Відступ від логотипу */
-    margin-bottom: 30px; /* Відступ до контейнера папок */
+    margin-bottom: 30px; /* Збільшений відступ до контейнера папок */
 }
 
 .social-icon-link {
-    display: block;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
     color: var(--main-text-color);
     transition: color 0.1s ease, transform 0.1s ease;
-    font-size: 0; /* Приховуємо текст-підпис */
+    text-decoration: none;
+    
+    /* Створення квадратного вигляду */
+    width: 50px; 
+    height: 50px; 
+    border: 3px solid var(--main-text-color);
+    box-shadow: 4px 4px 0 var(--link-button-shadow-color);
 }
 
 .social-icon-link:hover {
     color: #ffffff;
-    transform: scale(1.1);
+    transform: translate(2px, 2px); 
+    box-shadow: 2px 2px 0 var(--link-button-shadow-color);
 }
 
 .fa-2x {
-    font-size: 2em; /* Розмір іконок */
+    font-size: 2em; 
 }
-/* Квадратні іконки без підпису в ряд посередині будуть реалізовані через Font Awesome і flexbox. */
 
 /* БАЗОВИЙ ЛАЙАУТ */
 .site-section {
@@ -386,9 +394,20 @@ body {
     .section-image {
         max-width: 50%;
     }
-
+    
     .social-icons-bar {
         gap: 15px;
-        margin-bottom: 20px;
+        margin-bottom: 25px; 
+    }
+
+    .social-icon-link {
+        width: 40px; 
+        height: 40px;
+        box-shadow: 3px 3px 0 var(--link-button-shadow-color);
+    }
+
+    .social-icon-link:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--link-button-shadow-color);
     }
 }
