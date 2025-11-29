@@ -20,12 +20,40 @@ body {
     overflow-x: hidden;
 }
 
+/* ЗМЕНШЕНО НА 30% (300px * 0.7 = 210px) */
 .main-logo-image {
     width: 100%; 
-    max-width: 300px;
+    max-width: 210px; /* Оновлена максимальна ширина */
     height: auto;
     image-rendering: pixelated;
 }
+
+/* СТИЛІ ДЛЯ НОВИХ СОЦІАЛЬНИХ ІКОНОК ПІД ЛОГОТИПОМ */
+.social-icons-bar {
+    display: flex;
+    justify-content: center; /* Центрування по горизонталі */
+    align-items: center;
+    gap: 20px; /* Простір між іконками */
+    margin-top: 15px; /* Відступ від логотипу */
+    margin-bottom: 30px; /* Відступ до контейнера папок */
+}
+
+.social-icon-link {
+    display: block;
+    color: var(--main-text-color);
+    transition: color 0.1s ease, transform 0.1s ease;
+    font-size: 0; /* Приховуємо текст-підпис */
+}
+
+.social-icon-link:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.fa-2x {
+    font-size: 2em; /* Розмір іконок */
+}
+/* Квадратні іконки без підпису в ряд посередині будуть реалізовані через Font Awesome і flexbox. */
 
 /* БАЗОВИЙ ЛАЙАУТ */
 .site-section {
@@ -357,5 +385,10 @@ body {
 
     .section-image {
         max-width: 50%;
+    }
+
+    .social-icons-bar {
+        gap: 15px;
+        margin-bottom: 20px;
     }
 }
