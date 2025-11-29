@@ -3,7 +3,7 @@
     --main-text-color: #368600; /* Зелений термінальний текст */
     --link-button-color: var(--bg-color); 
     --link-button-shadow-color: var(--main-text-color); 
-    --back-button-color: #ff0000; /* Це більше не використовується для кнопки, але залишаю для консистентності */
+    --back-button-color: #ff0000; 
     --social-icon-color: var(--main-text-color);
 }
 
@@ -33,20 +33,19 @@ body {
     flex-direction: column;
     align-items: center; /* Центр по горизонталі */
     width: 100vw;
-    min-height: 100vh; /* Повна висота для центрування */
+    min-height: 100vh; 
     padding: 10px 20px;
     box-sizing: border-box;
     text-align: center;
 }
 
 .main-section {
-    justify-content: flex-start; /* Головна сторінка починається зверху */
+    justify-content: flex-start; 
 }
 
-/* Примусове вертикальне центрування для всіх "КІМНАТ" */
 .helper-section, .forum-section, .support-section, .sklad-section, .ada-section, .ex-section {
-    justify-content: center; /* Центрування вмісту по вертикалі */
-    padding-top: 50px; /* Відступ, щоб не перекривати кнопку назад */
+    justify-content: center; 
+    padding-top: 50px; 
 }
 
 .main-container {
@@ -75,9 +74,8 @@ body {
     z-index: 10;
 }
 
-/* СТИЛІ ДЛЯ КНОПКИ "НАЗАД" З ТВОЇМ ЗОБРАЖЕННЯМ */
 .back-button {
-    background-color: transparent; /* Робимо фон прозорим */
+    background-color: transparent; 
     border: none;
     padding: 0;
     display: flex;
@@ -91,16 +89,15 @@ body {
 }
 
 .back-button:hover {
-    transform: scale(1.05); /* Легке збільшення при наведенні */
+    transform: scale(1.05); 
 }
 
-/* Стилі для твого зображення close.jpg */
 .custom-back-icon {
-    display: block; /* Робимо зображення видимим */
-    width: 50px; /* Великий розмір для хрестика */
-    height: 50px; /* Великий розмір для хрестика */
-    image-rendering: pixelated; /* Зберігаємо піксельний вигляд */
-    filter: drop-shadow(2px 2px 0 #333); /* Додаємо тінь для об'ємності */
+    display: block; 
+    width: 50px; 
+    height: 50px; 
+    image-rendering: pixelated; 
+    filter: drop-shadow(2px 2px 0 #333); 
 }
 
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
@@ -185,11 +182,14 @@ body {
     color: var(--main-text-color);
 }
 
+/* ФІКС КОЛЬОРУ: ПРИМУСОВИЙ ЗЕЛЕНИЙ ФІЛЬТР */
 .nav-image {
-    max-width: 50px;
+    max-width: 50px; /* PC/Tablet size */
     height: auto;
     margin-bottom: 5px;
     image-rendering: pixelated;
+    /* ФІЛЬТР: Інвертує кольори, потім зміщує відтінок до зеленого */
+    filter: invert(1) hue-rotate(100deg) brightness(80%); 
 }
 
 .text-group {
@@ -200,28 +200,31 @@ body {
     line-height: 1.1;
 }
 
-/* ДІАЛОГОВИЙ СТИЛЬ */
+/* ДІАЛОГОВИЙ СТИЛЬ: ПОВНЕ ЦЕНТРУВАННЯ НА ПК ТА МОБІЛЬНИХ */
 .folder-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch; 
+    align-items: center; /* ГЛАВНОЕ: ВСЕГДА ЦЕНТРИРУЕМ ПО ГОРИЗОНТАЛИ */
     width: 100%;
     max-width: 600px; 
     margin: 0 auto; 
+    gap: 20px; 
 }
 
 .dialog-link.main-nav-link {
     flex-direction: row;
     align-items: center;
-    padding: 10px;
-    width: auto;
-    max-width: 70%;
+    padding: 12px 15px; 
+    width: 100%; 
+    max-width: 350px; 
     background-color: var(--link-button-color);
     color: var(--main-text-color);
     border: none;
     box-shadow: none;
     font-size: 0.9em;
     transition: color 0.1s ease;
+    margin: 0; 
+    align-self: center; /* Центрування всередині контейнера */
 }
 
 .dialog-link:hover {
@@ -229,41 +232,36 @@ body {
 }
 
 .dialog-link .nav-image {
-    max-width: 60px;
     margin-bottom: 0;
 }
 
-.dialog-link.align-left {
-    align-self: flex-start;
-    margin-right: auto;
-    margin-left: 5%; 
-}
 
+/* ВНУТРІШНІЙ ПОРЯДОК ІКОНОК/ТЕКСТУ (СВАП) */
+
+/* Helper / Support: Іконка зліва, Текст справа */
 .dialog-link.align-left .nav-image {
     order: 0;
 }
 
 .dialog-link.align-left .text-group {
     order: 1;
-    align-items: flex-start;
-    margin-left: 10px;
+    align-items: flex-start; 
+    margin-left: 5px; /* Мінімальний відступ для всіх розмірів */
+    flex-grow: 1;
 }
 
-.dialog-link.align-right {
-    align-self: flex-end;
-    margin-left: auto;
-    margin-right: 5%; 
-}
-
+/* Forum: Іконка справа, Текст зліва */
 .dialog-link.align-right .text-group {
     order: 0;
-    align-items: flex-end;
-    margin-right: 10px;
+    align-items: flex-end; 
+    margin-right: 5px; /* Мінімальний відступ для всіх розмірів */
+    flex-grow: 1;
 }
 
 .dialog-link.align-right .nav-image {
     order: 1;
 }
+
 
 .row-bottom-links {
     display: flex;
@@ -294,31 +292,27 @@ body {
         font-size: 0.9em;
     }
 
-    .site-section {
-        align-items: center !important; 
-    }
-
     .folder-container {
         gap: 10px;
-        align-items: center; 
     }
     
     .dialog-link.main-nav-link {
         font-size: 0.8em;
-        width: 90%;
-        max-width: 90%;
-        padding: 8px;
-        align-self: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: 300px; 
+        padding: 10px; 
     }
 
-    /* ВИПРАВЛЕННЯ: ЗМЕНШЕННЯ ВІДСТУПІВ ДО 3PX */
+    /* ФІКС ВІДСТУПУ: ЗМЕНШЕННЯ ДО 3PX НА МОБІЛЬНИХ */
     .dialog-link.align-left .text-group {
         margin-left: 3px; 
     }
     .dialog-link.align-right .text-group {
-        margin-right: 3px;
+        margin-right: 3px; 
+    }
+
+    /* ФІКС РОЗМІРУ ІКОНКИ НА МОБІЛЬНИХ */
+    .dialog-link .nav-image {
+        max-width: 45px; 
     }
     
     .dialog-link.align-left .text-group,
@@ -327,40 +321,9 @@ body {
         flex-grow: 0; 
     }
     
-    /* ВИПРАВЛЕННЯ: ЗМЕНШЕННЯ РОЗМІРУ ІКОНКИ */
-    .nav-image {
-        max-width: 50px; /* Повернено до початкового розміру */
-    }
-
-
-    /* ПРИМУСОВЕ ЦЕНТРУВАННЯ ДЛЯ ВСІХ КІМНАТ НА МОБІЛЬНИХ */
-    .helper-section, .support-section, .forum-section, .sklad-section, .ada-section, .ex-section {
-        align-items: center !important; 
-        text-align: center !important;
-    }
-
-    .retro-info-box {
-        text-align: center !important;
-        max-width: 90%;
-    }
-
-    .forum-info-box, .sklad-info-box {
-        text-align: center !important;
-    }
-
     .row-bottom-links {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
         max-width: 300px;
-        width: 100%;
-        gap: 10px;
         margin-top: 15px;
         margin-bottom: 15px;
     }
-
-    .row-bottom-links .main-nav-link {
-        font-size: 0.9em;
-        min-width: unset;
-        width: 45%;
-    }
+}
