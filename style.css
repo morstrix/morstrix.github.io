@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #000; /* ЧИСТИЙ ЧОРНИЙ ФОН */
+    --bg-color: #000;
     --main-text-color: #368600; /* Зелений термінальний текст */
     --link-button-color: var(--bg-color); 
     --link-button-shadow-color: var(--main-text-color); 
@@ -31,19 +31,18 @@ body {
 .site-section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центр по горизонталі */
+    align-items: center;
     width: 100vw;
-    min-height: 100vh; 
+    min-height: 100vh;
     padding: 10px 20px;
     box-sizing: border-box;
     text-align: center;
 }
 
 .main-section {
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
 
-/* Примусове вертикальне центрування для всіх "КІМНАТ" */
 .helper-section, .forum-section, .support-section, .sklad-section, .ada-section, .ex-section {
     justify-content: center; 
     padding-top: 50px; 
@@ -102,24 +101,35 @@ body {
     filter: drop-shadow(2px 2px 0 #333); 
 }
 
-/* СОЦІАЛЬНІ ІКОНКИ */
+/* ФІКС: СТИЛІ ДЛЯ КВАДРАТНИХ СОЦІАЛЬНИХ ІКОНОК */
 .social-icons-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
-    gap: 15px; 
+    gap: 20px; /* Збільшуємо відстань між іконками */
 }
 
 .social-icon-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px; 
+    height: 50px;
     color: var(--social-icon-color); 
-    transition: color 0.2s ease, transform 0.1s ease;
+    border: 3px solid var(--social-icon-color); 
+    box-shadow: 6px 6px 0 var(--link-button-shadow-color);
+    transition: all 0.1s ease;
+    text-decoration: none;
 }
 
 .social-icon-link:hover {
     color: #ffffff;
-    transform: scale(1.1);
+    box-shadow: 3px 3px 0 var(--link-button-shadow-color);
+    transform: translate(3px, 3px);
 }
+/* КІНЕЦЬ ФІКСУ СОЦІАЛЬНИХ ІКОНОК */
+
 
 /* РЕТРО-КНОПКИ ТА ІНФО-БОКСИ */
 .retro-button {
@@ -203,13 +213,13 @@ body {
     color: var(--main-text-color);
 }
 
-/* ФІКС КОЛЬОРУ: ПРИМУСОВИЙ ЗЕЛЕНИЙ ФІЛЬТР */
+/* ФІКС КОЛЬОРУ: ПРИМУСОВИЙ ЗЕЛЕНИЙ ФІЛЬТР ДЛЯ ЗОБРАЖЕНЬ */
 .nav-image {
-    max-width: 50px; /* PC/Tablet size */
+    max-width: 50px;
     height: auto;
     margin-bottom: 5px;
     image-rendering: pixelated;
-    /* ФІЛЬТР: Інвертує кольори, потім зміщує відтінок до зеленого */
+    /* ФІЛЬТР ДЛЯ ПРИНУДИТЕЛЬНОГО ЗЕЛЕНОГО КОЛЬОРУ */
     filter: invert(1) hue-rotate(100deg) brightness(80%); 
 }
 
@@ -271,7 +281,7 @@ body {
     flex-grow: 1;
 }
 
-/* Forum: Іконка справа, Текст зліва */
+/* Forum / Sklad: Іконка справа, Текст зліва */
 .dialog-link.align-right .text-group {
     order: 0;
     align-items: flex-end; 
