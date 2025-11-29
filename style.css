@@ -230,7 +230,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     line-height: 1.1;
 }
 
@@ -238,24 +237,27 @@ body {
 .folder-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch; 
+    align-items: center; /* ГЛАВНОЕ: ВСЕГДА ЦЕНТРИРУЕМ ПО ГОРИЗОНТАЛИ */
     width: 100%;
     max-width: 600px; 
     margin: 0 auto; 
+    gap: 20px; 
 }
 
 .dialog-link.main-nav-link {
     flex-direction: row;
     align-items: center;
-    padding: 10px;
-    width: auto;
-    max-width: 70%;
+    padding: 12px 15px; 
+    width: 100%; 
+    max-width: 350px; /* Фиксируем максимальную ширину */
     background-color: var(--link-button-color);
     color: var(--main-text-color);
     border: none;
     box-shadow: none;
     font-size: 0.9em;
     transition: color 0.1s ease;
+    margin: 0; 
+    align-self: center; /* Обеспечиваем центрирование внутри контейнера */
 }
 
 .dialog-link:hover {
@@ -267,11 +269,11 @@ body {
     margin-bottom: 0;
 }
 
-/* ГАРАНТОВАНЕ ВИРІВНЮВАННЯ ПО КРАЯХ НА ШИРОКИХ ЕКРАНАХ */
+/* --- СТИЛИ ДЛЯ ВНУТРЕННЕГО ПОРЯДКА ИКОНОК/ТЕКСТА --- */
+
+/* Helper / Support: Иконка слева, Текст справа */
 .dialog-link.align-left {
-    align-self: flex-start;
-    margin-right: auto;
-    margin-left: 5%; 
+    /* Ничего не делаем с align-self, оставляем center */
 }
 
 .dialog-link.align-left .nav-image {
@@ -280,25 +282,28 @@ body {
 
 .dialog-link.align-left .text-group {
     order: 1;
-    align-items: flex-start;
-    margin-left: 10px;
+    align-items: flex-start; /* Выравнивание текста внутри кнопки */
+    margin-left: 15px;
+    flex-grow: 1;
 }
 
+/* Forum: Иконка справа, Текст слева */
 .dialog-link.align-right {
-    align-self: flex-end;
-    margin-left: auto;
-    margin-right: 5%; 
+    /* Ничего не делаем с align-self, оставляем center */
 }
 
 .dialog-link.align-right .text-group {
     order: 0;
-    align-items: flex-end;
-    margin-right: 10px;
+    align-items: flex-end; /* Выравнивание текста внутри кнопки */
+    margin-right: 15px;
+    flex-grow: 1;
 }
 
 .dialog-link.align-right .nav-image {
     order: 1;
 }
+/* --- КОНЕЦ СТИЛЕЙ ПОРЯДКА --- */
+
 
 .row-bottom-links {
     display: flex;
@@ -323,18 +328,14 @@ body {
     color: #ffffff;
 }
 
-/* МОБІЛЬНА АДАПТАЦІЯ */
+/* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
     body {
-        font-size: 0.8em; /* Трохи менший шрифт */
-    }
-
-    .site-section {
-        padding: 10px;
+        font-size: 0.8em; 
     }
 
     .main-logo-image {
-        max-width: 180px; /* Трохи менше лого на мобільних */
+        max-width: 180px; 
     }
 
     .social-icons-bar {
@@ -342,48 +343,30 @@ body {
     }
 
     .folder-container {
-        gap: 20px; /* Збільшимо простір між елементами */
+        gap: 15px; 
         align-items: center; 
         padding: 0 10px;
     }
     
-    /* ПРИМУСОВЕ ЦЕНТРУВАННЯ ДІАЛОГОВИХ ЛІНКІВ НА МОБІЛЬНИХ */
     .dialog-link.main-nav-link {
         font-size: 0.8em;
-        width: 100%; /* Займаємо всю доступну ширину контейнера (max-width: 600px) */
-        max-width: 300px; /* Обмежуємо абсолютний розмір */
-        padding: 12px 10px; /* Збільшимо padding */
-        align-self: center !important; 
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: 300px; 
+        padding: 10px; 
     }
     
-    /* Конкретно для першого елемента дамо відступ від іконок */
-    .dialog-link:first-of-type {
-        margin-top: 15px !important;
-    }
-
     .dialog-link .nav-image {
-        max-width: 45px; /* Трохи менші іконки папок */
+        max-width: 45px;
     }
     
-    /* На мобільних вирівнюємо текст по центру для чистоти */
+    /* На мобильных центрируем текст внутри кнопки для лучшего вида */
     .dialog-link.align-left .text-group,
     .dialog-link.align-right .text-group {
-        align-items: center;
+        align-items: center; 
         text-align: center;
-        flex-grow: 1; /* Дозволяємо тексту займати простір, щоб краще відцентрувати */
-    }
-    
-    .dialog-link.align-left .text-group {
         margin-left: 5px;
-    }
-    
-    .dialog-link.align-right .text-group {
         margin-right: 5px;
     }
 
-    /* Стилі для нижніх ADA та EX */
     .row-bottom-links {
         max-width: 300px;
         width: 100%;
@@ -392,5 +375,21 @@ body {
 
     .row-bottom-links .main-nav-link {
         font-size: 0.8em;
+    }
+    
+    /* АДАПТАЦИЯ ИКОНОК НА МОБИЛЬНЫХ */
+    .social-icons-bar {
+        gap: 15px;
+        margin-bottom: 25px; 
+    }
+
+    .social-icon-link {
+        width: 40px; 
+        height: 40px;
+        box-shadow: 3px 3px 0 var(--link-button-shadow-color);
+    }
+    .social-icon-link:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--link-button-shadow-color);
     }
 }
