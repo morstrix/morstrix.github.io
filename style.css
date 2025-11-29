@@ -204,27 +204,24 @@ body {
 .folder-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрування по горизонталі */
+    align-items: stretch; 
     width: 100%;
     max-width: 600px; 
     margin: 0 auto; 
-    gap: 20px; 
 }
 
 .dialog-link.main-nav-link {
     flex-direction: row;
     align-items: center;
     padding: 10px;
-    width: 100%; 
-    max-width: 350px; 
+    width: auto;
+    max-width: 70%;
     background-color: var(--link-button-color);
     color: var(--main-text-color);
     border: none;
     box-shadow: none;
     font-size: 0.9em;
     transition: color 0.1s ease;
-    margin: 0; 
-    align-self: center; 
 }
 
 .dialog-link:hover {
@@ -236,7 +233,11 @@ body {
     margin-bottom: 0;
 }
 
-/* --- СТИЛІ ДЛЯ ВНУТРЕННЬОГО ПОРЯДКУ ІКОНОК/ТЕКСТА (З ВЕЛИКИМ ВІДСТУПОМ) --- */
+.dialog-link.align-left {
+    align-self: flex-start;
+    margin-right: auto;
+    margin-left: 5%; 
+}
 
 .dialog-link.align-left .nav-image {
     order: 0;
@@ -244,23 +245,25 @@ body {
 
 .dialog-link.align-left .text-group {
     order: 1;
-    align-items: flex-start; 
-    margin-left: 10px; /* ВЕЛИКИЙ ВІДСТУП НА ПК */
-    flex-grow: 1;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.dialog-link.align-right {
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 5%; 
 }
 
 .dialog-link.align-right .text-group {
     order: 0;
-    align-items: flex-end; 
-    margin-right: 10px; /* ВЕЛИКИЙ ВІДСТУП НА ПК */
-    flex-grow: 1;
+    align-items: flex-end;
+    margin-right: 10px;
 }
 
 .dialog-link.align-right .nav-image {
     order: 1;
 }
-/* --- КОНЕЦ СТИЛЕЙ ПОРЯДКА --- */
-
 
 .row-bottom-links {
     display: flex;
@@ -305,25 +308,30 @@ body {
         width: 90%;
         max-width: 90%;
         padding: 8px;
-        align-self: center;
-        margin-left: auto;
-        margin-right: auto;
+        align-self: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
-    /* !!! ВИПРАВЛЕННЯ: ОБНУЛЕННЯ ВІДСТУПІВ НА МОБІЛЬНИХ !!! */
+    /* ВИПРАВЛЕННЯ: ЗМЕНШЕННЯ ВІДСТУПІВ ДО 3PX */
     .dialog-link.align-left .text-group {
-        margin-left: 5px; /* ЗМЕНШЕНО З 10PX */
+        margin-left: 3px; 
     }
     .dialog-link.align-right .text-group {
-        margin-right: 5px; /* ЗМЕНШЕНО З 10PX */
+        margin-right: 3px;
     }
     
     .dialog-link.align-left .text-group,
     .dialog-link.align-right .text-group {
         align-items: center; 
-        /* Зменшуємо flex-grow, щоб текст не займав увесь простір, якщо він короткий */
         flex-grow: 0; 
     }
+    
+    /* ВИПРАВЛЕННЯ: ЗМЕНШЕННЯ РОЗМІРУ ІКОНКИ */
+    .nav-image {
+        max-width: 50px; /* Повернено до початкового розміру */
+    }
+
 
     /* ПРИМУСОВЕ ЦЕНТРУВАННЯ ДЛЯ ВСІХ КІМНАТ НА МОБІЛЬНИХ */
     .helper-section, .support-section, .forum-section, .sklad-section, .ada-section, .ex-section {
@@ -356,12 +364,3 @@ body {
         min-width: unset;
         width: 45%;
     }
-
-    .nav-image {
-        max-width: 60px;
-    }
-
-    .section-image {
-        max-width: 50%;
-    }
-}
