@@ -71,7 +71,6 @@ body {
     text-transform: lowercase;
 }
 
-/* Лесенка */
 .step-1 { margin-left: 10%; }
 .step-2 { margin-left: 45%; }
 .step-3 { margin-left: 5%; }
@@ -114,12 +113,13 @@ body {
     align-items: center;
 }
 
+/* КНОПКА ЗАКРИТТЯ (БЕЗ ОБВОДКИ) */
 .back-button {
     position: fixed;
     top: 20px; right: 20px;
     width: 45px; height: 45px;
-    border: 2px solid var(--green);
-    background: #000;
+    background: transparent; /* Прибрано фон та рамку */
+    border: none;             /* Рамку видалено за запитом */
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -127,7 +127,7 @@ body {
 }
 .custom-back-icon { width: 25px; height: 25px; }
 
-/* КАРУСЕЛЬ (SHOP) - ВІДНОВЛЕНО */
+/* КАРУСЕЛЬ (SHOP) */
 .carousel-wrapper {
     display: flex;
     align-items: center;
@@ -164,7 +164,7 @@ body {
 /* ТЕТРІС (SUPPORT) */
 .game-window-container {
     width: 320px;
-    height: 600px; /* Висота для Mac */
+    height: 600px; 
     border: 2px solid var(--green);
     background: #000;
     margin-bottom: 20px;
