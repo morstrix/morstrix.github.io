@@ -12,16 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <canvas id="neuro-bg"></canvas>
 
     <section id="main-content" class="site-section main-section">
         <div class="main-container">
-
             <div class="main-title-container">
                 <img src="GAME-LOGO.jpg" alt="Main Logo" class="main-logo-image">
             </div>
 
             <div class="folder-container">
-
                 <a href="shop.html" class="main-nav-link dialog-link align-left">
                     <img src="xshop.jpg" alt="Shop Icon" class="nav-image">
                     <div class="text-group">
@@ -33,7 +32,7 @@
                 <a href="helper.html" class="main-nav-link dialog-link align-right">
                     <div class="text-group">
                         HELPER
-                        <span class="button-sub-caption">android app</span>
+                        <span class="button-sub-caption">utility bot</span>
                     </div>
                     <img src="helper.jpg" alt="Helper Icon" class="nav-image">
                 </a>
@@ -64,16 +63,66 @@
                         • DEV
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var mainContent = document.getElementById('main-content');
-            if (mainContent) { mainContent.style.display = 'flex'; }
-        });
+        const canvas = document.getElementById('neuro-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    size: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; // Хвосты нейронов
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = "#368600";
+            ctx.strokeStyle = "rgba(54, 134, 0, 0.25)";
+            ctx.lineWidth = 1;
+
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        draw();
     </script>
 </body>
 </html>

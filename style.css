@@ -1,22 +1,37 @@
 :root {
     --bg-color: #000;
     --main-text-color: #368600;
-    --link-button-color: var(--bg-color); 
-    --link-button-shadow-color: var(--main-text-color); 
-    --back-button-color: #ff0000; 
 }
 
-html {
+html, body {
     height: 100%;
-}
-
-body {
-    font-family: 'Press Start 2P', cursive;
-    background-color: var(--bg-color);
     margin: 0;
+    background-color: var(--bg-color);
+    font-family: 'Press Start 2P', cursive;
     color: var(--main-text-color);
-    height: 100%;
     overflow-x: hidden;
+}
+
+/* ФОН ДЛЯ ИНДЕКСА */
+#neuro-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.site-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100vw;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .main-logo-image {
@@ -24,72 +39,14 @@ body {
     max-width: 180px; 
     height: auto;
     image-rendering: pixelated;
-}
-
-/* БАЗОВЫЙ ЛАЙАУТ */
-.site-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    width: 100vw;
-    min-height: 100vh;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.main-section {
-    justify-content: flex-start;
-    padding-top: 5vh;
-}
-
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-}
-
-/* КАРУСЕЛЬ ДЛЯ ФОРУМА */
-.carousel-container {
-    width: 100%;
-    max-width: 300px;
     margin-bottom: 20px;
-    position: relative;
 }
 
-.carousel-track {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 10px;
-    scrollbar-width: none;
-}
-
-.carousel-track::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-track .section-image {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
-    object-fit: contain;
-    image-rendering: pixelated;
-}
-
-.carousel-hint {
-    font-size: 8px;
-    margin-top: 8px;
-    opacity: 0.5;
-    text-transform: uppercase;
-}
-
-/* ДИАЛОГОВАЯ СТРУКТУРА (INDEX) */
 .folder-container {
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 500px;
     gap: 15px;
 }
 
@@ -100,203 +57,90 @@ body {
     color: var(--main-text-color);
     padding: 10px;
     border: 2px solid var(--main-text-color);
-    background-color: var(--link-button-color);
-    box-shadow: 5px 5px 0px var(--link-button-shadow-color);
+    background-color: var(--bg-color);
+    box-shadow: 5px 5px 0px var(--main-text-color);
     transition: all 0.2s ease;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 11px;
 }
 
-.dialog-link {
-    width: fit-content;
-    max-width: 85%;
-}
-
-.align-left {
-    align-self: flex-start;
-    flex-direction: row;
-    border-radius: 0 15px 15px 15px;
-}
-
-.align-right {
-    align-self: flex-end;
-    flex-direction: row;
-    border-radius: 15px 0 15px 15px;
-}
+.dialog-link { width: fit-content; max-width: 90%; }
+.align-left { align-self: flex-start; border-radius: 0 15px 15px 15px; }
+.align-right { align-self: flex-end; flex-direction: row-reverse; border-radius: 15px 0 15px 15px; }
 
 .nav-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
+    width: 45px;
+    height: 45px;
     image-rendering: pixelated;
+    object-fit: cover;
 }
 
 .align-left .nav-image { margin-right: 15px; }
 .align-right .nav-image { margin-left: 15px; }
 
-.text-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.button-sub-caption {
-    font-size: 8px;
-    margin-top: 5px;
-    opacity: 0.7;
-}
+.text-group { display: flex; flex-direction: column; text-align: left; }
+.button-sub-caption { font-size: 8px; margin-top: 5px; opacity: 0.7; }
 
 .main-nav-link:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0px var(--link-button-shadow-color);
     background-color: var(--main-text-color);
     color: #000;
 }
 
-/* НИЖНИЕ ССЫЛКИ (ADA/EX) */
-.row-bottom-links {
-    display: flex;
-    justify-content: space-around;
+/* КАРУСЕЛИ */
+.carousel-container {
     width: 100%;
-    max-width: 450px;
-    gap: 20px;
-    margin-top: 30px;
-    align-self: center;
+    max-width: 320px;
+    margin-bottom: 20px;
 }
 
-.row-bottom-links .main-nav-link {
-    min-width: 100px;
-    border: none;
-    box-shadow: none;
+.carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    scrollbar-width: none;
 }
 
-/* СЕКЦИИ КОМНАТ */
-.section-image {
-    max-width: 300px;
-    height: auto;
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-track .section-image {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
     image-rendering: pixelated;
 }
 
+/* КНОПКИ И ИНФО */
 .retro-info-box {
     border: 2px solid var(--main-text-color);
     padding: 15px;
-    margin: 20px 0;
-    max-width: 300px;
     font-size: 10px;
-    line-height: 1.5;
-    background-color: rgba(54, 134, 0, 0.1);
+    background: rgba(54, 134, 0, 0.1);
+    margin: 20px 0;
 }
 
 .retro-button {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 12px 20px;
     text-decoration: none;
-    background-color: var(--main-text-color);
+    background: var(--main-text-color);
     color: #000;
-    font-size: 12px;
     box-shadow: 4px 4px 0px #1a4d00;
 }
 
-.retro-button:hover {
-    background-color: #4db300;
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px #1a4d00;
-}
-
-/* КНОПКА НАЗАД */
 .back-button {
     position: fixed;
     top: 20px;
     left: 20px;
-    padding: 5px;
-    background: none;
-    box-shadow: none;
     z-index: 100;
 }
 
-.custom-back-icon {
-    width: 30px;
-    height: 30px;
-}
+.custom-back-icon { width: 25px; height: 25px; }
 
-/* ССЫЛКИ ВНУТРИ EX/ADA/SHOP */
-.link-container {
+.row-bottom-links {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 300px;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.external-link-button {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* МОБИЛЬНАЯ АДАПТАЦИЯ */
-@media (max-width: 768px) {
-    .main-logo-image {
-        max-width: 150px;
-    }
-    
-    .dialog-link.main-nav-link {
-        font-size: 0.8em;
-        max-width: 300px;
-    }
-
-    .nav-image {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-/* Анимация сканирующей линии */
-body::before {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    z-index: 200; /* Поверх всего */
-    background-size: 100% 4px, 3px 100%;
-    pointer-events: none; /* Чтобы можно было кликать сквозь полосы */
-}
-
-/* Бегущая светлая полоса */
-body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(18, 16, 16, 0.1);
-    opacity: 0;
-    z-index: 201;
-    pointer-events: none;
-    animation: scanline 6s linear infinite;
-}
-
-@keyframes scanline {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-}
-
-.main-title-container, .main-nav-link {
-    animation: flicker 0.15s infinite;
-}
-
-@keyframes flicker {
-    0% { opacity: 0.97; }
-    5% { opacity: 0.95; }
-    10% { opacity: 0.9; }
-    15% { opacity: 0.99; }
-    20% { opacity: 0.96; }
-    60% { opacity: 0.95; }
-    100% { opacity: 0.98; }
-}
+.external-link-button { width: 100%; max-width: 300px; box-sizing: border-box; text-align: center; }
