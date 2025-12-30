@@ -14,12 +14,17 @@ body {
     background-color: var(--bg-color);
     font-family: 'Press Start 2P', cursive;
     color: var(--green);
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
-    overflow: hidden; 
+    overflow-x: hidden; /* Защита от горизонтального сдвига */
 }
 
-/* ФОНОВАЯ АНИМАЦИЯ */
+/* ФИКСИРУЕМ ГЛАВНУЮ БЕЗ СКРОЛЛА */
+body:has(.main-index) {
+    height: 100vh;
+    overflow: hidden;
+}
+
 #neuro-bg {
     position: fixed;
     top: 0; left: 0;
@@ -28,7 +33,7 @@ body {
     pointer-events: none;
 }
 
-/* КОНТЕЙНЕР ГЛАВНОЙ СТРАНИЦЫ */
+/* КОНТЕЙНЕР ГЛАВНОЙ */
 .site-section.main-index {
     display: flex;
     flex-direction: column;
@@ -38,76 +43,51 @@ body {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    /* Увеличенный отступ снизу для безопасной зоны телефонов */
-    padding: 60px 20px 80px; 
+    padding: 10vh 20px 80px; /* Отступ 80px снизу для безопасности */
 }
 
-/* ГРУППА ПАПОК / КОМНАТ */
+/* ГРУППА ПАПОК */
 .folder-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 60vh; 
+    height: 60vh;
     width: 100%;
 }
 
-/* ССЫЛКИ НА ГЛАВНОЙ */
 .main-nav-link {
     display: flex; 
     align-items: center;
     text-decoration: none; 
     color: var(--green);
-    background: transparent;
     transition: transform 0.1s;
-    width: auto;
 }
 
-.main-nav-link:active { 
-    transform: scale(0.95); 
-}
-
-/* ИКОНКИ (МОНСТРЫ) */
 .nav-folder-icon {
-    width: 70px;
-    height: 70px;
+    width: clamp(50px, 15vw, 75px); /* Адаптивный размер иконки */
+    height: auto;
     image-rendering: pixelated;
-    margin-right: 20px;
-    object-fit: contain;
+    margin-right: 15px;
 }
 
-/* ТЕКСТОВАЯ ГРУППА */
 .text-group {
     display: flex;
     flex-direction: column;
-    font-size: 14px;
-    line-height: 1.2;
+    font-size: clamp(10px, 3vw, 14px); /* Адаптивный шрифт */
 }
 
-.sub-caption { 
-    font-size: 8px; 
-    opacity: 0.6; 
-    margin-top: 5px; 
-}
+.sub-caption { font-size: 8px; opacity: 0.6; margin-top: 5px; }
 
-/* --- ПОЛНАЯ ЛОГИКА ЛЕСЕНКИ (БЕЗ УПРОЩЕНИЙ) --- */
-.step-1 { 
-    margin-left: 10%; 
-}
-.step-2 { 
-    margin-left: 45%; 
-}
-.step-3 { 
-    margin-left: 5%; 
-}
-.step-4 { 
-    margin-left: 55%; 
-}
+/* ЛОГИКА ЛЕСЕНКИ */
+.step-1 { margin-left: 5%; }
+.step-2 { margin-left: 45%; }
+.step-3 { margin-left: 2%; }
+.step-4 { margin-left: 50%; }
 
-/* НИЖНИЕ ССЫЛКИ (DES / DEV) */
+/* НИЖНИЕ ССЫЛКИ */
 .row-bottom-links {
     display: flex;
-    justify-content: center;
-    gap: 40px;
+    justify-content: space-between;
     width: 100%;
     margin-top: auto;
 }
@@ -115,77 +95,69 @@ body {
 .bottom-link {
     text-decoration: none;
     color: var(--green);
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 1px;
 }
 
-/* --- ВНУТРЕННИЕ СТРАНИЦЫ (ПОЛНЫЙ ФУНКЦИОНАЛ) --- */
-body:not(:has(.main-index)) {
-    overflow-y: auto;
-}
-
+/* --- ВНУТРЕННИЕ СТРАНИЦЫ И КАРУСЕЛИ --- */
 .site-section:not(.main-index) {
     min-height: 100vh;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    border: 2px solid var(--green);
-    background: #000;
-    padding: 8px;
+    padding: 80px 20px 40px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-decoration: none;
 }
 
-.custom-back-icon {
-    width: 25px;
-    height: 25px;
-}
-
+/* Правильное отображение карусели */
 .carousel-window {
     width: 100%;
-    overflow: hidden;
+    max-width: 400px;
+    overflow-x: auto; /* Позволяет листать картинки */
+    display: flex;
     border: 2px solid var(--green);
+    background: #000;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel-window img {
+    width: 100%; /* Картинка на всю ширину рамки */
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    image-rendering: pixelated;
+    display: block;
 }
 
 .retro-info-box {
     border: 2px solid var(--green);
     padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
+    margin: 20px 0;
     font-size: 10px;
     line-height: 1.6;
-    margin: 30px 0;
+    width: 100%;
 }
 
 .retro-button {
     display: block;
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     background: var(--green);
     color: #000;
-    font-size: 12px;
     text-align: center;
-    border: none;
-    text-transform: uppercase;
     text-decoration: none;
+    font-size: 11px;
+    text-transform: uppercase;
 }
 
-/* АДАПТИВ ДЛЯ МОБИЛОК */
-@media (max-width: 480px) {
-    .nav-folder-icon {
-        width: 60px;
-        height: 60px;
-    }
-    .text-group {
-        font-size: 12px;
-    }
-    .step-2 { margin-left: 35%; }
-    .step-4 { margin-left: 40%; }
+.back-button {
+    position: fixed; top: 20px; right: 20px;
+    border: 2px solid var(--green); background: #000;
+    padding: 8px; text-decoration: none; color: var(--green);
+    z-index: 100;
+}
+
+/* ПЛАНШЕТЫ И ДЕСКТОП */
+@media (min-width: 768px) {
+    .site-section.main-index { max-width: 600px; }
+    .nav-folder-icon { width: 80px; }
+    .text-group { font-size: 18px; }
 }
