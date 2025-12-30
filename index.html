@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ZONE INDEX</title>
+
+    <meta property="og:title" content="NEURO-INTERFACE PROJECT">
+    <meta property="og:description" content="Accessing the DIY ecosystem. Select a module to proceed.">
+    <meta property="og:image" content="GAME-LOGO.jpg"> 
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,11 +18,9 @@
     <canvas id="neuro-bg"></canvas>
 
     <section class="site-section">
-        <img src="GAME-LOGO.jpg" alt="Logo" class="main-logo-image">
-
-        <div class="folder-container">
+        <div class="folder-container" style="margin-top: 40px;">
             <a href="shop.html" class="main-nav-link align-left">
-                <img src="xshop.jpg" alt="icon" class="nav-folder-icon">
+                <img src="xshop.jpg" class="nav-folder-icon">
                 <div class="text-group">
                     SHOP
                     <span class="sub-caption">diy gear</span>
@@ -27,11 +32,11 @@
                     HELPER
                     <span class="sub-caption">utility bot</span>
                 </div>
-                <img src="helper.jpg" alt="icon" class="nav-folder-icon">
+                <img src="helper.jpg" class="nav-folder-icon">
             </a>
 
             <a href="forum.html" class="main-nav-link align-left">
-                <img src="forum.jpg" alt="icon" class="nav-folder-icon">
+                <img src="forum.jpg" class="nav-folder-icon">
                 <div class="text-group">
                     FORUM
                     <span class="sub-caption">reply society</span>
@@ -43,49 +48,20 @@
                     SUPPORT
                     <span class="sub-caption">bot</span>
                 </div>
-                <img src="support.jpg" alt="icon" class="nav-folder-icon">
+                <img src="support.jpg" class="nav-folder-icon">
             </a>
         </div>
 
         <div class="row-bottom-links">
             <a href="ada.html" class="bottom-link">
-                <img src="a.jpg" alt="D" class="tiny-icon">
-                DES
+                <img src="a.jpg" class="tiny-icon"> DES
             </a>
             <a href="ex.html" class="bottom-link">
-                <img src="x.jpg" alt="E" class="tiny-icon">
-                DEV
+                <img src="x.jpg" class="tiny-icon"> DEV
             </a>
         </div>
     </section>
 
-    <script>
-        const canvas = document.getElementById('neuro-bg');
-        const ctx = canvas.getContext('2d');
-        let w, h, p = [];
-        const init = () => {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-            p = Array.from({length: w < 600 ? 50 : 100}, () => ({
-                x: Math.random()*w, y: Math.random()*h,
-                vx: (Math.random()-.5), vy: (Math.random()-.5)
-            }));
-        };
-        const draw = () => {
-            ctx.clearRect(0,0,w,h);
-            ctx.fillStyle = "#368600"; ctx.strokeStyle = "rgba(54,134,0,0.3)";
-            p.forEach((pt, i) => {
-                pt.x += pt.vx; pt.y += pt.vy;
-                if(pt.x<0||pt.x>w) pt.vx*=-1; if(pt.y<0||pt.y>h) pt.vy*=-1;
-                ctx.fillRect(pt.x, pt.y, 2, 2);
-                for(let j=i+1; j<p.length; j++) {
-                    let d = Math.hypot(pt.x-p[j].x, pt.y-p[j].y);
-                    if(d<100) { ctx.beginPath(); ctx.moveTo(pt.x,pt.y); ctx.lineTo(p[j].x,p[j].y); ctx.stroke(); }
-                }
-            });
-            requestAnimationFrame(draw);
-        };
-        window.onresize = init; init(); draw();
-    </script>
+    <script src="script-bg.js"></script>
 </body>
 </html>
