@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ</title>
-    <meta name="description" content="ᘏᗢ">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -54,13 +53,11 @@
                 </a>
 
                 <div class="row-bottom-links">
-                    <a href="ada.html" class="main-nav-link">
-                        <img src="a.jpg" alt="ADA Folder" class="nav-image">
-                        • DES
+                    <a href="ada.html" class="main-nav-link bottom-small">
+                        <img src="a.jpg" alt="ADA" class="nav-image-small"> DES
                     </a>
-                    <a href="ex.html" class="main-nav-link">
-                        <img src="x.jpg" alt="EX Folder" class="nav-image">
-                        • DEV
+                    <a href="ex.html" class="main-nav-link bottom-small">
+                        <img src="x.jpg" alt="EX" class="nav-image-small"> DEV
                     </a>
                 </div>
             </div>
@@ -76,29 +73,28 @@
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 90; i++) {
+            // Для мобилок уменьшаем кол-во частиц, чтобы не лагало
+            const count = width < 768 ? 40 : 80;
+            for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.6,
-                    vy: (Math.random() - 0.5) * 0.6,
-                    size: Math.random() * 2 + 1
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 1.5 + 1
                 });
             }
         }
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; // Хвосты нейронов
+            ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
             ctx.fillRect(0, 0, width, height);
-
             ctx.fillStyle = "#368600";
-            ctx.strokeStyle = "rgba(54, 134, 0, 0.25)";
+            ctx.strokeStyle = "rgba(54, 134, 0, 0.15)";
             ctx.lineWidth = 1;
 
             particles.forEach((p, i) => {
-                p.x += p.vx;
-                p.y += p.vy;
-
+                p.x += p.vx; p.y += p.vy;
                 if (p.x < 0 || p.x > width) p.vx *= -1;
                 if (p.y < 0 || p.y > height) p.vy *= -1;
 
@@ -109,7 +105,7 @@
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 130) {
+                    if (dist < 110) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -119,10 +115,8 @@
             });
             requestAnimationFrame(draw);
         }
-
         window.addEventListener('resize', init);
-        init();
-        draw();
+        init(); draw();
     </script>
 </body>
 </html>
