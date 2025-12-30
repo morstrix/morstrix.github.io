@@ -3,118 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ʍ☻ʀᔕᴛʀɪ𒉽☇ ᴢᴏɴᴇ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>ZONE INDEX</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="index-page">
+<body>
     <canvas id="neuro-bg"></canvas>
 
-    <section id="main-content" class="site-section main-section">
-        <div class="main-container">
-            <div class="main-title-container">
-                <img src="GAME-LOGO.jpg" alt="Main Logo" class="main-logo-image">
-            </div>
+    <section class="site-section">
+        <img src="GAME-LOGO.jpg" alt="Logo" class="main-logo-image">
 
-            <div class="folder-container">
-                <a href="shop.html" class="main-nav-link dialog-link align-left">
-                    <img src="xshop.jpg" alt="Shop Icon" class="nav-image">
-                    <div class="text-group">
-                        SHOP
-                        <span class="button-sub-caption">diy gear</span>
-                    </div>
-                </a>
-
-                <a href="helper.html" class="main-nav-link dialog-link align-right">
-                    <div class="text-group">
-                        HELPER
-                        <span class="button-sub-caption">utility bot</span>
-                    </div>
-                    <img src="helper.jpg" alt="Helper Icon" class="nav-image">
-                </a>
-
-                <a href="forum.html" class="main-nav-link dialog-link align-left">
-                    <img src="forum.jpg" alt="Forum Icon" class="nav-image">
-                    <div class="text-group">
-                        FORUM
-                        <span class="button-sub-caption">reply society</span>
-                    </div>
-                </a>
-
-                <a href="support.html" class="main-nav-link dialog-link align-right">
-                    <div class="text-group">
-                        SUPPORT
-                        <span class="button-sub-caption">bot</span>
-                    </div>
-                    <img src="support.jpg" alt="Support Icon" class="nav-image">
-                </a>
-
-                <div class="row-bottom-links">
-                    <a href="ada.html" class="main-nav-link bottom-small">
-                        <img src="a.jpg" alt="ADA" class="nav-image-small"> DES
-                    </a>
-                    <a href="ex.html" class="main-nav-link bottom-small">
-                        <img src="x.jpg" alt="EX" class="nav-image-small"> DEV
-                    </a>
+        <div class="folder-container">
+            <a href="shop.html" class="main-nav-link align-left">
+                <img src="xshop.jpg" alt="icon" class="nav-folder-icon">
+                <div class="text-group">
+                    SHOP
+                    <span class="sub-caption">diy gear</span>
                 </div>
-            </div>
+            </a>
+
+            <a href="helper.html" class="main-nav-link align-right">
+                <div class="text-group">
+                    HELPER
+                    <span class="sub-caption">utility bot</span>
+                </div>
+                <img src="helper.jpg" alt="icon" class="nav-folder-icon">
+            </a>
+
+            <a href="forum.html" class="main-nav-link align-left">
+                <img src="forum.jpg" alt="icon" class="nav-folder-icon">
+                <div class="text-group">
+                    FORUM
+                    <span class="sub-caption">reply society</span>
+                </div>
+            </a>
+
+            <a href="support.html" class="main-nav-link align-right">
+                <div class="text-group">
+                    SUPPORT
+                    <span class="sub-caption">bot</span>
+                </div>
+                <img src="support.jpg" alt="icon" class="nav-folder-icon">
+            </a>
+        </div>
+
+        <div class="row-bottom-links">
+            <a href="ada.html" class="bottom-link">
+                <img src="a.jpg" alt="D" class="tiny-icon">
+                DES
+            </a>
+            <a href="ex.html" class="bottom-link">
+                <img src="x.jpg" alt="E" class="tiny-icon">
+                DEV
+            </a>
         </div>
     </section>
 
     <script>
         const canvas = document.getElementById('neuro-bg');
         const ctx = canvas.getContext('2d');
-        let width, height, particles;
-
-        function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            particles = [];
-            const count = width < 768 ? 50 : 100;
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.8,
-                    vy: (Math.random() - 0.5) * 0.8,
-                    size: 2
-                });
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, width, height); // Полная очистка для яркости
-            ctx.fillStyle = "#368600";
-            ctx.strokeStyle = "rgba(54, 134, 0, 0.3)";
-            ctx.lineWidth = 1;
-
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
+        let w, h, p = [];
+        const init = () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            p = Array.from({length: w < 600 ? 50 : 100}, () => ({
+                x: Math.random()*w, y: Math.random()*h,
+                vx: (Math.random()-.5), vy: (Math.random()-.5)
+            }));
+        };
+        const draw = () => {
+            ctx.clearRect(0,0,w,h);
+            ctx.fillStyle = "#368600"; ctx.strokeStyle = "rgba(54,134,0,0.3)";
+            p.forEach((pt, i) => {
+                pt.x += pt.vx; pt.y += pt.vy;
+                if(pt.x<0||pt.x>w) pt.vx*=-1; if(pt.y<0||pt.y>h) pt.vy*=-1;
+                ctx.fillRect(pt.x, pt.y, 2, 2);
+                for(let j=i+1; j<p.length; j++) {
+                    let d = Math.hypot(pt.x-p[j].x, pt.y-p[j].y);
+                    if(d<100) { ctx.beginPath(); ctx.moveTo(pt.x,pt.y); ctx.lineTo(p[j].x,p[j].y); ctx.stroke(); }
                 }
             });
             requestAnimationFrame(draw);
-        }
-        window.addEventListener('resize', init);
-        init(); draw();
+        };
+        window.onresize = init; init(); draw();
     </script>
 </body>
 </html>

@@ -1,45 +1,55 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ꜰᴏʀᴜᴍ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-    <header class="site-header">
-        <a href="index.html" class="retro-button back-button">
-            <img src="close.jpg" alt="Back button" class="custom-back-icon">
-        </a>
-    </header>
+<body class="room-page">
+    <a href="index.html" class="back-button">
+        <img src="x-icon.png" alt="X" class="custom-back-icon">
+    </a>
 
-    <section class="site-section forum-section">
-        
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <img src="1.jpg" alt="1" class="section-image">
-                <img src="2.jpg" alt="2" class="section-image">
-                <img src="3.jpg" alt="3" class="section-image">
-                <img src="4.jpg" alt="4" class="section-image">
-                <img src="5.jpg" alt="5" class="section-image">
-                <img src="6.jpg" alt="6" class="section-image">
-                <img src="7.jpg" alt="7" class="section-image">
-                <img src="8.jpg" alt="8" class="section-image">
+    <section class="site-section">
+        <div class="carousel-wrapper">
+            <button class="nav-btn prev-btn" id="prevBtn">&lt;</button>
+            
+            <div class="carousel-container">
+                <div class="carousel-track" id="track">
+                    <img src="SCREEN1.jpg" alt="1">
+                    <img src="SCREEN2.jpg" alt="2">
+                    <img src="SCREEN3.jpg" alt="3">
+                </div>
             </div>
-            <div class="carousel-hint">scroll ➞</div>
+
+            <button class="nav-btn next-btn" id="nextBtn">&gt;</button>
         </div>
-        
-        <div class="retro-info-box forum-info-box">
-            <p>PRIVATE CLUB</p>
+
+        <div class="retro-info-box">
+            Твой текст описания комнаты здесь. 
+            Всё будет четко в рамках этого бокса.
         </div>
-        
-        <a href="https://t.me/+7Xmj6pPB0mEyMDky" target="_blank" class="retro-button join-button external-link-button">
-            telegram
-        </a>
     </section>
+
+    <script>
+        const track = document.getElementById('track');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        let index = 0;
+
+        nextBtn.addEventListener('click', () => {
+            const slides = track.querySelectorAll('img');
+            if (index < slides.length - 1) {
+                index++;
+                track.style.transform = `translateX(-${index * 100}%)`;
+            } else {
+                index = 0;
+                track.style.transform = `translateX(0)`;
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const slides = track.querySelectorAll('img');
+            if (index > 0) {
+                index--;
+                track.style.transform = `translateX(-${index * 100}%)`;
+            } else {
+                index = slides.length - 1;
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+        });
+    </script>
 </body>
-</html>
