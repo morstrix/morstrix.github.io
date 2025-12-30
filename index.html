@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body class="index-page">
     <canvas id="neuro-bg"></canvas>
 
     <section id="main-content" class="site-section main-section">
@@ -73,24 +73,22 @@
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            // Для мобилок уменьшаем кол-во частиц, чтобы не лагало
-            const count = width < 768 ? 40 : 80;
+            const count = width < 768 ? 50 : 100;
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 1.5 + 1
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8,
+                    size: 2
                 });
             }
         }
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-            ctx.fillRect(0, 0, width, height);
+            ctx.clearRect(0, 0, width, height); // Полная очистка для яркости
             ctx.fillStyle = "#368600";
-            ctx.strokeStyle = "rgba(54, 134, 0, 0.15)";
+            ctx.strokeStyle = "rgba(54, 134, 0, 0.3)";
             ctx.lineWidth = 1;
 
             particles.forEach((p, i) => {
@@ -105,7 +103,7 @@
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 110) {
+                    if (dist < 120) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
