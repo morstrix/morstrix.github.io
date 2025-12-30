@@ -16,9 +16,10 @@ body {
     color: var(--green);
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Запрет скролла на главной */
+    overflow: hidden; /* Запрещаем скролл на главной */
 }
 
+/* ФОНОВАЯ АНИМАЦИЯ */
 #neuro-bg {
     position: fixed;
     top: 0; left: 0;
@@ -31,46 +32,47 @@ body {
 .site-section.main-index {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: flex-start; /* Для корректной работы лесенки */
     height: 100vh;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    padding: 8vh 20px 5vh; /* Динамические отступы сверху и снизу */
+    padding: 20px;
 }
 
-/* ГРУППА КНОПОК */
+/* ГРУППА КНОПОК-КОМНАТ */
 .folder-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 65vh; /* Занимает 65% высоты экрана */
+    height: 55vh; /* Плотное расположение комнат */
     width: 100%;
 }
 
-/* ОБЩИЙ СТИЛЬ КНОПКИ */
+/* СТИЛЬ ССЫЛОК-КОМНАТ */
 .main-nav-link {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: var(--green);
-    background: transparent;
     transition: transform 0.2s;
 }
 
-.main-nav-link:active { transform: scale(0.95); }
+.main-nav-link:active { 
+    transform: scale(0.95); 
+}
 
-/* ИКОНКИ ПАПОК / МОНСТРОВ */
+/* ИКОНКИ ПЕРСОНАЖЕЙ В КОМНАТАХ */
 .nav-folder-icon {
-    width: 65px; /* Размер иконок */
+    width: 65px;
     height: 65px;
     object-fit: contain;
     image-rendering: pixelated;
     margin-right: 15px;
 }
 
-/* ТЕКСТ КНОПОК */
+/* ТЕКСТОВЫЙ БЛОК */
 .text-group {
     display: flex;
     flex-direction: column;
@@ -84,40 +86,38 @@ body {
     margin-top: 5px; 
 }
 
-/* --- ЛОГИКА "ЛЕСЕНКИ" (КАК НА КАРТИНКЕ) --- */
-.step-1 { margin-left: 10%; }
-.step-2 { margin-left: 45%; }
-.step-3 { margin-left: 5%; }
-.step-4 { margin-left: 50%; }
+/* --- ЛОГИКА "ЛЕСЕНКИ" (ЗИГЗАГ) --- */
+.step-1 { margin-left: 5%; }
+.step-2 { margin-left: 42%; }
+.step-3 { margin-left: 2%; }
+.step-4 { margin-left: 48%; }
 
-/* ПОДВАЛ (DES / DEV) */
+/* --- НИЖНИЕ ССЫЛКИ (БЕЗ КАРТИНОК) --- */
 .row-bottom-links {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    height: 10vh;
+    gap: 60px; /* Пробел между DES и DEV */
+    height: 8vh;
     align-items: center;
     width: 100%;
+    margin-top: 10px;
 }
 
 .bottom-link {
-    display: flex;
-    align-items: center;
     text-decoration: none;
     color: var(--green);
-    font-size: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    transition: opacity 0.2s;
 }
 
-.tiny-icon {
-    width: 25px;
-    height: 25px;
-    margin-right: 10px;
-    image-rendering: pixelated;
+.bottom-link:active {
+    opacity: 0.5;
 }
 
-/* --- НАСТРОЙКИ ДЛЯ ВНУТРЕННИХ КОМНАТ --- */
+/* --- НАСТРОЙКИ ДЛЯ ВНУТРЕННИХ СТРАНИЦ (ГДЕ НУЖЕН СКРОЛЛ) --- */
 body:not(:has(.main-index)) {
-    overflow-y: auto; /* Скролл разрешен везде, кроме главной */
+    overflow-y: auto;
 }
 
 .site-section:not(.main-index) {
@@ -127,21 +127,33 @@ body:not(:has(.main-index)) {
 }
 
 .back-button {
-    position: fixed; top: 15px; right: 15px; z-index: 9999;
-    border: 1px solid var(--green); background: #000; padding: 5px;
+    position: fixed; 
+    top: 15px; 
+    right: 15px; 
+    z-index: 9999;
+    border: 1px solid var(--green); 
+    background: #000; 
+    padding: 5px;
+    text-decoration: none;
+    color: var(--green);
 }
-.custom-back-icon { width: 18px; height: 18px; }
 
 .retro-button {
-    display: block; width: 100%; padding: 15px; background: var(--green);
-    color: #000; text-align: center; text-decoration: none; font-size: 10px;
+    display: block; 
+    width: 100%; 
+    padding: 15px; 
+    background: var(--green);
+    color: #000; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 10px; 
     margin-top: 15px;
 }
 
-/* АДАПТИВ ДЛЯ СОВСЕМ МАЛЕНЬКИХ ТЕЛЕФОНОВ */
+/* АДАПТИВ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
 @media (max-width: 380px) {
-    .nav-folder-icon { width: 50px; height: 50px; }
-    .text-group { font-size: 11px; }
-    .step-2 { margin-left: 30%; }
-    .step-4 { margin-left: 35%; }
+    .nav-folder-icon { width: 55px; height: 55px; }
+    .text-group { font-size: 12px; }
+    .step-2 { margin-left: 35%; }
+    .step-4 { margin-left: 40%; }
 }
