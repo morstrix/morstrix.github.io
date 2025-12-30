@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <title>MORSTRIX | TETRIS</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg: #000;
+            --text: #fff;
+            --grid: #111;
+            --controls-bg: rgba(10, 10, 10, 0.95);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            touch-action: none;
+            overscroll-behavior: none;
+            -webkit-user-select: none;
+            user-select: none;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ВЕРХНЯЯ ПАНЕЛЬ С ПАУЗОЙ */
+        .top-panel {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 8px 10px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            height: 60px;
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 0.75em;
+            margin-bottom: 2px;
+        }
+        
+        .stat-value {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* ПРАВАЯ ЧАСТЬ С ПАУЗОЙ И NEXT */
+        .right-panel {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .pause-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #pause-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        #pause-btn:active {
+            color: #fff;
+            transform: scale(0.95);
+        }
+        
+        .pause-label {
+            color: #888;
+            font-size: 0.7em;
+        }
+        
+        .next-piece-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        #next-piece-canvas {
+            border: 1px solid #444;
+            background: #0a0a0a;
+            display: block;
+        }
+        
+        /* ИГРОВОЕ ПОЛЕ */
+        .game-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            min-height: 0;
+        }
+        
+        #tetris-canvas {
+            border: 2px solid #333;
+            background: var(--grid);
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+        
+        /* 4 КНОПКИ С ХОРОШИМИ ОТСТУПАМИ */
+        .controls {
+            background: var(--controls-bg);
+            padding: 15px 10px;
+            border-top: 2px solid #333;
+            display: flex;
+            justify-content: space-around; /* Равномерное распределение */
+            align-items: center;
+            flex-shrink: 0;
+            height: 100px; /* Чуть выше для отступов */
+            gap: 10px; /* Отступы между кнопками */
+        }
+        
+        .game-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1; /* Равная ширина для всех кнопок */
+            max-width: 80px; /* МАКСИМАЛЬНЫЙ размер кнопки */
+            height: 80px;
+            margin: 0 5px; /* Отступы слева/справа у каждой кнопки */
+        }
+        
+        .game-btn:active {
+            transform: scale(0.85);
+        }
+        
+        .game-btn img {
+            width: 100%; /* Занимает всю кнопку */
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.2);
+            pointer-events: none; /* Чтобы клик проходил через картинку на кнопку */
+        }
+        
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+        @media (max-width: 768px) {
+            .top-panel {
+                height: 55px;
+                padding: 6px 8px;
+            }
+            
+            .stats-container {
+                gap: 10px;
+            }
+            
+            .stat-box {
+                min-width: 60px;
+            }
+            
+            .stat-label {
+                font-size: 0.7em;
+            }
+            
+            .stat-value {
+                font-size: 1em;
+            }
+            
+            .right-panel {
+                gap: 10px;
+            }
+            
+            #next-piece-canvas {
+                width: 35px;
+                height: 35px;
+            }
+            
+            #pause-btn {
+                font-size: 1.6em;
+            }
+            
+            .controls {
+                height: 90px;
+                padding: 12px 8px;
+                gap: 8px;
+            }
+            
+            .game-btn {
+                max-width: 70px; /* Меньше на мобильных */
+                height: 70px;
+                margin: 0 3px;
+            }
+        }
+        
+        /* МАЛЕНЬКИЕ АНДРОИДЫ */
+        @media (max-width: 480px) {
+            .top-panel {
+                height: 50px;
+                padding: 5px 6px;
+            }
+            
+            .stat-box {
+                min-width: 55px;
+            }
+            
+            .stat-label {
+                font-size: 0.65em;
+            }
+            
+            .stat-value {
+                font-size: 0.9em;
+            }
+            
+            .right-panel {
+                gap: 8px;
+            }
+            
+            #pause-btn {
+                font-size: 1.4em;
+            }
+            
+            .pause-label {
+                font-size: 0.65em;
+            }
+            
+            .controls {
+                height: 85px;
+                padding: 10px 6px;
+                gap: 6px;
+            }
+            
+            .game-btn {
+                max-width: 65px; /* Еще меньше на маленьких экранах */
+                height: 65px;
+                margin: 0 2px;
+            }
+        }
+        
+        /* ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ */
+        @media (max-width: 360px) {
+            .controls {
+                height: 80px;
+                padding: 8px 4px;
+                gap: 4px;
+            }
+            
+            .game-btn {
+                max-width: 60px;
+                height: 60px;
+                margin: 0 1px;
+            }
+        }
+        
+        /* ДЕСКТОП */
+        @media (min-width: 769px) {
+            .controls {
+                height: 110px;
+                padding: 20px 15px;
+                gap: 15px;
+            }
+            
+            .game-btn {
+                max-width: 90px;
+                height: 90px;
+                margin: 0 8px;
+            }
+            
+            .game-btn:hover {
+                transform: scale(1.05);
+            }
+            
+            .game-btn:active {
+                transform: scale(0.9);
+            }
+        }
+        
+        /* ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЛУЧШЕЙ КЛИКАБЕЛЬНОСТИ */
+        .game-btn::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ВЕРХНЯЯ ПАНЕЛЬ С ПАУЗОЙ -->
+<div class="top-panel">
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-label">SCORE</div>
+            <div id="score" class="stat-value">0</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">LINES</div>
+            <div id="lines" class="stat-value">0</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">LEVEL</div>
+            <div id="level" class="stat-value">1</div>
+        </div>
+    </div>
+    
+    <!-- ПРАВАЯ ЧАСТЬ С ПАУЗОЙ И NEXT -->
+    <div class="right-panel">
+        <div class="pause-container">
+            <button id="pause-btn">
+                ⏸
+                <span class="pause-label">PAUSE</span>
+            </button>
+        </div>
+        
+        <div class="next-piece-box">
+            <div class="stat-label">NEXT</div>
+            <canvas id="next-piece-canvas" width="40" height="40"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- ИГРОВАЯ ОБЛАСТЬ -->
+<div class="game-area">
+    <canvas id="tetris-canvas"></canvas>
+</div>
+
+<!-- 4 КНОПКИ С ХОРОШИМИ ОТСТУПАМИ -->
+<div class="controls">
+    <button id="left-btn" class="game-btn" aria-label="Move left">
+        <img src="1.png" alt="Left" loading="lazy">
+    </button>
+    <button id="rotate-btn" class="game-btn" aria-label="Rotate">
+        <img src="2.png" alt="Rotate" loading="lazy">
+    </button>
+    <button id="right-btn" class="game-btn" aria-label="Move right">
+        <img src="3.png" alt="Right" loading="lazy">
+    </button>
+    <button id="down-btn" class="game-btn" aria-label="Drop fast">
+        <img src="4.png" alt="Down" loading="lazy">
+    </button>
+</div>
+
+<script src="drafts.js"></script>
+</body>
+</html>

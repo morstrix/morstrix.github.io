@@ -1,4 +1,4 @@
-/* БАЗОВЫЕ НАСТРОЙКИ */
+/* --- 1. БАЗОВЫЕ НАСТРОЙКИ И ОБНУЛЕНИЕ --- */
 :root {
     --green: #368600;
     --bg-color: #000;
@@ -8,6 +8,7 @@
     box-sizing: border-box; 
     margin: 0; 
     padding: 0; 
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -16,13 +17,15 @@ body {
     color: var(--green);
     min-height: 100vh;
     width: 100vw;
-    overflow-x: hidden; /* Защита от горизонтального сдвига */
+    overflow-x: hidden;
 }
 
-/* ФИКСИРУЕМ ГЛАВНУЮ БЕЗ СКРОЛЛА */
+/* Фикс для главной страницы (чтобы не было скролла) */
 body:has(.main-index) {
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 #neuro-bg {
@@ -33,131 +36,170 @@ body:has(.main-index) {
     pointer-events: none;
 }
 
-/* КОНТЕЙНЕР ГЛАВНОЙ */
+/* --- 2. ГЛАВНАЯ СТРАНИЦА (INDEX) --- */
 .site-section.main-index {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
-    height: 100vh;
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 10vh 20px 80px; /* Отступ 80px снизу для безопасности */
+    max-width: 480px; 
+    height: 100%;
+    padding: 10vh 20px calc(80px + env(safe-area-inset-bottom));
 }
 
-/* ГРУППА ПАПОК */
 .folder-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 60vh;
-    width: 100%;
 }
 
 .main-nav-link {
-    display: flex; 
+    display: flex;
     align-items: center;
-    text-decoration: none; 
+    text-decoration: none;
     color: var(--green);
     transition: transform 0.1s;
 }
 
+.main-nav-link:active { transform: scale(0.95); }
+
 .nav-folder-icon {
-    width: clamp(50px, 15vw, 75px); /* Адаптивный размер иконки */
-    height: auto;
+    width: 65px; height: 65px;
     image-rendering: pixelated;
     margin-right: 15px;
+    flex-shrink: 0;
 }
 
-.text-group {
-    display: flex;
-    flex-direction: column;
-    font-size: clamp(10px, 3vw, 14px); /* Адаптивный шрифт */
-}
-
+.text-group { display: flex; flex-direction: column; font-size: 13px; }
 .sub-caption { font-size: 8px; opacity: 0.6; margin-top: 5px; }
 
-/* ЛОГИКА ЛЕСЕНКИ */
-.step-1 { margin-left: 5%; }
+/* ЛЕСЕНКА */
+.step-1 { margin-left: 10%; }
 .step-2 { margin-left: 45%; }
-.step-3 { margin-left: 2%; }
+.step-3 { margin-left: 5%; }
 .step-4 { margin-left: 50%; }
 
-/* НИЖНИЕ ССЫЛКИ */
 .row-bottom-links {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: auto;
 }
+.bottom-link { text-decoration: none; color: var(--green); font-size: 9px; }
 
-.bottom-link {
-    text-decoration: none;
-    color: var(--green);
-    font-size: 9px;
-    letter-spacing: 1px;
-}
-
-/* --- ВНУТРЕННИЕ СТРАНИЦЫ И КАРУСЕЛИ --- */
+/* --- 3. ОБЩИЕ СТИЛИ ВНУТРЕННИХ СТРАНИЦ (SHOP, SUPPORT) --- */
 .site-section:not(.main-index) {
-    min-height: 100vh;
-    padding: 80px 20px 40px;
+    padding: 80px 15px 40px;
+    max-width: 500px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
 }
 
-/* Правильное отображение карусели */
-.carousel-window {
-    width: 100%;
-    max-width: 400px;
-    overflow-x: auto; /* Позволяет листать картинки */
-    display: flex;
+/* Кнопка закрытия (Фикс гигантизма) */
+.back-button {
+    position: fixed;
+    top: 20px; right: 20px;
+    width: 45px; height: 45px;
     border: 2px solid var(--green);
     background: #000;
-    scroll-snap-type: x mandatory;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.carousel-window img {
-    width: 100%; /* Картинка на всю ширину рамки */
-    flex-shrink: 0;
-    scroll-snap-align: start;
+.custom-back-icon {
+    width: 25px; height: 25px;
     image-rendering: pixelated;
-    display: block;
 }
 
+/* --- 4. КАРУСЕЛЬ (ДЛЯ SHOP.HTML) --- */
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.carousel-window {
+    width: 280px;
+    height: 280px;
+    border: 2px solid var(--green);
+    overflow: hidden;
+    background: #000;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.room-image {
+    width: 280px;
+    height: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.nav-btn {
+    background: none; border: none;
+    color: var(--green);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* --- 5. ТЕРМИНАЛ ИГРЫ (ДЛЯ SUPPORT.HTML) --- */
+.game-window-container {
+    width: 310px;
+    height: 480px; /* Чтобы влез и тетрис, и его кнопки 1-4 */
+    border: 2px solid var(--green);
+    background: #000;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.game-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* --- 6. ИНФО-БОКСЫ И КНОПКИ ДЕЙСТВИЯ --- */
 .retro-info-box {
     border: 2px solid var(--green);
-    padding: 20px;
-    margin: 20px 0;
-    font-size: 10px;
-    line-height: 1.6;
+    padding: 15px;
     width: 100%;
+    max-width: 320px;
+    font-size: 9px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .retro-button {
     display: block;
-    width: 100%;
-    padding: 15px;
+    width: 200px;
+    padding: 16px;
     background: var(--green);
     color: #000;
     text-align: center;
     text-decoration: none;
     font-size: 11px;
-    text-transform: uppercase;
 }
 
-.back-button {
-    position: fixed; top: 20px; right: 20px;
-    border: 2px solid var(--green); background: #000;
-    padding: 8px; text-decoration: none; color: var(--green);
-    z-index: 100;
-}
-
-/* ПЛАНШЕТЫ И ДЕСКТОП */
-@media (min-width: 768px) {
-    .site-section.main-index { max-width: 600px; }
-    .nav-folder-icon { width: 80px; }
-    .text-group { font-size: 18px; }
+/* --- 7. АДАПТИВ ПОД МАЛЕНЬКИЕ МОБИЛКИ --- */
+@media (max-width: 360px) {
+    .carousel-window, .room-image { width: 240px; height: 240px; }
+    .game-window-container { width: 280px; height: 440px; }
+    .text-group { font-size: 11px; }
 }
