@@ -16,31 +16,33 @@ body {
     color: var(--green);
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Без скролла на главной */
+    overflow: hidden; 
 }
 
+/* ФОНОВАЯ АНИМАЦИЯ */
 #neuro-bg {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     z-index: -1;
+    pointer-events: none;
 }
 
 /* КОНТЕЙНЕР ГЛАВНОЙ СТРАНИЦЫ */
 .site-section.main-index {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Распределяет папки сверху, ссылки снизу */
+    justify-content: space-between;
     align-items: flex-start;
     height: 100vh;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    /* Увеличили нижний отступ (40px), чтобы ссылки не прилипали к краю телефона */
-    padding: 6vh 20px 40px; 
+    /* Увеличенный отступ снизу для безопасной зоны телефонов */
+    padding: 60px 20px 80px; 
 }
 
-/* ГРУППА ПАПОК */
+/* ГРУППА ПАПОК / КОМНАТ */
 .folder-container {
     display: flex;
     flex-direction: column;
@@ -49,62 +51,141 @@ body {
     width: 100%;
 }
 
+/* ССЫЛКИ НА ГЛАВНОЙ */
 .main-nav-link {
-    display: flex;
+    display: flex; 
     align-items: center;
-    text-decoration: none;
+    text-decoration: none; 
     color: var(--green);
-    transition: transform 0.2s;
+    background: transparent;
+    transition: transform 0.1s;
+    width: auto;
 }
 
+.main-nav-link:active { 
+    transform: scale(0.95); 
+}
+
+/* ИКОНКИ (МОНСТРЫ) */
 .nav-folder-icon {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     image-rendering: pixelated;
-    margin-right: 15px;
+    margin-right: 20px;
+    object-fit: contain;
 }
 
+/* ТЕКСТОВАЯ ГРУППА */
 .text-group {
     display: flex;
     flex-direction: column;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.2;
 }
 
-.sub-caption { font-size: 7px; opacity: 0.6; margin-top: 5px; }
+.sub-caption { 
+    font-size: 8px; 
+    opacity: 0.6; 
+    margin-top: 5px; 
+}
 
-/* ЛЕСЕНКА */
-.step-1 { margin-left: 5%; }
-.step-2 { margin-left: 42%; }
-.step-3 { margin-left: 2%; }
-.step-4 { margin-left: 48%; }
+/* --- ПОЛНАЯ ЛОГИКА ЛЕСЕНКИ (БЕЗ УПРОЩЕНИЙ) --- */
+.step-1 { 
+    margin-left: 10%; 
+}
+.step-2 { 
+    margin-left: 45%; 
+}
+.step-3 { 
+    margin-left: 5%; 
+}
+.step-4 { 
+    margin-left: 55%; 
+}
 
-/* НИЖНИЕ ТЕКСТОВЫЕ ССЫЛКИ */
+/* НИЖНИЕ ССЫЛКИ (DES / DEV) */
 .row-bottom-links {
     display: flex;
-    justify-content: space-between; /* Чтобы ссылки разошлись по бокам или центру */
-    gap: 20px;
+    justify-content: center;
+    gap: 40px;
     width: 100%;
-    /* Дополнительный внутренний отступ для безопасности */
-    padding-bottom: env(safe-area-inset-bottom); 
+    margin-top: auto;
 }
 
 .bottom-link {
     text-decoration: none;
     color: var(--green);
-    font-size: 8px; /* Чуть меньше размер для длинных слов */
+    font-size: 10px;
     letter-spacing: 1px;
-    opacity: 0.8;
 }
 
-/* ВНУТРЕННИЕ СТРАНИЦЫ (СО СКРОЛЛОМ) */
-body:not(:has(.main-index)) { overflow-y: auto; }
-.site-section:not(.main-index) { min-height: 100vh; padding: 60px 20px; text-align: center; }
-.back-button { position: fixed; top: 15px; right: 15px; border: 1px solid var(--green); background: #000; padding: 5px; text-decoration: none; color: var(--green); z-index: 99; }
-.retro-button { display: block; width: 100%; padding: 15px; background: var(--green); color: #000; text-align: center; text-decoration: none; font-size: 10px; margin-top: 15px; }
+/* --- ВНУТРЕННИЕ СТРАНИЦЫ (ПОЛНЫЙ ФУНКЦИОНАЛ) --- */
+body:not(:has(.main-index)) {
+    overflow-y: auto;
+}
 
-/* АДАПТИВ */
-@media (max-width: 380px) {
-    .nav-folder-icon { width: 50px; height: 50px; }
-    .text-group { font-size: 11px; }
+.site-section:not(.main-index) {
+    min-height: 100vh;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    border: 2px solid var(--green);
+    background: #000;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.custom-back-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.carousel-window {
+    width: 100%;
+    overflow: hidden;
+    border: 2px solid var(--green);
+}
+
+.retro-info-box {
+    border: 2px solid var(--green);
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    font-size: 10px;
+    line-height: 1.6;
+    margin: 30px 0;
+}
+
+.retro-button {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    background: var(--green);
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    border: none;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+/* АДАПТИВ ДЛЯ МОБИЛОК */
+@media (max-width: 480px) {
+    .nav-folder-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .text-group {
+        font-size: 12px;
+    }
+    .step-2 { margin-left: 35%; }
+    .step-4 { margin-left: 40%; }
 }
