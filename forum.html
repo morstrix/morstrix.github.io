@@ -1,55 +1,52 @@
-<body class="room-page">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FORUM ZONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="neuro-bg"></canvas>
+
     <a href="index.html" class="back-button">
         <img src="x-icon.png" alt="X" class="custom-back-icon">
     </a>
 
     <section class="site-section">
         <div class="carousel-wrapper">
-            <button class="nav-btn prev-btn" id="prevBtn">&lt;</button>
-            
-            <div class="carousel-container">
-                <div class="carousel-track" id="track">
-                    <img src="SCREEN1.jpg" alt="1">
-                    <img src="SCREEN2.jpg" alt="2">
-                    <img src="SCREEN3.jpg" alt="3">
+            <button class="nav-btn prev-btn" id="f-prev">&lt;</button>
+            <div class="carousel-window">
+                <div class="carousel-track" id="forum-track">
+                    <img src="forum1.jpg" class="room-image">
+                    <img src="forum2.jpg" class="room-image">
+                    <img src="forum3.jpg" class="room-image">
                 </div>
             </div>
-
-            <button class="nav-btn next-btn" id="nextBtn">&gt;</button>
+            <button class="nav-btn next-btn" id="f-next">&gt;</button>
         </div>
 
         <div class="retro-info-box">
-            Твой текст описания комнаты здесь. 
-            Всё будет четко в рамках этого бокса.
+            [FORUM NODE: ACTIVE]<br>
+            --------------------------<br>
+            Общайся с другими участниками, делись опытом и читай последние новости проекта.
+        </div>
+
+        <div class="action-buttons">
+            <a href="https://t.me/forum" class="retro-button">GO TO FORUM</a>
         </div>
     </section>
 
+    <script src="script-bg.js"></script>
     <script>
-        const track = document.getElementById('track');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        let index = 0;
-
-        nextBtn.addEventListener('click', () => {
-            const slides = track.querySelectorAll('img');
-            if (index < slides.length - 1) {
-                index++;
-                track.style.transform = `translateX(-${index * 100}%)`;
-            } else {
-                index = 0;
-                track.style.transform = `translateX(0)`;
-            }
-        });
-
-        prevBtn.addEventListener('click', () => {
-            const slides = track.querySelectorAll('img');
-            if (index > 0) {
-                index--;
-                track.style.transform = `translateX(-${index * 100}%)`;
-            } else {
-                index = slides.length - 1;
-                track.style.transform = `translateX(-${index * 100}%)`;
-            }
-        });
+        const track = document.getElementById('forum-track');
+        const nextBtn = document.getElementById('f-next');
+        const prevBtn = document.getElementById('f-prev');
+        let currentIndex = 0;
+        const updateSlide = () => track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        nextBtn.onclick = () => { currentIndex = (currentIndex + 1) % track.children.length; updateSlide(); };
+        prevBtn.onclick = () => { currentIndex = (currentIndex - 1 + track.children.length) % track.children.length; updateSlide(); };
     </script>
 </body>
+</html>

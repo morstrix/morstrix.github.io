@@ -2,39 +2,73 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>helper</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HELPER ZONE</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <header class="site-header">
-        <a href="index.html" class="retro-button back-button">
-            <img src="close.jpg" alt="Back button" class="custom-back-icon">
-        </a>
-    </header>
+    <canvas id="neuro-bg"></canvas>
 
-    <section class="site-section helper-section">
+    <a href="index.html" class="back-button">
+        <img src="x-icon.png" alt="X" class="custom-back-icon">
+    </a>
 
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <img src="1h.jpg" alt="Helper 1" class="section-image">
-                <img src="2h.jpg" alt="Helper 2" class="section-image">
-                <img src="3h.jpg" alt="Helper 3" class="section-image">
+    <section class="site-section">
+        <div class="carousel-wrapper">
+            <button class="nav-btn prev-btn" id="h-prev">&lt;</button>
+            <div class="carousel-window">
+                <div class="carousel-track" id="helper-track">
+                    <img src="h1.jpg" class="room-image" alt="Step 1">
+                    <img src="h2.jpg" class="room-image" alt="Step 2">
+                    <img src="h3.jpg" class="room-image" alt="Step 3">
+                </div>
             </div>
-            <div class="carousel-hint">scroll ➞</div>
+            <button class="nav-btn next-btn" id="h-next">&gt;</button>
         </div>
-        
-        <div class="retro-info-box shop-info-box">
-            <p>productivity organizer</p>
+
+        <div class="retro-info-box">
+            [SYSTEM UPDATE: v2.4]<br>
+            --------------------------<br>
+            Установите официальный Helper App для прямого доступа к функциям системы. Файл проверен на вирусы и готов к работе.
         </div>
-        
-        <a href="helper.apk" download class="retro-button download-apk-button external-link-button">
-            DOWNLOAD .APK
-        </a>
+
+        <div class="action-buttons">
+            <a href="helper.apk" download="helper.apk" class="retro-button">DOWNLOAD APK</a>
+        </div>
     </section>
+
+    <script src="script-bg.js"></script>
+
+    <script>
+        const track = document.getElementById('helper-track');
+        const nextBtn = document.getElementById('h-next');
+        const prevBtn = document.getElementById('h-prev');
+        const slides = Array.from(track.children);
+        
+        let currentIndex = 0;
+
+        function updateSlide() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        nextBtn.onclick = () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlide();
+        };
+
+        prevBtn.onclick = () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlide();
+        };
+
+        let startX = 0;
+        track.ontouchstart = e => startX = e.touches[0].clientX;
+        track.ontouchend = e => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) nextBtn.click();
+            if (startX - endX < -50) prevBtn.click();
+        };
+    </script>
 </body>
 </html>
