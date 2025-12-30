@@ -249,3 +249,54 @@ body {
         height: 40px;
     }
 }
+
+/* Анимация сканирующей линии */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 200; /* Поверх всего */
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none; /* Чтобы можно было кликать сквозь полосы */
+}
+
+/* Бегущая светлая полоса */
+body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 201;
+    pointer-events: none;
+    animation: scanline 6s linear infinite;
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.main-title-container, .main-nav-link {
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.99; }
+    20% { opacity: 0.96; }
+    60% { opacity: 0.95; }
+    100% { opacity: 0.98; }
+}
