@@ -1,7 +1,8 @@
-/* --- 1. ПЕРЕМЕННЫЕ --- */
+/* --- 1. ПЕРЕМЕННЫЕ И ОСНОВА --- */
 :root {
-    --green: #368600;         /* Яркий зеленый для заголовков */
-    --dusty-gray: #7a8278;    /* Тот самый пыльно-пепельный гранж */
+    --green: #368600;         
+    --dusty-gray: #7a8278;    
+    --dirty-white: rgba(180, 185, 180, 0.15); 
     --bg-color: #000;
 }
 
@@ -20,7 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ФИКС ДЛЯ ГЛАВНОЙ */
+/* Фикс для главной без скролла */
 body:has(.main-index) {
     height: 100vh;
     overflow: hidden;
@@ -58,21 +59,21 @@ body:has(.main-index) {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--green); /* Названия комнат остаются зелеными */
+    color: var(--green);
 }
 
 .nav-folder-icon {
     width: 65px; height: 65px;
     image-rendering: pixelated;
     margin-right: 15px;
+    flex-shrink: 0;
 }
 
 .text-group { display: flex; flex-direction: column; font-size: 13px; }
 
-/* ПОДПИСИ ПОД КОМНАТАМИ (ПЫЛЬНО-СЕРЫЙ) */
 .sub-caption { 
     font-size: 8px; 
-    color: var(--dusty-gray); /* Твой новый цвет */
+    color: var(--dusty-gray); 
     margin-top: 5px; 
     text-transform: lowercase;
 }
@@ -83,20 +84,49 @@ body:has(.main-index) {
 .step-3 { margin-left: 5%; }
 .step-4 { margin-left: 50%; }
 
-/* НИЖНИЕ ССЫЛКИ (ПЫЛЬНО-СЕРЫЙ) */
+/* --- 3. НИЖНИЕ БЛОКИ (БЕЗ АНИМАЦИИ) --- */
 .row-bottom-links {
     display: flex;
     justify-content: space-between;
     width: 100%;
-}
-.bottom-link { 
-    text-decoration: none; 
-    color: var(--dusty-gray); 
-    font-size: 9px; 
-    letter-spacing: -1px;
+    padding-top: 20px;
+    gap: 10px;
 }
 
-/* --- 3. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP, SUPPORT) --- */
+.bottom-link-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 14px 10px; /* Увеличил высоту для солидности */
+    flex: 1;
+    background: var(--dirty-white); 
+    border: 1px solid rgba(122, 130, 120, 0.3);
+    transition: all 0.2s ease;
+}
+
+.bottom-link {
+    color: var(--dusty-gray);
+    font-size: 8px;
+    text-transform: lowercase;
+}
+
+/* Полностью скрываем иконки, если они остались в HTML */
+.rotating-icon {
+    display: none !important;
+}
+
+/* Эффект при клике */
+.bottom-link-wrapper:active {
+    background: rgba(180, 185, 180, 0.3);
+    border-color: var(--green);
+}
+.bottom-link-wrapper:active .bottom-link {
+    color: var(--green);
+}
+
+/* --- 4. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP, SUPPORT, HELPER) --- */
 .site-section:not(.main-index) {
     padding: 80px 15px 40px;
     max-width: 500px;
@@ -119,17 +149,16 @@ body:has(.main-index) {
 }
 .custom-back-icon { width: 25px; height: 25px; }
 
-/* ТЕРМИНАЛ ИГРЫ (SUPPORT) */
 .game-terminal-container {
     width: 310px;
     height: 480px;
     border: 2px solid var(--green);
     background: #000;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 .game-iframe { width: 100%; height: 100%; border: none; }
 
-/* КАРУСЕЛЬ (SHOP) */
 .carousel-wrapper {
     display: flex;
     align-items: center;
@@ -154,7 +183,6 @@ body:has(.main-index) {
     cursor: pointer;
 }
 
-/* ИНФО-БОКС (ПЫЛЬНО-СЕРЫЙ ТЕКСТ) */
 .retro-info-box {
     border: 2px solid var(--green);
     padding: 15px;
@@ -162,7 +190,7 @@ body:has(.main-index) {
     font-size: 9px;
     line-height: 1.8;
     margin-bottom: 25px;
-    color: var(--dusty-gray); /* Текст внутри коробок теперь серый */
+    color: var(--dusty-gray);
 }
 
 .retro-button {
@@ -176,8 +204,10 @@ body:has(.main-index) {
     font-size: 11px;
 }
 
-/* АДАПТИВ */
+/* --- 5. АДАПТИВ --- */
 @media (max-width: 360px) {
     .carousel-window, .room-image { width: 240px; height: 240px; }
-    .game-window-container { width: 280px; height: 440px; }
+    .game-terminal-container { width: 280px; height: 440px; }
+    .row-bottom-links { flex-direction: column; align-items: center; }
+    .bottom-link-wrapper { width: 100%; }
 }
