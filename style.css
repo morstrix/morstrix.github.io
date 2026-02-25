@@ -1,9 +1,12 @@
-/* --- 1. ОСНОВНІ ПАРАМЕТРИ ТА КОЛЬОРИ --- */
+/* --- 1. ГЛОБАЛЬНЫЕ НАСТРОЙКИ И ШРИФТЫ --- */
 :root {
     --green: #368600;         
     --dusty-gray: #7a8278;    
-    --dirty-white: rgba(180, 185, 180, 0.15); 
     --bg-color: #000;
+    --red: #ff0000;
+    --mint-dark: #2a6b6b;      /* Тусклый мятно-бирюзовый (основа) */
+    --mint-light: #3a9b9b;     /* Светлее на пару тонов для иконок */
+    --terminal-glow: #00ff9d;   /* Неоновый зеленый для эффекта терминала */
 }
 
 * { 
@@ -21,6 +24,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Анимированный фон (сетка) */
 #neuro-bg {
     position: fixed;
     top: 0; left: 0;
@@ -29,181 +33,447 @@ body {
     pointer-events: none;
 }
 
-/* --- 2. ГОЛОВНА СТОРІНКА (INDEX) --- */
+/* --- 2. ГЛАВНАЯ СТРАНИЦА (INDEX.HTML) --- */
 .site-section.main-index {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 480px;
-    height: 100vh;
+    align-items: center;
+    max-width: 400px;
+    min-height: 100vh;
     margin: 0 auto;
-    padding: 8vh 20px 60px;
+    padding: 40px 20px;
+    gap: 25px;
 }
 
 .folder-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 60vh;
+    align-items: center;
 }
 
 .main-nav-link {
-    display: flex;
-    align-items: center;
     text-decoration: none;
-    color: var(--green);
-}
-
-.nav-folder-icon {
-    width: 65px; height: 65px;
-    image-rendering: pixelated;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-
-.text-group { display: flex; flex-direction: column; font-size: 13px; }
-
-.sub-caption { 
-    font-size: 8px; 
-    color: var(--dusty-gray); 
-    margin-top: 5px; 
-    text-transform: lowercase;
-}
-
-.step-1 { margin-left: 10%; }
-.step-2 { margin-left: 45%; }
-.step-3 { margin-left: 5%; }
-.step-4 { margin-left: 50%; }
-
-/* --- 3. НИЖНІ БЛОКИ --- */
-.row-bottom-links {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding-top: 20px;
-    gap: 10px;
-}
-
-.bottom-link-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    padding: 14px 10px;
-    flex: 1;
-    background: var(--dirty-white); 
-    border: 1px solid rgba(122, 130, 120, 0.3);
-}
-
-.bottom-link {
-    color: var(--dusty-gray);
-    font-size: 8px;
-    text-transform: lowercase;
-}
-
-/* --- 4. ВНУТРІШНІ СТОРІНКИ (SHOP, SUPPORT, HELPER) --- */
-.site-section:not(.main-index) {
-    padding: 70px 15px 30px;
-    max-width: 500px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* КНОПКА ЗАКРИТТЯ (БЕЗ ОБВОДКИ) */
-.back-button {
-    position: fixed;
-    top: 20px; right: 20px;
-    width: 45px; height: 45px;
-    background: transparent; /* Прибрано фон та рамку */
-    border: none;             /* Рамку видалено за запитом */
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.custom-back-icon { width: 25px; height: 25px; }
-
-/* КАРУСЕЛЬ (SHOP) */
-.carousel-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-    margin-bottom: 25px;
-}
-.carousel-window {
-    width: 280px; height: 280px;
-    border: 2px solid var(--green);
-    overflow: hidden;
-    background: #000;
-}
-.carousel-track { 
-    display: flex; 
-    transition: transform 0.5s ease-in-out; 
-    height: 100%; 
-}
-.room-image { 
-    width: 280px; 
-    flex-shrink: 0; 
-    object-fit: contain; 
+.nav-folder-icon {
+    width: 120px;
+    height: auto;
+    margin-bottom: 10px;
     image-rendering: pixelated;
-}
-.nav-btn {
-    background: none; border: none;
-    color: var(--green);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    cursor: pointer;
+    /* Сохраняем оригинальные цвета */
+    filter: none !important;
 }
 
-/* ТЕТРІС (SUPPORT) */
-.game-window-container {
-    width: 320px;
-    height: 600px; 
-    border: 2px solid var(--green);
-    background: #000;
-    margin-bottom: 20px;
+/* --- 3. БАРАБАН ПЕРЕКЛЮЧЕНИЯ (SYSTEM SELECT) --- */
+.drum-system {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid rgba(54, 134, 0, 0.3);
+    border-bottom: 1px solid rgba(54, 134, 0, 0.3);
+    background: rgba(54, 134, 0, 0.03);
+}
+
+.drum-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.system-label {
+    font-size: 8px;
+    color: var(--red);
+    font-weight: bold;
+}
+
+.d-btn {
+    background: none; 
+    border: none;
+    color: var(--green);
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+}
+
+.drum-viewport {
+    width: 160px;
     overflow: hidden;
 }
-.game-iframe { width: 100%; height: 100%; border: none; display: block; }
 
-/* ІНФО-БОКСИ */
-.retro-info-box {
-    border: 2px solid var(--green);
-    padding: 15px;
-    width: 310px;
-    font-size: 9px;
-    line-height: 1.8;
-    margin-bottom: 25px;
+.drum-track {
+    display: flex;
+    transition: transform 0.3s steps(4);
+}
+
+.drum-item {
+    min-width: 100%;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* СПЕЦИАЛЬНО ДЛЯ ИКОНКИ HELPER - полный сброс всех стилей */
+.drum-item img[src*="helper.png"],
+.drum-item img[alt*="HELPER"],
+.drum-item .nav-folder-icon {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    mix-blend-mode: normal !important;
+    isolation: isolate !important;
+    color-interpolation-filters: sRGB !important;
+    /* Сброс всех возможных цветовых эффектов */
+    forced-color-adjust: none !important;
+    color-scheme: only light !important;
+}
+
+.text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 10px;
+    color: var(--green);
+}
+
+.sub-caption {
+    font-size: 7px;
+    margin-top: 4px;
     color: var(--dusty-gray);
 }
 
-.retro-button {
+/* --- 4. НИЖНИЕ КНОПКИ ПЕРСОНАЖЕЙ (A / X) --- */
+.row-bottom-links {
+    display: flex;
+    gap: 40px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.cyber-icon-btn {
+    cursor: pointer;
+    position: relative;
+    transition: 0.1s;
+}
+
+.cyber-icon-btn:active {
+    transform: scale(0.95);
+}
+
+.small-icon { 
+    width: 80px;
+    height: 80px; 
+    border: 2px solid var(--green); 
+    padding: 8px; 
+    image-rendering: pixelated; 
+    background: rgba(54, 134, 0, 0.05);
+    object-fit: contain;
     display: block;
-    width: 220px;
+    box-shadow: none;
+    /* Сохраняем оригинальные цвета */
+    filter: none !important;
+}
+
+/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - РЕТРО ТЕРМИНАЛ СТИЛЬ --- */
+.mini-cloud {
+    position: fixed;
+    display: none;
+    background: rgba(10, 20, 10, 0.95);
+    border: 1px solid var(--terminal-glow);
     padding: 16px;
+    z-index: 2000;
+    transform: translate(-50%, -115%); 
+    box-shadow: 
+        0 0 10px rgba(0, 255, 157, 0.3),
+        inset 0 0 10px rgba(0, 255, 157, 0.2);
+    backdrop-filter: blur(4px);
+    border-radius: 4px;
+}
+
+.mini-cloud.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.mini-cloud::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--terminal-glow), 
+        transparent
+    );
+    animation: scan 3s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    50% { top: 100%; }
+    100% { top: 0; }
+}
+
+.mini-cloud::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--terminal-glow);
+    border-left: 2px solid var(--terminal-glow);
+}
+
+.mini-cloud .corner-bottom-right {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid var(--terminal-glow);
+    border-right: 2px solid var(--terminal-glow);
+}
+
+.cloud-icons-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.social-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    filter: drop-shadow(0 0 3px var(--terminal-glow));
+}
+
+.social-link-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: #000000;
+}
+
+.social-link-icon:active {
+    transform: scale(0.8);
+    filter: drop-shadow(0 0 8px var(--terminal-glow));
+}
+
+.social-text-link {
+    text-decoration: none;
+    color: #000000;
+    background: rgba(0, 255, 157, 0.3);
+    padding: 8px 16px;
+    font-size: 10px;
+    border: 1px solid var(--terminal-glow);
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
+}
+
+.social-text-link:active {
+    background: rgba(0, 255, 157, 0.6);
+    color: #000000;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
+}
+
+.cloud-arrow {
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 255, 157, 0.3);
+    border: 1px solid var(--terminal-glow);
+    transform: rotate(45deg);
+    position: absolute;
+    bottom: -7px;
+    left: calc(50% - 6px);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.mini-cloud .matrix-dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--terminal-glow) 1px, transparent 1px);
+    background-size: 4px 4px;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- 6. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP / ROOMS / HELPER / SUPPORT) --- */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    text-decoration: none;
+}
+
+.custom-back-icon {
+    width: 35px;
+    height: auto;
+    image-rendering: pixelated;
+    /* Сохраняем оригинальные цвета */
+    filter: none !important;
+}
+
+.site-section {
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Карусель изображений - общие стили */
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.carousel-window { 
+    width: 280px;
+    height: 280px;
+    border: 2px solid var(--green); 
+    overflow: hidden;
+    background: #000;
+    box-shadow: none;
+}
+
+/* Специально для helper.html - вертикальные картинки */
+.carousel-window.vertical {
+    height: 380px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.room-image {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    object-fit: contain;
+    image-rendering: pixelated;
+    /* ВАЖНО: сохраняем оригинальные цвета */
+    filter: none !important;
+}
+
+/* Для вертикальных картинок в helper */
+.room-image.vertical {
+    height: 380px;
+}
+
+.nav-btn {
+    background: none; border: none;
+    color: var(--green);
+    font-family: 'Press Start 2P';
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Текстовые блоки и списки */
+.retro-info-box {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.retro-info-box ul {
+    list-style: none;
+}
+
+.retro-info-box li {
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 20px;
+    color: var(--green);
+}
+
+.retro-info-box li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+}
+
+/* Кнопки действий на внутренних страницах */
+.action-buttons {
+    width: 100%;
+    max-width: 310px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.retro-button { 
+    display: block;
+    width: 100%;
+    padding: 15px; 
+    border: 2px solid var(--green);
+    background: transparent; 
+    color: var(--green);
+    text-decoration: none;
+    text-align: center; 
+    font-size: 10px;
+}
+
+.retro-button:active {
     background: var(--green);
     color: #000;
-    text-align: center;
-    text-decoration: none;
-    font-size: 11px;
 }
 
-/* --- 5. АДАПТИВ ТА ФІКСИ --- */
-@media (max-height: 750px) {
-    .game-window-container {
-        transform: scale(0.85);
-        margin-top: -30px;
-    }
+/* --- 7. КОНТЕЙНЕРЫ ДЛЯ ИГР И БОТОВ (SUPPORT) --- */
+.game-window-container { 
+    width: 320px;
+    height: 550px;
+    border: 2px solid var(--green); 
+    background: #000;
+    overflow: hidden; 
+    margin-bottom: 20px;
+    box-shadow: none;
 }
 
-@media (max-width: 360px) {
-    .carousel-window, .room-image { width: 240px; height: 240px; }
-    .game-window-container { width: 300px; height: 550px; }
-    .row-bottom-links { flex-direction: column; }
+.game-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
 }
