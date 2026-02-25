@@ -1,12 +1,12 @@
 /* --- 1. ГЛОБАЛЬНЫЕ НАСТРОЙКИ И ШРИФТЫ --- */
 :root {
-    --green: #368600;         
+    --green: #a84d6b;         /* Грязно-розовый */
     --dusty-gray: #7a8278;    
     --bg-color: #000;
     --red: #ff0000;
-    --mint-dark: #2a6b6b;      /* Тусклый мятно-бирюзовый (основа) */
-    --mint-light: #3a9b9b;     /* Светлее на пару тонов для иконок */
-    --terminal-glow: #00ff9d;   /* Неоновый зеленый для эффекта терминала */
+    --mint-dark: #2a6b6b;      
+    --mint-light: #3a9b9b;     
+    --terminal-glow: #a84d6b;   /* Грязно-розовый */
 }
 
 * { 
@@ -31,6 +31,10 @@ body {
     width: 100%; height: 100%;
     z-index: -1;
     pointer-events: none;
+}
+
+#neuro-bg canvas {
+    filter: hue-rotate(320deg) saturate(0.7);
 }
 
 /* --- 2. ГЛАВНАЯ СТРАНИЦА (INDEX.HTML) --- */
@@ -64,7 +68,6 @@ body {
     height: auto;
     margin-bottom: 10px;
     image-rendering: pixelated;
-    /* Сохраняем оригинальные цвета */
     filter: none !important;
 }
 
@@ -75,9 +78,9 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 15px 0;
-    border-top: 1px solid rgba(54, 134, 0, 0.3);
-    border-bottom: 1px solid rgba(54, 134, 0, 0.3);
-    background: rgba(54, 134, 0, 0.03);
+    border-top: 1px solid rgba(168, 77, 107, 0.3);
+    border-bottom: 1px solid rgba(168, 77, 107, 0.3);
+    background: rgba(168, 77, 107, 0.03);
 }
 
 .drum-nav {
@@ -127,22 +130,9 @@ body {
     align-items: center;
 }
 
-/* СПЕЦИАЛЬНО ДЛЯ ИКОНКИ HELPER - полный сброс всех стилей */
-.drum-item img[src*="helper.png"],
-.drum-item img[alt*="HELPER"],
 .drum-item .nav-folder-icon {
     filter: none !important;
-    -webkit-filter: none !important;
     opacity: 1 !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    mix-blend-mode: normal !important;
-    isolation: isolate !important;
-    color-interpolation-filters: sRGB !important;
-    /* Сброс всех возможных цветовых эффектов */
-    forced-color-adjust: none !important;
-    color-scheme: only light !important;
 }
 
 .text-group {
@@ -181,30 +171,29 @@ body {
 .small-icon { 
     width: 80px;
     height: 80px; 
-    border: 2px solid var(--green); 
+    border: 2px solid var(--green);
     padding: 8px; 
     image-rendering: pixelated; 
-    background: rgba(54, 134, 0, 0.05);
+    background: rgba(168, 77, 107, 0.05);
     object-fit: contain;
     display: block;
     box-shadow: none;
-    /* Сохраняем оригинальные цвета */
     filter: none !important;
 }
 
-/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - РЕТРО ТЕРМИНАЛ СТИЛЬ --- */
+/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - VHS СТИЛЬ --- */
 .mini-cloud {
     position: fixed;
     display: none;
-    background: rgba(10, 20, 10, 0.95);
-    border: 1px solid var(--terminal-glow);
+    background: rgba(10, 5, 20, 0.7);  /* Полупрозрачный фиолетово-черный VHS-фон */
+    border: 2px solid #7f4fbf;          /* Фиолетовая рамка */
     padding: 16px;
     z-index: 2000;
     transform: translate(-50%, -115%); 
     box-shadow: 
-        0 0 10px rgba(0, 255, 157, 0.3),
-        inset 0 0 10px rgba(0, 255, 157, 0.2);
-    backdrop-filter: blur(4px);
+        0 0 15px rgba(127, 79, 191, 0.3),
+        inset 0 0 10px rgba(127, 79, 191, 0.2);
+    backdrop-filter: blur(3px);
     border-radius: 4px;
 }
 
@@ -215,6 +204,7 @@ body {
     gap: 15px;
 }
 
+/* Эффект сканирующей линии (VHS-стиль) */
 .mini-cloud::before {
     content: "";
     position: absolute;
@@ -224,112 +214,138 @@ body {
     height: 2px;
     background: linear-gradient(90deg, 
         transparent, 
-        var(--terminal-glow), 
+        #7f4fbf,           /* Фиолетовый */
+        #76b7b7,           /* Бирюзовый */
+        #7f4fbf, 
         transparent
     );
     animation: scan 3s linear infinite;
-    opacity: 0.5;
+    opacity: 0.6;
+    z-index: 1;
 }
 
-@keyframes scan {
-    0% { top: 0; }
-    50% { top: 100%; }
-    100% { top: 0; }
-}
-
+/* VHS-шум (полосы) */
 .mini-cloud::after {
     content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: 10px;
-    height: 10px;
-    border-top: 2px solid var(--terminal-glow);
-    border-left: 2px solid var(--terminal-glow);
-}
-
-.mini-cloud .corner-bottom-right {
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 10px;
-    height: 10px;
-    border-bottom: 2px solid var(--terminal-glow);
-    border-right: 2px solid var(--terminal-glow);
-}
-
-.cloud-icons-row {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-}
-
-.social-link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    filter: drop-shadow(0 0 3px var(--terminal-glow));
-}
-
-.social-link-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: #000000;
-}
-
-.social-link-icon:active {
-    transform: scale(0.8);
-    filter: drop-shadow(0 0 8px var(--terminal-glow));
-}
-
-.social-text-link {
-    text-decoration: none;
-    color: #000000;
-    background: rgba(0, 255, 157, 0.3);
-    padding: 8px 16px;
-    font-size: 10px;
-    border: 1px solid var(--terminal-glow);
-    transition: all 0.2s;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
-}
-
-.social-text-link:active {
-    background: rgba(0, 255, 157, 0.6);
-    color: #000000;
-    box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
-}
-
-.cloud-arrow {
-    width: 12px;
-    height: 12px;
-    background: rgba(0, 255, 157, 0.3);
-    border: 1px solid var(--terminal-glow);
-    transform: rotate(45deg);
-    position: absolute;
-    bottom: -7px;
-    left: calc(50% - 6px);
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
-}
-
-.mini-cloud .matrix-dots {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(var(--terminal-glow) 1px, transparent 1px);
-    background-size: 4px 4px;
-    opacity: 0.1;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(127, 79, 191, 0.1) 0px,
+        rgba(118, 183, 183, 0.1) 2px,
+        transparent 2px,
+        transparent 6px
+    );
     pointer-events: none;
+    animation: vhs-noise 0.2s infinite;
+    border-radius: 2px;
+}
+
+/* Пиксельные уголки (фиолетовые) */
+.mini-cloud .corner-tl {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid #7f4fbf;
+    border-left: 2px solid #7f4fbf;
+}
+
+.mini-cloud .corner-br {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    border-bottom: 2px solid #7f4fbf;
+    border-right: 2px solid #7f4fbf;
+}
+
+/* Контейнер для иконок */
+.cloud-icons-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+}
+
+/* Иконки соцсетей - цвет #76b7b7 */
+.social-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    filter: drop-shadow(0 0 5px rgba(118, 183, 183, 0.5));
+}
+
+.social-link-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: #76b7b7;        /* Бирюзовый цвет для иконок */
+}
+
+.social-link-icon:active {
+    transform: scale(0.8);
+    filter: drop-shadow(0 0 10px rgba(118, 183, 183, 0.8));
+}
+
+/* Текстовая ссылка */
+.social-text-link {
+    text-decoration: none;
+    color: #76b7b7;        /* Бирюзовый текст */
+    background: rgba(10, 5, 20, 0.5);
+    padding: 8px 16px;
+    font-size: 10px;
+    border: 1px solid #7f4fbf;  /* Фиолетовая рамка */
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 0 8px rgba(127, 79, 191, 0.3);
+}
+
+.social-text-link:active {
+    background: rgba(118, 183, 183, 0.2);
+    color: #76b7b7;
+    border-color: #76b7b7;
+    box-shadow: 0 0 12px rgba(118, 183, 183, 0.4);
+}
+
+/* Стрелка облачка */
+.cloud-arrow {
+    width: 14px;
+    height: 14px;
+    background: rgba(10, 5, 20, 0.8);
+    border-right: 2px solid #7f4fbf;
+    border-bottom: 2px solid #7f4fbf;
+    transform: rotate(45deg);
+    position: absolute;
+    bottom: -8px;
+    left: calc(50% - 7px);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 10px rgba(127, 79, 191, 0.3);
     z-index: 1;
+}
+
+/* Анимации */
+@keyframes scan {
+    0% { top: 0; opacity: 0.3; }
+    50% { top: 100%; opacity: 0.8; }
+    100% { top: 0; opacity: 0.3; }
+}
+
+@keyframes vhs-noise {
+    0% { transform: translateY(0); opacity: 0.3; }
+    25% { transform: translateY(2px); opacity: 0.5; }
+    50% { transform: translateY(0); opacity: 0.3; }
+    75% { transform: translateY(-2px); opacity: 0.5; }
+    100% { transform: translateY(0); opacity: 0.3; }
 }
 
 /* --- 6. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP / ROOMS / HELPER / SUPPORT) --- */
@@ -345,7 +361,6 @@ body {
     width: 35px;
     height: auto;
     image-rendering: pixelated;
-    /* Сохраняем оригинальные цвета */
     filter: none !important;
 }
 
@@ -356,7 +371,6 @@ body {
     align-items: center;
 }
 
-/* Карусель изображений - общие стили */
 .carousel-wrapper {
     display: flex;
     align-items: center;
@@ -367,13 +381,12 @@ body {
 .carousel-window { 
     width: 280px;
     height: 280px;
-    border: 2px solid var(--green); 
+    border: 2px solid var(--green);
     overflow: hidden;
     background: #000;
     box-shadow: none;
 }
 
-/* Специально для helper.html - вертикальные картинки */
 .carousel-window.vertical {
     height: 380px;
 }
@@ -389,11 +402,9 @@ body {
     flex-shrink: 0;
     object-fit: contain;
     image-rendering: pixelated;
-    /* ВАЖНО: сохраняем оригинальные цвета */
     filter: none !important;
 }
 
-/* Для вертикальных картинок в helper */
 .room-image.vertical {
     height: 380px;
 }
@@ -406,7 +417,6 @@ body {
     cursor: pointer;
 }
 
-/* Текстовые блоки и списки */
 .retro-info-box {
     width: 100%;
     max-width: 320px;
@@ -434,7 +444,6 @@ body {
     color: var(--green);
 }
 
-/* Кнопки действий на внутренних страницах */
 .action-buttons {
     width: 100%;
     max-width: 310px;
@@ -464,7 +473,7 @@ body {
 .game-window-container { 
     width: 320px;
     height: 550px;
-    border: 2px solid var(--green); 
+    border: 2px solid var(--green);
     background: #000;
     overflow: hidden; 
     margin-bottom: 20px;
@@ -486,31 +495,31 @@ body {
     position: relative;
 }
 
-/* VHS-сенсор (ближе и с усиленными эффектами) */
+/* VHS-сенсор */
 .folder-container:has(a[href*="forum"]) .main-nav-link::after {
     content: "";
     position: absolute;
     top: 0px;
-    right: -25px;        /* Ближе к картинке */
+    right: 40px;
     width: 55px;
     height: 55px;
     background: rgba(10, 5, 20, 0.9);
     border: 2px solid #7f4fbf;
     border-radius: 6px;
     box-shadow: 
-        0 0 25px rgba(127, 79, 191, 0.5),
-        inset 0 0 15px rgba(127, 79, 191, 0.4);
+        0 0 8px rgba(127, 79, 191, 0.3),        /* УМЕНЬШИЛ свечение */
+        inset 0 0 6px rgba(127, 79, 191, 0.2);   /* УМЕНЬШИЛ внутреннее */
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
 }
 
-/* Основной VHS-шум (полосы) - БОЛЕЕ ЗАМЕТНЫЙ */
+/* Основной VHS-шум (полосы) */
 .folder-container:has(a[href*="forum"]) .main-nav-link::before {
     content: "";
     position: absolute;
     top: 0px;
-    right: -25px;
+    right: 40px;
     width: 55px;
     height: 55px;
     background: repeating-linear-gradient(
@@ -528,30 +537,21 @@ body {
     opacity: 0.8;
 }
 
-/* Дополнительный цветовой шум */
-.folder-container:has(a[href*="forum"]) .main-nav-link {
-    position: relative;
-}
-
-.folder-container:has(a[href*="forum"]) .main-nav-link span {
-    display: none;
-}
-
 /* Текст внутри сенсора */
 .folder-container:has(a[href*="forum"]) .text-group::after {
     content: "design";
     position: absolute;
     top: 20px;
-    right: -18px;        /* Центрируем в квадрате */
+    right: 47px;
     font-size: 7px;
-    color: #d0b0ff;       /* Ярче */
+    color: #76b7b7;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow: 
-        0 0 8px #9f6fdf,
-        1px 0 0 rgba(255, 0, 255, 0.5),
-        -1px 0 0 rgba(0, 255, 255, 0.5),
-        0 1px 0 rgba(255, 255, 0, 0.3);
+        0 0 4px #9f6fdf,                          /* УМЕНЬШИЛ */
+        0.5px 0 0 rgba(255, 0, 255, 0.3),
+        -0.5px 0 0 rgba(0, 255, 255, 0.3),
+        0 0.5px 0 rgba(255, 255, 0, 0.2);
     animation: text-cycle 18s infinite, vhs-flicker 0.2s infinite;
     white-space: nowrap;
     z-index: 12;
@@ -564,12 +564,12 @@ body {
     transform: skewX(-2deg);
 }
 
-/* Эффект "снега" - УСИЛЕН */
+/* Эффект "снега" */
 .folder-container:has(a[href*="forum"]) .main-nav-link::after {
     content: "";
     position: absolute;
     top: 0px;
-    right: -25px;
+    right: 40px;
     width: 55px;
     height: 55px;
     background: 
@@ -581,14 +581,14 @@ body {
     border: 2px solid #9f6fdf;
     border-radius: 6px;
     box-shadow: 
-        0 0 25px rgba(159, 111, 223, 0.6),
-        inset 0 0 15px rgba(159, 111, 223, 0.4);
+        0 0 8px rgba(159, 111, 223, 0.3),        /* УМЕНЬШИЛ */
+        inset 0 0 6px rgba(159, 111, 223, 0.2);   /* УМЕНЬШИЛ */
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
 }
 
-/* Анимации - УСКОРЕНЫ */
+/* Анимации */
 @keyframes vhs-shake {
     0%, 100% { transform: translate(0, 0) skewX(0deg); }
     5% { transform: translate(1px, -1px) skewX(1deg); }
@@ -613,12 +613,12 @@ body {
 }
 
 @keyframes vhs-flicker {
-    0%, 100% { opacity: 1; text-shadow: 0 0 8px #9f6fdf, 2px 0 0 rgba(255,0,255,0.4), -2px 0 0 rgba(0,255,255,0.4); }
-    10% { opacity: 0.9; text-shadow: 0 0 8px #9f6fdf, 0 2px 0 rgba(255,0,255,0.4), 0 -2px 0 rgba(0,255,255,0.4); }
-    20% { opacity: 0.95; text-shadow: 0 0 8px #9f6fdf, -2px 0 0 rgba(255,0,255,0.4), 2px 0 0 rgba(0,255,255,0.4); }
-    30% { opacity: 0.85; text-shadow: 0 0 8px #9f6fdf, 0 -2px 0 rgba(255,0,255,0.4), 0 2px 0 rgba(0,255,255,0.4); }
-    40% { opacity: 1; text-shadow: 0 0 8px #9f6fdf, 1px 1px 0 rgba(255,0,255,0.4), -1px -1px 0 rgba(0,255,255,0.4); }
-    50% { opacity: 0.9; text-shadow: 0 0 8px #9f6fdf, -1px 1px 0 rgba(255,0,255,0.4), 1px -1px 0 rgba(0,255,255,0.4); }
+    0%, 100% { opacity: 1; text-shadow: 0 0 4px #9f6fdf, 1px 0 0 rgba(255,0,255,0.3), -1px 0 0 rgba(0,255,255,0.3); }
+    10% { opacity: 0.9; text-shadow: 0 0 4px #9f6fdf, 0 1px 0 rgba(255,0,255,0.3), 0 -1px 0 rgba(0,255,255,0.3); }
+    20% { opacity: 0.95; text-shadow: 0 0 4px #9f6fdf, -1px 0 0 rgba(255,0,255,0.3), 1px 0 0 rgba(0,255,255,0.3); }
+    30% { opacity: 0.85; text-shadow: 0 0 4px #9f6fdf, 0 -1px 0 rgba(255,0,255,0.3), 0 1px 0 rgba(0,255,255,0.3); }
+    40% { opacity: 1; text-shadow: 0 0 4px #9f6fdf, 1px 1px 0 rgba(255,0,255,0.3), -1px -1px 0 rgba(0,255,255,0.3); }
+    50% { opacity: 0.9; text-shadow: 0 0 4px #9f6fdf, -1px 1px 0 rgba(255,0,255,0.3), 1px -1px 0 rgba(0,255,255,0.3); }
 }
 
 @keyframes text-cycle {
