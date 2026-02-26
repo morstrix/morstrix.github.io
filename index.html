@@ -67,8 +67,10 @@
             </div>
         </div>
 
+        <!-- ФОРУМ з декоративним квадратиком -->
         <div class="folder-container">
             <a href="forum.html" class="main-nav-link">
+                <div class="forum-decor"></div> <!-- Це наш квадратик -->
                 <img src="forum.png" class="nav-folder-icon">
                 <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
             </a>
@@ -140,35 +142,23 @@
         }
     </script>
 
+    <!-- Скрипт для зміни слів у квадратику форуму -->
     <script>
-(function() {
-    // Слова, які будуть з'являтися в квадратику
-    const words = [
-        "design", "wellness", "diy gear", "radio", "it/ai",
-        "english", "barbering", "travel", "tattoo", "print", "money"
-    ];
-    
-    // Знаходимо потрібний елемент (текстовий блок біля форуму)
-    const textGroup = document.querySelector('.folder-container:has(a[href*="forum"]) .text-group');
-    if (!textGroup) return;
-    
-    // Створюємо стиль для CSS-змінної (якщо ще не існує)
-    const style = document.createElement('style');
-    style.textContent = `
-        .folder-container:has(a[href*="forum"]) .text-group::after {
-            content: var(--dynamic-word, "design");
-        }
-    `;
-    document.head.appendChild(style);
-    
-    let index = 0;
-    // Оновлюємо слово кожні 1.8 секунди
-    setInterval(() => {
-        index = (index + 1) % words.length;
-        textGroup.style.setProperty('--dynamic-word', `"${words[index]}"`);
-    }, 1800);
-})();
-</script>
+    (function() {
+        const words = [
+            "design", "wellness", "diy gear", "radio", "it/ai",
+            "english", "barbering", "travel", "tattoo", "print", "money"
+        ];
 
+        const decor = document.querySelector('.forum-decor');
+        if (!decor) return;
+
+        let index = 0;
+        setInterval(() => {
+            index = (index + 1) % words.length;
+            decor.style.setProperty('--dynamic-word', `"${words[index]}"`);
+        }, 1800);
+    })();
+    </script>
 </body>
 </html>
