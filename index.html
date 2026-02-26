@@ -139,5 +139,36 @@
             }, 50);
         }
     </script>
+
+    <script>
+(function() {
+    // Слова, які будуть з'являтися в квадратику
+    const words = [
+        "design", "wellness", "diy gear", "radio", "it/ai",
+        "english", "barbering", "travel", "tattoo", "print", "money"
+    ];
+    
+    // Знаходимо потрібний елемент (текстовий блок біля форуму)
+    const textGroup = document.querySelector('.folder-container:has(a[href*="forum"]) .text-group');
+    if (!textGroup) return;
+    
+    // Створюємо стиль для CSS-змінної (якщо ще не існує)
+    const style = document.createElement('style');
+    style.textContent = `
+        .folder-container:has(a[href*="forum"]) .text-group::after {
+            content: var(--dynamic-word, "design");
+        }
+    `;
+    document.head.appendChild(style);
+    
+    let index = 0;
+    // Оновлюємо слово кожні 1.8 секунди
+    setInterval(() => {
+        index = (index + 1) % words.length;
+        textGroup.style.setProperty('--dynamic-word', `"${words[index]}"`);
+    }, 1800);
+})();
+</script>
+
 </body>
 </html>

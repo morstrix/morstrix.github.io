@@ -61,6 +61,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative; /* добавлено для правильного позиционирования псевдоэлементов */
 }
 
 .nav-folder-icon {
@@ -181,19 +182,19 @@ body {
     filter: none !important;
 }
 
-/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - VHS СТИЛЬ --- */
+/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - ОРИГИНАЛЬНЫЕ ТОНА --- */
 .mini-cloud {
     position: fixed;
     display: none;
-    background: rgba(10, 5, 20, 0.7);  /* Полупрозрачный фиолетово-черный VHS-фон */
-    border: 2px solid #7f4fbf;          /* Фиолетовая рамка */
+    background: rgba(10, 20, 10, 0.95);
+    border: 1px solid #00ff9d;
     padding: 16px;
     z-index: 2000;
     transform: translate(-50%, -115%); 
     box-shadow: 
-        0 0 15px rgba(127, 79, 191, 0.3),
-        inset 0 0 10px rgba(127, 79, 191, 0.2);
-    backdrop-filter: blur(3px);
+        0 0 10px rgba(0, 255, 157, 0.3),
+        inset 0 0 10px rgba(0, 255, 157, 0.2);
+    backdrop-filter: blur(4px);
     border-radius: 4px;
 }
 
@@ -204,7 +205,6 @@ body {
     gap: 15px;
 }
 
-/* Эффект сканирующей линии (VHS-стиль) */
 .mini-cloud::before {
     content: "";
     position: absolute;
@@ -214,138 +214,106 @@ body {
     height: 2px;
     background: linear-gradient(90deg, 
         transparent, 
-        #7f4fbf,           /* Фиолетовый */
-        #76b7b7,           /* Бирюзовый */
-        #7f4fbf, 
+        #00ff9d, 
         transparent
     );
     animation: scan 3s linear infinite;
-    opacity: 0.6;
-    z-index: 1;
+    opacity: 0.5;
 }
 
-/* VHS-шум (полосы) */
 .mini-cloud::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(127, 79, 191, 0.1) 0px,
-        rgba(118, 183, 183, 0.1) 2px,
-        transparent 2px,
-        transparent 6px
-    );
-    pointer-events: none;
-    animation: vhs-noise 0.2s infinite;
-    border-radius: 2px;
-}
-
-/* Пиксельные уголки (фиолетовые) */
-.mini-cloud .corner-tl {
-    position: absolute;
     top: -2px;
     left: -2px;
-    width: 12px;
-    height: 12px;
-    border-top: 2px solid #7f4fbf;
-    border-left: 2px solid #7f4fbf;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #00ff9d;
+    border-left: 2px solid #00ff9d;
 }
 
-.mini-cloud .corner-br {
+.mini-cloud .corner-bottom-right {
     position: absolute;
     bottom: -2px;
     right: -2px;
-    width: 12px;
-    height: 12px;
-    border-bottom: 2px solid #7f4fbf;
-    border-right: 2px solid #7f4fbf;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid #00ff9d;
+    border-right: 2px solid #00ff9d;
 }
 
-/* Контейнер для иконок */
 .cloud-icons-row {
     display: flex;
     gap: 20px;
     align-items: center;
     position: relative;
-    z-index: 5;
+    z-index: 2;
 }
 
-/* Иконки соцсетей - цвет #76b7b7 */
 .social-link-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-    filter: drop-shadow(0 0 5px rgba(118, 183, 183, 0.5));
+    filter: drop-shadow(0 0 3px #00ff9d);
 }
 
 .social-link-icon svg {
     width: 32px;
     height: 32px;
-    fill: #76b7b7;        /* Бирюзовый цвет для иконок */
+    fill: #000000;
 }
 
 .social-link-icon:active {
     transform: scale(0.8);
-    filter: drop-shadow(0 0 10px rgba(118, 183, 183, 0.8));
+    filter: drop-shadow(0 0 8px #00ff9d);
 }
 
-/* Текстовая ссылка */
 .social-text-link {
     text-decoration: none;
-    color: #76b7b7;        /* Бирюзовый текст */
-    background: rgba(10, 5, 20, 0.5);
+    color: #000000;
+    background: rgba(0, 255, 157, 0.3);
     padding: 8px 16px;
     font-size: 10px;
-    border: 1px solid #7f4fbf;  /* Фиолетовая рамка */
+    border: 1px solid #00ff9d;
     transition: all 0.2s;
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
-    z-index: 5;
-    box-shadow: 0 0 8px rgba(127, 79, 191, 0.3);
+    z-index: 2;
+    box-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
 }
 
 .social-text-link:active {
-    background: rgba(118, 183, 183, 0.2);
-    color: #76b7b7;
-    border-color: #76b7b7;
-    box-shadow: 0 0 12px rgba(118, 183, 183, 0.4);
+    background: rgba(0, 255, 157, 0.6);
+    color: #000000;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
 }
 
-/* Стрелка облачка */
 .cloud-arrow {
-    width: 14px;
-    height: 14px;
-    background: rgba(10, 5, 20, 0.8);
-    border-right: 2px solid #7f4fbf;
-    border-bottom: 2px solid #7f4fbf;
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 255, 157, 0.3);
+    border: 1px solid #00ff9d;
     transform: rotate(45deg);
     position: absolute;
-    bottom: -8px;
-    left: calc(50% - 7px);
-    backdrop-filter: blur(3px);
-    box-shadow: 0 0 10px rgba(127, 79, 191, 0.3);
+    bottom: -7px;
+    left: calc(50% - 6px);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.mini-cloud .matrix-dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#00ff9d 1px, transparent 1px);
+    background-size: 4px 4px;
+    opacity: 0.1;
+    pointer-events: none;
     z-index: 1;
-}
-
-/* Анимации */
-@keyframes scan {
-    0% { top: 0; opacity: 0.3; }
-    50% { top: 100%; opacity: 0.8; }
-    100% { top: 0; opacity: 0.3; }
-}
-
-@keyframes vhs-noise {
-    0% { transform: translateY(0); opacity: 0.3; }
-    25% { transform: translateY(2px); opacity: 0.5; }
-    50% { transform: translateY(0); opacity: 0.3; }
-    75% { transform: translateY(-2px); opacity: 0.5; }
-    100% { transform: translateY(0); opacity: 0.3; }
 }
 
 /* --- 6. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP / ROOMS / HELPER / SUPPORT) --- */
@@ -488,207 +456,81 @@ body {
 }
 
 /* ======================== */
-/*   ФОРУМ - VHS ГОЛОГРАММА   */
+/*   ФОРУМ - СЕНСОР (ОРИГИНАЛЬНЫЕ ТОНА)   */
 /* ======================== */
 
-.folder-container:has(a[href*="forum"]) {
-    position: relative;
-    overflow: visible !important; /* щоб квадратик не обрізався */
-}
-
-.folder-container:has(a[href*="forum"]) .main-nav-link {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: visible !important;
-}
-
-/* Контейнер для іконки та тексту */
-.folder-container:has(a[href*="forum"]) .main-nav-link {
-    position: relative;
-}
-
-/* VHS-сенсор (квадратик) */
 .folder-container:has(a[href*="forum"]) .main-nav-link::after {
     content: "";
     position: absolute;
-    /* Розташовуємо праворуч від іконки */
-    left: 100%;           /* стає праворуч від батька */
-    top: 30px;            /* фіксована позиція по вертикалі (рівень іконки) */
-    margin-left: 10px;    /* відступ від іконки */
-    
+    top: 0px;
+    left: -60px;          /* сдвиг влево */
     width: 55px;
     height: 55px;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 1px, transparent 1px),
-        radial-gradient(circle at 50% 50%, rgba(255,0,255,0.15) 1px, transparent 1px),
-        radial-gradient(circle at 80% 70%, rgba(0,255,255,0.15) 1px, transparent 1px),
-        rgba(10, 5, 20, 0.9);
-    background-size: 6px 6px, 8px 8px, 10px 10px, cover;
-    border: 2px solid #9f6fdf;
+    background: rgba(10, 20, 10, 0.9);
+    border: 2px solid #00ff9d;
     border-radius: 6px;
     box-shadow: 
-        0 0 8px rgba(159, 111, 223, 0.3),
-        inset 0 0 6px rgba(159, 111, 223, 0.2);
+        0 0 8px rgba(0, 255, 157, 0.3),
+        inset 0 0 6px rgba(0, 255, 157, 0.2);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
-    z-index: 999;        /* високий z-index, щоб бути поверх всього */
+    z-index: 10;
 }
 
-/* VHS-шум (рухомі смуги) */
 .folder-container:has(a[href*="forum"]) .main-nav-link::before {
     content: "";
     position: absolute;
-    /* Те саме позиціонування */
-    left: 100%;
-    top: 30px;
-    margin-left: 10px;
-    
+    top: 0px;
+    left: -60px;          /* сдвиг влево */
     width: 55px;
     height: 55px;
     background: repeating-linear-gradient(
         0deg,
-        rgba(127, 79, 191, 0.25) 0px,
-        rgba(127, 79, 191, 0.4) 2px,
+        rgba(0, 255, 157, 0.25) 0px,
+        rgba(0, 255, 157, 0.4) 2px,
         transparent 2px,
         transparent 5px
     );
     border-radius: 6px;
     animation: vhs-scan 0.15s infinite;
     pointer-events: none;
-    z-index: 1000;
+    z-index: 11;
     mix-blend-mode: overlay;
     opacity: 0.8;
 }
 
-/* Текст всередині сенсора */
 .folder-container:has(a[href*="forum"]) .text-group::after {
     content: "design";
     position: absolute;
-    /* Розташовуємо текст всередині квадратика */
-    left: 100%;
-    top: 45px;           /* трохи нижче, щоб був всередині квадратика */
-    margin-left: 15px;   /* трохи правіше */
-    
-    font-size: 10px;
-    color: #76b7b7;
+    top: 20px;
+    left: -53px;          /* сдвиг влево (чуть правее квадратика) */
+    font-size: 7px;
+    color: #00ff9d;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow: 
-        0 0 4px #9f6fdf,
+        0 0 4px #00ff9d,
         0.5px 0 0 rgba(255, 0, 255, 0.3),
         -0.5px 0 0 rgba(0, 255, 255, 0.3),
         0 0.5px 0 rgba(255, 255, 0, 0.2);
     animation: text-cycle 18s infinite, vhs-flicker 0.2s infinite;
     white-space: nowrap;
-    z-index: 1001;
+    z-index: 12;
     font-weight: bold;
     background: rgba(0, 0, 0, 0.6);
-    padding: 3px 6px;
+    padding: 2px 5px;
     border-radius: 3px;
-    border-left: 3px solid #9f6fdf;
+    border-left: 3px solid #00ff9d;
     backdrop-filter: blur(2px);
-    pointer-events: none;
+    transform: skewX(-2deg);
 }
 
-/* Адаптація для мобільних пристроїв */
-@media (max-width: 768px) {
-    .folder-container:has(a[href*="forum"]) .main-nav-link::after,
-    .folder-container:has(a[href*="forum"]) .main-nav-link::before {
-        width: 45px;        /* менший квадратик на мобільних */
-        height: 45px;
-        top: 25px;          /* коригуємо позицію */
-        margin-left: 5px;   /* менший відступ */
-    }
-    
-    .folder-container:has(a[href*="forum"]) .text-group::after {
-        font-size: 8px;     /* менший текст */
-        top: 38px;
-        margin-left: 8px;
-        padding: 2px 4px;
-    }
-}
-
-@media (max-width: 480px) {
-    .folder-container:has(a[href*="forum"]) .main-nav-link::after,
-    .folder-container:has(a[href*="forum"]) .main-nav-link::before {
-        width: 40px;
-        height: 40px;
-        top: 20px;
-    }
-    
-    .folder-container:has(a[href*="forum"]) .text-group::after {
-        font-size: 7px;
-        top: 32px;
-    }
-}
-
-/* Анімації */
-@keyframes vhs-shake {
-    0%, 100% { transform: translate(0, 0) skewX(0deg); }
-    5% { transform: translate(1px, -1px) skewX(1deg); }
-    10% { transform: translate(-1px, 1px) skewX(-1deg); }
-    15% { transform: translate(0.5px, 0.5px) skewX(0.5deg); }
-    20% { transform: translate(-0.5px, -0.5px) skewX(-0.5deg); }
-    25% { transform: translate(0, 0) skewX(0deg); }
-    30% { transform: translate(1px, 0) skewX(1deg); }
-    35% { transform: translate(-1px, 0) skewX(-1deg); }
-    40% { transform: translate(0, 1px) skewX(0deg); }
-    45% { transform: translate(0, -1px) skewX(0deg); }
-    50% { transform: translate(0, 0) skewX(0deg); }
-}
-
-@keyframes vhs-scan {
-    0% { transform: translateY(0); opacity: 0.8; }
-    20% { transform: translateY(8px); opacity: 1; }
-    40% { transform: translateY(4px); opacity: 0.7; }
-    60% { transform: translateY(-4px); opacity: 1; }
-    80% { transform: translateY(-8px); opacity: 0.8; }
-    100% { transform: translateY(0); opacity: 0.8; }
-}
-
-@keyframes vhs-flicker {
-    0%, 100% { opacity: 1; text-shadow: 0 0 4px #9f6fdf, 1px 0 0 rgba(255,0,255,0.3), -1px 0 0 rgba(0,255,255,0.3); }
-    10% { opacity: 0.9; text-shadow: 0 0 4px #9f6fdf, 0 1px 0 rgba(255,0,255,0.3), 0 -1px 0 rgba(0,255,255,0.3); }
-    20% { opacity: 0.95; text-shadow: 0 0 4px #9f6fdf, -1px 0 0 rgba(255,0,255,0.3), 1px 0 0 rgba(0,255,255,0.3); }
-    30% { opacity: 0.85; text-shadow: 0 0 4px #9f6fdf, 0 -1px 0 rgba(255,0,255,0.3), 0 1px 0 rgba(0,255,255,0.3); }
-    40% { opacity: 1; text-shadow: 0 0 4px #9f6fdf, 1px 1px 0 rgba(255,0,255,0.3), -1px -1px 0 rgba(0,255,255,0.3); }
-    50% { opacity: 0.9; text-shadow: 0 0 4px #9f6fdf, -1px 1px 0 rgba(255,0,255,0.3), 1px -1px 0 rgba(0,255,255,0.3); }
-}
-
-@keyframes text-cycle {
-    0%, 5% { content: "design"; opacity: 1; }
-    5.5% { opacity: 0; }
-    6%, 11% { content: "wellness"; opacity: 1; }
-    11.5% { opacity: 0; }
-    12%, 17% { content: "diy gear"; opacity: 1; }
-    17.5% { opacity: 0; }
-    18%, 23% { content: "radio"; opacity: 1; }
-    23.5% { opacity: 0; }
-    24%, 29% { content: "it/ai"; opacity: 1; }
-    29.5% { opacity: 0; }
-    30%, 35% { content: "english"; opacity: 1; }
-    35.5% { opacity: 0; }
-    36%, 41% { content: "barbering"; opacity: 1; }
-    41.5% { opacity: 0; }
-    42%, 47% { content: "travel"; opacity: 1; }
-    47.5% { opacity: 0; }
-    48%, 53% { content: "tattoo"; opacity: 1; }
-    53.5% { opacity: 0; }
-    54%, 59% { content: "print"; opacity: 1; }
-    59.5% { opacity: 0; }
-    60%, 65% { content: "money"; opacity: 1; }
-    65.5% { opacity: 0; }
-    66%, 71% { content: "design"; opacity: 1; }
-    71.5% { opacity: 0; }
-    72%, 77% { content: "wellness"; opacity: 1; }
-    77.5% { opacity: 0; }
-    78%, 83% { content: "diy gear"; opacity: 1; }
-    83.5% { opacity: 0; }
-    84%, 89% { content: "radio"; opacity: 1; }
-    89.5% { opacity: 0; }
-    90%, 95% { content: "it/ai"; opacity: 1; }
-    95.5% { opacity: 0; }
-    96%, 100% { content: "english"; opacity: 1; }
+/* Остальные стили для фона квадратика остаются без изменений */
+.folder-container:has(a[href*="forum"]) .main-nav-link::after {
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(0,255,157,0.15) 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(0,255,157,0.15) 1px, transparent 1px),
+        rgba(10, 20, 10, 0.9);
+    background-size: 6px 6px, 8px 8px, 10px 10px, cover;
 }
