@@ -491,20 +491,32 @@ body {
 /*   ФОРУМ - VHS ГОЛОГРАММА   */
 /* ======================== */
 
-.folder-container:has(a[href*="forum"]) .main-nav-link {
+.folder-container:has(a[href*="forum"]) {
     position: relative;
-    display: inline-block; /* для коректної поведінки */
+    overflow: visible !important; /* щоб квадратик не обрізався */
 }
 
-/* VHS-сенсор (квадратик з ефектами) */
+.folder-container:has(a[href*="forum"]) .main-nav-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible !important;
+}
+
+/* Контейнер для іконки та тексту */
+.folder-container:has(a[href*="forum"]) .main-nav-link {
+    position: relative;
+}
+
+/* VHS-сенсор (квадратик) */
 .folder-container:has(a[href*="forum"]) .main-nav-link::after {
     content: "";
     position: absolute;
-    /* Позиціонування ПРАВОРУЧ від іконки */
-    left: 100%;           /* стає праворуч від батьківського елемента */
-    top: 50%;             /* центр по вертикалі */
-    transform: translateY(-50%); /* точне вертикальне центрування */
-    margin-left: 15px;    /* відступ від іконки */
+    /* Розташовуємо праворуч від іконки */
+    left: 100%;           /* стає праворуч від батька */
+    top: 30px;            /* фіксована позиція по вертикалі (рівень іконки) */
+    margin-left: 10px;    /* відступ від іконки */
     
     width: 55px;
     height: 55px;
@@ -521,18 +533,17 @@ body {
         inset 0 0 6px rgba(159, 111, 223, 0.2);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
-    z-index: 10;
+    z-index: 999;        /* високий z-index, щоб бути поверх всього */
 }
 
 /* VHS-шум (рухомі смуги) */
 .folder-container:has(a[href*="forum"]) .main-nav-link::before {
     content: "";
     position: absolute;
-    /* Те саме позиціонування, що й у after */
+    /* Те саме позиціонування */
     left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 15px;
+    top: 30px;
+    margin-left: 10px;
     
     width: 55px;
     height: 55px;
@@ -546,7 +557,7 @@ body {
     border-radius: 6px;
     animation: vhs-scan 0.15s infinite;
     pointer-events: none;
-    z-index: 11;
+    z-index: 1000;
     mix-blend-mode: overlay;
     opacity: 0.8;
 }
@@ -555,13 +566,12 @@ body {
 .folder-container:has(a[href*="forum"]) .text-group::after {
     content: "design";
     position: absolute;
-    /* Розміщуємо текст всередині квадратика */
-    left: 100%;           /* біля правого краю батька */
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 15px;    /* той самий відступ, що й у квадратика */
+    /* Розташовуємо текст всередині квадратика */
+    left: 100%;
+    top: 45px;           /* трохи нижче, щоб був всередині квадратика */
+    margin-left: 15px;   /* трохи правіше */
     
-    font-size: 11px;      /* фіксований розмір для читабельності */
+    font-size: 10px;
     color: #76b7b7;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -572,38 +582,70 @@ body {
         0 0.5px 0 rgba(255, 255, 0, 0.2);
     animation: text-cycle 18s infinite, vhs-flicker 0.2s infinite;
     white-space: nowrap;
-    z-index: 12;
+    z-index: 1001;
     font-weight: bold;
     background: rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
+    padding: 3px 6px;
     border-radius: 3px;
     border-left: 3px solid #9f6fdf;
     backdrop-filter: blur(2px);
-    pointer-events: none; /* щоб текст не заважав клікам */
+    pointer-events: none;
+}
+
+/* Адаптація для мобільних пристроїв */
+@media (max-width: 768px) {
+    .folder-container:has(a[href*="forum"]) .main-nav-link::after,
+    .folder-container:has(a[href*="forum"]) .main-nav-link::before {
+        width: 45px;        /* менший квадратик на мобільних */
+        height: 45px;
+        top: 25px;          /* коригуємо позицію */
+        margin-left: 5px;   /* менший відступ */
+    }
+    
+    .folder-container:has(a[href*="forum"]) .text-group::after {
+        font-size: 8px;     /* менший текст */
+        top: 38px;
+        margin-left: 8px;
+        padding: 2px 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .folder-container:has(a[href*="forum"]) .main-nav-link::after,
+    .folder-container:has(a[href*="forum"]) .main-nav-link::before {
+        width: 40px;
+        height: 40px;
+        top: 20px;
+    }
+    
+    .folder-container:has(a[href*="forum"]) .text-group::after {
+        font-size: 7px;
+        top: 32px;
+    }
 }
 
 /* Анімації */
 @keyframes vhs-shake {
-    0%, 100% { transform: translateY(-50%) translate(0, 0) skewX(0deg); }
-    5% { transform: translateY(-50%) translate(1px, -1px) skewX(1deg); }
-    10% { transform: translateY(-50%) translate(-1px, 1px) skewX(-1deg); }
-    15% { transform: translateY(-50%) translate(0.5px, 0.5px) skewX(0.5deg); }
-    20% { transform: translateY(-50%) translate(-0.5px, -0.5px) skewX(-0.5deg); }
-    25% { transform: translateY(-50%) translate(0, 0) skewX(0deg); }
-    30% { transform: translateY(-50%) translate(1px, 0) skewX(1deg); }
-    35% { transform: translateY(-50%) translate(-1px, 0) skewX(-1deg); }
-    40% { transform: translateY(-50%) translate(0, 1px) skewX(0deg); }
-    45% { transform: translateY(-50%) translate(0, -1px) skewX(0deg); }
-    50% { transform: translateY(-50%) translate(0, 0) skewX(0deg); }
+    0%, 100% { transform: translate(0, 0) skewX(0deg); }
+    5% { transform: translate(1px, -1px) skewX(1deg); }
+    10% { transform: translate(-1px, 1px) skewX(-1deg); }
+    15% { transform: translate(0.5px, 0.5px) skewX(0.5deg); }
+    20% { transform: translate(-0.5px, -0.5px) skewX(-0.5deg); }
+    25% { transform: translate(0, 0) skewX(0deg); }
+    30% { transform: translate(1px, 0) skewX(1deg); }
+    35% { transform: translate(-1px, 0) skewX(-1deg); }
+    40% { transform: translate(0, 1px) skewX(0deg); }
+    45% { transform: translate(0, -1px) skewX(0deg); }
+    50% { transform: translate(0, 0) skewX(0deg); }
 }
 
 @keyframes vhs-scan {
-    0% { transform: translateY(-50%) translateY(0); opacity: 0.8; }
-    20% { transform: translateY(-50%) translateY(8px); opacity: 1; }
-    40% { transform: translateY(-50%) translateY(4px); opacity: 0.7; }
-    60% { transform: translateY(-50%) translateY(-4px); opacity: 1; }
-    80% { transform: translateY(-50%) translateY(-8px); opacity: 0.8; }
-    100% { transform: translateY(-50%) translateY(0); opacity: 0.8; }
+    0% { transform: translateY(0); opacity: 0.8; }
+    20% { transform: translateY(8px); opacity: 1; }
+    40% { transform: translateY(4px); opacity: 0.7; }
+    60% { transform: translateY(-4px); opacity: 1; }
+    80% { transform: translateY(-8px); opacity: 0.8; }
+    100% { transform: translateY(0); opacity: 0.8; }
 }
 
 @keyframes vhs-flicker {
