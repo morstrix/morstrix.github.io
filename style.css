@@ -3,7 +3,8 @@
     --green: #a84d6b;         /* Брудно-рожевий */
     --dusty-gray: #7a8278;    
     --bg-color: #000;
-    --terminal-glow: #a84d6b;
+    --hud-blue: #3a8ab0;
+    --hud-dark: #1a3a4a;
 }
 
 * { 
@@ -57,18 +58,6 @@ body {
     filter: none !important;
 }
 
-/* --- 4. ГОЛОВНА СТОРІНКА (INDEX.HTML) --- */
-.site-section.main-index {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 400px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 40px 20px;
-    gap: 25px;
-}
-
 .main-nav-link {
     text-decoration: none;
     display: flex;
@@ -78,9 +67,9 @@ body {
 }
 
 .nav-folder-icon {
-    width: 120px;
+    width: 55px;
     height: auto;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     image-rendering: pixelated;
     filter: none !important;
 }
@@ -100,87 +89,163 @@ body {
     color: var(--dusty-gray);
 }
 
-/* Глітч-барабан */
-.glitch-container {
+/* --- 4. ФУТУРИСТИЧНЕ ВІКНО (ДЛЯ INDEX.HTML) --- */
+.futuristic-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0;
-}
-
-.glitch-viewport {
+    margin: 10px 0;
     position: relative;
-    width: 250px;
-    height: 180px;
-    background: rgba(168, 77, 107, 0.02);
-    border: 1px solid var(--green);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    color: #7aaac0;
+}
+
+.futuristic-window {
+    position: relative;
+    width: 280px;
+    height: 160px;
+    background: #030303;
+    border: 1px solid var(--hud-dark);
+    margin-bottom: 15px;
     cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #0f2a3a inset, 0 0 0 2px #000 inset;
+    transition: transform 0.2s ease;
 }
 
-.glitch-slide {
+.hud-corner {
     position: absolute;
-    display: none;
-    flex-direction: column;
-    align-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--hud-blue);
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.corner-tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
+.corner-tr { top: 5px; right: 5px; border-left: none; border-bottom: none; }
+.corner-bl { bottom: 5px; left: 5px; border-right: none; border-top: none; }
+.corner-br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+
+.crosshair {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px; height: 40px;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+.crosshair::before,
+.crosshair::after {
+    content: '';
+    position: absolute;
+    background: var(--hud-blue);
+}
+
+.crosshair::before { width: 1px; height: 40px; left: 50%; transform: translateX(-50%); }
+.crosshair::after { width: 40px; height: 1px; top: 50%; transform: translateY(-50%); }
+
+.scan-line {
+    position: absolute;
     width: 100%;
-}
-
-.glitch-slide.active {
-    display: flex;
-}
-
-.glitch-img {
-    width: 90px;
-    image-rendering: pixelated;
-    filter: drop-shadow(0 0 5px var(--green));
-}
-
-.noise-overlay {
-    position: absolute;
+    height: 2px;
+    background: rgba(58, 106, 138, 0.2);
     top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, transparent 1px);
-    background-size: 100% 2px;
-    display: none;
+    animation: scanMove 6s linear infinite;
     pointer-events: none;
     z-index: 10;
 }
 
-.trigger-glitch .glitch-img {
-    animation: glitchAnim 0.3s steps(2) infinite;
+@keyframes scanMove {
+    0% { top: -10px; opacity: 0; }
+    10% { opacity: 0.5; }
+    50% { top: 110%; opacity: 0.5; }
+    60% { opacity: 0; }
+    100% { top: -10px; opacity: 0; }
 }
 
-@keyframes glitchAnim {
-    0% { transform: translate(0); filter: hue-rotate(0deg) contrast(2); }
-    20% { transform: translate(-5px, 2px); clip-path: inset(10% 0 30% 0); filter: hue-rotate(90deg); }
-    40% { transform: translate(5px, -2px); clip-path: inset(40% 0 10% 0); }
-    60% { transform: translate(-2px, 5px); clip-path: inset(20% 0 50% 0); }
-    100% { transform: translate(0); }
+.grid-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(58, 106, 138, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(58, 106, 138, 0.05) 1px, transparent 1px);
+    background-size: 15px 15px;
+    pointer-events: none;
+    z-index: 2;
 }
 
-/* Нижні іконки A / X */
-.row-bottom-links {
+.window-content {
+    position: relative;
+    width: 100%; height: 100%;
     display: flex;
-    gap: 40px;
-    margin-top: 10px;
+    align-items: center;
     justify-content: center;
+    z-index: 3;
 }
 
-.small-icon { 
-    width: 80px;
-    height: 80px; 
-    border: 2px solid var(--green);
-    padding: 8px; 
-    image-rendering: pixelated; 
-    background: rgba(168, 77, 107, 0.05);
-    object-fit: contain;
-    display: block;
-    filter: none !important;
+.content-slide {
+    position: absolute;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.content-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.slide-image {
+    width: 65px;
+    height: auto;
+    image-rendering: pixelated;
+    margin-bottom: 10px;
+    filter: grayscale(40%) contrast(110%);
+    opacity: 0.9;
+}
+
+.slide-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: #7aaac0;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.slide-subtitle {
+    font-size: 6px;
+    color: var(--hud-dark);
+    letter-spacing: 1px;
+}
+
+.hud-indicators {
+    display: flex;
+    gap: 15px;
+    margin: 5px 0;
+}
+
+.hud-dot {
+    width: 8px; height: 8px;
+    border: 1px solid var(--hud-dark);
+    background: transparent;
+    transition: all 0.3s ease;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.hud-dot.active {
+    background: var(--hud-blue);
+    border-color: #7aaac0;
 }
 
 /* --- 5. ФОРУМ (FORUM.HTML) --- */
@@ -226,10 +291,6 @@ body {
     max-width: 320px;
     margin-bottom: 30px;
     text-align: left;
-}
-
-.retro-info-box ul {
-    list-style: none;
 }
 
 .retro-info-box li {
@@ -290,106 +351,177 @@ body {
     display: block;
 }
 
-/* --- 7. ДЕКОРАТИВНИЙ КВАДРАТИК (FORUM.HTML) --- */
+/* --- 7. СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ --- */
+.social-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.social-popup.active {
+    display: flex;
+}
+
+.popup-content {
+    background: #0a0a0a;
+    border: 2px solid var(--green);
+    padding: 25px 30px;
+    min-width: 280px;
+    max-width: 340px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(168, 77, 107, 0.3);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 10px;
+}
+
+.popup-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 2px;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    color: var(--green);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: all 0.2s;
+}
+
+.popup-close:hover {
+    color: #ff6b9d;
+    transform: scale(1.2);
+}
+
+.popup-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px 0;
+    flex-wrap: wrap;
+}
+
+.popup-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.popup-icon-link:hover {
+    transform: translateY(-5px);
+}
+
+.popup-icon {
+    width: 48px;
+    height: 48px;
+    fill: var(--green);
+    transition: all 0.2s;
+}
+
+.popup-icon-link:hover .popup-icon {
+    fill: #ff6b9d;
+    transform: scale(1.1);
+}
+
+.popup-icon-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: var(--dusty-gray);
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- 8. ДЕКОРАТИВНИЙ КВАДРАТИК (FORUM.HTML) --- */
 .forum-decor {
     position: absolute;
     top: 0;
     left: -60px;
     width: 55px;
     height: 55px;
-    background: rgba(10, 20, 10, 0.9);
-    border: 2px solid #b284b0;
+    background: rgba(30, 10, 20, 0.9);
+    border: 2px solid var(--green);
     border-radius: 6px;
-    box-shadow: 
-        0 0 8px rgba(255, 74, 189, 0.3),
-        inset 0 0 6px rgba(197, 80, 255, 0.2);
+    box-shadow: 0 0 8px rgba(168, 77, 107, 0.3);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
 }
 
-.forum-decor::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.67) 0px,
-        rgba(255, 255, 255, 0.737) 2px,
-        transparent 2px,
-        transparent 5px
-    );
-    border-radius: 6px;
-    animation: vhs-scan 0.15s infinite;
-    pointer-events: none;
-    z-index: 11;
-    mix-blend-mode: overlay;
-    opacity: 0.8;
-}
-
 .forum-decor::after {
     content: var(--dynamic-word, "design");
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 7px;
-    color: #62c4bf;
+    color: var(--green);
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-shadow: 
-        0 0 4px #7ee9ff,
-        0.5px 0 0 rgba(255, 0, 255, 0.3),
-        -0.5px 0 0 rgba(0, 255, 255, 0.3),
-        0 0.5px 0 rgba(255, 255, 0, 0.2);
-    animation: vhs-flicker 0.2s infinite;
     white-space: nowrap;
-    font-weight: bold;
     background: rgba(0, 0, 0, 0.6);
     padding: 2px 5px;
     border-radius: 3px;
-    border-left: 3px solid #ff008483;
-    backdrop-filter: blur(2px);
     z-index: 12;
 }
 
-/* Анімації для forum-decor */
 @keyframes vhs-shake {
-    0%, 100% { transform: translate(0, 0) skewX(0deg); }
-    5% { transform: translate(1px, -1px) skewX(1deg); }
-    10% { transform: translate(-1px, 1px) skewX(-1deg); }
-    15% { transform: translate(0.5px, 0.5px) skewX(0.5deg); }
-    20% { transform: translate(-0.5px, -0.5px) skewX(-0.5deg); }
-    25% { transform: translate(0, 0) skewX(0deg); }
-    30% { transform: translate(1px, 0) skewX(1deg); }
-    35% { transform: translate(-1px, 0) skewX(-1deg); }
-    40% { transform: translate(0, 1px) skewX(0deg); }
-    45% { transform: translate(0, -1px) skewX(0deg); }
-    50% { transform: translate(0, 0) skewX(0deg); }
+    0%,100% { transform: translate(0,0); }
+    10% { transform: translate(1px,-1px); }
+    20% { transform: translate(-1px,1px); }
 }
 
-@keyframes vhs-scan {
-    0% { transform: translateY(0); opacity: 0.8; }
-    20% { transform: translateY(8px); opacity: 1; }
-    40% { transform: translateY(4px); opacity: 0.7; }
-    60% { transform: translateY(-4px); opacity: 1; }
-    80% { transform: translateY(-8px); opacity: 0.8; }
-    100% { transform: translateY(0); opacity: 0.8; }
+/* --- 9. НИЖНІ ІКОНКИ A/X --- */
+.row-bottom-links {
+    display: flex;
+    gap: 40px;
+    margin-top: 15px;
+    justify-content: center;
 }
 
-@keyframes vhs-flicker {
-    0%, 100% { opacity: 1; text-shadow: 0 0 4px #00ff9d, 1px 0 0 rgba(255,0,255,0.3), -1px 0 0 rgba(0,255,255,0.3); }
-    10% { opacity: 0.9; text-shadow: 0 0 4px #00ff9d, 0 1px 0 rgba(255,0,255,0.3), 0 -1px 0 rgba(0,255,255,0.3); }
-    20% { opacity: 0.95; text-shadow: 0 0 4px #00ff9d, -1px 0 0 rgba(255,0,255,0.3), 1px 0 0 rgba(0,255,255,0.3); }
-    30% { opacity: 0.85; text-shadow: 0 0 4px #00ff9d, 0 -1px 0 rgba(255,0,255,0.3), 0 1px 0 rgba(0,255,255,0.3); }
-    40% { opacity: 1; text-shadow: 0 0 4px #00ff9d, 1px 1px 0 rgba(255,0,255,0.3), -1px -1px 0 rgba(0,255,255,0.3); }
-    50% { opacity: 0.9; text-shadow: 0 0 4px #00ff9d, -1px 1px 0 rgba(255,0,255,0.3), 1px -1px 0 rgba(0,255,255,0.3); }
+.small-icon { 
+    width: 55px; height: 55px; 
+    border: 2px solid var(--green);
+    padding: 5px; 
+    image-rendering: pixelated; 
+    background: #0a0a0a;
+    object-fit: contain;
+    display: block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.8;
 }
 
-/* --- 8. МОБІЛЬНА АДАПТАЦІЯ ДЛЯ FORUM-DECOR --- */
+.small-icon:hover { border-color: #c45d7b; opacity: 1; }
+.small-icon:active { transform: scale(0.95); }
+
+/* --- 10. МОБІЛЬНА АДАПТАЦІЯ --- */
 @media (max-width: 768px) {
     .forum-decor {
         width: 40px;
@@ -404,13 +536,40 @@ body {
 }
 
 @media (max-width: 480px) {
-    .forum-decor {
-        width: 35px;
-        height: 35px;
-        left: -40px;
-        top: 8px;
+    .futuristic-window { width: 260px; height: 150px; }
+    .slide-image { width: 55px; }
+    .slide-title { font-size: 9px; }
+    .forum-decor { left: -35px; width: 30px; height: 30px; }
+    .nav-folder-icon { width: 50px; }
+    .row-bottom-links { gap: 30px; }
+    .small-icon { width: 50px; height: 50px; }
+    
+    .popup-content {
+        padding: 20px 25px;
+        min-width: 260px;
     }
-    .forum-decor::after {
-        font-size: 5px;
+    .popup-icon {
+        width: 42px;
+        height: 42px;
+    }
+    .popup-title {
+        font-size: 10px;
+    }
+    .popup-icons {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 360px) {
+    .futuristic-window { width: 240px; height: 140px; }
+    .forum-decor { left: -30px; }
+    .row-bottom-links { gap: 25px; }
+    .small-icon { width: 45px; height: 45px; }
+    .popup-icons {
+        gap: 20px;
+    }
+    .popup-icon {
+        width: 38px;
+        height: 38px;
     }
 }

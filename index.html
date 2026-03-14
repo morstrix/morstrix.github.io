@@ -256,7 +256,7 @@
         .hud-indicators {
             display: flex;
             gap: 15px;
-            margin: 5px 0 8px;
+            margin: 5px 0;
         }
 
         .hud-dot {
@@ -272,17 +272,6 @@
             background: #3a8ab0;
             border-color: #7aaac0;
         }
-
-        .system-info {
-            display: flex;
-            gap: 20px;
-            font-size: 6px;
-            color: #2a4a6a;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .system-info span { color: #3a6a8a; }
 
         /* --- ФОРУМ --- */
         .forum-wrapper {
@@ -346,6 +335,114 @@
         .small-icon:hover { border-color: #c45d7b; opacity: 1; }
         .small-icon:active { transform: scale(0.95); }
 
+        /* --- СПЛИВАЮЧЕ ВІКНО --- */
+        .social-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .social-popup.active {
+            display: flex;
+        }
+
+        .popup-content {
+            background: #0a0a0a;
+            border: 2px solid #a84d6b;
+            padding: 25px 30px;
+            min-width: 280px;
+            max-width: 340px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(168, 77, 107, 0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #a84d6b;
+            padding-bottom: 10px;
+        }
+
+        .popup-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #a84d6b;
+            letter-spacing: 2px;
+        }
+
+        .popup-close {
+            background: none;
+            border: none;
+            color: #a84d6b;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: all 0.2s;
+        }
+
+        .popup-close:hover {
+            color: #ff6b9d;
+            transform: scale(1.2);
+        }
+
+        .popup-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .popup-icon-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .popup-icon-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .popup-icon {
+            width: 48px;
+            height: 48px;
+            fill: #a84d6b;
+            transition: all 0.2s;
+        }
+
+        .popup-icon-link:hover .popup-icon {
+            fill: #ff6b9d;
+            transform: scale(1.1);
+        }
+
+        .popup-icon-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #7a8278;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* АДАПТАЦІЯ */
         @media (max-width: 480px) {
             .futuristic-window { width: 260px; height: 150px; }
@@ -354,6 +451,21 @@
             .forum-decor { left: -35px; width: 30px; height: 30px; }
             .nav-folder-icon { width: 50px; }
             .money-svg { width: 28px; height: 28px; right: -40px; }
+            
+            .popup-content {
+                padding: 20px 25px;
+                min-width: 260px;
+            }
+            .popup-icon {
+                width: 42px;
+                height: 42px;
+            }
+            .popup-title {
+                font-size: 10px;
+            }
+            .popup-icons {
+                gap: 30px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -362,6 +474,13 @@
             .row-bottom-links { gap: 30px; }
             .small-icon { width: 50px; height: 50px; }
             .money-svg { right: -35px; }
+            .popup-icons {
+                gap: 20px;
+            }
+            .popup-icon {
+                width: 38px;
+                height: 38px;
+            }
         }
     </style>
 </head>
@@ -415,8 +534,6 @@
                 <div class="hud-dot active" id="indicator1"></div>
                 <div class="hud-dot" id="indicator2"></div>
             </div>
-            
-           
         </div>
 
         <!-- ФОРУМ -->
@@ -430,10 +547,21 @@
 
         <!-- НИЖНІ ІКОНКИ -->
         <div class="row-bottom-links">
-            <div onclick="window.location.href='a.html'"><img src="a.png" class="small-icon" alt="A"></div>
-            <div onclick="window.location.href='x.html'"><img src="x.png" class="small-icon" alt="X"></div>
+            <div class="social-trigger" data-type="ada"><img src="a.png" class="small-icon" alt="A"></div>
+            <div class="social-trigger" data-type="exs"><img src="x.png" class="small-icon" alt="X"></div>
         </div>
     </section>
+
+    <!-- СПЛИВАЮЧЕ ВІКНО -->
+    <div id="socialPopup" class="social-popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span class="popup-title" id="popupTitle">ADA</span>
+                <button class="popup-close" id="closePopup">×</button>
+            </div>
+            <div class="popup-icons" id="popupIcons"></div>
+        </div>
+    </div>
 
     <script src="script-bg.js"></script>
     <script src="index.js"></script>
