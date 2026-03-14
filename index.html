@@ -3,164 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- Основной заголовок -->
     <title>ɪɴꜰᴏ</title>
-    
-    <!-- Описание для поисковиков и превью -->
-    <meta name="description" content="ʙᴏʜᴇᴍɪᴀɴ ʙʀᴀɴᴅ">
-    
-    <!-- Open Graph (для Telegram, Facebook, VK, ссылок) -->
-    <meta property="og:title" content="ᗢ☻ʀᔕᴛʀɪ𒉽☇">
-    <meta property="og:description" content="ʙᴏʜᴇᴍɪᴀɴ ʙʀᴀɴᴅ">
-    <meta property="og:image" content="https://morstrix.zone/preview.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://morstrix.zone">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="ᴍᴏʀꜱᴛʀɪx.ᴢᴏɴᴇ">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ᗢ☻ʀᔕᴛʀɪ𒉽☇">
-    <meta name="twitter:description" content="ʙᴏʜᴇᴍɪᴀɴ ʙʀᴀɴᴅ">
-    <meta name="twitter:image" content="https://morstrix.zone/preview.jpg">
-    
-    <!-- Цвет темы в браузере (розовый) -->
-    <meta name="theme-color" content="#a84d6b">
-    
-    <!-- Иконка для вкладки -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <!-- Шрифты и стили -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- ГЛОБАЛЬНІ СТИЛІ --- */
+        :root {
+            --green: #a84d6b;
+            --dusty-gray: #7a8278;
+            --bg-color: #000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Press Start 2P', cursive;
+            color: var(--green);
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #neuro-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .site-section.main-index {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* --- ШОП --- */
+        .shop-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .main-nav-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .icon-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-folder-icon {
+            display: block;
+            width: 55px;
+            height: auto;
+            image-rendering: pixelated;
+            filter: none !important;
+        }
+
+        .money-svg {
+            position: absolute;
+            right: -45px;
+            top: 50%;
+            width: 32px;
+            height: 32px;
+            animation: rotateMoney 1.5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateMoney {
+            0% { transform: translateY(-50%) perspective(400px) rotateY(0deg); }
+            100% { transform: translateY(-50%) perspective(400px) rotateY(360deg); }
+        }
+
+        .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 10px;
+            color: #a84d6b;
+            margin-top: 8px;
+        }
+
+        .sub-caption {
+            font-size: 7px;
+            margin-top: 4px;
+            color: #7a8278;
+        }
+
+        /* --- ФУТУРИСТИЧНЕ ВІКНО --- */
+        .futuristic-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
+            position: relative;
+            color: #7aaac0;
+        }
+
+        .futuristic-window {
+            position: relative;
+            width: 280px;
+            height: 160px;
+            background: #030303;
+            border: 1px solid #2a4a6a;
+            margin-bottom: 15px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px #0f2a3a inset, 0 0 0 2px #000 inset;
+            transition: transform 0.2s ease;
+        }
+
+        .hud-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #3a6a8a;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .corner-tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
+        .corner-tr { top: 5px; right: 5px; border-left: none; border-bottom: none; }
+        .corner-bl { bottom: 5px; left: 5px; border-right: none; border-top: none; }
+        .corner-br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+
+        .crosshair {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px; height: 40px;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: #3a6a8a;
+        }
+
+        .crosshair::before { width: 1px; height: 40px; left: 50%; transform: translateX(-50%); }
+        .crosshair::after { width: 40px; height: 1px; top: 50%; transform: translateY(-50%); }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(58, 106, 138, 0.2);
+            top: 0; left: 0;
+            animation: scanMove 6s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes scanMove {
+            0% { top: -10px; opacity: 0; }
+            10% { opacity: 0.5; }
+            50% { top: 110%; opacity: 0.5; }
+            60% { opacity: 0; }
+            100% { top: -10px; opacity: 0; }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(58, 106, 138, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(58, 106, 138, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .window-content {
+            position: relative;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .content-slide {
+            position: absolute;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .content-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .slide-image {
+            width: 65px;
+            height: auto;
+            image-rendering: pixelated;
+            margin-bottom: 10px;
+            filter: grayscale(40%) contrast(110%);
+            opacity: 0.9;
+        }
+
+        .slide-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #7aaac0;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .slide-subtitle {
+            font-size: 6px;
+            color: #3a5a6a;
+            letter-spacing: 1px;
+        }
+
+        .hud-indicators {
+            display: flex;
+            gap: 15px;
+            margin: 5px 0 8px;
+        }
+
+        .hud-dot {
+            width: 8px; height: 8px;
+            border: 1px solid #2a4a6a;
+            background: transparent;
+            transition: all 0.3s ease;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+
+        .hud-dot.active {
+            background: #3a8ab0;
+            border-color: #7aaac0;
+        }
+
+        .system-info {
+            display: flex;
+            gap: 20px;
+            font-size: 6px;
+            color: #2a4a6a;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .system-info span { color: #3a6a8a; }
+
+        /* --- ФОРУМ --- */
+        .forum-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+        }
+
+        .forum-decor {
+            position: absolute;
+            left: -40px;
+            top: 5px;
+            width: 35px;
+            height: 35px;
+            border: 1px solid #a84d6b;
+            background: rgba(30, 10, 20, 0.8);
+            animation: vhs-shake 4s infinite;
+            z-index: 5;
+        }
+
+        .forum-decor::after {
+            content: var(--dynamic-word, "radio");
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6px;
+            color: #a84d6b;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        @keyframes vhs-shake {
+            0%,100% { transform: translate(0,0); }
+            10% { transform: translate(1px,-1px); }
+            20% { transform: translate(-1px,1px); }
+        }
+
+        /* --- НИЖНІ ІКОНКИ --- */
+        .row-bottom-links {
+            display: flex;
+            gap: 40px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .small-icon { 
+            width: 55px; height: 55px; 
+            border: 1px solid #a84d6b;
+            padding: 5px; 
+            image-rendering: pixelated; 
+            background: #0a0a0a;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .small-icon:hover { border-color: #c45d7b; opacity: 1; }
+        .small-icon:active { transform: scale(0.95); }
+
+        /* АДАПТАЦІЯ */
+        @media (max-width: 480px) {
+            .futuristic-window { width: 260px; height: 150px; }
+            .slide-image { width: 55px; }
+            .slide-title { font-size: 9px; }
+            .forum-decor { left: -35px; width: 30px; height: 30px; }
+            .nav-folder-icon { width: 50px; }
+            .money-svg { width: 28px; height: 28px; right: -40px; }
+        }
+
+        @media (max-width: 360px) {
+            .futuristic-window { width: 240px; height: 140px; }
+            .forum-decor { left: -30px; }
+            .row-bottom-links { gap: 30px; }
+            .small-icon { width: 50px; height: 50px; }
+            .money-svg { right: -35px; }
+        }
+    </style>
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
 
     <section class="site-section main-index">
-        <div class="folder-container">
+        <!-- ШОП -->
+        <div class="shop-container">
             <a href="shop.html" class="main-nav-link">
-                <img src="space.png" class="nav-folder-icon">
+                <div class="icon-wrapper">
+                    <img src="space.png" class="nav-folder-icon" alt="shop">
+                    <svg class="money-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="8" width="20" height="16" fill="#0a2a0a" stroke="#22c55e" stroke-width="2"/>
+                        <circle cx="16" cy="16" r="4" fill="#22c55e"/>
+                        <rect x="10" y="12" width="2" height="2" fill="#22c55e"/>
+                        <rect x="20" y="18" width="2" height="2" fill="#22c55e"/>
+                    </svg>
+                </div>
                 <div class="text-group">ШОП<span class="sub-caption">diy gear</span></div>
             </a>
         </div>
 
-        <div class="drum-system">
-            <div class="drum-nav">
-                <button class="d-btn" id="d-prev">◀</button>
-                <span class="system-label">SELECT DEVELOPMENT</span>
-                <button class="d-btn" id="d-next">▶</button>
-            </div>
-            <div class="drum-viewport">
-                <div class="drum-track" id="drum-track">
-                    <a href="support.html" class="drum-item">
-                        <img src="support.png" class="nav-folder-icon">
-                        <div class="text-group">SUPPORT<span class="sub-caption">ai/game bot</span></div>
-                    </a>
-                    <a href="helper.html" class="drum-item">
-                        <img src="helper.png" class="nav-folder-icon">
-                        <div class="text-group">HELPER<span class="sub-caption">android app</span></div>
-                    </a>
+        <!-- ФУТУРИСТИЧНЕ ВІКНО -->
+        <div class="futuristic-container">
+            <div class="futuristic-window" id="futuristicWindow">
+                <div class="hud-corner corner-tl"></div>
+                <div class="hud-corner corner-tr"></div>
+                <div class="hud-corner corner-bl"></div>
+                <div class="hud-corner corner-br"></div>
+                <div class="crosshair"></div>
+                <div class="scan-line"></div>
+                <div class="grid-overlay"></div>
+                
+                <div class="window-content">
+                    <div class="content-slide active" id="slideSupport">
+                        <img src="support.png" class="slide-image" alt="Support">
+                        <div class="slide-title">SUPPORT</div>
+                        <div class="slide-subtitle">AI/GAME BOT</div>
+                    </div>
+                    
+                    <div class="content-slide" id="slideHelper">
+                        <img src="helper.png" class="slide-image" alt="Helper">
+                        <div class="slide-title">HELPER</div>
+                        <div class="slide-subtitle">ANDROID APP</div>
+                    </div>
                 </div>
             </div>
+            
+            <div class="hud-indicators">
+                <div class="hud-dot active" id="indicator1"></div>
+                <div class="hud-dot" id="indicator2"></div>
+            </div>
+            
+           
         </div>
 
-        <a href="print.html" class="retro-button">PRINT DESIGN</a>
-        
-        <!-- ФОРУМ з декоративним квадратиком -->
-        <div class="folder-container">
+        <!-- ФОРУМ -->
+        <div class="forum-wrapper">
             <a href="forum.html" class="main-nav-link">
-                <div class="forum-decor"></div> <!-- Це наш квадратик -->
-                <img src="forum.png" class="nav-folder-icon">
+                <div class="forum-decor" id="forumDecor"></div>
+                <img src="forum.png" class="nav-folder-icon" alt="forum">
                 <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
             </a>
         </div>
 
+        <!-- НИЖНІ ІКОНКИ -->
         <div class="row-bottom-links">
-            <div class="cyber-icon-btn" onclick="openCloud('ada', this)">
-                <img src="a.png" class="small-icon">
-            </div>
-            <div class="cyber-icon-btn" onclick="openCloud('dev', this)">
-                <img src="x.png" class="small-icon">
-            </div>
+            <div onclick="window.location.href='a.html'"><img src="a.png" class="small-icon" alt="A"></div>
+            <div onclick="window.location.href='x.html'"><img src="x.png" class="small-icon" alt="X"></div>
         </div>
     </section>
 
-    <div id="mini-cloud" class="mini-cloud">
-        <div id="cloud-icons-container" class="cloud-icons-row"></div>
-        <div class="cloud-arrow"></div>
-    </div>
-
     <script src="script-bg.js"></script>
-    <script>
-        // ЛОГИКА БАРАБАНА
-        const track = document.getElementById('drum-track');
-        let index = 0;
-        const update = () => track.style.transform = `translateX(-${index * 100}%)`;
-        document.getElementById('d-next').onclick = () => { index = (index + 1) % 2; update(); };
-        document.getElementById('d-prev').onclick = () => { index = (index - 1 + 2) % 2; update(); };
-
-        // ИКОНКИ ДЛЯ ОБЛАЧКА (SVG)
-        const icons = {
-            ig: `<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.849-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849s.012-3.584.07-4.849c.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.351-.2 6.77-2.618 6.97-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.2-4.349-2.619-6.77-6.98-6.97-1.28-.059-1.688-.073-4.947-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`,
-            tt: `<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.33 2.1-.1.7.07 1.42.47 2.01.39.55.96.93 1.6 1.11.82.24 1.7.13 2.41-.3.67-.41 1.07-1.11 1.14-1.89.07-2.13.05-4.27.05-6.41V0z"/></svg>`
-        };
-
-        // ДАННЫЕ ОБЛАЧКА
-        const socialData = {
-            ada: [
-                { type: 'icon', html: icons.ig, url: 'https://instagram.com/a.mrsva' }
-            ],
-            dev: [
-                { type: 'icon', html: icons.ig, url: 'https://instagram.com/grimexframe' },
-                { type: 'icon', html: icons.tt, url: 'https://tiktok.com/@grimexframe' }
-            ]
-        };
-
-        const cloud = document.getElementById('mini-cloud');
-        const container = document.getElementById('cloud-icons-container');
-
-        function openCloud(type, element) {
-            container.innerHTML = socialData[type].map(item => {
-                return `<a href="${item.url}" target="_blank" class="social-link-icon">${item.html}</a>`;
-            }).join('');
-
-            const rect = element.getBoundingClientRect();
-            cloud.style.left = (rect.left + rect.width / 2) + "px";
-            cloud.style.top = (rect.top - 10) + "px";
-            cloud.classList.add('active');
-            
-            setTimeout(() => {
-                const closeHandler = (e) => {
-                    if (!cloud.contains(e.target) && !element.contains(e.target)) {
-                        cloud.classList.remove('active');
-                        document.removeEventListener('click', closeHandler);
-                    }
-                };
-                document.addEventListener('click', closeHandler);
-            }, 50);
-        }
-    </script>
-
-    <!-- Скрипт для зміни слів у квадратику форуму -->
-    <script>
-    (function() {
-        const words = [
-            "design", "wellness", "diy gear", "radio", "it/ai",
-            "english", "barbering", "travel", "tattoo", "print", "money"
-        ];
-
-        const decor = document.querySelector('.forum-decor');
-        if (!decor) return;
-
-        let index = 0;
-        setInterval(() => {
-            index = (index + 1) % words.length;
-            decor.style.setProperty('--dynamic-word', `"${words[index]}"`);
-        }, 1800);
-    })();
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>

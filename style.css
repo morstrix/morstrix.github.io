@@ -1,12 +1,9 @@
-/* --- 1. ГЛОБАЛЬНЫЕ НАСТРОЙКИ И ШРИФТЫ --- */
+/* --- 1. ГЛОБАЛЬНІ НАЛАШТУВАННЯ --- */
 :root {
-    --green: #a84d6b;         /* Грязно-розовый */
+    --green: #a84d6b;         /* Брудно-рожевий */
     --dusty-gray: #7a8278;    
     --bg-color: #000;
-    --red: #ff0000;
-    --mint-dark: #2a6b6b;      
-    --mint-light: #3a9b9b;     
-    --terminal-glow: #a84d6b;   /* Грязно-розовый */
+    --terminal-glow: #a84d6b;
 }
 
 * { 
@@ -24,7 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Анимированный фон (сетка) */
+/* --- 2. АНІМОВАНИЙ ФОН (NEURO) --- */
 #neuro-bg {
     position: fixed;
     top: 0; left: 0;
@@ -37,7 +34,30 @@ body {
     filter: hue-rotate(320deg) saturate(0.7);
 }
 
-/* --- 2. ГЛАВНАЯ СТРАНИЦА (INDEX.HTML) --- */
+/* --- 3. СПІЛЬНІ КОМПОНЕНТИ --- */
+.site-section {
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    text-decoration: none;
+}
+
+.custom-back-icon {
+    width: 35px;
+    height: auto;
+    image-rendering: pixelated;
+    filter: none !important;
+}
+
+/* --- 4. ГОЛОВНА СТОРІНКА (INDEX.HTML) --- */
 .site-section.main-index {
     display: flex;
     flex-direction: column;
@@ -47,13 +67,6 @@ body {
     margin: 0 auto;
     padding: 40px 20px;
     gap: 25px;
-}
-
-.folder-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .main-nav-link {
@@ -72,70 +85,6 @@ body {
     filter: none !important;
 }
 
-/* --- 3. БАРАБАН ПЕРЕКЛЮЧЕНИЯ (SYSTEM SELECT) --- */
-.drum-system {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 0;
-    border-top: 1px solid rgba(168, 77, 107, 0.3);
-    border-bottom: 1px solid rgba(168, 77, 107, 0.3);
-    background: rgba(168, 77, 107, 0.03);
-}
-
-.drum-nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.system-label {
-    font-size: 8px;
-    color: var(--red);
-    font-weight: bold;
-}
-
-.d-btn {
-    background: none; 
-    border: none;
-    color: var(--green);
-    font-family: 'Press Start 2P', 'Courier New', monospace;
-    font-size: 16px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    padding: 0;
-}
-
-.drum-viewport {
-    width: 160px;
-    overflow: hidden;
-}
-
-.drum-track {
-    display: flex;
-    transition: transform 0.3s steps(4);
-}
-
-.drum-item {
-    min-width: 100%;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.drum-item .nav-folder-icon {
-    filter: none !important;
-    opacity: 1 !important;
-}
-
 .text-group {
     display: flex;
     flex-direction: column;
@@ -151,22 +100,75 @@ body {
     color: var(--dusty-gray);
 }
 
-/* --- 4. НИЖНИЕ КНОПКИ ПЕРСОНАЖЕЙ (A / X) --- */
+/* Глітч-барабан */
+.glitch-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.glitch-viewport {
+    position: relative;
+    width: 250px;
+    height: 180px;
+    background: rgba(168, 77, 107, 0.02);
+    border: 1px solid var(--green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.glitch-slide {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.glitch-slide.active {
+    display: flex;
+}
+
+.glitch-img {
+    width: 90px;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 5px var(--green));
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, transparent 1px);
+    background-size: 100% 2px;
+    display: none;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.trigger-glitch .glitch-img {
+    animation: glitchAnim 0.3s steps(2) infinite;
+}
+
+@keyframes glitchAnim {
+    0% { transform: translate(0); filter: hue-rotate(0deg) contrast(2); }
+    20% { transform: translate(-5px, 2px); clip-path: inset(10% 0 30% 0); filter: hue-rotate(90deg); }
+    40% { transform: translate(5px, -2px); clip-path: inset(40% 0 10% 0); }
+    60% { transform: translate(-2px, 5px); clip-path: inset(20% 0 50% 0); }
+    100% { transform: translate(0); }
+}
+
+/* Нижні іконки A / X */
 .row-bottom-links {
     display: flex;
     gap: 40px;
     margin-top: 10px;
     justify-content: center;
-}
-
-.cyber-icon-btn {
-    cursor: pointer;
-    position: relative;
-    transition: 0.1s;
-}
-
-.cyber-icon-btn:active {
-    transform: scale(0.95);
 }
 
 .small-icon { 
@@ -178,167 +180,10 @@ body {
     background: rgba(168, 77, 107, 0.05);
     object-fit: contain;
     display: block;
-    box-shadow: none;
     filter: none !important;
 }
 
-/* --- 5. ВСПЛЫВАЮЩЕЕ ОБЛАЧКО (MINI CLOUD) - ОРИГИНАЛЬНЫЕ ТОНА --- */
-.mini-cloud {
-    position: fixed;
-    display: none;
-    background: rgba(10, 20, 10, 0.95);
-    border: 1px solid #70b2b2;
-    padding: 16px;
-    z-index: 2000;
-    transform: translate(-50%, -115%); 
-    box-shadow: 
-        0 0 10px rgba(0, 255, 157, 0.3),
-        inset 0 0 10px rgba(0, 146, 44, 0.602);
-    backdrop-filter: blur(4px);
-    border-radius: 4px;
-}
-
-.mini-cloud.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.mini-cloud::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        #5d9c9c, 
-        transparent
-    );
-    animation: scan 3s linear infinite;
-    opacity: 0.5;
-}
-
-.mini-cloud::after {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: 10px;
-    height: 10px;
-    border-top: 2px solid #65a089;
-    border-left: 2px solid #8dbabd;
-}
-
-.mini-cloud .corner-bottom-right {
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 10px;
-    height: 10px;
-    border-bottom: 2px solid #66aeab;
-    border-right: 2px solid #71a8b0;
-}
-
-.cloud-icons-row {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-}
-
-.social-link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    filter: drop-shadow(0 0 3px #b36fa4);
-}
-
-.social-link-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: #000000;
-}
-
-.social-link-icon:active {
-    transform: scale(0.8);
-    filter: drop-shadow(0 0 8px #b777b8bc);
-}
-
-.social-text-link {
-    text-decoration: none;
-    color: #000000;
-    background: rgba(0, 255, 157, 0.3);
-    padding: 8px 16px;
-    font-size: 10px;
-    border: 1px solid #bf73b6;
-    transition: all 0.2s;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
-}
-
-.social-text-link:active {
-    background: rgba(168, 107, 166, 0.6);
-    color: #000000;
-    box-shadow: 0 0 15px rgba(224, 99, 235, 0.6);
-}
-
-.cloud-arrow {
-    width: 12px;
-    height: 12px;
-    background: rgba(118, 165, 168, 0.527);
-    border: 1px solid #79fff4;
-    transform: rotate(45deg);
-    position: absolute;
-    bottom: -7px;
-    left: calc(50% - 6px);
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 10px rgba(0, 221, 15, 0.3);
-}
-
-.mini-cloud .matrix-dots {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(#00ff9d 1px, transparent 1px);
-    background-size: 4px 4px;
-    opacity: 0.1;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* --- 6. ВНУТРЕННИЕ СТРАНИЦЫ (SHOP / ROOMS / HELPER / SUPPORT) --- */
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    text-decoration: none;
-}
-
-.custom-back-icon {
-    width: 35px;
-    height: auto;
-    image-rendering: pixelated;
-    filter: none !important;
-}
-
-.site-section {
-    padding: 60px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
+/* --- 5. ФОРУМ (FORUM.HTML) --- */
 .carousel-wrapper {
     display: flex;
     align-items: center;
@@ -352,11 +197,6 @@ body {
     border: 2px solid var(--green);
     overflow: hidden;
     background: #000;
-    box-shadow: none;
-}
-
-.carousel-window.vertical {
-    height: 380px;
 }
 
 .carousel-track {
@@ -371,10 +211,6 @@ body {
     object-fit: contain;
     image-rendering: pixelated;
     filter: none !important;
-}
-
-.room-image.vertical {
-    height: 380px;
 }
 
 .nav-btn {
@@ -437,7 +273,7 @@ body {
     color: #000;
 }
 
-/* --- 7. КОНТЕЙНЕРЫ ДЛЯ ИГР И БОТОВ (SUPPORT) --- */
+/* --- 6. HELPER (HELPER.HTML) --- */
 .game-window-container { 
     width: 320px;
     height: 550px;
@@ -445,7 +281,6 @@ body {
     background: #000;
     overflow: hidden; 
     margin-bottom: 20px;
-    box-shadow: none;
 }
 
 .game-iframe {
@@ -455,10 +290,7 @@ body {
     display: block;
 }
 
-/* ======================== */
-/*   ФОРУМ – ДЕКОРАТИВНИЙ КВАДРАТИК (forum-decor) */
-/* ======================== */
-
+/* --- 7. ДЕКОРАТИВНИЙ КВАДРАТИК (FORUM.HTML) --- */
 .forum-decor {
     position: absolute;
     top: 0;
@@ -476,7 +308,6 @@ body {
     z-index: 10;
 }
 
-/* Анімована лінія (сканування) */
 .forum-decor::before {
     content: "";
     position: absolute;
@@ -499,7 +330,6 @@ body {
     opacity: 0.8;
 }
 
-/* Текст всередині квадратика */
 .forum-decor::after {
     content: var(--dynamic-word, "design");
     position: absolute;
@@ -526,47 +356,7 @@ body {
     z-index: 12;
 }
 
-/* Адаптація для мобільних */
-@media (max-width: 768px) {
-    .forum-decor {
-        width: 40px;
-        height: 40px;
-        left: -45px;
-        top: 5px;
-    }
-    .forum-decor::after {
-        font-size: 6px;
-        padding: 1px 3px;
-    }
-}
-
-@media (max-width: 480px) {
-    .forum-decor {
-        width: 35px;
-        height: 35px;
-        left: -40px;
-        top: 8px;
-    }
-    .forum-decor::after {
-        font-size: 5px;
-    }
-}
-
-/* --- АНИМАЦИИ --- */
-@keyframes scan {
-    0% { top: 0; opacity: 0.3; }
-    50% { top: 100%; opacity: 0.8; }
-    100% { top: 0; opacity: 0.3; }
-}
-
-@keyframes vhs-noise {
-    0% { transform: translateY(0); opacity: 0.3; }
-    25% { transform: translateY(2px); opacity: 0.5; }
-    50% { transform: translateY(0); opacity: 0.3; }
-    75% { transform: translateY(-2px); opacity: 0.5; }
-    100% { transform: translateY(0); opacity: 0.3; }
-}
-
+/* Анімації для forum-decor */
 @keyframes vhs-shake {
     0%, 100% { transform: translate(0, 0) skewX(0deg); }
     5% { transform: translate(1px, -1px) skewX(1deg); }
@@ -597,4 +387,30 @@ body {
     30% { opacity: 0.85; text-shadow: 0 0 4px #00ff9d, 0 -1px 0 rgba(255,0,255,0.3), 0 1px 0 rgba(0,255,255,0.3); }
     40% { opacity: 1; text-shadow: 0 0 4px #00ff9d, 1px 1px 0 rgba(255,0,255,0.3), -1px -1px 0 rgba(0,255,255,0.3); }
     50% { opacity: 0.9; text-shadow: 0 0 4px #00ff9d, -1px 1px 0 rgba(255,0,255,0.3), 1px -1px 0 rgba(0,255,255,0.3); }
+}
+
+/* --- 8. МОБІЛЬНА АДАПТАЦІЯ ДЛЯ FORUM-DECOR --- */
+@media (max-width: 768px) {
+    .forum-decor {
+        width: 40px;
+        height: 40px;
+        left: -45px;
+        top: 5px;
+    }
+    .forum-decor::after {
+        font-size: 6px;
+        padding: 1px 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .forum-decor {
+        width: 35px;
+        height: 35px;
+        left: -40px;
+        top: 8px;
+    }
+    .forum-decor::after {
+        font-size: 5px;
+    }
 }
