@@ -3,8 +3,8 @@
     --green: #a84d6b;         /* Брудно-рожевий */
     --dusty-gray: #7a8278;    
     --bg-color: #000;
-    --hud-blue: #3a8ab0;
-    --hud-dark: #1a3a4a;
+    --hud-blue: #b03a5e;
+    --hud-dark: #4a1a2a;
 }
 
 * { 
@@ -97,7 +97,7 @@ body {
     align-items: center;
     margin: 10px 0;
     position: relative;
-    color: #7aaac0;
+    color: #5c464b;
 }
 
 .futuristic-window {
@@ -109,7 +109,7 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #0f2a3a inset, 0 0 0 2px #000 inset;
+    box-shadow: 0 0 0 1px #2a0f1a inset, 0 0 0 2px #000 inset;
     transition: transform 0.2s ease;
 }
 
@@ -217,7 +217,7 @@ body {
 .slide-title {
     font-family: 'Press Start 2P', cursive;
     font-size: 10px;
-    color: #7aaac0;
+    color: #a00000ad;
     letter-spacing: 1px;
     margin-bottom: 4px;
 }
@@ -469,7 +469,7 @@ body {
     background: rgba(30, 10, 20, 0.9);
     border: 2px solid var(--green);
     border-radius: 6px;
-    box-shadow: 0 0 8px rgba(168, 77, 107, 0.3);
+    box-shadow: 0 0 8px rgba(0, 140, 23, 0.3);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
@@ -543,7 +543,11 @@ body {
     .nav-folder-icon { width: 50px; }
     .row-bottom-links { gap: 30px; }
     .small-icon { width: 50px; height: 50px; }
-    
+    .hud-dot.active {
+    background: #b03a5e;
+    box-shadow: 0 0 10px #b03a5e;
+}
+
     .popup-content {
         padding: 20px 25px;
         min-width: 260px;
