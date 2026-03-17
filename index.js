@@ -199,14 +199,14 @@ const socialIcons = {
 
 const socialData = {
     ada: {
-        title: 'ADA',
+        title: 'ADA (DES)',
         links: [
             { url: 'https://instagram.com/a.mrsva', icon: socialIcons.instagram, name: 'INSTAGRAM' },
-            { url: 'https://linkedin.com/in/a-mrsva', icon: socialIcons.linkedin, name: 'LINKEDIN' }
+            { url: 'https://linkedin.com/in/a.mrsva', icon: socialIcons.linkedin, name: 'LINKEDIN' }
         ]
     },
     exs: {
-        title: 'EXS',
+        title: 'EX (DEV)',
         links: [
             { url: 'https://instagram.com/grimexframe', icon: socialIcons.instagram, name: 'INSTAGRAM' },
             { url: 'https://tiktok.com/@grimexframe', icon: socialIcons.tiktok, name: 'TIKTOK' }
