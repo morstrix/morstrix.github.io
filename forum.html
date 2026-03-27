@@ -1,44 +1,273 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ʀᴇᴘʟʏ ᴄʟᴜʙ</title>
+    <title>ФОРУМ | MORSTRIX</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Press Start 2P', monospace;
+        }
+        
+        /* Тонкий CRT-ефект фону (статичний) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.02) 0px,
+                rgba(0, 255, 0, 0.02) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .forum-container {
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Кнопка назад */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            text-decoration: none;
+        }
+        
+        .custom-back-icon {
+            width: 35px;
+            height: auto;
+            filter: brightness(0.8);
+            transition: filter 0.2s;
+        }
+        
+        .custom-back-icon:hover {
+            filter: brightness(1);
+        }
+        
+        /* ========== РЕТРО-ФУТУРИСТИЧНЕ ВІКНО ========== */
+        .retro-window {
+            margin-bottom: 30px;
+        }
+        
+        .window-border {
+            background: #0a0a0a;
+            border: 2px solid #a84d6b;
+            padding: 22px;
+            position: relative;
+            box-shadow: 0 0 12px rgba(168, 77, 107, 0.2);
+        }
+        
+        /* Кутки */
+        .corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid #a84d6b;
+        }
+        
+        .corner-tl {
+            top: -1px;
+            left: -1px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-tr {
+            top: -1px;
+            right: -1px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .corner-bl {
+            bottom: -1px;
+            left: -1px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .corner-br {
+            bottom: -1px;
+            right: -1px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Статична лінія (без анімації) */
+        .static-line {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #a84d6b, transparent);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .window-title {
+            font-size: 11px;
+            color: #a84d6b;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            display: inline-block;
+            background: rgba(168,77,107,0.1);
+            padding: 4px 10px;
+        }
+        
+        .description-text {
+            color: #ccc;
+            font-size: 10px;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+        
+        .description-text .highlight {
+            color: #a84d6b;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #222;
+        }
+        
+        .tag {
+            font-size: 7px;
+            color: #7a8278;
+            background: #111;
+            padding: 5px 10px;
+            letter-spacing: 1px;
+            border: 1px solid #2a2a2a;
+        }
+        
+        /* Віджет коментарів */
+        .comments-wrapper {
+            background: #030303;
+            border: 1px solid #2a2a2a;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        /* Кнопка */
+        .tg-button {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .tg-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0a0a0a;
+            color: #a84d6b;
+            text-decoration: none;
+            padding: 12px 28px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            border: 2px solid #a84d6b;
+            transition: all 0.15s;
+        }
+        
+        .tg-link:hover {
+            background: #a84d6b;
+            color: #000;
+        }
+        
+        /* Адаптація */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .window-title {
+                font-size: 9px;
+            }
+            .description-text {
+                font-size: 9px;
+                line-height: 1.6;
+            }
+            .tag {
+                font-size: 6px;
+                padding: 4px 8px;
+            }
+            .tg-link {
+                font-size: 8px;
+                padding: 10px 20px;
+            }
+            .window-border {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="neuro-bg"></canvas>
-
     <a href="index.html" class="back-button">
         <img src="close.jpg" alt="X" class="custom-back-icon">
     </a>
-
-    <section class="site-section">
-        <div class="carousel-wrapper">
-            <button class="nav-btn prev-btn" id="f-prev">&lt;</button>
-            <div class="carousel-window">
-                <div class="carousel-track" id="forum-track">
-                    <img src="f1.jpg" class="room-image">
+    
+    <div class="forum-container">
+        <!-- РЕТРО-ВІКНО -->
+        <div class="retro-window">
+            <div class="window-border">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="static-line"></div>
+                
+                <div class="window-title">
+                    ГОСТЬОВА КНИГА
                 </div>
+                
+                <div class="description-text">
+                    тут має бути опис, але його поки що немає.<br><br>
+                </div>
+                
             </div>
-            <button class="nav-btn next-btn" id="f-next">&gt;</button>
         </div>
-
-        <div class="action-buttons">
-            <a href="https://t.me/+n5Qg8d2h9qliMmRi" class="retro-button">TELEGRAM</a>
+        
+        <!-- ВІДЖЕТ КОМЕНТАРІВ -->
+        <div class="comments-wrapper">
+            <script async 
+                src="https://telegram.org/js/telegram-widget.js?22"
+                data-telegram-discussion="morstrix/48"
+                data-width="100%"
+                data-dark="1"
+                data-color="a84d6b"
+                data-comments-limit="50">
+            </script>
         </div>
-    </section>
-
-    <script src="script-bg.js"></script>
-    <script>
-        const track = document.getElementById('forum-track');
-        const nextBtn = document.getElementById('f-next');
-        const prevBtn = document.getElementById('f-prev');
-        let currentIndex = 0;
-        const updateSlide = () => track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        nextBtn.onclick = () => { currentIndex = (currentIndex + 1) % track.children.length; updateSlide(); };
-        prevBtn.onclick = () => { currentIndex = (currentIndex - 1 + track.children.length) % track.children.length; updateSlide(); };
-    </script>
+        
+        <!-- КНОПКА -->
+        <div class="tg-button">
+            <a href="https://t.me/+n5Qg8d2h9qliMmRi" target="_blank" class="tg-link">
+                ПРИЄДНАТИСЯ
+            </a>
+        </div>
+    </div>
 </body>
 </html>
