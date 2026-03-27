@@ -1,10 +1,15 @@
 /* --- 1. ГЛОБАЛЬНІ НАЛАШТУВАННЯ --- */
 :root {
-    --green: #a84d6b;         /* Брудно-рожевий */
-    --dusty-gray: #7a8278;    
-    --bg-color: #000;
-    --hud-blue: #b03a5e;
-    --hud-dark: #4a1a2a;
+    --cyan: #5f9f9f;
+    --cyan-dark: #4a7a7a;
+    --purple: #8f6f8f;
+    --purple-dark: #6f4f6f;
+    --dusty-gray: #7a7a7a;
+    --bg-color: #121212;
+    --bg-darker: #0a0a0a;
+    --bg-lighter: #1a1a1a;
+    --text: #c0c0c0;
+    --text-dim: #7a7a7a;
 }
 
 * { 
@@ -16,7 +21,7 @@
 body {
     background-color: var(--bg-color);
     font-family: 'Press Start 2P', cursive;
-    color: var(--green);
+    color: var(--text);
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
@@ -32,7 +37,7 @@ body {
 }
 
 #neuro-bg canvas {
-    filter: hue-rotate(320deg) saturate(0.7);
+    filter: hue-rotate(200deg) saturate(0.6) brightness(0.8);
 }
 
 /* --- 3. СПІЛЬНІ КОМПОНЕНТИ --- */
@@ -55,7 +60,12 @@ body {
     width: 35px;
     height: auto;
     image-rendering: pixelated;
-    filter: none !important;
+    filter: brightness(0.7) sepia(1) hue-rotate(180deg) saturate(0.5);
+    transition: filter 0.2s;
+}
+
+.custom-back-icon:hover {
+    filter: brightness(1) sepia(1) hue-rotate(180deg) saturate(0.8);
 }
 
 .main-nav-link {
@@ -71,7 +81,7 @@ body {
     height: auto;
     margin-bottom: 8px;
     image-rendering: pixelated;
-    filter: none !important;
+    filter: drop-shadow(0 0 3px var(--purple));
 }
 
 .text-group {
@@ -80,13 +90,13 @@ body {
     align-items: center;
     text-align: center;
     font-size: 10px;
-    color: #a00000ad;
+    color: var(--purple);
 }
 
 .sub-caption {
     font-size: 7px;
     margin-top: 4px;
-    color: var(--dusty-gray);
+    color: var(--text-dim);
 }
 
 /* --- 4. ФУТУРИСТИЧНЕ ВІКНО (ДЛЯ INDEX.HTML) --- */
@@ -97,19 +107,19 @@ body {
     align-items: center;
     margin: 10px 0;
     position: relative;
-    color: #5c464b;
+    color: var(--text-dim);
 }
 
 .futuristic-window {
     position: relative;
     width: 280px;
     height: 160px;
-    background: #030303;
-    border: 1px solid var(--hud-dark);
+    background: var(--bg-darker);
+    border: 1px solid var(--purple);
     margin-bottom: 15px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #2a0f1a inset, 0 0 0 2px #000 inset;
+    box-shadow: 0 0 0 1px var(--purple) inset, 0 0 0 2px var(--bg-color) inset;
     transition: transform 0.2s ease;
 }
 
@@ -117,7 +127,7 @@ body {
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 1px solid var(--hud-blue);
+    border: 1px solid var(--cyan);
     z-index: 5;
     pointer-events: none;
     opacity: 0.5;
@@ -141,7 +151,7 @@ body {
 .crosshair::after {
     content: '';
     position: absolute;
-    background: var(--hud-blue);
+    background: var(--cyan);
 }
 
 .crosshair::before { width: 1px; height: 40px; left: 50%; transform: translateX(-50%); }
@@ -151,7 +161,7 @@ body {
     position: absolute;
     width: 100%;
     height: 2px;
-    background: rgba(58, 106, 138, 0.2);
+    background: rgba(95, 159, 159, 0.2);
     top: 0; left: 0;
     animation: scanMove 6s linear infinite;
     pointer-events: none;
@@ -170,8 +180,8 @@ body {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-image: linear-gradient(rgba(58, 106, 138, 0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(58, 106, 138, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(95, 159, 159, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(95, 159, 159, 0.05) 1px, transparent 1px);
     background-size: 15px 15px;
     pointer-events: none;
     z-index: 2;
@@ -217,14 +227,14 @@ body {
 .slide-title {
     font-family: 'Press Start 2P', cursive;
     font-size: 10px;
-    color: #a00000ad;
+    color: var(--purple);
     letter-spacing: 1px;
     margin-bottom: 4px;
 }
 
 .slide-subtitle {
     font-size: 6px;
-    color: var(--hud-dark);
+    color: var(--cyan);
     letter-spacing: 1px;
 }
 
@@ -236,7 +246,7 @@ body {
 
 .hud-dot {
     width: 8px; height: 8px;
-    border: 1px solid var(--hud-dark);
+    border: 1px solid var(--purple);
     background: transparent;
     transition: all 0.3s ease;
     transform: rotate(45deg);
@@ -244,8 +254,9 @@ body {
 }
 
 .hud-dot.active {
-    background: var(--hud-blue);
-    border-color: #7aaac0;
+    background: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
 }
 
 /* --- 5. ФОРУМ (FORUM.HTML) --- */
@@ -259,9 +270,9 @@ body {
 .carousel-window { 
     width: 280px;
     height: 280px;
-    border: 2px solid var(--green);
+    border: 2px solid var(--cyan);
     overflow: hidden;
-    background: #000;
+    background: var(--bg-color);
 }
 
 .carousel-track {
@@ -280,7 +291,7 @@ body {
 
 .nav-btn {
     background: none; border: none;
-    color: var(--green);
+    color: var(--cyan);
     font-family: 'Press Start 2P';
     font-size: 18px;
     cursor: pointer;
@@ -299,14 +310,14 @@ body {
     margin-bottom: 15px;
     position: relative;
     padding-left: 20px;
-    color: var(--green);
+    color: var(--cyan);
 }
 
 .retro-info-box li::before {
     content: "■";
     position: absolute;
     left: 0;
-    color: var(--green);
+    color: var(--purple);
 }
 
 .action-buttons {
@@ -321,25 +332,26 @@ body {
     display: block;
     width: 100%;
     padding: 15px; 
-    border: 2px solid var(--green);
+    border: 2px solid var(--cyan);
     background: transparent; 
-    color: var(--green);
+    color: var(--cyan);
     text-decoration: none;
     text-align: center; 
     font-size: 10px;
+    transition: all 0.2s;
 }
 
 .retro-button:active {
-    background: var(--green);
-    color: #000;
+    background: var(--cyan);
+    color: var(--bg-color);
 }
 
 /* --- 6. HELPER (HELPER.HTML) --- */
 .game-window-container { 
     width: 320px;
     height: 550px;
-    border: 2px solid var(--green);
-    background: #000;
+    border: 2px solid var(--cyan);
+    background: var(--bg-color);
     overflow: hidden; 
     margin-bottom: 20px;
 }
@@ -359,7 +371,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(3px);
     z-index: 1000;
     justify-content: center;
@@ -372,13 +384,13 @@ body {
 }
 
 .popup-content {
-    background: #0a0a0a;
-    border: 2px solid var(--green);
+    background: var(--bg-darker);
+    border: 2px solid var(--cyan);
     padding: 25px 30px;
     min-width: 280px;
     max-width: 340px;
     position: relative;
-    box-shadow: 0 0 30px rgba(168, 77, 107, 0.3);
+    box-shadow: 0 0 30px rgba(95, 159, 159, 0.3);
     animation: popIn 0.3s ease;
 }
 
@@ -392,21 +404,21 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    border-bottom: 1px solid var(--green);
+    border-bottom: 1px solid var(--cyan);
     padding-bottom: 10px;
 }
 
 .popup-title {
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
-    color: var(--green);
+    color: var(--cyan);
     letter-spacing: 2px;
 }
 
 .popup-close {
     background: none;
     border: none;
-    color: var(--green);
+    color: var(--cyan);
     font-size: 24px;
     cursor: pointer;
     padding: 0 8px;
@@ -414,7 +426,7 @@ body {
 }
 
 .popup-close:hover {
-    color: #ff6b9d;
+    color: var(--purple);
     transform: scale(1.2);
 }
 
@@ -441,19 +453,19 @@ body {
 .popup-icon {
     width: 48px;
     height: 48px;
-    fill: var(--green);
+    fill: var(--cyan);
     transition: all 0.2s;
 }
 
 .popup-icon-link:hover .popup-icon {
-    fill: #ff6b9d;
+    fill: var(--purple);
     transform: scale(1.1);
 }
 
 .popup-icon-name {
     font-family: 'Press Start 2P', cursive;
     font-size: 7px;
-    color: var(--dusty-gray);
+    color: var(--text-dim);
     margin-top: 8px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -466,10 +478,10 @@ body {
     left: -60px;
     width: 55px;
     height: 55px;
-    background: rgba(30, 10, 20, 0.9);
-    border: 2px solid var(--green);
+    background: rgba(30, 20, 30, 0.9);
+    border: 2px solid var(--cyan);
     border-radius: 6px;
-    box-shadow: 0 0 8px rgba(0, 140, 23, 0.3);
+    box-shadow: 0 0 8px rgba(95, 159, 159, 0.3);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
@@ -481,7 +493,7 @@ body {
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 7px;
-    color: var(--green);
+    color: var(--cyan);
     text-transform: uppercase;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -507,10 +519,10 @@ body {
 
 .small-icon { 
     width: 55px; height: 55px; 
-    border: 2px solid var(--green);
+    border: 2px solid var(--cyan);
     padding: 5px; 
     image-rendering: pixelated; 
-    background: #0a0a0a;
+    background: var(--bg-darker);
     object-fit: contain;
     display: block;
     cursor: pointer;
@@ -518,7 +530,7 @@ body {
     opacity: 0.8;
 }
 
-.small-icon:hover { border-color: #c45d7b; opacity: 1; }
+.small-icon:hover { border-color: var(--purple); opacity: 1; }
 .small-icon:active { transform: scale(0.95); }
 
 /* --- 10. МОБІЛЬНА АДАПТАЦІЯ --- */
@@ -544,10 +556,9 @@ body {
     .row-bottom-links { gap: 30px; }
     .small-icon { width: 50px; height: 50px; }
     .hud-dot.active {
-    background: #b03a5e;
-    box-shadow: 0 0 10px #b03a5e;
-}
-
+        background: #5f9f9f;
+        box-shadow: 0 0 10px #5f9f9f;
+    }
     .popup-content {
         padding: 20px 25px;
         min-width: 260px;

@@ -8,8 +8,8 @@ let DROP_SPEED = 1000;
 
 // === ТЕМНЫЕ ЦВЕТА ===
 const PIECE_COLORS = [
-    '#1a3a1a', '#2a2a4a', '#3a2a1a', '#1a2a3a',
-    '#2a3a2a', '#3a1a2a', '#2a1a3a'
+    '#3f7f7f', '#7f5f7f', '#5f7f5f', '#7f7f3f',
+    '#3f7f5f', '#7f3f7f', '#5f3f7f'
 ];
 
 // === СОСТОЯНИЕ ===
