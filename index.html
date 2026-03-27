@@ -1232,49 +1232,7 @@
         // Запобігаємо виділенню тексту
         document.addEventListener('selectstart', (e) => e.preventDefault());
 
-        // --- ГЕНЕРАЦИЯ ХАОТИЧНОЙ ЗЕРНИСТОСТИ ---
-        function createNoiseParticles() {
-            const container = document.getElementById('noiseParticles');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            
-            const particleCount = 180;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'noise-particle';
-                
-                const size = Math.random() * 7 + 1;
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                const opacity = Math.random() * 0.22 + 0.03;
-                const duration = Math.random() * 9 + 3;
-                const delay = Math.random() * 8;
-                const moveX = (Math.random() - 0.5) * 15;
-                const moveY = (Math.random() - 0.5) * 15;
-                const flicker = Math.random() * 3 + 1.5;
-                
-                particle.style.cssText = `
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${left}%;
-                    top: ${top}%;
-                    --opacity: ${opacity};
-                    --duration: ${duration}s;
-                    --moveX: ${moveX};
-                    --moveY: ${moveY};
-                    --flicker: ${flicker}s;
-                    animation: particleFloat ${duration}s infinite ease-in-out, particleFlicker ${flicker}s infinite;
-                    animation-delay: ${delay}s;
-                `;
-                
-                container.appendChild(particle);
-            }
-        }
         
-        document.addEventListener('DOMContentLoaded', createNoiseParticles);
-        window.addEventListener('resize', createNoiseParticles);
     </script>
 </body>
 </html>
