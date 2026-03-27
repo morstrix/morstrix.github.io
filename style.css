@@ -1,15 +1,15 @@
 /* --- 1. ГЛОБАЛЬНІ НАЛАШТУВАННЯ --- */
 :root {
-    --cyan: #5f9f9f;
-    --cyan-dark: #4a7a7a;
-    --purple: #8f6f8f;
+    --cyan-glow: #7fbfbf;
     --purple-dark: #6f4f6f;
-    --dusty-gray: #7a7a7a;
+    --purple-darker: #5a3f5a;
+    --gray-dirty: #6a5a5a;
+    --gray: #7a6a6a;
     --bg-color: #121212;
     --bg-darker: #0a0a0a;
     --bg-lighter: #1a1a1a;
-    --text: #c0c0c0;
-    --text-dim: #7a7a7a;
+    --text: #7fbfbf;
+    --text-dim: #6a5a5a;
 }
 
 * { 
@@ -25,6 +25,56 @@ body {
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
+    text-shadow: 0 0 5px rgba(127, 191, 191, 0.5);
+    animation: crtFlicker 8s infinite;
+}
+
+/* --- CRT ЭФФЕКТ (текстура старого телевизора) --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0px,
+        rgba(0, 0, 0, 0.2) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
+}
+
+/* Эффект мерцания */
+@keyframes crtFlicker {
+    0% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
+    95% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
+    96% { opacity: 0.95; text-shadow: 0 0 3px rgba(127, 191, 191, 0.3); }
+    97% { opacity: 0.98; text-shadow: 0 0 6px rgba(127, 191, 191, 0.6); }
+    98% { opacity: 0.94; text-shadow: 0 0 2px rgba(127, 191, 191, 0.2); }
+    99% { opacity: 0.97; text-shadow: 0 0 7px rgba(127, 191, 191, 0.7); }
+    100% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
+}
+
+/* Хроматическая аберрация по краям */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(
+        circle at 50% 50%,
+        transparent 60%,
+        rgba(111, 79, 111, 0.2) 100%
+    );
 }
 
 /* --- 2. АНІМОВАНИЙ ФОН (NEURO) --- */
@@ -37,7 +87,7 @@ body {
 }
 
 #neuro-bg canvas {
-    filter: hue-rotate(200deg) saturate(0.6) brightness(0.8);
+    filter: hue-rotate(280deg) saturate(0.4) brightness(0.5);
 }
 
 /* --- 3. СПІЛЬНІ КОМПОНЕНТИ --- */
@@ -60,12 +110,12 @@ body {
     width: 35px;
     height: auto;
     image-rendering: pixelated;
-    filter: brightness(0.7) sepia(1) hue-rotate(180deg) saturate(0.5);
+    filter: brightness(0.6) sepia(1) hue-rotate(280deg) saturate(0.5);
     transition: filter 0.2s;
 }
 
 .custom-back-icon:hover {
-    filter: brightness(1) sepia(1) hue-rotate(180deg) saturate(0.8);
+    filter: brightness(0.9) sepia(1) hue-rotate(280deg) saturate(0.7);
 }
 
 .main-nav-link {
@@ -81,7 +131,7 @@ body {
     height: auto;
     margin-bottom: 8px;
     image-rendering: pixelated;
-    filter: drop-shadow(0 0 3px var(--purple));
+    filter: drop-shadow(0 0 3px var(--purple-dark));
 }
 
 .text-group {
@@ -90,13 +140,13 @@ body {
     align-items: center;
     text-align: center;
     font-size: 10px;
-    color: var(--purple);
+    color: var(--purple-dark);
 }
 
 .sub-caption {
     font-size: 7px;
     margin-top: 4px;
-    color: var(--text-dim);
+    color: var(--gray-dirty);
 }
 
 /* --- 4. ФУТУРИСТИЧНЕ ВІКНО (ДЛЯ INDEX.HTML) --- */
@@ -107,7 +157,7 @@ body {
     align-items: center;
     margin: 10px 0;
     position: relative;
-    color: var(--text-dim);
+    color: var(--gray-dirty);
 }
 
 .futuristic-window {
@@ -115,19 +165,23 @@ body {
     width: 280px;
     height: 160px;
     background: var(--bg-darker);
-    border: 1px solid var(--purple);
+    border: 1px solid var(--purple-dark);
     margin-bottom: 15px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 0 0 1px var(--purple) inset, 0 0 0 2px var(--bg-color) inset;
+    box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 0 2px var(--bg-color) inset, 0 0 15px rgba(127, 191, 191, 0.2);
     transition: transform 0.2s ease;
+}
+
+.futuristic-window:hover {
+    box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 0 2px var(--bg-color) inset, 0 0 25px rgba(127, 191, 191, 0.4);
 }
 
 .hud-corner {
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 1px solid var(--cyan);
+    border: 1px solid var(--cyan-glow);
     z-index: 5;
     pointer-events: none;
     opacity: 0.5;
@@ -151,7 +205,7 @@ body {
 .crosshair::after {
     content: '';
     position: absolute;
-    background: var(--cyan);
+    background: var(--cyan-glow);
 }
 
 .crosshair::before { width: 1px; height: 40px; left: 50%; transform: translateX(-50%); }
@@ -161,7 +215,7 @@ body {
     position: absolute;
     width: 100%;
     height: 2px;
-    background: rgba(95, 159, 159, 0.2);
+    background: rgba(127, 191, 191, 0.2);
     top: 0; left: 0;
     animation: scanMove 6s linear infinite;
     pointer-events: none;
@@ -180,8 +234,8 @@ body {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-image: linear-gradient(rgba(95, 159, 159, 0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(95, 159, 159, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(127, 191, 191, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(127, 191, 191, 0.05) 1px, transparent 1px);
     background-size: 15px 15px;
     pointer-events: none;
     z-index: 2;
@@ -227,15 +281,17 @@ body {
 .slide-title {
     font-family: 'Press Start 2P', cursive;
     font-size: 10px;
-    color: var(--purple);
+    color: var(--purple-dark);
     letter-spacing: 1px;
     margin-bottom: 4px;
+    text-shadow: 0 0 3px rgba(111, 79, 111, 0.5);
 }
 
 .slide-subtitle {
     font-size: 6px;
-    color: var(--cyan);
+    color: var(--cyan-glow);
     letter-spacing: 1px;
+    text-shadow: 0 0 3px rgba(127, 191, 191, 0.5);
 }
 
 .hud-indicators {
@@ -246,7 +302,7 @@ body {
 
 .hud-dot {
     width: 8px; height: 8px;
-    border: 1px solid var(--purple);
+    border: 1px solid var(--purple-dark);
     background: transparent;
     transition: all 0.3s ease;
     transform: rotate(45deg);
@@ -254,9 +310,9 @@ body {
 }
 
 .hud-dot.active {
-    background: var(--cyan);
-    border-color: var(--cyan);
-    box-shadow: 0 0 8px var(--cyan);
+    background: var(--cyan-glow);
+    border-color: var(--cyan-glow);
+    box-shadow: 0 0 10px var(--cyan-glow);
 }
 
 /* --- 5. ФОРУМ (FORUM.HTML) --- */
@@ -270,9 +326,10 @@ body {
 .carousel-window { 
     width: 280px;
     height: 280px;
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--purple-dark);
     overflow: hidden;
     background: var(--bg-color);
+    box-shadow: 0 0 10px rgba(127, 191, 191, 0.2);
 }
 
 .carousel-track {
@@ -291,10 +348,11 @@ body {
 
 .nav-btn {
     background: none; border: none;
-    color: var(--cyan);
+    color: var(--cyan-glow);
     font-family: 'Press Start 2P';
     font-size: 18px;
     cursor: pointer;
+    text-shadow: 0 0 5px var(--cyan-glow);
 }
 
 .retro-info-box {
@@ -310,14 +368,15 @@ body {
     margin-bottom: 15px;
     position: relative;
     padding-left: 20px;
-    color: var(--cyan);
+    color: var(--cyan-glow);
+    text-shadow: 0 0 3px rgba(127, 191, 191, 0.3);
 }
 
 .retro-info-box li::before {
     content: "■";
     position: absolute;
     left: 0;
-    color: var(--purple);
+    color: var(--purple-dark);
 }
 
 .action-buttons {
@@ -332,28 +391,31 @@ body {
     display: block;
     width: 100%;
     padding: 15px; 
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--purple-dark);
     background: transparent; 
-    color: var(--cyan);
+    color: var(--cyan-glow);
     text-decoration: none;
     text-align: center; 
     font-size: 10px;
     transition: all 0.2s;
+    text-shadow: 0 0 3px rgba(127, 191, 191, 0.3);
 }
 
 .retro-button:active {
-    background: var(--cyan);
+    background: var(--purple-dark);
     color: var(--bg-color);
+    text-shadow: none;
 }
 
 /* --- 6. HELPER (HELPER.HTML) --- */
 .game-window-container { 
     width: 320px;
     height: 550px;
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--purple-dark);
     background: var(--bg-color);
     overflow: hidden; 
     margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(127, 191, 191, 0.2);
 }
 
 .game-iframe {
@@ -385,12 +447,12 @@ body {
 
 .popup-content {
     background: var(--bg-darker);
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--cyan-glow);
     padding: 25px 30px;
     min-width: 280px;
     max-width: 340px;
     position: relative;
-    box-shadow: 0 0 30px rgba(95, 159, 159, 0.3);
+    box-shadow: 0 0 30px rgba(127, 191, 191, 0.3);
     animation: popIn 0.3s ease;
 }
 
@@ -404,21 +466,22 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    border-bottom: 1px solid var(--cyan);
+    border-bottom: 1px solid var(--cyan-glow);
     padding-bottom: 10px;
 }
 
 .popup-title {
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
-    color: var(--cyan);
+    color: var(--cyan-glow);
     letter-spacing: 2px;
+    text-shadow: 0 0 5px var(--cyan-glow);
 }
 
 .popup-close {
     background: none;
     border: none;
-    color: var(--cyan);
+    color: var(--cyan-glow);
     font-size: 24px;
     cursor: pointer;
     padding: 0 8px;
@@ -426,7 +489,7 @@ body {
 }
 
 .popup-close:hover {
-    color: var(--purple);
+    color: var(--purple-dark);
     transform: scale(1.2);
 }
 
@@ -453,19 +516,20 @@ body {
 .popup-icon {
     width: 48px;
     height: 48px;
-    fill: var(--cyan);
+    fill: var(--cyan-glow);
     transition: all 0.2s;
+    filter: drop-shadow(0 0 3px var(--cyan-glow));
 }
 
 .popup-icon-link:hover .popup-icon {
-    fill: var(--purple);
+    fill: var(--purple-dark);
     transform: scale(1.1);
 }
 
 .popup-icon-name {
     font-family: 'Press Start 2P', cursive;
     font-size: 7px;
-    color: var(--text-dim);
+    color: var(--gray-dirty);
     margin-top: 8px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -479,9 +543,9 @@ body {
     width: 55px;
     height: 55px;
     background: rgba(30, 20, 30, 0.9);
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--cyan-glow);
     border-radius: 6px;
-    box-shadow: 0 0 8px rgba(95, 159, 159, 0.3);
+    box-shadow: 0 0 8px rgba(127, 191, 191, 0.3);
     backdrop-filter: blur(2px);
     animation: vhs-shake 3s infinite;
     z-index: 10;
@@ -493,7 +557,7 @@ body {
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 7px;
-    color: var(--cyan);
+    color: var(--cyan-glow);
     text-transform: uppercase;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -501,6 +565,7 @@ body {
     padding: 2px 5px;
     border-radius: 3px;
     z-index: 12;
+    text-shadow: 0 0 3px var(--cyan-glow);
 }
 
 @keyframes vhs-shake {
@@ -519,7 +584,7 @@ body {
 
 .small-icon { 
     width: 55px; height: 55px; 
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--purple-dark);
     padding: 5px; 
     image-rendering: pixelated; 
     background: var(--bg-darker);
@@ -528,9 +593,10 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     opacity: 0.8;
+    box-shadow: 0 0 5px rgba(127, 191, 191, 0.2);
 }
 
-.small-icon:hover { border-color: var(--purple); opacity: 1; }
+.small-icon:hover { border-color: var(--cyan-glow); opacity: 1; box-shadow: 0 0 10px var(--cyan-glow); }
 .small-icon:active { transform: scale(0.95); }
 
 /* --- 10. МОБІЛЬНА АДАПТАЦІЯ --- */
@@ -556,8 +622,8 @@ body {
     .row-bottom-links { gap: 30px; }
     .small-icon { width: 50px; height: 50px; }
     .hud-dot.active {
-        background: #5f9f9f;
-        box-shadow: 0 0 10px #5f9f9f;
+        background: #7fbfbf;
+        box-shadow: 0 0 10px #7fbfbf;
     }
     .popup-content {
         padding: 20px 25px;
@@ -587,4 +653,34 @@ body {
         width: 38px;
         height: 38px;
     }
+}
+/* ТОЧЕЧКИ НА УГЛАХ - покрупнее */
+.retro-box .corner-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--purple-dark);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 8px var(--purple-dark);
+}
+
+.retro-box .dot-tl {
+    top: -4px;
+    left: -4px;
+}
+
+.retro-box .dot-tr {
+    top: -4px;
+    right: -4px;
+}
+
+.retro-box .dot-bl {
+    bottom: -4px;
+    left: -4px;
+}
+
+.retro-box .dot-br {
+    bottom: -4px;
+    right: -4px;
 }
