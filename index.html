@@ -24,9 +24,9 @@
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --cyan-glow: #7fbfbf;
-            --purple-dark: #6f4f6f;
-            --purple-darker: #5a3f5a;
+            --cyan-glow: #b36e6ea6;
+            --purple-dark: #49969373;
+            --purple-darker: #5a425a;
             --gray-dirty: #6a5a5a;
             --gray: #7a6a6a;
             --bg-color: #121212;
@@ -71,25 +71,35 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             padding: 25px 20px;
-            gap: 25px;
+            gap: 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* ============================================
-           УБРАЛИ КВАДРАТНУЮ СЕТКУ (crt-btn-effect) — КНОПКИ ВИДНЫ
-        ============================================ */
-        /* Полностью удаляем ::before эффект с кнопок, чтобы сетка не мешала */
-        .crt-btn-effect {
-            position: relative;
-            display: inline-block;
+        /* ВЕРХНИЙ РЯД: ФОРУМ слева, ШОП справа */
+        .top-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 30px;
+            margin-bottom: 5px;
         }
 
+        /* Каждый элемент занимает равное пространство */
+        .top-row > * {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Убираем CRT сетку с кнопок */
         .crt-btn-effect::before {
-            display: none; /* Убираем наложение сетки */
+            display: none;
         }
 
         /* Стили для контента */
@@ -97,6 +107,14 @@
             width: 100%;
             display: flex;
             justify-content: center;
+        }
+
+        .forum-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 0;
         }
 
         .main-nav-link {
@@ -164,7 +182,7 @@
             color: var(--text-dim);
         }
 
-        /* Футуристическое окно */
+        /* Футуристическое окно SUPPORT/HELPER */
         .futuristic-container {
             width: 100%;
             display: flex;
@@ -176,8 +194,8 @@
 
         .futuristic-window {
             position: relative;
-            width: 260px;
-            height: 150px;
+            width: 280px;
+            height: 160px;
             background: var(--bg-darker);
             border: 1px solid var(--purple-dark);
             margin-bottom: 12px;
@@ -304,15 +322,7 @@
             box-shadow: 0 0 8px var(--cyan-glow);
         }
 
-        /* Форум блок */
-        .forum-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 0;
-        }
-
+        /* Форум декоративный элемент */
         .forum-decor {
             position: absolute;
             top: -15px;
@@ -334,7 +344,7 @@
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             font-size: 6px;
-            color: var(--cyan-glow);
+            color: #ca00009b;
             text-transform: uppercase;
             letter-spacing: 1px;
             white-space: nowrap;
@@ -350,21 +360,23 @@
             20% { transform: translate(-1px,1px); }
         }
 
-        /* НИЖНИЙ РЯД: ADA + EXS (слева в столбик) и ТЕКСТОВОЕ ОКНО (справа) */
+        /* НИЖНИЙ РЯД: ADA + EXS (столбик слева) и ТЕКСТОВОЕ ОКНО (справа) */
         .bottom-row {
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: flex-start;
             width: 100%;
             gap: 20px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        /* Левая колонка с иконками в столбик */
+        /* Левая колонка с иконками ВСЕГДА В СТОЛБИК */
         .social-column {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            flex-shrink: 0;
         }
 
         .social-item {
@@ -373,14 +385,13 @@
             position: relative;
         }
 
-        /* Убираем наложение сетки на ADA и EXS */
         .social-item::before {
-            display: none; /* Убираем CRT сетку с иконок ADA/EXS */
+            display: none;
         }
 
         .social-icon {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             padding: 8px;
             image-rendering: pixelated;
             background: transparent;
@@ -406,9 +417,10 @@
             z-index: 2;
         }
 
-        /* Правое текстовое окно с рамкой */
+        /* Правое текстовое окно */
         .info-window {
             flex: 1;
+            min-width: 0;
             background: rgba(10, 10, 10, 0.4);
             border: 1px solid var(--purple-dark);
             padding: 12px 15px;
@@ -416,7 +428,6 @@
             box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 10px rgba(127, 191, 191, 0.1);
         }
 
-        /* Уголки для текстового окна */
         .info-window::before,
         .info-window::after {
             content: '';
@@ -612,7 +623,7 @@
         }
 
         /* ============================================
-           ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ (без сетки на кнопках)
+           ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ
         ============================================ */
         .crt-overlay {
             position: fixed;
@@ -624,7 +635,6 @@
             z-index: 9999;
         }
 
-        /* 1. КВАДРАТНАЯ ТЕКСТУРА — оставляем только для фона, но без перекрытия кнопок (уже pointer-events:none) */
         .crt-overlay .pixel-grid {
             position: absolute;
             top: 0;
@@ -638,7 +648,6 @@
             pointer-events: none;
         }
 
-        /* 2. ХАОТИЧНАЯ ЗЕРНИСТОСТЬ */
         .crt-overlay .noise-particles {
             position: absolute;
             top: 0;
@@ -648,51 +657,6 @@
             pointer-events: none;
         }
 
-        .noise-particle {
-            position: absolute;
-            background: rgba(127, 191, 191, var(--opacity));
-            border-radius: 50%;
-            pointer-events: none;
-            animation: particleFloat var(--duration) infinite ease-in-out, particleFlicker var(--flicker) infinite;
-        }
-
-        @keyframes particleFloat {
-            0% { transform: translate(0, 0); opacity: var(--opacity); }
-            50% { transform: translate(calc(var(--moveX) * 1px), calc(var(--moveY) * 1px)); opacity: calc(var(--opacity) * 1.5); }
-            100% { transform: translate(0, 0); opacity: var(--opacity); }
-        }
-
-        @keyframes particleFlicker {
-            0%, 100% { opacity: var(--opacity); }
-            50% { opacity: calc(var(--opacity) * 0.4); }
-        }
-
-        /* 3. ХАОТИЧНЫЙ КВАДРАТНЫЙ ГЛИТЧ */
-        .crt-overlay .glitch-block {
-            position: absolute;
-            background: rgba(127, 191, 191, 0.05);
-            border: 1px solid rgba(127, 191, 191, 0.08);
-            animation: glitchFloat 10s infinite ease-in-out;
-        }
-
-        .glitch-block.small { width: 15px; height: 15px; }
-        .glitch-block.medium { width: 35px; height: 25px; }
-        .glitch-block.large { width: 60px; height: 40px; }
-        .glitch-block.wide { width: 80px; height: 12px; }
-        .glitch-block.tall { width: 12px; height: 70px; }
-        .glitch-block.tiny { width: 8px; height: 8px; }
-
-        @keyframes glitchFloat {
-            0% { opacity: 0; transform: translateX(0) translateY(0); }
-            15% { opacity: 0.2; transform: translateX(-2px) translateY(1px); }
-            30% { opacity: 0.1; transform: translateX(2px) translateY(-1px); }
-            45% { opacity: 0.25; transform: translateX(-1px) translateY(2px); }
-            60% { opacity: 0.08; transform: translateX(1px) translateY(-2px); }
-            80% { opacity: 0.15; transform: translateX(-1px) translateY(-1px); }
-            100% { opacity: 0; transform: translateX(0) translateY(0); }
-        }
-
-        /* 4. СЛУЧАЙНЫЕ МЕРЦАНИЯ */
         .crt-overlay .flicker {
             position: absolute;
             top: 0;
@@ -709,7 +673,6 @@
             50% { opacity: 0.4; }
         }
 
-        /* 5. БЕЛЫЙ ШУМ */
         .crt-overlay .noise {
             position: absolute;
             top: 0;
@@ -729,7 +692,6 @@
             100% { background-position: 50px 50px; }
         }
 
-        /* 6. ВИНЬЕТКА */
         .crt-overlay .vignette {
             position: absolute;
             top: 0;
@@ -741,52 +703,133 @@
         }
 
         /* Мобильная адаптация */
-        @media (max-width: 480px) {
-            .site-section.main-index {
-                padding: 20px 15px;
+        @media (max-width: 550px) {
+            .top-row {
                 gap: 20px;
+            }
+            .nav-folder-icon {
+                width: 48px;
+            }
+            .text-group {
+                font-size: 8px;
+            }
+            .sub-caption {
+                font-size: 6px;
+            }
+            .forum-decor {
+                width: 38px;
+                height: 38px;
+                left: -40px;
+                top: -12px;
+            }
+            .futuristic-window {
+                width: 260px;
+                height: 150px;
+            }
+            .slide-image {
+                width: 48px;
+            }
+            .slide-title {
+                font-size: 8px;
+            }
+            .bottom-row {
+                gap: 15px;
+            }
+            .social-icon {
+                width: 48px;
+                height: 48px;
+            }
+            .social-label {
+                font-size: 6px;
+            }
+            .social-column {
+                gap: 15px;
+            }
+            .info-window {
+                padding: 10px 12px;
+            }
+            .info-title {
+                font-size: 7px;
+            }
+            .info-text {
+                font-size: 6px;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .top-row {
+                gap: 15px;
+            }
+            .nav-folder-icon {
+                width: 42px;
+            }
+            .text-group {
+                font-size: 7px;
+            }
+            .sub-caption {
+                font-size: 5px;
+            }
+            .forum-decor {
+                width: 32px;
+                height: 32px;
+                left: -35px;
+            }
+            .forum-decor::after {
+                font-size: 5px;
             }
             .futuristic-window {
                 width: 240px;
                 height: 140px;
             }
             .slide-image {
-                width: 48px;
-            }
-            .forum-decor {
-                left: -40px;
-                width: 38px;
-                height: 38px;
-            }
-            .bottom-row {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            .social-column {
-                flex-direction: row;
-                gap: 30px;
-            }
-            .info-window {
-                width: 100%;
+                width: 42px;
             }
             .social-icon {
-                width: 45px;
-                height: 45px;
-            }
-            .popup-content {
-                padding: 20px 25px;
-                min-width: 260px;
-            }
-            .popup-icon {
                 width: 42px;
                 height: 42px;
             }
-            .popup-title {
-                font-size: 10px;
+            .social-label {
+                font-size: 5px;
             }
-            .popup-icons {
-                gap: 30px;
+            .social-column {
+                gap: 12px;
+            }
+            .info-window {
+                padding: 8px 10px;
+            }
+            .info-title {
+                font-size: 6px;
+            }
+            .info-text {
+                font-size: 5px;
+                line-height: 1.4;
+            }
+            .bottom-row {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .top-row {
+                gap: 12px;
+            }
+            .nav-folder-icon {
+                width: 38px;
+            }
+            .text-group {
+                font-size: 6px;
+            }
+            .futuristic-window {
+                width: 220px;
+                height: 130px;
+            }
+            .slide-image {
+                width: 38px;
+            }
+            .social-icon {
+                width: 38px;
+                height: 38px;
             }
         }
     </style>
@@ -796,23 +839,37 @@
 
     <section class="site-section main-index">
         
-        <!-- БЛОК 1: ШОП (сетка убрана) -->
-        <div class="crt-btn-effect">
-            <div class="shop-container">
-                <a href="shop.html" class="main-nav-link">
-                    <div class="icon-wrapper">
-                        <img src="space.png" class="nav-folder-icon" alt="shop">
-                        <svg class="money-svg" viewBox="0 0 32 32" fill="none">
-                            <rect x="6" y="8" width="20" height="16" stroke="#22c55e" stroke-width="2"/>
-                            <circle cx="16" cy="16" r="4" fill="#22c55e"/>
-                        </svg>
-                    </div>
-                    <div class="text-group">ШОП<span class="sub-caption">diy gear</span></div>
-                </a>
+        <!-- ВЕРХНИЙ РЯД: ФОРУМ слева, ШОП справа -->
+        <div class="top-row">
+            <!-- ФОРУМ - слева -->
+            <div class="crt-btn-effect">
+                <div class="forum-wrapper">
+                    <a href="forum.html" class="main-nav-link">
+                        <div class="forum-decor" id="forumDecor"></div>
+                        <img src="forum.png" class="nav-folder-icon" alt="forum">
+                        <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ШОП - справа -->
+            <div class="crt-btn-effect">
+                <div class="shop-container">
+                    <a href="shop.html" class="main-nav-link">
+                        <div class="icon-wrapper">
+                            <img src="space.png" class="nav-folder-icon" alt="shop">
+                            <svg class="money-svg" viewBox="0 0 32 32" fill="none">
+                                <rect x="6" y="8" width="20" height="16" stroke="#22c55e" stroke-width="2"/>
+                                <circle cx="16" cy="16" r="4" fill="#22c55e"/>
+                            </svg>
+                        </div>
+                        <div class="text-group">ШОП<span class="sub-caption">diy gear</span></div>
+                    </a>
+                </div>
             </div>
         </div>
-
-        <!-- БЛОК 2: ОКНО SUPPORT/HELPER (сетка убрана) -->
+        
+        <!-- БЛОК 2: ОКНО SUPPORT/HELPER -->
         <div class="crt-btn-effect">
             <div class="futuristic-container">
                 <div class="futuristic-window" id="futuristicWindow">
@@ -842,20 +899,8 @@
             </div>
         </div>
 
-        <!-- БЛОК 3: ФОРУМ (сетка убрана) -->
-        <div class="crt-btn-effect">
-            <div class="forum-wrapper">
-                <a href="forum.html" class="main-nav-link">
-                    <div class="forum-decor" id="forumDecor"></div>
-                    <img src="forum.png" class="nav-folder-icon" alt="forum">
-                    <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
-                </a>
-            </div>
-        </div>
-
-        <!-- БЛОК 4: ADA + EXS (столбик слева) и ТЕКСТОВОЕ ОКНО (справа) -->
+        <!-- НИЖНИЙ РЯД: ADA + EXS (столбик слева) и ТЕКСТОВОЕ ОКНО (справа) -->
         <div class="bottom-row">
-            <!-- Левая колонка с иконками в столбик -->
             <div class="social-column">
                 <div class="social-trigger social-item" data-type="ada">
                     <img src="a.png" class="social-icon" alt="DES">
@@ -866,8 +911,6 @@
                     <div class="social-label">DEV</div>
                 </div>
             </div>
-
-            <!-- Правое текстовое окно -->
             <div class="info-window">
                 <div class="corner-tl"></div>
                 <div class="corner-tr"></div>
@@ -899,13 +942,12 @@
         </div>
     </div>
 
-    <!-- ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ (только фоновые шумы, без сетки на кнопках) -->
+    <!-- ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ -->
     <div class="crt-overlay">
         <div class="pixel-grid"></div>
         <div class="flicker"></div>
         <div class="noise"></div>
         <div class="vignette"></div>
-        
         <div class="noise-particles" id="noiseParticles"></div>
         
         <div class="glitch-block small" style="top: 8%; left: 12%; animation-delay: 0s"></div>
@@ -985,7 +1027,6 @@
                 }
             });
 
-            // СВАЙПИ
             windowEl.addEventListener('touchstart', (e) => {
                 touchStartX = e.touches[0].clientX;
                 isSwiping = true;
@@ -995,10 +1036,8 @@
             windowEl.addEventListener('touchmove', (e) => {
                 if (!isSwiping) return;
                 e.preventDefault();
-                
                 const currentX = e.touches[0].clientX;
                 const diff = currentX - touchStartX;
-                
                 if (Math.abs(diff) > 5) {
                     swipeDetected = true;
                     const shift = Math.min(Math.max(diff, -15), 15);
@@ -1008,25 +1047,17 @@
 
             windowEl.addEventListener('touchend', (e) => {
                 if (!isSwiping) return;
-                
                 const touchEndX = e.changedTouches[0].clientX;
                 const swipeDistance = touchEndX - touchStartX;
-                
                 windowEl.style.transform = 'translateX(0)';
-                
                 if (Math.abs(swipeDistance) > 30) {
                     swipeDetected = true;
-                    if (swipeDistance > 0) {
-                        switchTo('support');
-                    } else {
-                        switchTo('helper');
-                    }
+                    if (swipeDistance > 0) switchTo('support');
+                    else switchTo('helper');
                 }
-                
                 isSwiping = false;
             }, {passive: true});
 
-            // DRAG для миші
             let mouseStartX = 0;
             let isDragging = false;
 
@@ -1039,7 +1070,6 @@
 
             windowEl.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
-                
                 const diff = e.clientX - mouseStartX;
                 if (Math.abs(diff) > 5) {
                     swipeDetected = true;
@@ -1050,23 +1080,16 @@
 
             window.addEventListener('mouseup', (e) => {
                 if (!isDragging) return;
-                
                 const diff = e.clientX - mouseStartX;
                 windowEl.style.transform = 'translateX(0)';
-                
                 if (Math.abs(diff) > 30) {
                     swipeDetected = true;
-                    if (diff > 0) {
-                        switchTo('support');
-                    } else {
-                        switchTo('helper');
-                    }
+                    if (diff > 0) switchTo('support');
+                    else switchTo('helper');
                 }
-                
                 isDragging = false;
             });
 
-            // КЛІК НА ІНДИКАТОРИ
             if (indicator1) indicator1.addEventListener('click', (e) => {
                 e.stopPropagation();
                 switchTo('support');
@@ -1097,10 +1120,8 @@
                 if (link.getAttribute('href') && !link.getAttribute('href').startsWith('#')) {
                     e.preventDefault();
                     const href = link.getAttribute('href');
-                    
                     document.body.style.opacity = '0';
                     document.body.style.transition = 'opacity 0.2s ease';
-                    
                     setTimeout(() => {
                         window.location.href = href;
                     }, 200);
