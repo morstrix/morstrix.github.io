@@ -3,9 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ᴀɴᴅʀᴏɪᴅ ᴀᴘᴘ</title>
+    <title>HELPER | PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .paint-container {
+            width: 90vw;
+            max-width: 400px;
+            background: #000;
+            border: 4px solid #fff;
+            touch-action: none;
+        }
+        #drawCanvas {
+            width: 100%;
+            height: 350px;
+            display: block;
+            background: #000;
+            cursor: crosshair;
+        }
+        .paint-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #111;
+            border-top: 4px solid #fff;
+        }
+        .btn-retro {
+            background: #000;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 8px 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        input[type="color"] {
+            width: 40px;
+            height: 35px;
+            border: 2px solid #fff;
+            background: #000;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
@@ -14,16 +54,86 @@
         <img src="close.jpg" alt="X" class="custom-back-icon">
     </a>
 
-    <section class="site-section game-focus">
-        <div class="game-window-container">
-            <iframe src="drafts.html" class="game-iframe" scrolling="no"></iframe>
+    <section class="site-section">
+        <div class="paint-container">
+            <canvas id="drawCanvas"></canvas>
+            <div class="paint-controls">
+                <input type="color" id="pColor" value="#ffffff">
+                <button class="btn-retro" id="pClear">CLEAR</button>
+            </div>
         </div>
-
-        <div class="action-buttons">
-            <a href="helper.apk" download="helper.apk" class="retro-button">DOWNLOAD APK</a>
+        <div class="action-buttons" style="margin-top: 30px;">
+            <a href="https://t.me/MORSTRIXBOT" target="_blank" class="retro-button">TELEGRAM</a>
         </div>
     </section>
 
     <script src="script-bg.js"></script>
+    <script>
+        (function() {
+            const dCanvas = document.getElementById('drawCanvas');
+            const dCtx = dCanvas.getContext('2d');
+            const dColor = document.getElementById('pColor');
+            const dClear = document.getElementById('pClear');
+            
+            let isDrawing = false;
+
+            function setupCanvas() {
+                const rect = dCanvas.getBoundingClientRect();
+                dCanvas.width = rect.width;
+                dCanvas.height = rect.height;
+                dCtx.fillStyle = "#000";
+                dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);
+                dCtx.lineCap = 'round';
+                dCtx.lineJoin = 'round';
+                dCtx.lineWidth = 5;
+            }
+
+            window.addEventListener('load', setupCanvas);
+            window.addEventListener('resize', setupCanvas);
+
+            function getMousePos(e) {
+                const rect = dCanvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function start(e) {
+                isDrawing = true;
+                const pos = getMousePos(e);
+                dCtx.beginPath();
+                dCtx.moveTo(pos.x, pos.y);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                if (e.cancelable) e.preventDefault();
+                const pos = getMousePos(e);
+                dCtx.strokeStyle = dColor.value;
+                dCtx.lineTo(pos.x, pos.y);
+                dCtx.stroke();
+            }
+
+            function stop() {
+                isDrawing = false;
+                dCtx.closePath();
+            }
+
+            dCanvas.addEventListener('mousedown', start);
+            window.addEventListener('mousemove', draw);
+            window.addEventListener('mouseup', stop);
+            dCanvas.addEventListener('touchstart', start, {passive: false});
+            dCanvas.addEventListener('touchmove', draw, {passive: false});
+            dCanvas.addEventListener('touchend', stop);
+
+            dClear.onclick = () => {
+                dCtx.fillStyle = "#000";
+                dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);
+            };
+        })();
+    </script>
 </body>
 </html>
