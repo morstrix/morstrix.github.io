@@ -1,412 +1,194 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ᴅɪʏ ɢᴇᴀʀ ꜱʜᴏᴘ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MORSTRIX SHOP | PAYHIP</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Специфічні стилі для магазину */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --shop-green: #a84d6b;
-            --shop-glow: rgba(168, 77, 107, 0.3);
-            --shop-bg: #0a0a0a;
+            --shop-glow: #a84d6b;
+            --card-bg: #0f0f0f;
         }
 
         body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #000000;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
-        }
-
-        .shop-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        /* Заголовок магазину */
-        .shop-header {
-            text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-
-        .shop-title {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 14px;
-            color: var(--shop-green);
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-shadow: 0 0 10px var(--shop-glow);
-            animation: glitch 3s infinite;
-        }
-
-        .shop-subtitle {
-            font-size: 8px;
-            color: #7a8278;
-            letter-spacing: 3px;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: skew(0deg); }
-            95% { transform: skew(0deg); }
-            96% { transform: skew(5deg); }
-            97% { transform: skew(-5deg); }
-            98% { transform: skew(3deg); }
-        }
-
-        /* CRT екран */
-        .crt-screen {
-            background: #000;
-            border: 3px solid var(--shop-green);
-            padding: 20px;
+            font-family: 'Press Start 2P', monospace;
             position: relative;
-            margin-bottom: 30px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 320px;
-            box-shadow: 
-                0 0 20px var(--shop-glow),
-                inset 0 0 20px rgba(0, 0, 0, 0.8);
-            animation: flicker 8s infinite;
-        }
-
-        .crt-screen::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%,
-                rgba(0, 0, 0, 0.1) 50%
-            );
-            background-size: 100% 4px;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(168, 77, 107, 0.04) 0px, rgba(168, 77, 107, 0.04) 1px, transparent 1px, transparent 3px);
             pointer-events: none;
-            animation: scan 10s linear infinite;
+            z-index: 0;
         }
 
-        .crt-screen::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(
-                circle at 50% 50%,
-                transparent 0%,
-                rgba(0, 0, 0, 0.2) 100%
-            );
-            pointer-events: none;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            10% { opacity: 0.95; }
-            20% { opacity: 1; }
-            30% { opacity: 0.97; }
-            40% { opacity: 1; }
-            70% { opacity: 0.98; }
-            80% { opacity: 1; }
-        }
-
-        @keyframes scan {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
-        }
-
-        /* Сітка 3x3 */
-        .grid-3x3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
             position: relative;
             z-index: 2;
         }
 
-        /* Слот */
-        .grid-slot {
-            aspect-ratio: 1 / 1;
-            background: #111;
-            border: 2px solid var(--shop-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
+        /* header */
+        .shop-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px 20px;
+            background: rgba(0, 0, 0, 0.65);
+            border: 2px solid var(--shop-glow);
+            backdrop-filter: blur(3px);
             position: relative;
-            overflow: hidden;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 5px var(--shop-glow);
         }
 
-        .grid-slot::before {
-            content: "";
+        .shop-header::before,
+        .shop-header::after {
+            content: '';
             position: absolute;
-            top: -2px; left: -2px;
-            right: -2px; bottom: -2px;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(168, 77, 107, 0.1) 50%,
-                transparent 70%
-            );
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--shop-glow);
+        }
+        .shop-header::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .shop-header::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .shop-title {
+            font-size: 1.3rem;
+            color: var(--shop-glow);
+            letter-spacing: 3px;
+            text-shadow: 0 0 6px var(--shop-glow);
         }
 
-        .grid-slot:hover::before {
-            transform: translateX(100%);
-        }
-
-        .grid-slot:active {
-            transform: scale(0.95);
-            border-color: #ef82a8;
-            box-shadow: 0 0 15px rgba(168, 77, 107, 0.5);
-        }
-
-        /* Зображення в слотах */
-        .grid-slot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            image-rendering: pixelated;
-            transition: all 0.3s ease;
-            filter: brightness(0.9) contrast(1.1);
-        }
-
-        .grid-slot:hover img {
-            filter: brightness(1.1) contrast(1.2);
-            transform: scale(1.05);
-        }
-
-        /* Знак питання (пустий слот) */
-        .placeholder-question {
-            font-family: 'Press Start 2P', cursive;
-            color: var(--shop-green);
-            font-size: 30px;
-            opacity: 0.5;
-            transition: all 0.2s ease;
-            text-shadow: 0 0 5px var(--shop-glow);
-        }
-
-        .grid-slot:hover .placeholder-question {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* Декоративні елементи */
-        .screen-corner {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border: 2px solid var(--shop-green);
-            pointer-events: none;
-        }
-
-        .corner-tl {
-            top: -2px; left: -2px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .corner-tr {
-            top: -2px; right: -2px;
-            border-left: none;
-            border-bottom: none;
-        }
-
-        .corner-bl {
-            bottom: -2px; left: -2px;
-            border-right: none;
-            border-top: none;
-        }
-
-        .corner-br {
-            bottom: -2px; right: -2px;
-            border-left: none;
-            border-top: none;
-        }
-
-        /* LED індикатори */
-        .led-indicator {
-            display: flex;
-            gap: 8px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .led {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            animation: pulse 2s infinite;
-        }
-
-        .led:nth-child(1) { animation-delay: 0s; }
-        .led:nth-child(2) { animation-delay: 0.3s; }
-        .led:nth-child(3) { animation-delay: 0.6s; }
-        .led:nth-child(4) { animation-delay: 0.9s; }
-        .led:nth-child(5) { animation-delay: 1.2s; }
-
-        .led.active {
-            background: var(--shop-green);
-            box-shadow: 0 0 10px var(--shop-green);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Інформаційний рядок */
-        .info-strip {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 320px;
-            margin-top: 20px;
-            font-size: 7px;
+        .shop-subtitle {
+            font-size: 0.6rem;
             color: #7a8278;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 12px;
         }
 
-        .info-strip span {
-            color: var(--shop-green);
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* Кнопка назад (перевизначення) */
+        /* кнопка назад */
         .back-button {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 100;
             text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.2s;
         }
-
-        .back-button:hover {
-            opacity: 1;
-        }
-
         .custom-back-icon {
-            width: 30px;
-            height: auto;
-            image-rendering: pixelated;
-            filter: brightness(0.8) sepia(1) hue-rotate(300deg);
+            width: 32px;
+            filter: brightness(0.7) sepia(1) hue-rotate(290deg);
         }
 
-        /* Адаптація для мобільних */
-        @media (max-width: 480px) {
-            .shop-title {
-                font-size: 12px;
-            }
-            
-            .crt-screen {
-                padding: 15px;
-            }
-            
-            .grid-3x3 {
-                gap: 8px;
-            }
-            
-            .placeholder-question {
-                font-size: 24px;
-            }
+        /* виджет Payhip */
+        .payhip-widget {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--shop-glow);
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        /* если используешь iframe от Payhip */
+        .payhip-widget iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            background: transparent;
+        }
+
+        /* LED индикатор */
+        .led-indicator {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2a2a2a;
+        }
+        .led.active {
+            background: var(--shop-glow);
+            box-shadow: 0 0 8px var(--shop-glow);
+        }
+
+        .static-line {
+            position: absolute;
+            bottom: 12px;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--shop-glow), transparent);
+            opacity: 0.4;
+        }
+
+        @media (max-width: 680px) {
+            .shop-title { font-size: 1rem; }
+            .payhip-widget { padding: 12px; }
         }
     </style>
 </head>
 <body>
-    <canvas id="neuro-bg"></canvas>
 
-    <a href="index.html" class="back-button">
-        <img src="close.jpg" alt="X" class="custom-back-icon">
-    </a>
+<a href="index.html" class="back-button">
+    <img src="close.jpg" alt="X" class="custom-back-icon">
+</a>
 
-    <div class="shop-container">
-        <!-- Заголовок -->
-        <div class="shop-header">
-            <div class="shop-title">◈ MORSTRIX ◈</div>
-            <div class="shop-subtitle">DIY GEAR // 2026</div>
-        </div>
+<div class="container">
+    <div class="shop-header">
+        <div class="shop-title">◈ MORSTRIX SHOP ◈</div>
+        <div class="shop-subtitle">[ DIY GEAR / DIGITAL GOODS ]</div>
+        <div class="static-line"></div>
+    </div>
 
-        <!-- CRT екран з товарами -->
-        <div class="crt-screen">
-            <!-- Декоративні кути -->
-            <div class="screen-corner corner-tl"></div>
-            <div class="screen-corner corner-tr"></div>
-            <div class="screen-corner corner-bl"></div>
-            <div class="screen-corner corner-br"></div>
+    <!-- ВСТАВЬ СЮДА СВОЙ КОД ОТ PAYHIP -->
+    <div class="payhip-widget">
+        <!-- 
+            👇 ЗАМЕНИ ЭТОТ КОД НА ТВОЙ ИЗ PAYHIP
+            В Payhip зайди в "Settings" → "Embed" → скопируй код виджета
+        -->
+        <iframe src="https://payhip.com/morstrix" style="width:100%; height:600px; border:none;"></iframe>
+        <!-- 
+            ИЛИ если используешь JavaScript виджет:
+            <script async src="https://payhip.com/payhip.js"></script>
+            <div data-payhip-store="твой-id"></div>
+        -->
+    </div>
 
-            <!-- Сітка 3x3 -->
-            <div class="grid-3x3">
-                <!-- Ряд 1 -->
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <img src="mcrn.jpg" alt="Item 2" loading="lazy">
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
+    <div class="led-indicator">
+        <div class="led active"></div><div class="led"></div><div class="led"></div>
+        <div class="led"></div><div class="led"></div><div class="led"></div>
+    </div>
+</div>
 
-                <!-- Ряд 2 -->
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-
-                <!-- Ряд 3 -->
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <div class="placeholder-question">?</div>
-                </a>
-                <a href="https://twitter.com/morstrix" class="grid-slot" target="_blank">
-                    <img src="5item.jpg" alt="Item 5" loading="lazy">
-                </a>
-            </div>
-        </div>
-
-
-    <script src="script-bg.js"></script>
-    <script>
-        // Додаємо випадкові "перешкоди" для CRT ефекту
+<script>
+    // LED анимация
+    let ledIndex = 0;
+    function animateLED() {
+        const leds = document.querySelectorAll('.led');
+        if (!leds.length) return;
         setInterval(() => {
-            const slots = document.querySelectorAll('.grid-slot');
-            const randomSlot = Math.floor(Math.random() * slots.length);
-            
-            // Мікро-глітч
-            slots[randomSlot].style.transform = 'scale(0.98) translate(1px, -1px)';
-            slots[randomSlot].style.borderColor = '#ef82a8';
-            
-            setTimeout(() => {
-                slots[randomSlot].style.transform = 'scale(1) translate(0, 0)';
-                slots[randomSlot].style.borderColor = '';
-            }, 50);
-        }, 3000);
-    </script>
+            leds.forEach((led, i) => {
+                led.classList.toggle('active', i === ledIndex);
+            });
+            ledIndex = (ledIndex + 1) % leds.length;
+        }, 1000);
+    }
+    animateLED();
+</script>
 </body>
 </html>
