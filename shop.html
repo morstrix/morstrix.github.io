@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX | ДОСКА</title>
-    <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+    <title>MORSTRIX SHOP | PAYHIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,44 +12,71 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            background: #000000;
+        :root {
+            --shop-glow: #a84d6b;
+            --card-bg: #0f0f0f;
         }
 
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #000000;
+            min-height: 100vh;
             padding: 20px;
+            font-family: 'Press Start 2P', monospace;
+            position: relative;
         }
 
-        /* контейнер занимает всю доступную ширину, но с отступами */
-        .center-wrapper {
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 1400px;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(168, 77, 107, 0.04) 0px, rgba(168, 77, 107, 0.04) 1px, transparent 1px, transparent 3px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1300px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
-        /* убираем возможные отступы у виджета */
-        .pinterest-widget {
-            width: 100%;
-            display: flex;
-            justify-content: center;
+        /* header */
+        .shop-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px 20px;
+            background: rgba(0, 0, 0, 0.65);
+            border: 2px solid var(--shop-glow);
+            backdrop-filter: blur(3px);
+            position: relative;
         }
 
-        .pinterest-widget a {
-            display: block;
-            width: 100%;
+        .shop-header::before,
+        .shop-header::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--shop-glow);
+        }
+        .shop-header::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .shop-header::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .shop-title {
+            font-size: 1.3rem;
+            color: var(--shop-glow);
+            letter-spacing: 3px;
+            text-shadow: 0 0 6px var(--shop-glow);
         }
 
-        /* принудительно растягиваем iframe на всю ширину */
-        .pinterest-widget iframe {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 auto !important;
-            display: block !important;
+        .shop-subtitle {
+            font-size: 0.6rem;
+            color: #7a8278;
+            margin-top: 12px;
         }
 
         /* кнопка назад */
@@ -63,10 +90,55 @@
         .custom-back-icon {
             width: 32px;
             filter: brightness(0.7) sepia(1) hue-rotate(290deg);
-            transition: filter 0.2s;
         }
-        .custom-back-icon:hover {
-            filter: brightness(1) sepia(1) hue-rotate(280deg);
+
+        /* виджет Payhip */
+        .payhip-widget {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--shop-glow);
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        /* если используешь iframe от Payhip */
+        .payhip-widget iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            background: transparent;
+        }
+
+        /* LED индикатор */
+        .led-indicator {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2a2a2a;
+        }
+        .led.active {
+            background: var(--shop-glow);
+            box-shadow: 0 0 8px var(--shop-glow);
+        }
+
+        .static-line {
+            position: absolute;
+            bottom: 12px;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--shop-glow), transparent);
+            opacity: 0.4;
+        }
+
+        @media (max-width: 680px) {
+            .shop-title { font-size: 1rem; }
+            .payhip-widget { padding: 12px; }
         }
     </style>
 </head>
@@ -76,45 +148,47 @@
     <img src="close.jpg" alt="X" class="custom-back-icon">
 </a>
 
-<div class="center-wrapper">
-    <div class="pinterest-widget">
-        <a data-pin-do="embedBoard" 
-           data-pin-board-width="100%" 
-           data-pin-scale-height="800" 
-           data-pin-scale-width="120" 
-           href="https://www.pinterest.com/morstrix/шоп/">
-        </a>
+<div class="container">
+    <div class="shop-header">
+        <div class="shop-title">◈ MORSTRIX SHOP ◈</div>
+        <div class="shop-subtitle">[ DIY GEAR / DIGITAL GOODS ]</div>
+        <div class="static-line"></div>
+    </div>
+
+    <!-- ВСТАВЬ СЮДА СВОЙ КОД ОТ PAYHIP -->
+    <div class="payhip-widget">
+        <!-- 
+            👇 ЗАМЕНИ ЭТОТ КОД НА ТВОЙ ИЗ PAYHIP
+            В Payhip зайди в "Settings" → "Embed" → скопируй код виджета
+        -->
+        <iframe src="https://payhip.com/morstrix" style="width:100%; height:600px; border:none;"></iframe>
+        <!-- 
+            ИЛИ если используешь JavaScript виджет:
+            <script async src="https://payhip.com/payhip.js"></script>
+            <div data-payhip-store="твой-id"></div>
+        -->
+    </div>
+
+    <div class="led-indicator">
+        <div class="led active"></div><div class="led"></div><div class="led"></div>
+        <div class="led"></div><div class="led"></div><div class="led"></div>
     </div>
 </div>
 
 <script>
-    // Ждём загрузки виджета и принудительно центрируем iframe
-    function centerPinterestWidget() {
-        setTimeout(() => {
-            const iframes = document.querySelectorAll('.pinterest-widget iframe');
-            iframes.forEach(iframe => {
-                iframe.style.width = '100%';
-                iframe.style.margin = '0 auto';
-                iframe.style.display = 'block';
+    // LED анимация
+    let ledIndex = 0;
+    function animateLED() {
+        const leds = document.querySelectorAll('.led');
+        if (!leds.length) return;
+        setInterval(() => {
+            leds.forEach((led, i) => {
+                led.classList.toggle('active', i === ledIndex);
             });
-        }, 500);
+            ledIndex = (ledIndex + 1) % leds.length;
+        }, 1000);
     }
-
-    if (window.PinUtils) {
-        window.PinUtils.build();
-        centerPinterestWidget();
-    } else {
-        const checkInterval = setInterval(() => {
-            if (window.PinUtils) {
-                window.PinUtils.build();
-                centerPinterestWidget();
-                clearInterval(checkInterval);
-            }
-        }, 200);
-    }
-    
-    // дополнительно после полной загрузки
-    window.addEventListener('load', centerPinterestWidget);
+    animateLED();
 </script>
 </body>
 </html>
