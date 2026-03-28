@@ -3,194 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX SHOP | GUMROAD</title>
+    <title>MORSTRIX SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --shop-glow: #a84d6b;
-            --card-bg: #0f0f0f;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --shop-glow: #a84d6b; --card-bg: #0f0f0f; }
         body {
-            background: #000000;
+            background: #000;
             min-height: 100vh;
             padding: 20px;
             font-family: 'Press Start 2P', monospace;
             position: relative;
         }
-
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(168, 77, 107, 0.04) 0px, rgba(168, 77, 107, 0.04) 1px, transparent 1px, transparent 3px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(168,77,107,0.04) 0px, rgba(168,77,107,0.04) 1px, transparent 1px, transparent 3px);
             pointer-events: none;
             z-index: 0;
         }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+        
         .shop-header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 25px 20px;
-            background: rgba(0, 0, 0, 0.65);
-            border: 2px solid var(--shop-glow);
-            backdrop-filter: blur(3px);
-            position: relative;
-        }
-
-        .shop-header::before,
-        .shop-header::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(0,0,0,0.65);
             border: 2px solid var(--shop-glow);
         }
-        .shop-header::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-        .shop-header::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
-
-        .shop-title {
-            font-size: 1.3rem;
-            color: var(--shop-glow);
-            letter-spacing: 3px;
-            text-shadow: 0 0 6px var(--shop-glow);
-        }
-
-        .shop-subtitle {
-            font-size: 0.6rem;
-            color: #7a8278;
-            margin-top: 12px;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            text-decoration: none;
-        }
-        .custom-back-icon {
-            width: 32px;
-            filter: brightness(0.7) sepia(1) hue-rotate(290deg);
-        }
-
-        .products-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--shop-glow);
-            padding: 20px;
-            min-height: 500px;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--shop-glow);
-            padding: 15px;
-            transition: all 0.2s ease;
-            width: 280px;
-            text-align: center;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(168, 77, 107, 0.3);
-            border-color: #cf6f8f;
-        }
-
-        .product-image {
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        .product-title {
-            font-size: 0.75rem;
-            color: var(--shop-glow);
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-
-        .product-price {
-            font-size: 0.7rem;
-            color: #7a8278;
-            margin-bottom: 15px;
-        }
-
-        .buy-button {
-            display: inline-block;
+        .shop-title { font-size: 1.3rem; color: var(--shop-glow); }
+        .shop-subtitle { font-size: 0.6rem; color: #7a8278; margin-top: 12px; }
+        
+        .back-button { position: fixed; top: 20px; right: 20px; text-decoration: none; }
+        .custom-back-icon { width: 32px; filter: brightness(0.7) sepia(1) hue-rotate(290deg); }
+        
+        .cart-bar { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .cart-btn {
             background: transparent;
             border: 1px solid var(--shop-glow);
             color: var(--shop-glow);
             font-family: 'Press Start 2P', monospace;
-            font-size: 0.6rem;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: all 0.2s;
+            font-size: 0.7rem;
+            padding: 10px 20px;
             cursor: pointer;
-        }
-
-        .buy-button:hover {
-            background: var(--shop-glow);
-            color: #000;
-        }
-
-        .loading {
-            color: var(--shop-glow);
-            text-align: center;
-            padding: 50px;
-            width: 100%;
-        }
-
-        .led-indicator {
             display: flex;
             gap: 10px;
+        }
+        .cart-count { background: var(--shop-glow); color: #000; padding: 2px 8px; border-radius: 20px; }
+        
+        /* КАТЕГОРИИ СЕТКОЙ 2x3 */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .cat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--shop-glow);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(168,77,107,0.3);
+            border-color: #cf6f8f;
+        }
+        .cat-card.active {
+            border-color: #fff;
+            box-shadow: 0 0 15px var(--shop-glow);
+        }
+        .cat-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 1px solid #333;
+        }
+        .cat-name {
+            font-size: 0.75rem;
+            color: var(--shop-glow);
+            letter-spacing: 2px;
+        }
+        
+        /* товары в 2 столбика */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--shop-glow);
+            padding: 20px;
+        }
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--shop-glow);
+            padding: 15px;
+            text-align: center;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(168,77,107,0.3); }
+        .product-image { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 15px; }
+        .product-title { font-size: 0.7rem; color: var(--shop-glow); margin-bottom: 10px; }
+        .product-price { font-size: 0.8rem; margin-bottom: 15px; }
+        .add-to-cart {
+            background: transparent;
+            border: 1px solid var(--shop-glow);
+            color: var(--shop-glow);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            padding: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .add-to-cart:hover { background: var(--shop-glow); color: #000; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
             justify-content: center;
-            margin-top: 30px;
+            align-items: center;
         }
-        .led {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #2a2a2a;
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #0a0a0a;
+            border: 2px solid var(--shop-glow);
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
         }
-        .led.active {
-            background: var(--shop-glow);
-            box-shadow: 0 0 8px var(--shop-glow);
-        }
-
-        .static-line {
-            position: absolute;
-            bottom: 12px;
-            left: 10%;
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--shop-glow), transparent);
-            opacity: 0.4;
-        }
-
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #333; font-size: 0.7rem; }
+        .cart-total { margin-top: 20px; padding-top: 10px; border-top: 2px solid var(--shop-glow); text-align: right; }
+        .checkout-btn { background: var(--shop-glow); color: #000; border: none; padding: 12px; width: 100%; margin-top: 15px; cursor: pointer; font-family: 'Press Start 2P', monospace; }
+        .remove-item { background: none; border: none; color: #a84d6b; cursor: pointer; margin-left: 10px; }
+        .close-modal { background: none; border: none; color: var(--shop-glow); float: right; font-size: 1.5rem; cursor: pointer; }
+        .led-indicator { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
+        .led { width: 8px; height: 8px; border-radius: 50%; background: #2a2a2a; }
+        .led.active { background: var(--shop-glow); }
+        
         @media (max-width: 680px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .products-grid { grid-template-columns: 1fr; }
             .shop-title { font-size: 1rem; }
-            .products-grid { padding: 12px; gap: 15px; }
-            .product-card { width: 100%; max-width: 280px; }
+            .cat-name { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -203,13 +165,17 @@
 <div class="container">
     <div class="shop-header">
         <div class="shop-title">◈ MORSTRIX SHOP ◈</div>
-        <div class="shop-subtitle">[ DIY GEAR / DIGITAL GOODS ]</div>
-        <div class="static-line"></div>
+        <div class="shop-subtitle">[ DIY GEAR ]</div>
     </div>
 
-    <div class="products-grid" id="productsGrid">
-        <div class="loading">⏳ ЗАГРУЗКА ТОВАРОВ...</div>
+    <div class="cart-bar">
+        <button class="cart-btn" id="cartBtn">🛒 КОРЗИНА <span id="cartCount" class="cart-count">0</span></button>
     </div>
+
+    <!-- КАТЕГОРИИ СЕТКОЙ 2x3 (БЕЗ "ВСЕ") -->
+    <div class="categories-grid" id="categoriesGrid"></div>
+
+    <div class="products-grid" id="productsGrid"></div>
 
     <div class="led-indicator">
         <div class="led active"></div><div class="led"></div><div class="led"></div>
@@ -217,71 +183,165 @@
     </div>
 </div>
 
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal">✕</button>
+        <h3 style="margin-bottom: 20px;">КОРЗИНА</h3>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal"></div>
+        <button id="checkoutBtn" class="checkout-btn">📦 ОФОРМИТЬ</button>
+    </div>
+</div>
+
 <script>
-    // ========== ВСТАВЬ СВОЙ ТОКЕН СЮДА ==========
-    const GUMROAD_TOKEN = "GMBXH6KQKmMcjwNqH_Hm9Q7Qlczup5CoVINn2pGzzgw";
+    // ========== КАТЕГОРИИ (БЕЗ "ВСЕ") ==========
+    const categories = [
+        { id: "print", name: "PRINT", image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
+        { id: "design", name: "DESIGN", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
+        { id: "tattoo", name: "TATTOO", image: "https://i.pinimg.com/736x/b0/31/ea/b031ea07ec8e4f208360ae4c7b69b0de.jpg" },
+        { id: "barbering", name: "BARBERING", image: "https://i.pinimg.com/736x/6b/02/8a/6b028ac4910258859105342388d0bf00.jpg" },
+        { id: "diygear", name: "DIY GEAR", image: "https://i.pinimg.com/736x/fc/6e/c2/fc6ec274ace15a74b58f263ec8299ced.jpg" },
+        { id: "shmot", name: "SHMOT", image: "https://i.pinimg.com/1200x/5b/50/2e/5b502ebe3d34a5d207c49a7602374414.jpg" }
+    ];
+    
+    // ========== ТОВАРЫ ==========
+    const products = [
+        { id: 1, name: "Постер Киберпанк", price: 15, category: "print", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
+        { id: 2, name: "Дизайн-кит Glitch", price: 25, category: "design", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
+        // 👇 ДОБАВЛЯЙ НОВЫЕ ТОВАРЫ:
+        // { id: 3, name: "Название", price: 20, category: "tattoo", image: "https://i.pinimg.com/ссылка.jpg" },
+    ];
     // ============================================
     
-    async function loadProducts() {
-        const container = document.getElementById('productsGrid');
+    let cart = JSON.parse(localStorage.getItem('morstrix_cart')) || [];
+    let currentCategory = categories[0].id; // первая категория по умолчанию
+    
+    // Рендер категорий (без "ВСЕ")
+    function renderCategories() {
+        const container = document.getElementById('categoriesGrid');
+        container.innerHTML = categories.map(cat => `
+            <div class="cat-card ${currentCategory === cat.id ? 'active' : ''}" data-cat="${cat.id}">
+                <img src="${cat.image}" class="cat-image" onerror="this.src='https://via.placeholder.com/300x300?text=${cat.name}'">
+                <div class="cat-name">${cat.name}</div>
+            </div>
+        `).join('');
         
-        try {
-            const response = await fetch(`https://api.gumroad.com/v2/products?access_token=${GUMROAD_TOKEN}`);
-            const data = await response.json();
-            
-            if (!data.success || !data.products) {
-                throw new Error('Не удалось загрузить товары');
-            }
-            
-            container.innerHTML = '';
-            
-            data.products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                
-                // Картинка (первая из превью)
-                const previewUrl = product.preview_url || '';
-                
-                card.innerHTML = `
-                    ${previewUrl ? `<img src="${previewUrl}" class="product-image" alt="${product.name}">` : ''}
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-price">${product.formatted_price || product.price}</div>
-                    <a href="${product.short_url}" target="_blank" class="buy-button">КУПИТЬ →</a>
-                `;
-                
-                container.appendChild(card);
+        document.querySelectorAll('.cat-card').forEach(card => {
+            card.addEventListener('click', () => {
+                currentCategory = card.dataset.cat;
+                renderCategories();
+                renderProducts();
+                if (navigator.vibrate) navigator.vibrate(10);
             });
-            
-            if (data.products.length === 0) {
-                container.innerHTML = '<div class="loading">📦 ТОВАРОВ ПОКА НЕТ</div>';
-            }
-            
-        } catch (error) {
-            console.error('Ошибка:', error);
-            container.innerHTML = `
-                <div class="loading">
-                    ⚠️ НЕ УДАЛОСЬ ЗАГРУЗИТЬ ТОВАРЫ<br>
-                    <small style="font-size:0.55rem;">Проверь токен или настройки Gumroad</small>
-                </div>
-            `;
-        }
+        });
     }
+    
+    function renderProducts() {
+        const container = document.getElementById('productsGrid');
+        const filtered = products.filter(p => p.category === currentCategory);
+        
+        if (filtered.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:50px;">📦 НЕТ ТОВАРОВ В ЭТОЙ КАТЕГОРИИ</div>';
+            return;
+        }
+        
+        container.innerHTML = filtered.map(product => `
+            <div class="product-card">
+                <img src="${product.image}" class="product-image" onerror="this.src='https://via.placeholder.com/300x300?text=NO+IMAGE'">
+                <div class="product-title">${product.name}</div>
+                <div class="product-price">$${product.price}</div>
+                <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
+                    В КОРЗИНУ →
+                </button>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const product = {
+                    id: parseInt(btn.dataset.id),
+                    name: btn.dataset.name,
+                    price: parseFloat(btn.dataset.price)
+                };
+                addToCart(product);
+                btn.textContent = "✓ ДОБАВЛЕНО";
+                setTimeout(() => { btn.textContent = "В КОРЗИНУ →"; }, 1000);
+            });
+        });
+    }
+    
+    function addToCart(product) {
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) existing.quantity++;
+        else cart.push({ ...product, quantity: 1 });
+        updateCartUI();
+        if (navigator.vibrate) navigator.vibrate(50);
+    }
+    
+    function removeFromCart(id) {
+        const index = cart.findIndex(item => item.id === id);
+        if (index !== -1) {
+            if (cart[index].quantity > 1) cart[index].quantity--;
+            else cart.splice(index, 1);
+        }
+        updateCartUI();
+    }
+    
+    function updateCartUI() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        document.getElementById('cartCount').textContent = totalItems;
+        
+        const cartItemsDiv = document.getElementById('cartItems');
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = '<div style="text-align:center; padding:20px;">Корзина пуста</div>';
+        } else {
+            cartItemsDiv.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>
+                        $${(item.price * item.quantity).toFixed(2)}
+                        <button class="remove-item" data-id="${item.id}">✕</button>
+                    </span>
+                </div>
+            `).join('');
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            });
+        }
+        document.getElementById('cartTotal').innerHTML = `ИТОГО: $${totalPrice.toFixed(2)}`;
+        localStorage.setItem('morstrix_cart', JSON.stringify(cart));
+    }
+    
+    // Корзина модалка
+    const modal = document.getElementById('cartModal');
+    document.getElementById('cartBtn').onclick = () => { updateCartUI(); modal.classList.add('active'); };
+    document.querySelector('.close-modal').onclick = () => modal.classList.remove('active');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+    
+    // Оформление заказа
+    document.getElementById('checkoutBtn').onclick = () => {
+        if (cart.length === 0) { alert('Корзина пуста'); return; }
+        const items = cart.map(item => `${item.name} x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}`).join('\n');
+        const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+        const msg = `НОВЫЙ ЗАКАЗ!\n\n${items}\n\nИТОГО: $${total.toFixed(2)}`;
+        window.open(`https://t.me/share/url?url=${encodeURIComponent('Заказ Morstrix')}&text=${encodeURIComponent(msg)}`, '_blank');
+        cart = [];
+        updateCartUI();
+        modal.classList.remove('active');
+        alert('Заказ отправлен! Я свяжусь с вами в Telegram.');
+    };
     
     // LED анимация
     let ledIndex = 0;
-    function animateLED() {
-        const leds = document.querySelectorAll('.led');
-        if (!leds.length) return;
-        setInterval(() => {
-            leds.forEach((led, i) => {
-                led.classList.toggle('active', i === ledIndex);
-            });
-            ledIndex = (ledIndex + 1) % leds.length;
-        }, 1000);
-    }
+    setInterval(() => {
+        document.querySelectorAll('.led').forEach((led, i) => led.classList.toggle('active', i === ledIndex));
+        ledIndex = (ledIndex + 1) % 6;
+    }, 1000);
     
-    loadProducts();
-    animateLED();
+    renderCategories();
+    renderProducts();
+    updateCartUI();
 </script>
 </body>
 </html>
