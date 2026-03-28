@@ -6,17 +6,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0a0a2a">
-    <title>MORSTRIX | TETRIS · DARK FANTASY</title>
+    <title>MORSTRIX | TETRIS · CRYSTAL SHARD</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #050510;
             --bg-darker: #020208;
             --grid-color: #2a1a3a;
-            --glow-purple: #8a4fff;
+            --glow-purple: #b87cff;
             --glow-cyan: #2affb6;
-            --glow-red: #ff3a6f;
-            --text-glow: #b87cff;
+            --glow-red: #ff6a8f;
+            --glow-gold: #ffcc44;
+            --glow-blue: #4a9eff;
         }
         
         * {
@@ -37,7 +38,7 @@
             font-family: 'Press Start 2P', monospace;
         }
         
-        /* Анимированный фон с частицами */
+        /* Анимированный фон */
         .pixel-dust {
             position: fixed;
             top: 0;
@@ -47,9 +48,9 @@
             pointer-events: none;
             z-index: 0;
             background-image: 
-                radial-gradient(2px 2px at 20% 30%, rgba(138, 79, 255, 0.3), transparent),
-                radial-gradient(3px 3px at 80% 70%, rgba(42, 255, 182, 0.2), transparent),
-                radial-gradient(1px 1px at 45% 85%, rgba(255, 58, 111, 0.25), transparent);
+                radial-gradient(2px 2px at 20% 30%, rgba(184, 124, 255, 0.4), transparent),
+                radial-gradient(3px 3px at 80% 70%, rgba(42, 255, 182, 0.3), transparent),
+                radial-gradient(1px 1px at 45% 85%, rgba(255, 106, 143, 0.35), transparent);
             background-size: 200px 200px, 300px 300px, 150px 150px;
             background-repeat: no-repeat;
             animation: dustDrift 20s linear infinite;
@@ -60,7 +61,6 @@
             100% { background-position: 200% 100%, 300% 200%, 150% 150%; }
         }
         
-        /* CRT + scanlines эффект */
         .crt-overlay {
             position: fixed;
             top: 0;
@@ -69,13 +69,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 10;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.3) 0px,
-                rgba(0, 0, 0, 0.3) 2px,
-                transparent 2px,
-                transparent 6px
-            );
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0px, rgba(0, 0, 0, 0.3) 2px, transparent 2px, transparent 6px);
             animation: scanlines 8s linear infinite;
         }
         
@@ -84,7 +78,6 @@
             100% { transform: translateY(100%); }
         }
         
-        /* Кнопка назад - готический стиль */
         .back-button {
             position: fixed;
             top: 20px;
@@ -96,22 +89,21 @@
             padding: 10px;
             border-radius: 12px;
             border: 1px solid var(--glow-purple);
-            box-shadow: 0 0 15px rgba(138, 79, 255, 0.3);
+            box-shadow: 0 0 15px rgba(184, 124, 255, 0.3);
             transition: all 0.3s ease;
         }
         
         .back-button:active {
             transform: scale(0.92);
-            box-shadow: 0 0 25px rgba(138, 79, 255, 0.6);
+            box-shadow: 0 0 25px rgba(184, 124, 255, 0.6);
         }
         
         .custom-back-icon {
             width: 28px;
             height: 28px;
-            filter: drop-shadow(0 0 4px #8a4fff);
+            filter: drop-shadow(0 0 4px #b87cff);
         }
         
-        /* Основной контейнер */
         .game-container {
             position: relative;
             z-index: 5;
@@ -124,7 +116,6 @@
             padding: 20px 15px 15px 15px;
         }
         
-        /* Верхняя панель - стилизованная */
         .stats-panel {
             background: rgba(5, 5, 20, 0.85);
             backdrop-filter: blur(8px);
@@ -134,7 +125,7 @@
             display: flex;
             gap: 30px;
             margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(138, 79, 255, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(184, 124, 255, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
             position: relative;
         }
         
@@ -154,7 +145,6 @@
         
         .stat-card {
             text-align: center;
-            position: relative;
         }
         
         .stat-label {
@@ -172,7 +162,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 10px rgba(138, 79, 255, 0.5);
+            text-shadow: 0 0 10px rgba(184, 124, 255, 0.5);
         }
         
         .right-stats {
@@ -221,11 +211,10 @@
             border: 2px solid var(--glow-purple);
             background: #050510;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(138, 79, 255, 0.4);
+            box-shadow: 0 0 10px rgba(184, 124, 255, 0.4);
             margin-top: 5px;
         }
         
-        /* ИГРОВАЯ ОБЛАСТЬ - МАКСИМАЛЬНОЕ МЕСТО */
         .game-area {
             flex: 1;
             display: flex;
@@ -243,18 +232,17 @@
             width: auto;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 0 40px rgba(138, 79, 255, 0.4), inset 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px rgba(184, 124, 255, 0.4), inset 0 0 20px rgba(0,0,0,0.5);
             border: 2px solid;
             border-image: linear-gradient(135deg, var(--glow-purple), var(--glow-cyan)) 1;
             animation: borderPulse 2s ease-in-out infinite;
         }
         
         @keyframes borderPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(138, 79, 255, 0.3); }
-            50% { box-shadow: 0 0 50px rgba(138, 79, 255, 0.8); }
+            0%, 100% { box-shadow: 0 0 20px rgba(184, 124, 255, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(184, 124, 255, 0.8); }
         }
         
-        /* Нижние кнопки - пиксельный готический стиль */
         .control-bar {
             background: rgba(5, 5, 20, 0.85);
             backdrop-filter: blur(10px);
@@ -294,7 +282,6 @@
             filter: drop-shadow(0 0 6px var(--glow-purple));
         }
         
-        /* Адаптация */
         @media (max-width: 700px) {
             .stats-panel { padding: 8px 16px; gap: 20px; }
             .stat-value { font-size: 16px; }
@@ -320,7 +307,6 @@
             .right-stats { gap: 12px; }
         }
         
-        /* Анимация для частиц */
         .glow-particle {
             position: fixed;
             pointer-events: none;
@@ -345,7 +331,6 @@
 <div class="pixel-dust"></div>
 <div class="crt-overlay"></div>
 
-<!-- КРЕСТИК ВИДЕН -->
 <a href="index.html" class="back-button">
     <img src="close.jpg" alt="X" class="custom-back-icon">
 </a>
@@ -353,7 +338,7 @@
 <div class="game-container">
     <div class="stats-panel">
         <div class="stat-card">
-            <div class="stat-label">⚔️ SCORE</div>
+            <div class="stat-label">💎 SCORE</div>
             <div id="score" class="stat-value">0</div>
         </div>
         <div class="stat-card">
@@ -382,23 +367,14 @@
     </div>
 
     <div class="control-bar">
-        <button id="left-btn" class="control-btn">
-            <img src="1.png" alt="←" loading="lazy">
-        </button>
-        <button id="rotate-btn" class="control-btn">
-            <img src="2.png" alt="↻" loading="lazy">
-        </button>
-        <button id="right-btn" class="control-btn">
-            <img src="3.png" alt="→" loading="lazy">
-        </button>
-        <button id="down-btn" class="control-btn">
-            <img src="4.png" alt="↓" loading="lazy">
-        </button>
+        <button id="left-btn" class="control-btn"><img src="1.png" alt="←" loading="lazy"></button>
+        <button id="rotate-btn" class="control-btn"><img src="2.png" alt="↻" loading="lazy"></button>
+        <button id="right-btn" class="control-btn"><img src="3.png" alt="→" loading="lazy"></button>
+        <button id="down-btn" class="control-btn"><img src="4.png" alt="↓" loading="lazy"></button>
     </div>
 </div>
 
 <script>
-    // Динамические частицы для атмосферы
     (function createParticles() {
         for(let i = 0; i < 30; i++) {
             const particle = document.createElement('div');
