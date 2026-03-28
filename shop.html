@@ -67,6 +67,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
         }
         .cat-card:hover {
             transform: translateY(-5px);
@@ -83,43 +84,31 @@
             object-fit: cover;
             margin-bottom: 12px;
             border: 1px solid #333;
+            pointer-events: none;
         }
         .cat-name {
             font-size: 0.75rem;
             color: var(--shop-glow);
             letter-spacing: 2px;
+            pointer-events: none;
+        }
+        .price-tag {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(168,77,107,0.9);
+            color: #000;
+            padding: 4px 8px;
+            font-size: 0.6rem;
+            font-family: 'Press Start 2P', monospace;
+            border-radius: 4px;
+            pointer-events: none;
         }
         
-        /* товары в 2 столбика */
+        /* товары больше не показываем */
         .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--shop-glow);
-            padding: 20px;
+            display: none;
         }
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--shop-glow);
-            padding: 15px;
-            text-align: center;
-        }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(168,77,107,0.3); }
-        .product-image { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 15px; }
-        .product-title { font-size: 0.7rem; color: var(--shop-glow); margin-bottom: 10px; }
-        .product-price { font-size: 0.8rem; margin-bottom: 15px; }
-        .add-to-cart {
-            background: transparent;
-            border: 1px solid var(--shop-glow);
-            color: var(--shop-glow);
-            font-family: 'Press Start 2P', monospace;
-            font-size: 0.55rem;
-            padding: 8px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .add-to-cart:hover { background: var(--shop-glow); color: #000; }
         
         .modal {
             display: none;
@@ -150,9 +139,9 @@
         
         @media (max-width: 680px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .products-grid { grid-template-columns: 1fr; }
             .shop-title { font-size: 1rem; }
             .cat-name { font-size: 0.65rem; }
+            .price-tag { font-size: 0.5rem; padding: 3px 6px; }
         }
     </style>
 </head>
@@ -165,17 +154,15 @@
 <div class="container">
     <div class="shop-header">
         <div class="shop-title">◈ MORSTRIX SHOP ◈</div>
-        <div class="shop-subtitle">[ DIY GEAR ]</div>
+        <div class="shop-subtitle">[ НАЖМИ НА КАРТИНКУ → В КОРЗИНУ ]</div>
     </div>
 
     <div class="cart-bar">
         <button class="cart-btn" id="cartBtn">🛒 КОРЗИНА <span id="cartCount" class="cart-count">0</span></button>
     </div>
 
-    <!-- КАТЕГОРИИ СЕТКОЙ 2x3 (БЕЗ "ВСЕ") -->
+    <!-- КАТЕГОРИИ СЕТКОЙ 2x3 -->
     <div class="categories-grid" id="categoriesGrid"></div>
-
-    <div class="products-grid" id="productsGrid"></div>
 
     <div class="led-indicator">
         <div class="led active"></div><div class="led"></div><div class="led"></div>
@@ -194,95 +181,73 @@
 </div>
 
 <script>
-    // ========== КАТЕГОРИИ (БЕЗ "ВСЕ") ==========
+    // ========== КАТЕГОРИИ С ЦЕНАМИ ==========
     const categories = [
-        { id: "print", name: "PRINT", image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
-        { id: "design", name: "DESIGN", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
-        { id: "tattoo", name: "TATTOO", image: "https://i.pinimg.com/736x/b0/31/ea/b031ea07ec8e4f208360ae4c7b69b0de.jpg" },
-        { id: "barbering", name: "BARBERING", image: "https://i.pinimg.com/736x/6b/02/8a/6b028ac4910258859105342388d0bf00.jpg" },
-        { id: "diygear", name: "DIY GEAR", image: "https://i.pinimg.com/736x/fc/6e/c2/fc6ec274ace15a74b58f263ec8299ced.jpg" },
-        { id: "shmot", name: "SHMOT", image: "https://i.pinimg.com/1200x/5b/50/2e/5b502ebe3d34a5d207c49a7602374414.jpg" }
+        { id: "print", name: "PRINT", price: 15, image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
+        { id: "design", name: "DESIGN", price: 25, image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
+        { id: "tattoo", name: "TATTOO", price: 20, image: "https://i.pinimg.com/736x/b0/31/ea/b031ea07ec8e4f208360ae4c7b69b0de.jpg" },
+        { id: "barbering", name: "BARBERING", price: 18, image: "https://i.pinimg.com/736x/6b/02/8a/6b028ac4910258859105342388d0bf00.jpg" },
+        { id: "diygear", name: "DIY GEAR", price: 30, image: "https://i.pinimg.com/736x/fc/6e/c2/fc6ec274ace15a74b58f263ec8299ced.jpg" },
+        { id: "shmot", name: "SHMOT", price: 35, image: "https://i.pinimg.com/1200x/5b/50/2e/5b502ebe3d34a5d207c49a7602374414.jpg" }
     ];
-    
-    // ========== ТОВАРЫ ==========
-    const products = [
-        { id: 1, name: "Постер Киберпанк", price: 15, category: "print", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
-        { id: 2, name: "Дизайн-кит Glitch", price: 25, category: "design", image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
-        // 👇 ДОБАВЛЯЙ НОВЫЕ ТОВАРЫ:
-        // { id: 3, name: "Название", price: 20, category: "tattoo", image: "https://i.pinimg.com/ссылка.jpg" },
-    ];
-    // ============================================
     
     let cart = JSON.parse(localStorage.getItem('morstrix_cart')) || [];
-    let currentCategory = categories[0].id; // первая категория по умолчанию
     
-    // Рендер категорий (без "ВСЕ")
+    // Рендер категорий
     function renderCategories() {
         const container = document.getElementById('categoriesGrid');
         container.innerHTML = categories.map(cat => `
-            <div class="cat-card ${currentCategory === cat.id ? 'active' : ''}" data-cat="${cat.id}">
+            <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}">
                 <img src="${cat.image}" class="cat-image" onerror="this.src='https://via.placeholder.com/300x300?text=${cat.name}'">
                 <div class="cat-name">${cat.name}</div>
+                <div class="price-tag">$${cat.price}</div>
             </div>
         `).join('');
         
+        // Добавляем обработчики кликов на карточки
         document.querySelectorAll('.cat-card').forEach(card => {
-            card.addEventListener('click', () => {
-                currentCategory = card.dataset.cat;
-                renderCategories();
-                renderProducts();
-                if (navigator.vibrate) navigator.vibrate(10);
-            });
-        });
-    }
-    
-    function renderProducts() {
-        const container = document.getElementById('productsGrid');
-        const filtered = products.filter(p => p.category === currentCategory);
-        
-        if (filtered.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:50px;">📦 НЕТ ТОВАРОВ В ЭТОЙ КАТЕГОРИИ</div>';
-            return;
-        }
-        
-        container.innerHTML = filtered.map(product => `
-            <div class="product-card">
-                <img src="${product.image}" class="product-image" onerror="this.src='https://via.placeholder.com/300x300?text=NO+IMAGE'">
-                <div class="product-title">${product.name}</div>
-                <div class="product-price">$${product.price}</div>
-                <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
-                    В КОРЗИНУ →
-                </button>
-            </div>
-        `).join('');
-        
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const product = {
-                    id: parseInt(btn.dataset.id),
-                    name: btn.dataset.name,
-                    price: parseFloat(btn.dataset.price)
-                };
-                addToCart(product);
-                btn.textContent = "✓ ДОБАВЛЕНО";
-                setTimeout(() => { btn.textContent = "В КОРЗИНУ →"; }, 1000);
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(card.dataset.id);
+                const name = card.dataset.name;
+                const price = parseFloat(card.dataset.price);
+                
+                addToCart({ id, name, price });
+                
+                // Визуальный фидбек
+                const originalText = card.querySelector('.price-tag')?.innerHTML;
+                if (card.querySelector('.price-tag')) {
+                    card.querySelector('.price-tag').innerHTML = '✓ ДОБАВЛЕНО';
+                    setTimeout(() => {
+                        if (card.querySelector('.price-tag')) {
+                            card.querySelector('.price-tag').innerHTML = originalText;
+                        }
+                    }, 800);
+                }
+                
+                if (navigator.vibrate) navigator.vibrate(50);
             });
         });
     }
     
     function addToCart(product) {
         const existing = cart.find(item => item.id === product.id);
-        if (existing) existing.quantity++;
-        else cart.push({ ...product, quantity: 1 });
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
         updateCartUI();
-        if (navigator.vibrate) navigator.vibrate(50);
     }
     
     function removeFromCart(id) {
         const index = cart.findIndex(item => item.id === id);
         if (index !== -1) {
-            if (cart[index].quantity > 1) cart[index].quantity--;
-            else cart.splice(index, 1);
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+            } else {
+                cart.splice(index, 1);
+            }
         }
         updateCartUI();
     }
@@ -340,7 +305,6 @@
     }, 1000);
     
     renderCategories();
-    renderProducts();
     updateCartUI();
 </script>
 </body>
