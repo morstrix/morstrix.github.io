@@ -83,16 +83,16 @@
         .top-row {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content:  center;
             align-items: center;
             width: 100%;
-            gap: 30px;
+            gap: 15px;
             margin-bottom: 5px;
         }
 
         /* Каждый элемент занимает равное пространство */
         .top-row > * {
-            flex: 1;
+            flex: 0 0 auto;
             display: flex;
             justify-content: center;
         }
@@ -132,7 +132,7 @@
 
         .nav-folder-icon {
             display: block;
-            width: 55px;
+            width: 90px;
             height: auto;
             image-rendering: pixelated;
             filter: drop-shadow(0 0 3px var(--purple-dark));
@@ -390,8 +390,8 @@
         }
 
         .social-icon {
-            width: 55px;
-            height: 55px;
+            width: 100px;
+            height: 100px;
             padding: 8px;
             image-rendering: pixelated;
             background: transparent;
@@ -419,14 +419,12 @@
 
         /* Правое текстовое окно */
         .info-window {
-            flex: 1;
-            min-width: 0;
-            background: rgba(10, 10, 10, 0.4);
-            border: 1px solid var(--purple-dark);
-            padding: 12px 15px;
-            position: relative;
-            box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 10px rgba(127, 191, 191, 0.1);
-        }
+    flex: 0 0 70%;      /* занимает 40% ширины родителя */
+    background: rgba(10, 10, 10, 0.4);
+    border: 1px solid var(--purple-dark);
+    padding: 12px 15px;
+    position: relative;
+}
 
         .info-window::before,
         .info-window::after {
