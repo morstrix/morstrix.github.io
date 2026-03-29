@@ -12,12 +12,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: #000;
+            background: #0a0a0a;
             min-height: 100vh;
             padding: 20px;
             padding-bottom: 90px;
             font-family: 'Press Start 2P', monospace;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,8 +26,6 @@
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
         
         /* ЗАГОЛОВОК */
@@ -36,19 +33,16 @@
             text-align: center;
             margin-bottom: 30px;
             padding: 20px 10px;
-            background: transparent;
-            border: none;
         }
         
         .shop-title { 
             font-size: 1.3rem; 
-            color: #a84d6b95;
-            text-shadow: 0 0 8px rgba(168,77,107,0.5);
+            color: #a84d6b;
         }
         
         .shop-subtitle { 
             font-size: 0.6rem; 
-            color: #ffffff; 
+            color: #a1a1a1; 
             margin-top: 12px;
         }
         
@@ -61,18 +55,18 @@
         }
         
         .cat-card {
-            background: #0f0f0f;
+            background: #050505;
             border: 1px solid #a84d6b;
             padding: 15px;
-            padding-bottom: 35px;
+            padding-bottom: 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             position: relative;
+            transition: all 0.1s;
         }
         
         .cat-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
         
         .cat-image {
@@ -80,29 +74,21 @@
             aspect-ratio: 1/1;
             object-fit: cover;
             margin-bottom: 12px;
-            border: 1px solid #333;
-            pointer-events: none;
+            border: 1px solid #2a2a2a;
+            filter: grayscale(0.2);
         }
         
         .cat-name {
             font-size: 0.75rem;
-            color: #a84d6b95;
+            color: #a84d6b;
             letter-spacing: 2px;
-            pointer-events: none;
-            word-break: break-word;
         }
         
-        .price-tag {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: #a84d6b95;
-            color: #ffffff;
-            padding: 4px 8px;
+        .cat-price {
+            margin-top: 10px;
             font-size: 0.6rem;
+            color: #a1a1a1;
             font-family: 'Press Start 2P', monospace;
-            border-radius: 4px;
-            pointer-events: none;
         }
         
         /* КОРЗИНА СНИЗУ */
@@ -111,21 +97,19 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #0a0a0a;
+            background: #050505;
             border-top: 2px solid #a84d6b;
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(10,10,10,0.95);
         }
         
         .cart-bottom-btn {
             background: transparent;
-            border: 1px solid #a84d6b95;
-            color: #a84d6b95;
+            border: 1px solid #a84d6b;
+            color: #a84d6b;
             font-family: 'Press Start 2P', monospace;
             font-size: 0.7rem;
             padding: 10px 20px;
@@ -137,18 +121,19 @@
         
         .cart-bottom-btn:active {
             transform: scale(0.95);
+            background: rgba(168, 77, 107, 0.2);
         }
         
         .cart-bottom-count {
-            background: #a84d6b95;
-            color: #ffffff;
+            background: #a84d6b;
+            color: #000;
             padding: 2px 8px;
             border-radius: 20px;
             font-size: 0.7rem;
         }
         
         .cart-bottom-total {
-            color: #a84d6b95;
+            color: #a84d6b;
             font-size: 0.7rem;
         }
         
@@ -169,7 +154,7 @@
         .modal.active { display: flex; }
         
         .modal-content {
-            background: #0a0a0a;
+            background: #050505;
             border: 2px solid #a84d6b;
             padding: 25px;
             max-width: 500px;
@@ -182,7 +167,7 @@
             display: flex; 
             justify-content: space-between; 
             padding: 10px 0; 
-            border-bottom: 1px solid #333; 
+            border-bottom: 1px solid #2a2a2a; 
             font-size: 0.7rem; 
         }
         
@@ -192,11 +177,12 @@
             border-top: 2px solid #a84d6b; 
             text-align: right; 
             font-size: 0.8rem; 
+            color: #a84d6b;
         }
         
         .checkout-btn { 
-            background: #a84d6b95; 
-            color: #ffffff; 
+            background: #a84d6b; 
+            color: #000; 
             border: none; 
             padding: 12px; 
             width: 100%; 
@@ -212,7 +198,7 @@
         .remove-item { 
             background: none; 
             border: none; 
-            color: #a84d6b95; 
+            color: #a84d6b; 
             cursor: pointer; 
             margin-left: 10px; 
             font-size: 0.8rem; 
@@ -221,23 +207,18 @@
         .close-modal { 
             background: none; 
             border: none; 
-            color: #a84d6b95; 
+            color: #a84d6b; 
             float: right; 
             font-size: 1.5rem; 
             cursor: pointer; 
         }
         
-        /* Адаптация для телефонов — цена не налезает */
+        /* Адаптация */
         @media (max-width: 680px) {
             .categories-grid { gap: 15px; }
             .shop-title { font-size: 1rem; }
             .cat-name { font-size: 0.65rem; }
-            .price-tag { 
-                font-size: 0.5rem; 
-                padding: 3px 6px;
-                bottom: 8px;
-                right: 8px;
-            }
+            .cat-price { font-size: 0.5rem; }
             .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
             .cart-bottom-total { font-size: 0.55rem; }
         }
@@ -245,174 +226,165 @@
         @media (max-width: 480px) {
             .cat-card {
                 padding: 10px;
-                padding-bottom: 30px;
             }
             .cat-name {
                 font-size: 0.55rem;
-            }
-            .price-tag {
-                position: relative;
-                display: inline-block;
-                margin-top: 8px;
-                bottom: auto;
-                right: auto;
-                font-size: 0.55rem;
-                padding: 4px 10px;
             }
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="back-button">
-    <img src="close.jpg" alt="X" class="custom-back-icon">
-</a>
+    <!-- НОВЫЙ КРЕСТИК -->
+    <a href="index.html" class="back-button">
+        <span>×</span>
+    </a>
 
-<div class="container">
-    <div class="shop-header">
-        <div class="shop-title">SHOP</div>
-        <div class="shop-subtitle">індивідуальні замовлення</div>
+    <div class="container">
+        <div class="shop-header">
+            <div class="shop-title">SHOP</div>
+            <div class="shop-subtitle">індивідуальні замовлення</div>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid"></div>
     </div>
 
-    <div class="categories-grid" id="categoriesGrid"></div>
-</div>
+    <!-- КОРЗИНА -->
+    <div class="cart-bottom" id="cartBottom">
+        <button class="cart-bottom-btn" id="cartBtn">
+            ПАКЕТ
+            <span id="cartCount" class="cart-bottom-count">0</span>
+        </button>
+        <div class="cart-bottom-total" id="cartTotalBottom">$0</div>
+    </div>
 
-<!-- КОРЗИНА -->
-<div class="cart-bottom" id="cartBottom">
-    <button class="cart-bottom-btn" id="cartBtn">
-        🛒 ПАКЕТ
-        <span id="cartCount" class="cart-bottom-count">0</span>
-    </button>
-    <div class="cart-bottom-total" id="cartTotalBottom">$0</div>
-</div>
-
-<!-- МОДАЛЬНОЕ ОКНО -->
-<div id="cartModal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal">✕</button>
-        <h3 style="margin-bottom: 20px; font-size: 0.8rem;">ПАКЕТ</h3>
-        <div id="cartItems"></div>
-        <div class="cart-total" id="cartTotalModal"></div>
-        <button id="checkoutBtn" class="checkout-btn">ENTER</button>
-        <div style="font-size: 0.5rem; color: #726767c0; margin-top: 12px; text-align: center;">
-            * деталі в Telegram
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">✕</button>
+            <h3 style="margin-bottom: 20px; font-size: 0.8rem; color: #a84d6b;">ПАКЕТ</h3>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotalModal"></div>
+            <button id="checkoutBtn" class="checkout-btn">ENTER</button>
+            <div style="font-size: 0.5rem; color: #a1a1a1; margin-top: 12px; text-align: center;">
+                * деталі в Telegram
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const categories = [
-        { id: 1, name: "PRINT", price: 15, image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
-        { id: 2, name: "DESIGN", price: 25, image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
-        { id: 3, name: "TATTOO", price: 20, image: "https://i.pinimg.com/736x/b0/31/ea/b031ea07ec8e4f208360ae4c7b69b0de.jpg" },
-        { id: 4, name: "BARBERING", price: 18, image: "https://i.pinimg.com/736x/6b/02/8a/6b028ac4910258859105342388d0bf00.jpg" },
-        { id: 5, name: "DIY GEAR", price: 30, image: "https://i.pinimg.com/736x/fc/6e/c2/fc6ec274ace15a74b58f263ec8299ced.jpg" },
-        { id: 6, name: "SHMOT", price: 35, image: "https://i.pinimg.com/1200x/5b/50/2e/5b502ebe3d34a5d207c49a7602374414.jpg" }
-    ];
-    
-    let cart = JSON.parse(localStorage.getItem('morstrix_cart')) || [];
-    
-    function renderCategories() {
-        const container = document.getElementById('categoriesGrid');
-        container.innerHTML = categories.map(cat => `
-            <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}">
-                <img src="${cat.image}" class="cat-image" onerror="this.src='https://via.placeholder.com/300x300?text=${cat.name}'">
-                <div class="cat-name">${cat.name}</div>
-                <div class="price-tag">$${cat.price}</div>
-            </div>
-        `).join('');
+    <script>
+        const categories = [
+            { id: 1, name: "PRINT", price: 15, image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
+            { id: 2, name: "DESIGN", price: 25, image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
+            { id: 3, name: "TATTOO", price: 20, image: "https://i.pinimg.com/736x/b0/31/ea/b031ea07ec8e4f208360ae4c7b69b0de.jpg" },
+            { id: 4, name: "BARBERING", price: 18, image: "https://i.pinimg.com/736x/6b/02/8a/6b028ac4910258859105342388d0bf00.jpg" },
+            { id: 5, name: "DIY GEAR", price: 30, image: "https://i.pinimg.com/736x/fc/6e/c2/fc6ec274ace15a74b58f263ec8299ced.jpg" },
+            { id: 6, name: "SHMOT", price: 35, image: "https://i.pinimg.com/1200x/5b/50/2e/5b502ebe3d34a5d207c49a7602374414.jpg" }
+        ];
         
-        document.querySelectorAll('.cat-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const id = parseInt(card.dataset.id);
-                const name = card.dataset.name;
-                const price = parseFloat(card.dataset.price);
-                addToCart({ id, name, price });
-                
-                const priceTag = card.querySelector('.price-tag');
-                const originalText = priceTag.innerHTML;
-                priceTag.innerHTML = 'додано';
-                setTimeout(() => {
-                    if (card.querySelector('.price-tag')) {
-                        card.querySelector('.price-tag').innerHTML = originalText;
-                    }
-                }, 800);
-                
-                if (navigator.vibrate) navigator.vibrate(50);
-            });
-        });
-    }
-    
-    function addToCart(product) {
-        const existing = cart.find(item => item.id === product.id);
-        if (existing) {
-            existing.quantity++;
-        } else {
-            cart.push({ ...product, quantity: 1 });
-        }
-        updateCartUI();
-    }
-    
-    function removeFromCart(id) {
-        const index = cart.findIndex(item => item.id === id);
-        if (index !== -1) {
-            if (cart[index].quantity > 1) {
-                cart[index].quantity--;
-            } else {
-                cart.splice(index, 1);
-            }
-        }
-        updateCartUI();
-    }
-    
-    function updateCartUI() {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let cart = JSON.parse(localStorage.getItem('morstrix_cart')) || [];
         
-        document.getElementById('cartCount').textContent = totalItems;
-        document.getElementById('cartTotalBottom').textContent = `$${totalPrice.toFixed(2)}`;
-        
-        const cartItemsDiv = document.getElementById('cartItems');
-        if (cart.length === 0) {
-            cartItemsDiv.innerHTML = '<div style="text-align:center; padding:20px;">пусто</div>';
-        } else {
-            cartItemsDiv.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <span>${item.name} x${item.quantity}</span>
-                    <span>
-                        $${(item.price * item.quantity).toFixed(2)}
-                        <button class="remove-item" data-id="${item.id}">✕</button>
-                    </span>
+        function renderCategories() {
+            const container = document.getElementById('categoriesGrid');
+            container.innerHTML = categories.map(cat => `
+                <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}">
+                    <img src="${cat.image}" class="cat-image" onerror="this.src='https://via.placeholder.com/300x300?text=${cat.name}'">
+                    <div class="cat-name">${cat.name}</div>
+                    <div class="cat-price">$${cat.price}</div>
                 </div>
             `).join('');
-            document.querySelectorAll('.remove-item').forEach(btn => {
-                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            
+            document.querySelectorAll('.cat-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const id = parseInt(card.dataset.id);
+                    const name = card.dataset.name;
+                    const price = parseFloat(card.dataset.price);
+                    addToCart({ id, name, price });
+                    
+                    const priceDiv = card.querySelector('.cat-price');
+                    const originalText = priceDiv.innerHTML;
+                    priceDiv.innerHTML = 'додано';
+                    setTimeout(() => {
+                        if (card.querySelector('.cat-price')) {
+                            card.querySelector('.cat-price').innerHTML = originalText;
+                        }
+                    }, 800);
+                    
+                    if (navigator.vibrate) navigator.vibrate(50);
+                });
             });
         }
-        document.getElementById('cartTotalModal').innerHTML = `ТОТАЛ: $${totalPrice.toFixed(2)}`;
         
-        localStorage.setItem('morstrix_cart', JSON.stringify(cart));
-    }
-    
-    const modal = document.getElementById('cartModal');
-    document.getElementById('cartBtn').onclick = () => { updateCartUI(); modal.classList.add('active'); };
-    document.querySelector('.close-modal').onclick = () => modal.classList.remove('active');
-    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-    
-    document.getElementById('checkoutBtn').onclick = () => {
-        if (cart.length === 0) { alert('пусто'); return; }
-        const items = cart.map(item => `${item.name} x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}`).join('\n');
-        const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-        const msg = `НОВЫЙ ЗАКАЗ!\n\n${items}\n\nИТОГО: $${total.toFixed(2)}`;
-        window.open(`https://t.me/share/url?url=${encodeURIComponent('Заказ Morstrix')}&text=${encodeURIComponent(msg)}`, '_blank');
-        cart = [];
+        function addToCart(product) {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartUI();
+        }
+        
+        function removeFromCart(id) {
+            const index = cart.findIndex(item => item.id === id);
+            if (index !== -1) {
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                } else {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+        
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('cartCount').textContent = totalItems;
+            document.getElementById('cartTotalBottom').textContent = `$${totalPrice.toFixed(2)}`;
+            
+            const cartItemsDiv = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div style="text-align:center; padding:20px; color: #a1a1a1;">пусто</div>';
+            } else {
+                cartItemsDiv.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <span style="color: #a84d6b;">${item.name} x${item.quantity}</span>
+                        <span>
+                            <span style="color: #a1a1a1;">$${(item.price * item.quantity).toFixed(2)}</span>
+                            <button class="remove-item" data-id="${item.id}">✕</button>
+                        </span>
+                    </div>
+                `).join('');
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+                });
+            }
+            document.getElementById('cartTotalModal').innerHTML = `ТОТАЛ: $${totalPrice.toFixed(2)}`;
+            
+            localStorage.setItem('morstrix_cart', JSON.stringify(cart));
+        }
+        
+        const modal = document.getElementById('cartModal');
+        document.getElementById('cartBtn').onclick = () => { updateCartUI(); modal.classList.add('active'); };
+        document.querySelector('.close-modal').onclick = () => modal.classList.remove('active');
+        modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+        
+        document.getElementById('checkoutBtn').onclick = () => {
+            if (cart.length === 0) { alert('пусто'); return; }
+            const items = cart.map(item => `${item.name} x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}`).join('\n');
+            const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            const msg = `НОВЫЙ ЗАКАЗ!\n\n${items}\n\nИТОГО: $${total.toFixed(2)}`;
+            window.open(`https://t.me/share/url?url=${encodeURIComponent('Заказ Morstrix')}&text=${encodeURIComponent(msg)}`, '_blank');
+            cart = [];
+            updateCartUI();
+            modal.classList.remove('active');
+            alert('Заказ отправлен! Я свяжусь с вами в Telegram.');
+        };
+        
+        renderCategories();
         updateCartUI();
-        modal.classList.remove('active');
-        alert('Заказ отправлен! Я свяжусь с вами в Telegram.');
-    };
-    
-    renderCategories();
-    updateCartUI();
-</script>
+    </script>
 </body>
 </html>

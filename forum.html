@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ФОРУМ | MORSTRIX</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
     <style>
         * {
             margin: 0;
@@ -17,25 +19,9 @@
             min-height: 100vh;
             padding: 20px;
             font-family: 'Press Start 2P', monospace;
-        }
-        
-        /* Тонкий CRT-ефект фону (статичний) */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 255, 0, 0.02) 0px,
-                rgba(0, 255, 0, 0.02) 2px,
-                transparent 2px,
-                transparent 4px
-            );
-            pointer-events: none;
-            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .forum-container {
@@ -43,29 +29,10 @@
             margin: 0 auto;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
         
-        /* Кнопка назад */
-        .back-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            text-decoration: none;
-        }
-        
-        .custom-back-icon {
-            width: 35px;
-            height: auto;
-            filter: brightness(0.8);
-            transition: filter 0.2s;
-        }
-        
-        .custom-back-icon:hover {
-            filter: brightness(1);
-        }
-        
-        /* ========== РЕТРО-ФУТУРИСТИЧНЕ ВІКНО ========== */
+        /* РЕТРО-ВІКНО */
         .retro-window {
             margin-bottom: 30px;
         }
@@ -75,15 +42,6 @@
             border: 2px solid #a84d6b;
             padding: 22px;
             position: relative;
-            box-shadow: 0 0 12px rgba(168, 77, 107, 0.2);
-        }
-        
-        /* Кутки */
-        .corner {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border: 1.5px solid #a84d6b;
         }
         
         .corner-tl {
@@ -114,7 +72,6 @@
             border-top: none;
         }
         
-        /* Статична лінія (без анімації) */
         .static-line {
             position: absolute;
             top: 15px;
@@ -128,7 +85,7 @@
         
         .window-title {
             font-size: 11px;
-            color: #a84d6b95;
+            color: #a84d6b;
             letter-spacing: 2px;
             margin-bottom: 18px;
             display: inline-block;
@@ -137,14 +94,14 @@
         }
         
         .description-text {
-            color: #ccc;
+            color: #a1a1a1;
             font-size: 10px;
             line-height: 1.8;
             margin: 15px 0;
         }
         
         .description-text .highlight {
-            color: #a84d6b95;
+            color: #a84d6b;
         }
         
         .tags {
@@ -153,12 +110,12 @@
             gap: 12px;
             margin-top: 18px;
             padding-top: 15px;
-            border-top: 1px solid #222;
+            border-top: 1px solid #2a2a2a;
         }
         
         .tag {
             font-size: 7px;
-            color: #7a8278;
+            color: #a1a1a1;
             background: #111;
             padding: 5px 10px;
             letter-spacing: 1px;
@@ -167,8 +124,8 @@
         
         /* Віджет коментарів */
         .comments-wrapper {
-            background: #030303;
-            border: 1px solid #2a2a2a;
+            background: transparent;
+            border: none;
             overflow: hidden;
             margin-bottom: 25px;
         }
@@ -184,7 +141,7 @@
             align-items: center;
             gap: 10px;
             background: #0a0a0a;
-            color: #a84d6b95;
+            color: #a84d6b;
             text-decoration: none;
             padding: 12px 28px;
             font-family: 'Press Start 2P', monospace;
@@ -193,9 +150,10 @@
             transition: all 0.15s;
         }
         
-        .tg-link:hover {
-            background: #a84d6b95;
+        .tg-link:active {
+            background: #a84d6b;
             color: #000;
+            transform: scale(0.95);
         }
         
         /* Адаптація */
@@ -225,8 +183,9 @@
     </style>
 </head>
 <body>
+    <!-- НОВЫЙ КРЕСТИК -->
     <a href="index.html" class="back-button">
-        <img src="close.jpg" alt="X" class="custom-back-icon">
+        <span>×</span>
     </a>
     
     <div class="forum-container">
@@ -244,13 +203,22 @@
                 </div>
                 
                 <div class="description-text">
-                    тут має бути опис, але його поки що немає.<br><br>
+                    <span class="highlight">> СТАТУС:</span> ВІДКРИТО<br>
+                    <span class="highlight">> ТЕМА:</span> ОБГОВОРЕННЯ ПРОЄКТУ<br>
+                    <span class="highlight">> ПРАВИЛА:</span> БЕЗ СПАМУ, ПОВАГА<br><br>
+                    залишайте свої коментарі нижче
                 </div>
                 
+                <div class="tags">
+                    <span class="tag">#MORSTRIX</span>
+                    <span class="tag">#Y2K</span>
+                    <span class="tag">#FUTURISM</span>
+                    <span class="tag">#PIXELART</span>
+                </div>
             </div>
         </div>
         
-        <!-- ВІДЖЕТ КОМЕНТАРІВ -->
+        <!-- ВІДЖЕТ КОМЕНТАРІВ (БЕЗ РАМКИ) -->
         <div class="comments-wrapper">
             <script async 
                 src="https://telegram.org/js/telegram-widget.js?22"

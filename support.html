@@ -8,24 +8,57 @@
     <meta name="theme-color" content="#0a0a0a">
     <title>MORSTRIX | TETRIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    
     <style>
-        /* ===== ТОЛЬКО УНИКАЛЬНЫЕ СТИЛИ ДЛЯ ТЕТРИСА ===== */
         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: #050505;
+            background: #000;
             min-height: 100vh;
             overflow: hidden;
             position: fixed;
             width: 100%;
             height: 100%;
+            font-family: 'Press Start 2P', monospace;
         }
         
+        /* КРЕСТИК — ПРОСТОЙ, НАД ВСЕМ */
+        .back-button {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 99999;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+        }
+        
+        .back-button span {
+            font-size: 48px;
+            font-weight: 900;
+            color: #666;
+            line-height: 1;
+            display: block;
+            font-family: monospace;
+            transform: scaleX(1.3) scaleY(1.1);
+        }
+        
+        .back-button:active span {
+            transform: scaleX(1.1) scaleY(0.9);
+        }
+        
+        /* ИГРОВОЙ КОНТЕЙНЕР */
         .game-container {
             position: relative;
             z-index: 5;
@@ -38,15 +71,15 @@
             padding: 12px;
         }
         
-        /* Верхняя панель */
+        /* ВЕРХНЯЯ ПАНЕЛЬ — ТОЛЬКО СЧЁТ И NEXT */
         .stats-panel {
-            background: rgba(10, 10, 10, 0.95);
+            background: #0a0a0a;
             border: 1px solid #333;
-            border-radius: 8px;
-            padding: 8px 16px;
+            border-radius: 0;
+            padding: 8px 20px;
             display: flex;
-            gap: 20px;
-            margin-bottom: 12px;
+            gap: 40px;
+            margin-bottom: 15px;
             flex-shrink: 0;
         }
         
@@ -56,13 +89,13 @@
         
         .stat-label {
             font-size: 8px;
-            color: #888;
+            color: #666;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
         
         .stat-value {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
             color: #ddd;
             font-family: 'Press Start 2P', monospace;
@@ -70,17 +103,17 @@
         
         .right-stats {
             display: flex;
-            gap: 15px;
+            gap: 25px;
             align-items: center;
             margin-left: 10px;
         }
         
         .pause-btn {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid #555;
-            border-radius: 8px;
-            width: 48px;
-            height: 48px;
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 0;
+            width: 55px;
+            height: 55px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -91,14 +124,14 @@
         }
         
         .pause-btn:active {
-            background: #333;
+            background: #222;
             transform: scale(0.95);
         }
         
         .pause-label {
             font-size: 6px;
             margin-top: 2px;
-            color: #888;
+            color: #666;
         }
         
         .next-box {
@@ -110,13 +143,11 @@
         }
         
         #next-piece-canvas {
-            border: 1px solid #444;
+            border: 1px solid #333;
             background: #0a0a0a;
-            border-radius: 4px;
-            margin-top: 4px;
         }
         
-        /* Игровая область */
+        /* ИГРОВАЯ ОБЛАСТЬ — МАКСИМАЛЬНЫЙ РАЗМЕР */
         .game-area {
             flex: 1;
             display: flex;
@@ -130,32 +161,30 @@
         #tetris-canvas {
             display: block;
             max-width: 95vw;
-            max-height: 55vh;
+            max-height: 60vh;
             width: auto;
             height: auto;
             border: 2px solid #333;
             background: #0a0a0a;
         }
         
-        /* Нижние кнопки */
+        /* НИЖНИЕ КНОПКИ — ЖИРНЫЕ, БОЛЬШИЕ */
         .control-bar {
-            background: rgba(10, 10, 10, 0.95);
-            border-radius: 50px;
-            padding: 10px 20px;
-            margin-top: 10px;
-            display: flex;
-            gap: 15px;
+            background: #0a0a0a;
             border: 1px solid #333;
+            padding: 15px 25px;
+            margin-top: 15px;
+            display: flex;
+            gap: 25px;
             flex-shrink: 0;
         }
         
         .control-btn {
             background: #111;
-            border: 1px solid #444;
+            border: 2px solid #444;
             cursor: pointer;
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
+            width: 85px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -166,48 +195,117 @@
             transform: scale(0.95);
         }
         
-        .control-btn img {
-            width: 70%;
-            height: 70%;
-            object-fit: contain;
-            filter: brightness(0.9);
+        /* ПИКСЕЛЬНЫЕ СТРЕЛКИ */
+        .arrow-left, .arrow-right, .arrow-down, .rotate-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Адаптация под экраны */
-        @media (max-width: 600px) {
-            .stats-panel { padding: 6px 12px; gap: 12px; }
-            .stat-value { font-size: 14px; }
-            .stat-label { font-size: 7px; }
-            .control-btn { width: 55px; height: 55px; }
-            .control-bar { gap: 12px; padding: 8px 15px; }
-            .pause-btn { width: 42px; height: 42px; font-size: 16px; }
+        .pixel-arrow {
+            display: block;
+            width: 0;
+            height: 0;
+        }
+        
+        /* Стрелка влево */
+        .arrow-left .pixel-arrow {
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-right: 30px solid #888;
+        }
+        
+        /* Стрелка вправо */
+        .arrow-right .pixel-arrow {
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 30px solid #888;
+        }
+        
+        /* Стрелка вниз */
+        .arrow-down .pixel-arrow {
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid #888;
+        }
+        
+        /* Поворот — квадрат со стрелкой */
+        .rotate-icon {
+            position: relative;
+        }
+        
+        .rotate-icon::before {
+            content: '↻';
+            font-size: 48px;
+            color: #888;
+            font-weight: bold;
+        }
+        
+        /* АДАПТАЦИЯ ПОД ВСЕ ЭКРАНЫ */
+        @media (max-width: 700px) {
+            .control-btn { width: 70px; height: 70px; }
+            .control-bar { gap: 18px; padding: 12px 18px; }
+            .stat-value { font-size: 20px; }
+            .stats-panel { gap: 25px; padding: 6px 15px; }
+            .right-stats { gap: 18px; }
+            .pause-btn { width: 48px; height: 48px; font-size: 16px; }
+            .arrow-left .pixel-arrow { border-right: 24px solid #888; border-top: 16px solid transparent; border-bottom: 16px solid transparent; }
+            .arrow-right .pixel-arrow { border-left: 24px solid #888; border-top: 16px solid transparent; border-bottom: 16px solid transparent; }
+            .arrow-down .pixel-arrow { border-top: 24px solid #888; border-left: 16px solid transparent; border-right: 16px solid transparent; }
+            .rotate-icon::before { font-size: 38px; }
+        }
+        
+        @media (max-width: 550px) {
+            .control-btn { width: 60px; height: 60px; }
+            .control-bar { gap: 14px; padding: 10px 14px; }
+            .stat-value { font-size: 16px; }
+            .stats-panel { gap: 18px; padding: 5px 12px; }
+            .right-stats { gap: 14px; }
+            .pause-btn { width: 42px; height: 42px; font-size: 14px; }
+            .arrow-left .pixel-arrow { border-right: 20px solid #888; border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
+            .arrow-right .pixel-arrow { border-left: 20px solid #888; border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
+            .arrow-down .pixel-arrow { border-top: 20px solid #888; border-left: 14px solid transparent; border-right: 14px solid transparent; }
+            .rotate-icon::before { font-size: 32px; }
         }
         
         @media (max-width: 450px) {
-            .control-btn { width: 50px; height: 50px; }
-            .control-bar { gap: 10px; }
-            .stat-value { font-size: 12px; }
-            .stats-panel { gap: 10px; padding: 5px 10px; }
-            .right-stats { gap: 10px; }
+            .control-btn { width: 55px; height: 55px; }
+            .control-bar { gap: 12px; padding: 8px 12px; }
+            .stat-value { font-size: 14px; }
+            .stats-panel { gap: 14px; padding: 4px 10px; }
+            .arrow-left .pixel-arrow { border-right: 18px solid #888; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+            .arrow-right .pixel-arrow { border-left: 18px solid #888; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+            .arrow-down .pixel-arrow { border-top: 18px solid #888; border-left: 12px solid transparent; border-right: 12px solid transparent; }
+            .rotate-icon::before { font-size: 28px; }
         }
         
         @media (max-width: 380px) {
-            .control-btn { width: 45px; height: 45px; }
-            .control-bar { gap: 8px; }
-            .stat-value { font-size: 10px; }
+            .control-btn { width: 50px; height: 50px; }
+            .control-bar { gap: 10px; padding: 6px 10px; }
+            .arrow-left .pixel-arrow { border-right: 16px solid #888; border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
+            .arrow-right .pixel-arrow { border-left: 16px solid #888; border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
+            .arrow-down .pixel-arrow { border-top: 16px solid #888; border-left: 10px solid transparent; border-right: 10px solid transparent; }
+            .rotate-icon::before { font-size: 24px; }
         }
         
-        @media (min-width: 769px) {
-            .control-btn { width: 80px; height: 80px; }
-            .control-bar { gap: 20px; padding: 15px 30px; }
-            .stat-value { font-size: 22px; }
+        @media (min-width: 1200px) {
+            .control-btn { width: 100px; height: 100px; }
+            .control-bar { gap: 35px; padding: 20px 35px; }
+            .stat-value { font-size: 28px; }
+            .pause-btn { width: 65px; height: 65px; font-size: 22px; }
+            .arrow-left .pixel-arrow { border-right: 35px solid #888; border-top: 25px solid transparent; border-bottom: 25px solid transparent; }
+            .arrow-right .pixel-arrow { border-left: 35px solid #888; border-top: 25px solid transparent; border-bottom: 25px solid transparent; }
+            .arrow-down .pixel-arrow { border-top: 35px solid #888; border-left: 25px solid transparent; border-right: 25px solid transparent; }
+            .rotate-icon::before { font-size: 55px; }
         }
     </style>
 </head>
 <body>
 
 <a href="index.html" class="back-button">
-    <img src="close.jpg" alt="X" class="custom-back-icon">
+    <span>×</span>
 </a>
 
 <div class="game-container">
@@ -216,19 +314,11 @@
             <div class="stat-label">SCORE</div>
             <div id="score" class="stat-value">0</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-label">LINES</div>
-            <div id="lines" class="stat-value">0</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">LEVEL</div>
-            <div id="level" class="stat-value">1</div>
-        </div>
         
         <div class="right-stats">
             <div class="next-box">
                 <div class="stat-label">NEXT</div>
-                <canvas id="next-piece-canvas" width="45" height="45"></canvas>
+                <canvas id="next-piece-canvas" width="50" height="50"></canvas>
             </div>
             <button id="pause-btn" class="pause-btn">
                 ⏸
@@ -242,18 +332,26 @@
     </div>
 
     <div class="control-bar">
-        <button id="left-btn" class="control-btn"><img src="1.png" alt="←"></button>
-        <button id="rotate-btn" class="control-btn"><img src="2.png" alt="↻"></button>
-        <button id="right-btn" class="control-btn"><img src="3.png" alt="→"></button>
-        <button id="down-btn" class="control-btn"><img src="4.png" alt="↓"></button>
+        <button id="left-btn" class="control-btn">
+            <div class="arrow-left"><i class="pixel-arrow"></i></div>
+        </button>
+        <button id="rotate-btn" class="control-btn">
+            <div class="rotate-icon"></div>
+        </button>
+        <button id="right-btn" class="control-btn">
+            <div class="arrow-right"><i class="pixel-arrow"></i></div>
+        </button>
+        <button id="down-btn" class="control-btn">
+            <div class="arrow-down"><i class="pixel-arrow"></i></div>
+        </button>
     </div>
 </div>
 
 <script>
-// ==================== TETRIS ОПТИМИЗИРОВАННЫЙ ====================
+// ==================== МИНИМАЛИСТИЧНЫЙ ТЕТРИС ====================
 const COLS = 10;
 const ROWS = 20;
-let BLOCK_SIZE = 25;
+let BLOCK_SIZE = 30;
 const BASE_SPEED = 1000;
 
 let canvas, ctx, nextCanvas, nextCtx;
@@ -264,16 +362,10 @@ let lastTime = 0;
 let isGameOver = false;
 let isPaused = false;
 let score = 0;
-let lines = 0;
-let level = 1;
 let gameSpeed = BASE_SPEED;
 
-// Цвета фигур (спокойные, без анимаций)
-const COLORS = [
-    '#4a4a4a', '#5a5a5a', '#6a6a6a', '#7a7a7a',
-    '#858585', '#707070', '#5f5f5f', '#4f4f4f',
-    '#3f3f3f', '#2f2f2f', '#3a3a3a', '#454545'
-];
+// Монохром
+const COLORS = ['#4a4a4a', '#5a5a5a', '#6a6a6a', '#7a7a7a', '#858585', '#707070', '#5f5f5f', '#4f4f4f'];
 
 const PIECES = [
     [[1,1],[1,1]],
@@ -308,10 +400,10 @@ function calcCanvasSize() {
     const area = document.querySelector('.game-area');
     if (!area) return;
     const maxW = area.clientWidth - 20;
-    const maxH = Math.min(window.innerHeight * 0.55, 480);
+    const maxH = Math.min(window.innerHeight * 0.6, 550);
     const blockW = Math.floor(maxW / COLS);
     const blockH = Math.floor(maxH / ROWS);
-    BLOCK_SIZE = Math.min(blockW, blockH, 32);
+    BLOCK_SIZE = Math.min(blockW, blockH, 38);
     canvas.width = COLS * BLOCK_SIZE;
     canvas.height = ROWS * BLOCK_SIZE;
     draw();
@@ -355,7 +447,7 @@ function spawnPiece() {
     if (checkCollision(currentPiece)) {
         isGameOver = true;
         setTimeout(() => {
-            alert(`GAME OVER\nSCORE: ${score}\nLINES: ${lines}`);
+            alert(`GAME OVER\nSCORE: ${score}`);
             location.reload();
         }, 300);
     }
@@ -445,34 +537,29 @@ function clearLines() {
         }
     }
     if (cleared) {
-        lines += cleared;
-        score += [0, 100, 300, 500, 800][cleared] * level;
-        level = Math.floor(lines / 10) + 1;
-        gameSpeed = Math.max(200, BASE_SPEED - (level - 1) * 70);
+        score += [0, 100, 300, 500, 800][cleared];
         updateUI();
     }
 }
 
 function updateUI() {
     document.getElementById('score').textContent = score;
-    document.getElementById('lines').textContent = lines;
-    document.getElementById('level').textContent = level;
 }
 
 function drawNext() {
     nextCtx.fillStyle = '#0a0a0a';
-    nextCtx.fillRect(0, 0, 45, 45);
+    nextCtx.fillRect(0, 0, 50, 50);
     if (!nextPiece) return;
-    const size = Math.min(45 / nextPiece.matrix.length, 12);
-    const offX = (45 - nextPiece.matrix[0].length * size) / 2;
-    const offY = (45 - nextPiece.matrix.length * size) / 2;
+    const size = Math.min(50 / nextPiece.matrix.length, 14);
+    const offX = (50 - nextPiece.matrix[0].length * size) / 2;
+    const offY = (50 - nextPiece.matrix.length * size) / 2;
     
     nextPiece.matrix.forEach((row, y) => {
         row.forEach((cell, x) => {
             if (cell) {
                 nextCtx.fillStyle = nextPiece.color;
                 nextCtx.fillRect(offX + x * size, offY + y * size, size - 0.5, size - 0.5);
-                nextCtx.strokeStyle = '#444';
+                nextCtx.strokeStyle = '#333';
                 nextCtx.strokeRect(offX + x * size, offY + y * size, size, size);
             }
         });
@@ -484,7 +571,7 @@ function drawBlock(x, y, color) {
     const by = y * BLOCK_SIZE;
     ctx.fillStyle = color;
     ctx.fillRect(bx, by, BLOCK_SIZE, BLOCK_SIZE);
-    ctx.strokeStyle = '#333';
+    ctx.strokeStyle = '#222';
     ctx.strokeRect(bx + 0.5, by + 0.5, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
 }
 
@@ -509,7 +596,7 @@ function drawGhost() {
 }
 
 function drawGrid() {
-    ctx.strokeStyle = '#1e1e1e';
+    ctx.strokeStyle = '#1a1a1a';
     ctx.lineWidth = 0.5;
     for (let x = 0; x <= COLS; x++) {
         ctx.beginPath();
@@ -558,7 +645,7 @@ function draw() {
     if (isGameOver) {
         ctx.fillStyle = 'rgba(0,0,0,0.85)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#ccc';
+        ctx.fillStyle = '#aaa';
         ctx.font = `${Math.max(10, BLOCK_SIZE * 0.8)}px 'Press Start 2P'`;
         ctx.textAlign = 'center';
         ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
