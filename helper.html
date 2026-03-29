@@ -3,195 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HELPER | PAINT</title>
+    <title>MORSTRIX | MULTILAYER PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-    
     <style>
-        /* Специфические стили для рисовалки */
+        :root {
+            --primary: #fff;
+            --accent: #a84d6b;
+            --bg: #0a0a0a;
+        }
+
         body {
-            background: #0a0a0a;
-            min-height: 100vh;
+            background: var(--bg);
+            color: var(--primary);
+            font-family: 'Press Start 2P', monospace;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100vh;
             overflow: hidden;
-            font-family: 'Press Start 2P', monospace;
         }
 
+        /* Контейнер */
         .paint-container {
             width: 90vw;
             max-width: 400px;
+            border: 4px solid var(--primary);
             background: #000;
-            border: 4px solid #fff; /* Белая рамка в стиле ретро */
-            position: relative;
-            z-index: 10;
-            touch-action: none;
-        }
-
-        #drawCanvas {
-            width: 100%;
-            height: 350px;
-            display: block;
-            background: #000;
-            cursor: crosshair;
-        }
-
-        .paint-controls {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        /* Панель инструментов сверху */
+        .paint-history {
+            display: flex;
             align-items: center;
             padding: 10px;
-            background: #111;
-            border-top: 4px solid #fff;
+            background: #000;
+            border-bottom: 2px solid var(--primary);
         }
 
         .btn-retro {
-            background: #000;
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 8px 12px;
-            font-family: 'Press Start 2P', cursive;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Press Start 2P';
+            cursor: pointer;
+            padding: 5px 10px;
             font-size: 10px;
-            cursor: pointer;
         }
 
-        .btn-retro:active {
-            background: #fff;
-            color: #000;
-        }
+        .btn-retro:disabled { color: #444; border-color: #444; }
+        .btn-retro:active { transform: translateY(2px); }
 
-        input[type="color"] {
-            width: 40px;
-            height: 35px;
-            border: 2px solid #fff;
+        /* Холсты (Слоеный пирог) */
+        .canvas-area {
+            position: relative;
+            width: 100%;
+            height: 350px;
             background: #000;
-            cursor: pointer;
-            padding: 0;
         }
 
-        /* Контейнер для кнопок под рисовалкой */
-        .helper-actions {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            z-index: 10;
-        }
-
-        /* Фон */
-        #neuro-bg {
-            position: fixed;
+        canvas {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            touch-action: none;
         }
+
+        #layer2 { background: transparent; }
+
+        /* Нижняя панель */
+        .paint-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-top: 2px solid var(--primary);
+            background: #111;
+        }
+
+        #pColor { width: 40px; height: 30px; border: 1px solid #fff; background: none; }
+
+        /* ПОПАП СЛОЕВ */
+        .layers-popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .layers-popup.active { display: flex; }
+
+        .layers-window {
+            width: 260px;
+            border: 2px solid var(--primary);
+            background: #000;
+        }
+
+        .layers-header {
+            background: var(--primary);
+            color: #000;
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8px;
+        }
+
+        .layer-item {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            font-size: 8px;
+        }
+
+        .layer-item.active {
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+        }
+
+        .back-button { position: fixed; top: 10px; right: 10px; color: #fff; font-size: 20px; text-decoration: none; }
     </style>
 </head>
 <body>
-    <canvas id="neuro-bg"></canvas>
 
-    <a href="index.html" class="back-button">
-        <span>×</span>
-    </a>
+<a href="index.html" class="back-button">×</a>
 
-    <div style="display: flex; flex-direction: column; align-items: center;">
-        <div class="paint-container">
-            <canvas id="drawCanvas"></canvas>
-            <div class="paint-controls">
-                <input type="color" id="pColor" value="#ffffff">
-                <button class="btn-retro" id="pClear">CLEAR</button>
-            </div>
-        </div>
-
-        <div class="helper-actions">
-            <a href="https://t.me/MORSTRIXBOT" target="_blank" class="retro-button" style="text-decoration: none;">
-                TELEGRAM
-            </a>
-        </div>
+<div class="paint-container">
+    <div class="paint-history">
+        <button class="btn-retro" id="pUndo" disabled> < </button>
+        <button class="btn-retro" id="pRedo" disabled style="margin-left:5px;"> > </button>
+        <button class="btn-retro" id="btnLayersOpen" style="margin-left: 20px;">[ LAYERS ]</button>
     </div>
 
-    <script src="script-bg.js"></script>
+    <div class="canvas-area">
+        <canvas id="layer1"></canvas>
+        <canvas id="layer2"></canvas>
+    </div>
+
+    <div class="paint-controls">
+        <input type="color" id="pColor" value="#ffffff">
+        <button class="btn-retro" id="pClear">CLEAR ACTIVE</button>
+    </div>
+</div>
+
+<div id="layersPopup" class="layers-popup">
+    <div class="layers-window">
+        <div class="layers-header">
+            <span>CHANNELS</span>
+            <button id="btnLayersClose" style="border:none; background:none; cursor:pointer;">X</button>
+        </div>
+        <div id="layerList">
+            <div class="layer-item active" data-id="2">LAYER_02 (TOP)</div>
+            <div class="layer-item" data-id="1">LAYER_01 (BG)</div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const l1 = document.getElementById('layer1');
+    const l2 = document.getElementById('layer2');
+    const ctx1 = l1.getContext('2d', { willReadFrequently: true });
+    const ctx2 = l2.getContext('2d', { willReadFrequently: true });
     
-    <script>
-        (function() {
-            const dCanvas = document.getElementById('drawCanvas');
-            const dCtx = dCanvas.getContext('2d');
-            const dColor = document.getElementById('pColor');
-            const dClear = document.getElementById('pClear');
-            
-            let isDrawing = false;
+    let currentCtx = ctx2; // По умолчанию рисуем на верхнем слое
+    let isDrawing = false;
+    let undoStack = [];
+    let redoStack = [];
 
-            function setupCanvas() {
-                const rect = dCanvas.getBoundingClientRect();
-                // Учитываем разрешение экрана для четкости
-                dCanvas.width = rect.width;
-                dCanvas.height = rect.height;
-                dCtx.fillStyle = "#000";
-                dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);
-                dCtx.lineCap = 'round';
-                dCtx.lineJoin = 'round';
-                dCtx.lineWidth = 5;
-            }
+    function init() {
+        [l1, l2].forEach(c => {
+            c.width = c.offsetWidth;
+            c.height = c.offsetHeight;
+        });
+        ctx1.fillStyle = "#000";
+        ctx1.fillRect(0, 0, l1.width, l1.height);
+        ctx1.lineCap = ctx2.lineCap = 'round';
+        ctx1.lineWidth = ctx2.lineWidth = 5;
+        saveState();
+    }
 
-            // Инициализация при загрузке
-            window.addEventListener('load', setupCanvas);
-            
-            // Чтобы при повороте экрана всё не удалялось, 
-            // resize лучше использовать аккуратно, но пока оставим так:
-            window.addEventListener('resize', setupCanvas);
+    // История (Undo/Redo)
+    function saveState() {
+        redoStack = [];
+        // Сохраняем состояние ОБОИХ слоев в один снимок
+        undoStack.push({
+            l1: l1.toDataURL(),
+            l2: l2.toDataURL()
+        });
+        if (undoStack.length > 20) undoStack.shift();
+        updateBtns();
+    }
 
-            function getMousePos(e) {
-                const rect = dCanvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return {
-                    x: clientX - rect.left,
-                    y: clientY - rect.top
-                };
-            }
+    function updateBtns() {
+        document.getElementById('pUndo').disabled = undoStack.length <= 1;
+        document.getElementById('pRedo').disabled = redoStack.length === 0;
+    }
 
-            function start(e) {
-                isDrawing = true;
-                const pos = getMousePos(e);
-                dCtx.beginPath();
-                dCtx.moveTo(pos.x, pos.y);
-            }
+    document.getElementById('pUndo').onclick = () => {
+        if (undoStack.length > 1) {
+            redoStack.push(undoStack.pop());
+            applyState(undoStack[undoStack.length - 1]);
+        }
+    };
 
-            function draw(e) {
-                if (!isDrawing) return;
-                if (e.cancelable) e.preventDefault();
-                const pos = getMousePos(e);
-                dCtx.strokeStyle = dColor.value;
-                dCtx.lineTo(pos.x, pos.y);
-                dCtx.stroke();
-            }
+    document.getElementById('pRedo').onclick = () => {
+        if (redoStack.length > 0) {
+            const state = redoStack.pop();
+            undoStack.push(state);
+            applyState(state);
+        }
+    };
 
-            function stop() {
-                isDrawing = false;
-                dCtx.closePath();
-            }
+    function applyState(state) {
+        const img1 = new Image(), img2 = new Image();
+        img1.src = state.l1; img2.src = state.l2;
+        img1.onload = () => { ctx1.clearRect(0,0,l1.width,l1.height); ctx1.drawImage(img1,0,0); };
+        img2.onload = () => { ctx2.clearRect(0,0,l2.width,l2.height); ctx2.drawImage(img2,0,0); };
+        updateBtns();
+    }
 
-            // Мышь
-            dCanvas.addEventListener('mousedown', start);
-            window.addEventListener('mousemove', draw);
-            window.addEventListener('mouseup', stop);
-            
-            // Тач (телефоны)
-            dCanvas.addEventListener('touchstart', start, {passive: false});
-            dCanvas.addEventListener('touchmove', draw, {passive: false});
-            dCanvas.addEventListener('touchend', stop);
+    // Рисование
+    function getPos(e) {
+        const rect = l2.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - rect.left, y: clientY - rect.top };
+    }
 
-            // Очистка
-            dClear.onclick = () => {
-                dCtx.fillStyle = "#000";
-                dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);
-            };
-        })();
-    </script>
+    const start = (e) => { isDrawing = true; currentCtx.beginPath(); const p = getPos(e); currentCtx.moveTo(p.x, p.y); };
+    const move = (e) => { 
+        if(!isDrawing) return; 
+        const p = getPos(e); 
+        currentCtx.strokeStyle = document.getElementById('pColor').value; 
+        currentCtx.lineTo(p.x, p.y); 
+        currentCtx.stroke(); 
+    };
+    const end = () => { if(isDrawing) { isDrawing = false; saveState(); } };
+
+    l2.addEventListener('mousedown', start);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    l2.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); });
+    l2.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); });
+    l2.addEventListener('touchend', end);
+
+    // Управление попапом
+    const pop = document.getElementById('layersPopup');
+    document.getElementById('btnLayersOpen').onclick = () => pop.classList.add('active');
+    document.getElementById('btnLayersClose').onclick = () => pop.classList.remove('active');
+
+    document.querySelectorAll('.layer-item').forEach(item => {
+        item.onclick = () => {
+            document.querySelectorAll('.layer-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            currentCtx = (item.dataset.id === "1") ? ctx1 : ctx2;
+            setTimeout(() => pop.classList.remove('active'), 200);
+        };
+    });
+
+    document.getElementById('pClear').onclick = () => {
+        currentCtx.clearRect(0, 0, l1.width, l1.height);
+        if (currentCtx === ctx1) { ctx1.fillStyle = "#000"; ctx1.fillRect(0,0,l1.width,l1.height); }
+        saveState();
+    };
+
+    window.onload = init;
+})();
+</script>
 </body>
 </html>
