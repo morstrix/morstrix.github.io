@@ -5,15 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>HELPER | PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    
     <style>
+        /* Специфические стили для рисовалки */
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Press Start 2P', monospace;
+        }
+
         .paint-container {
             width: 90vw;
             max-width: 400px;
             background: #000;
-            border: 4px solid #fff;
+            border: 4px solid #fff; /* Белая рамка в стиле ретро */
+            position: relative;
+            z-index: 10;
             touch-action: none;
         }
+
         #drawCanvas {
             width: 100%;
             height: 350px;
@@ -21,6 +37,7 @@
             background: #000;
             cursor: crosshair;
         }
+
         .paint-controls {
             display: flex;
             justify-content: space-between;
@@ -29,6 +46,7 @@
             background: #111;
             border-top: 4px solid #fff;
         }
+
         .btn-retro {
             background: #000;
             border: 2px solid #fff;
@@ -38,12 +56,39 @@
             font-size: 10px;
             cursor: pointer;
         }
+
+        .btn-retro:active {
+            background: #fff;
+            color: #000;
+        }
+
         input[type="color"] {
             width: 40px;
             height: 35px;
             border: 2px solid #fff;
             background: #000;
             cursor: pointer;
+            padding: 0;
+        }
+
+        /* Контейнер для кнопок под рисовалкой */
+        .helper-actions {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        /* Фон */
+        #neuro-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
     </style>
 </head>
@@ -51,10 +96,10 @@
     <canvas id="neuro-bg"></canvas>
 
     <a href="index.html" class="back-button">
-        <img src="close.jpg" alt="X" class="custom-back-icon">
+        <span>×</span>
     </a>
 
-    <section class="site-section">
+    <div style="display: flex; flex-direction: column; align-items: center;">
         <div class="paint-container">
             <canvas id="drawCanvas"></canvas>
             <div class="paint-controls">
@@ -62,12 +107,16 @@
                 <button class="btn-retro" id="pClear">CLEAR</button>
             </div>
         </div>
-        <div class="action-buttons" style="margin-top: 30px;">
-            <a href="https://t.me/MORSTRIXBOT" target="_blank" class="retro-button">TELEGRAM</a>
+
+        <div class="helper-actions">
+            <a href="https://t.me/MORSTRIXBOT" target="_blank" class="retro-button" style="text-decoration: none;">
+                TELEGRAM
+            </a>
         </div>
-    </section>
+    </div>
 
     <script src="script-bg.js"></script>
+    
     <script>
         (function() {
             const dCanvas = document.getElementById('drawCanvas');
@@ -79,6 +128,7 @@
 
             function setupCanvas() {
                 const rect = dCanvas.getBoundingClientRect();
+                // Учитываем разрешение экрана для четкости
                 dCanvas.width = rect.width;
                 dCanvas.height = rect.height;
                 dCtx.fillStyle = "#000";
@@ -88,7 +138,11 @@
                 dCtx.lineWidth = 5;
             }
 
+            // Инициализация при загрузке
             window.addEventListener('load', setupCanvas);
+            
+            // Чтобы при повороте экрана всё не удалялось, 
+            // resize лучше использовать аккуратно, но пока оставим так:
             window.addEventListener('resize', setupCanvas);
 
             function getMousePos(e) {
@@ -122,13 +176,17 @@
                 dCtx.closePath();
             }
 
+            // Мышь
             dCanvas.addEventListener('mousedown', start);
             window.addEventListener('mousemove', draw);
             window.addEventListener('mouseup', stop);
+            
+            // Тач (телефоны)
             dCanvas.addEventListener('touchstart', start, {passive: false});
             dCanvas.addEventListener('touchmove', draw, {passive: false});
             dCanvas.addEventListener('touchend', stop);
 
+            // Очистка
             dClear.onclick = () => {
                 dCtx.fillStyle = "#000";
                 dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);

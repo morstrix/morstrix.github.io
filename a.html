@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ADA | MORSTRIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #0a0a0a; 
+            min-height: 100vh; 
+            font-family: 'Press Start 2P', monospace; 
+            color: #fff; 
+            overflow-x: hidden; 
+        }
+
+        /* Кнопка назад */
+        /* ЕДИНЫЙ СТИЛЬ ДЛЯ КРЕСТИКА */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    transition: transform 0.2s ease;
+}
+
+.back-button span {
+    color: #a84d6b; /* Твой фирменный розовый */
+    font-size: 32px;
+    font-family: monospace;
+    line-height: 1;
+}
+
+.back-button:hover {
+    transform: scale(1.1);
+}
+
+.back-button:active {
+    transform: scale(0.9);
+}
+
+        /* Заголовок */
+        .ig-header { text-align: center; padding: 80px 20px 30px; }
+        .ig-title { font-size: 1.2rem; color: #a84d6b; letter-spacing: 2px; margin-bottom: 12px; }
+        .ig-subtitle { font-size: 0.55rem; color: #a1a1a1; line-height: 1.4; }
+
+        /* Контейнер виджета */
+        .instagram-feed { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; }
+        behold-widget { display: block; min-height: 400px; }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back-button"><span>×</span></a>
+
+<div class="ig-header">
+    <div class="ig-title">ADA MORSOVA</div>
+    <div class="ig-subtitle">INSTAGRAM FEED</div>
+</div>
+
+<div class="instagram-feed">
+    <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+</div>
+
+<script type="module" src="https://w.behold.so/widget.js"></script>
+</body>
+</html>

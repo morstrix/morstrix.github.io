@@ -60,7 +60,6 @@ if (windowEl) {
 
     windowEl.addEventListener('touchmove', (e) => {
         if (!isSwiping) return;
-        e.preventDefault();
         const currentX = e.touches[0].clientX;
         const diff = currentX - touchStartX;
         if (Math.abs(diff) > 5) {
@@ -83,7 +82,7 @@ if (windowEl) {
         isSwiping = false;
     }, {passive: true});
 
-    // Мышь
+    // Мышь (Drag)
     let mouseStartX = 0;
     let isDragging = false;
 
@@ -91,7 +90,6 @@ if (windowEl) {
         mouseStartX = e.clientX;
         isDragging = true;
         swipeDetected = false;
-        e.preventDefault();
     });
 
     windowEl.addEventListener('mousemove', (e) => {
@@ -140,14 +138,18 @@ if (windowEl) {
     }
 })();
 
-// ==================== ПЛАВНЫЙ ПЕРЕХОД ДЛЯ ССЫЛОК ====================
+// ==================== ПЛАВНЫЙ ПЕРЕХОД ДЛЯ ВСЕХ ССЫЛОК ====================
 document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', (e) => {
-        if (link.getAttribute('href') && !link.getAttribute('href').startsWith('#')) {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !link.target) {
             e.preventDefault();
-            const href = link.getAttribute('href');
+            
+            if (navigator.vibrate) navigator.vibrate(10);
+            
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.2s ease';
+            
             setTimeout(() => {
                 window.location.href = href;
             }, 200);
@@ -155,15 +157,11 @@ document.querySelectorAll('a').forEach(link => {
     });
 });
 
-// ==================== СОЦИАЛЬНЫЕ СЕТИ (A и X) ====================
-// Ждём полной загрузки DOM
+// ==================== СОЦИАЛЬНЫЕ СЕТИ (TEAM POPUP) ====================
 document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('socialPopup');
-    const popupTitle = document.getElementById('popupTitle');
-    const popupIcons = document.getElementById('popupIcons');
-    const closePopup = document.getElementById('closePopup');
     
-    // Если попапа нет в DOM, создаём его
+    // Создаем структуру попапа, если её нет
     if (!popup) {
         const newPopup = document.createElement('div');
         newPopup.id = 'socialPopup';
@@ -174,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="popup-title" id="popupTitle">SOCIAL</span>
                     <button class="popup-close" id="closePopup">×</button>
                 </div>
-                <div class="popup-icons" id="popupIcons"></div>
+                <div id="popupIcons"></div>
             </div>
         `;
         document.body.appendChild(newPopup);
@@ -184,80 +182,59 @@ document.addEventListener('DOMContentLoaded', function() {
     const finalPopupTitle = document.getElementById('popupTitle');
     const finalPopupIcons = document.getElementById('popupIcons');
     const finalClosePopup = document.getElementById('closePopup');
-    
-    const socialIcons = {
-        instagram: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/></svg>`,
-        tiktok: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.33 2.1-.1.7.07 1.42.47 2.01.39.55.96.93 1.6 1.11.82.24 1.7.13 2.41-.3.67-.41 1.07-1.11 1.14-1.89.07-2.13.05-4.27.05-6.41V0z"/></svg>`,
-        linkedin: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`
-    };
-    
+
     const socialData = {
-        ada: {
-            title: 'ADA MORSOVA',
-            links: [
-                { url: 'https://instagram.com/a.mrsva', icon: socialIcons.instagram, name: 'INSTAGRAM' },
-                { url: 'https://linkedin.com/in/a.mrsva', icon: socialIcons.linkedin, name: 'LINKEDIN' }
-            ]
-        },
-        exs: {
-            title: 'GRIM EX FRAME',
-            links: [
-                { url: 'https://instagram.com/grimexframe', icon: socialIcons.instagram, name: 'INSTAGRAM' },
-                { url: 'https://tiktok.com/@grimexframe', icon: socialIcons.tiktok, name: 'TIKTOK' }
-            ]
+        team: {
+            title: 'TXT',
+            content: `
+                <div class="team-popup-container">
+                    <a href="a.html" class="team-member">
+                        <img src="a.png" alt="DES">
+                        <span>designer</span>
+                    </a>
+                    <a href="x.html" class="team-member">
+                        <img src="x.png" alt="DEV">
+                        <span>developer</span>
+                    </a>
+                </div>
+            `
         }
     };
-    
+
     function openSocialPopup(type) {
         const data = socialData[type];
         if (!data) return;
         
         if (finalPopupTitle) finalPopupTitle.textContent = data.title;
-        if (finalPopupIcons) {
-            finalPopupIcons.innerHTML = data.links.map(link => `
-                <a href="${link.url}" target="_blank" class="popup-icon-link">
-                    ${link.icon}
-                    <span class="popup-icon-name">${link.name}</span>
-                </a>
-            `).join('');
-        }
+        if (finalPopupIcons) finalPopupIcons.innerHTML = data.content;
         
         if (finalPopup) finalPopup.classList.add('active');
         if (navigator.vibrate) navigator.vibrate(10);
     }
-    
+
     function closeSocialPopup() {
         if (finalPopup) finalPopup.classList.remove('active');
     }
-    
-    // Находим все триггеры и вешаем события
-    const socialTriggers = document.querySelectorAll('.social-trigger');
-    console.log('Найдено триггеров:', socialTriggers.length);
-    
-    socialTriggers.forEach(trigger => {
+
+    // Обработка кнопки TEAM
+    document.querySelectorAll('.social-trigger').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
             const type = trigger.dataset.type;
-            console.log('Клик по:', type);
             openSocialPopup(type);
         });
     });
+
+    if (finalClosePopup) finalClosePopup.addEventListener('click', closeSocialPopup);
     
-    // Закрытие попапа
     if (finalPopup) {
         finalPopup.addEventListener('click', (e) => {
             if (e.target === finalPopup) closeSocialPopup();
         });
     }
-    if (finalClosePopup) {
-        finalClosePopup.addEventListener('click', closeSocialPopup);
-    }
-    
+
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && finalPopup && finalPopup.classList.contains('active')) {
-            closeSocialPopup();
-        }
+        if (e.key === 'Escape') closeSocialPopup();
     });
 });
 

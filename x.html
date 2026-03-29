@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>INSTAGRAM | MORSTRIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            font-family: 'Press Start 2P', monospace;
+            color: #fff;
+        }
+        
+        /* Кнопка назад */
+        /* ЕДИНЫЙ СТИЛЬ ДЛЯ КРЕСТИКА НА ВСЕХ СТРАНИЦАХ */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none; /* Убираем тот самый круг, если он не нужен */
+}
+
+.back-button span {
+    color: #a84d6b;
+    font-family: Arial, sans-serif; /* Чистый и ровный шрифт */
+    font-size: 32px;
+    font-weight: 300; /* Тонкий современный вид */
+    line-height: 1;
+    display: block;
+    transform: none; /* Убираем искажения */
+    transition: all 0.2s ease;
+}
+
+/* Эффект при наведении */
+.back-button:hover span {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+/* Эффект при нажатии */
+.back-button:active span {
+    transform: scale(0.9);
+}
+        
+        /* Шапка */
+        .ig-header {
+            text-align: center;
+            padding: 80px 20px 30px 20px;
+        }
+        
+        .ig-title {
+            font-size: 1.2rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        
+        .ig-subtitle {
+            font-size: 0.55rem;
+            color: #a1a1a1;
+            letter-spacing: 1px;
+        }
+        
+        /* Контейнер для виджета */
+        .instagram-feed {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px 50px 15px;
+        }
+
+        /* Настройка внешнего вида самого виджета через стили (если нужно) */
+        behold-widget {
+            display: block;
+            min-height: 400px;
+        }
+        
+        /* Адаптация */
+        @media (max-width: 600px) {
+            .ig-header {
+                padding: 70px 15px 20px 15px;
+            }
+            .ig-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back-button">
+    <span>×</span>
+</a>
+
+<div class="ig-header">
+    <div class="ig-title">@GRIMEXFRAME</div>
+    <div class="ig-subtitle">актуальне з Instagram</div>
+</div>
+
+<div class="instagram-feed">
+    <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+</div>
+
+<script>
+  (() => {
+    const d=document,s=d.createElement("script");s.type="module";
+    s.src="https://w.behold.so/widget.js";d.head.append(s);
+  })();
+</script>
+
+</body>
+</html>
