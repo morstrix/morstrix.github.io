@@ -1,4 +1,27 @@
 // ==================== LOGICA SUPPORT/HELPER ====================
+// Функция генерации 8-битного звука
+const playSound = (type) => {
+    // Создаем аудио-контекст (инструменты для синтеза звука)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+        oscillator.type = 'square'; // "Квадратная" волна дает ретро-звук
+        oscillator.frequency.setValueAtTime(800, now);
+        oscillator.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+        gainNode.gain.setValueAtTime(0.1, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        oscillator.start(now);
+        oscillator.stop(now + 0.1);
+    } 
+};
+
 let currentSystem = 'support';
 let touchStartX = 0;
 let isSwiping = false;
@@ -13,6 +36,16 @@ const indicator2 = document.getElementById('indicator2');
 function switchTo(system) {
     if (system === currentSystem) return;
     
+    // 1. Добавляем звук (если ты вставил функцию playSound из прошлого ответа)
+    if (typeof playSound === 'function') playSound('select');
+
+    // 2. Улучшенная вибрация
+    if (navigator.vibrate) {
+        // Паттерн: 20мс вибрация, 10мс пауза, 20мс вибрация
+        // Это создает ощущение механического "щелчка"
+        navigator.vibrate([20, 10, 20]); 
+    }
+
     if (system === 'support') {
         slideHelper.classList.remove('active');
         slideSupport.classList.add('active');
@@ -27,12 +60,11 @@ function switchTo(system) {
         currentSystem = 'helper';
     }
     
-    windowEl.style.transform = 'scale(0.98)';
+    // Визуальный отклик (сжатие окна)
+    windowEl.style.transform = 'scale(0.96)'; // Чуть сильнее сжимаем для эффекта
     setTimeout(() => {
         windowEl.style.transform = 'scale(1)';
     }, 100);
-    
-    if (navigator.vibrate) navigator.vibrate(10);
 }
 
 function enterSystem() {
@@ -204,6 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function openSocialPopup(type) {
         const data = socialData[type];
         if (!data) return;
+        
+        playSound('click');
         
         if (finalPopupTitle) finalPopupTitle.textContent = data.title;
         if (finalPopupIcons) finalPopupIcons.innerHTML = data.content;
