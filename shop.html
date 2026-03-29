@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
     <style>
+        /* ===== УНИКАЛЬНЫЕ СТИЛИ ДЛЯ SHOP ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --shop-glow: #a84d6b; --card-bg: #0f0f0f; }
+        
         body {
             background: #000;
             min-height: 100vh;
@@ -15,24 +18,20 @@
             padding-bottom: 90px;
             font-family: 'Press Start 2P', monospace;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(168,77,107,0.04) 0px, rgba(168,77,107,0.04) 1px, transparent 1px, transparent 3px);
-            pointer-events: none;
-            z-index: 0;
-        }
+        
         .container {
             max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
         
-        /* ЗАГОЛОВОК БЕЗ РАМКИ */
+        /* ЗАГОЛОВОК */
         .shop-header {
             text-align: center;
             margin-bottom: 30px;
@@ -40,72 +39,42 @@
             background: transparent;
             border: none;
         }
+        
         .shop-title { 
             font-size: 1.3rem; 
-            color: var(--shop-glow);
+            color: #a84d6b95;
             text-shadow: 0 0 8px rgba(168,77,107,0.5);
         }
+        
         .shop-subtitle { 
             font-size: 0.6rem; 
-            color: #7a8278; 
+            color: #ffffff; 
             margin-top: 12px;
         }
         
-        /* КРЕСТИК - СВЕРХУ, ВЫШЕ ВСЕГО */
-        .back-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            text-decoration: none;
-            background: rgba(0,0,0,0.6);
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid var(--shop-glow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .back-button:hover {
-            background: rgba(168,77,107,0.3);
-            transform: scale(1.02);
-        }
-        .back-button:active {
-            transform: scale(0.95);
-        }
-        .custom-back-icon {
-            width: 28px;
-            height: 28px;
-            filter: brightness(0.7) sepia(1) hue-rotate(290deg);
-            display: block;
-        }
-        
-        /* КАТЕГОРИИ СЕТКОЙ 2x3 */
+        /* СЕТКА 2x3 */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             margin-bottom: 20px;
         }
+        
         .cat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--shop-glow);
+            background: #0f0f0f;
+            border: 1px solid #a84d6b;
             padding: 15px;
+            padding-bottom: 35px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
         }
-        .cat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(168,77,107,0.3);
-            border-color: #cf6f8f;
-        }
+        
         .cat-card:active {
             transform: scale(0.98);
         }
+        
         .cat-image {
             width: 100%;
             aspect-ratio: 1/1;
@@ -114,18 +83,21 @@
             border: 1px solid #333;
             pointer-events: none;
         }
+        
         .cat-name {
             font-size: 0.75rem;
-            color: var(--shop-glow);
+            color: #a84d6b95;
             letter-spacing: 2px;
             pointer-events: none;
+            word-break: break-word;
         }
+        
         .price-tag {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(168,77,107,0.9);
-            color: #000;
+            background: #a84d6b95;
+            color: #ffffff;
             padding: 4px 8px;
             font-size: 0.6rem;
             font-family: 'Press Start 2P', monospace;
@@ -133,14 +105,14 @@
             pointer-events: none;
         }
         
-        /* КОРЗИНА СНИЗУ (FIXED) */
+        /* КОРЗИНА СНИЗУ */
         .cart-bottom {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background: #0a0a0a;
-            border-top: 2px solid var(--shop-glow);
+            border-top: 2px solid #a84d6b;
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
@@ -149,10 +121,11 @@
             backdrop-filter: blur(10px);
             background: rgba(10,10,10,0.95);
         }
+        
         .cart-bottom-btn {
             background: transparent;
-            border: 1px solid var(--shop-glow);
-            color: var(--shop-glow);
+            border: 1px solid #a84d6b95;
+            color: #a84d6b95;
             font-family: 'Press Start 2P', monospace;
             font-size: 0.7rem;
             padding: 10px 20px;
@@ -161,15 +134,21 @@
             align-items: center;
             gap: 10px;
         }
+        
+        .cart-bottom-btn:active {
+            transform: scale(0.95);
+        }
+        
         .cart-bottom-count {
-            background: var(--shop-glow);
-            color: #000;
+            background: #a84d6b95;
+            color: #ffffff;
             padding: 2px 8px;
             border-radius: 20px;
             font-size: 0.7rem;
         }
+        
         .cart-bottom-total {
-            color: var(--shop-glow);
+            color: #a84d6b95;
             font-size: 0.7rem;
         }
         
@@ -177,38 +156,109 @@
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
+        
         .modal.active { display: flex; }
+        
         .modal-content {
             background: #0a0a0a;
-            border: 2px solid var(--shop-glow);
+            border: 2px solid #a84d6b;
             padding: 25px;
             max-width: 500px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
         }
-        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #333; font-size: 0.7rem; }
-        .cart-total { margin-top: 20px; padding-top: 10px; border-top: 2px solid var(--shop-glow); text-align: right; font-size: 0.8rem; }
-        .checkout-btn { background: var(--shop-glow); color: #000; border: none; padding: 12px; width: 100%; margin-top: 15px; cursor: pointer; font-family: 'Press Start 2P', monospace; }
-        .remove-item { background: none; border: none; color: #a84d6b; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
-        .close-modal { background: none; border: none; color: var(--shop-glow); float: right; font-size: 1.5rem; cursor: pointer; }
         
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 10px 0; 
+            border-bottom: 1px solid #333; 
+            font-size: 0.7rem; 
+        }
+        
+        .cart-total { 
+            margin-top: 20px; 
+            padding-top: 10px; 
+            border-top: 2px solid #a84d6b; 
+            text-align: right; 
+            font-size: 0.8rem; 
+        }
+        
+        .checkout-btn { 
+            background: #a84d6b95; 
+            color: #ffffff; 
+            border: none; 
+            padding: 12px; 
+            width: 100%; 
+            margin-top: 15px; 
+            cursor: pointer; 
+            font-family: 'Press Start 2P', monospace; 
+        }
+        
+        .checkout-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .remove-item { 
+            background: none; 
+            border: none; 
+            color: #a84d6b95; 
+            cursor: pointer; 
+            margin-left: 10px; 
+            font-size: 0.8rem; 
+        }
+        
+        .close-modal { 
+            background: none; 
+            border: none; 
+            color: #a84d6b95; 
+            float: right; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+        }
+        
+        /* Адаптация для телефонов — цена не налезает */
         @media (max-width: 680px) {
             .categories-grid { gap: 15px; }
             .shop-title { font-size: 1rem; }
             .cat-name { font-size: 0.65rem; }
-            .price-tag { font-size: 0.5rem; padding: 3px 6px; }
+            .price-tag { 
+                font-size: 0.5rem; 
+                padding: 3px 6px;
+                bottom: 8px;
+                right: 8px;
+            }
             .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
             .cart-bottom-total { font-size: 0.55rem; }
-            .back-button { top: 12px; right: 12px; padding: 6px; }
-            .custom-back-icon { width: 24px; height: 24px; }
+        }
+        
+        @media (max-width: 480px) {
+            .cat-card {
+                padding: 10px;
+                padding-bottom: 30px;
+            }
+            .cat-name {
+                font-size: 0.55rem;
+            }
+            .price-tag {
+                position: relative;
+                display: inline-block;
+                margin-top: 8px;
+                bottom: auto;
+                right: auto;
+                font-size: 0.55rem;
+                padding: 4px 10px;
+            }
         }
     </style>
 </head>
@@ -224,11 +274,10 @@
         <div class="shop-subtitle">індивідуальні замовлення</div>
     </div>
 
-    <!-- КАТЕГОРИИ СЕТКОЙ 2x3 -->
     <div class="categories-grid" id="categoriesGrid"></div>
 </div>
 
-<!-- КОРЗИНА СНИЗУ -->
+<!-- КОРЗИНА -->
 <div class="cart-bottom" id="cartBottom">
     <button class="cart-bottom-btn" id="cartBtn">
         🛒 ПАКЕТ
@@ -237,7 +286,7 @@
     <div class="cart-bottom-total" id="cartTotalBottom">$0</div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+<!-- МОДАЛЬНОЕ ОКНО -->
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <button class="close-modal">✕</button>
@@ -245,14 +294,13 @@
         <div id="cartItems"></div>
         <div class="cart-total" id="cartTotalModal"></div>
         <button id="checkoutBtn" class="checkout-btn">ENTER</button>
-        <div style="font-size: 0.5rem; color: #666; margin-top: 12px; text-align: center;">
+        <div style="font-size: 0.5rem; color: #726767c0; margin-top: 12px; text-align: center;">
             * деталі в Telegram
         </div>
     </div>
 </div>
 
 <script>
-    // ========== КАТЕГОРИИ С ЦЕНАМИ ==========
     const categories = [
         { id: 1, name: "PRINT", price: 15, image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
         { id: 2, name: "DESIGN", price: 25, image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },

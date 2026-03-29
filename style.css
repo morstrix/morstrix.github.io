@@ -1,20 +1,26 @@
-/* --- 1. ГЛОБАЛЬНІ НАЛАШТУВАННЯ --- */
+/* ============================================
+   ROOT ПЕРЕМЕННЫЕ
+============================================ */
 :root {
-    --cyan-glow: #7fbfbf;
-    --purple-dark: #6f4f6f;
+    --cyan-glow: #a84d6b95;
+    --purple-dark: #5a7777d7;
     --purple-darker: #5a3f5a;
     --gray-dirty: #6a5a5a;
     --gray: #7a6a6a;
     --bg-color: #121212;
     --bg-darker: #0a0a0a;
     --bg-lighter: #1a1a1a;
-    --text: #7fbfbf;
+    --text: #ffffff;
     --text-dim: #6a5a5a;
 }
 
+/* ============================================
+   ГЛОБАЛЬНЫЕ НАСТРОЙКИ
+============================================ */
 * { 
     box-sizing: border-box; 
-    margin: 0; padding: 0; 
+    margin: 0; 
+    padding: 0; 
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -25,72 +31,65 @@ body {
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
-    text-shadow: 0 0 5px rgba(127, 191, 191, 0.5);
-    animation: crtFlicker 8s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 3px rgba(127, 191, 191, 0.4);
+    position: relative;
 }
 
-/* --- CRT ЭФФЕКТ (текстура старого телевизора) --- */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.2) 0px,
-        rgba(0, 0, 0, 0.2) 1px,
-        transparent 1px,
-        transparent 2px
-    );
-    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
-}
-
-/* Эффект мерцания */
-@keyframes crtFlicker {
-    0% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
-    95% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
-    96% { opacity: 0.95; text-shadow: 0 0 3px rgba(127, 191, 191, 0.3); }
-    97% { opacity: 0.98; text-shadow: 0 0 6px rgba(127, 191, 191, 0.6); }
-    98% { opacity: 0.94; text-shadow: 0 0 2px rgba(127, 191, 191, 0.2); }
-    99% { opacity: 0.97; text-shadow: 0 0 7px rgba(127, 191, 191, 0.7); }
-    100% { opacity: 1; text-shadow: 0 0 5px rgba(127, 191, 191, 0.5); }
-}
-
-/* Хроматическая аберрация по краям */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9998;
-    background: radial-gradient(
-        circle at 50% 50%,
-        transparent 60%,
-        rgba(111, 79, 111, 0.2) 100%
-    );
-}
-
-/* --- 2. АНІМОВАНИЙ ФОН (NEURO) --- */
+/* ============================================
+   ФОН NEURO
+============================================ */
 #neuro-bg {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
     pointer-events: none;
 }
 
-#neuro-bg canvas {
-    filter: hue-rotate(280deg) saturate(0.4) brightness(0.5);
+/* ============================================
+   КРЕСТИК НАЗАД (ПОВЕРХ ВСЕГО)
+============================================ */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--purple-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-/* --- 3. СПІЛЬНІ КОМПОНЕНТИ --- */
+.back-button:hover {
+    background: rgba(168, 77, 107, 0.5);
+    border-color: var(--cyan-glow);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+}
+
+.custom-back-icon {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0.8);
+    display: block;
+}
+
+/* ============================================
+   ОБЩИЕ КОМПОНЕНТЫ
+============================================ */
 .site-section {
     padding: 60px 20px;
     display: flex;
@@ -98,24 +97,18 @@ body::after {
     align-items: center;
 }
 
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    text-decoration: none;
-}
-
-.custom-back-icon {
-    width: 35px;
-    height: auto;
-    image-rendering: pixelated;
-    filter: brightness(0.6) sepia(1) hue-rotate(280deg) saturate(0.5);
-    transition: filter 0.2s;
-}
-
-.custom-back-icon:hover {
-    filter: brightness(0.9) sepia(1) hue-rotate(280deg) saturate(0.7);
+.site-section.main-index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px 20px;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .main-nav-link {
@@ -149,7 +142,9 @@ body::after {
     color: var(--gray-dirty);
 }
 
-/* --- 4. ФУТУРИСТИЧНЕ ВІКНО (ДЛЯ INDEX.HTML) --- */
+/* ============================================
+   ФУТУРИСТИЧЕСКОЕ ОКНО (SUPPORT/HELPER)
+============================================ */
 .futuristic-container {
     width: 100%;
     display: flex;
@@ -157,7 +152,6 @@ body::after {
     align-items: center;
     margin: 10px 0;
     position: relative;
-    color: var(--gray-dirty);
 }
 
 .futuristic-window {
@@ -171,10 +165,6 @@ body::after {
     overflow: hidden;
     box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 0 2px var(--bg-color) inset, 0 0 15px rgba(127, 191, 191, 0.2);
     transition: transform 0.2s ease;
-}
-
-.futuristic-window:hover {
-    box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 0 2px var(--bg-color) inset, 0 0 25px rgba(127, 191, 191, 0.4);
 }
 
 .hud-corner {
@@ -194,9 +184,11 @@ body::after {
 
 .crosshair {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 40px; height: 40px;
+    width: 40px;
+    height: 40px;
     pointer-events: none;
     opacity: 0.15;
 }
@@ -208,32 +200,26 @@ body::after {
     background: var(--cyan-glow);
 }
 
-.crosshair::before { width: 1px; height: 40px; left: 50%; transform: translateX(-50%); }
-.crosshair::after { width: 40px; height: 1px; top: 50%; transform: translateY(-50%); }
-
-.scan-line {
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: rgba(127, 191, 191, 0.2);
-    top: 0; left: 0;
-    animation: scanMove 6s linear infinite;
-    pointer-events: none;
-    z-index: 10;
+.crosshair::before {
+    width: 1px;
+    height: 40px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-@keyframes scanMove {
-    0% { top: -10px; opacity: 0; }
-    10% { opacity: 0.5; }
-    50% { top: 110%; opacity: 0.5; }
-    60% { opacity: 0; }
-    100% { top: -10px; opacity: 0; }
+.crosshair::after {
+    width: 40px;
+    height: 1px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .grid-overlay {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: linear-gradient(rgba(127, 191, 191, 0.05) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(127, 191, 191, 0.05) 1px, transparent 1px);
     background-size: 15px 15px;
@@ -243,7 +229,8 @@ body::after {
 
 .window-content {
     position: relative;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,7 +239,8 @@ body::after {
 
 .content-slide {
     position: absolute;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -284,14 +272,12 @@ body::after {
     color: var(--purple-dark);
     letter-spacing: 1px;
     margin-bottom: 4px;
-    text-shadow: 0 0 3px rgba(111, 79, 111, 0.5);
 }
 
 .slide-subtitle {
     font-size: 6px;
     color: var(--cyan-glow);
     letter-spacing: 1px;
-    text-shadow: 0 0 3px rgba(127, 191, 191, 0.5);
 }
 
 .hud-indicators {
@@ -301,7 +287,8 @@ body::after {
 }
 
 .hud-dot {
-    width: 8px; height: 8px;
+    width: 8px;
+    height: 8px;
     border: 1px solid var(--purple-dark);
     background: transparent;
     transition: all 0.3s ease;
@@ -315,117 +302,9 @@ body::after {
     box-shadow: 0 0 10px var(--cyan-glow);
 }
 
-/* --- 5. ФОРУМ (FORUM.HTML) --- */
-.carousel-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.carousel-window { 
-    width: 280px;
-    height: 280px;
-    border: 2px solid var(--purple-dark);
-    overflow: hidden;
-    background: var(--bg-color);
-    box-shadow: 0 0 10px rgba(127, 191, 191, 0.2);
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.room-image {
-    width: 280px;
-    height: 280px;
-    flex-shrink: 0;
-    object-fit: contain;
-    image-rendering: pixelated;
-    filter: none !important;
-}
-
-.nav-btn {
-    background: none; border: none;
-    color: var(--cyan-glow);
-    font-family: 'Press Start 2P';
-    font-size: 18px;
-    cursor: pointer;
-    text-shadow: 0 0 5px var(--cyan-glow);
-}
-
-.retro-info-box {
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.retro-info-box li {
-    font-size: 11px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    position: relative;
-    padding-left: 20px;
-    color: var(--cyan-glow);
-    text-shadow: 0 0 3px rgba(127, 191, 191, 0.3);
-}
-
-.retro-info-box li::before {
-    content: "■";
-    position: absolute;
-    left: 0;
-    color: var(--purple-dark);
-}
-
-.action-buttons {
-    width: 100%;
-    max-width: 310px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.retro-button { 
-    display: block;
-    width: 100%;
-    padding: 15px; 
-    border: 2px solid var(--purple-dark);
-    background: transparent; 
-    color: var(--cyan-glow);
-    text-decoration: none;
-    text-align: center; 
-    font-size: 10px;
-    transition: all 0.2s;
-    text-shadow: 0 0 3px rgba(127, 191, 191, 0.3);
-}
-
-.retro-button:active {
-    background: var(--purple-dark);
-    color: var(--bg-color);
-    text-shadow: none;
-}
-
-/* --- 6. HELPER (HELPER.HTML) --- */
-.game-window-container { 
-    width: 320px;
-    height: 550px;
-    border: 2px solid var(--purple-dark);
-    background: var(--bg-color);
-    overflow: hidden; 
-    margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(127, 191, 191, 0.2);
-}
-
-.game-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
-
-/* --- 7. СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ --- */
+/* ============================================
+   СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ
+============================================ */
 .social-popup {
     display: none;
     position: fixed;
@@ -435,10 +314,9 @@ body::after {
     height: 100%;
     background: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(3px);
-    z-index: 1000;
+    z-index: 100000;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.2s ease;
 }
 
 .social-popup.active {
@@ -453,12 +331,6 @@ body::after {
     max-width: 340px;
     position: relative;
     box-shadow: 0 0 30px rgba(127, 191, 191, 0.3);
-    animation: popIn 0.3s ease;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
 }
 
 .popup-header {
@@ -475,14 +347,13 @@ body::after {
     font-size: 12px;
     color: var(--cyan-glow);
     letter-spacing: 2px;
-    text-shadow: 0 0 5px var(--cyan-glow);
 }
 
 .popup-close {
     background: none;
     border: none;
     color: var(--cyan-glow);
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
     padding: 0 8px;
     transition: all 0.2s;
@@ -518,7 +389,6 @@ body::after {
     height: 48px;
     fill: var(--cyan-glow);
     transition: all 0.2s;
-    filter: drop-shadow(0 0 3px var(--cyan-glow));
 }
 
 .popup-icon-link:hover .popup-icon {
@@ -535,95 +405,240 @@ body::after {
     letter-spacing: 1px;
 }
 
-/* --- 8. ДЕКОРАТИВНИЙ КВАДРАТИК (FORUM.HTML) --- */
-.forum-decor {
+/* ============================================
+   CRT ОВЕРЛЕЙ (ПОВЕРХ ВСЕГО)
+============================================ */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+.pixel-grid {
     position: absolute;
     top: 0;
-    left: -60px;
-    width: 55px;
-    height: 55px;
-    background: rgba(30, 20, 30, 0.9);
-    border: 2px solid var(--cyan-glow);
-    border-radius: 6px;
-    box-shadow: 0 0 8px rgba(127, 191, 191, 0.3);
-    backdrop-filter: blur(2px);
-    animation: vhs-shake 3s infinite;
-    z-index: 10;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(0deg, rgba(100, 150, 180, 0.06) 0px, rgba(100, 150, 180, 0.06) 1px, transparent 1px, transparent 4px),
+        repeating-linear-gradient(90deg, rgba(100, 150, 180, 0.04) 0px, rgba(100, 150, 180, 0.04) 1px, transparent 1px, transparent 4px);
+    background-size: 4px 4px, 4px 4px;
+    pointer-events: none;
 }
 
-.forum-decor::after {
-    content: var(--dynamic-word, "design");
+.flicker {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 7px;
-    color: var(--cyan-glow);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 2px 5px;
-    border-radius: 3px;
-    z-index: 12;
-    text-shadow: 0 0 3px var(--cyan-glow);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(127, 191, 191, 0.03) 0%, transparent 70%);
+    pointer-events: none;
 }
 
-@keyframes vhs-shake {
-    0%,100% { transform: translate(0,0); }
-    10% { transform: translate(1px,-1px); }
-    20% { transform: translate(-1px,1px); }
+.noise {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjUiIG51bU9jdGF2ZXM9IjIiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=');
+    background-repeat: repeat;
+    background-size: 80px 80px;
+    opacity: 0.06;
+    pointer-events: none;
 }
 
-/* --- 9. НИЖНІ ІКОНКИ A/X --- */
-.row-bottom-links {
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+/* Glitch блоки */
+.glitch-block {
+    position: absolute;
+    background: rgba(127, 191, 191, 0.08);
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.glitch-block.small { width: 30px; height: 30px; }
+.glitch-block.medium { width: 50px; height: 50px; }
+.glitch-block.large { width: 80px; height: 80px; }
+.glitch-block.tiny { width: 15px; height: 15px; }
+.glitch-block.wide { width: 100px; height: 20px; }
+.glitch-block.tall { width: 20px; height: 100px; }
+
+/* ============================================
+   ФОРУМ (forum.html)
+============================================ */
+.carousel-wrapper {
     display: flex;
-    gap: 40px;
-    margin-top: 15px;
-    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
 }
 
-.small-icon { 
-    width: 55px; height: 55px; 
+.carousel-window {
+    width: 280px;
+    height: 280px;
     border: 2px solid var(--purple-dark);
-    padding: 5px; 
-    image-rendering: pixelated; 
-    background: var(--bg-darker);
+    overflow: hidden;
+    background: var(--bg-color);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.room-image {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
     object-fit: contain;
-    display: block;
+    image-rendering: pixelated;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: var(--cyan-glow);
+    font-family: 'Press Start 2P';
+    font-size: 18px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    opacity: 0.8;
-    box-shadow: 0 0 5px rgba(127, 191, 191, 0.2);
 }
 
-.small-icon:hover { border-color: var(--cyan-glow); opacity: 1; box-shadow: 0 0 10px var(--cyan-glow); }
-.small-icon:active { transform: scale(0.95); }
+.retro-info-box {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 30px;
+    text-align: left;
+}
 
-/* --- 10. МОБІЛЬНА АДАПТАЦІЯ --- */
+.retro-info-box li {
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 20px;
+    color: var(--cyan-glow);
+}
+
+.retro-info-box li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: var(--purple-dark);
+}
+
+.action-buttons {
+    width: 100%;
+    max-width: 310px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.retro-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: 2px solid var(--purple-dark);
+    background: transparent;
+    color: var(--cyan-glow);
+    text-decoration: none;
+    text-align: center;
+    font-size: 10px;
+    transition: all 0.2s;
+}
+
+.retro-button:active {
+    background: var(--purple-dark);
+    color: var(--bg-color);
+}
+
+/* ============================================
+   HELPER (helper.html)
+============================================ */
+.paint-container {
+    width: 90vw;
+    max-width: 400px;
+    background: #000;
+    border: 4px solid #fff;
+    touch-action: none;
+}
+
+#drawCanvas {
+    width: 100%;
+    height: 350px;
+    display: block;
+    background: #000;
+    cursor: crosshair;
+}
+
+.paint-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #111;
+    border-top: 4px solid #fff;
+}
+
+.btn-retro {
+    background: #000;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 8px 12px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+input[type="color"] {
+    width: 40px;
+    height: 35px;
+    border: 2px solid #fff;
+    background: #000;
+    cursor: pointer;
+}
+
+/* ============================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+============================================ */
 @media (max-width: 768px) {
-    .forum-decor {
-        width: 40px;
-        height: 40px;
-        left: -45px;
-        top: 5px;
+    .back-button {
+        top: 12px;
+        right: 12px;
+        padding: 6px;
     }
-    .forum-decor::after {
-        font-size: 6px;
-        padding: 1px 3px;
+    .custom-back-icon {
+        width: 24px;
+        height: 24px;
     }
-}
-
-@media (max-width: 480px) {
-    .futuristic-window { width: 260px; height: 150px; }
-    .slide-image { width: 55px; }
-    .slide-title { font-size: 9px; }
-    .forum-decor { left: -35px; width: 30px; height: 30px; }
-    .nav-folder-icon { width: 50px; }
-    .row-bottom-links { gap: 30px; }
-    .small-icon { width: 50px; height: 50px; }
-    .hud-dot.active {
-        background: #7fbfbf;
-        box-shadow: 0 0 10px #7fbfbf;
+    .futuristic-window {
+        width: 260px;
+        height: 150px;
+    }
+    .slide-image {
+        width: 55px;
+    }
+    .slide-title {
+        font-size: 9px;
+    }
+    .nav-folder-icon {
+        width: 50px;
     }
     .popup-content {
         padding: 20px 25px;
@@ -641,11 +656,11 @@ body::after {
     }
 }
 
-@media (max-width: 360px) {
-    .futuristic-window { width: 240px; height: 140px; }
-    .forum-decor { left: -30px; }
-    .row-bottom-links { gap: 25px; }
-    .small-icon { width: 45px; height: 45px; }
+@media (max-width: 480px) {
+    .futuristic-window {
+        width: 240px;
+        height: 140px;
+    }
     .popup-icons {
         gap: 20px;
     }
@@ -654,33 +669,10 @@ body::after {
         height: 38px;
     }
 }
-/* ТОЧЕЧКИ НА УГЛАХ - покрупнее */
-.retro-box .corner-dot {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--purple-dark);
-    border-radius: 50%;
-    pointer-events: none;
-    box-shadow: 0 0 8px var(--purple-dark);
-}
 
-.retro-box .dot-tl {
-    top: -4px;
-    left: -4px;
-}
-
-.retro-box .dot-tr {
-    top: -4px;
-    right: -4px;
-}
-
-.retro-box .dot-bl {
-    bottom: -4px;
-    left: -4px;
-}
-
-.retro-box .dot-br {
-    bottom: -4px;
-    right: -4px;
+@media (max-width: 360px) {
+    .futuristic-window {
+        width: 220px;
+        height: 130px;
+    }
 }

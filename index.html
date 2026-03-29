@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ɪɴꜰᴏ</title>
     
-    <!-- Open Graph теги для превью -->
+    <!-- Open Graph -->
     <meta property="og:title" content="ᗢ☻ʀᔕᴛʀɪ𒉽☇">
     <meta property="og:description" content="пᴏᴘᴛᴀʌ">
     <meta property="og:image" content="preview.jpg">
@@ -22,50 +22,9 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
     <style>
-        :root {
-            --cyan-glow: #b36e6ea6;
-            --purple-dark: #49969373;
-            --purple-darker: #5a425a;
-            --gray-dirty: #6a5a5a;
-            --gray: #7a6a6a;
-            --bg-color: #121212;
-            --bg-darker: #0a0a0a;
-            --bg-lighter: #1a1a1a;
-            --text: #7fbfbf;
-            --text-dim: #6a5a5a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            font-family: 'Press Start 2P', cursive;
-            color: var(--text);
-            min-height: 100vh;
-            width: 100vw;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-shadow: 0 0 3px rgba(127, 191, 191, 0.4);
-        }
-
-        #neuro-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
+        /* ===== УНИКАЛЬНЫЕ СТИЛИ ТОЛЬКО ДЛЯ INDEX ===== */
         .site-section.main-index {
             display: flex;
             flex-direction: column;
@@ -79,65 +38,27 @@
             z-index: 1;
         }
 
-        /* ВЕРХНИЙ РЯД: ФОРУМ слева, ШОП справа */
+        /* Верхний ряд */
         .top-row {
             display: flex;
             flex-direction: row;
-            justify-content:  center;
+            justify-content: center;
             align-items: center;
             width: 100%;
             gap: 15px;
             margin-bottom: 5px;
         }
 
-        /* Каждый элемент занимает равное пространство */
         .top-row > * {
             flex: 0 0 auto;
             display: flex;
             justify-content: center;
         }
 
-        /* Убираем CRT сетку с кнопок */
-        .crt-btn-effect::before {
-            display: none;
-        }
-
-        /* Стили для контента */
-        .shop-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .forum-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 0;
-        }
-
-        .main-nav-link {
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
+        /* Shop иконка с монеткой */
         .icon-wrapper {
             position: relative;
             display: inline-block;
-        }
-
-        .nav-folder-icon {
-            display: block;
-            width: 90px;
-            height: auto;
-            image-rendering: pixelated;
-            filter: drop-shadow(0 0 3px var(--purple-dark));
-            position: relative;
-            z-index: 2;
         }
 
         .money-svg {
@@ -150,176 +71,10 @@
             pointer-events: none;
             z-index: 2;
         }
-        
-        .money-svg rect {
-            stroke: var(--cyan-glow);
-        }
-        
-        .money-svg circle {
-            fill: var(--cyan-glow);
-        }
 
         @keyframes rotateMoney {
             0% { transform: translateY(-50%) perspective(400px) rotateY(0deg); }
             100% { transform: translateY(-50%) perspective(400px) rotateY(360deg); }
-        }
-
-        .text-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            font-size: 10px;
-            color: var(--purple-dark);
-            margin-top: 8px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .sub-caption {
-            font-size: 7px;
-            margin-top: 4px;
-            color: var(--text-dim);
-        }
-
-        /* Футуристическое окно SUPPORT/HELPER */
-        .futuristic-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            position: relative;
-        }
-
-        .futuristic-window {
-            position: relative;
-            width: 400px;
-            height: 160px;
-            background: var(--bg-darker);
-            border: 1px solid var(--purple-dark);
-            margin-bottom: 12px;
-            cursor: pointer;
-            overflow: hidden;
-            box-shadow: 0 0 0 1px var(--purple-dark) inset, 0 0 0 2px var(--bg-color) inset, 0 0 15px rgba(127, 191, 191, 0.2);
-            transition: transform 0.2s ease;
-        }
-
-        .hud-corner {
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            border: 1px solid var(--cyan-glow);
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        .corner-tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
-        .corner-tr { top: 5px; right: 5px; border-left: none; border-bottom: none; }
-        .corner-bl { bottom: 5px; left: 5px; border-right: none; border-top: none; }
-        .corner-br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
-
-        .crosshair {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 35px; height: 35px;
-            pointer-events: none;
-            opacity: 0.1;
-        }
-
-        .crosshair::before,
-        .crosshair::after {
-            content: '';
-            position: absolute;
-            background: var(--cyan-glow);
-        }
-
-        .crosshair::before { width: 1px; height: 35px; left: 50%; transform: translateX(-50%); }
-        .crosshair::after { width: 35px; height: 1px; top: 50%; transform: translateY(-50%); }
-
-        .grid-overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(127, 191, 191, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(127, 191, 191, 0.03) 1px, transparent 1px);
-            background-size: 12px 12px;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .window-content {
-            position: relative;
-            width: 100%; height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3;
-        }
-
-        .content-slide {
-            position: absolute;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .content-slide.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
-        }
-
-        .slide-image {
-            width: 55px;
-            height: auto;
-            image-rendering: pixelated;
-            margin-bottom: 8px;
-            filter: grayscale(40%) contrast(110%);
-            opacity: 0.9;
-        }
-
-        .slide-title {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 9px;
-            color: var(--purple-dark);
-            letter-spacing: 1px;
-            margin-bottom: 3px;
-        }
-
-        .slide-subtitle {
-            font-size: 6px;
-            color: var(--cyan-glow);
-            letter-spacing: 1px;
-        }
-
-        .hud-indicators {
-            display: flex;
-            gap: 12px;
-            margin: 5px 0;
-        }
-
-        .hud-dot {
-            width: 7px; height: 7px;
-            border: 1px solid var(--purple-dark);
-            background: transparent;
-            transition: all 0.3s ease;
-            transform: rotate(45deg);
-            cursor: pointer;
-        }
-
-        .hud-dot.active {
-            background: var(--cyan-glow);
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 8px var(--cyan-glow);
         }
 
         /* Форум декоративный элемент */
@@ -360,7 +115,7 @@
             20% { transform: translate(-1px,1px); }
         }
 
-        /* НИЖНИЙ РЯД: ADA + EXS (столбик слева) и ТЕКСТОВОЕ ОКНО (справа) */
+        /* Нижний ряд */
         .bottom-row {
             display: flex;
             flex-direction: row;
@@ -371,7 +126,7 @@
             margin-top: 5px;
         }
 
-        /* Левая колонка с иконками ВСЕГДА В СТОЛБИК */
+        /* Левая колонка с иконками (вертикально) */
         .social-column {
             display: flex;
             flex-direction: column;
@@ -383,10 +138,6 @@
             text-align: center;
             cursor: pointer;
             position: relative;
-        }
-
-        .social-item::before {
-            display: none;
         }
 
         .social-icon {
@@ -419,34 +170,11 @@
 
         /* Правое текстовое окно */
         .info-window {
-    flex: 0 0 60%;      /* занимает 40% ширины родителя */
-    background: rgba(10, 10, 10, 0.4);
-    border: 1px solid var(--purple-dark);
-    padding: 12px 15px;
-    position: relative;
-}
-
-        .info-window::before,
-        .info-window::after {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            pointer-events: none;
-        }
-
-        .info-window::before {
-            top: -2px;
-            left: -2px;
-            border-top: 2px solid var(--cyan-glow);
-            border-left: 2px solid var(--cyan-glow);
-        }
-
-        .info-window::after {
-            bottom: -2px;
-            right: -2px;
-            border-bottom: 2px solid var(--cyan-glow);
-            border-right: 2px solid var(--cyan-glow);
+            flex: 0 0 60%;
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid var(--purple-dark);
+            padding: 12px 15px;
+            position: relative;
         }
 
         .info-window .corner-tl,
@@ -508,327 +236,36 @@
             color: var(--cyan-glow);
         }
 
-        /* ============================================
-           СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ
-        ============================================ */
-        .social-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(18, 18, 18, 0.85);
-            backdrop-filter: blur(3px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.2s ease;
-        }
-
-        .social-popup.active {
-            display: flex;
-        }
-
-        .popup-content {
-            background: var(--bg-darker);
-            border: 2px solid var(--cyan-glow);
-            padding: 25px 30px;
-            min-width: 280px;
-            max-width: 340px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(127, 191, 191, 0.3);
-            animation: popIn 0.3s ease;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .popup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--cyan-glow);
-            padding-bottom: 10px;
-        }
-
-        .popup-title {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            color: var(--cyan-glow);
-            letter-spacing: 2px;
-            text-shadow: 0 0 5px var(--cyan-glow);
-        }
-
-        .popup-close {
-            background: none;
-            border: none;
-            color: var(--cyan-glow);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0 8px;
-            transition: all 0.2s;
-        }
-
-        .popup-close:hover {
-            color: var(--purple-dark);
-            transform: scale(1.2);
-        }
-
-        .popup-icons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 15px 0;
-            flex-wrap: wrap;
-        }
-
-        .popup-icon-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .popup-icon-link:hover {
-            transform: translateY(-5px);
-        }
-
-        .popup-icon {
-            width: 48px;
-            height: 48px;
-            fill: var(--cyan-glow);
-            transition: all 0.2s;
-            filter: drop-shadow(0 0 3px var(--cyan-glow));
-        }
-
-        .popup-icon-link:hover .popup-icon {
-            fill: var(--purple-dark);
-            transform: scale(1.1);
-        }
-
-        .popup-icon-name {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 7px;
-            color: var(--text-dim);
-            margin-top: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ============================================
-           ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ
-        ============================================ */
-        .crt-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .crt-overlay .pixel-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(0deg, rgba(100, 150, 180, 0.06) 0px, rgba(100, 150, 180, 0.06) 1px, transparent 1px, transparent 4px),
-                repeating-linear-gradient(90deg, rgba(100, 150, 180, 0.04) 0px, rgba(100, 150, 180, 0.04) 1px, transparent 1px, transparent 4px);
-            background-size: 4px 4px, 4px 4px;
-            pointer-events: none;
-        }
-
-        .crt-overlay .noise-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .crt-overlay .flicker {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(127, 191, 191, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-            animation: gentleFlicker 5s infinite;
-        }
-
-        @keyframes gentleFlicker {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.4; }
-        }
-
-        .crt-overlay .noise {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjUiIG51bU9jdGF2ZXM9IjIiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=');
-            background-repeat: repeat;
-            background-size: 80px 80px;
-            opacity: 0.06;
-            pointer-events: none;
-            animation: noiseMove 12s steps(3) infinite;
-        }
-
-        @keyframes noiseMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-
-        .crt-overlay .vignette {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
-            pointer-events: none;
-        }
-
         /* Мобильная адаптация */
         @media (max-width: 550px) {
-            .top-row {
-                gap: 20px;
-            }
-            .nav-folder-icon {
-                width: 80px;
-            }
-            .text-group {
-                font-size: 8px;
-            }
-            .sub-caption {
-                font-size: 6px;
-            }
-            .forum-decor {
-                width: 38px;
-                height: 38px;
-                left: -40px;
-                top: -12px;
-            }
-            .futuristic-window {
-                width: 260px;
-                height: 150px;
-            }
-            .slide-image {
-                width: 48px;
-            }
-            .slide-title {
-                font-size: 8px;
-            }
-            .bottom-row {
-                gap: 15px;
-            }
-            .social-icon {
-                width: 80px;
-                height: 80px;
-            }
-            .social-label {
-                font-size: 6px;
-            }
-            .social-column {
-                gap: 15px;
-            }
-            .info-window {
-                padding: 10px 12px;
-            }
-            .info-title {
-                font-size: 7px;
-            }
-            .info-text {
-                font-size: 6px;
-                line-height: 1.5;
-            }
+            .top-row { gap: 20px; }
+            .forum-decor { width: 38px; height: 38px; left: -40px; top: -12px; }
+            .bottom-row { gap: 15px; }
+            .social-icon { width: 100px; height: 100px; }
+            .social-label { font-size: 6px; }
+            .social-column { gap: 15px; }
+            .info-window { padding: 10px 12px; }
+            .info-title { font-size: 7px; }
+            .info-text { font-size: 6px; line-height: 1.5; }
         }
 
         @media (max-width: 450px) {
-            .top-row {
-                gap: 15px;
-            }
-            .nav-folder-icon {
-                width: 80px;
-            }
-            .text-group {
-                font-size: 7px;
-            }
-            .sub-caption {
-                font-size: 5px;
-            }
-            .forum-decor {
-                width: 32px;
-                height: 32px;
-                left: -35px;
-            }
-            .forum-decor::after {
-                font-size: 5px;
-            }
-            .futuristic-window {
-                width: 240px;
-                height: 140px;
-            }
-            .slide-image {
-                width: 42px;
-            }
-            .social-icon {
-                width: 80px;
-                height: 80px;
-            }
-            .social-label {
-                font-size: 5px;
-            }
-            .social-column {
-                gap: 12px;
-            }
-            .info-window {
-                padding: 8px 10px;
-            }
-            .info-title {
-                font-size: 6px;
-            }
-            .info-text {
-                font-size: 5px;
-                line-height: 1.4;
-            }
-            .bottom-row {
-                gap: 10px;
-            }
+            .top-row { gap: 15px; }
+            .forum-decor { width: 32px; height: 32px; left: -35px; }
+            .forum-decor::after { font-size: 5px; }
+            .social-icon { width: 100px; height: 100px; }
+            .social-label { font-size: 5px; }
+            .social-column { gap: 12px; }
+            .info-window { padding: 8px 10px; }
+            .info-title { font-size: 6px; }
+            .info-text { font-size: 5px; line-height: 1.4; }
+            .bottom-row { gap: 10px; }
         }
 
         @media (max-width: 380px) {
-            .top-row {
-                gap: 12px;
-            }
-            .nav-folder-icon {
-                width: 80px;
-            }
-            .text-group {
-                font-size: 6px;
-            }
-            .futuristic-window {
-                width: 220px;
-                height: 130px;
-            }
-            .slide-image {
-                width: 38px;
-            }
-            .social-icon {
-                width: 80px;
-                height: 80px;
-            }
+            .top-row { gap: 12px; }
+            .forum-decor { width: 30px; height: 30px; left: -32px; }
+            .social-icon { width: 90px; height: 90px; }
         }
     </style>
 </head>
@@ -837,9 +274,8 @@
 
     <section class="site-section main-index">
         
-        <!-- ВЕРХНИЙ РЯД: ФОРУМ слева, ШОП справа -->
+        <!-- ВЕРХНИЙ РЯД: ФОРУМ + ШОП -->
         <div class="top-row">
-            <!-- ФОРУМ - слева -->
             <div class="crt-btn-effect">
                 <div class="forum-wrapper">
                     <a href="forum.html" class="main-nav-link">
@@ -850,7 +286,6 @@
                 </div>
             </div>
 
-            <!-- ШОП - справа -->
             <div class="crt-btn-effect">
                 <div class="shop-container">
                     <a href="shop.html" class="main-nav-link">
@@ -867,7 +302,7 @@
             </div>
         </div>
         
-        <!-- БЛОК 2: ОКНО SUPPORT/HELPER -->
+        <!-- БЛОК SUPPORT/HELPER -->
         <div class="crt-btn-effect">
             <div class="futuristic-container">
                 <div class="futuristic-window" id="futuristicWindow">
@@ -897,7 +332,7 @@
             </div>
         </div>
 
-        <!-- НИЖНИЙ РЯД: ADA + EXS (столбик слева) и ТЕКСТОВОЕ ОКНО (справа) -->
+        <!-- НИЖНИЙ РЯД: ADA + EXS и текстовое окно -->
         <div class="bottom-row">
             <div class="social-column">
                 <div class="social-trigger social-item" data-type="ada">
@@ -929,17 +364,6 @@
         
     </section>
 
-    <!-- СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ -->
-    <div id="socialPopup" class="social-popup">
-        <div class="popup-content">
-            <div class="popup-header">
-                <span class="popup-title" id="popupTitle">ADA</span>
-                <button class="popup-close" id="closePopup">×</button>
-            </div>
-            <div class="popup-icons" id="popupIcons"></div>
-        </div>
-    </div>
-
     <!-- ПОЛНОЭКРАННЫЙ CRT ЭФФЕКТ -->
     <div class="crt-overlay">
         <div class="pixel-grid"></div>
@@ -967,231 +391,6 @@
     </div>
 
     <script src="script-bg.js"></script>
-    <script>
-        // --- ЛОГІКА ПЕРЕМИКАННЯ SUPPORT/HELPER ---
-        let currentSystem = 'support';
-        let touchStartX = 0;
-        let isSwiping = false;
-        let swipeDetected = false;
-
-        const windowEl = document.getElementById('futuristicWindow');
-        const slideSupport = document.getElementById('slideSupport');
-        const slideHelper = document.getElementById('slideHelper');
-        const indicator1 = document.getElementById('indicator1');
-        const indicator2 = document.getElementById('indicator2');
-
-        function switchTo(system) {
-            if (system === currentSystem) return;
-            
-            if (system === 'support') {
-                slideHelper.classList.remove('active');
-                slideSupport.classList.add('active');
-                indicator1.classList.add('active');
-                indicator2.classList.remove('active');
-                currentSystem = 'support';
-            } else {
-                slideSupport.classList.remove('active');
-                slideHelper.classList.add('active');
-                indicator2.classList.add('active');
-                indicator1.classList.remove('active');
-                currentSystem = 'helper';
-            }
-            
-            windowEl.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                windowEl.style.transform = 'scale(1)';
-            }, 100);
-            
-            if (navigator.vibrate) navigator.vibrate(10);
-        }
-
-        function enterSystem() {
-            const url = currentSystem === 'support' ? 'support.html' : 'helper.html';
-            
-            windowEl.style.transform = 'scale(0.95)';
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.2s ease';
-            
-            setTimeout(() => {
-                window.location.href = url;
-            }, 200);
-        }
-
-        if (windowEl) {
-            windowEl.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!swipeDetected) {
-                    enterSystem();
-                }
-            });
-
-            windowEl.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                isSwiping = true;
-                swipeDetected = false;
-            }, {passive: true});
-
-            windowEl.addEventListener('touchmove', (e) => {
-                if (!isSwiping) return;
-                e.preventDefault();
-                const currentX = e.touches[0].clientX;
-                const diff = currentX - touchStartX;
-                if (Math.abs(diff) > 5) {
-                    swipeDetected = true;
-                    const shift = Math.min(Math.max(diff, -15), 15);
-                    windowEl.style.transform = `translateX(${shift * 0.3}px)`;
-                }
-            }, {passive: false});
-
-            windowEl.addEventListener('touchend', (e) => {
-                if (!isSwiping) return;
-                const touchEndX = e.changedTouches[0].clientX;
-                const swipeDistance = touchEndX - touchStartX;
-                windowEl.style.transform = 'translateX(0)';
-                if (Math.abs(swipeDistance) > 30) {
-                    swipeDetected = true;
-                    if (swipeDistance > 0) switchTo('support');
-                    else switchTo('helper');
-                }
-                isSwiping = false;
-            }, {passive: true});
-
-            let mouseStartX = 0;
-            let isDragging = false;
-
-            windowEl.addEventListener('mousedown', (e) => {
-                mouseStartX = e.clientX;
-                isDragging = true;
-                swipeDetected = false;
-                e.preventDefault();
-            });
-
-            windowEl.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                const diff = e.clientX - mouseStartX;
-                if (Math.abs(diff) > 5) {
-                    swipeDetected = true;
-                    const shift = Math.min(Math.max(diff, -15), 15);
-                    windowEl.style.transform = `translateX(${shift * 0.3}px)`;
-                }
-            });
-
-            window.addEventListener('mouseup', (e) => {
-                if (!isDragging) return;
-                const diff = e.clientX - mouseStartX;
-                windowEl.style.transform = 'translateX(0)';
-                if (Math.abs(diff) > 30) {
-                    swipeDetected = true;
-                    if (diff > 0) switchTo('support');
-                    else switchTo('helper');
-                }
-                isDragging = false;
-            });
-
-            if (indicator1) indicator1.addEventListener('click', (e) => {
-                e.stopPropagation();
-                switchTo('support');
-            });
-
-            if (indicator2) indicator2.addEventListener('click', (e) => {
-                e.stopPropagation();
-                switchTo('helper');
-            });
-        }
-
-        // --- ДИНАМІКА ФОРУМУ ---
-        (function() {
-            const words = ["radio", "travel", "wellness", "money"];
-            const decor = document.getElementById('forumDecor');
-            if (decor) {
-                let i = 0;
-                setInterval(() => {
-                    i = (i + 1) % words.length;
-                    decor.style.setProperty('--dynamic-word', `"${words[i]}"`);
-                }, 2000);
-            }
-        })();
-
-        // --- ПЛАВНИЙ ПЕРЕХІД ДЛЯ ПОСИЛАНЬ ---
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (link.getAttribute('href') && !link.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const href = link.getAttribute('href');
-                    document.body.style.opacity = '0';
-                    document.body.style.transition = 'opacity 0.2s ease';
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 200);
-                }
-            });
-        });
-
-        // --- СПЛИВАЮЧЕ ВІКНО ДЛЯ СОЦМЕРЕЖ ---
-        const popup = document.getElementById('socialPopup');
-        const popupTitle = document.getElementById('popupTitle');
-        const popupIcons = document.getElementById('popupIcons');
-        const closePopup = document.getElementById('closePopup');
-
-        const socialIcons = {
-            instagram: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/></svg>`,
-            tiktok: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.33 2.1-.1.7.07 1.42.47 2.01.39.55.96.93 1.6 1.11.82.24 1.7.13 2.41-.3.67-.41 1.07-1.11 1.14-1.89.07-2.13.05-4.27.05-6.41V0z"/></svg>`,
-            linkedin: `<svg class="popup-icon" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`
-        };
-
-        const socialData = {
-            ada: {
-                title: 'ADA MORSOVA',
-                links: [
-                    { url: 'https://instagram.com/a.mrsva', icon: socialIcons.instagram, name: 'INSTAGRAM' },
-                    { url: 'https://linkedin.com/in/a.mrsva', icon: socialIcons.linkedin, name: 'LINKEDIN' }
-                ]
-            },
-            exs: {
-                title: 'GRIM EX FRAME',
-                links: [
-                    { url: 'https://instagram.com/grimexframe', icon: socialIcons.instagram, name: 'INSTAGRAM' },
-                    { url: 'https://tiktok.com/@grimexframe', icon: socialIcons.tiktok, name: 'TIKTOK' }
-                ]
-            }
-        };
-
-        function openSocialPopup(type) {
-            const data = socialData[type];
-            if (!data) return;
-            popupTitle.textContent = data.title;
-            popupIcons.innerHTML = data.links.map(link => `
-                <a href="${link.url}" target="_blank" class="popup-icon-link">
-                    ${link.icon}
-                    <span class="popup-icon-name">${link.name}</span>
-                </a>
-            `).join('');
-            popup.classList.add('active');
-            if (navigator.vibrate) navigator.vibrate(10);
-        }
-
-        function closeSocialPopup() {
-            popup.classList.remove('active');
-        }
-
-        document.querySelectorAll('.social-trigger').forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                const type = trigger.dataset.type;
-                openSocialPopup(type);
-            });
-        });
-
-        if (popup) {
-            popup.addEventListener('click', (e) => {
-                if (e.target === popup) closeSocialPopup();
-            });
-        }
-        if (closePopup) closePopup.addEventListener('click', closeSocialPopup);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && popup && popup.classList.contains('active')) closeSocialPopup();
-        });
-        document.addEventListener('selectstart', (e) => e.preventDefault());
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
