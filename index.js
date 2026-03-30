@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="popup-content">
                 <div class="popup-header">
                     <span class="popup-title" id="popupTitle">SOCIAL</span>
-                    <button class="popup-close" id="closePopup">×</button>
+                    <button class="popup-close" id="closePopup">✜</button>
                 </div>
                 <div id="popupIcons"></div>
             </div>

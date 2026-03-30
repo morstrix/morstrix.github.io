@@ -130,7 +130,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid #2a2a2a;
     font-size: 0.7rem;
 }
 
@@ -145,7 +145,7 @@ body {
 
 .checkout-btn {
     background: #ffffff;
-    color: #ffffff;
+    color: #000;
     border: none;
     padding: 12px;
     width: 100%;

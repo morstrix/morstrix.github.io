@@ -83,10 +83,10 @@ function updateCartUI() {
     } else {
         cartItemsDiv.innerHTML = cart.map(item => `
             <div class="cart-item">
-                <span style="color:#ffffff;">${item.name} x${item.quantity}</span>
+                <span style="color:#a1a1a1;">${item.name} x${item.quantity}</span>
                 <span>
                     <span style="color:#a1a1a1;">$${(item.price * item.quantity).toFixed(2)}</span>
-                    <button class="remove-item" data-id="${item.id}">⌧</button>
+                    <button class="remove-item" data-id="${item.id}">✖</button>
                 </span>
             </div>
         `).join('');
