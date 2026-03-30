@@ -1030,3 +1030,173 @@ input[type="color"] {
         height: 65px;
     }
 }
+
+/* ==================== СТИЛИ ГЛАВНОЙ СТРАНИЦЫ (INDEX) ==================== */
+
+.site-section.main-index {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1;
+}
+
+/* Контейнеры верхнего ряда */
+.top-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+/* Обертка форума для позиционирования плашки */
+.forum-wrapper {
+    position: relative; /* Чтобы плашка .forum-decor не улетала */
+}
+
+/* САМА ПЛАШКА С МЕНЯЮЩИМИСЯ СЛОВАМИ */
+.forum-decor {
+    position: absolute;
+    top: -18px;    /* Смещение вверх относительно иконки */
+    left: -45px;   /* Смещение влево */
+    width: 30px;   /* Фиксированная ширина, чтобы не прыгала */
+    height: 30px;
+    background: rgba(30, 20, 30, 0.9);
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+    z-index: 10;
+    
+    /* Центрируем текст внутри плашки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* СТИЛЬ ТЕКСТА ВНУТРИ ПЛАШКИ */
+#dynamicWord {
+    font-size: 6px;
+    color: #ffffff; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    background: #a84d6b; /* Тот самый розовый фон */
+    box-shadow: 0 0 8px rgba(168, 77, 107, 0.8);
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    /* Для плавной смены через JS */
+    transition: opacity 0.3s ease; 
+    opacity: 1;
+}
+
+/* Навигационные ссылки */
+.main-nav-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-folder-icon {
+    width: 60px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(168, 77, 107, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.main-nav-link:hover .nav-folder-icon {
+    transform: scale(1.1);
+}
+
+.text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.sub-caption {
+    font-size: 6px;
+    color: var(--primary-light);
+    margin-top: 4px;
+}
+
+/* Адаптив для мобилок */
+@media (max-width: 450px) {
+    .top-row {
+        gap: 20px;
+    }
+    .forum-decor {
+        width: 42px;
+        left: -35px;
+        top: -15px;
+    }
+    #dynamicWord {
+        font-size: 5px;
+    }
+    .nav-folder-icon {
+        width: 50px;
+    }
+}
+
+/* ==================== 3D ВРАЩЕНИЕ МОНЕТКИ ==================== */
+
+@keyframes spin3D {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        /* Минус — чтобы вращалась против часовой стрелки (справа налево) */
+        transform: rotateY(-360deg);
+    }
+}
+
+.money-svg {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    right: -12px;
+    top: -8px;
+    
+    filter: drop-shadow(0 0 5px rgba(101, 129, 129, 0.6));
+    
+    /* Включаем 3D вращение */
+    animation: spin3D 3s linear infinite;
+    
+    /* Чтобы вращение выглядело объемным */
+    transform-style: preserve-3d;
+    
+    z-index: 2;
+    pointer-events: none;
+}
+
+.icon-wrapper {
+    position: relative;
+}
+
+/* Линии иконки */
+.money-svg rect, 
+.money-svg circle {
+    stroke: #658181;
+    stroke-width: 2.5px; /* Чуть жирнее, чтобы при повороте не исчезала */
+    transition: stroke 0.3s ease;
+}
+
+/* При наведении ускоряем и меняем цвет */
+.main-nav-link:hover .money-svg {
+    animation-duration: 1s;
+}
+
+.main-nav-link:hover .money-svg rect,
+.main-nav-link:hover .money-svg circle {
+    stroke: #ffffff;
+}

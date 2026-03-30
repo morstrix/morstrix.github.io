@@ -37,7 +37,7 @@ const init = () => {
             baseR: r,
             baseG: g,
             baseB: b,
-            brightness: Math.random() * 0.7 + 0.3, // базовая яркость
+            brightness: Math.random() * 0.4 + 0.6, // базовая яркость
             twinkleSpeed: Math.random() * 0.03 + 0.01,
             twinklePhase: Math.random() * Math.PI * 2
         };
@@ -87,11 +87,11 @@ const draw = () => {
         const twinkle = Math.sin(Date.now() * star.twinkleSpeed + star.twinklePhase) * 0.3 + 0.7;
         
         // Яркость зависит от расстояния и мерцания
-        const distanceFactor = Math.max(0.3, 1 - (star.z / (w + 100)) * 0.5);
+        const distanceFactor = 1 - (star.z / (w + 100));
         const finalBrightness = star.brightness * distanceFactor * twinkle;
         
         // Прозрачность (дальние звезды более прозрачные)
-        const alpha = Math.min(1, finalBrightness * (1 - star.z / (w + 200)));
+        const alpha = Math.min(1, finalBrightness * 1.5);
         
         // Рисуем звезду
         if (screenX > -20 && screenX < w + 20 && screenY > -20 && screenY < h + 20) {
@@ -101,7 +101,7 @@ const draw = () => {
             
             // Добавляем ореол для ярких звезд
             if (size > 3 && alpha > 0.5) {
-                ctx.globalAlpha = alpha * 0.3;
+                ctx.globalAlpha = alpha * 0.6;
                 ctx.fillStyle = `rgb(${Math.floor(star.baseR)}, ${Math.floor(star.baseG)}, ${Math.floor(star.baseB)})`;
                 ctx.fillRect(screenX - 1, screenY - 1, size + 2, size + 2);
                 ctx.globalAlpha = 1;

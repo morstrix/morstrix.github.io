@@ -1,7 +1,6 @@
 // ==================== LOGICA SUPPORT/HELPER ====================
 // Функция генерации 8-битного звука
 const playSound = (type) => {
-    // Создаем аудио-контекст (инструменты для синтеза звука)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
@@ -12,7 +11,7 @@ const playSound = (type) => {
     const now = audioCtx.currentTime;
 
     if (type === 'click') {
-        oscillator.type = 'square'; // "Квадратная" волна дает ретро-звук
+        oscillator.type = 'square';
         oscillator.frequency.setValueAtTime(800, now);
         oscillator.frequency.exponentialRampToValueAtTime(400, now + 0.1);
         gainNode.gain.setValueAtTime(0.1, now);
@@ -36,13 +35,9 @@ const indicator2 = document.getElementById('indicator2');
 function switchTo(system) {
     if (system === currentSystem) return;
     
-    // 1. Добавляем звук (если ты вставил функцию playSound из прошлого ответа)
     if (typeof playSound === 'function') playSound('select');
 
-    // 2. Улучшенная вибрация
     if (navigator.vibrate) {
-        // Паттерн: 20мс вибрация, 10мс пауза, 20мс вибрация
-        // Это создает ощущение механического "щелчка"
         navigator.vibrate([20, 10, 20]); 
     }
 
@@ -60,8 +55,7 @@ function switchTo(system) {
         currentSystem = 'helper';
     }
     
-    // Визуальный отклик (сжатие окна)
-    windowEl.style.transform = 'scale(0.96)'; // Чуть сильнее сжимаем для эффекта
+    windowEl.style.transform = 'scale(0.96)';
     setTimeout(() => {
         windowEl.style.transform = 'scale(1)';
     }, 100);
@@ -83,7 +77,6 @@ if (windowEl) {
         if (!swipeDetected) enterSystem();
     });
 
-    // Свайпы
     windowEl.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
         isSwiping = true;
@@ -114,7 +107,6 @@ if (windowEl) {
         isSwiping = false;
     }, {passive: true});
 
-    // Мышь (Drag)
     let mouseStartX = 0;
     let isDragging = false;
 
@@ -160,12 +152,15 @@ if (windowEl) {
 // ==================== ДИНАМИКА ФОРУМА ====================
 (function() {
     const words = ["radio", "travel", "wellness", "money"];
-    const decor = document.getElementById('forumDecor');
-    if (decor) {
+    // Теперь находим конкретный span по ID, который мы добавили в HTML
+    const wordElement = document.getElementById('dynamicWord');
+    
+    if (wordElement) {
         let i = 0;
         setInterval(() => {
             i = (i + 1) % words.length;
-            decor.style.setProperty('--dynamic-word', `"${words[i]}"`);
+            // Обновляем текст напрямую
+            wordElement.textContent = words[i];
         }, 2000);
     }
 })();
@@ -193,7 +188,6 @@ document.querySelectorAll('a').forEach(link => {
 document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('socialPopup');
     
-    // Создаем структуру попапа, если её нет
     if (!popup) {
         const newPopup = document.createElement('div');
         newPopup.id = 'socialPopup';
@@ -250,7 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (finalPopup) finalPopup.classList.remove('active');
     }
 
-    // Обработка кнопки TEAM
     document.querySelectorAll('.social-trigger').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();

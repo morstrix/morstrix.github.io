@@ -4,318 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ɪɴꜰᴏ</title>
-    
-    <meta property="og:title" content="ᗢ☻ʀᔕᴛʀɪ𒉽☇">
-    <meta property="og:description" content="пᴏᴘᴛᴀʌ">
-    <meta property="og:image" content="preview.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://morstrix.zone">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ᗢ☻ʀᔕᴛʀɪ𒉽☇">
-    <meta name="twitter:description" content="пᴏᴘᴛᴀʌ">
-    <meta name="twitter:image" content="preview.jpg">
-    
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* ===== УНИКАЛЬНЫЕ СТИЛИ ТОЛЬКО ДЛЯ INDEX ===== */
-        .site-section.main-index {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 550px;
-            width: 100%;
-            padding: 25px 20px;
-            gap: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-row {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            gap: 15px;
-            margin-bottom: 5px;
-        }
-
-        .top-row > * {
-            flex: 0 0 auto;
-            display: flex;
-            justify-content: center;
-        }
-
-        .icon-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .money-svg {
-            position: absolute;
-            right: -45px;
-            top: 50%;
-            width: 32px;
-            height: 32px;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .forum-decor {
-            position: absolute;
-            top: -15px;
-            left: -50px;
-            width: 35px;
-            height: 35px;
-            background: rgba(30, 20, 30, 0.9);
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            z-index: 10;
-        }
-
-        .forum-decor::after {
-            content: var(--dynamic-word, "radio");
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 6px;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 2px 4px;
-            border-radius: 3px;
-            z-index: 12;
-        }
-
-        .bottom-row {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            gap: 20px;
-            margin-top: 5px;
-        }
-
-        .social-column {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            flex-shrink: 0;
-        }
-
-        .social-item {
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .social-icon {
-            width: 100px;
-            height: 100px;
-            padding: 8px;
-            image-rendering: pixelated;
-            background: transparent;
-            object-fit: contain;
-            display: block;
-            opacity: 0.9;
-            position: relative;
-            z-index: 2;
-            filter: grayscale(0.2);
-        }
-
-        .social-icon:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .social-label {
-            font-size: 7px;
-            color: var(--primary);
-            margin-top: 5px;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .info-window {
-            flex: 0 0 60%;
-            background: rgba(10, 10, 10, 0.4);
-            border: 1px solid var(--primary);
-            padding: 12px 15px;
-            position: relative;
-        }
-
-        .info-window .corner-tl,
-        .info-window .corner-tr,
-        .info-window .corner-bl,
-        .info-window .corner-br {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            pointer-events: none;
-        }
-
-        .info-window .corner-tl {
-            top: 5px;
-            left: 5px;
-            border-top: 1px solid var(--primary);
-            border-left: 1px solid var(--primary);
-        }
-
-        .info-window .corner-tr {
-            top: 5px;
-            right: 5px;
-            border-top: 1px solid var(--primary);
-            border-right: 1px solid var(--primary);
-        }
-
-        .info-window .corner-bl {
-            bottom: 5px;
-            left: 5px;
-            border-bottom: 1px solid var(--primary);
-            border-left: 1px solid var(--primary);
-        }
-
-        .info-window .corner-br {
-            bottom: 5px;
-            right: 5px;
-            border-bottom: 1px solid var(--primary);
-            border-right: 1px solid var(--primary);
-        }
-
-        .info-title {
-            font-size: 8px;
-            color: var(--primary);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--primary);
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-
-        .info-text {
-            font-size: 7px;
-            color: var(--secondary-dark);
-            line-height: 1.6;
-            font-family: monospace;
-        }
-
-        .info-text .highlight {
-            color: var(--primary);
-        }
-
-        @media (max-width: 550px) {
-            .top-row { gap: 20px; }
-            .forum-decor { width: 38px; height: 38px; left: -40px; top: -12px; }
-            .bottom-row { gap: 15px; }
-            .social-icon { width: 100px; height: 100px; }
-            .social-label { font-size: 6px; }
-            .social-column { gap: 15px; }
-            .info-window { padding: 10px 12px; }
-            .info-title { font-size: 7px; }
-            .info-text { font-size: 6px; line-height: 1.5; }
-        }
-
-        @media (max-width: 450px) {
-            .top-row { gap: 15px; }
-            .forum-decor { width: 32px; height: 32px; left: -35px; }
-            .forum-decor::after { font-size: 5px; }
-            .social-icon { width: 100px; height: 100px; }
-            .social-label { font-size: 5px; }
-            .social-column { gap: 12px; }
-            .info-window { padding: 8px 10px; }
-            .info-title { font-size: 6px; }
-            .info-text { font-size: 5px; line-height: 1.4; }
-            .bottom-row { gap: 10px; }
-        }
-
-        @media (max-width: 380px) {
-            .top-row { gap: 12px; }
-            .forum-decor { width: 30px; height: 30px; left: -32px; }
-            .social-icon { width: 90px; height: 90px; }
-        }
-    </style>
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
 
     <section class="site-section main-index">
-        
         <div class="top-row">
-            <div>
-                <div class="forum-wrapper">
-                    <a href="forum.html" class="main-nav-link">
-                        <div class="forum-decor" id="forumDecor"></div>
-                        <img src="forum.png" class="nav-folder-icon" alt="forum">
-                        <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
-                    </a>
-                </div>
+            <div class="forum-wrapper">
+                <a href="forum.html" class="main-nav-link">
+                    <div class="forum-decor">
+                        <span id="dynamicWord">radio</span>
+                    </div>
+                    <img src="forum.png" class="nav-folder-icon" alt="forum">
+                    <div class="text-group">FORUM<span class="sub-caption">archive</span></div>
+                </a>
             </div>
 
-            <div>
-                <div class="shop-container">
-                    <a href="shop.html" class="main-nav-link">
-                        <div class="icon-wrapper">
-                            <img src="space.png" class="nav-folder-icon" alt="shop">
-                            <svg class="money-svg" viewBox="0 0 32 32" fill="none">
-                                <rect x="6" y="8" width="20" height="16" stroke="#658181" stroke-width="2"/>
-                                <circle cx="16" cy="16" r="4" fill="#658181"/>
-                            </svg>
-                        </div>
-                        <div class="text-group">ШОП<span class="sub-caption">diy gear</span></div>
-                    </a>
-                </div>
+            <div class="shop-container">
+                <a href="shop.html" class="main-nav-link">
+                    <div class="icon-wrapper">
+                        <img src="space.png" class="nav-folder-icon" alt="shop">
+                        <svg class="money-svg" viewBox="0 0 32 32" fill="none">
+                            <rect x="6" y="8" width="20" height="16" />
+                            <circle cx="16" cy="16" r="4" />
+                        </svg>
+                    </div>
+                    <div class="text-group">ШОП<span class="sub-caption">diy gear</span></div>
+                </a>
             </div>
         </div>
         
-        <div>
-            <div class="futuristic-container">
-                <div class="futuristic-window" id="futuristicWindow">
-                    <div class="hud-corner corner-tl"></div>
-                    <div class="hud-corner corner-tr"></div>
-                    <div class="hud-corner corner-bl"></div>
-                    <div class="hud-corner corner-br"></div>
-                    <div class="crosshair"></div>
-                    <div class="grid-overlay"></div>
-                    <div class="window-content">
-                        <div class="content-slide active" id="slideSupport">
-                            <img src="support.png" class="slide-image" alt="Support">
-                            <div class="slide-title">SUPPORT</div>
-                            <div class="slide-subtitle">TETRIS</div>
-                        </div>
-                        <div class="content-slide" id="slideHelper">
-                            <img src="helper.png" class="slide-image" alt="Helper">
-                            <div class="slide-title">HELPER</div>
-                            <div class="slide-subtitle">PAINT</div>
-                        </div>
+        <div class="futuristic-container">
+            <div class="futuristic-window" id="futuristicWindow">
+                <div class="window-content">
+                    <div class="content-slide active" id="slideSupport">
+                        <img src="support.png" class="slide-image" alt="Support">
+                        <div class="slide-title">SUPPORT</div>
+                        <div class="slide-subtitle">TETRIS</div>
+                    </div>
+                    <div class="content-slide" id="slideHelper">
+                        <img src="helper.png" class="slide-image" alt="Helper">
+                        <div class="slide-title">HELPER</div>
+                        <div class="slide-subtitle">PAINT</div>
                     </div>
                 </div>
-                <div class="hud-indicators">
-                    <div class="hud-dot active" id="indicator1"></div>
-                    <div class="hud-dot" id="indicator2"></div>
-                </div>
+            </div>
+            <div class="hud-indicators">
+                <div class="hud-dot active" id="indicator1"></div>
+                <div class="hud-dot" id="indicator2"></div>
             </div>
         </div>
 
         <div class="social-column">
-    <div class="social-trigger team-btn" data-type="team">
-        <div class="team-label">TEAM</div>
-    </div>
-</div>
-           
-        
+            <div class="social-trigger team-btn" data-type="team">
+                <div class="team-label">TEAM</div>
+            </div>
+        </div>
     </section>
 
-    <script src="script-bg.js"></script>
+    <script src="background.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
