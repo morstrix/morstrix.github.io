@@ -34,7 +34,7 @@ function renderCategories() {
             // Визуальный фидбек
             const priceDiv = card.querySelector('.cat-price');
             const orig = priceDiv.innerHTML;
-            priceDiv.innerHTML = '✅';
+            priceDiv.innerHTML = 'додано';
             setTimeout(() => { 
                 if (card.querySelector('.cat-price')) 
                     card.querySelector('.cat-price').innerHTML = orig; 
@@ -83,10 +83,10 @@ function updateCartUI() {
     } else {
         cartItemsDiv.innerHTML = cart.map(item => `
             <div class="cart-item">
-                <span style="color:#a84d6b;">${item.name} x${item.quantity}</span>
+                <span style="color:#ffffff;">${item.name} x${item.quantity}</span>
                 <span>
                     <span style="color:#a1a1a1;">$${(item.price * item.quantity).toFixed(2)}</span>
-                    <button class="remove-item" data-id="${item.id}">✕</button>
+                    <button class="remove-item" data-id="${item.id}">⌧</button>
                 </span>
             </div>
         `).join('');

@@ -113,8 +113,8 @@ canvas {
 }
 
 .layer-item.active {
-    color: #a84d6b;
-    border-left: 4px solid #a84d6b;
+    color: #ffffff;
+    border-left: 4px solid #ffffff;
 }
 
 @media (max-height: 600px) {

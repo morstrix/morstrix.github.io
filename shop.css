@@ -22,7 +22,7 @@ body {
     padding: 20px 10px;
 }
 
-.shop-title { font-size: 1.3rem; color: #a84d6b; }
+.shop-title { font-size: 1.3rem; color: #ffffff; }
 .shop-subtitle { font-size: 0.6rem; color: #a1a1a1; margin-top: 12px; }
 
 .categories-grid {
@@ -34,7 +34,7 @@ body {
 
 .cat-card {
     background: #050505;
-    border: 1px solid #a84d6b;
+    border: 1px solid #ffffff;
     padding: 15px;
     text-align: center;
     cursor: pointer;
@@ -42,7 +42,7 @@ body {
 }
 
 .cat-card:active { transform: scale(0.97); }
-.cat-card:hover { border-color: #c46a88; }
+.cat-card:hover { border-color: #ffffff; }
 
 .cat-image {
     width: 100%;
@@ -53,7 +53,7 @@ body {
     filter: grayscale(0.2);
 }
 
-.cat-name { font-size: 0.75rem; color: #a84d6b; letter-spacing: 2px; }
+.cat-name { font-size: 0.75rem; color: #ffffff; letter-spacing: 2px; }
 .cat-price { margin-top: 10px; font-size: 0.6rem; color: #a1a1a1; }
 
 /* КОРЗИНА */
@@ -61,7 +61,7 @@ body {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background: #050505;
-    border-top: 2px solid #a84d6b;
+    border-top: 2px solid #ffffff;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -71,8 +71,8 @@ body {
 
 .cart-bottom-btn {
     background: transparent;
-    border: 1px solid #a84d6b;
-    color: #a84d6b;
+    border: 1px solid #ffffff;
+    color: #ffffff;
     font-family: 'Press Start 2P', monospace;
     font-size: 0.7rem;
     padding: 10px 20px;
@@ -82,17 +82,17 @@ body {
     gap: 10px;
 }
 
-.cart-bottom-btn:active { transform: scale(0.95); background: rgba(168,77,107,0.2); }
+.cart-bottom-btn:active { transform: scale(0.95); background: rgb(255, 255, 255); }
 
 .cart-bottom-count {
-    background: #a84d6b;
+    background: #ffffff;
     color: #000;
     padding: 2px 8px;
     border-radius: 20px;
     font-size: 0.7rem;
 }
 
-.cart-bottom-total { color: #a84d6b; font-size: 0.7rem; }
+.cart-bottom-total { color: #ffffff; font-size: 0.7rem; }
 
 /* МОДАЛКА */
 .modal {
@@ -109,7 +109,7 @@ body {
 
 .modal-content {
     background: #050505;
-    border: 2px solid #a84d6b;
+    border: 2px solid #ffffff;
     padding: 25px;
     max-width: 500px;
     width: 90%;
@@ -120,7 +120,7 @@ body {
 .close-modal {
     background: none;
     border: none;
-    color: #a84d6b;
+    color: #ffffff;
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
@@ -130,22 +130,22 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid #ffffff;
     font-size: 0.7rem;
 }
 
 .cart-total {
     margin-top: 20px;
     padding-top: 10px;
-    border-top: 2px solid #a84d6b;
+    border-top: 2px solid #ffffff;
     text-align: right;
     font-size: 0.8rem;
-    color: #a84d6b;
+    color: #ffffff;
 }
 
 .checkout-btn {
-    background: #a84d6b;
-    color: #000;
+    background: #ffffff;
+    color: #ffffff;
     border: none;
     padding: 12px;
     width: 100%;
@@ -159,7 +159,7 @@ body {
 .remove-item {
     background: none;
     border: none;
-    color: #a84d6b;
+    color: #ffffff;
     cursor: pointer;
     margin-left: 10px;
     font-size: 0.8rem;

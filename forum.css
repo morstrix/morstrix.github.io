@@ -28,24 +28,23 @@ body {
 
 .window-border {
     background: #0a0a0a;
-    border: 2px solid #a84d6b;
+    border: 2px solid #ffffff;
     padding: 22px;
     position: relative;
-    box-shadow: 0 0 20px rgba(168, 77, 107, 0.2);
 }
 
 .static-line {
     position: absolute;
     top: 15px; left: 20px; right: 20px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #a84d6b, transparent);
+    background: linear-gradient(90deg, transparent, #95566b, transparent);
     opacity: 0.4;
     pointer-events: none;
 }
 
 .window-title {
     font-size: 11px;
-    color: #a84d6b;
+    color: #ffffff;
     letter-spacing: 2px;
     margin-bottom: 18px;
     display: inline-block;
@@ -60,7 +59,7 @@ body {
     margin: 15px 0;
 }
 
-.description-text .highlight { color: #a84d6b; }
+.description-text .highlight { color: #ffffff; }
 
 .tags {
     display: flex;
@@ -95,16 +94,16 @@ body {
     align-items: center;
     gap: 10px;
     background: #0a0a0a;
-    color: #a84d6b;
+    color: #ffffff;
     text-decoration: none;
     padding: 12px 28px;
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
-    border: 2px solid #a84d6b;
+    border: 2px solid #ffffff;
     transition: all 0.15s;
 }
 
-.tg-link:active { background: #a84d6b; color: #000; transform: scale(0.95); }
+.tg-link:active { background: #ffffff; color: #000; transform: scale(0.95); }
 
 @media (max-width: 768px) {
     .window-title { font-size: 9px; }
