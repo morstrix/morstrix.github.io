@@ -22,8 +22,16 @@ body {
     padding: 20px 10px;
 }
 
-.shop-title { font-size: 1.3rem; color: #ffffff; }
-.shop-subtitle { font-size: 0.6rem; color: #a1a1a1; margin-top: 12px; }
+.shop-title {
+    font-size: 1.3rem;
+    color: var(--shop-text-white);
+}
+
+.shop-subtitle {
+    font-size: 0.6rem;
+    color: var(--shop-text-gray);
+    margin-top: 12px;
+}
 
 .categories-grid {
     display: grid;
@@ -33,35 +41,51 @@ body {
 }
 
 .cat-card {
-    background: #050505;
-    border: 1px solid #ffffff;
+    background: var(--shop-bg-card);
+    border: 1px solid var(--shop-border-white);
     padding: 15px;
     text-align: center;
     cursor: pointer;
     transition: all 0.1s;
 }
 
-.cat-card:active { transform: scale(0.97); }
-.cat-card:hover { border-color: #ffffff; }
+.cat-card:active {
+    transform: scale(0.97);
+}
+
+.cat-card:hover {
+    border-color: var(--shop-text-gray);
+}
 
 .cat-image {
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
     margin-bottom: 12px;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--shop-border-dark);
     filter: grayscale(0.2);
 }
 
-.cat-name { font-size: 0.75rem; color: #ffffff; letter-spacing: 2px; }
-.cat-price { margin-top: 10px; font-size: 0.6rem; color: #a1a1a1; }
+.cat-name {
+    font-size: 0.75rem;
+    color: var(--shop-text-white);
+    letter-spacing: 2px;
+}
+
+.cat-price {
+    margin-top: 10px;
+    font-size: 0.6rem;
+    color: var(--shop-text-gray);
+}
 
 /* КОРЗИНА */
 .cart-bottom {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #050505;
-    border-top: 2px solid #ffffff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--shop-bg-cart);
+    border-top: 2px solid var(--shop-border-white);
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -71,8 +95,8 @@ body {
 
 .cart-bottom-btn {
     background: transparent;
-    border: 1px solid #ffffff;
-    color: #ffffff;
+    border: 1px solid var(--shop-border-white);
+    color: var(--shop-text-white);
     font-family: 'Press Start 2P', monospace;
     font-size: 0.7rem;
     padding: 10px 20px;
@@ -82,34 +106,43 @@ body {
     gap: 10px;
 }
 
-.cart-bottom-btn:active { transform: scale(0.95); background: rgb(255, 255, 255); }
+.cart-bottom-btn:active {
+    transform: scale(0.95);
+    background: var(--shop-text-white);
+    color: #000;
+}
 
 .cart-bottom-count {
-    background: #ffffff;
+    background: var(--shop-text-white);
     color: #000;
     padding: 2px 8px;
     border-radius: 20px;
     font-size: 0.7rem;
 }
 
-.cart-bottom-total { color: #ffffff; font-size: 0.7rem; }
+.cart-bottom-total {
+    color: var(--shop-text-gray);
+    font-size: 0.7rem;
+}
 
 /* МОДАЛКА */
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 1000;
     justify-content: center;
     align-items: center;
 }
 
-.modal.active { display: flex; }
+.modal.active {
+    display: flex;
+}
 
 .modal-content {
-    background: #050505;
-    border: 2px solid #ffffff;
+    background: var(--shop-bg-modal);
+    border: 2px solid var(--shop-border-white);
     padding: 25px;
     max-width: 500px;
     width: 90%;
@@ -120,7 +153,7 @@ body {
 .close-modal {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--shop-text-white);
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
@@ -130,21 +163,21 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid var(--shop-border-dark);
     font-size: 0.7rem;
 }
 
 .cart-total {
     margin-top: 20px;
     padding-top: 10px;
-    border-top: 2px solid #ffffff;
+    border-top: 2px solid var(--shop-border-white);
     text-align: right;
     font-size: 0.8rem;
-    color: #ffffff;
+    color: var(--shop-text-white);
 }
 
 .checkout-btn {
-    background: #ffffff;
+    background: var(--shop-text-white);
     color: #000;
     border: none;
     padding: 12px;
@@ -154,12 +187,15 @@ body {
     font-family: 'Press Start 2P', monospace;
 }
 
-.checkout-btn:active { transform: scale(0.98); }
+.checkout-btn:active {
+    transform: scale(0.98);
+    background: var(--shop-accent);
+}
 
 .remove-item {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--shop-text-white);
     cursor: pointer;
     margin-left: 10px;
     font-size: 0.8rem;

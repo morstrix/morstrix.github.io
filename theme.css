@@ -1,0 +1,140 @@
+/* ============================================
+   THEME.CSS — ПОЛНЫЙ ФАЙЛ ВСЕХ ЦВЕТОВ
+   ============================================ */
+
+/* ---------- ОСНОВНЫЕ ПЕРЕМЕННЫЕ (все цвета, что были в оригинале) ---------- */
+:root {
+    /* Основные (из style.css) */
+    --primary: #ffffff;           /* белый */
+    --bg: #0a0a0a;                /* тёмный фон */
+    --text: #a1a1a1;              /* серый текст */
+    --bg-color: #0a0a0a;          /* фон body */
+    --primary-light: #a1a1a1;     /* для sub-caption */
+    --bg-darker: #050505;         /* для окна */
+    --secondary: #a1a1a1;         /* второстепенный текст */
+    --red-accent: #970000;        /* фон бегущего слова */
+    --money-green-dark: #2a7a3b;  /* тёмный зелёный монетки */
+    --money-green-light: #3dab54; /* светлый зелёный монетки */
+    --border-dark: #2a2a2a;       /* тёмные рамки */
+    --accent-bg: rgba(168, 77, 107, 0.05); /* сетка */
+    --accent-pink: #a84d6b;       /* розовый акцент */
+
+    /* Переменные для FORUM */
+    --forum-bg-window: #0a0a0a;
+    --forum-bg-tag: #111111;
+    --forum-text-white: #ffffff;
+    --forum-text-gray: #a1a1a1;
+    --forum-border-white: #ffffff;
+    --forum-border-dark: #2a2a2a;
+    --forum-accent: #a84d6b;
+    --forum-accent-light: #95566b;
+
+    /* Переменные для SHOP */
+    --shop-text-white: #ffffff;
+    --shop-text-gray: #a1a1a1;
+    --shop-bg-card: #050505;
+    --shop-border-white: #ffffff;
+    --shop-border-dark: #2a2a2a;
+    --shop-bg-cart: #050505;
+    --shop-bg-modal: #050505;
+    --shop-accent: #a84d6b;
+
+    /* Переменные для HELPER (рисовалка) */
+    --helper-border-white: #ffffff;
+    --helper-bg-container: #000000;
+    --helper-text-white: #ffffff;
+    --helper-border-dark: #2a2a2a;
+    --helper-bg-panel: #111111;
+    --helper-bg-popup: #000000;
+    --helper-text-gray: #a1a1a1;
+
+    /* Переменные для SUPPORT (тетрис) */
+    --support-bg-game: #0a0a0a;
+    --support-border-white: #ffffff;
+    --support-bg-panel: #000000;
+    --support-border-dark: #2a2a2a;
+    --support-text-gray: #a1a1a1;
+    --support-text-white: #ffffff;
+    --support-bg-card: #111111;
+}
+
+/* ---------- СТРАНИЦА A (ADA) — переопределяем внутренний style ---------- */
+.page-a {
+    --a-text-white: #ffffff;
+    --a-text-gray: #a1a1a1;
+    --a-accent: #a84d6b;
+}
+.page-a body {
+    color: var(--a-text-white) !important;
+}
+.page-a .ig-title {
+    color: var(--a-accent) !important;
+}
+.page-a .ig-subtitle {
+    color: var(--a-text-gray) !important;
+}
+
+/* ---------- СТРАНИЦА X (INSTAGRAM) ---------- */
+.page-x {
+    --x-text-white: #ffffff;
+    --x-text-gray: #a1a1a1;
+    --x-accent: #a84d6b;
+}
+.page-x body {
+    color: var(--x-text-white) !important;
+}
+.page-x .ig-title {
+    color: var(--x-accent) !important;
+}
+.page-x .ig-subtitle {
+    color: var(--x-text-gray) !important;
+}
+
+/* ---------- (ОПЦИОНАЛЬНО) если нужно принудительно применить переменные на всех страницах ---------- */
+/* Эти правила не ломают вёрстку, только цвета */
+.back-button span {
+    color: var(--primary) !important;
+}
+.team-label,
+.popup-title,
+.popup-close,
+.team-member,
+.text-group,
+.slide-title,
+.hud-dot,
+.hud-dot.active {
+    color: var(--primary) !important;
+}
+.team-btn,
+.popup-content,
+.hud-dot,
+.team-member img {
+    border-color: var(--primary) !important;
+}
+.team-btn:hover {
+    background: var(--primary) !important;
+}
+.sub-caption,
+.slide-subtitle {
+    color: var(--primary-light) !important;
+}
+#dynamicWord {
+    background: var(--red-accent) !important;
+    color: var(--primary) !important;
+}
+.money-svg rect {
+    fill: var(--money-green-dark) !important;
+    stroke: var(--money-green-light) !important;
+}
+.money-svg circle {
+    fill: var(--money-green-light) !important;
+    stroke: var(--bg) !important;
+}
+.futuristic-window {
+    background: var(--bg-darker) !important;
+    border-color: var(--primary) !important;
+}
+.grid-overlay {
+    background-image: linear-gradient(var(--accent-bg) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--accent-bg) 1px, transparent 1px) !important;
+}

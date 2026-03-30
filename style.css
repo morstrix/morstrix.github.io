@@ -1,11 +1,6 @@
 /* ============================================
    1. ПЕРЕМЕННЫЕ И ОСНОВА
 ============================================ */
-:root {
-    --primary: #ffffff;     /* один розовый на всё */
-    --bg: #0a0a0a;
-    --text: #a1a1a1;
-}
 * { 
     box-sizing: border-box; 
     margin: 0; 
@@ -38,7 +33,6 @@ body {
    2. ОБЩИЕ КОМПОНЕНТЫ (КНОПКИ, КРЕСТИК)
 ============================================ */
 
-/* ЕДИНЫЙ СТИЛЬ ДЛЯ КРЕСТИКА НАЗАД */
 .back-button {
     position: fixed;
     top: 20px;
@@ -56,7 +50,7 @@ body {
 }
 
 .back-button span {
-    color: #ffffff;
+    color: var(--primary);
     font-family: 'Press Start 2P', cursive;
     font-size: 32px;
     font-weight: 300;
@@ -91,7 +85,6 @@ body {
     align-items: center;
 }
 
-/* ФОРУМ И ПЛАШКА "RADIO" */
 .forum-wrapper { position: relative; }
 
 .forum-decor {
@@ -101,7 +94,7 @@ body {
     width: 30px;
     height: 30px;
     background: rgba(30, 20, 30, 0.9);
-    border: 2px solid #ffffff;
+    border: 2px solid var(--primary);
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -111,14 +104,13 @@ body {
 
 #dynamicWord {
     font-size: 6px;
-    color: #ffffff;
-    background: #970000;
+    color: var(--primary);
+    background: var(--red-accent);
     padding: 2px 4px;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
     transition: opacity 0.3s ease;
 }
 
-/* НАВИГАЦИОННЫЕ ССЫЛКИ */
 .main-nav-link {
     text-decoration: none;
     display: flex;
@@ -141,7 +133,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #fff;
+    color: var(--primary);
     font-size: 10px;
     letter-spacing: 2px;
 }
@@ -178,14 +170,14 @@ body {
 }
 
 .money-svg rect {
-    fill: #2a7a3b;
-    stroke: #3dab54;
+    fill: var(--money-green-dark);
+    stroke: var(--money-green-light);
     stroke-width: 1;
 }
 
 .money-svg circle {
-    fill: #3dab54;
-    stroke: #0a0a0a;
+    fill: var(--money-green-light);
+    stroke: var(--bg);
     stroke-width: 1;
 }
 
@@ -214,8 +206,8 @@ body {
 .grid-overlay {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(168, 77, 107, 0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(168, 77, 107, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(var(--accent-bg) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--accent-bg) 1px, transparent 1px);
     background-size: 15px 15px;
     z-index: 2;
 }
@@ -275,7 +267,6 @@ body {
    7. SOCIAL POPUP (TEAM)
 ============================================ */
 
-/* КНОПКА TEAM НА ГЛАВНОЙ */
 .team-btn {
     border: 1px solid var(--primary);
     padding: 12px 24px;
@@ -294,11 +285,10 @@ body {
 
 .team-label {
     font-size: 12px;
-    color: #fff;
+    color: var(--primary);
     letter-spacing: 3px;
 }
 
-/* ПОПАП */
 .social-popup {
     display: none;
     position: fixed;
@@ -312,8 +302,8 @@ body {
 .social-popup.active { display: flex; }
 
 .popup-content {
-    background: #0a0a0a;
-    border: 2px solid #ffffff;
+    background: var(--bg);
+    border: 2px solid var(--primary);
     padding: 25px;
     min-width: 260px;
     max-width: 90vw;
@@ -325,19 +315,19 @@ body {
     align-items: center;
     margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .popup-title {
     font-size: 11px;
-    color: #ffffff;
+    color: var(--primary);
     letter-spacing: 3px;
 }
 
 .popup-close {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--primary);
     font-size: 28px;
     cursor: pointer;
     line-height: 1;
@@ -362,7 +352,7 @@ body {
     align-items: center;
     gap: 12px;
     text-decoration: none;
-    color: #fff;
+    color: var(--primary);
     font-size: 8px;
     letter-spacing: 1px;
     transition: opacity 0.2s ease;
@@ -372,11 +362,11 @@ body {
     width: 75px;
     height: 75px;
     object-fit: cover;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--primary);
     image-rendering: pixelated;
     transition: border-color 0.2s ease;
 }
 
 .team-member:hover { opacity: 0.8; }
-.team-member:hover img { border-color: #fff; }
+.team-member:hover img { border-color: var(--primary); }
 .team-member:active { opacity: 0.6; }

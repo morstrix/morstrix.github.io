@@ -1,146 +1,164 @@
 /* ============================================
-   СТРЕЛКИ УПРАВЛЕНИЯ (были inline в support.html)
+   TETRIS.CSS — стили страницы тетриса
 ============================================ */
 
 body {
-    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .game-container {
-    position: relative;
-    z-index: 5;
+    background: var(--support-bg-game);
+    border: 2px solid var(--support-border-white);
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    padding: 12px;
+    gap: 20px;
+    width: auto;
 }
 
 .stats-panel {
-    background: #0a0a0a;
-    border: 1px solid #333;
-    padding: 8px 20px;
     display: flex;
-    gap: 40px;
-    margin-bottom: 15px;
-    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
 }
 
-.stat-card { text-align: center; }
-.stat-label { font-size: 8px; color: #666; letter-spacing: 1px; margin-bottom: 5px; }
-.stat-value { font-size: 24px; color: #ddd; font-family: 'Press Start 2P', monospace; }
+.stat-card {
+    background: var(--support-bg-panel);
+    border: 1px solid var(--support-border-dark);
+    padding: 10px 20px;
+    text-align: center;
+}
 
-.right-stats { display: flex; gap: 25px; align-items: center; margin-left: 10px; }
+.stat-label {
+    font-size: 8px;
+    color: var(--support-text-gray);
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 18px;
+    color: var(--support-text-white);
+    margin-top: 8px;
+}
+
+.right-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.next-box {
+    background: var(--support-bg-panel);
+    border: 1px solid var(--support-border-dark);
+    padding: 10px;
+    text-align: center;
+}
+
+#next-piece-canvas {
+    background: var(--support-bg-panel);
+    margin-top: 8px;
+}
 
 .pause-btn {
-    background: #111;
-    border: 1px solid #444;
-    width: 55px; height: 55px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    cursor: pointer; color: #ccc; font-size: 18px;
+    background: var(--support-bg-card);
+    border: 1px solid var(--support-border-white);
+    color: var(--support-text-white);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
-.pause-btn:active { background: #222; transform: scale(0.95); }
-.pause-label { font-size: 6px; margin-top: 2px; color: #666; }
 
-.next-box { text-align: center; }
-.next-box .stat-label { font-size: 7px; }
-#next-piece-canvas { border: 1px solid #333; background: #0a0a0a; }
+.pause-btn:active {
+    transform: scale(0.95);
+    background: var(--support-text-white);
+    color: #000;
+}
 
 .game-area {
-    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 0;
-    margin: 5px 0;
 }
 
 #tetris-canvas {
-    display: block;
-    max-width: 95vw;
-    max-height: 60vh;
-    width: auto; height: auto;
-    border: 2px solid #333;
-    background: #0a0a0a;
+    background: var(--support-bg-panel);
+    border: 2px solid var(--support-border-white);
+    box-shadow: 0 0 0 1px var(--support-border-dark);
 }
 
 .control-bar {
-    background: #0a0a0a;
-    border: 1px solid #333;
-    padding: 15px 25px;
-    margin-top: 15px;
     display: flex;
-    gap: 40px;
-    flex-shrink: 0;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .control-btn {
-    background: #111;
-    border: 2px solid #444;
+    background: var(--support-bg-card);
+    border: 1px solid var(--support-border-white);
+    width: 60px;
+    height: 60px;
     cursor: pointer;
-    width: 85px; height: 85px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.control-btn:active { background: #222; transform: scale(0.95); }
-
-.arrow-left, .arrow-right, .arrow-down, .rotate-icon {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
+    transition: all 0.05s linear;
 }
 
-.pixel-arrow { display: block; width: 0; height: 0; }
-.arrow-left  .pixel-arrow { border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-right: 30px solid #888; }
-.arrow-right .pixel-arrow { border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 30px solid #888; }
-.arrow-down  .pixel-arrow { border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #888; }
-.rotate-icon::before { content: '↻'; font-size: 48px; color: #888; }
+.control-btn:active {
+    transform: scale(0.92);
+    background: var(--support-text-white);
+}
 
-@media (max-width: 700px) {
-    .control-btn { width: 70px; height: 70px; }
-    .control-bar { gap: 18px; padding: 12px 18px; }
-    .stat-value { font-size: 20px; }
-    .stats-panel { gap: 25px; padding: 6px 15px; }
-    .right-stats { gap: 18px; }
-    .pause-btn { width: 48px; height: 48px; font-size: 16px; }
-    .arrow-left  .pixel-arrow { border-right: 24px solid #888; border-top: 16px solid transparent; border-bottom: 16px solid transparent; }
-    .arrow-right .pixel-arrow { border-left: 24px solid #888; border-top: 16px solid transparent; border-bottom: 16px solid transparent; }
-    .arrow-down  .pixel-arrow { border-top: 24px solid #888; border-left: 16px solid transparent; border-right: 16px solid transparent; }
-    .rotate-icon::before { font-size: 38px; }
+/* Стрелки */
+.arrow-left {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 18px solid var(--support-text-white);
+}
+
+.arrow-right {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 18px solid var(--support-text-white);
+}
+
+.arrow-down {
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 18px solid var(--support-text-white);
+}
+
+.rotate-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--support-text-white);
+    position: relative;
+}
+
+.rotate-icon::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid var(--support-text-white);
+    border-right: 2px solid var(--support-text-white);
+    top: -4px;
+    right: -4px;
 }
 
 @media (max-width: 550px) {
-    .control-btn { width: 60px; height: 60px; }
-    .control-bar { gap: 14px; padding: 10px 14px; }
-    .stat-value { font-size: 16px; }
-    .stats-panel { gap: 18px; padding: 5px 12px; }
-    .pause-btn { width: 42px; height: 42px; font-size: 14px; }
-    .arrow-left  .pixel-arrow { border-right: 20px solid #888; border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
-    .arrow-right .pixel-arrow { border-left: 20px solid #888; border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
-    .arrow-down  .pixel-arrow { border-top: 20px solid #888; border-left: 14px solid transparent; border-right: 14px solid transparent; }
-    .rotate-icon::before { font-size: 32px; }
-}
-
-@media (max-width: 450px) {
-    .control-btn { width: 55px; height: 55px; }
-    .control-bar { gap: 12px; padding: 8px 12px; }
+    .game-container { padding: 12px; gap: 12px; }
+    .control-btn { width: 50px; height: 50px; }
+    .stat-card { padding: 6px 12px; }
     .stat-value { font-size: 14px; }
-    .stats-panel { gap: 14px; padding: 4px 10px; }
-    .arrow-left  .pixel-arrow { border-right: 18px solid #888; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
-    .arrow-right .pixel-arrow { border-left: 18px solid #888; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
-    .arrow-down  .pixel-arrow { border-top: 18px solid #888; border-left: 12px solid transparent; border-right: 12px solid transparent; }
-    .rotate-icon::before { font-size: 28px; }
 }

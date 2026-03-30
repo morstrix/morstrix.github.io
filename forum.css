@@ -27,8 +27,8 @@ body {
 }
 
 .window-border {
-    background: #0a0a0a;
-    border: 2px solid #ffffff;
+    background: var(--forum-bg-window);
+    border: 2px solid var(--forum-border-white);
     padding: 22px;
     position: relative;
 }
@@ -37,14 +37,14 @@ body {
     position: absolute;
     top: 15px; left: 20px; right: 20px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #95566b, transparent);
+    background: linear-gradient(90deg, transparent, var(--forum-accent-light), transparent);
     opacity: 0.4;
     pointer-events: none;
 }
 
 .window-title {
     font-size: 11px;
-    color: #ffffff;
+    color: var(--forum-text-white);
     letter-spacing: 2px;
     margin-bottom: 18px;
     display: inline-block;
@@ -53,13 +53,15 @@ body {
 }
 
 .description-text {
-    color: #a1a1a1;
+    color: var(--forum-text-gray);
     font-size: 9px;
     line-height: 1.8;
     margin: 15px 0;
 }
 
-.description-text .highlight { color: #ffffff; }
+.description-text .highlight {
+    color: var(--forum-text-white);
+}
 
 .tags {
     display: flex;
@@ -67,16 +69,16 @@ body {
     gap: 12px;
     margin-top: 18px;
     padding-top: 15px;
-    border-top: 1px solid #2a2a2a;
+    border-top: 1px solid var(--forum-border-dark);
 }
 
 .tag {
     font-size: 7px;
-    color: #a1a1a1;
-    background: #111;
+    color: var(--forum-text-gray);
+    background: var(--forum-bg-tag);
     padding: 5px 10px;
     letter-spacing: 1px;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--forum-border-dark);
 }
 
 .comments-wrapper {
@@ -87,23 +89,30 @@ body {
     margin-bottom: 25px;
 }
 
-.tg-button { text-align: center; margin-top: 15px; }
+.tg-button {
+    text-align: center;
+    margin-top: 15px;
+}
 
 .tg-link {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #0a0a0a;
-    color: #ffffff;
+    background: var(--forum-bg-window);
+    color: var(--forum-text-white);
     text-decoration: none;
     padding: 12px 28px;
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
-    border: 2px solid #ffffff;
+    border: 2px solid var(--forum-border-white);
     transition: all 0.15s;
 }
 
-.tg-link:active { background: #ffffff; color: #000; transform: scale(0.95); }
+.tg-link:active {
+    background: var(--forum-text-white);
+    color: #000;
+    transform: scale(0.95);
+}
 
 @media (max-width: 768px) {
     .window-title { font-size: 9px; }
