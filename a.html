@@ -5,57 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ADA | MORSTRIX</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: #0a0a0a; 
-            min-height: 100vh; 
-            font-family: 'Press Start 2P', monospace; 
-            color: #fff; 
-            overflow-x: hidden; 
+        body {
+            min-height: 100vh;
+            display: block;
+            color: #fff;
         }
 
-        /* Кнопка назад */
-        /* ЕДИНЫЙ СТИЛЬ ДЛЯ КРЕСТИКА */
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 99999;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: none;
-    transition: transform 0.2s ease;
-}
+        .ig-header {
+            text-align: center;
+            padding: 80px 20px 30px;
+        }
 
-.back-button span {
-    color: #a84d6b; /* Твой фирменный розовый */
-    font-size: 32px;
-    font-family: monospace;
-    line-height: 1;
-}
+        .ig-title {
+            font-size: 1.2rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
 
-.back-button:hover {
-    transform: scale(1.1);
-}
+        .ig-subtitle {
+            font-size: 0.55rem;
+            color: #a1a1a1;
+            line-height: 1.4;
+        }
 
-.back-button:active {
-    transform: scale(0.9);
-}
+        .instagram-feed {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px 50px;
+        }
 
-        /* Заголовок */
-        .ig-header { text-align: center; padding: 80px 20px 30px; }
-        .ig-title { font-size: 1.2rem; color: #a84d6b; letter-spacing: 2px; margin-bottom: 12px; }
-        .ig-subtitle { font-size: 0.55rem; color: #a1a1a1; line-height: 1.4; }
-
-        /* Контейнер виджета */
-        .instagram-feed { max-width: 900px; margin: 0 auto; padding: 0 15px 50px; }
         behold-widget { display: block; min-height: 400px; }
     </style>
 </head>

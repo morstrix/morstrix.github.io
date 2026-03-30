@@ -1,0 +1,115 @@
+/* ============================================
+   FORUM.CSS — стили страницы форума
+============================================ */
+
+body {
+    display: block;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.forum-container {
+    max-width: 750px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-window {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.window-border {
+    background: #0a0a0a;
+    border: 2px solid #a84d6b;
+    padding: 22px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(168, 77, 107, 0.2);
+}
+
+.static-line {
+    position: absolute;
+    top: 15px; left: 20px; right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a84d6b, transparent);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.window-title {
+    font-size: 11px;
+    color: #a84d6b;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    display: inline-block;
+    background: rgba(168, 77, 107, 0.1);
+    padding: 4px 10px;
+}
+
+.description-text {
+    color: #a1a1a1;
+    font-size: 9px;
+    line-height: 1.8;
+    margin: 15px 0;
+}
+
+.description-text .highlight { color: #a84d6b; }
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #2a2a2a;
+}
+
+.tag {
+    font-size: 7px;
+    color: #a1a1a1;
+    background: #111;
+    padding: 5px 10px;
+    letter-spacing: 1px;
+    border: 1px solid #2a2a2a;
+}
+
+.comments-wrapper {
+    width: 100%;
+    background: transparent;
+    border: none;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.tg-button { text-align: center; margin-top: 15px; }
+
+.tg-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0a0a0a;
+    color: #a84d6b;
+    text-decoration: none;
+    padding: 12px 28px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    border: 2px solid #a84d6b;
+    transition: all 0.15s;
+}
+
+.tg-link:active { background: #a84d6b; color: #000; transform: scale(0.95); }
+
+@media (max-width: 768px) {
+    .window-title { font-size: 9px; }
+    .description-text { font-size: 8px; }
+    .tag { font-size: 6px; padding: 4px 8px; }
+    .tg-link { font-size: 8px; padding: 10px 20px; }
+    .window-border { padding: 18px; }
+}

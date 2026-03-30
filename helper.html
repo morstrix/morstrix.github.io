@@ -5,146 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | MULTILAYER PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #fff;
-            --accent: #a84d6b;
-            --bg: #0a0a0a;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--primary);
-            font-family: 'Press Start 2P', monospace;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Контейнер */
-        .paint-container {
-            width: 90vw;
-            max-width: 400px;
-            border: 4px solid var(--primary);
-            background: #000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Панель инструментов сверху */
-        .paint-history {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #000;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .btn-retro {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            font-family: 'Press Start 2P';
-            cursor: pointer;
-            padding: 5px 10px;
-            font-size: 10px;
-        }
-
-        .btn-retro:disabled { color: #444; border-color: #444; }
-        .btn-retro:active { transform: translateY(2px); }
-
-        /* Холсты (Слоеный пирог) */
-        .canvas-area {
-            position: relative;
-            width: 100%;
-            height: 350px;
-            background: #000;
-        }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-
-        #layer2 { background: transparent; }
-
-        /* Нижняя панель */
-        .paint-controls {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            border-top: 2px solid var(--primary);
-            background: #111;
-        }
-
-        #pColor { width: 40px; height: 30px; border: 1px solid #fff; background: none; }
-
-        /* ПОПАП СЛОЕВ */
-        .layers-popup {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-        .layers-popup.active { display: flex; }
-
-        .layers-window {
-            width: 260px;
-            border: 2px solid var(--primary);
-            background: #000;
-        }
-
-        .layers-header {
-            background: var(--primary);
-            color: #000;
-            padding: 8px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 8px;
-        }
-
-        .layer-item {
-            padding: 15px;
-            border-bottom: 1px solid #333;
-            cursor: pointer;
-            font-size: 8px;
-        }
-
-        .layer-item.active {
-            color: var(--accent);
-            border-left: 4px solid var(--accent);
-        }
-
-        .back-button { position: fixed; top: 10px; right: 10px; color: #fff; font-size: 20px; text-decoration: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="paint.css">
 </head>
 <body>
 
-<a href="index.html" class="back-button">×</a>
+<a href="index.html" class="back-button"><span>×</span></a>
 
 <div class="paint-container">
     <div class="paint-history">
-        <button class="btn-retro" id="pUndo" disabled> < </button>
-        <button class="btn-retro" id="pRedo" disabled style="margin-left:5px;"> > </button>
-        <button class="btn-retro" id="btnLayersOpen" style="margin-left: 20px;">[ LAYERS ]</button>
+        <button class="btn-retro" id="pUndo" disabled> &lt; </button>
+        <button class="btn-retro" id="pRedo" disabled style="margin-left:5px;"> &gt; </button>
+        <button class="btn-retro" id="btnLayersOpen" style="margin-left:20px;">[ LAYERS ]</button>
     </div>
-
     <div class="canvas-area">
         <canvas id="layer1"></canvas>
         <canvas id="layer2"></canvas>
     </div>
-
     <div class="paint-controls">
         <input type="color" id="pColor" value="#ffffff">
         <button class="btn-retro" id="pClear">CLEAR ACTIVE</button>
@@ -155,7 +32,7 @@
     <div class="layers-window">
         <div class="layers-header">
             <span>CHANNELS</span>
-            <button id="btnLayersClose" style="border:none; background:none; cursor:pointer;">X</button>
+            <button id="btnLayersClose" style="border:none;background:none;cursor:pointer;font-family:'Press Start 2P';font-size:8px;">X</button>
         </div>
         <div id="layerList">
             <div class="layer-item active" data-id="2">LAYER_02 (TOP)</div>
@@ -170,17 +47,13 @@
     const l2 = document.getElementById('layer2');
     const ctx1 = l1.getContext('2d', { willReadFrequently: true });
     const ctx2 = l2.getContext('2d', { willReadFrequently: true });
-    
-    let currentCtx = ctx2; // По умолчанию рисуем на верхнем слое
+    let currentCtx = ctx2;
     let isDrawing = false;
     let undoStack = [];
     let redoStack = [];
 
     function init() {
-        [l1, l2].forEach(c => {
-            c.width = c.offsetWidth;
-            c.height = c.offsetHeight;
-        });
+        [l1, l2].forEach(c => { c.width = c.offsetWidth; c.height = c.offsetHeight; });
         ctx1.fillStyle = "#000";
         ctx1.fillRect(0, 0, l1.width, l1.height);
         ctx1.lineCap = ctx2.lineCap = 'round';
@@ -188,14 +61,9 @@
         saveState();
     }
 
-    // История (Undo/Redo)
     function saveState() {
         redoStack = [];
-        // Сохраняем состояние ОБОИХ слоев в один снимок
-        undoStack.push({
-            l1: l1.toDataURL(),
-            l2: l2.toDataURL()
-        });
+        undoStack.push({ l1: l1.toDataURL(), l2: l2.toDataURL() });
         if (undoStack.length > 20) undoStack.shift();
         updateBtns();
     }
@@ -206,18 +74,10 @@
     }
 
     document.getElementById('pUndo').onclick = () => {
-        if (undoStack.length > 1) {
-            redoStack.push(undoStack.pop());
-            applyState(undoStack[undoStack.length - 1]);
-        }
+        if (undoStack.length > 1) { redoStack.push(undoStack.pop()); applyState(undoStack[undoStack.length - 1]); }
     };
-
     document.getElementById('pRedo').onclick = () => {
-        if (redoStack.length > 0) {
-            const state = redoStack.pop();
-            undoStack.push(state);
-            applyState(state);
-        }
+        if (redoStack.length > 0) { const s = redoStack.pop(); undoStack.push(s); applyState(s); }
     };
 
     function applyState(state) {
@@ -228,7 +88,6 @@
         updateBtns();
     }
 
-    // Рисование
     function getPos(e) {
         const rect = l2.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -237,25 +96,18 @@
     }
 
     const start = (e) => { isDrawing = true; currentCtx.beginPath(); const p = getPos(e); currentCtx.moveTo(p.x, p.y); };
-    const move = (e) => { 
-        if(!isDrawing) return; 
-        const p = getPos(e); 
-        currentCtx.strokeStyle = document.getElementById('pColor').value; 
-        currentCtx.lineTo(p.x, p.y); 
-        currentCtx.stroke(); 
-    };
-    const end = () => { if(isDrawing) { isDrawing = false; saveState(); } };
+    const move  = (e) => { if (!isDrawing) return; const p = getPos(e); currentCtx.strokeStyle = document.getElementById('pColor').value; currentCtx.lineTo(p.x, p.y); currentCtx.stroke(); };
+    const end   = () => { if (isDrawing) { isDrawing = false; saveState(); } };
 
     l2.addEventListener('mousedown', start);
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseup', end);
     l2.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); });
-    l2.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); });
+    l2.addEventListener('touchmove',  (e) => { e.preventDefault(); move(e); });
     l2.addEventListener('touchend', end);
 
-    // Управление попапом
     const pop = document.getElementById('layersPopup');
-    document.getElementById('btnLayersOpen').onclick = () => pop.classList.add('active');
+    document.getElementById('btnLayersOpen').onclick  = () => pop.classList.add('active');
     document.getElementById('btnLayersClose').onclick = () => pop.classList.remove('active');
 
     document.querySelectorAll('.layer-item').forEach(item => {
