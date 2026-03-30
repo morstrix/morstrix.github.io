@@ -151,7 +151,7 @@ if (windowEl) {
 
 // ==================== ДИНАМИКА ФОРУМА ====================
 (function() {
-    const words = ["radio", "travel", "wellness", "money"];
+    const words = ["wellness", "travel", "english", "money", "radio"];
     // Теперь находим конкретный span по ID, который мы добавили в HTML
     const wordElement = document.getElementById('dynamicWord');
     
