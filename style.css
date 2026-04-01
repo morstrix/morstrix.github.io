@@ -7,10 +7,16 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+    --primary: #00ff41;       /* Матричный зеленый */
+    --accent-pink: #ff00ff;    /* Неоновый розовый */
+    --bg-dark: #000000;
+}
+
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #000; /* Чисто черный фон под канвас */
+    background-color: var(--bg-dark);
     font-family: 'Press Start 2P', cursive;
     overflow-x: hidden;
     color: #fff;
@@ -30,10 +36,10 @@ html, body {
 /* --- СЕТКА ХАБА (GRID INDEX) --- */
 .grid-index {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Две колонки */
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
     padding: 80px 20px 40px;
-    max-width: 600px; /* Чтобы на широких экранах не расползалось */
+    max-width: 600px;
     margin: 0 auto;
     position: relative;
     z-index: 10;
@@ -53,90 +59,38 @@ html, body {
     overflow: hidden;
 }
 
-.room-btn:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Квадратные блоки */
-.room-btn.clean-square {
-    grid-column: span 1;
-    aspect-ratio: 1 / 1;
-}
-
-/* Широкие блоки (Tetris, Paint, Donate) */
-.room-btn.wide-bar {
-    grid-column: span 2;
-    height: 70px;
-    border-color: rgba(255, 255, 255, 0.15);
-}
+.room-btn:active { transform: scale(0.95); }
+.room-btn.clean-square { grid-column: span 1; aspect-ratio: 1 / 1; }
+.room-btn.wide-bar { grid-column: span 2; height: 70px; border-color: rgba(255, 255, 255, 0.15); }
 
 /* --- КОНТЕНТ ВНУТРИ КНОПОК --- */
 .room-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     position: relative;
 }
 
-.room-icon {
-    max-width: 60px;
-    height: auto;
-    image-rendering: pixelated; /* Сохраняем четкость пикселей */
-}
+.room-icon { max-width: 60px; height: auto; image-rendering: pixelated; }
+.room-label { font-size: 7px; color: #fff; margin-top: 10px; text-transform: uppercase; text-align: center; }
 
-.svg-icon {
-    width: 40px;
-    height: 40px;
-    color: #fff;
-}
-
-.room-label {
-    font-size: 7px;
-    color: #fff;
-    margin-top: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.wide-label {
-    font-size: 10px;
-    color: #fff;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-/* --- ТА САМАЯ КРАСНАЯ ПЛАШКА --- */
+/* --- КРАСНАЯ ПЛАШКА (FORUM) --- */
 .forum-header {
     position: absolute;
-    top: 0;
-    left: 0;
-    background: #ff0000 !important; /* Принудительно красный */
+    top: 0; left: 0;
+    background: #ff0000 !important;
     color: #fff !important;
     padding: 3px 8px;
     font-size: 6px;
-    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     z-index: 100;
-    border: none !important;
-}
-
-#dynamicWord {
-    background: transparent !important;
-    color: #fff !important;
 }
 
 /* --- ВРАЩАЮЩАЯСЯ МОНЕТКА В SHOP --- */
 .money-rotating {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 20px;
-    height: auto;
+    top: 8px; right: 8px;
+    width: 20px; height: auto;
     color: #4ade80;
     animation: coinSpin 3s linear infinite;
 }
@@ -146,23 +100,23 @@ html, body {
     100% { transform: rotateY(360deg); }
 }
 
-/* --- ТЕРМИНАЛ ДОНАТА --- */
+/* --- ТЕРМИНАЛ ДОНАТА (НА ГЛАВНОЙ) --- */
 .donate-widget-area {
     grid-column: span 2;
-    border: 1px solid #fff;
-    background: #000;
+    border: 1px solid var(--primary);
+    background: rgba(0, 0, 0, 0.8);
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .widget-head {
-    background: #fff;
+    background: var(--primary);
     color: #000;
     font-size: 8px;
     padding: 6px;
     text-align: center;
-    font-family: 'Press Start 2P', cursive;
 }
 
 .inject-btn {
@@ -172,30 +126,85 @@ html, body {
     padding: 12px;
     text-decoration: none;
     font-size: 8px;
-    font-family: 'Press Start 2P', cursive;
     transition: 0.3s;
 }
 
-.inject-btn:hover {
-    background: #b30000;
+/* --- МОДАЛЬНЫЕ ОКНА (ПОПАПЫ) --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
 }
 
-/* --- БЕГУЩАЯ СТРОКА (МАРГУШКА) --- */
-.rec-box {
-    grid-column: span 2;
-    border: 1px dashed rgba(255, 255, 255, 0.3);
-    padding: 10px;
-    font-size: 7px;
-    color: rgba(255, 255, 255, 0.6);
-    background: rgba(0,0,0,0.2);
+.modal-box {
+    position: relative; /* Чтобы крестик позиционировался внутри */
+    border: 2px solid var(--primary);
+    background: #000;
+    padding: 50px 20px 20px; /* Сверху больше места под крестик */
+    max-width: 90%;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+}
+
+/* --- КРЕСТИК ЗАКРЫТИЯ (ВСЕГДА В ПРАВОМ УГЛУ) --- */
+.close-btn {
+    position: absolute;
+    top: 15px;      /* Отступ сверху */
+    right: 15px;    /* Отступ справа */
+    background: none;
+    border: none;
+    color: #ff0000 !important; /* Принудительно красный */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 3100;
+    line-height: 1;
+    padding: 5px;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #ff0000;
+}
+
+/* Специфика для окна доната */
+.donate-modal-box {
+    width: 550px;
+    height: 180px;
+    padding: 0; /* Виджет на всю ширину */
+    overflow: hidden;
+}
+
+.donate-modal-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Ссылки Инстаграма */
+.insta-links a {
+    display: block;
+    color: var(--primary);
+    text-decoration: none;
+    border: 1px solid var(--primary);
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.insta-links a:hover {
+    background: var(--primary);
+    color: #000;
 }
 
 /* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
 @media (max-width: 480px) {
-    .grid-index {
-        gap: 10px;
-        padding: 70px 15px 30px;
-    }
+    .grid-index { gap: 10px; padding: 70px 15px 30px; }
     .room-label { font-size: 6px; }
-    .wide-label { font-size: 8px; letter-spacing: 2px; }
+    .donate-modal-box { width: 95%; height: 150px; }
 }
