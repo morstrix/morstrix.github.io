@@ -24,18 +24,18 @@
         }
         
         .donate-container {
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             background: rgba(10, 10, 10, 0.95);
             border: 2px solid #ff3366;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 51, 102, 0.3);
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
         }
         
         .donate-header {
-            background: #ff3366;
-            padding: 15px;
+            background: linear-gradient(135deg, #ff3366, #aa2266);
+            padding: 20px;
             text-align: center;
         }
         
@@ -53,15 +53,12 @@
         
         .widget-wrapper {
             width: 100%;
-            height: 320px;
+            min-height: 400px;
             background: #0a0a0a;
-            overflow: hidden;
-        }
-        
-        .widget-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .back-link {
@@ -82,9 +79,88 @@
             color: #000;
         }
         
+        /* Donatello Widget Styles */
+        .donatello-widget {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .donatello-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ff3366, #aa2266);
+            border: none;
+            padding: 16px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            color: white;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        
+        .donatello-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #ff3366;
+        }
+        
+        .donatello-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .donatello-modal.active {
+            display: flex;
+        }
+        
+        .donatello-modal-content {
+            width: 90%;
+            max-width: 500px;
+            background: #1a1a1a;
+            border: 2px solid #ff3366;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .donatello-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ff3366;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            font-family: monospace;
+        }
+        
+        .donatello-modal-close:hover {
+            color: #fff;
+        }
+        
+        .donatello-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        
         @media (max-width: 600px) {
-            .widget-wrapper { height: 280px; }
-            .donate-header h1 { font-size: 10px; }
+            .donatello-iframe { height: 550px; }
+            .donatello-button { font-size: 9px; padding: 12px 20px; }
         }
     </style>
 </head>
@@ -95,13 +171,47 @@
             <p>SUPPORT THE PROJECT</p>
         </div>
         <div class="widget-wrapper">
-            <iframe 
-                src="https://donatello.to/widget/69cce53c853ffcbd14d8b8e7/token/dff9f6028b506348f3084eb6e4b6ee79"
-                scrolling="no"
-                allowtransparency="true">
-            </iframe>
+            <!-- Красивая кнопка-виджет -->
+            <button class="donatello-button" id="openDonateBtn">
+                <span>💎</span>
+                SUPPORT CREATOR
+                <span>⚡</span>
+            </button>
         </div>
     </div>
     <a href="index.html" class="back-link">◀ RETURN TO HUB</a>
+
+    <!-- Модальное окно с Donatello -->
+    <div id="donatelloModal" class="donatello-modal">
+        <div class="donatello-modal-content">
+            <button class="donatello-modal-close" id="closeDonateBtn">✕</button>
+            <iframe 
+                id="donatelloIframe"
+                class="donatello-iframe"
+                src="https://donatello.to/morstrix"
+                frameborder="0">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('donatelloModal');
+        const openBtn = document.getElementById('openDonateBtn');
+        const closeBtn = document.getElementById('closeDonateBtn');
+        
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
