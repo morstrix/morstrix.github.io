@@ -5,258 +5,236 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | HUB</title>
     
-    <meta property="og:title" content="MORSTRIX HUB">
-    <meta property="og:image" content="preview.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="preview.jpg">
-
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
 
     <style>
-        .grid-index {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 90px 20px 40px;
-            max-width: 800px;
-            margin: 0 auto;
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            user-select: none; -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            width: 100%; height: 100%;
+            background: #000;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden; /* Чтобы ничего не дергалось */
+            color: var(--primary);
+        }
+
+        /* КАНВАС ВСЕГДА СНИЗУ */
+        #neuro-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        /* ОСНОВНОЙ КОНТЕЙНЕР - ВИСИТ ПОВЕРХ ФОНА */
+        .hub-layer {
             position: relative;
             z-index: 10;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .room-btn {
+        /* СЕТКА БЕЗ ФОНА */
+        .grid-hud {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px; /* Больше места для фона */
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* КНОПКИ-ПРИЗРАКИ */
+        .hud-item {
             text-decoration: none;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            background: none;
+            background: transparent; /* НИКАКИХ ПЛИТОК */
             border: none;
-            transition: transform 0.1s;
             cursor: pointer;
+            transition: transform 0.1s;
         }
-        .room-btn:active { transform: scale(0.95); }
 
-        .room-btn.clean-square { grid-column: span 1; aspect-ratio: 1 / 1; }
-        .room-btn.wide-bar {
+        .hud-item:active { transform: scale(0.9); }
+
+        .hud-item.wide {
             grid-column: span 2;
-            height: 85px;
-            background: rgba(15, 15, 15, 0.6);
-            border: 2px solid var(--border-dark);
-            backdrop-filter: blur(5px);
+            height: 60px;
         }
 
-        .wide-label {
-            font-size: 12px;
+        /* КРАСНАЯ ПЛАШКА CONNECTING (ПРОСТО ТЕКСТ НА ФОНЕ) */
+        .forum-tag {
+            position: absolute;
+            top: -15px;
+            background: #ff0000;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 6px;
+            z-index: 20;
+        }
+
+        .hud-icon {
+            max-width: 65px;
+            height: auto;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 0 5px var(--accent-pink));
+        }
+
+        .hud-label {
+            font-size: 8px;
             color: var(--primary);
-            letter-spacing: 4px;
+            margin-top: 15px;
             text-transform: uppercase;
+            text-shadow: 0 0 8px var(--accent-pink);
         }
 
-        .room-content {
-            width: 100%;
-            height: 100%;
+        /* ПЛЕЕР С АНИМАЦИЕЙ (ВМЕСТО ЮТУБА) */
+        .player-circle {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            transition: 0.3s;
         }
 
-        .forum-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: #ff0000;
-            color: #ffffff;
-            padding: 4px 10px;
-            font-size: 7px;
-            font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-            z-index: 100;
+        .play-icon { font-size: 18px; color: var(--primary); }
+
+        /* Состояние "Играет" */
+        .is-playing .player-circle {
+            border-color: #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+            animation: pulse 1s infinite alternate;
+        }
+        .is-playing .play-icon { color: #ff0000; }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
-        .money-rotating {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 25px;
-            animation: spinMoney 4s linear infinite;
-            color: #4ade80;
-        }
-
-        @keyframes spinMoney {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        .room-icon { max-width: 70px; height: auto; image-rendering: pixelated; }
-        .svg-icon { width: 45px; height: 45px; color: var(--primary); }
-        .room-label { font-size: 8px; color: var(--primary); margin-top: 12px; letter-spacing: 1px; text-align: center; }
-
-        .donate-widget-area {
+        /* ТЕРМИНАЛ ДОНАТА (ПРОЗРАЧНЫЙ) */
+        .donate-area {
             grid-column: span 2;
-            border: 2px solid var(--primary);
-            background: #000;
+            border: 1px solid var(--primary);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
             margin-top: 20px;
-            display: flex;
-            flex-direction: column;
         }
 
-        .widget-head {
-            background: var(--primary);
-            color: #000;
-            font-size: 9px;
-            padding: 8px;
-            text-align: center;
-            font-family: 'Press Start 2P', cursive;
-        }
-
-        .inject-btn {
+        .donate-btn {
             display: block;
             background: #ff0000;
-            color: #ffffff;
+            color: #fff;
             text-align: center;
-            padding: 15px;
+            padding: 12px;
             text-decoration: none;
             font-size: 8px;
-            font-family: 'Press Start 2P';
         }
 
-        .rec-box { 
-            grid-column: span 2; 
-            border: 1px dashed var(--primary); 
-            padding: 12px; 
-            font-size: 8px; 
-            color: var(--primary); 
-            text-align: center; 
+        /* Адаптив */
+        @media (max-width: 480px) {
+            .grid-hud { gap: 25px; }
+            .hud-icon { max-width: 50px; }
         }
-
-        #neuro-bg { position: fixed; inset: 0; z-index: -1; }
-        #yt-player-hidden { position: absolute; top: -999px; visibility: hidden; }
     </style>
 </head>
-<body class="page-index">
+<body>
 
     <canvas id="neuro-bg"></canvas>
-    <div id="yt-player-hidden"></div>
 
-    <section class="grid-index">
-        
-        <a href="support.html" class="room-btn wide-bar"><div class="wide-label">SUPPORT [TETRIS]</div></a>
+    <main class="hub-layer">
+        <div class="grid-hud">
+            
+            <a href="support.html" class="hud-item wide"><span class="hud-label" style="font-size:12px;">[ TETRIS SYSTEM ]</span></a>
 
-        <a href="forum.html" class="room-btn clean-square">
-            <div class="room-content">
-                <div class="forum-header"><span id="dynamicWord">CONNECTING</span></div>
-                <img src="forum.png" class="room-icon" alt="forum">
-                <div class="room-label">FORUM</div>
-            </div>
-        </a>
-
-        <a href="shop.html" class="room-btn clean-square">
-            <div class="room-content">
-                <svg class="money-rotating" viewBox="0 0 32 20" fill="none">
-                    <rect x="1" y="1" width="30" height="18" rx="1" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="16" cy="10" r="4" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                <img src="space.png" class="room-icon" alt="shop">
-                <div class="room-label">SHOP</div>
-            </div>
-        </a>
-
-        <a href="helper.html" class="room-btn wide-bar"><div class="wide-label">HELPER [PAINT]</div></a>
-
-        <a href="https://pinterest.com" target="_blank" class="room-btn clean-square">
-            <div class="room-content">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.16 9.42 7.63 11.16-.1-.95-.19-2.4.04-3.44.21-.93 1.34-5.68 1.34-5.68s-.34-.68-.34-1.69c0-1.58.92-2.76 2.06-2.76 0.97 0 1.44.73 1.44 1.61 0 .98-.62 2.44-.94 3.79-.27 1.13.56 2.05 1.68 2.05 2.02 0 3.57-2.13 3.57-5.2 0-2.72-1.95-4.62-4.74-4.62-3.23 0-5.13 2.42-5.13 4.93 0 .98.38 2.02.85 2.59.09.11.11.21.08.32-.09.37-.29 1.18-.33 1.34-.05.21-.17.26-.39.15-1.46-.68-2.37-2.82-2.37-4.54 0-3.69 2.68-7.08 7.74-7.08 4.06 0 7.22 2.89 7.22 6.76 0 4.03-2.54 7.27-6.07 7.27-1.19 0-2.3-.62-2.68-1.34l-.73 2.78c-.26 1.01-0.97 2.27-1.44 3.06C10.13 23.83 11.05 24 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0z"/></svg>
-                <div class="room-label">MUDBOARD</div>
-            </div>
-        </a>
-
-        <a href="#" class="room-btn clean-square">
-            <div class="room-content">
-                <span style="font-size:35px; color:var(--primary);">▩</span>
-                <div class="room-label">PRINT DESIGN</div>
-            </div>
-        </a>
-
-        <a href="#" class="room-btn clean-square">
-            <div class="room-content">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M15.14 11.87c-.15 3.32-2.22 5.35-4.8 5.35-2.27 0-3.72-1.43-3.72-3.48 0-2.37 1.83-3.75 4.54-3.75.52 0 .99.06 1.45.15.03-1.14-.38-1.78-1.35-1.78-.65 0-1.25.27-1.71.74l-1.3-1.07c.86-.92 2-1.38 3.35-1.38 2.37 0 3.54 1.47 3.54 3.63v1.59zm-1.53-.16c-.34-.1-.7-.16-1.1-.16-1.63 0-2.5.76-2.5 1.95 0 .97.66 1.57 1.63 1.57 1.47 0 1.97-.99 1.97-2.37v-.99zm8.39.29c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zm-2 0c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.98 0 3.79-.72 5.19-1.92l-1.3-1.07C15.06 17.53 13.59 18 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c2.4 0 4.46 1.41 5.38 3.44l1.3-1.07C17.56 6.35 14.97 4.5 12 4.5c-4.14 0-7.5 3.36-7.5 7.5s3.36 7.5 7.5 7.5c2.14 0 4.07-.9 5.44-2.34l1.3 1.07c-1.55 1.77-3.8 2.87-6.24 2.87-4.14 0-7.5-3.36-7.5-7.5s3.36-7.5 7.5-7.5 7.5 3.36 7.5 7.5z"/></svg>
-                <div class="room-label">DIARY</div>
-            </div>
-        </a>
-
-        <div class="room-btn clean-square" onclick="openInstaPopup()">
-            <div class="room-content">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
-                <div class="room-label">INSTAGRAM</div>
-            </div>
-        </div>
-
-        <a href="https://tiktok.com/@grimexframe" target="_blank" class="room-btn clean-square">
-            <div class="room-content">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.47 3.85-1.14 1.27-2.81 2.02-4.51 2.19-1.59.17-3.27-.03-4.69-.78-1.49-.78-2.68-2.15-3.14-3.77-.47-1.56-.25-3.3.61-4.71 1.01-1.69 2.9-2.73 4.88-2.73.49 0 .97.05 1.45.16v4.19c-.48-.13-.99-.18-1.48-.11-1.12.11-2.14.8-2.59 1.83-.36.81-.31 1.77.14 2.53.46.77 1.3 1.3 2.19 1.36.9.06 1.84-.25 2.48-.89.6-.59.81-1.46.8-2.29-.02-4.39-.01-8.79-.02-13.18z"/></svg>
-                <div class="room-label">TIKTOK</div>
-            </div>
-        </a>
-
-        <div id="radioBtn" class="room-btn clean-square" onclick="toggleMusic()">
-            <div class="room-content">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                <div class="room-label" id="radioLabel">RADIO [OFF]</div>
-            </div>
-        </div>
-
-        <div class="rec-box">
-            <marquee scrollamount="4">OFFICE GOAL: SPAIN // NEW DROPS IN SHOP // RADIO CONNECTING...</marquee>
-        </div>
-
-        <div class="donate-widget-area">
-            <div class="widget-head">PAYMENT GATEWAY [OFFICE FUND]</div>
-            <div style="width: 100%; height: 100px; background: #000;">
-                <iframe src="https://donatello.to/widget/69ccdec71ba3314f9f5caf01/token/dff9f6028b506348f3084eb6e4b6ee79" style="width: 100%; height: 100%; border: none;" scrolling="no"></iframe>
-            </div>
-            <a href="https://donatello.to/morstrix?g=1775034053001" target="_blank" class="inject-btn">
-                [ INJECT FUNDS ]
+            <a href="forum.html" class="hud-item">
+                <div class="forum-tag">CONNECTING</div>
+                <img src="forum.png" class="hud-icon">
+                <div class="hud-label">FORUM</div>
             </a>
+
+            <a href="shop.html" class="hud-item">
+                <img src="space.png" class="hud-icon">
+                <div class="hud-label">SHOP</div>
+            </a>
+
+            <a href="helper.html" class="hud-item wide"><span class="hud-label" style="font-size:12px;">[ PAINT HELPER ]</span></a>
+
+            <a href="https://pinterest.com" target="_blank" class="hud-item">
+                <span style="font-size:30px;">▩</span>
+                <div class="hud-label">MUDBOARD</div>
+            </a>
+
+            <a href="#" class="hud-item">
+                <span style="font-size:30px;">✎</span>
+                <div class="hud-label">JOURNAL</div>
+            </a>
+
+            <div id="radioBtn" class="hud-item" onclick="toggleRadio()">
+                <div class="player-circle">
+                    <span class="play-icon" id="p-icon">▶</span>
+                </div>
+                <div class="hud-label" id="p-label">RADIO OFF</div>
+            </div>
+
+            <div class="hud-item" onclick="openInsta()">
+                <span style="font-size:30px;">▣</span>
+                <div class="hud-label">INSTAGRAM</div>
+            </div>
+
+            <div class="donate-area">
+                <div style="height: 80px; overflow: hidden;">
+                    <iframe src="https://donatello.to/widget/69ccdec71ba3314f9f5caf01/token/dff9f6028b506348f3084eb6e4b6ee79" style="width: 100%; height: 100%; border: none;" scrolling="no"></iframe>
+                </div>
+                <a href="https://donatello.to/morstrix?g=1775034053001" target="_blank" class="donate-btn">INJECT FUNDS</a>
+            </div>
+
         </div>
+    </main>
 
-    </section>
-
-    <div id="instaModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-        <div style="width: 310px; background: #000; border: 2px solid var(--primary); padding: 30px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
-                <span style="font-size: 8px; color: var(--primary);">SELECT FEED:</span>
-                <button onclick="closeInstaPopup()" style="background: none; border: none; color: var(--primary); font-family: 'Press Start 2P'; cursor:pointer;">[X]</button>
+    <div id="instaModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="border: 1px solid #fff; padding: 40px; background: #000; text-align: center;">
+            <div style="margin-bottom: 30px; display: flex; flex-direction: column; gap: 20px;">
+                <a href="a.html" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px;">ADA</a>
+                <a href="x.html" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px;">GRIMEX</a>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <a href="a.html" style="color:var(--primary); text-decoration:none; border:1px solid var(--primary); padding:15px; text-align:center; font-size: 14px;">ADA</a>
-                <a href="x.html" style="color:var(--primary); text-decoration:none; border:1px solid var(--primary); padding:15px; text-align:center; font-size: 14px;">GRIMEX</a>
-            </div>
+            <button onclick="closeInsta()" style="background: none; border: none; color: #fff; font-family: 'Press Start 2P'; cursor: pointer;">[ CLOSE ]</button>
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        var player, isPlaying = false;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-player-hidden', {
-                height: '1', width: '1', videoId: 'WB7LS3p7Tb4',
-                playerVars: { 'listType': 'playlist', 'list': 'PLi1Z1_6srFOvdJ5HrgSMoGpMnpoTrx56_', 'autoplay': 0 }
-            });
-        }
-        function toggleMusic() {
-            const label = document.getElementById('radioLabel');
-            if (!isPlaying) { player.playVideo(); label.innerText = 'RADIO [ON]'; isPlaying = true; } 
-            else { player.pauseVideo(); label.innerText = 'RADIO [OFF]'; isPlaying = false; }
-        }
-        function openInstaPopup() { document.getElementById('instaModal').style.display = 'flex'; }
-        function closeInstaPopup() { document.getElementById('instaModal').style.display = 'none'; }
-        window.onclick = function(e) { if (e.target == document.getElementById('instaModal')) closeInstaPopup(); }
-    </script>
     <script src="background.js"></script>
+    <script>
+        let playing = false;
+        function toggleRadio() {
+            const btn = document.getElementById('radioBtn');
+            const icon = document.getElementById('p-icon');
+            const label = document.getElementById('p-label');
+            playing = !playing;
+            if(playing) {
+                btn.classList.add('is-playing');
+                icon.innerText = '⏸';
+                label.innerText = 'RADIO ON';
+            } else {
+                btn.classList.remove('is-playing');
+                icon.innerText = '▶';
+                label.innerText = 'RADIO OFF';
+            }
+        }
+        function openInsta() { document.getElementById('instaModal').style.display = 'flex'; }
+        function closeInsta() { document.getElementById('instaModal').style.display = 'none'; }
+    </script>
 </body>
 </html>
