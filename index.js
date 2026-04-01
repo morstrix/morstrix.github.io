@@ -192,23 +192,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalPopupIcons = document.getElementById('finalPopupIcons');
     const finalClosePopup = document.getElementById('finalClosePopup');
 
+    // index.js (Отрезок кода внутри document.addEventListener('DOMContentLoaded', ...))
+
     const socialData = {
         instagram: {
-            title: "CHOOSE_FEED",
+            title: "TEAM",
+            // Мы меняем HTML содержимое попапа
             content: `
-                <div class="insta-grid" style="display:flex; gap:20px; justify-content:center; margin-top:20px;">
-                    <a href="a.html" class="team-member" style="text-align:center; text-decoration:none; color:#fff;">
-                        <div style="width:60px; height:60px; border:1px solid var(--accent-pink); margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">A</div>
-                        <span style="font-size:8px;">ada_model</span>
+                <div class="insta-grid" style="display:flex; gap:30px; justify-content:center; margin-top:20px;">
+                    
+                    <a href="a.html" class="popup-team-member" style="text-align:center; text-decoration:none; color:#fff;">
+                        <div class="popup-icon-wrap">
+                            <img src="assets/a.png" alt="Ada Feed" class="popup-icon-img">
+                        </div>
+                        <span style="font-size:8px;">designer</span>
                     </a>
-                    <a href="x.html" class="team-member" style="text-align:center; text-decoration:none; color:#fff;">
-                        <div style="width:60px; height:60px; border:1px solid var(--accent-pink); margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">X</div>
+
+                    <a href="x.html" class="popup-team-member" style="text-align:center; text-decoration:none; color:#fff;">
+                        <div class="popup-icon-wrap">
+                            <img src="assets/x.png" alt="Dev Feed" class="popup-icon-img">
+                        </div>
                         <span style="font-size:8px;">developer</span>
                     </a>
+
                 </div>
             `
         }
     };
+
+    // Остальной код (openSocialPopup, closeSocialPopup) оставляем БЕЗ ИЗМЕНЕНИЙ.
 
     function openSocialPopup(type) {
         const data = socialData[type];
