@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: # Добавляем явные права на запись
+    permissions:
       contents: write
     steps:
       - name: Checkout repo
@@ -25,32 +25,45 @@ jobs:
         run: |
           python3 -c "
           import requests, json, datetime
-          try:
-              # Используем другой открытый прокси, если первый лежал
-              url = 'https://threads-api.vercel.app/api/profile?username=grimexframe'
-              res = requests.get(url, timeout=20).json()
-              threads = res.get('threads', [])
-              
-              posts_data = []
-              for t in threads[:5]:
-                  items = t.get('thread_items', [])
-                  if items:
+          
+          def fetch_posts():
+              user = 'grimexframe'
+              # Используем проверенный прокси-шлюз
+              url = f'https://threads-api.vercel.app/api/profile?username={user}'
+              try:
+                  res = requests.get(url, timeout=30)
+                  data = res.json()
+                  threads = data.get('threads', [])
+                  
+                  final_posts = []
+                  for t in threads[:8]:
+                      items = t.get('thread_items', [])
+                      if not items: continue
+                      
                       post = items[0].get('post', {})
                       text = post.get('caption', {}).get('text', '')
                       ts = post.get('taken_at', 0)
+                      
                       if text:
-                          d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
-                          posts_data.append({'date': d, 'text': text.upper()})
-              
-              if not posts_data:
-                  posts_data = [{'date': 'SYSTEM', 'text': 'EMPTY_FEED_OR_PRIVATE_PROFILE'}]
-                  
-              with open('diary.json', 'w', encoding='utf-8') as f:
-                  json.dump(posts_data, f, ensure_ascii=False, indent=2)
-          except Exception as e:
-              print(f'Error: {e}')
-              with open('diary.json', 'w') as f:
-                  json.dump([{'date': 'ERROR', 'text': 'PROX_CONNECTION_FAILED'}], f)
+                          # Сохраняем текст как есть (с эмодзи), но в верхнем регистре
+                          date_str = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
+                          final_posts.append({
+                              'date': date_str,
+                              'text': text.upper()
+                          })
+                  return final_posts
+              except Exception as e:
+                  print(f'Error: {e}')
+                  return []
+
+          posts = fetch_posts()
+          
+          # Если постов нет, создаем системное уведомление
+          if not posts:
+              posts = [{'date': 'SYSTEM', 'text': 'IDLE_MODE: WAITING_FOR_NEW_THREADS'}]
+          
+          with open('diary.json', 'w', encoding='utf-8') as f:
+              json.dump(posts, f, ensure_ascii=False, indent=2)
           "
 
       - name: Commit and Push
@@ -58,5 +71,5 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m 'System: Auto-update diary' || exit 0
+          git commit -m 'System: Diary sync' || exit 0
           git push
