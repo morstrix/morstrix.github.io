@@ -59,6 +59,35 @@
     <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
 </div>
 
+<div class="diary-section">
+    <div class="diary-header">> SYSTEM_LOG: DIARY_ENTRIES</div>
+    <div id="diary-content">Загрузка протоколов...</div>
+</div>
+
+<script>
+    async function loadDiary() {
+        try {
+            // Добавляем ?v= к ссылке, чтобы браузер не кешировал старые посты
+            const response = await fetch('diary.json?v=' + Date.now());
+            const posts = await response.json();
+            const container = document.getElementById('diary-content');
+            container.innerHTML = '';
+
+            posts.forEach(post => {
+                container.innerHTML += `
+                    <div class="diary-entry" style="margin-bottom: 20px; border-left: 2px solid var(--x-accent); padding-left: 15px;">
+                        <div style="font-size: 8px; color: var(--x-accent); margin-bottom: 5px;">[ ${post.date} ]</div>
+                        <div style="font-size: 10px; line-height: 1.4;">${post.text}</div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            document.getElementById('diary-content').innerText = 'Ошибка доступа к логам.';
+        }
+    }
+    loadDiary();
+</script>
+
 <script src="background.js"></script>
 <script type="module" src="https://w.behold.so/widget.js"></script>
 </body>

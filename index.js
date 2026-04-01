@@ -184,43 +184,26 @@ document.querySelectorAll('a').forEach(link => {
     });
 });
 
-// ==================== СОЦИАЛЬНЫЕ СЕТИ (TEAM POPUP) ====================
-document.addEventListener('DOMContentLoaded', function() {
-    const popup = document.getElementById('socialPopup');
-    
-    if (!popup) {
-        const newPopup = document.createElement('div');
-        newPopup.id = 'socialPopup';
-        newPopup.className = 'social-popup';
-        newPopup.innerHTML = `
-            <div class="popup-content">
-                <div class="popup-header">
-                    <span class="popup-title" id="popupTitle">SOCIAL</span>
-                    <button class="popup-close" id="closePopup">✜</button>
-                </div>
-                <div id="popupIcons"></div>
-            </div>
-        `;
-        document.body.appendChild(newPopup);
-    }
-    
-    const finalPopup = document.getElementById('socialPopup');
-    const finalPopupTitle = document.getElementById('popupTitle');
-    const finalPopupIcons = document.getElementById('popupIcons');
-    const finalClosePopup = document.getElementById('closePopup');
+// Найди этот кусок в конце index.js и замени его:
+document.addEventListener('DOMContentLoaded', () => {
+    // Привязываем элементы
+    const finalPopup = document.getElementById('instaModal');
+    const finalPopupTitle = document.getElementById('finalPopupTitle');
+    const finalPopupIcons = document.getElementById('finalPopupIcons');
+    const finalClosePopup = document.getElementById('finalClosePopup');
 
     const socialData = {
-        team: {
-            title: 'TXT',
+        instagram: {
+            title: "CHOOSE_FEED",
             content: `
-                <div class="team-popup-container">
-                    <a href="a.html" class="team-member">
-                        <img src="a.png" alt="DES">
-                        <span>designer</span>
+                <div class="insta-grid" style="display:flex; gap:20px; justify-content:center; margin-top:20px;">
+                    <a href="a.html" class="team-member" style="text-align:center; text-decoration:none; color:#fff;">
+                        <div style="width:60px; height:60px; border:1px solid var(--accent-pink); margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">A</div>
+                        <span style="font-size:8px;">ada_model</span>
                     </a>
-                    <a href="x.html" class="team-member">
-                        <img src="x.png" alt="DEV">
-                        <span>developer</span>
+                    <a href="x.html" class="team-member" style="text-align:center; text-decoration:none; color:#fff;">
+                        <div style="width:60px; height:60px; border:1px solid var(--accent-pink); margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">X</div>
+                        <span style="font-size:8px;">developer</span>
                     </a>
                 </div>
             `
@@ -229,41 +212,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openSocialPopup(type) {
         const data = socialData[type];
-        if (!data) return;
-        
-        playSound('click');
+        if (!data || !finalPopup) return;
         
         if (finalPopupTitle) finalPopupTitle.textContent = data.title;
         if (finalPopupIcons) finalPopupIcons.innerHTML = data.content;
         
-        if (finalPopup) finalPopup.classList.add('active');
-        if (navigator.vibrate) navigator.vibrate(10);
+        finalPopup.style.display = 'flex'; // Принудительно показываем
+        finalPopup.classList.add('active');
     }
 
     function closeSocialPopup() {
-        if (finalPopup) finalPopup.classList.remove('active');
+        if (finalPopup) {
+            finalPopup.style.display = 'none';
+            finalPopup.classList.remove('active');
+        }
     }
 
+    // Вешаем клик на все триггеры
     document.querySelectorAll('.social-trigger').forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            const type = trigger.dataset.type;
+        trigger.onclick = (e) => {
+            const type = trigger.getAttribute('data-type');
             openSocialPopup(type);
-        });
+        };
     });
 
-    if (finalClosePopup) finalClosePopup.addEventListener('click', closeSocialPopup);
-    
-    if (finalPopup) {
-        finalPopup.addEventListener('click', (e) => {
-            if (e.target === finalPopup) closeSocialPopup();
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeSocialPopup();
-    });
+    if (finalClosePopup) finalClosePopup.onclick = closeSocialPopup;
 });
-
-// Запрет выделения текста
-document.addEventListener('selectstart', (e) => e.preventDefault());

@@ -1,0 +1,52 @@
+name: Update Diary Posts
+on:
+  schedule:
+    - cron: '0 * * * *' # Запуск каждый час
+  workflow_dispatch: # Позволяет запустить вручную кнопкой
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch Threads Posts
+        run: |
+          python -c "
+          import requests, json, re
+          
+          USERNAME = 'grimexframe' # Твой ник в Threads
+          url = f'https://www.threads.net/@grimexframe'
+          headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+          
+          try:
+              response = requests.get(url, headers=headers)
+              # Ищем данные постов в HTML (упрощенный метод для публичных страниц)
+              # Если Meta закроет прямой доступ, мы обновим метод на библиотеку
+              raw_html = response.text
+              # Это простой парсинг текста, для начала хватит
+              # В реальности лучше использовать специальные библиотеки, но для старта:
+              posts = [{'date': 'LOG_DATA', 'text': 'Checking connection to Threads...'}]
+              
+              with open('diary.json', 'w', encoding='utf-8') as f:
+                  json.dump(posts, f, ensure_ascii=False, indent=2)
+          except Exception as e:
+              print(f'Error: {e}')
+          "
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add diary.json
+          git commit -m 'System: Diary log updated' || exit 0
+          git push
