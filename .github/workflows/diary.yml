@@ -54,7 +54,7 @@ jobs:
               json.dump(data, f, ensure_ascii=False, indent=2)
           EOF
 
-      - name: Commit and Push
+      - name: git pull --rebase
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
