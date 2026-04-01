@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -20,44 +18,70 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install requests
-        run: pip install requests
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Fetch Threads Data
         run: |
-          python3 << 'EOF'
-          import requests, json, datetime
-          def fetch():
+          python3 - << 'EOF'
+          import requests, json, datetime, re
+          from xml.etree import ElementTree
+
+          def fetch_rss():
               user = 'grimexframe'
-              url = f'https://threads-api.vercel.app/api/profile?username={user}'
+              # Используем RSS-мост для стабильности
+              url = f'https://rsshub.app/threads/user/{user}'
               try:
-                  res = requests.get(url, timeout=30)
-                  res.raise_for_status()
-                  threads = res.json().get('threads', [])
-                  result = []
-                  for t in threads[:8]:
-                      items = t.get('thread_items', [])
-                      if items:
-                          post = items[0].get('post', {})
-                          text = post.get('caption', {}).get('text', '')
-                          ts = post.get('taken_at', 0)
-                          if text:
-                              d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
-                              result.append({'date': d, 'text': text.upper()})
-                  return result
+                  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+                  res = requests.get(url, timeout=30, headers=headers)
+                  if res.status_code != 200: 
+                      print(f"Server returned {res.status_code}")
+                      return []
+                  
+                  root = ElementTree.fromstring(res.content)
+                  posts = []
+                  
+                  for item in root.findall('./channel/item')[:8]:
+                      title_elem = item.find('title')
+                      desc_elem = item.find('description')
+                      
+                      # Берем текст из описания или заголовка
+                      raw_text = desc_elem.text if desc_elem is not None else (title_elem.text if title_elem is not None else "")
+                      # Очистка от HTML
+                      clean_text = re.sub('<[^<]+?>', '', raw_text).strip()
+                      
+                      pub_date = item.find('pubDate').text
+                      try:
+                          # Парсим стандартную дату RSS
+                          dt = datetime.datetime.strptime(pub_date[:25].strip(), '%a, %d %b %Y %H:%M:%S')
+                          d_str = dt.strftime('%d.%m.%Y')
+                      except:
+                          d_str = datetime.datetime.now().strftime('%d.%m.%Y')
+                      
+                      if clean_text and clean_text.lower() != 'post':
+                          # Ограничиваем длину текста для стиля
+                          display_text = clean_text[:280].upper()
+                          posts.append({'date': d_str, 'text': display_text})
+                  return posts
               except Exception as e:
                   print(f"Error: {e}")
                   return []
 
-          data = fetch() or [{'date': 'SYSTEM', 'text': 'IDLE_MODE: WAITING_FOR_DATA'}]
+          data = fetch_rss()
+          if not data:
+              data = [{"date": "SYNC", "text": "ESTABLISHING_SECURE_CONNECTION..."}]
+          
           with open('diary.json', 'w', encoding='utf-8') as f:
               json.dump(data, f, ensure_ascii=False, indent=2)
           EOF
 
-      - name: git pull --rebase
+      - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
           git commit -m 'System: Diary sync' || exit 0
+          git pull --rebase origin main
           git push
