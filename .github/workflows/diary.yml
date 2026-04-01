@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -18,53 +20,39 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install requests
         run: pip install requests
 
       - name: Fetch Threads Data
         run: |
-          python3 -c "
+          python3 << 'EOF'
           import requests, json, datetime
-          
-          def fetch_posts():
+          def fetch():
               user = 'grimexframe'
-              # Используем проверенный прокси-шлюз
               url = f'https://threads-api.vercel.app/api/profile?username={user}'
               try:
                   res = requests.get(url, timeout=30)
-                  data = res.json()
-                  threads = data.get('threads', [])
-                  
-                  final_posts = []
+                  res.raise_for_status()
+                  threads = res.json().get('threads', [])
+                  result = []
                   for t in threads[:8]:
                       items = t.get('thread_items', [])
-                      if not items: continue
-                      
-                      post = items[0].get('post', {})
-                      text = post.get('caption', {}).get('text', '')
-                      ts = post.get('taken_at', 0)
-                      
-                      if text:
-                          # Сохраняем текст как есть (с эмодзи), но в верхнем регистре
-                          date_str = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
-                          final_posts.append({
-                              'date': date_str,
-                              'text': text.upper()
-                          })
-                  return final_posts
+                      if items:
+                          post = items[0].get('post', {})
+                          text = post.get('caption', {}).get('text', '')
+                          ts = post.get('taken_at', 0)
+                          if text:
+                              d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
+                              result.append({'date': d, 'text': text.upper()})
+                  return result
               except Exception as e:
-                  print(f'Error: {e}')
+                  print(f"Error: {e}")
                   return []
 
-          posts = fetch_posts()
-          
-          # Если постов нет, создаем системное уведомление
-          if not posts:
-              posts = [{'date': 'SYSTEM', 'text': 'IDLE_MODE: WAITING_FOR_NEW_THREADS'}]
-          
+          data = fetch() or [{'date': 'SYSTEM', 'text': 'IDLE_MODE: WAITING_FOR_DATA'}]
           with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(posts, f, ensure_ascii=False, indent=2)
-          "
+              json.dump(data, f, ensure_ascii=False, indent=2)
+          EOF
 
       - name: Commit and Push
         run: |
