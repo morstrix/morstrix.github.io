@@ -82,14 +82,14 @@
             </div>
         </div>
 
-        <!-- КНОПКА НА DONATE.HTML (виджет будет там) -->
-        <a href="donate.html" class="donate-button">
-            <div class="donate-button-inner">
-                <span class="donate-icon">⚡</span>
-                <span class="donate-text">DONATION TERMINAL</span>
-                <span class="donate-icon">⚡</span>
+        <!-- KO-FI BUTTON -->
+        <a href="https://ko-fi.com/morstrix" target="_blank" class="kofi-button">
+            <div class="kofi-button-inner">
+                <span class="kofi-icon">☕</span>
+                <span class="kofi-text">SUPPORT US</span>
+                <span class="kofi-icon">⚡</span>
             </div>
-            <div class="donate-sub">support the system</div>
+            <div class="kofi-sub">buy me a coffee</div>
         </a>
 
     </main>
@@ -124,5 +124,14 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('morstrix', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support',
+    'floating-chat.donateButton.background-color': '#29abe0',
+    'floating-chat.donateButton.text-color': '#fff'
+  });
+</script>
 </body>
 </html>

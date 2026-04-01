@@ -8,8 +8,8 @@
 }
 
 :root {
-    --primary: #00ff41;       /* Матричный зеленый */
-    --accent-pink: #ff00ff;    /* Неоновый розовый */
+    --primary: #00ff41;
+    --accent-pink: #ff00ff;
     --bg-dark: #000000;
 }
 
@@ -100,64 +100,54 @@ html, body {
     100% { transform: rotateY(360deg); }
 }
 
-/* ============================================
-   DONATELLO WIDGET FIX
-   ============================================ */
-.donate-widget-area {
+/* --- KO-FI BUTTON --- */
+.kofi-button {
     grid-column: span 2;
-    border: 1px solid #00ff41;
-    background: rgba(0, 0, 0, 0.9);
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.widget-head {
-    background: #00ff41;
-    color: #000;
-    font-size: 8px;
-    padding: 8px;
-    text-align: center;
-    font-family: 'Press Start 2P', monospace;
-    font-weight: bold;
-}
-
-.widget-frame-wrapper {
-    width: 100%;
-    height: 280px;
-    background: #0a0a0a;
-    overflow: hidden;
-    position: relative;
-}
-
-.widget-frame-wrapper iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: transparent;
-}
-
-.inject-btn {
-    background: #ff3366;
-    color: #fff;
-    text-align: center;
-    padding: 12px;
     text-decoration: none;
-    font-size: 8px;
-    font-family: 'Press Start 2P', monospace;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, #29abe0, #1e6f8f);
+    border: 2px solid #3fc0f5;
+    border-radius: 12px;
+    padding: 20px 15px;
+    text-align: center;
+    transition: all 0.2s ease;
+    margin-top: 10px;
     display: block;
+    cursor: pointer;
 }
 
-.inject-btn:hover {
-    background: #ff6699;
-    transform: scale(0.98);
+.kofi-button:active {
+    transform: scale(0.97);
 }
 
-.inject-btn:active {
-    transform: scale(0.95);
+.kofi-button-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.kofi-icon {
+    font-size: 24px;
+    animation: kofiPulse 1.5s infinite;
+}
+
+.kofi-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.kofi-sub {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 12px;
+}
+
+@keyframes kofiPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
 }
 
 /* --- МОДАЛЬНЫЕ ОКНА (ПОПАПЫ) --- */
@@ -181,7 +171,7 @@ html, body {
     box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
 }
 
-/* --- КРЕСТИК ЗАКРЫТИЯ (ВСЕГДА В ПРАВОМ УГЛУ) --- */
+/* --- КРЕСТИК ЗАКРЫТИЯ --- */
 .close-btn {
     position: absolute;
     top: 15px;
@@ -202,20 +192,6 @@ html, body {
     text-shadow: 0 0 10px #ff0000;
 }
 
-/* Специфика для окна доната */
-.donate-modal-box {
-    width: 550px;
-    height: 180px;
-    padding: 0;
-    overflow: hidden;
-}
-
-.donate-modal-box iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
 /* Ссылки Инстаграма */
 .insta-links a {
     display: block;
@@ -233,17 +209,7 @@ html, body {
     color: #000;
 }
 
-/* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
-@media (max-width: 480px) {
-    .grid-index { gap: 10px; padding: 70px 15px 30px; }
-    .room-label { font-size: 6px; }
-    .donate-modal-box { width: 95%; height: 150px; }
-    .widget-frame-wrapper { height: 240px; }
-}
-
-/* ============================================
-   BACK BUTTON (общая кнопка назад)
-   ============================================ */
+/* --- BACK BUTTON (общая кнопка назад) --- */
 .back-button {
     position: fixed;
     top: 20px;
@@ -271,9 +237,7 @@ html, body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* ============================================
-   RADIO PLAYER STYLES
-   ============================================ */
+/* --- RADIO PLAYER STYLES --- */
 .player-circle {
     width: 40px;
     height: 40px;
@@ -299,24 +263,20 @@ html, body {
     color: #00ff41;
 }
 
-/* ============================================
-   WIDE BAR LABEL
-   ============================================ */
+/* --- WIDE BAR LABEL --- */
 .wide-label {
     font-size: 10px;
     color: #fff;
     letter-spacing: 2px;
 }
 
-/* ============================================
-   ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ РАЗНЫХ СТРАНИЦ
-   ============================================ */
+/* --- СТИЛИ ДЛЯ РАЗНЫХ СТРАНИЦ --- */
 body.page-a, body.page-x, body.page-forum, body.page-shop, body.page-helper, body.page-support {
     min-height: 100vh;
     display: block;
 }
 
-/* Стили для скролла */
+/* --- СКРОЛЛБАР --- */
 ::-webkit-scrollbar {
     width: 4px;
 }
@@ -332,4 +292,13 @@ body.page-a, body.page-x, body.page-forum, body.page-shop, body.page-helper, bod
 
 ::-webkit-scrollbar-thumb:hover {
     background: #ff6699;
+}
+
+/* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
+@media (max-width: 480px) {
+    .grid-index { gap: 10px; padding: 70px 15px 30px; }
+    .room-label { font-size: 6px; }
+    .kofi-text { font-size: 8px; }
+    .kofi-icon { font-size: 20px; }
+    .kofi-button { padding: 15px 10px; }
 }
