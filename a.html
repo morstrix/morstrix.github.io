@@ -8,15 +8,38 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
+        /* Убираем черное полотно, делаем прозрачным для background.js */
         body {
+            background: transparent !important;
             min-height: 100vh;
             display: block;
             color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ТВОЙ КРЕСТИК СПРАВА И БЕЛЫЙ */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            right: 30px; /* ПЕРЕНЕС НАПРАВО */
+            left: auto;  /* Сброс левого позиционирования */
+            z-index: 1000;
+            color: #ffffff !important; /* БЕЛЫЙ ЦВЕТ */
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        .back-button span {
+            color: #ffffff !important;
         }
 
         .ig-header {
+            position: relative;
+            z-index: 10;
             text-align: center;
             padding: 80px 20px 30px;
+            background: rgba(0, 0, 0, 0.4); /* Легкая подложка для читаемости текста */
         }
 
         .ig-title {
@@ -33,12 +56,24 @@
         }
 
         .instagram-feed {
+            position: relative;
+            z-index: 10;
             max-width: 900px;
             margin: 0 auto;
             padding: 0 15px 50px;
+            background: rgba(0, 0, 0, 0.4); /* Прозрачный фон виджета */
         }
 
-        behold-widget { display: block; min-height: 400px; }
+        /* ПРИНУДИТЕЛЬНАЯ ПРОЗРАЧНОСТЬ ДЛЯ BEHOLD */
+        behold-widget { 
+            display: block; 
+            min-height: 400px; 
+            background: transparent !important; 
+        }
+
+        behold-widget * {
+            background: transparent !important;
+        }
     </style>
 </head>
 <body class="page-a">
