@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | HUB</title>
+    
+    <meta property="og:title" content="MORSTRIX HUB">
+    <meta property="og:image" content="preview.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="preview.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
+
     <style>
         .grid-index {
             display: grid;
@@ -15,6 +22,8 @@
             padding: 90px 20px 40px;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
 
         .room-btn {
@@ -28,64 +37,52 @@
             transition: transform 0.1s;
             cursor: pointer;
         }
-        
         .room-btn:active { transform: scale(0.95); }
 
-        /* Квадраты без рамок */
         .room-btn.clean-square { grid-column: span 1; aspect-ratio: 1 / 1; }
-
-        /* Широкие блоки с рамками (Тетрис, Паинт) */
         .room-btn.wide-bar {
             grid-column: span 2;
             height: 85px;
             background: rgba(15, 15, 15, 0.6);
             border: 2px solid var(--border-dark);
+            backdrop-filter: blur(5px);
         }
 
         .wide-label {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--primary);
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
 
         .room-content {
             width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Анимация пульсации для Радио */
-        .playing .svg-icon {
-            animation: pulse 1s infinite alternate;
-            color: #fff;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+            position: relative;
         }
 
         .forum-header {
-            font-size: 6px;
-            color: var(--text-dim);
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000;
-            padding: 2px 6px;
-            border-left: 1px solid var(--primary);
-            white-space: nowrap;
+            left: 0;
+            background: #ff0000;
+            color: #ffffff;
+            padding: 4px 10px;
+            font-size: 7px;
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            z-index: 100;
         }
 
         .money-rotating {
             position: absolute;
             top: 5px;
-            right: 20%;
-            width: 30px;
+            right: 5px;
+            width: 25px;
             animation: spinMoney 4s linear infinite;
             color: #4ade80;
         }
@@ -95,20 +92,17 @@
             100% { transform: rotateY(360deg); }
         }
 
-        /* Donatello Widget */
+        .room-icon { max-width: 70px; height: auto; image-rendering: pixelated; }
+        .svg-icon { width: 45px; height: 45px; color: var(--primary); }
+        .room-label { font-size: 8px; color: var(--primary); margin-top: 12px; letter-spacing: 1px; text-align: center; }
+
         .donate-widget-area {
             grid-column: span 2;
             border: 2px solid var(--primary);
             background: #000;
             margin-top: 20px;
-            overflow: hidden;
-        }
-
-        .donate-widget-area iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-            background: #fff;
+            display: flex;
+            flex-direction: column;
         }
 
         .widget-head {
@@ -117,43 +111,45 @@
             font-size: 9px;
             padding: 8px;
             text-align: center;
+            font-family: 'Press Start 2P', cursive;
         }
 
-        .room-icon { max-width: 80px; height: auto; image-rendering: pixelated; }
-        .svg-icon { width: 55px; height: 55px; color: var(--primary); }
-        .room-label { font-size: 8px; color: var(--primary); margin-top: 15px; text-align: center; line-height: 1.4; letter-spacing: 1px; }
-
-        .rec-box {
-            grid-column: span 2;
-            border: 1px dashed var(--primary);
-            padding: 15px;
-            font-size: 8px;
-            color: var(--primary);
-            margin-top: 10px;
+        .inject-btn {
+            display: block;
+            background: #ff0000;
+            color: #ffffff;
             text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 8px;
+            font-family: 'Press Start 2P';
         }
 
-        /* Скрытый плеер YouTube */
-        #yt-player-hidden {
-            position: absolute;
-            top: -999px;
-            visibility: hidden;
+        .rec-box { 
+            grid-column: span 2; 
+            border: 1px dashed var(--primary); 
+            padding: 12px; 
+            font-size: 8px; 
+            color: var(--primary); 
+            text-align: center; 
         }
+
+        #neuro-bg { position: fixed; inset: 0; z-index: -1; }
+        #yt-player-hidden { position: absolute; top: -999px; visibility: hidden; }
     </style>
 </head>
 <body class="page-index">
 
+    <canvas id="neuro-bg"></canvas>
     <div id="yt-player-hidden"></div>
 
     <section class="grid-index">
         
-        <a href="support.html" class="room-btn wide-bar"><div class="wide-label">TETRIS</div></a>
+        <a href="support.html" class="room-btn wide-bar"><div class="wide-label">SUPPORT [TETRIS]</div></a>
 
         <a href="forum.html" class="room-btn clean-square">
             <div class="room-content">
-                <div class="forum-header">
-    <span id="dynamicWord">CONNECTING</span>
-</div>
+                <div class="forum-header"><span id="dynamicWord">CONNECTING</span></div>
                 <img src="forum.png" class="room-icon" alt="forum">
                 <div class="room-label">FORUM</div>
             </div>
@@ -170,7 +166,7 @@
             </div>
         </a>
 
-        <a href="helper.html" class="room-btn wide-bar"><div class="wide-label">PAINT</div></a>
+        <a href="helper.html" class="room-btn wide-bar"><div class="wide-label">HELPER [PAINT]</div></a>
 
         <a href="https://pinterest.com" target="_blank" class="room-btn clean-square">
             <div class="room-content">
@@ -215,91 +211,52 @@
         </div>
 
         <div class="rec-box">
-            <marquee scrollamount="4">RECOMMENDED: GRIMEXFRAME // NEW DROP IN SHOP // CONNECTING RADIO...</marquee>
+            <marquee scrollamount="4">OFFICE GOAL: SPAIN // NEW DROPS IN SHOP // RADIO CONNECTING...</marquee>
         </div>
 
         <div class="donate-widget-area">
-            <div class="widget-head">PAYMENT TERMINAL</div>
-            <iframe src="https://donatello.ua/ТВОЙ_НИК" scrolling="no"></iframe>
+            <div class="widget-head">PAYMENT GATEWAY [OFFICE FUND]</div>
+            <div style="width: 100%; height: 100px; background: #000;">
+                <iframe src="https://donatello.to/widget/69ccdec71ba3314f9f5caf01/token/dff9f6028b506348f3084eb6e4b6ee79" style="width: 100%; height: 100%; border: none;" scrolling="no"></iframe>
+            </div>
+            <a href="https://donatello.to/morstrix?g=1775034053001" target="_blank" class="inject-btn">
+                [ INJECT FUNDS ]
+            </a>
         </div>
 
     </section>
 
     <div id="instaModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-        <div style="width: 320px; background: #000; border: 2px solid var(--primary); padding: 30px; position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <span style="font-size: 10px; color: var(--primary); letter-spacing: 2px;">SELECT ACCOUNT:</span>
-                <button onclick="closeInstaPopup()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-family: 'Press Start 2P'; font-size: 14px;">[X]</button>
+        <div style="width: 310px; background: #000; border: 2px solid var(--primary); padding: 30px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                <span style="font-size: 8px; color: var(--primary);">SELECT FEED:</span>
+                <button onclick="closeInstaPopup()" style="background: none; border: none; color: var(--primary); font-family: 'Press Start 2P'; cursor:pointer;">[X]</button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <a href="a.html" style="color: var(--primary); text-decoration: none; font-size: 24px; border: 1px solid var(--primary); padding: 15px; text-align: center; transition: 0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='#000'" onmouseout="this.style.background='none'; this.style.color='var(--primary)'">ADA</a>
-                <a href="x.html" style="color: var(--primary); text-decoration: none; font-size: 24px; border: 1px solid var(--primary); padding: 15px; text-align: center; transition: 0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='#000'" onmouseout="this.style.background='none'; this.style.color='var(--primary)'">GRIMEX</a>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="a.html" style="color:var(--primary); text-decoration:none; border:1px solid var(--primary); padding:15px; text-align:center; font-size: 14px;">ADA</a>
+                <a href="x.html" style="color:var(--primary); text-decoration:none; border:1px solid var(--primary); padding:15px; text-align:center; font-size: 14px;">GRIMEX</a>
             </div>
         </div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Логика Радио
-        var player;
-        var isPlaying = false;
-
+        var player, isPlaying = false;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player-hidden', {
-                height: '0',
-                width: '0',
-                videoId: 'WB7LS3p7Tb4', // Твой трек
-                playerVars: {
-                    'listType': 'playlist',
-                    'list': 'PLi1Z1_6srFOvdJ5HrgSMoGpMnpoTrx56_', // Твой плейлист
-                    'autoplay': 0,
-                    'controls': 0
-                },
-                events: {
-                    'onReady': function(event) {
-                        event.target.setVolume(100); // Громкость на максимум при загрузке
-                    }
-                }
+                height: '1', width: '1', videoId: 'WB7LS3p7Tb4',
+                playerVars: { 'listType': 'playlist', 'list': 'PLi1Z1_6srFOvdJ5HrgSMoGpMnpoTrx56_', 'autoplay': 0 }
             });
         }
-
         function toggleMusic() {
-            if (!player || typeof player.playVideo !== 'function') return;
-            
-            const btn = document.getElementById('radioBtn');
             const label = document.getElementById('radioLabel');
-
-            if (!isPlaying) {
-                player.unMute();
-                player.setVolume(100);
-                player.playVideo();
-                btn.classList.add('playing');
-                label.innerText = 'RADIO [ON]';
-                isPlaying = true;
-            } else {
-                player.pauseVideo();
-                btn.classList.remove('playing');
-                label.innerText = 'RADIO [OFF]';
-                isPlaying = false;
-            }
+            if (!isPlaying) { player.playVideo(); label.innerText = 'RADIO [ON]'; isPlaying = true; } 
+            else { player.pauseVideo(); label.innerText = 'RADIO [OFF]'; isPlaying = false; }
         }
-
-        // Логика Попапа Инстаграм
-        function openInstaPopup() {
-            document.getElementById('instaModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Убираем скролл
-        }
-        function closeInstaPopup() {
-            document.getElementById('instaModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Возвращаем скролл
-        }
-        window.onclick = function(event) {
-            let modal = document.getElementById('instaModal');
-            if (event.target == modal) { closeInstaPopup(); }
-        }
+        function openInstaPopup() { document.getElementById('instaModal').style.display = 'flex'; }
+        function closeInstaPopup() { document.getElementById('instaModal').style.display = 'none'; }
+        window.onclick = function(e) { if (e.target == document.getElementById('instaModal')) closeInstaPopup(); }
     </script>
-    
     <script src="background.js"></script>
-    <script src="index.js"></script>
 </body>
 </html>

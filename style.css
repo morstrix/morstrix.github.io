@@ -1,287 +1,201 @@
-/* ============================================
-   1. ПЕРЕМЕННЫЕ И ОСНОВА
-============================================ */
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
+/* --- ОСНОВНЫЕ НАСТРОЙКИ --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
 
-body {
-    background-color: var(--bg-color);
-    font-family: 'Press Start 2P', cursive;
-    color: var(--text);
-    min-height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-#neuro-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.3;
-}
-
-/* ============================================
-   2. ОБЩИЕ КОМПОНЕНТЫ
-============================================ */
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 99999;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: none;
-}
-
-.back-button span {
-    color: var(--primary);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1;
-    transition: all 0.2s ease;
-}
-
-.back-button:hover span { transform: scale(1.2); opacity: 0.8; }
-.back-button:active span { transform: scale(0.9); }
-
-/* ============================================
-   3. СТИЛИ ГЛАВНОЙ СТРАНИЦЫ (ИСПРАВЛЕНО)
-============================================ */
-.site-section.main-index {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 550px;
-    padding: 25px 20px;
-    gap: 20px;
-    z-index: 1;
-}
-
-.top-row {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 50px;
-    align-items: center;
-}
-
-/* ПЛАШКА CONNECTING В ЛЕВОМ УГЛУ */
-.forum-wrapper { position: relative; }
-
-.forum-header {
-    font-size: 7px;             /* Размер текста */
-    color: #fff;                /* Цвет текста (белый) */
-    position: absolute;
-    top: 0;                     /* Прижали к самому верху */
-    left: 0;                    /* Прижали к самому левому краю */
-    background: #ff0000;        /* Цвет плашки (красный, как ты хотел) */
-    padding: 3px 6px;           /* Отступы вокруг текста */
-    text-transform: uppercase;  /* Все буквы заглавные */
-    z-index: 10;
-    font-family: 'Press Start 2P', cursive;
-}
-
-.main-nav-link {
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.nav-folder-icon {
-    width: 60px;
-    height: auto;
-    image-rendering: pixelated;
-    filter: drop-shadow(0 0 10px rgba(168, 77, 107, 0.3));
-    transition: transform 0.3s ease;
-}
-
-.main-nav-link:hover .nav-folder-icon { transform: scale(1.1); }
-
-.text-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--primary);
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-.sub-caption {
-    font-size: 6px;
-    color: var(--primary-light);
-    margin-top: 4px;
-}
-
-/* ============================================
-   4. ВРАЩЕНИЕ МОНЕТКИ (ИСПРАВЛЕНО В УГОЛ)
-============================================ */
-.icon-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-@keyframes spin3D {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(-360deg); }
-}
-
-.money-svg {
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    right: -10px; /* Четко в правый угол */
-    top: -5px;
-    animation: spin3D 3s linear infinite;
-    transform-style: preserve-3d;
-    z-index: 10;
-}
-
-.money-svg rect { fill: var(--money-green-dark); stroke: var(--money-green-light); stroke-width: 1; }
-.money-svg circle { fill: var(--money-green-light); stroke: var(--bg); stroke-width: 1; }
-
-/* ============================================
-   5. ФУТУРИСТИЧЕСКОЕ ОКНО (СОХРАНЕНО)
-============================================ */
-.futuristic-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.futuristic-window {
-    position: relative;
-    width: 280px;
-    height: 160px;
-    background: var(--bg-darker);
-    border: 1px solid var(--primary);
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(var(--accent-bg) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--accent-bg) 1px, transparent 1px);
-    background-size: 15px 15px;
-    z-index: 2;
-}
-
-.window-content {
-    position: relative;
+html, body {
     width: 100%;
     height: 100%;
-    z-index: 3;
+    background-color: #000; /* Чисто черный фон под канвас */
+    font-family: 'Press Start 2P', cursive;
+    overflow-x: hidden;
+    color: #fff;
 }
 
-.content-slide {
-    position: absolute;
-    inset: 0;
+/* --- ФОН (КАНВАС) --- */
+#neuro-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    display: block;
+}
+
+/* --- СЕТКА ХАБА (GRID INDEX) --- */
+.grid-index {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки */
+    gap: 15px;
+    padding: 80px 20px 40px;
+    max-width: 600px; /* Чтобы на широких экранах не расползалось */
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- КНОПКИ-КОМНАТЫ --- */
+.room-btn {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: rgba(10, 10, 10, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.room-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Квадратные блоки */
+.room-btn.clean-square {
+    grid-column: span 1;
+    aspect-ratio: 1 / 1;
+}
+
+/* Широкие блоки (Tetris, Paint, Donate) */
+.room-btn.wide-bar {
+    grid-column: span 2;
+    height: 70px;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- КОНТЕНТ ВНУТРИ КНОПОК --- */
+.room-content {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.3s ease;
+    position: relative;
 }
 
-.content-slide.active { opacity: 1; transform: scale(1); }
-
-.slide-image {
-    width: 65px;
-    image-rendering: pixelated;
-    margin-bottom: 10px;
+.room-icon {
+    max-width: 60px;
+    height: auto;
+    image-rendering: pixelated; /* Сохраняем четкость пикселей */
 }
 
-.slide-title { font-size: 10px; color: var(--primary); letter-spacing: 1px; }
-.slide-subtitle { font-size: 6px; color: var(--secondary); margin-top: 4px; }
-
-/* ============================================
-   6. ПОПАП ИНСТАГРАМА (НОВОЕ)
-============================================ */
-.social-popup {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 10000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
+.svg-icon {
+    width: 40px;
+    height: 40px;
+    color: #fff;
 }
 
-.social-popup.active { display: flex; }
-
-.popup-content {
-    background: var(--bg);
-    border: 2px solid var(--primary);
-    padding: 30px;
-    width: 320px;
+.room-label {
+    font-size: 7px;
+    color: #fff;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     text-align: center;
 }
 
-.popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-dark);
+.wide-label {
+    font-size: 10px;
+    color: #fff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-.popup-title { font-size: 11px; color: var(--primary); letter-spacing: 3px; }
+/* --- ТА САМАЯ КРАСНАЯ ПЛАШКА --- */
+.forum-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ff0000 !important; /* Принудительно красный */
+    color: #fff !important;
+    padding: 3px 8px;
+    font-size: 6px;
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+    z-index: 100;
+    border: none !important;
+}
 
-.popup-close {
-    background: none;
-    border: none;
-    color: var(--primary);
-    font-size: 28px;
-    cursor: pointer;
+#dynamicWord {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+/* --- ВРАЩАЮЩАЯСЯ МОНЕТКА В SHOP --- */
+.money-rotating {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: auto;
+    color: #4ade80;
+    animation: coinSpin 3s linear infinite;
+}
+
+@keyframes coinSpin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* --- ТЕРМИНАЛ ДОНАТА --- */
+.donate-widget-area {
+    grid-column: span 2;
+    border: 1px solid #fff;
+    background: #000;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-head {
+    background: #fff;
+    color: #000;
+    font-size: 8px;
+    padding: 6px;
+    text-align: center;
     font-family: 'Press Start 2P', cursive;
 }
 
-.insta-choice-btn {
-    display: block;
-    color: var(--primary);
+.inject-btn {
+    background: #ff0000;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
     text-decoration: none;
-    font-size: 20px;
-    border: 1px solid var(--primary);
-    padding: 15px;
-    margin-bottom: 15px;
+    font-size: 8px;
+    font-family: 'Press Start 2P', cursive;
     transition: 0.3s;
 }
 
-.insta-choice-btn:hover { background: var(--primary); color: #000; }
+.inject-btn:hover {
+    background: #b30000;
+}
 
-/* ============================================
-   7. АДАПТИВНОСТЬ
-============================================ */
+/* --- БЕГУЩАЯ СТРОКА (МАРГУШКА) --- */
+.rec-box {
+    grid-column: span 2;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    font-size: 7px;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(0,0,0,0.2);
+}
+
+/* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
 @media (max-width: 480px) {
-    .top-row { gap: 20px; }
-    .nav-folder-icon { width: 50px; }
-    .futuristic-window { width: 240px; height: 140px; }
-    .back-button { top: 12px; right: 12px; }
+    .grid-index {
+        gap: 10px;
+        padding: 70px 15px 30px;
+    }
+    .room-label { font-size: 6px; }
+    .wide-label { font-size: 8px; letter-spacing: 2px; }
 }
