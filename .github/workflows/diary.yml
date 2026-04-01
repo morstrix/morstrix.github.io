@@ -19,62 +19,48 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+        run: pip install requests beautifulsoup4
 
       - name: Fetch Threads Data
         run: |
           python3 - << 'EOF'
           import requests, json, datetime, re
-          from xml.etree import ElementTree
+          from bs4 import BeautifulSoup
 
-          def fetch_rss():
+          def fetch_via_bridge():
               user = 'grimexframe'
-              # Используем RSS-мост для стабильности
-              url = f'https://rsshub.app/threads/user/{user}'
+              # Используем другой мощный RSS мост
+              url = f'https://nitter.net/search?q={user}' # Это пример, сейчас подставим Тредс
+              # Но для Тредса лучше всего работает этот фид:
+              api_url = f'https://threads-api.vercel.app/api/profile?username={user}'
+              
               try:
-                  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-                  res = requests.get(url, timeout=30, headers=headers)
-                  if res.status_code != 200: 
-                      print(f"Server returned {res.status_code}")
-                      return []
+                  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+                  res = requests.get(api_url, headers=headers, timeout=30)
+                  data = res.json()
+                  threads = data.get('threads', [])
                   
-                  root = ElementTree.fromstring(res.content)
-                  posts = []
-                  
-                  for item in root.findall('./channel/item')[:8]:
-                      title_elem = item.find('title')
-                      desc_elem = item.find('description')
-                      
-                      # Берем текст из описания или заголовка
-                      raw_text = desc_elem.text if desc_elem is not None else (title_elem.text if title_elem is not None else "")
-                      # Очистка от HTML
-                      clean_text = re.sub('<[^<]+?>', '', raw_text).strip()
-                      
-                      pub_date = item.find('pubDate').text
-                      try:
-                          # Парсим стандартную дату RSS
-                          dt = datetime.datetime.strptime(pub_date[:25].strip(), '%a, %d %b %Y %H:%M:%S')
-                          d_str = dt.strftime('%d.%m.%Y')
-                      except:
-                          d_str = datetime.datetime.now().strftime('%d.%m.%Y')
-                      
-                      if clean_text and clean_text.lower() != 'post':
-                          # Ограничиваем длину текста для стиля
-                          display_text = clean_text[:280].upper()
-                          posts.append({'date': d_str, 'text': display_text})
-                  return posts
-              except Exception as e:
-                  print(f"Error: {e}")
+                  result = []
+                  for t in threads[:5]:
+                      items = t.get('thread_items', [])
+                      if items:
+                          p = items[0].get('post', {})
+                          txt = p.get('caption', {}).get('text', '')
+                          if txt:
+                              d = datetime.datetime.fromtimestamp(p.get('taken_at', 0)).strftime('%d.%m.%Y')
+                              result.append({'date': d, 'text': txt.upper()})
+                  return result
+              except:
                   return []
 
-          data = fetch_rss()
-          if not data:
-              data = [{"date": "SYNC", "text": "ESTABLISHING_SECURE_CONNECTION..."}]
+          posts = fetch_via_bridge()
+          
+          # Если все еще пусто - пишем КРИТИЧЕСКУЮ ошибку, чтобы мы видели, что происходит
+          if not posts:
+              posts = [{"date": "ERROR", "text": "META_BLOCK_DETECTED_WAITING_RETRY"}]
           
           with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(data, f, ensure_ascii=False, indent=2)
+              json.dump(posts, f, ensure_ascii=False, indent=2)
           EOF
 
       - name: Commit and Push
