@@ -100,33 +100,64 @@ html, body {
     100% { transform: rotateY(360deg); }
 }
 
-/* --- ТЕРМИНАЛ ДОНАТА (НА ГЛАВНОЙ) --- */
+/* ============================================
+   DONATELLO WIDGET FIX
+   ============================================ */
 .donate-widget-area {
     grid-column: span 2;
-    border: 1px solid var(--primary);
-    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ff41;
+    background: rgba(0, 0, 0, 0.9);
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .widget-head {
-    background: var(--primary);
+    background: #00ff41;
     color: #000;
     font-size: 8px;
-    padding: 6px;
+    padding: 8px;
     text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-weight: bold;
+}
+
+.widget-frame-wrapper {
+    width: 100%;
+    height: 280px;
+    background: #0a0a0a;
+    overflow: hidden;
+    position: relative;
+}
+
+.widget-frame-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
 }
 
 .inject-btn {
-    background: #ff0000;
+    background: #ff3366;
     color: #fff;
     text-align: center;
     padding: 12px;
     text-decoration: none;
     font-size: 8px;
-    transition: 0.3s;
+    font-family: 'Press Start 2P', monospace;
+    transition: all 0.2s;
+    display: block;
+}
+
+.inject-btn:hover {
+    background: #ff6699;
+    transform: scale(0.98);
+}
+
+.inject-btn:active {
+    transform: scale(0.95);
 }
 
 /* --- МОДАЛЬНЫЕ ОКНА (ПОПАПЫ) --- */
@@ -142,10 +173,10 @@ html, body {
 }
 
 .modal-box {
-    position: relative; /* Чтобы крестик позиционировался внутри */
-    border: 2px solid var(--primary);
+    position: relative;
+    border: 2px solid #00ff41;
     background: #000;
-    padding: 50px 20px 20px; /* Сверху больше места под крестик */
+    padding: 50px 20px 20px;
     max-width: 90%;
     box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
 }
@@ -153,11 +184,11 @@ html, body {
 /* --- КРЕСТИК ЗАКРЫТИЯ (ВСЕГДА В ПРАВОМ УГЛУ) --- */
 .close-btn {
     position: absolute;
-    top: 15px;      /* Отступ сверху */
-    right: 15px;    /* Отступ справа */
+    top: 15px;
+    right: 15px;
     background: none;
     border: none;
-    color: #ff0000 !important; /* Принудительно красный */
+    color: #ff0000 !important;
     font-family: 'Press Start 2P', cursive;
     font-size: 18px;
     cursor: pointer;
@@ -175,7 +206,7 @@ html, body {
 .donate-modal-box {
     width: 550px;
     height: 180px;
-    padding: 0; /* Виджет на всю ширину */
+    padding: 0;
     overflow: hidden;
 }
 
@@ -188,9 +219,9 @@ html, body {
 /* Ссылки Инстаграма */
 .insta-links a {
     display: block;
-    color: var(--primary);
+    color: #00ff41;
     text-decoration: none;
-    border: 1px solid var(--primary);
+    border: 1px solid #00ff41;
     padding: 15px;
     text-align: center;
     margin-bottom: 10px;
@@ -198,7 +229,7 @@ html, body {
 }
 
 .insta-links a:hover {
-    background: var(--primary);
+    background: #00ff41;
     color: #000;
 }
 
@@ -207,4 +238,98 @@ html, body {
     .grid-index { gap: 10px; padding: 70px 15px 30px; }
     .room-label { font-size: 6px; }
     .donate-modal-box { width: 95%; height: 150px; }
+    .widget-frame-wrapper { height: 240px; }
+}
+
+/* ============================================
+   BACK BUTTON (общая кнопка назад)
+   ============================================ */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    text-decoration: none;
+    z-index: 1000;
+    transition: all 0.2s;
+}
+
+.back-button span {
+    color: #fff;
+    font-size: 20px;
+}
+
+.back-button:active {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   RADIO PLAYER STYLES
+   ============================================ */
+.player-circle {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.player-circle span {
+    font-size: 16px;
+    color: #fff;
+}
+
+.room-btn.playing .player-circle {
+    border-color: #00ff41;
+    box-shadow: 0 0 10px #00ff41;
+}
+
+.room-btn.playing .player-circle span {
+    color: #00ff41;
+}
+
+/* ============================================
+   WIDE BAR LABEL
+   ============================================ */
+.wide-label {
+    font-size: 10px;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+/* ============================================
+   ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ РАЗНЫХ СТРАНИЦ
+   ============================================ */
+body.page-a, body.page-x, body.page-forum, body.page-shop, body.page-helper, body.page-support {
+    min-height: 100vh;
+    display: block;
+}
+
+/* Стили для скролла */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff3366;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6699;
 }

@@ -1,12 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DONATE | MORSTRIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; overflow: hidden; background: transparent; }
-        iframe { width: 100%; height: 100vh; border: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', monospace;
+            padding: 20px;
+        }
+        
+        .donate-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #ff3366;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.3);
+        }
+        
+        .donate-header {
+            background: #ff3366;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .donate-header h1 {
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+        
+        .donate-header p {
+            font-size: 8px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 8px;
+        }
+        
+        .widget-wrapper {
+            width: 100%;
+            height: 320px;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+        
+        .widget-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #ff3366;
+            text-decoration: none;
+            font-size: 10px;
+            padding: 12px;
+            border: 1px solid #ff3366;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        
+        .back-link:hover {
+            background: #ff3366;
+            color: #000;
+        }
+        
+        @media (max-width: 600px) {
+            .widget-wrapper { height: 280px; }
+            .donate-header h1 { font-size: 10px; }
+        }
     </style>
 </head>
 <body>
-    <iframe src="https://donatello.to/widget/69cce53c853ffcbd14d8b8e7/token/dff9f6028b506348f3084eb6e4b6ee79"></iframe>
+    <div class="donate-container">
+        <div class="donate-header">
+            <h1>⚡ SYSTEM FUNDING ⚡</h1>
+            <p>SUPPORT THE PROJECT</p>
+        </div>
+        <div class="widget-wrapper">
+            <iframe 
+                src="https://donatello.to/widget/69cce53c853ffcbd14d8b8e7/token/dff9f6028b506348f3084eb6e4b6ee79"
+                scrolling="no"
+                allowtransparency="true">
+            </iframe>
+        </div>
+    </div>
+    <a href="index.html" class="back-link">◀ RETURN TO HUB</a>
 </body>
 </html>
