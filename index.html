@@ -31,8 +31,10 @@
         
         .room-btn:active { transform: scale(0.95); }
 
+        /* Квадраты без рамок */
         .room-btn.clean-square { grid-column: span 1; aspect-ratio: 1 / 1; }
 
+        /* Широкие блоки с рамками (Тетрис, Паинт) */
         .room-btn.wide-bar {
             grid-column: span 2;
             height: 85px;
@@ -55,7 +57,7 @@
             justify-content: center;
         }
 
-        /* Эффект играющей музыки */
+        /* Анимация пульсации для Радио */
         .playing .svg-icon {
             animation: pulse 1s infinite alternate;
             color: #fff;
@@ -131,7 +133,7 @@
             text-align: center;
         }
 
-        /* Скрытый плеер */
+        /* Скрытый плеер YouTube */
         #yt-player-hidden {
             position: absolute;
             top: -999px;
@@ -189,12 +191,12 @@
             </div>
         </a>
 
-        <a href="a.html" class="room-btn clean-square">
+        <div class="room-btn clean-square" onclick="openInstaPopup()">
             <div class="room-content">
                 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
                 <div class="room-label">INSTAGRAM</div>
             </div>
-        </a>
+        </div>
 
         <a href="https://tiktok.com/@grimexframe" target="_blank" class="room-btn clean-square">
             <div class="room-content">
@@ -216,13 +218,27 @@
 
         <div class="donate-widget-area">
             <div class="widget-head">PAYMENT TERMINAL</div>
-            <iframe src="https://donatello.ua/morstrix" scrolling="no"></iframe>
+            <iframe src="https://donatello.ua/ТВОЙ_НИК" scrolling="no"></iframe>
         </div>
 
     </section>
 
+    <div id="instaModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div style="width: 320px; background: #000; border: 2px solid var(--primary); padding: 30px; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <span style="font-size: 10px; color: var(--primary); letter-spacing: 2px;">SELECT ACCOUNT:</span>
+                <button onclick="closeInstaPopup()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-family: 'Press Start 2P'; font-size: 14px;">[X]</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <a href="a.html" style="color: var(--primary); text-decoration: none; font-size: 24px; border: 1px solid var(--primary); padding: 15px; text-align: center; transition: 0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='#000'" onmouseout="this.style.background='none'; this.style.color='var(--primary)'">ADA</a>
+                <a href="x.html" style="color: var(--primary); text-decoration: none; font-size: 24px; border: 1px solid var(--primary); padding: 15px; text-align: center; transition: 0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='#000'" onmouseout="this.style.background='none'; this.style.color='var(--primary)'">GRIMEX</a>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // Логика Радио
         var player;
         var isPlaying = false;
 
@@ -230,23 +246,30 @@
             player = new YT.Player('yt-player-hidden', {
                 height: '0',
                 width: '0',
-                videoId: 'WB7LS3p7Tb4',
+                videoId: 'WB7LS3p7Tb4', // Твой трек
                 playerVars: {
                     'listType': 'playlist',
-                    'list': 'PLi1Z1_6srFOvdJ5HrgSMoGpMnpoTrx56_',
+                    'list': 'PLi1Z1_6srFOvdJ5HrgSMoGpMnpoTrx56_', // Твой плейлист
                     'autoplay': 0,
                     'controls': 0
+                },
+                events: {
+                    'onReady': function(event) {
+                        event.target.setVolume(100); // Громкость на максимум при загрузке
+                    }
                 }
             });
         }
 
         function toggleMusic() {
-            if (!player) return;
+            if (!player || typeof player.playVideo !== 'function') return;
             
             const btn = document.getElementById('radioBtn');
             const label = document.getElementById('radioLabel');
 
             if (!isPlaying) {
+                player.unMute();
+                player.setVolume(100);
                 player.playVideo();
                 btn.classList.add('playing');
                 label.innerText = 'RADIO [ON]';
@@ -257,6 +280,20 @@
                 label.innerText = 'RADIO [OFF]';
                 isPlaying = false;
             }
+        }
+
+        // Логика Попапа Инстаграм
+        function openInstaPopup() {
+            document.getElementById('instaModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Убираем скролл
+        }
+        function closeInstaPopup() {
+            document.getElementById('instaModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Возвращаем скролл
+        }
+        window.onclick = function(event) {
+            let modal = document.getElementById('instaModal');
+            if (event.target == modal) { closeInstaPopup(); }
         }
     </script>
     

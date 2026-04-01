@@ -30,9 +30,8 @@ body {
 }
 
 /* ============================================
-   2. ОБЩИЕ КОМПОНЕНТЫ (КНОПКИ, КРЕСТИК)
+   2. ОБЩИЕ КОМПОНЕНТЫ
 ============================================ */
-
 .back-button {
     position: fixed;
     top: 20px;
@@ -62,9 +61,8 @@ body {
 .back-button:active span { transform: scale(0.9); }
 
 /* ============================================
-   3. СТИЛИ ГЛАВНОЙ СТРАНИЦЫ (INDEX)
+   3. СТИЛИ ГЛАВНОЙ СТРАНИЦЫ (ИСПРАВЛЕНО)
 ============================================ */
-
 .site-section.main-index {
     position: relative;
     display: flex;
@@ -85,29 +83,29 @@ body {
     align-items: center;
 }
 
+/* ПЛАШКА CONNECTING В ЛЕВОМ УГЛУ */
 .forum-wrapper { position: relative; }
 
 .forum-decor {
     position: absolute;
-    top: -18px;
-    left: -45px;
-    width: 30px;
-    height: 30px;
+    top: -5px; 
+    left: -10px; /* Подвинул ближе к иконке, чтобы не висело в воздухе */
+    width: auto;
+    height: auto;
     background: rgba(30, 20, 30, 0.9);
-    border: 2px solid var(--primary);
-    border-radius: 4px;
+    border: 1px solid var(--primary);
+    border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
+    padding: 2px 4px;
 }
 
 #dynamicWord {
     font-size: 6px;
     color: var(--primary);
-    background: var(--red-accent);
-    padding: 2px 4px;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+    background: transparent;
     transition: opacity 0.3s ease;
 }
 
@@ -145,9 +143,8 @@ body {
 }
 
 /* ============================================
-   4. ВРАЩЕНИЕ МОНЕТКИ (SHOP ICON)
+   4. ВРАЩЕНИЕ МОНЕТКИ (ИСПРАВЛЕНО В УГОЛ)
 ============================================ */
-
 .icon-wrapper {
     position: relative;
     display: inline-block;
@@ -162,29 +159,19 @@ body {
     position: absolute;
     width: 22px;
     height: 22px;
-    right: -12px;
-    top: -8px;
+    right: -10px; /* Четко в правый угол */
+    top: -5px;
     animation: spin3D 3s linear infinite;
     transform-style: preserve-3d;
-    z-index: 2;
+    z-index: 10;
 }
 
-.money-svg rect {
-    fill: var(--money-green-dark);
-    stroke: var(--money-green-light);
-    stroke-width: 1;
-}
-
-.money-svg circle {
-    fill: var(--money-green-light);
-    stroke: var(--bg);
-    stroke-width: 1;
-}
+.money-svg rect { fill: var(--money-green-dark); stroke: var(--money-green-light); stroke-width: 1; }
+.money-svg circle { fill: var(--money-green-light); stroke: var(--bg); stroke-width: 1; }
 
 /* ============================================
-   5. ФУТУРИСТИЧЕСКОЕ ОКНО (SUPPORT/HELPER)
+   5. ФУТУРИСТИЧЕСКОЕ ОКНО (СОХРАНЕНО)
 ============================================ */
-
 .futuristic-container {
     width: 100%;
     display: flex;
@@ -242,61 +229,18 @@ body {
 .slide-title { font-size: 10px; color: var(--primary); letter-spacing: 1px; }
 .slide-subtitle { font-size: 6px; color: var(--secondary); margin-top: 4px; }
 
-.hud-indicators { display: flex; gap: 15px; margin-top: 15px; }
-.hud-dot {
-    width: 8px; height: 8px;
-    border: 1px solid var(--primary);
-    transform: rotate(45deg);
-    transition: 0.3s;
-}
-.hud-dot.active { background: var(--primary); }
-
 /* ============================================
-   6. АДАПТИВНОСТЬ
+   6. ПОПАП ИНСТАГРАМА (НОВОЕ)
 ============================================ */
-
-@media (max-width: 480px) {
-    .top-row { gap: 20px; }
-    .forum-decor { left: -35px; top: -15px; }
-    .nav-folder-icon { width: 50px; }
-    .futuristic-window { width: 240px; height: 140px; }
-    .back-button { top: 12px; right: 12px; }
-}
-
-/* ============================================
-   7. SOCIAL POPUP (TEAM)
-============================================ */
-
-.team-btn {
-    border: 1px solid var(--primary);
-    padding: 12px 24px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: rgba(168, 77, 107, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.team-btn:hover {
-    background: var(--primary);
-    box-shadow: 0 0 20px var(--primary);
-}
-
-.team-label {
-    font-size: 12px;
-    color: var(--primary);
-    letter-spacing: 3px;
-}
-
 .social-popup {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.92);
-    z-index: 9999;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(8px);
 }
 
 .social-popup.active { display: flex; }
@@ -304,9 +248,9 @@ body {
 .popup-content {
     background: var(--bg);
     border: 2px solid var(--primary);
-    padding: 25px;
-    min-width: 260px;
-    max-width: 90vw;
+    padding: 30px;
+    width: 320px;
+    text-align: center;
 }
 
 .popup-header {
@@ -318,11 +262,7 @@ body {
     border-bottom: 1px solid var(--border-dark);
 }
 
-.popup-title {
-    font-size: 11px;
-    color: var(--primary);
-    letter-spacing: 3px;
-}
+.popup-title { font-size: 11px; color: var(--primary); letter-spacing: 3px; }
 
 .popup-close {
     background: none;
@@ -330,43 +270,28 @@ body {
     color: var(--primary);
     font-size: 28px;
     cursor: pointer;
-    line-height: 1;
     font-family: 'Press Start 2P', cursive;
-    font-weight: 300;
-    transition: transform 0.2s ease;
 }
 
-.popup-close:hover { transform: scale(1.2); }
-.popup-close:active { transform: scale(0.9); }
-
-.team-popup-container {
-    display: flex;
-    gap: 35px;
-    justify-content: center;
-    padding: 10px 0;
-}
-
-.team-member {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
+.insta-choice-btn {
+    display: block;
     color: var(--primary);
-    font-size: 8px;
-    letter-spacing: 1px;
-    transition: opacity 0.2s ease;
-}
-
-.team-member img {
-    width: 75px;
-    height: 75px;
-    object-fit: cover;
+    text-decoration: none;
+    font-size: 20px;
     border: 1px solid var(--primary);
-    image-rendering: pixelated;
-    transition: border-color 0.2s ease;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: 0.3s;
 }
 
-.team-member:hover { opacity: 0.8; }
-.team-member:hover img { border-color: var(--primary); }
-.team-member:active { opacity: 0.6; }
+.insta-choice-btn:hover { background: var(--primary); color: #000; }
+
+/* ============================================
+   7. АДАПТИВНОСТЬ
+============================================ */
+@media (max-width: 480px) {
+    .top-row { gap: 20px; }
+    .nav-folder-icon { width: 50px; }
+    .futuristic-window { width: 240px; height: 140px; }
+    .back-button { top: 12px; right: 12px; }
+}
