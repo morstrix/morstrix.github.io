@@ -11,85 +11,66 @@
 
     <canvas id="neuro-bg"></canvas>
 
-    <main class="grid-index">
+    <main class="floating-hub">
         
-        <a href="support.html" class="room-btn wide-bar">
-            <span class="wide-label">[ TETRIS SYSTEM ]</span>
+        <a href="support.html" class="float-item wide">
+            <span class="glitch-text">[ TETRIS_SYSTEM ]</span>
         </a>
 
-        <a href="forum.html" class="room-btn clean-square">
-            <div class="forum-header" id="dynamicWord">CONNECTING</div>
-            <div class="room-content">
-                <img src="forum.png" class="room-icon">
-                <div class="room-label">FORUM</div>
+        <a href="forum.html" class="float-item">
+            <div class="dynamic-tag" id="dynamicWord">CONNECTING</div>
+            <img src="forum.png" class="float-icon">
+            <span class="float-label">FORUM</span>
+        </a>
+
+        <a href="shop.html" class="float-item">
+            <div class="money-wrap">
+                <svg class="money-rotating" viewBox="0 0 32 20"><rect x="1" y="1" width="30" height="18" rx="1" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="10" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <img src="space.png" class="float-icon">
+            <span class="float-label">SHOP</span>
+        </a>
+
+        <a href="helper.html" class="float-item wide">
+            <div class="wide-inner">
+                <span class="icon-big">✎</span>
+                <span class="float-label">NEURO_PAINT</span>
             </div>
         </a>
 
-        <a href="shop.html" class="room-btn clean-square">
-            <svg class="money-rotating" viewBox="0 0 32 20" fill="none">
-                <rect x="1" y="1" width="30" height="18" rx="1" stroke="currentColor" stroke-width="2"/>
-                <circle cx="16" cy="10" r="4" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            <div class="room-content">
-                <img src="space.png" class="room-icon">
-                <div class="room-label">SHOP</div>
-            </div>
+        <a href="moodboard.html" class="float-item">
+            <span class="icon-big">🖼</span>
+            <span class="float-label">MOODBOARD</span>
+        </a>
+        <a href="journal.html" class="float-item">
+            <span class="icon-big">📖</span>
+            <span class="float-label">JOURNAL</span>
         </a>
 
-        <a href="helper.html" class="room-btn wide-bar">
-            <span class="wide-label">[ PAINT HELPER ]</span>
+        <a href="diary.html" class="float-item">
+            <span class="icon-big">📓</span>
+            <span class="float-label">DIARY</span>
         </a>
-
-        <a href="https://pinterest.com" target="_blank" class="room-btn clean-square">
-            <div class="room-content">
-                <span style="font-size:30px;">▩</span>
-                <div class="room-label">MUDBOARD</div>
-            </div>
-        </a>
-
-        <a href="#" class="room-btn clean-square">
-            <div class="room-content">
-                <span style="font-size:30px;">◈</span>
-                <div class="room-label">THREADS</div>
-            </div>
-        </a>
-
-        <a href="#" class="room-btn clean-square">
-            <div class="room-content">
-                <span style="font-size:30px;">✎</span>
-                <div class="room-label">JOURNAL</div>
-            </div>
-        </a>
-
-        <a href="https://tiktok.com/@grimexframe" target="_blank" class="room-btn clean-square">
-            <div class="room-content">
-                <span style="font-size:30px;">♪</span>
-                <div class="room-label">TIKTOK</div>
-            </div>
-        </a>
-
-        <div id="radioBtn" class="room-btn clean-square" onclick="toggleRadio()">
-            <div class="room-content">
-                <div class="player-circle"><span id="p-icon">▶</span></div>
-                <div class="room-label" id="p-label">RADIO OFF</div>
-            </div>
+        <div class="float-item" onclick="openModal('instaModal')">
+            <span class="icon-big">▣</span>
+            <span class="float-label">INSTAGRAM</span>
         </div>
 
-        <div class="room-btn clean-square" onclick="openModal('instaModal')">
-            <div class="room-content">
-                <span style="font-size:30px;">▣</span>
-                <div class="room-label">INSTAGRAM</div>
+        <a href="https://tiktok.com/@morstrix" target="_blank" class="float-item">
+            <span class="icon-big">♪</span>
+            <span class="float-label">TIKTOK</span>
+        </a>
+        <div id="radioBtn" class="float-item" onclick="toggleRadio()">
+            <div class="radio-status">
+                <div class="p-circle"><span id="p-icon">▶</span></div>
             </div>
+            <span class="float-label" id="p-label">RADIO OFF</span>
         </div>
 
-        <!-- KO-FI BUTTON -->
-        <a href="https://ko-fi.com/morstrix" target="_blank" class="kofi-button">
-            <div class="kofi-button-inner">
-                <span class="kofi-icon">☕</span>
-                <span class="kofi-text">SUPPORT US</span>
-                <span class="kofi-icon">⚡</span>
-            </div>
-            <div class="kofi-sub">buy me a coffee</div>
+        <a href="https://send.monobank.ua/jar/8q9Kk2hkDV" target="_blank" class="float-item wide donate-item">
+            <div class="scan-bar"></div>
+            <span class="float-label">ПІДТРИМАТИ ПРОЄКТ</span>
+            <span class="sub-label">MONOBANK.EXE</span>
         </a>
 
     </main>
@@ -105,33 +86,6 @@
     </div>
 
     <script src="background.js"></script>
-    <script>
-        const words = ["CONNECTING", "DYNAMIC WORLD", "SYSTEM ACTIVE", "MORSTRIX HUB"];
-        let i = 0;
-        setInterval(() => {
-            const el = document.getElementById('dynamicWord');
-            if(el) { el.innerText = words[i]; i = (i + 1) % words.length; }
-        }, 2500);
-
-        let playing = false;
-        function toggleRadio() {
-            playing = !playing;
-            document.getElementById('radioBtn').classList.toggle('playing', playing);
-            document.getElementById('p-icon').innerText = playing ? '⏸' : '▶';
-            document.getElementById('p-label').innerText = playing ? 'RADIO ON' : 'RADIO OFF';
-        }
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    </script>
-    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-<script>
-  kofiWidgetOverlay.draw('morstrix', {
-    'type': 'floating-chat',
-    'floating-chat.donateButton.text': 'Support',
-    'floating-chat.donateButton.background-color': '#29abe0',
-    'floating-chat.donateButton.text-color': '#fff'
-  });
-</script>
+    <script src="index.js"></script>
 </body>
 </html>
