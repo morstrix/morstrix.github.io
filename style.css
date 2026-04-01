@@ -86,27 +86,17 @@ body {
 /* ПЛАШКА CONNECTING В ЛЕВОМ УГЛУ */
 .forum-wrapper { position: relative; }
 
-.forum-decor {
+.forum-header {
+    font-size: 7px;             /* Размер текста */
+    color: #fff;                /* Цвет текста (белый) */
     position: absolute;
-    top: -5px; 
-    left: -10px; /* Подвинул ближе к иконке, чтобы не висело в воздухе */
-    width: auto;
-    height: auto;
-    background: rgba(30, 20, 30, 0.9);
-    border: 1px solid var(--primary);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 0;                     /* Прижали к самому верху */
+    left: 0;                    /* Прижали к самому левому краю */
+    background: #ff0000;        /* Цвет плашки (красный, как ты хотел) */
+    padding: 3px 6px;           /* Отступы вокруг текста */
+    text-transform: uppercase;  /* Все буквы заглавные */
     z-index: 10;
-    padding: 2px 4px;
-}
-
-#dynamicWord {
-    font-size: 6px;
-    color: var(--primary);
-    background: transparent;
-    transition: opacity 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .main-nav-link {
