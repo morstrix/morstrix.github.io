@@ -1,71 +1,87 @@
 name: Update Diary Posts
 on:
   schedule:
-    - cron: '0 * * * *' # Раз в час
-  workflow_dispatch: # Кнопка в GitHub Actions
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
-      - name: Install Dependencies
-        run: pip install requests
-
-      - name: Fetch Threads Posts
+      - name: Install dependencies
         run: |
-          python3 -c "
-          import requests, json, datetime
+          python -m pip install --upgrade pip
+          pip install requests
 
-          USERNAME = 'grimexframe'
-          # Используем стабильный прокси для Threads
-          URL = f'https://threads-api.vercel.app/api/profile?username={USERNAME}'
+      - name: Fetch Threads Data
+        run: |
+          python3 - << 'EOF'
+          import requests, json, datetime, re
+          from xml.etree import ElementTree
+
+          def fetch_rss():
+              user = 'grimexframe'
+              # Используем RSS-мост для стабильности
+              url = f'https://rsshub.app/threads/user/{user}'
+              try:
+                  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+                  res = requests.get(url, timeout=30, headers=headers)
+                  if res.status_code != 200: 
+                      print(f"Server returned {res.status_code}")
+                      return []
+                  
+                  root = ElementTree.fromstring(res.content)
+                  posts = []
+                  
+                  for item in root.findall('./channel/item')[:8]:
+                      title_elem = item.find('title')
+                      desc_elem = item.find('description')
+                      
+                      # Берем текст из описания или заголовка
+                      raw_text = desc_elem.text if desc_elem is not None else (title_elem.text if title_elem is not None else "")
+                      # Очистка от HTML
+                      clean_text = re.sub('<[^<]+?>', '', raw_text).strip()
+                      
+                      pub_date = item.find('pubDate').text
+                      try:
+                          # Парсим стандартную дату RSS
+                          dt = datetime.datetime.strptime(pub_date[:25].strip(), '%a, %d %b %Y %H:%M:%S')
+                          d_str = dt.strftime('%d.%m.%Y')
+                      except:
+                          d_str = datetime.datetime.now().strftime('%d.%m.%Y')
+                      
+                      if clean_text and clean_text.lower() != 'post':
+                          # Ограничиваем длину текста для стиля
+                          display_text = clean_text[:280].upper()
+                          posts.append({'date': d_str, 'text': display_text})
+                  return posts
+              except Exception as e:
+                  print(f"Error: {e}")
+                  return []
+
+          data = fetch_rss()
+          if not data:
+              data = [{"date": "SYNC", "text": "ESTABLISHING_SECURE_CONNECTION..."}]
           
-          try:
-              res = requests.get(URL, timeout=15).json()
-              threads = res.get('threads', [])
-              
-              posts_list = []
-              for t in threads[:5]:
-                  # Достаем текст поста
-                  thread_items = t.get('thread_items', [])
-                  if not thread_items: continue
-                  
-                  post = thread_items[0].get('post', {})
-                  text = post.get('caption', {}).get('text', '')
-                  timestamp = post.get('taken_at', 0)
-                  
-                  if text:
-                      date_str = datetime.datetime.fromtimestamp(timestamp).strftime('%d.%m.%Y')
-                      posts_list.append({
-                          'date': date_str,
-                          'text': text.upper() # В твоем стиле (капс)
-                      })
-
-              if not posts_list:
-                  posts_list = [{'date': 'SYSTEM', 'text': 'NO_NEW_DATA_RECEIVED'}]
-              
-              with open('diary.json', 'w', encoding='utf-8') as f:
-                  json.dump(posts_list, f, ensure_ascii=False, indent=2)
-                  
-          except Exception as e:
-              print(f'Error: {e}')
-              # Если ошибка, создаем файл-заглушку, чтобы сайт не падал
-              with open('diary.json', 'w') as f:
-                  json.dump([{'date': 'ERROR', 'text': 'SYNC_FAILED_RETrying_LATER'}], f)
-          "
+          with open('diary.json', 'w', encoding='utf-8') as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+          EOF
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m 'System: Diary live sync' || exit 0
+          git commit -m 'System: Diary sync' || exit 0
+          git pull --rebase origin main
           git push
