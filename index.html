@@ -10,16 +10,16 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-        body, html { width: 100%; height: 100%; background: #000; font-family: 'Press Start 2P', cursive; overflow: hidden; color: var(--primary); }
+        body, html { width: 100%; height: 100%; background: #000; font-family: 'Press Start 2P', cursive; overflow-y: auto; overflow-x: hidden; color: var(--primary); }
 
         #neuro-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-        .hub-layer { position: relative; z-index: 10; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .hub-layer { position: relative; z-index: 10; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
         
         .grid-hud { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 30px; 
+            gap: 35px; 
             width: 100%; 
             max-width: 600px; 
         }
@@ -31,10 +31,10 @@
             align-items: center; 
             justify-content: center; 
             background: transparent; 
-            position: relative; /* Важно для позиционирования плашки и монеты */
+            position: relative; 
         }
 
-        /* КРАСНАЯ ПЛАШКА (ФОРУМ) */
+        /* КРАСНАЯ ПЛАШКА */
         .forum-tag { 
             position: absolute; 
             top: -20px; 
@@ -44,10 +44,9 @@
             padding: 5px 10px; 
             font-size: 7px; 
             z-index: 100;
-            box-shadow: 0 0 10px rgba(255,0,0,0.5);
         }
 
-        /* МОНЕТКА (МАГАЗИН) */
+        /* МОНЕТКА */
         .money-rotating { 
             position: absolute; 
             top: -15px; 
@@ -55,7 +54,6 @@
             width: 30px; 
             z-index: 100;
             color: #4ade80;
-            filter: drop-shadow(0 0 5px #4ade80);
             animation: coinSpin 3s linear infinite;
         }
 
@@ -69,11 +67,43 @@
 
         .hud-item.wide { grid-column: span 2; height: 40px; }
 
-        /* ДОНАТ */
-        .donate-area { grid-column: span 2; border: 1px solid var(--primary); background: rgba(0,0,0,0.5); margin-top: 20px; }
-        .donate-btn { display: block; background: #ff0000; color: #fff; text-align: center; padding: 12px; text-decoration: none; font-size: 8px; }
+        /* ДОНАТ БЕЗ ЛИШНИХ РАМОК */
+        .donate-area { 
+            grid-column: span 2; 
+            border: 1px solid var(--primary); 
+            background: rgba(0,0,0,0.7); 
+            margin-top: 20px; 
+            width: 100%;
+        }
+        
+        .widget-box {
+            width: 100%;
+            height: 60px; /* Высота под полоску прогресса */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-        /* МОДАЛКА И КРЕСТИК */
+        .widget-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .donate-btn { 
+            display: block; 
+            background: #ff0000; 
+            color: #fff; 
+            text-align: center; 
+            padding: 12px; 
+            text-decoration: none; 
+            font-size: 8px; 
+            border-top: 1px solid var(--primary);
+        }
+
+        /* МОДАЛКА */
         #instaModal { 
             display: none; position: fixed; inset: 0; 
             background: rgba(0,0,0,0.9); z-index: 2000; 
@@ -87,7 +117,6 @@
             width: 320px; 
         }
 
-        /* КРЕСТИК СПРАВА ВВЕРХУ */
         .close-btn { 
             position: absolute; 
             top: 15px; 
@@ -96,9 +125,8 @@
             border: none; 
             color: #ff0000; 
             font-family: 'Press Start 2P'; 
-            font-size: 16px; 
+            font-size: 18px; 
             cursor: pointer;
-            padding: 5px;
         }
 
         .insta-links { display: flex; flex-direction: column; gap: 20px; }
@@ -169,8 +197,8 @@
             </div>
 
             <div class="donate-area">
-                <div style="height: 100px;">
-                    <iframe src="https://donatello.to/widget/69cce53c853ffcbd14d8b8e7/token/dff9f6028b506348f3084eb6e4b6ee79" style="width: 100%; height: 100%; border: none;" scrolling="no"></iframe>
+                <div class="widget-box">
+                    <iframe src="https://donatello.to/widget/69cce53c853ffcbd14d8b8e7/token/dff9f6028b506348f3084eb6e4b6ee79" scrolling="no"></iframe>
                 </div>
                 <a href="https://donatello.to/morstrix?g=1775034053001" target="_blank" class="donate-btn">INJECT FUNDS</a>
             </div>
@@ -190,15 +218,18 @@
 
     <script src="background.js"></script>
     <script>
-        // Динамический текст
+        // Динамический текст плашки
         const words = ["CONNECTING", "DYNAMIC WORLD", "SYSTEM ACTIVE", "MORSTRIX HUB"];
         let i = 0;
         setInterval(() => {
-            document.getElementById('dynamicWord').innerText = words[i];
-            i = (i + 1) % words.length;
+            const el = document.getElementById('dynamicWord');
+            if(el) {
+                el.innerText = words[i];
+                i = (i + 1) % words.length;
+            }
         }, 2500);
 
-        // Радио
+        // Радио логика
         let playing = false;
         function toggleRadio() {
             playing = !playing;
@@ -207,7 +238,7 @@
             document.getElementById('p-label').innerText = playing ? 'RADIO ON' : 'RADIO OFF';
         }
 
-        // Модалка
+        // Инста модалка
         function openInsta() { document.getElementById('instaModal').style.display = 'flex'; }
         function closeInsta() { document.getElementById('instaModal').style.display = 'none'; }
     </script>
