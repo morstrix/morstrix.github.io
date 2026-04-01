@@ -1,0 +1,32 @@
+name: Update Diary Posts
+on:
+  schedule:
+    - cron: '0 * * * *' # Раз в час
+  workflow_dispatch: # Кнопка ручного запуска
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Create Diary File
+        run: |
+          python3 -c "
+          import json
+          posts = [
+              {'date': '01.04.2026', 'text': 'SYSTEM_LOG: CONNECTION_ESTABLISHED.'},
+              {'date': '01.04.2026', 'text': 'DIARY_STATUS: AUTO_UPDATE_ACTIVE.'}
+          ]
+          with open('diary.json', 'w', encoding='utf-8') as f:
+              json.dump(posts, f, ensure_ascii=False, indent=2)
+          "
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add diary.json
+          git commit -m 'System: Diary auto-update' || exit 0
+          git push
