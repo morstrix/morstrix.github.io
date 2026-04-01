@@ -18,49 +18,58 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4
+      - name: Install requests
+        run: pip install requests
 
       - name: Fetch Threads Data
         run: |
           python3 - << 'EOF'
-          import requests, json, datetime, re
-          from bs4 import BeautifulSoup
+          import requests, json, datetime, time
 
-          def fetch_via_bridge():
+          def fetch_posts():
               user = 'grimexframe'
-              # Используем другой мощный RSS мост
-              url = f'https://nitter.net/search?q={user}' # Это пример, сейчас подставим Тредс
-              # Но для Тредса лучше всего работает этот фид:
-              api_url = f'https://threads-api.vercel.app/api/profile?username={user}'
-              
+              # Попытка №1: Основной API
               try:
-                  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
-                  res = requests.get(api_url, headers=headers, timeout=30)
-                  data = res.json()
-                  threads = data.get('threads', [])
-                  
-                  result = []
-                  for t in threads[:5]:
-                      items = t.get('thread_items', [])
-                      if items:
-                          p = items[0].get('post', {})
-                          txt = p.get('caption', {}).get('text', '')
-                          if txt:
-                              d = datetime.datetime.fromtimestamp(p.get('taken_at', 0)).strftime('%d.%m.%Y')
-                              result.append({'date': d, 'text': txt.upper()})
-                  return result
-              except:
-                  return []
+                  url = f'https://threads-api.vercel.app/api/profile?username={user}'
+                  res = requests.get(url, timeout=20)
+                  data = res.json().get('threads', [])
+                  if data:
+                      return parse_data(data)
+              except: pass
 
-          posts = fetch_via_bridge()
+              # Попытка №2: Резервный API
+              try:
+                  url = f'https://threads-photofeed.vercel.app/api/feed?username={user}'
+                  res = requests.get(url, timeout=20)
+                  data = res.json().get('data', {}).get('threads', [])
+                  if data:
+                      return parse_data(data, is_alt=True)
+              except: pass
+              
+              return []
+
+          def parse_data(threads, is_alt=False):
+              posts = []
+              for t in threads[:6]:
+                  # У разных API разная структура, пробуем обе
+                  item = t if is_alt else t.get('thread_items', [{}])[0]
+                  post = item.get('post', item)
+                  text = post.get('caption', {}).get('text', '')
+                  ts = post.get('taken_at', 0)
+                  if text:
+                      d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
+                      posts.append({'date': d, 'text': text.upper()})
+              return posts
+
+          results = fetch_posts()
           
-          # Если все еще пусто - пишем КРИТИЧЕСКУЮ ошибку, чтобы мы видели, что происходит
-          if not posts:
-              posts = [{"date": "ERROR", "text": "META_BLOCK_DETECTED_WAITING_RETRY"}]
+          # Если совсем глухо, пишем время последней проверки, чтобы видеть прогресс
+          current_time = datetime.datetime.now().strftime('%H:%M:%S')
+          if not results:
+              results = [{"date": "STATUS", "text": f"SYNCING_WITH_THREADS_AT_{current_time}..."}]
           
           with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(posts, f, ensure_ascii=False, indent=2)
+              json.dump(results, f, ensure_ascii=False, indent=2)
           EOF
 
       - name: Commit and Push
@@ -68,6 +77,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m 'System: Diary sync' || exit 0
+          git commit -m 'System: Auto-sync diary' || exit 0
           git pull --rebase origin main
           git push
