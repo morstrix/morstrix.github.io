@@ -150,18 +150,17 @@
             margin-top: 4px;
         }
         
-        /* Динамический тег для FORUM */
-        .dynamic-tag {
-            position: absolute;
-            top: -5px;
-            right: -75px;
-            background: #970000;
-            color: #fff;
-            padding: 3px 7px;
-            font-size: 6px;
-            white-space: nowrap;
-            z-index: 5;
-        }
+   .dynamic-tag {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    background: #970000;
+    color: #fff;
+    padding: 2px 0px;
+    font-size: 6px;
+    white-space: nowrap;
+    z-index: 5;
+}
         
         @keyframes coinSpin {
             0% { transform: rotateY(0deg); }
@@ -242,6 +241,8 @@
                 padding: 2px 5px;
             }
         }
+
+        
     </style>
 </head>
 <body>
@@ -251,8 +252,10 @@
     <div class="grid-container">
         
        <!-- РАДИО - просто картинка -->
-<img src="assets/radio.png" alt="Radio" id="radioBtn" style="position: fixed; top: 20px; right: 20px; width: 30px; cursor: pointer; z-index: 1000;">
-
+<!-- РАДИО - в потоке, справа, не фиксированное -->
+<div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+    <img src="assets/radio.png" alt="Radio" id="radioBtn" style="width: 30px; cursor: pointer;">
+</div>
         <!-- ОСНОВНАЯ СЕТКА 2x2 -->
         <div class="main-grid">
             
