@@ -8,78 +8,26 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-    /* Стиль для иконки инсты (оставляем как есть) */
-    .insta-svg {
-        width: 24px;
-        height: 24px;
-        fill: currentColor;
-        display: block;
-        margin: 0 auto 8px;
-    }
+        /* Стиль для новой иконки инсты */
+        .insta-svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            display: block;
+            margin: 0 auto 8px;
+        }
 
-    .social-trigger {
-        text-decoration: none !important;
-        outline: none !important;
-        border: none !important;
-    }
-    
-    /* ИНСТАГРАМ — БЕЗ ФИЛЬТРА, КАК БЫЛА */
-    .social-trigger .float-icon {
-        filter: none !important;
-        -webkit-filter: none !important;
-    }
-    
-    .social-trigger:hover .insta-svg {
-        filter: drop-shadow(0 0 5px #a84d6b);
-    }
-    
-    /* ========== ФИКС ДЛЯ ВСЕХ ОСТАЛЬНЫХ ИКОНОК ========== */
-    /* Превращаем в белый цвет только: tetris, forum, shop, paint, print, tiktok, radio */
-    .float-icon {
-        filter: brightness(0) invert(1);
-        -webkit-filter: brightness(0) invert(1);
-        image-rendering: crisp-edges;
-    }
-    
-    /* Широкие элементы (тетрис, донат) */
-    .float-item.wide .float-icon {
-        filter: brightness(0) invert(1);
-        -webkit-filter: brightness(0) invert(1);
-    }
-    
-    /* Радио-иконка */
-    #radio-icon-img {
-        filter: brightness(0) invert(1);
-        -webkit-filter: brightness(0) invert(1);
-    }
-    
-    /* Эффект при нажатии */
-    .float-item:active .float-icon {
-        filter: brightness(0) invert(1) drop-shadow(0 0 4px #a84d6b);
-        -webkit-filter: brightness(0) invert(1) drop-shadow(0 0 4px #a84d6b);
-    }
-    
-    /* Instagram-иконка при нажатии — без фильтра, только свечение */
-    .social-trigger:active .float-icon {
-        filter: drop-shadow(0 0 4px #a84d6b) !important;
-        -webkit-filter: drop-shadow(0 0 4px #a84d6b) !important;
-    }
-    
-    /* Текст всегда читаемый */
-    .float-label {
-        text-shadow: 0 0 4px #000000;
-        color: #ffffff;
-    }
-    
-    /* Донат-блок */
-    .donate-item .float-label {
-        color: #ffffff;
-    }
-    
-    .sub-label {
-        color: rgba(255, 255, 255, 0.5);
-    }
-</style>
+        /* Убираем лишние рамки и подсвечиваем иконку */
+        .social-trigger {
+            text-decoration: none !important;
+            outline: none !important;
+            border: none !important;
+        }
+        
+        .social-trigger:hover .insta-svg {
+            filter: drop-shadow(0 0 5px #a84d6b);
+        }
+    </style>
 </head>
 <body>
 
