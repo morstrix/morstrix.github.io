@@ -18,63 +18,15 @@
             z-index: 10;
         }
         
-        /* Радио — СПРАВА и БЕЗ ОБВОДКИ */
-        .radio-corner {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 40px;
-        }
-        
-        .radio-corner .radio-status {
-            border: 2px solid #fff;
-            padding: 8px 12px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            width: fit-content;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Убираем обводку полностью */
-        .radio-corner .radio-status:focus,
-        .radio-corner .radio-status:active,
-        .radio-corner .radio-status:focus-visible,
-        #radioBtn:focus,
-        #radioBtn:active,
-        #radioBtn:focus-visible {
-            outline: none !important;
-            box-shadow: none !important;
-            border-color: #fff !important;
-        }
-        
-        .radio-corner .float-icon {
-            width: 25px;
-            height: auto;
-        }
-        
-        .radio-corner .float-label {
-            font-size: 6px;
-        }
-        
-        /* Сетка 2x2 */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px 30px;
-            margin-bottom: 50px;
-        }
-        
-        .double-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px 30px;
-            margin-top: 60px;
-            margin-bottom: 50px;
+        <!-- Spotify плеер альбома - компактный -->
+<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <iframe style="border-radius:12px; width:300px; height:80px;" 
+        src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
+        frameborder="0" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+    </iframe>
+</div>
         }
         
         /* Донаты */
