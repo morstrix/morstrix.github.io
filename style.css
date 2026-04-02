@@ -232,3 +232,35 @@ html, body {
 @media (max-width: 480px) {
     .floating-hub { gap: 40px 10px; padding-top: 80px; }
 }
+
+/* ========== ФИКС: КРЕСТИК НЕ ПЛАВАЕТ НА ВСЕХ СТРАНИЦАХ ========== */
+.back-button {
+    position: static !important;
+    display: inline-flex !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    width: 44px !important;
+    height: 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    margin: 20px 20px 0 0 !important;
+    float: right !important;
+}
+
+.back-button span {
+    color: #fff !important;
+    font-size: 20px !important;
+}
+
+/* Убираем лишние фикс-позиционирования, если были */
+.page-forum .back-button,
+.page-shop .back-button,
+.page-helper .back-button,
+.page-support .back-button,
+.page-a .back-button,
+.page-x .back-button {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+}
