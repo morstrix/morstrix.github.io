@@ -308,17 +308,32 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА MOOD (Pinterest) -->
-    <div id="moodModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeMoodModal">✜</button>
-            <div class="modal-title">BOARD</div>
-            <div class="widget-container">
-                <a data-pin-do="embedBoard" href="https://www.pinterest.com/ada.morsova/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
-                <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
-            </div>
+   <!-- MOOD (Pinterest доска) -->
+<div class="grid-item" id="moodBtn" style="cursor: pointer;">
+    <img src="assets/mood.png" alt="Mood" class="grid-icon">
+    <div>
+        <span class="label-sub">pinterest</span>
+        <span class="label-main">MOOD</span>
+    </div>
+</div>
+
+<!-- Модалка с конкретной доской -->
+<div id="moodModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" id="closeMoodModal">✜</button>
+        <div class="modal-title">MOOD BOARD</div>
+        <div class="widget-container">
+            <!-- Вставь ID доски вместо 'morsovaada/nazvanie-doski' -->
+            <a data-pin-do="embedUser" 
+   href="https://www.pinterest.com/morsovaada/" 
+   data-pin-scale-width="80" 
+   data-pin-scale-height="200" 
+   data-pin-board-width="300">
+</a>
+            <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
         </div>
     </div>
+</div>
 
     <!-- МОДАЛКА DESIGNER -->
     <div id="designerModal" class="modal-overlay">
