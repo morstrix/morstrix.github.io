@@ -1,5 +1,5 @@
 /* ============================================
-   TETRIS.CSS — компактная версия
+   TETRIS.CSS — ПОЛНОСТЬЮ АДАПТИВНЫЙ
 ============================================ */
 
 body {
@@ -7,33 +7,36 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin: 0;
+    padding: 10px;
     overflow: hidden;
-    padding: 20px;
 }
 
 .game-container {
     background: var(--support-bg-game);
-    border: 2px solid var(--support-border-white);
-    padding: 15px;
+    border: 2px solid #b97272;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     width: auto;
-    max-width: 95vw;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 /* Панель статистики */
 .stats-panel {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .stat-card {
     background: var(--support-bg-panel);
     border: 1px solid var(--support-border-dark);
-    padding: 8px 16px;
+    padding: 5px 12px;
     text-align: center;
 }
 
@@ -44,50 +47,43 @@ body {
 }
 
 .stat-value {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--support-text-white);
-    margin-top: 6px;
+    margin-top: 4px;
 }
 
 .right-stats {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 .next-box {
     background: var(--support-bg-panel);
     border: 1px solid var(--support-border-dark);
-    padding: 8px;
+    padding: 5px;
     text-align: center;
 }
 
 #next-piece-canvas {
     background: var(--support-bg-panel);
-    margin-top: 6px;
-    width: 50px;
-    height: 50px;
+    margin-top: 4px;
+    width: 40px;
+    height: 40px;
 }
 
-/* Кнопка паузы */
 .pause-btn {
     background: var(--support-bg-card);
     border: 1px solid var(--support-border-white);
     color: var(--support-text-white);
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    padding: 5px 10px;
+    font-size: 8px;
+    padding: 5px 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-.pause-btn:active {
-    transform: scale(0.95);
-    background: var(--support-text-white);
-    color: #000;
 }
 
 /* Игровое поле */
@@ -98,30 +94,28 @@ body {
 
 #tetris-canvas {
     background: var(--support-bg-panel);
-    border: 2px solid var(--support-border-white);
-    box-shadow: 0 0 0 1px var(--support-border-dark);
-    width: 100%;
-    height: auto;
+    border: 2px solid #b97272;
+    display: block;
+    margin: 0 auto;
 }
 
-/* Кнопки управления — СПЛЮСНУТЫЕ */
+/* Кнопки управления */
 .control-bar {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
 .control-btn {
     background: var(--support-bg-card);
     border: 1px solid var(--support-border-white);
-    width: 55px;
-    height: 42px;
+    width: 50px;
+    height: 38px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.05s linear;
     border-radius: 0;
     outline: none;
 }
@@ -133,26 +127,26 @@ body {
 
 /* Стрелки */
 .arrow-left {
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-    border-right: 14px solid var(--support-text-white);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 12px solid var(--support-text-white);
 }
 
 .arrow-right {
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-    border-left: 14px solid var(--support-text-white);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid var(--support-text-white);
 }
 
 .arrow-down {
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-top: 14px solid var(--support-text-white);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid var(--support-text-white);
 }
 
 .rotate-icon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border: 2px solid var(--support-text-white);
     position: relative;
 }
@@ -160,76 +154,47 @@ body {
 .rotate-icon::after {
     content: '';
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-top: 2px solid var(--support-text-white);
     border-right: 2px solid var(--support-text-white);
-    top: -4px;
-    right: -4px;
+    top: -3px;
+    right: -3px;
 }
 
-/* ========== ПЛАНШЕТЫ (до 900px) ========== */
-@media (max-width: 900px) {
-    .game-container {
-        padding: 12px;
-        gap: 12px;
-    }
-    
+/* ========== ПЛАНШЕТЫ ========== */
+@media (max-width: 800px) {
     .control-btn {
-        width: 50px;
-        height: 38px;
-    }
-    
-    .arrow-left {
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-right: 12px solid var(--support-text-white);
-    }
-    
-    .arrow-right {
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-left: 12px solid var(--support-text-white);
-    }
-    
-    .arrow-down {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 12px solid var(--support-text-white);
-    }
-    
-    .stat-card {
-        padding: 6px 12px;
-    }
-    
-    .stat-value {
-        font-size: 14px;
-    }
-    
-    .pause-btn {
-        font-size: 8px;
-        padding: 4px 8px;
-    }
-}
-
-/* ========== МОБИЛЬНЫЕ (до 550px) ========== */
-@media (max-width: 550px) {
-    body {
-        padding: 10px;
-    }
-    
-    .game-container {
-        padding: 10px;
-        gap: 10px;
-        width: 100%;
-    }
-    
-    .stats-panel {
-        gap: 12px;
+        width: 45px;
+        height: 35px;
     }
     
     .stat-card {
         padding: 4px 10px;
+    }
+    
+    .stat-value {
+        font-size: 12px;
+    }
+}
+
+/* ========== ТЕЛЕФОНЫ ========== */
+@media (max-width: 550px) {
+    body {
+        padding: 5px;
+    }
+    
+    .game-container {
+        padding: 6px;
+        gap: 8px;
+    }
+    
+    .stats-panel {
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 3px 8px;
     }
     
     .stat-label {
@@ -237,73 +202,31 @@ body {
     }
     
     .stat-value {
-        font-size: 12px;
-        margin-top: 4px;
+        font-size: 10px;
+        margin-top: 2px;
     }
     
     .next-box {
-        padding: 5px;
+        padding: 3px;
     }
     
     #next-piece-canvas {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
     }
     
     .pause-btn {
-        font-size: 7px;
+        font-size: 6px;
         padding: 3px 6px;
     }
     
     .control-bar {
-        gap: 10px;
+        gap: 6px;
     }
     
     .control-btn {
-        width: 55px;
-        height: 35px;
-    }
-    
-    .arrow-left {
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-right: 11px solid var(--support-text-white);
-    }
-    
-    .arrow-right {
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-left: 11px solid var(--support-text-white);
-    }
-    
-    .arrow-down {
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-top: 11px solid var(--support-text-white);
-    }
-    
-    .rotate-icon {
-        width: 14px;
-        height: 14px;
-    }
-    
-    .rotate-icon::after {
-        width: 5px;
-        height: 5px;
-        top: -3px;
-        right: -3px;
-    }
-}
-
-/* ========== МАЛЕНЬКИЕ ТЕЛЕФОНЫ (до 380px) ========== */
-@media (max-width: 380px) {
-    .control-btn {
-        width: 48px;
+        width: 40px;
         height: 32px;
-    }
-    
-    .control-bar {
-        gap: 8px;
     }
     
     .arrow-left {
@@ -324,40 +247,67 @@ body {
         border-top: 10px solid var(--support-text-white);
     }
     
+    .rotate-icon {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .rotate-icon::after {
+        width: 4px;
+        height: 4px;
+        top: -2px;
+        right: -2px;
+    }
+}
+
+/* ========== МАЛЕНЬКИЕ ТЕЛЕФОНЫ ========== */
+@media (max-width: 380px) {
+    .control-btn {
+        width: 35px;
+        height: 28px;
+    }
+    
+    .arrow-left {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-right: 8px solid var(--support-text-white);
+    }
+    
+    .arrow-right {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 8px solid var(--support-text-white);
+    }
+    
+    .arrow-down {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 8px solid var(--support-text-white);
+    }
+    
     .stat-card {
-        padding: 3px 8px;
+        padding: 2px 6px;
     }
     
     .stat-value {
-        font-size: 10px;
+        font-size: 9px;
     }
     
     .pause-btn {
-        font-size: 6px;
-        padding: 3px 5px;
+        font-size: 5px;
+        padding: 2px 4px;
     }
 }
-/* ========== ПРИНУДИТЕЛЬНЫЙ ФИКС КРЕСТИКА СПРАВА ========== */
+
+/* Крестик */
+.back-button-wrapper {
+    text-align: right;
+    padding: 10px;
+}
+
 .page-support {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.page-support .back-button {
-    position: relative !important;
-    float: right !important;
-    margin: 20px 20px 0 0 !important;
-    display: inline-flex !important;
-    right: auto !important;
-    left: auto !important;
-}
-
-/* Контейнер для крестика */
-.back-button-wrapper {
-    width: 100%;
-    max-width: 500px;
-    text-align: right;
-    padding: 20px 20px 0 0;
+    justify-content: center;
 }

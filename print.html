@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>JOURNAL | MORSTRIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Крестик справа вверху */
+        .back-button-wrapper {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: inline-flex !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            width: 44px !important;
+            height: 44px !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-image: url('assets/close.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Контейнер */
+        .journal-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Заголовок */
+        .journal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .journal-title {
+            font-size: 1rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+        }
+
+        .journal-sub {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* БЛОК ТВИТТЕРА */
+        .twitter-block {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #b97272;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .twitter-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .twitter-icon {
+            font-size: 20px;
+        }
+
+        .twitter-label {
+            font-size: 8px;
+            color: #a27791;
+        }
+
+        .twitter-post {
+            font-size: 9px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .twitter-date {
+            font-size: 6px;
+            color: #666;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        /* ЛЕНТА СТАТЕЙ */
+        .feed-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #79434a;
+            padding: 20px;
+        }
+
+        .feed-title {
+            font-size: 8px;
+            color: #a27791;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feed-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feed-list li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 2px solid #b97272;
+        }
+
+        .feed-list a {
+            color: #d4a0a0;
+            text-decoration: none;
+            font-size: 7px;
+            line-height: 1.5;
+        }
+
+        .feed-list a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 550px) {
+            body { padding: 10px; }
+            .ticker { font-size: 6px; }
+            .twitter-post { font-size: 7px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- КРЕСТИК -->
+    <div class="back-button-wrapper">
+        <a href="index.html" class="back-button"></a>
+    </div>
+
+    <div class="journal-container">
+        
+        <!-- ЗАГОЛОВОК -->
+        <div class="journal-header">
+            <div class="journal-title">JOURNAL</div>
+            <div class="journal-sub">print / archive / rss feed</div>
+        </div>
+
+        <!-- БЕГУЩАЯ СТРОКА (RSS заголовки) -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="ticker">
+                <span>LOADING FEEDS...</span>
+            </div>
+        </div>
+
+        <!-- БЛОК ТВИТТЕРА (последний пост) -->
+        <div class="twitter-block" id="twitterBlock">
+            <div class="twitter-header">
+                <span class="twitter-icon">🐦</span>
+                <span class="twitter-label">LAST POST / TWITTER (X)</span>
+            </div>
+            <div class="twitter-post" id="twitterPost">
+                Loading last tweet...
+            </div>
+            <div class="twitter-date" id="twitterDate"></div>
+        </div>
+
+        <!-- ЛЕНТА СТАТЕЙ (RSS) -->
+        <div class="feed-block">
+            <div class="feed-title">✦ RSS FEEDS / ART JOURNALS ✦</div>
+            <ul class="feed-list" id="feedList">
+                <li>Loading articles...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="background.js"></script>
+    
+    <script>
+        // ========== ТВИТТЕР (заглушка — потом подключишь API) ==========
+        function loadLastTweet() {
+            // ВРЕМЕННАЯ ЗАГЛУШКА
+            // ПОТОМ ЗАМЕНИШЬ НА РЕАЛЬНЫЙ API ТВИТТЕРА
+            const tweetContainer = document.getElementById('twitterPost');
+            const dateContainer = document.getElementById('twitterDate');
+            
+            // Пример последнего поста (заменишь на реальный)
+            tweetContainer.innerHTML = `"The archive is never neutral. Every saved image is a political act. Digital preservation as resistance."`;
+            dateContainer.innerHTML = `posted: 2025-04-02 / 14:32`;
+        }
+        
+        // ========== RSS ЛЕНТА (заглушка — потом настроишь CORS proxy) ==========
+        async function loadRSSFeeds() {
+            const feedList = document.getElementById('feedList');
+            
+            // ВРЕМЕННАЯ ЗАГЛУШКА
+            // ПОТОМ ЗАМЕНИШЬ НА РЕАЛЬНЫЕ RSS С ПРОКСИ
+            const demoArticles = [
+                { title: "The Return of Glitch Aesthetics", link: "#" },
+                { title: "Why Print Still Matters in Digital Age", link: "#" },
+                { title: "Archiving the Internet: A Manifesto", link: "#" },
+                { title: "Pixel Art as Resistance", link: "#" },
+                { title: "Y2K Revival and the New Nostalgia", link: "#" }
+            ];
+            
+            feedList.innerHTML = demoArticles.map(article => 
+                `<li><a href="${article.link}" target="_blank">${article.title}</a></li>`
+            ).join('');
+        }
+        
+        // ========== ЗАПУСК ==========
+        initTicker();
+        loadLastTweet();
+        loadRSSFeeds();
+    </script>
+</body>
+</html>

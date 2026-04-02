@@ -139,8 +139,8 @@
         
         .modal-content {
             width: 90%;
-            max-width: 400px;
-            max-height: 80vh;
+            max-width: 500px;
+            max-height: 85vh;
             background: #000;
             border: 2px solid #fff;
             position: relative;
@@ -174,6 +174,94 @@
         .insta-widget {
             margin: 20px 0;
         }
+        
+        /* ========== СТИЛИ ДЛЯ JOURNAL ПОПАПА ========== */
+        .ticker-wrapper {
+            background: #0a0a0a;
+            border: 1px solid #a27791;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .ticker {
+            display: inline-block;
+            animation: tickerScroll 25s linear infinite;
+            font-size: 7px;
+            color: #d4a0a0;
+        }
+        
+        .ticker span {
+            margin-right: 30px;
+        }
+        
+        .ticker span::before {
+            content: "✦ ";
+            color: #b97272;
+        }
+        
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .twitter-block {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #b97272;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .twitter-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+        
+        .twitter-icon { font-size: 16px; }
+        .twitter-label { font-size: 7px; color: #a27791; }
+        .twitter-post { font-size: 8px; line-height: 1.5; color: #ccc; }
+        .twitter-date { font-size: 5px; color: #666; margin-top: 8px; text-align: right; }
+        
+        .feed-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #79434a;
+            padding: 15px;
+        }
+        
+        .feed-title {
+            font-size: 7px;
+            color: #a27791;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .feed-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feed-list li {
+            margin-bottom: 10px;
+            padding-left: 12px;
+            border-left: 2px solid #b97272;
+        }
+        
+        .feed-list a {
+            color: #d4a0a0;
+            text-decoration: none;
+            font-size: 6px;
+            line-height: 1.4;
+        }
+        
+        .feed-list a:hover {
+            color: #fff;
+        }
 
         @media (max-width: 550px) {
             .main-grid, .double-grid {
@@ -193,6 +281,13 @@
                 top: -16px;
                 padding: 2px 4px;
             }
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+            .ticker { font-size: 5px; }
+            .twitter-post { font-size: 7px; }
+            .feed-list a { font-size: 5px; }
         }
     </style>
 </head>
@@ -215,14 +310,14 @@
         <!-- ОСНОВНАЯ СЕТКА 2x2 -->
         <div class="main-grid">
             
-            <!-- PRINT -->
-            <a href="x.html" class="grid-item">
-                <img src="assets/print.png" alt="Print" class="grid-icon">
+            <!-- JOURNAL (попап) -->
+            <div class="grid-item" id="journalBtn" style="cursor: pointer;">
+                <img src="assets/print.png" alt="Journal" class="grid-icon">
                 <div>
                     <span class="label-sub">PRINT</span>
                     <span class="label-main">JOURNAL</span>
                 </div>
-            </a>
+            </div>
 
             <!-- STORE / DIY GEAR -->
             <a href="shop.html" class="grid-item">
@@ -308,6 +403,32 @@
         </div>
     </div>
 
+    <!-- МОДАЛКА JOURNAL -->
+    <div id="journalModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeJournalModal">✜</button>
+            <div class="modal-title">JOURNAL / PRINT</div>
+            
+            <!-- БЛОК ТВИТТЕРА -->
+            <div class="twitter-block">
+                <div class="twitter-header">
+                    <span class="twitter-icon">🐦</span>
+                    <span class="twitter-label">LAST POST / X</span>
+                </div>
+                <div class="twitter-post" id="journalTwitterPost">if you **** never do this..</div>
+                <div class="twitter-date" id="journalTwitterDate"></div>
+            </div>
+            
+            <!-- ЛЕНТА СТАТЕЙ -->
+            <div class="feed-block">
+                <div class="feed-title">RSS FEEDS / ART JOURNALS</div>
+                <ul class="feed-list" id="journalFeedList">
+                    <li>• what about the future?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!-- МОДАЛКА MOOD (Pinterest) -->
     <div id="moodModal" class="modal-overlay">
         <div class="modal-content">
@@ -368,20 +489,74 @@
         };
 
         // МОДАЛКИ
+        const journalModal = document.getElementById('journalModal');
         const moodModal = document.getElementById('moodModal');
         const designerModal = document.getElementById('designerModal');
         const developerModal = document.getElementById('developerModal');
         
+        document.getElementById('journalBtn').onclick = () => journalModal.classList.add('active');
+        document.getElementById('closeJournalModal').onclick = () => journalModal.classList.remove('active');
+        
         document.getElementById('moodBtn').onclick = () => moodModal.classList.add('active');
         document.getElementById('closeMoodModal').onclick = () => moodModal.classList.remove('active');
+        
         document.getElementById('designerBtn').onclick = () => designerModal.classList.add('active');
         document.getElementById('closeDesignerModal').onclick = () => designerModal.classList.remove('active');
+        
         document.getElementById('developerBtn').onclick = () => developerModal.classList.add('active');
         document.getElementById('closeDeveloperModal').onclick = () => developerModal.classList.remove('active');
         
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
+        
+        // ========== JOURNAL КОНТЕНТ ==========
+        
+        // Бегущая строка
+        const journalFeeds = [
+            "Artforum — The New Digital Aesthetic",
+            "e-flux — Notes on Algorithmic Culture",
+            "Rhizome — Net Art Anthology 2024",
+            "Contemporary Art Daily — Berlin Roundup",
+            "Hyperallergic — The Future of Print Media",
+            "Frieze — Post-Internet Art Review"
+        ];
+        
+        function initJournalTicker() {
+            const ticker = document.getElementById('journalTicker');
+            let content = '';
+            for (let i = 0; i < 3; i++) {
+                journalFeeds.forEach(feed => {
+                    content += `<span>${feed}</span>`;
+                });
+            }
+            ticker.innerHTML = content;
+        }
+        
+        // Твиттер (заглушка)
+        function loadJournalTweet() {
+            document.getElementById('journalTwitterPost').innerHTML = `"The archive is never neutral. Every saved image is a political act. Digital preservation as resistance."`;
+            document.getElementById('journalTwitterDate').innerHTML = `posted: 2025-04-02 / 14:32`;
+        }
+        
+        // RSS лента (заглушка)
+        function loadJournalRSS() {
+            const feedList = document.getElementById('journalFeedList');
+            const articles = [
+                { title: "The Return of Glitch Aesthetics", link: "#" },
+                { title: "Why Print Still Matters in Digital Age", link: "#" },
+                { title: "Archiving the Internet: A Manifesto", link: "#" },
+                { title: "Pixel Art as Resistance", link: "#" },
+                { title: "Y2K Revival and the New Nostalgia", link: "#" }
+            ];
+            feedList.innerHTML = articles.map(article => 
+                `<li><a href="${article.link}" target="_blank">${article.title}</a></li>`
+            ).join('');
+        }
+        
+        initJournalTicker();
+        loadJournalTweet();
+        loadJournalRSS();
         
         // THREADS
         async function loadThreads() {
@@ -430,4 +605,4 @@
         });
     </script>
 </body>
-</html>
+</html>1

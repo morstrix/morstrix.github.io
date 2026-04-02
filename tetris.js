@@ -46,15 +46,26 @@ function init() {
 }
 
 function calcCanvasSize() {
-    const area = document.querySelector('.game-area');
-    if (!area) return;
-    const maxW = area.clientWidth - 20;
-    const maxH = Math.min(window.innerHeight * 0.7, 650);
-    const blockW = Math.floor(maxW / COLS);
-    const blockH = Math.floor(maxH / ROWS);
-    BLOCK_SIZE = Math.min(blockW, blockH, 38);
+    // Получаем доступную ширину и высоту экрана
+    const maxWidth = window.innerWidth - 40;  // отступы по бокам
+    const maxHeight = window.innerHeight - 200; // отступ под крестик и кнопки
+    
+    // Рассчитываем размер блока
+    let blockW = Math.floor(maxWidth / COLS);
+    let blockH = Math.floor(maxHeight / ROWS);
+    
+    // Блок не больше 24px на телефонах
+    let maxBlockSize = 24;
+    if (window.innerWidth > 700) maxBlockSize = 32;
+    
+    BLOCK_SIZE = Math.min(blockW, blockH, maxBlockSize);
+    
+    // Минимальный размер блока
+    if (BLOCK_SIZE < 10) BLOCK_SIZE = 10;
+    
     canvas.width = COLS * BLOCK_SIZE;
     canvas.height = ROWS * BLOCK_SIZE;
+    
     draw();
 }
 

@@ -11,8 +11,8 @@
 </head>
 <body class="page-helper">
 
-<!-- Крестик справа вверху -->
-<div class="back-button-wrapper">
+<!-- КРЕСТИК КАК НА ФОРУМЕ (справа вверху) -->
+<div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
     <a href="index.html" class="back-button">
         <img src="assets/close.png" alt="Back" style="width: 30px; height: 30px;">
     </a>
@@ -22,7 +22,7 @@
     <div class="paint-history">
         <button class="btn-retro" id="pUndo" disabled> &lt; </button>
         <button class="btn-retro" id="pRedo" disabled style="margin-left:5px;"> &gt; </button>
-        <button class="btn-retro" id="btnLayersOpen" style="margin-left:20px;">LAYERS</button>
+        <button class="btn-retro" id="btnLayersOpen" style="margin-left:20px;">[ LAYERS ]</button>
     </div>
     <div class="canvas-area">
         <canvas id="layer1"></canvas>
@@ -30,7 +30,7 @@
     </div>
     <div class="paint-controls">
         <input type="color" id="pColor" value="#ffffff">
-        <button class="btn-retro" id="pClear">CLEAR</button>
+        <button class="btn-retro" id="pClear">CLEAR ACTIVE</button>
     </div>
 </div>
 
