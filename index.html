@@ -150,16 +150,19 @@
             margin-top: 4px;
         }
         
-   .dynamic-tag {
+/* Динамический тег для FORUM - по центру над иконкой */
+.dynamic-tag {
     position: absolute;
-    top: -15px;
-    right: 0;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #970000;
     color: #fff;
-    padding: 2px 0px;
+    padding: 2px 5px;
     font-size: 6px;
     white-space: nowrap;
     z-index: 5;
+}
 }
         
         @keyframes coinSpin {
@@ -219,27 +222,6 @@
         
         .insta-widget {
             margin: 20px 0;
-        }
-        
-        @media (max-width: 550px) {
-            .main-grid, .double-grid {
-                gap: 30px 20px;
-            }
-            .grid-icon {
-                width: 45px;
-            }
-            .label-main {
-                font-size: 7px;
-            }
-            .label-sub {
-                font-size: 5px;
-            }
-            .dynamic-tag {
-                font-size: 5px;
-                top: -5px;
-                right: -60px;
-                padding: 2px 5px;
-            }
         }
 
         
