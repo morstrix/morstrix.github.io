@@ -159,22 +159,86 @@ html, body {
     margin-bottom: 10px;
 }
 
-/* Донаты */
-.donate-item {
+/* Донаты — только полосочки, без кнопки */
+.donate-center {
+    display: flex;
+    justify-content: center;
     margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(151, 0, 0, 0.6);
-}
-.sub-label {
-    font-size: 6px;
-    color: rgba(255, 255, 255, 0.4);
-    margin-top: 8px;
 }
 
-@keyframes scanMove {
-    0% { top: 0; opacity: 0; }
-    50% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+.donate-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.donate-top-line {
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #8B3A3A 20%,
+        #C46A4A 50%,
+        #8B3A3A 80%,
+        transparent 100%
+    );
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+/* Скайфай-луч */
+.donate-top-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(255, 180, 100, 0.7),
+        transparent
+    );
+    animation: skifLight 3s ease-in-out infinite;
+}
+
+@keyframes skifLight {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.donate-bottom-line {
+    width: 200px;
+    height: 1px;
+    background: #4a2a2a;
+    margin-top: 12px;
+}
+
+.donate-text {
+    text-align: center;
+}
+
+.donate-label {
+    font-size: 8px;
+    color: #d4a0a0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.donate-sub {
+    display: block;
+    font-size: 6px;
+    color: #8a6a6a;
+    margin-top: 6px;
+    letter-spacing: 1px;
+}
+
+/* При нажатии — эффект */
+.donate-wrapper:active .donate-top-line {
+    opacity: 0.5;
 }
 
 /* Заменяем символ ✜ на PNG */
