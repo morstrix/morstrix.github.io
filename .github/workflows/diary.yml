@@ -13,56 +13,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install requests
-        run: pip install requests
-
-      - name: Fetch Threads Data
+      - name: Update diary.json
         run: |
-          python3 - << 'EOF'
-          import requests, json, datetime, re
-          
-          def fetch_from_rss():
-              # Пробуем через RSS-прокси Telegram (если есть канал)
-              try:
-                  rss_url = 'https://api.rss2json.com/v1/api.json?rss_url=https://t.me/s/morstrix'
-                  resp = requests.get(rss_url, timeout=15)
-                  data = resp.json()
-                  posts = []
-                  for item in data.get('items', [])[:6]:
-                      text = re.sub(r'<[^>]+>', '', item.get('description', ''))
-                      date = datetime.datetime.strptime(item.get('pubDate', ''), '%a, %d %b %Y %H:%M:%S %z')
-                      posts.append({
-                          'date': date.strftime('%d.%m.%Y %H:%M'),
-                          'text': text[:200].upper()
-                      })
-                  return posts
-              except Exception as e:
-                  print(f"RSS error: {e}")
-                  return []
-          
-          def fetch_fallback():
-              # Если ничего нет — показываем статус
-              current_time = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-              return [{"date": "STATUS", "text": f"LAST_SYNC: {current_time}"}]
-          
-          posts = fetch_from_rss()
-          if not posts:
-              posts = fetch_fallback()
-          
-          with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(posts, f, ensure_ascii=False, indent=2)
-          EOF
+          echo '[
+            {
+              "date": "'$(date '+%d.%m.%Y %H:%M:%S')'",
+              "text": "SYNC_OK"
+            }
+          ]' > diary.json
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m "System: Auto-sync diary $(date '+%Y-%m-%d %H:%M')" || exit 0
-          git pull --rebase origin main
+          git commit -m "Auto-sync $(date '+%Y-%m-%d %H:%M')" || exit 0
           git push
