@@ -214,3 +214,91 @@ body {
     .cat-card { padding: 10px; }
     .cat-name { font-size: 0.55rem; }
 }
+
+/* ========== КНОПКА ОФОРМИТЬ - ПРИНУДИТЕЛЬНО ========== */
+
+button.checkout-btn,
+.checkout-btn,
+#checkoutBtn,
+.checkout-btn:link,
+.checkout-btn:visited {
+    background: #a27791 !important;
+    border: 2px solid #b97272 !important;
+    color: #79434a !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    padding: 12px 20px !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    position: relative !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Черная линия слева */
+button.checkout-btn::before,
+.checkout-btn::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 2px !important;
+    top: 2px !important;
+    bottom: 2px !important;
+    width: 2px !important;
+    background: #010101 !important;
+    display: block !important;
+}
+
+/* Черная линия сверху */
+button.checkout-btn::after,
+.checkout-btn::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    right: 2px !important;
+    height: 2px !important;
+    background: #010101 !important;
+    display: block !important;
+}
+
+/* КНОПКА ПАКЕТ */
+button.cart-bottom-btn,
+.cart-bottom-btn {
+    background: #a27791 !important;
+    border: 2px solid #b97272 !important;
+    color: #79434a !important;
+    position: relative !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 0.65rem !important;
+    padding: 10px 20px !important;
+}
+
+button.cart-bottom-btn::before,
+.cart-bottom-btn::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 2px !important;
+    top: 2px !important;
+    bottom: 2px !important;
+    width: 2px !important;
+    background: #010101 !important;
+    display: block !important;
+}
+
+button.cart-bottom-btn::after,
+.cart-bottom-btn::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    right: 2px !important;
+    height: 2px !important;
+    background: #010101 !important;
+    display: block !important;
+}
+
+/* Счетчик корзины */
+.cart-bottom-count {
+    background: #79434a !important;
+    color: #a27791 !important;
+}

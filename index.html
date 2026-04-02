@@ -18,7 +18,7 @@
             z-index: 10;
         }
         
-        /* Радио */
+        /* Радио — СПРАВА и БЕЗ ОБВОДКИ */
         .radio-corner {
             display: flex;
             justify-content: flex-end;
@@ -36,6 +36,20 @@
             align-items: center;
             gap: 5px;
             width: fit-content;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Убираем обводку полностью */
+        .radio-corner .radio-status:focus,
+        .radio-corner .radio-status:active,
+        .radio-corner .radio-status:focus-visible,
+        #radioBtn:focus,
+        #radioBtn:active,
+        #radioBtn:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+            border-color: #fff !important;
         }
         
         .radio-corner .float-icon {
@@ -149,6 +163,11 @@
             z-index: 5;
         }
         
+        @keyframes coinSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
         /* Модальные окна */
         .modal-overlay {
             display: none;
@@ -231,13 +250,8 @@
 
     <div class="grid-container">
         
-        <!-- РАДИО -->
-        <div class="radio-corner">
-            <div id="radioBtn" class="radio-status">
-                <img src="assets/radio.png" alt="Radio" id="radio-icon-img" class="float-icon">
-                <span class="float-label" id="p-label">RADIO OFF</span>
-            </div>
-        </div>
+       <!-- РАДИО - просто картинка -->
+<img src="assets/radio.png" alt="Radio" id="radioBtn" style="position: fixed; top: 20px; right: 20px; width: 30px; cursor: pointer; z-index: 1000;">
 
         <!-- ОСНОВНАЯ СЕТКА 2x2 -->
         <div class="main-grid">
@@ -261,8 +275,7 @@
                 </div>
                 <img src="assets/shop.png" alt="Store" class="grid-icon">
                 <div>
-                    <span class="label-main">STORE</span>
-                    <span class="label-sub">DIY GEAR</span>
+                    <span class="label-main">DIY GEAR</span>
                 </div>
             </a>
 
@@ -271,7 +284,7 @@
                 <img src="assets/paint.png" alt="Paint" class="grid-icon">
                 <div>
                     <span class="label-main">PAINT</span>
-                    <span class="label-sub">GALERY</span>
+                    <span class="label-sub">galllery</span>
                 </div>
             </a>
 
@@ -298,7 +311,7 @@
                 <img src="assets/forum.png" alt="Forum" class="grid-icon">
                 <div>
                     <span class="label-main">FORUM</span>
-                    <span class="label-sub">HELP/ARCHIVE</span>
+                    <span class="label-sub">help</span>
                 </div>
             </a>
         </div>
@@ -328,8 +341,8 @@
             <div class="donate-wrapper" id="donateWrapper">
                 <div class="donate-top-line"></div>
                 <div class="donate-text">
-                    <span class="donate-label">ПІДТРИМАТИ ПРОЄКТ</span>
-                    <span class="donate-sub">MONOBANK.EXE</span>
+                    <span class="donate-label">DONATE</span>
+                    <span class="donate-sub">monobank</span>
                 </div>
                 <div class="donate-bottom-line"></div>
             </div>
