@@ -1,7 +1,7 @@
 name: Update Diary Posts
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -24,52 +24,38 @@ jobs:
       - name: Fetch Threads Data
         run: |
           python3 - << 'EOF'
-          import requests, json, datetime, time
-
-          def fetch_posts():
-              user = 'grimexframe'
-              # Попытка №1: Основной API
-              try:
-                  url = f'https://threads-api.vercel.app/api/profile?username={user}'
-                  res = requests.get(url, timeout=20)
-                  data = res.json().get('threads', [])
-                  if data:
-                      return parse_data(data)
-              except: pass
-
-              # Попытка №2: Резервный API
-              try:
-                  url = f'https://threads-photofeed.vercel.app/api/feed?username={user}'
-                  res = requests.get(url, timeout=20)
-                  data = res.json().get('data', {}).get('threads', [])
-                  if data:
-                      return parse_data(data, is_alt=True)
-              except: pass
-              
-              return []
-
-          def parse_data(threads, is_alt=False):
-              posts = []
-              for t in threads[:6]:
-                  # У разных API разная структура, пробуем обе
-                  item = t if is_alt else t.get('thread_items', [{}])[0]
-                  post = item.get('post', item)
-                  text = post.get('caption', {}).get('text', '')
-                  ts = post.get('taken_at', 0)
-                  if text:
-                      d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
-                      posts.append({'date': d, 'text': text.upper()})
-              return posts
-
-          results = fetch_posts()
+          import requests, json, datetime, re
           
-          # Если совсем глухо, пишем время последней проверки, чтобы видеть прогресс
-          current_time = datetime.datetime.now().strftime('%H:%M:%S')
-          if not results:
-              results = [{"date": "STATUS", "text": f"SYNCING_WITH_THREADS_AT_{current_time}..."}]
+          def fetch_from_rss():
+              # Пробуем через RSS-прокси Telegram (если есть канал)
+              try:
+                  rss_url = 'https://api.rss2json.com/v1/api.json?rss_url=https://t.me/s/morstrix'
+                  resp = requests.get(rss_url, timeout=15)
+                  data = resp.json()
+                  posts = []
+                  for item in data.get('items', [])[:6]:
+                      text = re.sub(r'<[^>]+>', '', item.get('description', ''))
+                      date = datetime.datetime.strptime(item.get('pubDate', ''), '%a, %d %b %Y %H:%M:%S %z')
+                      posts.append({
+                          'date': date.strftime('%d.%m.%Y %H:%M'),
+                          'text': text[:200].upper()
+                      })
+                  return posts
+              except Exception as e:
+                  print(f"RSS error: {e}")
+                  return []
+          
+          def fetch_fallback():
+              # Если ничего нет — показываем статус
+              current_time = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+              return [{"date": "STATUS", "text": f"LAST_SYNC: {current_time}"}]
+          
+          posts = fetch_from_rss()
+          if not posts:
+              posts = fetch_fallback()
           
           with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(results, f, ensure_ascii=False, indent=2)
+              json.dump(posts, f, ensure_ascii=False, indent=2)
           EOF
 
       - name: Commit and Push
@@ -77,6 +63,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m 'System: Auto-sync diary' || exit 0
+          git commit -m "System: Auto-sync diary $(date '+%Y-%m-%d %H:%M')" || exit 0
           git pull --rebase origin main
           git push
