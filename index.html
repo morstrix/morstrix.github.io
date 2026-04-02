@@ -395,21 +395,31 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА DEVELOPER -->
-    <div id="developerModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 500px;">
-            <button class="modal-close" id="closeDeveloperModal">✜</button>
-            <div class="modal-title">DEVELOPER</div>
- </div>
-                <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
-                <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">Loading threads...</div>
-            </div>
-            <div class="widget-container">
-                <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM</h4>
-                <div class="insta-widget">
-                    <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+  <!-- МОДАЛКА DEVELOPER -->
+<div id="developerModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+        <button class="modal-close" id="closeDeveloperModal">✜</button>
+        <div class="modal-title">DEVELOPER</div>
+        
+        <!-- Сначала THREADS / RSS -->
+        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
+        <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">Loading threads...</div>
+        
+        <!-- Потом INSTAGRAM -->
+        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">INSTAGRAM</h4>
+        <div class="insta-widget">
+            <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+        </div>
+        
+        <!-- Внизу TIKTOK -->
+        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">TIKTOK</h4>
+        <div style="margin-bottom: 20px;">
+            <a href="https://tiktok.com/@grimexframe" target="_blank" style="color: #fff; text-decoration: none; font-size: 8px; border: 1px solid #fff; padding: 8px 16px; display: inline-block;">
+                @grimexframe
+            </a>
         </div>
     </div>
+</div>
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
