@@ -70,32 +70,24 @@
             margin-top: 20px;
         }
         
-        .donate-item {
-            background: #2a1a1a;
-            border: 1px solid #5a3a3a;
-            padding: 15px 30px;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: all 0.2s;
-        }
-        
-        .donate-item:active {
-            transform: scale(0.95);
-            background: #3a2525;
+        .donate-wrapper {
+            cursor: pointer;
+            text-align: center;
         }
         
         .donate-label {
-            font-size: 9px;
+            font-size: 8px;
             color: #d4a0a0;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
         
         .donate-sub {
+            display: block;
             font-size: 6px;
             color: #8a6a6a;
-            margin-top: 8px;
+            margin-top: 6px;
+            letter-spacing: 1px;
         }
         
         /* Кнопки */
@@ -142,6 +134,33 @@
             color: #888;
             text-transform: none;
             margin-top: 4px;
+        }
+        
+        /* Динамический тег для FORUM */
+        .dynamic-tag {
+            position: absolute;
+            top: -5px;
+            right: -75px;
+            background: #970000;
+            color: #fff;
+            padding: 3px 7px;
+            font-size: 6px;
+            white-space: nowrap;
+            z-index: 5;
+        }
+        
+        /* Вращающаяся купюра */
+        .money-wrap {
+            position: absolute;
+            top: -18px;
+            right: -10px;
+            z-index: 5;
+        }
+        
+        .money-rotating {
+            width: 22px;
+            color: #4ade80;
+            animation: coinSpin 3s linear infinite;
         }
         
         @keyframes coinSpin {
@@ -218,15 +237,9 @@
             }
             .dynamic-tag {
                 font-size: 5px;
-                top: -20px;
+                top: -5px;
+                right: -60px;
                 padding: 2px 5px;
-            }
-            .money-wrap {
-                top: -15px;
-                right: -8px;
-            }
-            .money-rotating {
-                width: 18px;
             }
         }
     </style>
@@ -259,11 +272,16 @@
 
             <!-- STORE / DIY GEAR -->
             <a href="shop.html" class="grid-item">
+                <div class="money-wrap">
+                    <svg class="money-rotating" viewBox="0 0 32 20">
+                        <rect x="1" y="1" width="30" height="18" rx="1" stroke="#4ade80" stroke-width="2" fill="none"/>
+                        <circle cx="16" cy="10" r="4" stroke="#4ade80" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
                 <img src="assets/shop.png" alt="Store" class="grid-icon">
                 <div>
                     <span class="label-main">STORE</span>
-                                        <span class="label-sub">DIY GEAR</span>
-
+                    <span class="label-sub">DIY GEAR</span>
                 </div>
             </a>
 
@@ -288,7 +306,7 @@
             <div class="grid-item" id="moodBtn" style="cursor: pointer;">
                 <img src="assets/mood.png" alt="Mood" class="grid-icon">
                 <div>
-                                        <span class="label-sub">pinterest</span>
+                    <span class="label-sub">pinterest</span>
                     <span class="label-main">MOOD</span>
                 </div>
             </div>
@@ -325,16 +343,17 @@
         </div>
 
         <!-- ДОНАТЫ -->
-<div class="donate-center">
-    <div class="donate-wrapper">
-        <div class="donate-top-line"></div>
-        <div class="donate-text">
-            <span class="donate-label">ПІДТРИМАТИ ПРОЄКТ</span>
-            <span class="donate-sub">MONOBANK.EXE</span>
+        <div class="donate-center">
+            <div class="donate-wrapper" id="donateWrapper">
+                <div class="donate-top-line"></div>
+                <div class="donate-text">
+                    <span class="donate-label">ПІДТРИМАТИ ПРОЄКТ</span>
+                    <span class="donate-sub">MONOBANK.EXE</span>
+                </div>
+                <div class="donate-bottom-line"></div>
+            </div>
         </div>
-        <div class="donate-bottom-line"></div>
     </div>
-</div>
 
     <!-- МОДАЛКА MOOD (Pinterest) -->
     <div id="moodModal" class="modal-overlay">
@@ -364,31 +383,28 @@
         </div>
     </div>
 
-  <!-- МОДАЛКА DEVELOPER -->
-<div id="developerModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 500px;">
-        <button class="modal-close" id="closeDeveloperModal">✜</button>
-        <div class="modal-title">DEVELOPER</div>
-        
-        <!-- Сначала THREADS / RSS -->
-        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
-        <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">Loading threads...</div>
-        
-        <!-- Потом INSTAGRAM -->
-        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">INSTAGRAM</h4>
-        <div class="insta-widget">
-            <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
-        </div>
-        
-        <!-- Внизу TIKTOK -->
-        <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">TIKTOK</h4>
-        <div style="margin-bottom: 20px;">
-            <a href="https://tiktok.com/@grimexframe" target="_blank" style="color: #fff; text-decoration: none; font-size: 8px; border: 1px solid #fff; padding: 8px 16px; display: inline-block;">
-                @grimexframe
-            </a>
+    <!-- МОДАЛКА DEVELOPER -->
+    <div id="developerModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" id="closeDeveloperModal">✜</button>
+            <div class="modal-title">DEVELOPER</div>
+            
+            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
+            <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">Loading threads...</div>
+            
+            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">INSTAGRAM</h4>
+            <div class="insta-widget">
+                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+            </div>
+            
+            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">TIKTOK</h4>
+            <div style="margin-bottom: 20px;">
+                <a href="https://tiktok.com/@grimexframe" target="_blank" style="color: #fff; text-decoration: none; font-size: 8px; border: 1px solid #fff; padding: 8px 16px; display: inline-block;">
+                    @grimexframe
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
@@ -402,6 +418,11 @@
                 document.getElementById('p-label').innerText = isPlaying ? "RADIO ON" : "RADIO OFF";
             };
         }
+
+        // ДОНАТЫ - ссылка
+        document.getElementById('donateWrapper').onclick = () => {
+            window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
+        };
 
         // МОДАЛКИ
         const moodModal = document.getElementById('moodModal');
