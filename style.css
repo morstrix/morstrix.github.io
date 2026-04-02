@@ -177,22 +177,19 @@ html, body {
     100% { top: 100%; opacity: 0; }
 }
 
-/* --- КРЕСТИК НАЗАД (ДЛЯ ДРУГИХ СТРАНИЦ) --- */
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px; /* Всегда справа */
-    width: 44px;
-    height: 44px;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    text-decoration: none;
-    backdrop-filter: blur(4px);
+/* Заменяем символ ✜ на PNG */
+.back-button span {
+    display: none;
 }
-.back-button span { color: #fff; font-size: 20px; }
+
+.back-button {
+    background-image: url('assets/close.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 44px !important;
+    height: 44px !important;
+}
 
 /* --- МОДАЛКА --- */
 .modal-overlay {
@@ -263,4 +260,19 @@ html, body {
     top: auto !important;
     right: auto !important;
     left: auto !important;
+}
+
+.grid-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.label-main {
+    font-size: 8px;
+    color: #fff;
+}
+.label-sub {
+    font-size: 6px;
+    color: #888;
+    text-transform: none;
 }
