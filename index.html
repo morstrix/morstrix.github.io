@@ -8,127 +8,408 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-    .insta-svg {
-        width: 24px;
-        height: 24px;
-        fill: currentColor;
-        display: block;
-        margin: 0 auto 8px;
-    }
-
-    .social-trigger {
-        text-decoration: none !important;
-        outline: none !important;
-        border: none !important;
-    }
-    
-    /* ========== ИНВЕРСИЯ ВСЕХ ИКОНОК, КРОМЕ INSTAGRAM ========== */
-    .float-icon {
-        filter: invert(1);
-        -webkit-filter: invert(1);
-    }
-    
-    /* Instagram НЕ ТРОГАЕМ */
-    .social-trigger .float-icon {
-        filter: none !important;
-        -webkit-filter: none !important;
-    }
-    
-    /* Радио-иконка */
-    #radio-icon-img {
-        filter: invert(1);
-        -webkit-filter: invert(1);
-    }
-    
-    .social-trigger:hover .insta-svg {
-        filter: drop-shadow(0 0 5px #a84d6b);
-    }
-</style>
+        /* ========== НОВАЯ РАССТАНОВКА ========== */
+        
+        /* Радио в правом верхнем углу */
+        .radio-corner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .radio-corner .radio-status {
+            border: 2px solid #fff;
+            padding: 10px 15px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .radio-corner .float-icon {
+            width: 30px;
+            height: auto;
+        }
+        
+        .radio-corner .float-label {
+            font-size: 7px;
+        }
+        
+        /* Сетка-отступ от радио */
+        .grid-container {
+            padding: 100px 20px 60px;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Основная сетка 2x2 */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Вторая секция (designer & developer) */
+        .double-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 30px;
+            margin-bottom: 50px;
+            margin-top: 30px;
+        }
+        
+        /* Донаты по центру */
+        .donate-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        /* Общие стили кнопок */
+        .grid-item {
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        .grid-item:active {
+            transform: scale(0.9);
+        }
+        
+        .grid-icon {
+            width: 55px;
+            height: auto;
+            image-rendering: pixelated;
+            margin-bottom: 12px;
+        }
+        
+        .grid-label {
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 4px #000;
+        }
+        
+        /* Модальные окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            background: #000;
+            border: 2px solid #fff;
+            position: relative;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+        }
+        
+        .modal-title {
+            font-size: 10px;
+            color: #a84d6b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Стили для виджетов внутри попапов */
+        .widget-container {
+            margin: 15px 0;
+        }
+        
+        .widget-container iframe,
+        .widget-container behold-widget {
+            width: 100%;
+            min-height: 300px;
+        }
+        
+        /* Инста виджет */
+        .insta-widget {
+            margin: 20px 0;
+        }
+        
+        /* Behance виджет */
+        .behance-widget {
+            margin: 20px 0;
+        }
+        
+        /* TikTok иконка */
+        .icon-big {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        /* Инвертированные иконки (кроме instagram) */
+        .grid-icon {
+            filter: invert(1);
+        }
+        
+        .social-trigger .grid-icon {
+            filter: none;
+        }
+        
+        @media (max-width: 480px) {
+            .main-grid, .double-grid {
+                gap: 30px 20px;
+            }
+            .grid-icon {
+                width: 45px;
+            }
+            .grid-label {
+                font-size: 7px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <canvas id="neuro-bg"></canvas>
 
-    <main class="floating-hub">
-        
-        <a href="support.html" class="float-item wide">
-    <img src="assets/tetris.png" alt="Tetris" class="float-icon">
-    <span class="float-label">TETRIS</span>
-</a>
+    <!-- Радио в правом верхнем углу -->
+    <div id="radioBtn" class="radio-corner">
+        <div class="radio-status">
+            <img src="assets/radio.png" alt="Radio" id="radio-icon-img" class="float-icon" style="filter: invert(1);">
+            <span class="float-label" id="p-label">RADIO OFF</span>
+        </div>
+    </div>
 
-        <a href="forum.html" class="float-item">
-            <div class="dynamic-tag" id="dynamicWord">CONNECTING</div>
-            <img src="assets/forum.png" alt="Forum" class="float-icon">
-            <span class="float-label">FORUM</span>
-        </a>
+    <div class="grid-container">
+        <!-- Основная сетка -->
+        <div class="main-grid">
+            <!-- PAINT -->
+            <a href="helper.html" class="grid-item">
+                <img src="assets/paint.png" alt="Paint" class="grid-icon">
+                <span class="grid-label">PAINT</span>
+            </a>
 
-        <a href="shop.html" class="float-item">
-            <div class="money-wrap">
-                <svg class="money-rotating" viewBox="0 0 32 20">
-                    <rect x="1" y="1" width="30" height="18" rx="1" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="16" cy="10" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
+            <!-- STORE (бывший SHOP) -->
+            <a href="shop.html" class="grid-item">
+                <img src="assets/shop.png" alt="Store" class="grid-icon">
+                <span class="grid-label">STORE</span>
+            </a>
+
+            <!-- TETRIS -->
+            <a href="support.html" class="grid-item">
+                <img src="assets/tetris.png" alt="Tetris" class="grid-icon">
+                <span class="grid-label">TETRIS</span>
+            </a>
+
+            <!-- FORUM -->
+            <a href="forum.html" class="grid-item">
+                <div class="dynamic-tag" id="dynamicWord" style="position: absolute; margin-top: -25px; background: #970000; padding: 2px 6px; font-size: 6px;">CONNECTING</div>
+                <img src="assets/forum.png" alt="Forum" class="grid-icon">
+                <span class="grid-label">FORUM</span>
+            </a>
+
+            <!-- MOOD (Pinterest) -->
+            <div class="grid-item" id="moodBtn" style="cursor: pointer;">
+                <img src="assets/print.png" alt="Mood" class="grid-icon">
+                <span class="grid-label">MOOD</span>
             </div>
-            <img src="assets/shop.png" alt="Shop" class="float-icon"> 
-            <span class="float-label">SHOP</span>
-        </a>
 
-        <a href="helper.html" class="float-item">
-        <img src="assets/paint.png" alt="Paint" class="float-icon">
-        <span class="float-label">PAINT</span>
-    </a>
+            <!-- PRINT -->
+            <a href="x.html" class="grid-item">
+                <img src="assets/print.png" alt="Print" class="grid-icon">
+                <span class="grid-label">PRINT</span>
+            </a>
+        </div>
 
-        <a href="x.html" class="float-item">
-        <img src="assets/print.png" alt="Print" class="float-icon">
-        <span class="float-label">PRINT</span>
-    </a>
+        <!-- Вторая секция: Designer & Developer -->
+        <div class="double-grid">
+            <!-- DESIGNER -->
+            <div class="grid-item" id="designerBtn" style="cursor: pointer;">
+                <img src="assets/a.png" alt="Designer" class="grid-icon">
+                <span class="grid-label">DESIGNER</span>
+            </div>
 
-        <div class="float-item social-trigger" data-type="instagram" style="cursor: pointer;">
-        <img src="assets/insta.png" alt="Instagram" class="float-icon">
-        <span class="float-label">INSTAGRAM</span>
+            <!-- DEVELOPER -->
+            <div class="grid-item" id="developerBtn" style="cursor: pointer;">
+                <img src="assets/x.png" alt="Developer" class="grid-icon">
+                <span class="grid-label">DEVELOPER</span>
+            </div>
+        </div>
+
+        <!-- Донаты по центру -->
+        <div class="donate-center">
+            <a href="https://send.monobank.ua/jar/8q9Kk2hkDV" target="_blank" class="grid-item wide" style="grid-column: span 2; flex-direction: row; gap: 15px; padding: 15px 25px; border: 1px solid rgba(255,255,255,0.3);">
+                <span class="grid-label" style="font-size: 9px;">ПІДТРИМАТИ ПРОЄКТ</span>
+                <span class="sub-label" style="font-size: 6px; color: rgba(255,255,255,0.5);">MONOBANK.EXE</span>
+            </a>
+        </div>
     </div>
 
-        <a href="https://tiktok.com/@morstrix" target="_blank" class="float-item">
-            <span class="icon-big">♪</span>
-            <span class="float-label">TIKTOK</span>
-        </a>
-
-        <div id="radioBtn" class="float-item" style="cursor: pointer;">
-    <div class="radio-status">
-        <img src="assets/radio.png" alt="Radio" id="radio-icon-img" class="float-icon">
+    <!-- Модалка MOOD (Pinterest) -->
+    <div id="moodModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeMoodModal">✜</button>
+            <div class="modal-title">PINTEREST / MOOD BOARD</div>
+            <div id="pinterestWidget" class="widget-container">
+                <!-- Pinterest виджет -->
+                <a data-pin-do="embedBoard" href="https://www.pinterest.com/yourusername/yourboard/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
+                <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+            </div>
+        </div>
     </div>
-    <span class="float-label" id="p-label">RADIO OFF</span>
-</div>
 
-        <a href="https://send.monobank.ua/jar/8q9Kk2hkDV" target="_blank" class="float-item wide donate-item">            
-            <span class="float-label">ПІДТРИМАТИ ПРОЄКТ</span>
-            <span class="sub-label">MONOBANK.EXE</span>
-        </a>
+    <!-- Модалка DESIGNER -->
+    <div id="designerModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" id="closeDesignerModal">✜</button>
+            <div class="modal-title">DESIGNER // ADA MORSOVA</div>
+            <div class="widget-container">
+                <h4 style="font-size: 8px; color: #a84d6b;">BEHANCE</h4>
+                <!-- Behance виджет (iframe) -->
+                <iframe src="https://www.behance.net/embed/project/your_project_id?ilo0=1" height="300" width="100%" frameborder="0" allowfullscreen style="margin-bottom: 20px;"></iframe>
+                
+                <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM FEED</h4>
+                <div class="insta-widget">
+                    <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    </main>
-
-    <div id="instaModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close-btn" id="finalClosePopup">✜</button>
-            <div id="finalPopupTitle" class="popup-title"></div>
-            <div id="finalPopupIcons" class="insta-links"></div>
+    <!-- Модалка DEVELOPER -->
+    <div id="developerModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" id="closeDeveloperModal">✜</button>
+            <div class="modal-title">DEVELOPER // GRIMEXFRAME</div>
+            <div class="widget-container">
+                <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM FEED</h4>
+                <div class="insta-widget">
+                    <behold-widget feed-id="Ew8dq23tImFHuva5wjTL"></behold-widget>
+                </div>
+                
+                <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
+                <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">
+                    <div>Loading threads...</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="background.js"></script>
-    <script src="index.js"></script>
-    
+    <script type="module" src="https://w.behold.so/widget.js"></script>
     <script>
+        // ========== РАДИО ==========
         const radioBtn = document.getElementById('radioBtn');
         let isPlaying = false;
         if(radioBtn) {
             radioBtn.onclick = () => {
                 isPlaying = !isPlaying;
                 document.getElementById('p-label').innerText = isPlaying ? "RADIO ON" : "RADIO OFF";
-                document.getElementById('p-icon').innerText = isPlaying ? "■" : "▶";
             };
         }
-    </script>
 
+        // ========== МОДАЛЬНЫЕ ОКНА ==========
+        
+        // MOOD (Pinterest)
+        const moodModal = document.getElementById('moodModal');
+        document.getElementById('moodBtn').onclick = () => moodModal.classList.add('active');
+        document.getElementById('closeMoodModal').onclick = () => moodModal.classList.remove('active');
+        
+        // DESIGNER
+        const designerModal = document.getElementById('designerModal');
+        document.getElementById('designerBtn').onclick = () => designerModal.classList.add('active');
+        document.getElementById('closeDesignerModal').onclick = () => designerModal.classList.remove('active');
+        
+        // DEVELOPER
+        const developerModal = document.getElementById('developerModal');
+        document.getElementById('developerBtn').onclick = () => developerModal.classList.add('active');
+        document.getElementById('closeDeveloperModal').onclick = () => developerModal.classList.remove('active');
+        
+        // Закрытие по клику на фон
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.onclick = (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            };
+        });
+        
+        // ========== ЗАГРУЗКА THREADS ДЛЯ DEVELOPER ==========
+        async function loadThreads() {
+            const container = document.getElementById('threadsContent');
+            if (!container) return;
+            try {
+                const response = await fetch('diary.json?v=' + Date.now());
+                if (!response.ok) throw new Error();
+                const posts = await response.json();
+                container.innerHTML = posts.map(post => `
+                    <div style="margin-bottom: 15px; border-left: 2px solid #a84d6b; padding-left: 10px;">
+                        <div style="color: #a84d6b; font-size: 6px; margin-bottom: 5px;">[ ${post.date} ]</div>
+                        <div style="font-size: 7px; color: #ccc;">${post.text}</div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                container.innerHTML = '<div style="color: #666;">SYNCING THREADS...</div>';
+            }
+        }
+        loadThreads();
+        
+        // ========== ДИНАМИЧЕСКОЕ СЛОВО ДЛЯ FORUM ==========
+        const words = ["wellness", "travel", "english", "money", "radio"];
+        const wordElement = document.getElementById('dynamicWord');
+        if (wordElement) {
+            let i = 0;
+            setInterval(() => {
+                i = (i + 1) % words.length;
+                wordElement.textContent = words[i];
+            }, 2000);
+        }
+        
+        // Плавный переход для ссылок
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (!link.hasAttribute('target')) {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.startsWith('#')) {
+                        e.preventDefault();
+                        document.body.style.opacity = '0';
+                        document.body.style.transition = 'opacity 0.2s';
+                        setTimeout(() => window.location.href = href, 200);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
