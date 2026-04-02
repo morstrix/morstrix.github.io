@@ -1,32 +1,31 @@
-name: Sync Threads to Diary
+import feedparser
+import json
+import os
 
-on:
-  schedule:
-    - cron: '0 */3 * * *' # Запуск каждые 3 часа
-  workflow_dispatch:      # Кнопка для ручного запуска
+RSS_URL = "https://rss.app/feeds/C1izttJaInbt7xKb.xml"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+def update_threads():
+    try:
+        feed = feedparser.parse(RSS_URL)
+        if not feed.entries:
+            print("Фид пустой или недоступен")
+            return
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+        posts = []
+        for entry in feed.entries[:10]:
+            # Чистим текст от HTML-тегов, если они есть
+            text = entry.summary if 'summary' in entry else ""
+            posts.append({
+                "date": entry.published if 'published' in entry else "Recent",
+                "text": text
+            })
+        
+        with open("diary.json", "w", encoding='utf-8') as f:
+            json.dump(posts, f, ensure_ascii=False, indent=4)
+        print("diary.json успешно обновлен!")
+        
+    except Exception as e:
+        print(f"Ошибка при обновлении: {e}")
 
-      - name: Install dependencies
-        run: pip install feedparser
-
-      - name: Run update script
-        run: python .github/scripts/update_threads.py
-
-      - name: Commit and Push
-        run: |
-          git config --global user.name "ThreadsBot"
-          git config --global user.email "bot@github.com"
-          git add diary.json
-          git commit -m "Update threads diary" || exit 0
-          git push
+if __name__ == "__main__":
+    update_threads()
