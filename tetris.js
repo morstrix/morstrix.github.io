@@ -225,10 +225,57 @@ function drawNext() {
 function drawBlock(x, y, color) {
     const bx = x * BLOCK_SIZE;
     const by = y * BLOCK_SIZE;
-    ctx.fillStyle = color;
+    
+    // Основной цвет блока — #79434a
+    ctx.fillStyle = '#79434a';
     ctx.fillRect(bx, by, BLOCK_SIZE, BLOCK_SIZE);
-    ctx.strokeStyle = '#222';
-    ctx.strokeRect(bx + 0.5, by + 0.5, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+    
+    // Хаотичные чёрные пиксельные линии (глитч-контуры)
+    ctx.strokeStyle = '#010101';
+    ctx.lineWidth = 1;
+    
+    // Рандомно рисуем контуры: где-то есть, где-то нет
+    // Верхняя граница (рандомно)
+    if (Math.random() > 0.3) {
+        ctx.beginPath();
+        ctx.moveTo(bx, by);
+        ctx.lineTo(bx + BLOCK_SIZE, by);
+        ctx.stroke();
+    }
+    
+    // Левая граница (рандомно)
+    if (Math.random() > 0.4) {
+        ctx.beginPath();
+        ctx.moveTo(bx, by);
+        ctx.lineTo(bx, by + BLOCK_SIZE);
+        ctx.stroke();
+    }
+    
+    // Правая граница (рандомно)
+    if (Math.random() > 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(bx + BLOCK_SIZE, by);
+        ctx.lineTo(bx + BLOCK_SIZE, by + BLOCK_SIZE);
+        ctx.stroke();
+    }
+    
+    // Нижняя граница (рандомно)
+    if (Math.random() > 0.35) {
+        ctx.beginPath();
+        ctx.moveTo(bx, by + BLOCK_SIZE);
+        ctx.lineTo(bx + BLOCK_SIZE, by + BLOCK_SIZE);
+        ctx.stroke();
+    }
+    
+    // Дополнительные случайные пиксельные точки
+    for (let i = 0; i < 3; i++) {
+        if (Math.random() > 0.7) {
+            const px = bx + Math.random() * BLOCK_SIZE;
+            const py = by + Math.random() * BLOCK_SIZE;
+            ctx.fillStyle = '#010101';
+            ctx.fillRect(px, py, 1, 1);
+        }
+    }
 }
 
 function drawGhost() {

@@ -215,90 +215,81 @@ body {
     .cat-name { font-size: 0.55rem; }
 }
 
-/* ========== КНОПКА ОФОРМИТЬ - ПРИНУДИТЕЛЬНО ========== */
+/* ========== КНОПКИ В СТИЛЕ ПАЛИТРЫ ========== */
 
-button.checkout-btn,
-.checkout-btn,
-#checkoutBtn,
-.checkout-btn:link,
-.checkout-btn:visited {
+/* Кнопка ОФОРМИТЬ */
+.checkout-btn {
     background: #a27791 !important;
-    border: 2px solid #b97272 !important;
-    color: #79434a !important;
-    font-family: 'Press Start 2P', monospace !important;
-    font-size: 9px !important;
-    padding: 12px 20px !important;
-    width: 100% !important;
-    cursor: pointer !important;
-    position: relative !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    border: 1px solid #b97272 !important;
+    color: #8a4a52 !important;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 12px !important;
+    width: 100%;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Черная линия слева */
-button.checkout-btn::before,
-.checkout-btn::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 2px !important;
-    top: 2px !important;
-    bottom: 2px !important;
-    width: 2px !important;
-    background: #010101 !important;
-    display: block !important;
+.checkout-btn:hover {
+    background: #8a4a52 !important;
+    border-color: #000000 !important;
+    color: #a27791 !important;
 }
 
-/* Черная линия сверху */
-button.checkout-btn::after,
-.checkout-btn::after {
-    content: '' !important;
-    position: absolute !important;
-    top: 2px !important;
-    left: 2px !important;
-    right: 2px !important;
-    height: 2px !important;
-    background: #010101 !important;
-    display: block !important;
+.checkout-btn:active {
+    transform: scale(0.97);
+    background: #5a3035 !important;
+    border-color: #a27791 !important;
+    color: #b97272 !important;
 }
 
-/* КНОПКА ПАКЕТ */
-button.cart-bottom-btn,
+/* Кнопка ПАКЕТ внизу */
 .cart-bottom-btn {
     background: #a27791 !important;
-    border: 2px solid #b97272 !important;
-    color: #79434a !important;
-    position: relative !important;
-    font-family: 'Press Start 2P', monospace !important;
-    font-size: 0.65rem !important;
-    padding: 10px 20px !important;
+    border: 1px solid #b97272 !important;
+    color: #8a4a52 !important;
 }
 
-button.cart-bottom-btn::before,
-.cart-bottom-btn::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 2px !important;
-    top: 2px !important;
-    bottom: 2px !important;
-    width: 2px !important;
-    background: #010101 !important;
-    display: block !important;
-}
-
-button.cart-bottom-btn::after,
-.cart-bottom-btn::after {
-    content: '' !important;
-    position: absolute !important;
-    top: 2px !important;
-    left: 2px !important;
-    right: 2px !important;
-    height: 2px !important;
-    background: #010101 !important;
-    display: block !important;
+.cart-bottom-btn:active {
+    background: #b97272 !important;
+    color: #010101 !important;
 }
 
 /* Счетчик корзины */
 .cart-bottom-count {
-    background: #79434a !important;
+    background: #b97272 !important;
+    color: #010101 !important;
+}
+
+/* Кнопка закрытия модалки */
+.close-modal {
+    color: #b97272 !important;
+    transition: all 0.2s;
+}
+
+.close-modal:active {
     color: #a27791 !important;
+    transform: scale(1.1);
+}
+
+/* Кнопка удаления товара */
+.remove-item {
+    color: #b97272 !important;
+}
+
+.remove-item:active {
+    color: #a27791 !important;
+}
+
+/* Цены товаров */
+.cat-price {
+    color: #7e7e7e !important;
+}
+
+/* Карточки товаров при нажатии */
+.cat-card:active {
+    border-color: #b97272 !important;
 }

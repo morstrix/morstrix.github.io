@@ -10,6 +10,121 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tetris.css">
     <link rel="stylesheet" href="theme.css">
+    <style>
+        /* Дополнительные стили для тетриса - ПОЛНОСТЬЮ АДАПТИВНО */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding: 10px;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .game-container {
+            border: 2px solid #b97272 !important;
+            background: #a27791 !important;
+            width: auto;
+            max-width: 98vw;
+            margin: 0 auto;
+            padding: 8px;
+        }
+        
+        #tetris-canvas {
+            border: 2px solid #b97272 !important;
+            background: #0a0a0a !important;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .game-area {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .stats-panel {
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-bar {
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 40px;
+        }
+        
+        /* Адаптация под все экраны */
+        @media (max-width: 700px) {
+            .control-btn {
+                width: 45px;
+                height: 35px;
+            }
+            .stat-card {
+                padding: 4px 10px;
+            }
+            .stat-value {
+                font-size: 14px;
+            }
+            .pause-btn {
+                font-size: 8px;
+                padding: 4px 8px;
+            }
+        }
+        
+        @media (max-width: 550px) {
+            .control-btn {
+                width: 40px;
+                height: 32px;
+            }
+            .arrow-left, .arrow-right {
+                border-width: 8px;
+            }
+            .arrow-down {
+                border-width: 8px;
+            }
+        }
+        
+        @media (max-width: 450px) {
+            .control-btn {
+                width: 35px;
+                height: 28px;
+            }
+            .stat-card {
+                padding: 3px 6px;
+            }
+            .stat-label {
+                font-size: 6px;
+            }
+            .stat-value {
+                font-size: 10px;
+            }
+        }
+        
+        /* Крестик */
+        .back-button-wrapper {
+            text-align: right;
+            padding: 10px;
+        }
+        
+        .page-support {
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body class="page-support">
 
