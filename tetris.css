@@ -1,5 +1,5 @@
 /* ============================================
-   TETRIS.CSS — стили страницы тетриса
+   TETRIS.CSS — компактная версия
 ============================================ */
 
 body {
@@ -8,29 +8,32 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
+    padding: 20px;
 }
 
 .game-container {
     background: var(--support-bg-game);
     border: 2px solid var(--support-border-white);
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     width: auto;
+    max-width: 95vw;
 }
 
+/* Панель статистики */
 .stats-panel {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 30px;
+    gap: 20px;
 }
 
 .stat-card {
     background: var(--support-bg-panel);
     border: 1px solid var(--support-border-dark);
-    padding: 10px 20px;
+    padding: 8px 16px;
     text-align: center;
 }
 
@@ -41,41 +44,44 @@ body {
 }
 
 .stat-value {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--support-text-white);
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .right-stats {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 10px;
+    gap: 8px;
 }
 
 .next-box {
     background: var(--support-bg-panel);
     border: 1px solid var(--support-border-dark);
-    padding: 10px;
+    padding: 8px;
     text-align: center;
 }
 
 #next-piece-canvas {
     background: var(--support-bg-panel);
-    margin-top: 8px;
+    margin-top: 6px;
+    width: 50px;
+    height: 50px;
 }
 
+/* Кнопка паузы */
 .pause-btn {
     background: var(--support-bg-card);
     border: 1px solid var(--support-border-white);
     color: var(--support-text-white);
     font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    padding: 6px 12px;
+    font-size: 9px;
+    padding: 5px 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .pause-btn:active {
@@ -84,6 +90,7 @@ body {
     color: #000;
 }
 
+/* Игровое поле */
 .game-area {
     display: flex;
     justify-content: center;
@@ -93,25 +100,30 @@ body {
     background: var(--support-bg-panel);
     border: 2px solid var(--support-border-white);
     box-shadow: 0 0 0 1px var(--support-border-dark);
+    width: 100%;
+    height: auto;
 }
 
+/* Кнопки управления — СПЛЮСНУТЫЕ */
 .control-bar {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .control-btn {
     background: var(--support-bg-card);
     border: 1px solid var(--support-border-white);
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 42px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.05s linear;
+    border-radius: 0;
+    outline: none;
 }
 
 .control-btn:active {
@@ -121,26 +133,26 @@ body {
 
 /* Стрелки */
 .arrow-left {
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-right: 18px solid var(--support-text-white);
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 14px solid var(--support-text-white);
 }
 
 .arrow-right {
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-left: 18px solid var(--support-text-white);
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 14px solid var(--support-text-white);
 }
 
 .arrow-down {
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 18px solid var(--support-text-white);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 14px solid var(--support-text-white);
 }
 
 .rotate-icon {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border: 2px solid var(--support-text-white);
     position: relative;
 }
@@ -148,17 +160,204 @@ body {
 .rotate-icon::after {
     content: '';
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-top: 2px solid var(--support-text-white);
     border-right: 2px solid var(--support-text-white);
     top: -4px;
     right: -4px;
 }
 
+/* ========== ПЛАНШЕТЫ (до 900px) ========== */
+@media (max-width: 900px) {
+    .game-container {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .control-btn {
+        width: 50px;
+        height: 38px;
+    }
+    
+    .arrow-left {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 12px solid var(--support-text-white);
+    }
+    
+    .arrow-right {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 12px solid var(--support-text-white);
+    }
+    
+    .arrow-down {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 12px solid var(--support-text-white);
+    }
+    
+    .stat-card {
+        padding: 6px 12px;
+    }
+    
+    .stat-value {
+        font-size: 14px;
+    }
+    
+    .pause-btn {
+        font-size: 8px;
+        padding: 4px 8px;
+    }
+}
+
+/* ========== МОБИЛЬНЫЕ (до 550px) ========== */
 @media (max-width: 550px) {
-    .game-container { padding: 12px; gap: 12px; }
-    .control-btn { width: 50px; height: 50px; }
-    .stat-card { padding: 6px 12px; }
-    .stat-value { font-size: 14px; }
+    body {
+        padding: 10px;
+    }
+    
+    .game-container {
+        padding: 10px;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .stats-panel {
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 4px 10px;
+    }
+    
+    .stat-label {
+        font-size: 6px;
+    }
+    
+    .stat-value {
+        font-size: 12px;
+        margin-top: 4px;
+    }
+    
+    .next-box {
+        padding: 5px;
+    }
+    
+    #next-piece-canvas {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .pause-btn {
+        font-size: 7px;
+        padding: 3px 6px;
+    }
+    
+    .control-bar {
+        gap: 10px;
+    }
+    
+    .control-btn {
+        width: 55px;
+        height: 35px;
+    }
+    
+    .arrow-left {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 11px solid var(--support-text-white);
+    }
+    
+    .arrow-right {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 11px solid var(--support-text-white);
+    }
+    
+    .arrow-down {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 11px solid var(--support-text-white);
+    }
+    
+    .rotate-icon {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .rotate-icon::after {
+        width: 5px;
+        height: 5px;
+        top: -3px;
+        right: -3px;
+    }
+}
+
+/* ========== МАЛЕНЬКИЕ ТЕЛЕФОНЫ (до 380px) ========== */
+@media (max-width: 380px) {
+    .control-btn {
+        width: 48px;
+        height: 32px;
+    }
+    
+    .control-bar {
+        gap: 8px;
+    }
+    
+    .arrow-left {
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 10px solid var(--support-text-white);
+    }
+    
+    .arrow-right {
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 10px solid var(--support-text-white);
+    }
+    
+    .arrow-down {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 10px solid var(--support-text-white);
+    }
+    
+    .stat-card {
+        padding: 3px 8px;
+    }
+    
+    .stat-value {
+        font-size: 10px;
+    }
+    
+    .pause-btn {
+        font-size: 6px;
+        padding: 3px 5px;
+    }
+}
+/* ========== ПРИНУДИТЕЛЬНЫЙ ФИКС КРЕСТИКА СПРАВА ========== */
+.page-support {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.page-support .back-button {
+    position: relative !important;
+    float: right !important;
+    margin: 20px 20px 0 0 !important;
+    display: inline-flex !important;
+    right: auto !important;
+    left: auto !important;
+}
+
+/* Контейнер для крестика */
+.back-button-wrapper {
+    width: 100%;
+    max-width: 500px;
+    text-align: right;
+    padding: 20px 20px 0 0;
 }
