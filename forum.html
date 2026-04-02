@@ -16,154 +16,87 @@
     <img src="assets/close.png" alt="Back" style="width: 30px; height: 30px;">
 </a>
 
-<!-- Контейнер для последнего сообщения -->
-<div class="last-message-widget">
-    <div class="last-message-label">✦ LAST BROADCAST ✦</div>
-    <div id="lastMessageContainer" class="last-message-content">
-        <div class="loading">⏳ ЗАВАНТАЖЕННЯ...</div>
+<div class="forum-container">
+    <div class="retro-window">
+        <div class="window-border">
+            <div class="static-line"></div>
+            <div class="window-title">ГОСТЬОВА КНИГА</div>
+            <div class="description-text">
+                <span class="highlight">> СТАТУС:</span> ВІДКРИТО<br>
+                <span class="highlight">> ТЕМА:</span> ОБГОВОРЕННЯ ПРОЄКТУ<br>
+                <span class="highlight">> ПРАВИЛА:</span> БЕЗ СПАМУ, ПОВАГА<br><br>
+                останнє повідомлення з чату:
+            </div>
+            <div class="tags">
+                <span class="tag">#MORSTRIX</span>
+                <span class="tag">#Y2K</span>
+                <span class="tag">#FUTURISM</span>
+                <span class="tag">#PIXELART</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="last-message-widget">
+        <div class="last-message-label">✦ LAST BROADCAST ✦</div>
+        <script async src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-discussion="morstrix"
+            data-width="100%"
+            data-dark="1"
+            data-color="a84d6b"
+            data-limit="1">
+        </script>
+    </div>
+
+    <div class="tg-button">
+        <a href="https://t.me/morstrix" target="_blank" class="tg-link">
+            ➤ ПРИЄДНАТИСЯ ДО ЧАТУ ➤
+        </a>
     </div>
 </div>
 
-<script>
-async function getLastMessage() {
-    const container = document.getElementById('lastMessageContainer');
-    
-    // Используем публичное API для получения последнего сообщения
-    // Замени BOT_TOKEN на токен твоего бота
-    const BOT_TOKEN = '8128869475:AAHgbV2uHMGJPRZ1n7R9mPkKkqYf9EYn4zE'; // твой токен
-    const CHAT_ID = '@morstrix'; // username группы
-    
-    try {
-        // Получаем последние сообщения из группы
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?chat_id=${CHAT_ID}&limit=1`);
-        const data = await response.json();
-        
-        if (data.ok && data.result.length > 0) {
-            const lastUpdate = data.result[data.result.length - 1];
-            const msg = lastUpdate.message || lastUpdate.channel_post;
-            
-            if (msg && msg.text) {
-                const userName = msg.from?.first_name || 'Анон';
-                const date = new Date(msg.date * 1000);
-                const timeStr = date.toLocaleString('uk-UA', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
-                
-                container.innerHTML = `
-                    <div class="message-bubble">
-                        <div class="msg-author">👤 ${escapeHtml(userName)}</div>
-                        <div class="msg-text">${escapeHtml(msg.text)}</div>
-                        <div class="msg-time">📅 ${timeStr}</div>
-                    </div>
-                    <div class="msg-footer-link">
-                        <a href="https://t.me/morstrix" target="_blank">→ ВІДПОВІСТИ В TELEGRAM ←</a>
-                    </div>
-                `;
-                return;
-            }
-        }
-        throw new Error('No messages');
-        
-    } catch(e) {
-        container.innerHTML = `
-            <div class="message-bubble error">
-                <div class="msg-text">⚠️ НЕМАЄ ПОВІДОМЛЕНЬ</div>
-                <div class="msg-footer-link">
-                    <a href="https://t.me/morstrix" target="_blank">→ ПЕРЕЙТИ В ЧАТ ←</a>
-                </div>
-            </div>
-        `;
-    }
-}
-
-function escapeHtml(text) {
-    return text.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-// Загружаем при открытии страницы
-getLastMessage();
-
-// Обновляем каждые 30 секунд
-setInterval(getLastMessage, 30000);
-</script>
+<script src="background.js"></script>
 
 <style>
-.last-message-widget {
-    margin: 30px 0;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid var(--forum-border-white);
-    padding: 20px;
-}
-
-.last-message-label {
-    font-size: 8px;
-    color: #a84d6b;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.last-message-content {
-    min-height: 100px;
-}
-
-.message-bubble {
-    background: rgba(0, 0, 0, 0.8);
-    border-left: 3px solid #a84d6b;
-    padding: 15px;
-}
-
-.msg-author {
-    font-size: 7px;
-    color: #a84d6b;
-    margin-bottom: 8px;
-}
-
-.msg-text {
-    font-size: 8px;
-    color: #fff;
-    line-height: 1.5;
-    word-break: break-word;
-}
-
-.msg-time {
-    font-size: 5px;
-    color: #666;
-    margin-top: 8px;
-    text-align: right;
-}
-
-.msg-footer-link {
-    text-align: center;
-    margin-top: 12px;
-}
-
-.msg-footer-link a {
-    color: #a84d6b;
-    text-decoration: none;
-    font-size: 6px;
-    letter-spacing: 1px;
-}
-
-.msg-footer-link a:hover {
-    color: #fff;
-}
-
-.loading {
-    text-align: center;
-    font-size: 7px;
-    color: #666;
-    padding: 20px;
-}
-
-.error .msg-text {
-    color: #a84d6b;
-    text-align: center;
-}
+    .last-message-widget {
+        margin: 30px 0;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid var(--forum-border-white);
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .last-message-label {
+        font-size: 8px;
+        color: #a84d6b;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+    
+    .tg-button {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .tg-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: transparent;
+        color: var(--forum-text-white);
+        text-decoration: none;
+        padding: 12px 28px;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 9px;
+        border: 2px solid var(--forum-border-white);
+        transition: all 0.15s;
+    }
+    
+    .tg-link:active {
+        background: var(--forum-text-white);
+        color: #000;
+        transform: scale(0.95);
+    }
 </style>
 
 </body>
