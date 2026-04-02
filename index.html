@@ -8,26 +8,42 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-        /* Стиль для новой иконки инсты */
-        .insta-svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-            display: block;
-            margin: 0 auto 8px;
-        }
+    .insta-svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+        display: block;
+        margin: 0 auto 8px;
+    }
 
-        /* Убираем лишние рамки и подсвечиваем иконку */
-        .social-trigger {
-            text-decoration: none !important;
-            outline: none !important;
-            border: none !important;
-        }
-        
-        .social-trigger:hover .insta-svg {
-            filter: drop-shadow(0 0 5px #a84d6b);
-        }
-    </style>
+    .social-trigger {
+        text-decoration: none !important;
+        outline: none !important;
+        border: none !important;
+    }
+    
+    /* ========== ИНВЕРСИЯ ВСЕХ ИКОНОК, КРОМЕ INSTAGRAM ========== */
+    .float-icon {
+        filter: invert(1);
+        -webkit-filter: invert(1);
+    }
+    
+    /* Instagram НЕ ТРОГАЕМ */
+    .social-trigger .float-icon {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    
+    /* Радио-иконка */
+    #radio-icon-img {
+        filter: invert(1);
+        -webkit-filter: invert(1);
+    }
+    
+    .social-trigger:hover .insta-svg {
+        filter: drop-shadow(0 0 5px #a84d6b);
+    }
+</style>
 </head>
 <body>
 
