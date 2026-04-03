@@ -76,314 +76,6 @@
             color: #000;
         }
 
-        /* Бегущая строка - медленная */
-        .ticker-wrapper {
-            background: #0a0a0a;
-            border: 1px solid #a27791;
-            padding: 10px 0;
-            margin: 20px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .ticker {
-            display: inline-block;
-            animation: tickerScroll 60s linear infinite;
-            font-size: 7px;
-            color: #d4a0a0;
-        }
-
-        .ticker span {
-            margin-right: 40px;
-        }
-
-        .ticker span::before {
-            content: "✦ ";
-            color: #b97272;
-        }
-
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Форум картинка */
-        .forum-img {
-            display: block;
-            margin: 20px auto;
-            cursor: pointer;
-            width: 80px;
-            image-rendering: pixelated;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 5000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            width: 90%;
-            max-width: 400px;
-            background: #000;
-            border: 2px solid #fff;
-            position: relative;
-            overflow-y: auto;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            font-family: 'Press Start 2P', monospace;
-        }
-
-        .coming-soon {
-            font-size: 7px;
-            color: #888;
-            margin: 20px 0;
-        }
-
-        .telegram-widget-wrapper {
-            margin-top: 15px;
-            min-height: 300px;
-        }
-
-        @media (max-width: 550px) {
-            body { padding: 10px; }
-            .retro-btn { font-size: 6px; padding: 6px 12px; }
-            .ticker { font-size: 5px; animation-duration: 80s; }
-            .forum-img { width: 60px; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="back-button-wrapper">
-        <a href="index.html" class="back-button"></a>
-    </div>
-
-    <div class="journal-container">
-        
-        <div class="journal-header">
-            <div class="journal-title">JOURNAL</div>
-            <div class="journal-sub">print / archive / rss feed</div>
-        </div>
-
-        <!-- СПОТИФАЙ ПЛЕЕР -->
-        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                
-            </iframe>
-        </div>
-
-        <!-- БАРАБАН АРТОВ -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
-        </div>
-
-        <!-- ТВИТТЕР -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
-        </div>
-
-        <!-- БЕХАНС -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="100%" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-            <div style="margin-top: 10px;">
-                <a href="https://behance.net/ada_morsova1" target="_blank" class="retro-btn">→ ВСЕ ПРОЕКТЫ ←</a>
-            </div>
-        </div>
-
-        <!-- RSS ЛЕНТА (медленная бегущая строка) -->
-        <div class="ticker-wrapper">
-            <div class="ticker" id="rssTicker">✦ LOADING FEEDS... ✦</div>
-        </div>
-
-        <!-- ПИНТЕРЕСТ ВИДЖЕТ -->
-        <div style="text-align: center; margin: 20px 0;">
-            <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
-            <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
-        </div>
-
-        <!-- ТЕТРИС -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="tetrisBtn" class="retro-btn">🎮 TETRIS</button>
-        </div>
-
-        <!-- ФОРУМ (картинка) -->
-        <div style="text-align: center; margin: 20px 0;">
-            <img src="assets/forum.png" id="forumImg" class="forum-img" alt="Forum">
-        </div>
-
-        <!-- ТЕЛЕГРАМ ВИДЖЕТ -->
-        <div class="telegram-widget-wrapper">
-            <script async src="https://telegram.org/js/telegram-widget.js?23"
-                data-telegram-discussion="morstrixxx/71"
-                data-width="100%"
-                data-dark="1"
-                data-color="a84d6b"
-                data-limit="10">
-            </script>
-        </div>
-
-    </div>
-
-    <!-- МОДАЛКА ЗАГЛУШКА -->
-    <div id="placeholderModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeModal">✜</button>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button id="modalOkBtn" class="retro-btn" style="margin-top: 15px;">OK</button>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ДИСКЛЕЙМЕР ДЛЯ ФОРУМА -->
-    <div id="disclaimerModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeDisclaimerModal">✜</button>
-            <div class="coming-soon">
-                ⚠️ ВИ ПЕРЕХОДИТЕ ДО ТЕЛЕГРАМ ФОРУМУ<br><br>
-                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ<br>
-                ДОТРИМУЙТЕСЬ ПРАВИЛ СПІЛКУВАННЯ
-            </div>
-            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
-                <button id="confirmForumBtn" class="retro-btn">ENTER</button>
-                <button id="cancelForumBtn" class="retro-btn">CANCEL</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="background.js"></script>
-    <script>
-        const placeholderModal = document.getElementById('placeholderModal');
-        const disclaimerModal = document.getElementById('disclaimerModal');
-
-        function closeModal(modal) {
-            modal.classList.remove('active');
-        }
-
-        function showPlaceholder() {
-            placeholderModal.classList.add('active');
-        }
-
-        // ЗАГЛУШКИ
-        document.getElementById('artBtn').onclick = showPlaceholder;
-        document.getElementById('tetrisBtn').onclick = showPlaceholder;
-
-        // ФОРУМ ПО КАРТИНКЕ
-        document.getElementById('forumImg').onclick = () => disclaimerModal.classList.add('active');
-
-        // RSS ЛЕНТА (реальные заголовки)
-        async function loadRSSFeeds() {
-            const blogs = [
-                'https://hyperallergic.com/feed/',
-                'https://www.artnews.com/feed/',
-                'https://rhizome.org/feed/',
-                'https://www.artforum.com/feed/'
-            ];
-            let allTitles = [];
-            for (let blog of blogs) {
-                try {
-                    const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(blog);
-                    const res = await fetch(proxy);
-                    const data = await res.json();
-                    if (data.items) {
-                        const titles = data.items.slice(0, 2).map(item => item.title);
-                        allTitles.push(...titles);
-                    }
-                } catch(e) {
-                    console.log('RSS error:', blog);
-                }
-            }
-            const ticker = document.getElementById('rssTicker');
-            if (allTitles.length > 0) {
-                let content = '';
-                for (let i = 0; i < 4; i++) {
-                    allTitles.forEach(title => {
-                        content += `<span>${title}</span>`;
-                    });
-                }
-                ticker.innerHTML = content;
-            } else {
-                ticker.innerHTML = '<span>✦ ARTFORUM</span><span>✦ E-FLUX</span><span>✦ RHIZOME</span><span>✦ HYPERALLERGIC</span><span>✦ CONTEMPORARY ART DAILY</span>';
-            }
-        }
-        loadRSSFeeds();
-
-        // ЗАКРЫТИЕ МОДАЛОК
-        document.getElementById('closeModal').onclick = () => closeModal(placeholderModal);
-        document.getElementById('modalOkBtn').onclick = () => closeModal(placeholderModal);
-        document.getElementById('closeDisclaimerModal').onclick = () => closeModal(disclaimerModal);
-        document.getElementById('cancelForumBtn').onclick = () => closeModal(disclaimerModal);
-        document.getElementById('confirmForumBtn').onclick = () => {
-            window.open('https://t.me/morstrix', '_blank');
-            closeModal(disclaimerModal);
-        };
-
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-        });
-    </script>
-</body>
-</html>        .journal-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .journal-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .journal-title {
-            font-size: 1rem;
-            color: #a84d6b;
-            letter-spacing: 2px;
-        }
-
-        .journal-sub {
-            font-size: 0.55rem;
-            color: #888;
-            margin-top: 8px;
-        }
-
-        .retro-btn {
-            background: transparent;
-            border: 1px solid #a84d6b;
-            color: #fff;
-            padding: 8px 16px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 7px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            transition: all 0.1s;
-        }
-
-        .retro-btn:active {
-            transform: scale(0.95);
-            background: #a84d6b;
-            color: #000;
-        }
-
         .block {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid #b97272;
@@ -463,58 +155,65 @@
         <a href="index.html" class="back-button"></a>
     </div>
 
-        <!-- СПОТИФАЙ ПЛЕЕР -->
-        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator" width="60%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                </iframe>
+    <div class="journal-container">
+        
+        <div class="journal-header">
+            <div class="journal-title">JOURNAL</div>
+            <div class="journal-sub">print / archive / rss feed</div>
         </div>
 
-        <!-- БАРАБАН АРТОВ (ЗАГЛУШКА) -->
+        <!-- СПОТИФАЙ -->
+        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+            <iframe style="border-radius:12px; width:280px; height:80px;" 
+                src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- ART STUDIO -->
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
         </div>
 
-        <!-- ТВИТТЕР -->
+        <!-- TWITTER -->
         <div style="text-align: center; margin-bottom: 20px;">
             <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
         </div>
 
-        <!-- БЕХАНС -->
+        <!-- BEHANCE -->
         <div class="block">
             <div class="block-title">🎯 BEHANCE</div>
-            <div style="text-align: center;">
-                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="100%" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                <a href="https://behance.net/ada_morsova1" target="_blank" class="retro-btn" style="margin-top: 15px;">→ ВСЕ ПРОЕКТЫ ←</a>
+            <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="100%" allowfullscreen lazyload frameborder="0"></iframe>
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="https://behance.net/ada_morsova1" target="_blank" class="retro-btn">→ ВСЕ ПРОЕКТЫ ←</a>
             </div>
         </div>
 
-        <!-- RSS ЛЕНТА -->
+        <!-- RSS FEEDS -->
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="rssBtn" class="retro-btn">📡 RSS FEEDS</button>
         </div>
 
-        <!-- ПИНТЕРЕСТ ВИДЖЕТ -->
+        <!-- PINTEREST -->
         <div class="block">
-            <div class="block-title">📌 PINTEREST / MOOD BOARD</div>
-            <div style="text-align: center;">
-                <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
-                <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
-            </div>
+            <div class="block-title">📌 PINTEREST</div>
+            <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
+            <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
         </div>
 
-        <!-- ТЕТРИС ЛИДЕРБОРД -->
+        <!-- TETRIS -->
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="tetrisBtn" class="retro-btn">🎮 TETRIS</button>
         </div>
 
-        <!-- ФОРУМ -->
+        <!-- FORUM -->
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="forumBtn" class="retro-btn">💬 FORUM</button>
         </div>
 
-        <!-- Виджет канала morstrixxx -->
+        <!-- TELEGRAM WIDGET -->
         <div class="block">
-            <div class="block-title">📡 TELEGRAM CHANNEL</div>
+            <div class="block-title">📡 TELEGRAM</div>
             <div class="telegram-widget-wrapper">
                 <script async src="https://telegram.org/js/telegram-widget.js?23"
                     data-telegram-discussion="morstrixxx/71"
@@ -532,19 +231,18 @@
     <div id="placeholderModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeModal">✜</button>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button id="modalOkBtn" class="retro-btn" style="margin-top: 15px;">OK</button>
+            <div class="coming-soon">🚧 В РАЗРАБОТКЕ 🚧</div>
+            <button id="modalOkBtn" class="retro-btn">OK</button>
         </div>
     </div>
 
-    <!-- МОДАЛКА ДИСКЛЕЙМЕР ДЛЯ ФОРУМА -->
+    <!-- МОДАЛКА ДИСКЛЕЙМЕР -->
     <div id="disclaimerModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeDisclaimerModal">✜</button>
             <div class="coming-soon">
-                ⚠️ ВИ ПЕРЕХОДИТЕ ДО ТЕЛЕГРАМ ФОРУМУ<br><br>
-                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ<br>
-                ДОТРИМУЙТЕСЬ ПРАВИЛ СПІЛКУВАННЯ
+                ⚠️ ПЕРЕХОД В TELEGRAM<br><br>
+                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ
             </div>
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
                 <button id="confirmForumBtn" class="retro-btn">ENTER</button>
@@ -558,72 +256,26 @@
         const placeholderModal = document.getElementById('placeholderModal');
         const disclaimerModal = document.getElementById('disclaimerModal');
 
-        function closeModal(modal) {
-            modal.classList.remove('active');
-        }
-
-        function showPlaceholder() {
-            placeholderModal.classList.add('active');
-        }
-
-        // ЗАГЛУШКИ
-        document.getElementById('artBtn').onclick = showPlaceholder;
-        document.getElementById('rssBtn').onclick = showPlaceholder;
-        document.getElementById('tetrisBtn').onclick = showPlaceholder;
-
-        // ФОРУМ С ДИСКЛЕЙМЕРОМ
+        document.getElementById('artBtn').onclick = () => placeholderModal.classList.add('active');
+        document.getElementById('rssBtn').onclick = () => placeholderModal.classList.add('active');
+        document.getElementById('tetrisBtn').onclick = () => placeholderModal.classList.add('active');
         document.getElementById('forumBtn').onclick = () => disclaimerModal.classList.add('active');
 
-        // ЗАКРЫТИЕ МОДАЛОК
-        document.getElementById('closeModal').onclick = () => closeModal(placeholderModal);
-        document.getElementById('modalOkBtn').onclick = () => closeModal(placeholderModal);
-        document.getElementById('closeDisclaimerModal').onclick = () => closeModal(disclaimerModal);
-        document.getElementById('cancelForumBtn').onclick = () => closeModal(disclaimerModal);
+        document.getElementById('closeModal').onclick = () => placeholderModal.classList.remove('active');
+        document.getElementById('modalOkBtn').onclick = () => placeholderModal.classList.remove('active');
+        document.getElementById('closeDisclaimerModal').onclick = () => disclaimerModal.classList.remove('active');
+        document.getElementById('cancelForumBtn').onclick = () => disclaimerModal.classList.remove('active');
         document.getElementById('confirmForumBtn').onclick = () => {
             window.open('https://t.me/morstrix', '_blank');
-            closeModal(disclaimerModal);
+            disclaimerModal.classList.remove('active');
         };
 
-        // Закрытие по клику на оверлей
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
     </script>
-     
-    </style>
-</head>
-<body>
-
-    <script src="background.js"></script>
-    <script>
-        const placeholderModal = document.getElementById('placeholderModal');
-        const disclaimerModal = document.getElementById('disclaimerModal');
-
-        function closeModal(modal) {
-            modal.classList.remove('active');
-        }
-
-        function showPlaceholder() {
-            placeholderModal.classList.add('active');
-        }
-
-        // ЗАГЛУШКИ
-        document.getElementById('artBtn').onclick = showPlaceholder;
-        document.getElementById('rssBtn').onclick = showPlaceholder;
-        document.getElementById('pinterestBtn').onclick = showPlaceholder;
-        document.getElementById('tetrisBtn').onclick = showPlaceholder;
-        document.getElementById('tgWidgetBtn').onclick = showPlaceholder;
-
-        // ФОРУМ С ДИСКЛЕЙМЕРОМ
-        document.getElementById('forumBtn').onclick = () => disclaimerModal.classList.add('active');
-
-        // ЗАКРЫТИЕ МОДАЛОК
-        document.getElementById('closeModal').onclick = () => closeModal(placeholderModal);
-        document.getElementById('modalOkBtn').onclick = () => closeModal(placeholderModal);
-        document.getElementById('closeDisclaimerModal').onclick = () => closeModal(disclaimerModal);
-        document.getElementById('cancelForumBtn').onclick = () => closeModal(disclaimerModal);
-        document.getElementById('confirmForumBtn').onclick = () => {
-            window.open('https://t.me/morstrix', '_blank');
+</body>
+</html>            window.open('https://t.me/morstrix', '_blank');
             closeModal(disclaimerModal);
         };
 
