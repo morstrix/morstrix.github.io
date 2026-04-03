@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ САЙТА */
         .close-site { position: absolute; top: 15px; right: 15px; z-index: 999; }
         .close-site img { width: 30px; height: 30px; image-rendering: pixelated; }
 
@@ -45,7 +44,6 @@
         .carousel img:not(.active) { position: absolute; top: 0; left: 0; }
 
         .x-btn-img { cursor: pointer; width: 40px; margin-top: 15px; transition: 0.2s; }
-        .x-btn-img:hover { transform: scale(1.1); }
 
         /* 2. RSS СТРОКА */
         .ticker-wrapper {
@@ -56,12 +54,23 @@
         .ticker span { margin-right: 50px; }
         @keyframes scrollTicker { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
 
-        /* 3. НАВИГАЦИЯ (ИКОНКИ) */
+        /* 3. НАВИГАЦИЯ (ФОРУМ И САППОРТ) */
         .nav-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .nav-btn-img { cursor: pointer; width: 80px; height: auto; transition: 0.2s; image-rendering: pixelated; }
+        .nav-btn-img { cursor: pointer; width: 85px; height: auto; transition: 0.2s; image-rendering: pixelated; }
         .nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* 4. АРТ БЛОК (КВАДРАТ) */
+        /* 4. ПИНТЕРЕСТ ВИДЖЕТ В ЛЕНТЕ */
+        .pin-wrapper {
+            background: #0a0a0f;
+            border: 1px solid #1a1a1a;
+            padding: 10px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 450px;
+        }
+        .pin-label { font-size: 6px; color: #333; text-align: left; margin-bottom: 10px; letter-spacing: 1px; }
+
+        /* 5. АРТ БЛОК */
         .art-square-frame {
             width: 100%; max-width: 300px; aspect-ratio: 1/1;
             border: 1px solid #1a1a1a; background: #0a0a0f;
@@ -70,7 +79,7 @@
         .art-square-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
         .paint-label { font-size: 6px; color: #a84d6b; letter-spacing: 1px; margin-top: 8px; }
 
-        /* 5. FONT STYLER */
+        /* 6. FONT STYLER */
         .styler-label { font-size: 7px; color: #444; margin-bottom: 10px; text-align: left; max-width: 450px; margin-inline: auto; }
         .styler-container {
             display: flex; align-items: center; background: #0a0a0f; border: 1px solid #1a1a1a;
@@ -83,7 +92,7 @@
         .styler-icon-btn { background: transparent; border: none; cursor: pointer; padding: 5px; }
         .styler-icon-btn img { width: 20px; height: 20px; }
 
-        /* ОБЩИЕ МОДАЛКИ */
+        /* МОДАЛКИ */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98);
             z-index: 10000; align-items: center; justify-content: center; padding: 20px;
@@ -96,10 +105,10 @@
             font-size: 8px; cursor: pointer; text-decoration: none; display: inline-block;
         }
 
-        /* --- PAINT ENGINE STYLES --- */
+        /* PAINT ENGINE STYLES */
         .paint-window { width: 100%; max-width: 420px; background: #0a0a0f; border: 1px solid #1a1a1a; display: flex; flex-direction: column; margin: 0 auto; }
         .paint-header-bar { background: #1a1a1a; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 7px; color: #444; }
-        .canvas-container { position: relative; width: 100%; aspect-ratio: 1/1; background: #000; line-height: 0; overflow: hidden; }
+        .canvas-container { position: relative; width: 100%; aspect-ratio: 1/1; background: #000; overflow: hidden; }
         .canvas-container canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; }
         .paint-tools-panel { display: flex; justify-content: space-between; padding: 10px; background: #050508; border-top: 1px solid #1a1a1a; gap: 10px; align-items: center; }
         .layers-sub-modal { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 240px; background: #0a0a0f; border: 1px solid #ffb7c7; z-index: 11000; }
@@ -121,7 +130,7 @@
                 <img src="assets/mx1.jpg" class="active">
                 <img src="assets/mx2.jpg">
             </div>
-            <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
+            <img src="assets/x.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
         </div>
 
         <div class="ticker-wrapper">
@@ -131,17 +140,27 @@
         <div class="section nav-grid">
             <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
             <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
-            <img src="assets/mood.png" class="nav-btn-img" onclick="openModal('moodModal')">
+        </div>
+
+        <div class="section">
+            <div class="pin-wrapper">
+                <div class="pin-label">[ MOOD_STREAM ]</div>
+                <a data-pin-do="embedBoard" 
+                   data-pin-board-width="400" 
+                   data-pin-scale-height="240" 
+                   href="https://ru.pinterest.com/morstrix/re-f-erences/">
+                </a>
+            </div>
         </div>
 
         <hr style="border: 0; border-top: 1px solid #111;">
 
         <div class="section">
             <div class="art-square-frame">
-                <img src="assets/mx1.jpg" alt="Art Placeholder">
+                <img src="assets/mx1.jpg" alt="Preview">
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="assets/paint.png" class="nav-btn-img" onclick="openModal('artModal')">
+                <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" onclick="openModal('artModal')">
                 <div class="paint-label">PAINT</div>
             </div>
         </div>
@@ -190,13 +209,6 @@
         <div class="modal-content"><p style="font-size: 8px;">EMAIL: support@morstrix.com</p></div>
     </div>
 
-    <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <p style="font-size: 8px; margin-bottom: 20px;">📌 PINTEREST</p>
-            <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="350" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
-        </div>
-    </div>
-
     <div id="artModal" class="modal-overlay">
         <div class="modal-content" style="padding:0;">
             <div class="paint-window">
@@ -235,7 +247,7 @@
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
-        // 1. КАРУСЕЛЬ
+        // Карусель
         const slides = document.querySelectorAll('#mainCarousel img');
         let currentSlide = 0;
         setInterval(() => {
@@ -244,10 +256,9 @@
             slides[currentSlide].classList.add('active');
         }, 3500);
 
-        // 2. МОДАЛКИ
+        // Модалки
         function openModal(id) {
             document.getElementById(id).classList.add('active');
-            if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
             if(id === 'artModal' && !paintInit) {
                 setTimeout(startPaintLogic, 100);
                 paintInit = true;
@@ -256,7 +267,7 @@
         function closeModal(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
         function closeModalDirect(id) { document.getElementById(id).classList.remove('active'); }
 
-        // 3. FONT STYLER
+        // Font Styler
         const smallCapsMap = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'ꜱ','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
         let isTransformed = false;
         function handleAction() {
@@ -280,12 +291,12 @@
             }
         }
 
-        // 4. RSS TICKER
+        // Ticker
         const ticker = document.getElementById('rssTicker');
         const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
         ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
 
-        // 5. PAINT LOGIC
+        // Paint Logic
         let paintInit = false;
         function startPaintLogic() {
             const l1 = document.getElementById('layer1');
@@ -301,3 +312,58 @@
             [ctx1, ctx2].forEach(c => { c.lineCap = 'round'; c.lineWidth = 4; });
 
             let currentCtx = ctx2;
+            let isDrawing = false;
+            let undoStack = [];
+
+            const save = () => {
+                undoStack.push({l1: l1.toDataURL(), l2: l2.toDataURL()});
+                if(undoStack.length > 15) undoStack.shift();
+                document.getElementById('pUndo').disabled = undoStack.length <= 1;
+            };
+
+            const getCoords = (e) => {
+                const r = l2.getBoundingClientRect();
+                const cx = e.touches ? e.touches[0].clientX : e.clientX;
+                const cy = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: cx - r.left, y: cy - r.top };
+            };
+
+            const draw = (e) => {
+                if(!isDrawing) return;
+                const p = getCoords(e);
+                currentCtx.strokeStyle = document.getElementById('pColor').value;
+                currentCtx.lineTo(p.x, p.y);
+                currentCtx.stroke();
+            };
+
+            l2.addEventListener('mousedown', (e) => { isDrawing = true; currentCtx.beginPath(); const p = getCoords(e); currentCtx.moveTo(p.x, p.y); });
+            window.addEventListener('mousemove', draw);
+            window.addEventListener('mouseup', () => { if(isDrawing) { isDrawing = false; save(); } });
+            
+            l2.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; currentCtx.beginPath(); const p = getCoords(e); currentCtx.moveTo(p.x, p.y); });
+            l2.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+            l2.addEventListener('touchend', () => { if(isDrawing) { isDrawing = false; save(); } });
+
+            document.getElementById('pClear').onclick = () => {
+                ctx2.clearRect(0,0,l2.width,l2.height);
+                ctx1.fillStyle="#000"; ctx1.fillRect(0,0,l1.width,l1.height);
+                save();
+            };
+
+            document.getElementById('btnLayersOpen').onclick = () => document.getElementById('layersPopup').classList.add('active');
+            document.querySelectorAll('.layer-row').forEach(row => {
+                row.onclick = () => {
+                    document.querySelectorAll('.layer-row').forEach(r => r.classList.remove('active'));
+                    row.classList.add('active');
+                    currentCtx = (row.dataset.id === "1") ? ctx1 : ctx2;
+                    document.getElementById('layersPopup').classList.remove('active');
+                };
+            });
+            save();
+        }
+
+        // Обновление виджетов при загрузке
+        window.onload = () => { if(window.PinUtils) window.PinUtils.build(); };
+    </script>
+</body>
+</html>
