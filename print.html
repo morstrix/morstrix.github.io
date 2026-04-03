@@ -3,63 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX | PAINT STUDIO</title>
+    <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="paint.css">
-</head>
-<body class="paint-body">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <a href="index.html" class="paint-exit-btn">
-        <img src="assets/close.png" alt="Exit">
+        body {
+            background: #050508;
+            color: #f0f0f0;
+            font-family: 'Press Start 2P', monospace;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* КНОПКА ЗАКРЫТИЯ САЙТА */
+        .close-site { position: absolute; top: 15px; right: 15px; z-index: 999; }
+        .close-site img { width: 30px; height: 30px; image-rendering: pixelated; }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .section { width: 100%; text-align: center; }
+
+        /* 1. КАРУСЕЛЬ */
+        .carousel { width: 100%; position: relative; line-height: 0; background: #000; }
+        .carousel img {
+            width: 100%; height: auto; opacity: 0;
+            transition: opacity 0.8s ease-in-out; display: block;
+        }
+        .carousel img.active { opacity: 1; position: relative; }
+        .carousel img:not(.active) { position: absolute; top: 0; left: 0; }
+
+        .x-btn-img { cursor: pointer; width: 40px; margin-top: 15px; transition: 0.2s; }
+        .x-btn-img:hover { transform: scale(1.1); }
+
+        /* 2. RSS СТРОКА */
+        .ticker-wrapper {
+            padding: 12px 0; overflow: hidden; white-space: nowrap;
+            border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+        }
+        .ticker { display: inline-block; font-size: 8px; color: #ffd9e6; animation: scrollTicker 40s linear infinite; }
+        .ticker span { margin-right: 50px; }
+        @keyframes scrollTicker { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+
+        /* 3. НАВИГАЦИЯ (ИКОНКИ) */
+        .nav-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .nav-btn-img { cursor: pointer; width: 80px; height: auto; transition: 0.2s; image-rendering: pixelated; }
+        .nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* 4. АРТ БЛОК (КВАДРАТ) */
+        .art-square-frame {
+            width: 100%; max-width: 300px; aspect-ratio: 1/1;
+            border: 1px solid #1a1a1a; background: #0a0a0f;
+            margin: 0 auto 20px; overflow: hidden;
+        }
+        .art-square-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        .paint-label { font-size: 6px; color: #a84d6b; letter-spacing: 1px; margin-top: 8px; }
+
+        /* 5. FONT STYLER */
+        .styler-label { font-size: 7px; color: #444; margin-bottom: 10px; text-align: left; max-width: 450px; margin-inline: auto; }
+        .styler-container {
+            display: flex; align-items: center; background: #0a0a0f; border: 1px solid #1a1a1a;
+            padding: 5px 10px; width: 100%; max-width: 450px; margin: 0 auto;
+        }
+        .styler-input {
+            flex-grow: 1; background: transparent; border: none; color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace; font-size: 9px; padding: 12px 5px; outline: none;
+        }
+        .styler-icon-btn { background: transparent; border: none; cursor: pointer; padding: 5px; }
+        .styler-icon-btn img { width: 20px; height: 20px; }
+
+        /* ОБЩИЕ МОДАЛКИ */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98);
+            z-index: 10000; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content { width: 100%; max-width: 500px; text-align: center; position: relative; }
+        .retro-btn {
+            background: transparent; border: 1px solid #a84d6b; color: #ffb7c7;
+            padding: 10px 18px; font-family: 'Press Start 2P', monospace;
+            font-size: 8px; cursor: pointer; text-decoration: none; display: inline-block;
+        }
+
+        /* --- PAINT ENGINE STYLES --- */
+        .paint-window { width: 100%; max-width: 420px; background: #0a0a0f; border: 1px solid #1a1a1a; display: flex; flex-direction: column; margin: 0 auto; }
+        .paint-header-bar { background: #1a1a1a; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 7px; color: #444; }
+        .canvas-container { position: relative; width: 100%; aspect-ratio: 1/1; background: #000; line-height: 0; overflow: hidden; }
+        .canvas-container canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; }
+        .paint-tools-panel { display: flex; justify-content: space-between; padding: 10px; background: #050508; border-top: 1px solid #1a1a1a; gap: 10px; align-items: center; }
+        .layers-sub-modal { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 240px; background: #0a0a0f; border: 1px solid #ffb7c7; z-index: 11000; }
+        .layers-sub-modal.active { display: block; }
+        .layer-row { padding: 15px; font-size: 7px; border-bottom: 1px solid #111; cursor: pointer; color: #444; text-align: left; }
+        .layer-row.active { color: #ffb7c7; background: #0d0d14; border-left: 3px solid #ffb7c7; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="close-site">
+        <img src="assets/close.png" alt="Close">
     </a>
 
-    <div class="paint-window">
-        <div class="paint-header">
-            <span class="program-title">MS_PAINT.EXE</span>
-            <div class="header-controls">
-                <span class="win-btn">_</span>
-                <span class="win-btn">□</span>
-                <span class="win-btn">X</span>
+    <div class="container">
+        
+        <div class="section">
+            <div class="carousel" id="mainCarousel">
+                <img src="assets/mx1.jpg" class="active">
+                <img src="assets/mx2.jpg">
+            </div>
+            <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
+        </div>
+
+        <div class="ticker-wrapper">
+            <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
+        </div>
+
+        <div class="section nav-grid">
+            <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
+            <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
+            <img src="assets/mood.png" class="nav-btn-img" onclick="openModal('moodModal')">
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #111;">
+
+        <div class="section">
+            <div class="art-square-frame">
+                <img src="assets/mx1.jpg" alt="Art Placeholder">
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="assets/paint.png" class="nav-btn-img" onclick="openModal('artModal')">
+                <div class="paint-label">PAINT</div>
             </div>
         </div>
 
-        <div class="paint-toolbar top-bar">
-            <div class="history-group">
-                <button class="btn-retro" id="pUndo" disabled> &lt; </button>
-                <button class="btn-retro" id="pRedo" disabled> &gt; </button>
+        <div class="section">
+            <div class="styler-label">[ FONT_STYLER_V.1.0 ]</div>
+            <div class="styler-container">
+                <button class="styler-icon-btn" onclick="copyStylerText()">
+                    <img src="assets/x.png" style="filter: hue-rotate(290deg) brightness(0.8);">
+                </button>
+                <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
+                <button class="styler-icon-btn" onclick="handleAction()">
+                    <img src="assets/close.png" id="actionIcon">
+                </button>
             </div>
-            <button class="btn-retro" id="btnLayersOpen">CHANNELS</button>
         </div>
 
-        <div class="canvas-area" id="canvasContainer">
-            <canvas id="layer1"></canvas> <canvas id="layer2"></canvas> </div>
-
-        <div class="paint-toolbar bottom-bar">
-            <div class="tool-group">
-                <input type="color" id="pColor" value="#ffb7c7">
-                <div class="brush-info">SIZE: 4PX</div>
+        <div class="section" style="padding-bottom: 60px;">
+            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 20px;">🏆 HALL OF FAME</h4>
+            <div style="font-size: 8px; color: #444; line-height: 2.5;">
+                MORPHINE_DRIP — 12450<br>
+                GL1TCH_WITCH — 9820<br>
+                VHS_GHOST — 7650
             </div>
-            <button class="btn-retro" id="pClear">CLEAR_ALL</button>
+            <div style="margin-top: 30px;">
+                <a href="tetris.html" class="retro-btn">🎮 PLAY TETRIS</a>
+            </div>
         </div>
     </div>
 
-    <div id="layersPopup" class="modal-overlay-paint">
-        <div class="layers-window">
-            <div class="layers-header">
-                <span>SELECT_LAYER</span>
-                <button id="btnLayersClose">X</button>
-            </div>
-            <div id="layerList">
-                <div class="layer-item active" data-id="2">
-                    <span class="status-dot"></span> LAYER_02 (TOP)
+    <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">⚠️ ATTENTION ⚠️<br><br>EXPERIMENTAL DATA STREAM.</p>
+            <button class="retro-btn" onclick="closeModalDirect('disclaimerModal')">ENTER</button>
+        </div>
+    </div>
+
+    <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <p style="font-size: 8px; margin-bottom: 20px;">OPEN TELEGRAM?</p>
+            <a href="https://t.me/morstrix" target="_blank" class="retro-btn">YES</a>
+        </div>
+    </div>
+
+    <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content"><p style="font-size: 8px;">EMAIL: support@morstrix.com</p></div>
+    </div>
+
+    <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <p style="font-size: 8px; margin-bottom: 20px;">📌 PINTEREST</p>
+            <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="350" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
+        </div>
+    </div>
+
+    <div id="artModal" class="modal-overlay">
+        <div class="modal-content" style="padding:0;">
+            <div class="paint-window">
+                <div class="paint-header-bar">
+                    <span>MORSTRIX_PAINT.EXE</span>
+                    <button onclick="closeModalDirect('artModal')" style="background:none; border:none; color:#444; cursor:pointer; font-family:'Press Start 2P'; font-size:10px;">X</button>
                 </div>
-                <div class="layer-item" data-id="1">
-                    <span class="status-dot"></span> LAYER_01 (BACK)
+                <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a;">
+                    <div style="display:flex; gap:5px;">
+                        <button class="retro-btn" id="pUndo" style="padding:5px 8px;" disabled>&lt;</button>
+                        <button class="retro-btn" id="pRedo" style="padding:5px 8px;" disabled>&gt;</button>
+                    </div>
+                    <button class="retro-btn" id="btnLayersOpen" style="font-size:7px;">CHANNELS</button>
+                </div>
+                <div class="canvas-container" id="paintArea">
+                    <canvas id="layer1"></canvas>
+                    <canvas id="layer2"></canvas>
+                </div>
+                <div class="paint-tools-panel">
+                    <input type="color" id="pColor" value="#ffb7c7" style="width:35px; height:25px; border:1px solid #1a1a1a; background:none;">
+                    <button class="retro-btn" id="pClear" style="font-size:7px;">CLEAR</button>
+                </div>
+            </div>
+            <div id="layersPopup" class="layers-sub-modal">
+                <div style="background:#ffb7c7; color:#000; padding:8px; font-size:7px; display:flex; justify-content:space-between;">
+                    <span>LAYERS</span>
+                    <span onclick="document.getElementById('layersPopup').classList.remove('active')" style="cursor:pointer;">X</span>
+                </div>
+                <div id="layerList">
+                    <div class="layer-row active" data-id="2">LAYER_02 (TOP)</div>
+                    <div class="layer-row" data-id="1">LAYER_01 (BACK)</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="paint.js"></script>
-</body>
-</html>
+    <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+    <script>
+        // 1. КАРУСЕЛЬ
+        const slides = document.querySelectorAll('#mainCarousel img');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 3500);
+
+        // 2. МОДАЛКИ
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
+            if(id === 'artModal' && !paintInit) {
+                setTimeout(startPaintLogic, 100);
+                paintInit = true;
+            }
+        }
+        function closeModal(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
+        function closeModalDirect(id) { document.getElementById(id).classList.remove('active'); }
+
+        // 3. FONT STYLER
+        const smallCapsMap = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'ꜱ','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
+        let isTransformed = false;
+        function handleAction() {
+            const input = document.getElementById('fontInput');
+            if (!input.value) { input.focus(); return; }
+            if (!isTransformed) {
+                input.value = input.value.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
+                isTransformed = true;
+                document.getElementById('actionIcon').style.filter = "invert(1) sepia(1) saturate(5) hue-rotate(300deg)";
+            } else {
+                input.value = ""; isTransformed = false;
+                document.getElementById('actionIcon').style.filter = "none";
+            }
+        }
+        function copyStylerText() {
+            const input = document.getElementById('fontInput');
+            if (input.value && input.value !== "COPIED!") {
+                navigator.clipboard.writeText(input.value);
+                const val = input.value; input.value = "COPIED!";
+                setTimeout(() => { input.value = val; }, 1000);
+            }
+        }
+
+        // 4. RSS TICKER
+        const ticker = document.getElementById('rssTicker');
+        const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
+        ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
+
+        // 5. PAINT LOGIC
+        let paintInit = false;
+        function startPaintLogic() {
+            const l1 = document.getElementById('layer1');
+            const l2 = document.getElementById('layer2');
+            const ctx1 = l1.getContext('2d', { willReadFrequently: true });
+            const ctx2 = l2.getContext('2d', { willReadFrequently: true });
+            const area = document.getElementById('paintArea');
+
+            l1.width = l2.width = area.offsetWidth;
+            l1.height = l2.height = area.offsetHeight;
+
+            ctx1.fillStyle = "#000"; ctx1.fillRect(0,0,l1.width,l1.height);
+            [ctx1, ctx2].forEach(c => { c.lineCap = 'round'; c.lineWidth = 4; });
+
+            let currentCtx = ctx2;
