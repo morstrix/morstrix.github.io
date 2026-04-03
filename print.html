@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #050508; /* Темный фон для контраста */
+            background: #050508;
             color: #f0f0f0;
             font-family: 'Press Start 2P', monospace;
             padding: 20px;
@@ -19,56 +19,47 @@
             min-height: 100vh;
         }
 
-        /* ----- КНОПКА ЗАКРЫТИЯ (ВЕРХНИЙ ПРАВЫЙ УГОЛ) ----- */
+        /* КНОПКА ЗАКРЫТИЯ */
         .close-site {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 9999;
-            transition: transform 0.2s;
+            transition: 0.2s;
         }
-        .close-site img {
-            width: 40px;
-            height: 40px;
-            image-rendering: pixelated;
-        }
-        .close-site:hover { transform: scale(1.1); }
+        .close-site img { width: 40px; height: 40px; image-rendering: pixelated; }
 
         .container {
             max-width: 600px;
             width: 100%;
-            margin-top: 60px; /* Отступ под кнопку закрытия */
+            margin-top: 60px;
             display: flex;
             flex-direction: column;
-            gap: 30px; /* Отступы между блоками */
+            gap: 35px;
         }
 
-        /* Общие стили секций */
         .section { width: 100%; text-align: center; }
-        
-        .block-img {
+
+        /* КАРУСЕЛЬ В ХЕДЕРЕ */
+        .carousel {
             width: 100%;
-            max-height: 200px;
-            object-fit: cover;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
             border: 1px solid #332233;
         }
-
-        /* Кнопки */
-        .retro-btn {
-            background: transparent;
-            border: 1px solid #a84d6b;
-            color: #ffb7c7;
-            padding: 12px 20px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.2s;
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        .retro-btn:hover { background: #a84d6b; color: #fff; box-shadow: 0 0 10px #a84d6b; }
+        .carousel img.active { opacity: 1; }
 
-        /* RSS Бегущая строка */
+        /* RSS СТРОКА */
         .ticker-wrapper {
             border-top: 1px solid #332233;
             border-bottom: 1px solid #332233;
@@ -90,96 +81,101 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Сетка для кнопок (Форум + Саппорт) */
-        .button-row {
+        /* СЕТКА КНОПОК-КАРТИНОК */
+        .img-nav {
             display: flex;
             gap: 15px;
             justify-content: center;
+            flex-wrap: wrap;
         }
+        .nav-icon {
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            max-width: 120px;
+        }
+        .nav-icon:hover { transform: scale(1.05); filter: brightness(1.2); }
 
-        /* Фонт стайлер (заглушка) */
+        /* КНОПКА ПЕИНТ И ФОНТ СТАЙЛЕР */
+        .retro-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #ffb7c7;
+            padding: 12px 20px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
         .font-styler-box {
-            width: 100%;
             padding: 20px;
-            border: 1px dashed #555;
-            color: #888;
+            border: 1px dashed #444;
+            color: #666;
             font-size: 7px;
             background: rgba(255,255,255,0.02);
         }
 
-        /* Модалки */
+        /* МОДАЛКИ */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.96);
             z-index: 10000;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
             width: 90%;
             max-width: 500px;
+            max-height: 80vh;
             background: #000;
-            padding: 30px;
+            padding: 40px 20px;
             border: 1px solid #a84d6b;
             text-align: center;
             position: relative;
+            overflow-y: auto;
         }
-        .modal-close-btn {
+        .modal-close-x {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-            color: #a84d6b;
+            top: 15px; right: 15px;
+            color: #fff; cursor: pointer;
         }
 
-        /* Лидерборд */
-        .leaderboard ol {
-            list-style: none;
-            font-size: 8px;
-            line-height: 2;
-            color: #ccc;
-            margin: 15px 0;
-        }
+        /* ЛИДЕРБОРД */
+        .leaderboard { background: #0a0a0f; padding: 20px; border: 1px solid #222; }
+        .leaderboard ol { list-style: none; font-size: 8px; color: #aaa; margin: 15px 0; line-height: 2; }
     </style>
 </head>
 <body>
 
     <a href="index.html" class="close-site">
-        <img src="close.png" alt="Close">
+        <img src="assets/close.png" alt="Close">
     </a>
 
     <div class="container">
         
-        <div class="section">
-            <img src="your-image.jpg" class="block-img" alt="Header Visual">
+        <div class="section carousel" id="mainCarousel">
+            <img src="assets/mx1.jpg" class="active">
+            <img src="assets/mx2.jpg">
         </div>
 
         <div class="ticker-wrapper">
             <div class="ticker" id="rssTicker">✦ LOADING ART FEEDS... ✦</div>
         </div>
 
-        <div class="section button-row">
-            <button class="retro-btn" onclick="openModal('forumModal')">💬 FORUM</button>
-            <button class="retro-btn" onclick="openModal('supportModal')">🛠️ SUPPORT</button>
+        <div class="section img-nav">
+            <img src="assets/forum.png" class="nav-icon" onclick="openModal('forumModal')" alt="Forum">
+            <img src="assets/support.png" class="nav-icon" onclick="openModal('supportModal')" alt="Support">
+            <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')" alt="Moodboard">
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #222; margin: 10px 0;">
+        <hr style="border:0; border-top: 1px solid #222; margin: 10px 0;">
 
-        <div class="section">
-            <div style="overflow: hidden; border-radius: 8px;">
-                <a data-pin-do="embedBoard" data-pin-board-width="600" data-pin-scale-height="240" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
-            </div>
-        </div>
-
-        <div class="section" style="position: relative;">
-            <img src="paint-bg.jpg" class="block-img" style="opacity: 0.5;">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                <button class="retro-btn" onclick="openModal('artModal')">🎨 OPEN PAINT STUDIO</button>
-            </div>
+        <div class="section" style="position: relative; height: 120px; border: 1px solid #332233; display: flex; align-items: center; justify-content: center;">
+             <div style="background: url('assets/mx1.jpg') center/cover; opacity: 0.3; position: absolute; inset:0;"></div>
+             <button class="retro-btn" style="position: relative;" onclick="openModal('artModal')">🎨 ART STUDIO // PAINT</button>
         </div>
 
         <div class="section">
@@ -189,8 +185,8 @@
             </div>
         </div>
 
-        <div class="section" style="background: rgba(20,10,15,0.5); padding: 20px; border: 1px solid #222;">
-            <h4 style="font-size: 9px; color: #ffadc2;">🏆 TOP PLAYERS</h4>
+        <div class="section leaderboard">
+            <h4 style="font-size: 8px; color: #ffb7c7;">🏆 HALL OF FAME</h4>
             <ol>
                 <li>1. MORPHINE_DRIP — 12450</li>
                 <li>2. GL1TCH_WITCH — 9820</li>
@@ -201,48 +197,63 @@
 
     </div>
 
-    <div id="forumModal" class="modal-overlay" onclick="closeAllModals(event)">
+    <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-btn" onclick="closeAllModals()">✖</span>
-            <p style="font-size: 8px; line-height: 1.6;">ВЫ ПЕРЕХОДИТЕ В ТЕЛЕГРАМ-СООБЩЕСТВО</p>
-            <br>
-            <a href="https://t.me/morstrix" target="_blank" class="retro-btn">ПОДТВЕРДИТЬ</a>
+            <span class="modal-close-x">✖</span>
+            <p style="font-size: 8px; margin-bottom: 20px;">ПЕРЕХОД В ТЕЛЕГРАМ</p>
+            <a href="https://t.me/morstrix" target="_blank" class="retro-btn">ENTER</a>
         </div>
     </div>
 
-    <div id="supportModal" class="modal-overlay" onclick="closeAllModals(event)">
+    <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-btn" onclick="closeAllModals()">✖</span>
-            <p style="font-size: 8px;">SUPPORT CENTER<br><br>EMAIL: contact@morstrix.com</p>
+            <span class="modal-close-x">✖</span>
+            <p style="font-size: 8px;">SUPPORT: contact@morstrix.com</p>
         </div>
     </div>
 
-    <div id="artModal" class="modal-overlay" onclick="closeAllModals(event)">
+    <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="modal-close-x">✖</span>
+            <p style="font-size: 8px; margin-bottom: 20px;">📌 MOODBOARD</p>
+            <a data-pin-do="embedBoard" data-pin-board-width="500" data-pin-scale-height="300" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
+        </div>
+    </div>
+
+    <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-btn" onclick="closeAllModals()">✖</span>
-            <p style="font-size: 8px;">🎨 PAINT STUDIO<br><br>В РАЗРАБОТКЕ</p>
+            <span class="modal-close-x">✖</span>
+            <p style="font-size: 8px;">ART STUDIO<br><br>COMING SOON...</p>
         </div>
     </div>
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
+        // ЛОГИКА КАРУСЕЛИ
+        const slides = document.querySelectorAll('#mainCarousel img');
+        let currentSlide = 0;
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        setInterval(nextSlide, 3000); // Смена каждые 3 секунды
+
+        // МОДАЛКИ
         function openModal(id) {
             document.getElementById(id).classList.add('active');
+            if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
         }
-
-        function closeAllModals(e) {
-            if (!e || e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close-btn')) {
+        function closeModal(e) {
+            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close-x')) {
                 document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
             }
         }
 
-        // RSS Loader (упрощенный пример)
-        async function loadRSS() {
-            const ticker = document.getElementById('rssTicker');
-            const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
-            ticker.innerHTML = `<span>${items.join('</span><span>')}</span>`.repeat(5);
-        }
-        loadRSS();
+        // RSS
+        const ticker = document.getElementById('rssTicker');
+        const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
+        ticker.innerHTML = `<span>${items.join('</span><span>')}</span>`.repeat(5);
     </script>
 </body>
 </html>
