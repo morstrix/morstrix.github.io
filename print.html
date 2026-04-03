@@ -12,25 +12,33 @@
             background: #050508;
             color: #f0f0f0;
             font-family: 'Press Start 2P', monospace;
-            padding: 20px;
+            /* Увеличиваем боковые отступы body, чтобы контент не пересекался с крестиком */
+            padding: 0 80px 60px; 
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ (ПРАВЫЙ УГОЛ) */
+        /* КНОПКА ЗАКРЫТИЯ - ПРИЖАТА К УГЛУ */
         .close-site {
             position: fixed;
-            top: 25px;
-            right: 25px;
+            top: 0;
+            right: 0;
             z-index: 9999;
+            padding: 15px; /* небольшое поле внутри для удобства нажатия */
         }
-        .close-site img { width: 35px; height: 35px; image-rendering: pixelated; }
+        .close-site img { 
+            width: 35px; 
+            height: 35px; 
+            display: block;
+            image-rendering: pixelated; 
+        }
 
         .container {
-            max-width: 600px;
+            max-width: 600px; /* Ширина контента */
             width: 100%;
-            margin-top: 70px; /* Отступ от крестика */
+            margin-top: 60px; /* Отступ сверху */
             display: flex;
             flex-direction: column;
             gap: 40px;
@@ -38,7 +46,7 @@
 
         .section { width: 100%; text-align: center; }
 
-        /* КАРУСЕЛЬ - ТОЛЬКО КАРТИНКИ */
+        /* КАРУСЕЛЬ - ЧИСТО КАРТИНКИ */
         .carousel {
             width: 100%;
             position: relative;
@@ -79,16 +87,17 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .nav-icon {
             cursor: pointer;
-            width: 110px;
+            width: 100px;
             height: auto;
             transition: 0.2s;
         }
         .nav-icon:hover { transform: scale(1.05); }
 
-        /* КНОПКИ ТЕКСТОМ */
+        /* ТЕКСТОВЫЕ КНОПКИ */
         .retro-btn {
             background: transparent;
             border: 1px solid #a84d6b;
@@ -98,9 +107,10 @@
             font-size: 8px;
             cursor: pointer;
             text-decoration: none;
+            display: inline-block;
         }
 
-        /* ФОНТ СТАЙЛЕР (ЗАГЛУШКА) */
+        /* ЗАГЛУШКА */
         .font-styler-box {
             padding: 25px;
             color: #444;
@@ -109,7 +119,7 @@
         }
 
         /* ЛИДЕРБОРД */
-        .leaderboard { padding: 20px; text-align: center; }
+        .leaderboard { padding: 20px; }
         .leaderboard h4 { font-size: 8px; color: #a84d6b; margin-bottom: 15px; }
         .leaderboard ol { list-style: none; font-size: 8px; color: #777; line-height: 2; }
 
@@ -128,7 +138,6 @@
             width: 90%;
             max-width: 500px;
             text-align: center;
-            position: relative;
         }
     </style>
 </head>
@@ -155,7 +164,7 @@
             <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')">
         </div>
 
-        <div class="section" style="padding: 40px 0;">
+        <div class="section" style="padding: 30px 0;">
              <button class="retro-btn" onclick="openModal('artModal')">🎨 ART STUDIO // PAINT</button>
         </div>
 
@@ -177,6 +186,7 @@
                 <a href="tetris.html" class="retro-btn">🎮 PLAY TETRIS</a>
             </div>
         </div>
+
     </div>
 
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
