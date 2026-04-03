@@ -162,24 +162,21 @@
             <div class="journal-sub">print / archive / rss feed</div>
         </div>
 
-        <!-- СПОТИФАЙ -->
-        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-            <iframe style="border-radius:12px; width:280px; height:80px;" 
-                src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
-                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
-            </iframe>
-        </div>
-
-        <!-- ART STUDIO -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
-        </div>
-
         <!-- TWITTER -->
         <div style="text-align: center; margin-bottom: 20px;">
             <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
         </div>
-
+        
+<!-- RSS FEEDS -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="rssBtn" class="retro-btn">📡 RSS FEEDS</button>
+        </div>       
+        
+        <!-- ART STUDIO -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
+        </div>
+        
         <!-- BEHANCE -->
         <div class="block">
             <div class="block-title">🎯 BEHANCE</div>
@@ -189,11 +186,6 @@
             </div>
         </div>
 
-        <!-- RSS FEEDS -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="rssBtn" class="retro-btn">📡 RSS FEEDS</button>
-        </div>
-
         <!-- PINTEREST -->
         <div class="block">
             <div class="block-title">📌 PINTEREST</div>
@@ -201,6 +193,12 @@
             <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
         </div>
 
+<!-- СПОТИФАЙ -->
+        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+            </iframe>
+        </div>
+        
         <!-- TETRIS -->
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="tetrisBtn" class="retro-btn">🎮 TETRIS</button>
@@ -246,7 +244,6 @@
             </div>
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
                 <button id="confirmForumBtn" class="retro-btn">ENTER</button>
-                <button id="cancelForumBtn" class="retro-btn">CANCEL</button>
             </div>
         </div>
     </div>
