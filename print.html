@@ -12,50 +12,57 @@
             background: #050508;
             color: #f0f0f0;
             font-family: 'Press Start 2P', monospace;
-            padding: 20px;
+            /* Увеличиваем отступы по бокам, чтобы контент дышал */
+            padding: 20px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ */
+        /* КНОПКА ЗАКРЫТИЯ - Фиксированная, с фоном для видимости */
         .close-site {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 9999;
             transition: 0.2s;
+            background: rgba(5, 5, 8, 0.8);
+            border-radius: 5px;
+            padding: 5px;
         }
-        .close-site img { width: 40px; height: 40px; image-rendering: pixelated; }
+        .close-site img { width: 35px; height: 35px; display: block; image-rendering: pixelated; }
 
         .container {
             max-width: 600px;
             width: 100%;
-            margin-top: 60px;
+            /* Отступ сверху больше, чтобы контент не нырял под крестик сразу */
+            margin-top: 80px; 
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 40px;
         }
 
         .section { width: 100%; text-align: center; }
 
-        /* КАРУСЕЛЬ В ХЕДЕРЕ */
+        /* КАРУСЕЛЬ - ФИКСИРОВАННЫЙ РАЗМЕР БЕЗ ОБРЕЗКИ */
         .carousel {
             width: 100%;
-            height: 250px;
+            aspect-ratio: 16 / 9; /* Задает пропорции блока */
             position: relative;
             overflow: hidden;
             border: 1px solid #332233;
+            background: #000;
         }
         .carousel img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            /* 'contain' гарантирует, что картинка видна на 100% без обрезки */
+            object-fit: contain; 
             position: absolute;
             top: 0; left: 0;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
         }
         .carousel img.active { opacity: 1; }
 
@@ -74,28 +81,27 @@
             animation: scrollTicker 40s linear infinite;
         }
         .ticker span { margin-right: 50px; }
-        .ticker span::before { content: "✦ "; color: #ff8c69; }
 
         @keyframes scrollTicker {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
         }
 
-        /* СЕТКА КНОПОК-КАРТИНОК */
+        /* КНОПКИ-ИКОНКИ */
         .img-nav {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
-            flex-wrap: wrap;
         }
         .nav-icon {
             cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
-            max-width: 120px;
+            transition: 0.2s;
+            width: 100px; /* Фиксированная ширина для иконок */
+            height: auto;
         }
-        .nav-icon:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .nav-icon:hover { transform: scale(1.1); filter: brightness(1.3); }
 
-        /* КНОПКА ПЕИНТ И ФОНТ СТАЙЛЕР */
+        /* РЕТРО КНОПКИ И БЛОКИ */
         .retro-btn {
             background: transparent;
             border: 1px solid #a84d6b;
@@ -104,14 +110,15 @@
             font-family: 'Press Start 2P', monospace;
             font-size: 8px;
             cursor: pointer;
-            transition: 0.2s;
+            text-decoration: none;
         }
+        
         .font-styler-box {
             padding: 20px;
             border: 1px dashed #444;
-            color: #666;
+            color: #555;
             font-size: 7px;
-            background: rgba(255,255,255,0.02);
+            line-height: 1.5;
         }
 
         /* МОДАЛКИ */
@@ -119,33 +126,23 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.96);
+            background: rgba(0, 0, 0, 0.98);
             z-index: 10000;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
             width: 90%;
             max-width: 500px;
-            max-height: 80vh;
             background: #000;
             padding: 40px 20px;
             border: 1px solid #a84d6b;
-            text-align: center;
             position: relative;
-            overflow-y: auto;
-        }
-        .modal-close-x {
-            position: absolute;
-            top: 15px; right: 15px;
-            color: #fff; cursor: pointer;
         }
 
-        /* ЛИДЕРБОРД */
-        .leaderboard { background: #0a0a0f; padding: 20px; border: 1px solid #222; }
-        .leaderboard ol { list-style: none; font-size: 8px; color: #aaa; margin: 15px 0; line-height: 2; }
+        .leaderboard { background: rgba(10,10,15,0.8); padding: 25px; border: 1px solid #222; }
     </style>
 </head>
 <body>
@@ -162,74 +159,70 @@
         </div>
 
         <div class="ticker-wrapper">
-            <div class="ticker" id="rssTicker">✦ LOADING ART FEEDS... ✦</div>
+            <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
         <div class="section img-nav">
-            <img src="assets/forum.png" class="nav-icon" onclick="openModal('forumModal')" alt="Forum">
-            <img src="assets/support.png" class="nav-icon" onclick="openModal('supportModal')" alt="Support">
-            <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')" alt="Moodboard">
+            <img src="assets/forum.png" class="nav-icon" onclick="openModal('forumModal')">
+            <img src="assets/support.png" class="nav-icon" onclick="openModal('supportModal')">
+            <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')">
         </div>
 
-        <hr style="border:0; border-top: 1px solid #222; margin: 10px 0;">
-
-        <div class="section" style="position: relative; height: 120px; border: 1px solid #332233; display: flex; align-items: center; justify-content: center;">
-             <div style="background: url('assets/mx1.jpg') center/cover; opacity: 0.3; position: absolute; inset:0;"></div>
+        <div class="section" style="position: relative; overflow: hidden; border: 1px solid #332233; padding: 40px 0;">
+             <div style="background: url('assets/mx1.jpg') center/cover; opacity: 0.15; position: absolute; inset:0; filter: grayscale(1);"></div>
              <button class="retro-btn" style="position: relative;" onclick="openModal('artModal')">🎨 ART STUDIO // PAINT</button>
         </div>
 
         <div class="section">
             <div class="font-styler-box">
                 [ FONT_STYLER_V.1.0 ]<br><br>
-                STATUS: OFFLINE / UNDER DEVELOPMENT
+                _STATUS: ENCRYPTED / OFFLINE
             </div>
         </div>
 
         <div class="section leaderboard">
-            <h4 style="font-size: 8px; color: #ffb7c7;">🏆 HALL OF FAME</h4>
-            <ol>
-                <li>1. MORPHINE_DRIP — 12450</li>
-                <li>2. GL1TCH_WITCH — 9820</li>
-                <li>3. VHS_GHOST — 7650</li>
-            </ol>
-            <a href="tetris.html" class="retro-btn" style="margin-top: 10px;">🎮 PLAY TETRIS</a>
+            <h4 style="font-size: 8px; color: #ffb7c7; margin-bottom: 20px;">🏆 HALL OF FAME</h4>
+            <div style="font-size: 8px; color: #888; text-align: left; display: inline-block; line-height: 2.5;">
+                1. MORPHINE_DRIP — 12450<br>
+                2. GL1TCH_WITCH — 9820<br>
+                3. VHS_GHOST — 7650
+            </div>
+            <div style="margin-top: 25px;">
+                <a href="tetris.html" class="retro-btn">🎮 PLAY TETRIS</a>
+            </div>
         </div>
 
     </div>
 
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-x">✖</span>
-            <p style="font-size: 8px; margin-bottom: 20px;">ПЕРЕХОД В ТЕЛЕГРАМ</p>
-            <a href="https://t.me/morstrix" target="_blank" class="retro-btn">ENTER</a>
+            <p style="font-size: 8px; margin-bottom: 30px;">REDIRECTING TO TELEGRAM...</p>
+            <a href="https://t.me/morstrix" target="_blank" class="retro-btn">PROCEED</a>
         </div>
     </div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-x">✖</span>
-            <p style="font-size: 8px;">SUPPORT: contact@morstrix.com</p>
+            <p style="font-size: 8px; line-height: 1.6;">SUPPORT CENTER<br><br>CONTACT@MORSTRIX.COM</p>
         </div>
     </div>
 
     <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" style="max-width: 600px;">
-            <span class="modal-close-x">✖</span>
+        <div class="modal-content" style="max-width: 550px; height: 80vh; overflow-y: auto;">
             <p style="font-size: 8px; margin-bottom: 20px;">📌 MOODBOARD</p>
-            <a data-pin-do="embedBoard" data-pin-board-width="500" data-pin-scale-height="300" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
+            <a data-pin-do="embedBoard" data-pin-board-width="450" data-pin-scale-height="400" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 
     <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="modal-close-x">✖</span>
-            <p style="font-size: 8px;">ART STUDIO<br><br>COMING SOON...</p>
+            <p style="font-size: 8px;">🎨 STUDIO<br><br>UNDER CONSTRUCTION</p>
         </div>
     </div>
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
-        // ЛОГИКА КАРУСЕЛИ
+        // Карусель
         const slides = document.querySelectorAll('#mainCarousel img');
         let currentSlide = 0;
         function nextSlide() {
@@ -237,23 +230,23 @@
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-        setInterval(nextSlide, 3000); // Смена каждые 3 секунды
+        setInterval(nextSlide, 3500);
 
-        // МОДАЛКИ
+        // Модалки
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
         }
         function closeModal(e) {
-            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close-x')) {
+            if (e.target.classList.contains('modal-overlay')) {
                 document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
             }
         }
 
-        // RSS
+        // RSS текст
         const ticker = document.getElementById('rssTicker');
         const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
-        ticker.innerHTML = `<span>${items.join('</span><span>')}</span>`.repeat(5);
+        ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
     </script>
 </body>
 </html>
