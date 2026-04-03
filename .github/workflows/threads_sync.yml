@@ -1,0 +1,31 @@
+import feedparser
+import json
+import os
+
+RSS_URL = "https://rss.app/feeds/C1izttJaInbt7xKb.xml"
+
+def update_threads():
+    try:
+        feed = feedparser.parse(RSS_URL)
+        if not feed.entries:
+            print("Фид пустой или недоступен")
+            return
+
+        posts = []
+        for entry in feed.entries[:10]:
+            # Чистим текст от HTML-тегов, если они есть
+            text = entry.summary if 'summary' in entry else ""
+            posts.append({
+                "date": entry.published if 'published' in entry else "Recent",
+                "text": text
+            })
+        
+        with open("diary.json", "w", encoding='utf-8') as f:
+            json.dump(posts, f, ensure_ascii=False, indent=4)
+        print("diary.json успешно обновлен!")
+        
+    except Exception as e:
+        print(f"Ошибка при обновлении: {e}")
+
+if __name__ == "__main__":
+    update_threads()

@@ -1,7 +1,7 @@
 name: Update Diary Posts
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -18,58 +18,45 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install requests
-        run: pip install requests
+      - name: Install dependencies
+        run: pip install requests feedparser
 
-      - name: Fetch Threads Data
+      - name: Fetch Threads via RSS
         run: |
           python3 - << 'EOF'
-          import requests, json, datetime, time
-
-          def fetch_posts():
-              user = 'grimexframe'
-              # Попытка №1: Основной API
-              try:
-                  url = f'https://threads-api.vercel.app/api/profile?username={user}'
-                  res = requests.get(url, timeout=20)
-                  data = res.json().get('threads', [])
-                  if data:
-                      return parse_data(data)
-              except: pass
-
-              # Попытка №2: Резервный API
-              try:
-                  url = f'https://threads-photofeed.vercel.app/api/feed?username={user}'
-                  res = requests.get(url, timeout=20)
-                  data = res.json().get('data', {}).get('threads', [])
-                  if data:
-                      return parse_data(data, is_alt=True)
-              except: pass
-              
-              return []
-
-          def parse_data(threads, is_alt=False):
-              posts = []
-              for t in threads[:6]:
-                  # У разных API разная структура, пробуем обе
-                  item = t if is_alt else t.get('thread_items', [{}])[0]
-                  post = item.get('post', item)
-                  text = post.get('caption', {}).get('text', '')
-                  ts = post.get('taken_at', 0)
-                  if text:
-                      d = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y')
-                      posts.append({'date': d, 'text': text.upper()})
-              return posts
-
-          results = fetch_posts()
+          import feedparser, json, datetime, re, sys
           
-          # Если совсем глухо, пишем время последней проверки, чтобы видеть прогресс
-          current_time = datetime.datetime.now().strftime('%H:%M:%S')
-          if not results:
-              results = [{"date": "STATUS", "text": f"SYNCING_WITH_THREADS_AT_{current_time}..."}]
+          # Пробуем разные источники
+          sources = [
+              f"https://rss.app/feeds/_threads_grimexframe.xml",
+              f"https://api.rss2json.com/v1/api.json?rss_url=https://www.threads.net/@{username}"
+          ]
+          
+          username = "grimexframe"
+          posts = []
+          
+          # Способ 1: Через rss.app (если есть кастомный фид)
+          try:
+              feed = feedparser.parse(f"https://rss.app/feeds/_threads_{username}.xml")
+              if feed.entries:
+                  for entry in feed.entries[:5]:
+                      posts.append({
+                          'date': datetime.datetime.strptime(entry.published, '%a, %d %b %Y %H:%M:%S %Z').strftime('%d.%m.%Y %H:%M'),
+                          'text': re.sub(r'<[^>]+>', '', entry.description)[:200].upper()
+                      })
+          except Exception as e:
+              print(f"RSS.app error: {e}")
+          
+          # Способ 2: Заглушка с реальным временем (пока нет API)
+          if not posts:
+              now = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+              posts = [
+                  {'date': now, 'text': f"LAST_SCAN: {now}"},
+                  {'date': 'STATUS', 'text': 'AWAITING_THREADS_API'}
+              ]
           
           with open('diary.json', 'w', encoding='utf-8') as f:
-              json.dump(results, f, ensure_ascii=False, indent=2)
+              json.dump(posts, f, ensure_ascii=False, indent=2)
           EOF
 
       - name: Commit and Push
@@ -77,6 +64,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add diary.json
-          git commit -m 'System: Auto-sync diary' || exit 0
+          git commit -m "Threads sync: $(date '+%Y-%m-%d %H:%M')" || exit 0
           git pull --rebase origin main
           git push
