@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta property="og:title" content=➞ ᴢ☻ɴǝ>
-<meta property="og:description" content="пᴏᴘᴛᴀʌ">
-<meta property="og:image" content="https://morstrix.zone/assets/preview.jpg">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta property="og:title" content="➞ ᴢ☻ɴǝ">
+    <meta property="og:description" content="пᴏᴘᴛᴀʌ">
+    <meta property="og:image" content="https://morstrix.zone/assets/preview.jpg">
+    <title>MORSTRIX | PORTAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-        /* ========== НОВАЯ РАССТАНОВКА + АДАПТАЦИЯ ========== */
-        
+        /* ========== ОСНОВНЫЕ СТИЛИ ========== */
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow-x: hidden;
+        }
+
         .grid-container {
             padding: 20px 20px 60px 20px;
             max-width: 500px;
@@ -18,7 +31,7 @@
             position: relative;
             z-index: 10;
         }
-        
+
         /* Сетка 2x2 */
         .main-grid {
             display: grid;
@@ -27,33 +40,33 @@
             margin-bottom: 50px;
         }
         
-        .double-grid {
+        /* Вторая сетка для Ада и Х */
+        .second-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px 30px;
-            margin-top: 60px;
             margin-bottom: 50px;
         }
-        
+
         /* Донаты */
         .donate-center {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        
+
         .donate-wrapper {
             cursor: pointer;
             text-align: center;
         }
-        
+
         .donate-label {
             font-size: 8px;
             color: #d4a0a0;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-        
+
         .donate-sub {
             display: block;
             font-size: 6px;
@@ -61,7 +74,7 @@
             margin-top: 6px;
             letter-spacing: 1px;
         }
-        
+
         /* Кнопки */
         .grid-item {
             text-decoration: none;
@@ -76,19 +89,18 @@
             cursor: pointer;
             position: relative;
         }
-        
+
         .grid-item:active {
             transform: scale(0.9);
         }
-        
+
         .grid-icon {
             width: 55px;
             height: auto;
             image-rendering: pixelated;
             margin-bottom: 12px;
         }
-        
-        /* Основная подпись */
+
         .label-main {
             display: block;
             font-size: 8px;
@@ -96,9 +108,9 @@
             color: #fff;
             text-transform: uppercase;
             text-shadow: 0 0 4px #000;
+            text-align: center;
         }
-        
-        /* Серая подпись */
+
         .label-sub {
             display: block;
             font-size: 6px;
@@ -106,22 +118,9 @@
             color: #888;
             text-transform: none;
             margin-top: 4px;
+            text-align: center;
         }
-        
-        /* Динамический тег для FORUM - по центру над иконкой */
-        .dynamic-tag {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #970000;
-            color: #fff;
-            padding: 2px 5px;
-            font-size: 6px;
-            white-space: nowrap;
-            z-index: 5;
-        }
-        
+
         /* Модальные окна */
         .modal-overlay {
             display: none;
@@ -133,11 +132,11 @@
             justify-content: center;
             backdrop-filter: blur(8px);
         }
-        
+
         .modal-overlay.active {
             display: flex;
         }
-        
+
         .modal-content {
             width: 90%;
             max-width: 500px;
@@ -148,7 +147,7 @@
             overflow-y: auto;
             padding: 20px;
         }
-        
+
         .modal-close {
             position: absolute;
             top: 10px;
@@ -160,60 +159,26 @@
             cursor: pointer;
             font-family: 'Press Start 2P', monospace;
         }
-        
+
         .modal-title {
             font-size: 10px;
             color: #a84d6b;
             margin-bottom: 20px;
             text-align: center;
         }
-        
-        .widget-container {
-            margin: 15px 0;
-        }
-        
+
         .insta-widget {
             margin: 20px 0;
         }
-        
-        /* ========== СТИЛИ ДЛЯ JOURNAL ПОПАПА ========== */
-        .ticker-wrapper {
-            background: #0a0a0a;
-            border: 1px solid #a27791;
-            padding: 8px 0;
-            margin-bottom: 20px;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        
-        .ticker {
-            display: inline-block;
-            animation: tickerScroll 25s linear infinite;
-            font-size: 7px;
-            color: #d4a0a0;
-        }
-        
-        .ticker span {
-            margin-right: 30px;
-        }
-        
-        .ticker span::before {
-            content: "✦ ";
-            color: #b97272;
-        }
-        
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        
+
+        /* Стили для виджетов внутри попапов */
         .twitter-block {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #b97272;
             padding: 15px;
             margin-bottom: 20px;
         }
-        
+
         .twitter-header {
             display: flex;
             align-items: center;
@@ -222,174 +187,83 @@
             border-bottom: 1px solid #333;
             padding-bottom: 8px;
         }
-        
+
         .twitter-icon { font-size: 16px; }
         .twitter-label { font-size: 7px; color: #a27791; }
         .twitter-post { font-size: 8px; line-height: 1.5; color: #ccc; }
         .twitter-date { font-size: 5px; color: #666; margin-top: 8px; text-align: right; }
-        
-        .feed-block {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid #79434a;
-            padding: 15px;
-        }
-        
-        .feed-title {
+
+        .retro-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #fff;
+            padding: 8px 16px;
+            font-family: 'Press Start 2P', monospace;
             font-size: 7px;
-            color: #a27791;
-            margin-bottom: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
             text-align: center;
         }
-        
-        .feed-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .feed-list li {
-            margin-bottom: 10px;
-            padding-left: 12px;
-            border-left: 2px solid #b97272;
-        }
-        
-        .feed-list a {
-            color: #d4a0a0;
-            text-decoration: none;
-            font-size: 6px;
-            line-height: 1.4;
-        }
-        
-        .feed-list a:hover {
-            color: #fff;
+
+        .retro-btn:active {
+            transform: scale(0.95);
+            background: #a84d6b;
+            color: #000;
         }
 
-        /* ========== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ========== */
-        
-        /* Планшеты и маленькие ноутбуки */
-        @media (max-width: 768px) {
-            .grid-container {
-                max-width: 450px;
-                padding: 15px 15px 50px 15px;
-            }
-            
-            .main-grid, .double-grid {
+        .coming-soon {
+            font-size: 7px;
+            color: #888;
+            margin: 20px 0;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* Spotify плеер */
+        .spotify-iframe {
+            border-radius: 12px;
+            width: 250px;
+            height: 70px;
+        }
+
+        /* Адаптация под телефоны */
+        @media (max-width: 550px) {
+            .main-grid, .second-grid {
                 gap: 30px 20px;
             }
-            
             .grid-icon {
-                width: 50px;
-                margin-bottom: 8px;
+                width: 45px;
             }
-            
             .label-main {
                 font-size: 7px;
             }
-            
             .label-sub {
                 font-size: 5px;
             }
-        }
-        
-        /* Телефоны */
-        @media (max-width: 550px) {
-            .grid-container {
-                padding: 12px 12px 40px 12px;
-                max-width: 100%;
-            }
-            
-            .main-grid, .double-grid {
-                gap: 25px 15px;
-                margin-bottom: 35px;
-            }
-            
-            .double-grid {
-                margin-top: 40px;
-            }
-            
-            .grid-icon {
-                width: 45px;
-                margin-bottom: 6px;
-            }
-            
-            .label-main {
-                font-size: 6px;
-            }
-            
-            .label-sub {
-                font-size: 4.5px;
-                margin-top: 3px;
-            }
-            
-            .dynamic-tag {
-                font-size: 4px;
-                top: -14px;
-                padding: 1px 4px;
-            }
-            
             .modal-content {
                 width: 95%;
                 padding: 15px;
             }
-            
-            .ticker { font-size: 5px; }
-            .twitter-post { font-size: 7px; }
-            .feed-list a { font-size: 5px; }
-            
-            /* Spotify плеер */
             .spotify-iframe {
-                width: 260px !important;
-                height: 70px !important;
+                width: 220px;
+                height: 65px;
             }
         }
-        
-        /* Очень маленькие телефоны (iPhone SE, 375px и меньше) */
+
         @media (max-width: 400px) {
+            .main-grid, .second-grid {
+                gap: 25px 15px;
+            }
             .grid-icon {
                 width: 38px;
             }
-            
-            .main-grid, .double-grid {
-                gap: 20px 12px;
-            }
-            
             .label-main {
-                font-size: 5.5px;
+                font-size: 6px;
             }
-            
             .label-sub {
-                font-size: 4px;
-            }
-            
-            .dynamic-tag {
-                font-size: 3.5px;
-                top: -12px;
-                padding: 1px 3px;
-            }
-            
-            .modal-title {
-                font-size: 8px;
-            }
-            
-            .modal-close {
-                font-size: 16px;
-                top: 8px;
-                right: 12px;
-            }
-        }
-        
-        /* Большие экраны (компьютеры) — оставляем оригинальный размер */
-        @media (min-width: 1200px) {
-            .grid-icon {
-                width: 65px;
-            }
-            
-            .label-main {
-                font-size: 9px;
-            }
-            
-            .label-sub {
-                font-size: 7px;
+                font-size: 4.5px;
             }
         }
     </style>
@@ -400,99 +274,56 @@
 
     <div class="grid-container">
         
-        <!-- SPOTIFY ПЛЕЕР АЛЬБОМА SNIPERZ - ПО ЦЕНТРУ -->
-        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-            <iframe class="spotify-iframe" style="border-radius:12px; width:300px; height:80px;" 
+        <!-- СПОТИФАЙ ПЛЕЕР ПО ЦЕНТРУ -->
+        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+            <iframe class="spotify-iframe" 
                 src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
-                frameborder="0" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy">
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
             </iframe>
         </div>
 
-        <!-- ОСНОВНАЯ СЕТКА 2x2 -->
+        <!-- ПЕРВАЯ СЕТКА: ЖУРНАЛ + СТОР -->
         <div class="main-grid">
             
-            <!-- JOURNAL (попап) -->
-            <div class="grid-item" id="journalBtn" style="cursor: pointer;">
+            <!-- ЖУРНАЛ (print.html) -->
+            <a href="print.html" class="grid-item">
                 <img src="assets/print.png" alt="Journal" class="grid-icon">
                 <div>
                     <span class="label-sub">PRINT</span>
                     <span class="label-main">JOURNAL</span>
                 </div>
-            </div>
+            </a>
 
-            <!-- STORE / DIY GEAR -->
+            <!-- СТОР (shop.html) -->
             <a href="shop.html" class="grid-item">
-                <div class="money-wrap">
-                    <svg class="money-rotating" viewBox="0 0 32 20">
-                        <rect x="1" y="1" width="30" height="18" rx="1" stroke="#4ade80" stroke-width="2" fill="none"/>
-                        <circle cx="16" cy="10" r="4" stroke="#4ade80" stroke-width="2" fill="none"/>
-                    </svg>
-                </div>
                 <img src="assets/shop.png" alt="Store" class="grid-icon">
                 <div>
                     <span class="label-main">DIY GEAR</span>
                 </div>
             </a>
-
-            <!-- PAINT -->
-            <a href="paint.html" class="grid-item">
-                <img src="assets/paint.png" alt="Paint" class="grid-icon">
-                <div>
-                    <span class="label-main">PAINT</span>
-                    <span class="label-sub">gallery</span>
-                </div>
-            </a>
-
-            <!-- TETRIS -->
-            <a href="tetris.html" class="grid-item">
-                <img src="assets/tetris.png" alt="Tetris" class="grid-icon">
-                <div>
-                    <span class="label-main">TETRIS</span>
-                </div>
-            </a>
-
-            <!-- MOOD -->
-            <div class="grid-item" id="moodBtn" style="cursor: pointer;">
-                <img src="assets/mood.png" alt="Mood" class="grid-icon">
-                <div>
-                    <span class="label-sub">pinterest</span>
-                    <span class="label-main">MOOD</span>
-                </div>
-            </div>
-
-            <!-- FORUM -->
-            <a href="forum.html" class="grid-item">
-                <div class="dynamic-tag" id="dynamicWord">CONNECTING</div>
-                <img src="assets/forum.png" alt="Forum" class="grid-icon">
-                <div>
-                    <span class="label-main">ARCHIVE</span>
-                </div>
-            </a>
         </div>
 
-        <!-- DESIGNER & DEVELOPER -->
-        <div class="double-grid">
+        <!-- ВТОРАЯ СЕТКА: АДА + Х -->
+        <div class="second-grid">
             
-            <!-- DESIGNER -->
-            <div class="grid-item" id="designerBtn" style="cursor: pointer;">
-                <img src="assets/a.png" alt="Designer" class="grid-icon">
+            <!-- ADA (ПОПАП) -->
+            <div class="grid-item" id="adaBtn" style="cursor: pointer;">
+                <img src="assets/a.png" alt="Ada" class="grid-icon">
                 <div>
                     <span class="label-main">ADA MORSOVA</span>
                 </div>
             </div>
 
-            <!-- DEVELOPER -->
-            <div class="grid-item" id="developerBtn" style="cursor: pointer;">
-                <img src="assets/x.png" alt="Developer" class="grid-icon">
+            <!-- Х (ПОПАП) -->
+            <div class="grid-item" id="xBtn" style="cursor: pointer;">
+                <img src="assets/x.png" alt="X" class="grid-icon">
                 <div>
                     <span class="label-main">GRIM EX FRAME</span>
                 </div>
             </div>
         </div>
 
-        <!-- ДОНАТЫ -->
+        <!-- ДОНАТЫ ПОД АДА И Х -->
         <div class="donate-center">
             <div class="donate-wrapper" id="donateWrapper">
                 <div class="donate-top-line"></div>
@@ -505,162 +336,129 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА JOURNAL -->
-    <div id="journalModal" class="modal-overlay">
+    <!-- ========== ПОПАП ADA ========== -->
+    <div id="adaModal" class="modal-overlay">
         <div class="modal-content">
-            <button class="modal-close" id="closeJournalModal">✜</button>
-            <div class="modal-title">JOURNAL / PRINT</div>
+            <button class="modal-close" id="closeAdaModal">✜</button>
+            <div class="modal-title">ADA MORSOVA</div>
             
-            <!-- БЛОК ТВИТТЕРА -->
             <div class="twitter-block">
                 <div class="twitter-header">
                     <span class="twitter-icon">🐦</span>
                     <span class="twitter-label">LAST POST / X</span>
                 </div>
-                <div class="twitter-post" id="journalTwitterPost">if you **** never do this..</div>
-                <div class="twitter-date" id="journalTwitterDate"></div>
+                <div class="twitter-post" id="adaTwitterPost">Loading...</div>
+                <div class="twitter-date" id="adaTwitterDate"></div>
             </div>
             
-            <!-- ЛЕНТА СТАТЕЙ -->
-            <div class="feed-block">
-                <div class="feed-title">RSS FEEDS / ART JOURNALS</div>
-                <ul class="feed-list" id="journalFeedList">
-                    <li>• what about the future?</li>
-                </ul>
+            <div style="margin: 15px 0;">
+                <a href="https://behance.net/ada_morsova" target="_blank" class="retro-btn" style="display: block; width: 100%;">🎨 BEHANCE</a>
+            </div>
+            
+            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 10px;">INSTAGRAM</h4>
+            <div class="insta-widget">
+                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛКА MOOD (Pinterest) -->
-    <div id="moodModal" class="modal-overlay">
+    <!-- ========== ПОПАП X ========== -->
+    <div id="xModal" class="modal-overlay">
         <div class="modal-content">
-            <button class="modal-close" id="closeMoodModal">✜</button>
-            <div class="modal-title">BOARD</div>
-            <div class="widget-container">
-                <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
-                <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА DESIGNER -->
-    <div id="designerModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 500px;">
-            <button class="modal-close" id="closeDesignerModal">✜</button>
-            <div class="modal-title">DESIGNER</div>
-            <div class="widget-container">
-                <h4 style="font-size: 8px; color: #a84d6b;">BEHANCE</h4>
-                <iframe src="https://www.behance.net/embed/project/your_project_id?ilo0=1" height="300" width="100%" frameborder="0" allowfullscreen style="margin-bottom: 20px;"></iframe>
-                <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM</h4>
-                <div class="insta-widget">
-                    <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА DEVELOPER -->
-    <div id="developerModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 500px;">
-            <button class="modal-close" id="closeDeveloperModal">✜</button>
-            <div class="modal-title">DEVELOPER</div>
+            <button class="modal-close" id="closeXModal">✜</button>
+            <div class="modal-title">GRIM EX FRAME</div>
             
-            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">THREADS / RSS</h4>
-            <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;">Loading threads...</div>
+            <h4 style="font-size: 8px; color: #a84d6b;">THREADS / RSS</h4>
+            <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px; margin-bottom: 15px;">Loading threads...</div>
             
-            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">INSTAGRAM</h4>
+            <div style="margin: 15px 0;">
+                <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🧵 THREADS</a>
+            </div>
+            
+            <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM</h4>
             <div class="insta-widget">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
             
-            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 20px;">TIKTOK</h4>
-            <div style="margin-bottom: 20px;">
-                <a href="https://tiktok.com/@grimexframe" target="_blank" style="color: #fff; text-decoration: none; font-size: 8px; border: 1px solid #fff; padding: 8px 16px; display: inline-block;">
-                    @grimexframe
-                </a>
+            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 15px;">TIKTOK</h4>
+            <div style="margin-bottom: 10px;">
+                <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🎵 @grimexframe</a>
             </div>
+        </div>
+    </div>
+
+    <!-- ========== ЗАГЛУШКИ ДЛЯ ДРУГИХ КОМНАТ ========== -->
+    <!-- PAINT (заглушка) -->
+    <div id="paintModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closePaintModal">✜</button>
+            <div class="modal-title">🎨 PAINT</div>
+            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
+            <button class="retro-btn" id="paintComingSoonBtn" style="margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- TETRIS (заглушка) -->
+    <div id="tetrisModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeTetrisModal">✜</button>
+            <div class="modal-title">🎮 TETRIS</div>
+            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
+            <button class="retro-btn" id="tetrisComingSoonBtn" style="margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- MOOD (заглушка) -->
+    <div id="moodModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeMoodModal">✜</button>
+            <div class="modal-title">🌸 MOOD</div>
+            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
+            <button class="retro-btn" id="moodComingSoonBtn" style="margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- FORUM (заглушка) -->
+    <div id="forumModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeForumModal">✜</button>
+            <div class="modal-title">💬 FORUM</div>
+            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
+            <button class="retro-btn" id="forumComingSoonBtn" style="margin-top: 20px;">OK</button>
         </div>
     </div>
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
     <script>
-        // ДОНАТЫ - ссылка
+        // ДОНАТЫ
         document.getElementById('donateWrapper').onclick = () => {
             window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
         };
 
-        // МОДАЛКИ
-        const journalModal = document.getElementById('journalModal');
-        const moodModal = document.getElementById('moodModal');
-        const designerModal = document.getElementById('designerModal');
-        const developerModal = document.getElementById('developerModal');
+        // ========== ПОПАП ADA ==========
+        const adaModal = document.getElementById('adaModal');
+        const xModal = document.getElementById('xModal');
         
-        document.getElementById('journalBtn').onclick = () => journalModal.classList.add('active');
-        document.getElementById('closeJournalModal').onclick = () => journalModal.classList.remove('active');
+        document.getElementById('adaBtn').onclick = () => adaModal.classList.add('active');
+        document.getElementById('closeAdaModal').onclick = () => adaModal.classList.remove('active');
         
-        document.getElementById('moodBtn').onclick = () => moodModal.classList.add('active');
-        document.getElementById('closeMoodModal').onclick = () => moodModal.classList.remove('active');
+        document.getElementById('xBtn').onclick = () => xModal.classList.add('active');
+        document.getElementById('closeXModal').onclick = () => xModal.classList.remove('active');
         
-        document.getElementById('designerBtn').onclick = () => designerModal.classList.add('active');
-        document.getElementById('closeDesignerModal').onclick = () => designerModal.classList.remove('active');
-        
-        document.getElementById('developerBtn').onclick = () => developerModal.classList.add('active');
-        document.getElementById('closeDeveloperModal').onclick = () => developerModal.classList.remove('active');
-        
+        // Закрытие по клику на оверлей
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
-        
-        // ========== JOURNAL КОНТЕНТ ==========
-        
-        // Бегущая строка
-        const journalFeeds = [
-            "Artforum — The New Digital Aesthetic",
-            "e-flux — Notes on Algorithmic Culture",
-            "Rhizome — Net Art Anthology 2024",
-            "Contemporary Art Daily — Berlin Roundup",
-            "Hyperallergic — The Future of Print Media",
-            "Frieze — Post-Internet Art Review"
-        ];
-        
-        function initJournalTicker() {
-            const ticker = document.getElementById('journalTicker');
-            let content = '';
-            for (let i = 0; i < 3; i++) {
-                journalFeeds.forEach(feed => {
-                    content += `<span>${feed}</span>`;
-                });
-            }
-            ticker.innerHTML = content;
+
+        // ========== ADA TWITTER ЗАГЛУШКА ==========
+        function loadAdaTweet() {
+            document.getElementById('adaTwitterPost').innerHTML = `"Digital preservation as resistance. The archive is never neutral."`;
+            document.getElementById('adaTwitterDate').innerHTML = `posted: 2026-04-03 / 10:32`;
         }
-        
-        // Твиттер (заглушка)
-        function loadJournalTweet() {
-            document.getElementById('journalTwitterPost').innerHTML = `"The archive is never neutral. Every saved image is a political act. Digital preservation as resistance."`;
-            document.getElementById('journalTwitterDate').innerHTML = `posted: 2025-04-02 / 14:32`;
-        }
-        
-        // RSS лента (заглушка)
-        function loadJournalRSS() {
-            const feedList = document.getElementById('journalFeedList');
-            const articles = [
-                { title: "The Return of Glitch Aesthetics", link: "#" },
-                { title: "Why Print Still Matters in Digital Age", link: "#" },
-                { title: "Archiving the Internet: A Manifesto", link: "#" },
-                { title: "Pixel Art as Resistance", link: "#" },
-                { title: "Y2K Revival and the New Nostalgia", link: "#" }
-            ];
-            feedList.innerHTML = articles.map(article => 
-                `<li><a href="${article.link}" target="_blank">${article.title}</a></li>`
-            ).join('');
-        }
-        
-        initJournalTicker();
-        loadJournalTweet();
-        loadJournalRSS();
-        
-        // THREADS
+        loadAdaTweet();
+
+        // ========== X THREADS (diary.json) ==========
         async function loadThreads() {
             const container = document.getElementById('threadsContent');
             if (!container) return;
@@ -679,19 +477,30 @@
             }
         }
         loadThreads();
-        
-        // ДИНАМИЧЕСКОЕ СЛОВО
-        const words = ["wellness", "travel", "english", "money", "radio"];
-        const wordElement = document.getElementById('dynamicWord');
-        if (wordElement) {
-            let i = 0;
-            setInterval(() => {
-                i = (i + 1) % words.length;
-                wordElement.textContent = words[i];
-            }, 2000);
+        setInterval(loadThreads, 30000);
+
+        // ========== ЗАГЛУШКИ ==========
+        const modals = {
+            paint: document.getElementById('paintModal'),
+            tetris: document.getElementById('tetrisModal'),
+            mood: document.getElementById('moodModal'),
+            forum: document.getElementById('forumModal')
+        };
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
         }
-        
-        // ПЛАВНЫЙ ПЕРЕХОД
+
+        document.getElementById('closePaintModal').onclick = () => closeModal(modals.paint);
+        document.getElementById('paintComingSoonBtn').onclick = () => closeModal(modals.paint);
+        document.getElementById('closeTetrisModal').onclick = () => closeModal(modals.tetris);
+        document.getElementById('tetrisComingSoonBtn').onclick = () => closeModal(modals.tetris);
+        document.getElementById('closeMoodModal').onclick = () => closeModal(modals.mood);
+        document.getElementById('moodComingSoonBtn').onclick = () => closeModal(modals.mood);
+        document.getElementById('closeForumModal').onclick = () => closeModal(modals.forum);
+        document.getElementById('forumComingSoonBtn').onclick = () => closeModal(modals.forum);
+
+        // Плавный переход для ссылок
         document.querySelectorAll('a[href]').forEach(link => {
             if (!link.hasAttribute('target') && link.getAttribute('href') !== 'index.html') {
                 link.addEventListener('click', (e) => {
