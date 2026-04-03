@@ -125,7 +125,7 @@
         
         <div class="section">
             <div class="carousel" id="mainCarousel">
-                <img src="assets/mx1.jpg" class="active">
+                <img src="assets/mx1.jpeg" class="active">
                 <img src="assets/mx2.jpg">
             </div>
             <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
@@ -148,7 +148,6 @@
 
         <div class="section">
             <div class="pin-wrapper">
-                <div class="pin-label">[ MOOD_STREAM ]</div>
                 <a data-pin-do="embedBoard" 
                    data-pin-board-width="400" 
                    data-pin-scale-height="240" 
@@ -161,7 +160,7 @@
 
         <div class="section">
             <div class="art-square-frame">
-                <img src="assets/mx1.jpg" alt="Preview">
+                <img src="assets/art.jpg" alt="Preview">
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" onclick="openModal('artModal')">
@@ -170,30 +169,30 @@
         </div>
 
         <div class="section">
-            <div class="styler-label">[ FONT_STYLER_V.1.0 ]</div>
+            <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
                 <button class="styler-icon-btn" onclick="copyStylerText()">
-                    <img src="assets/x.png" style="filter: hue-rotate(290deg) brightness(0.8);">
+                    <img src="assets/st1.png" style="filter: hue-rotate(290deg) brightness(0.8);">
                 </button>
                 <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
                 <button class="styler-icon-btn" onclick="handleAction()">
-                    <img src="assets/a.png" id="actionIcon">
+                    <img src="assets/st2.png" id="actionIcon">
                 </button>
             </div>
         </div>
 
         <div class="section" style="padding-bottom: 60px;">
-            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 20px;">🏆 HALL OF FAME</h4>
+            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 20px;">TOP PLAYERS:</h4>
             <div style="font-size: 8px; color: #444; line-height: 2.5;">
-                MORPHINE_DRIP — 12450<br>
-                GL1TCH_WITCH — 9820<br>
-                VHS_GHOST — 7650
+                MORPH — 12450<br>
+                GWITCH — 9820<br>
+                REVOST — 7650
             </div>
             <div style="margin-top: 40px; display: flex; flex-direction: column; align-items: center;">
                 <a href="tetris.html">
                     <img src="assets/tetris.png" class="nav-btn-img" alt="Play Tetris">
                 </a>
-                <div class="paint-label">PLAY TETRIS</div>
+                <div class="paint-label">TETRIS</div>
             </div>
         </div>
     </div>
@@ -220,7 +219,7 @@
         <div class="modal-content" style="padding:0;">
             <div class="paint-window">
                 <div class="paint-header-bar">
-                    <span>MORSTRIX_PAINT.EXE</span>
+                    <span>PAINT.EXE</span>
                     <button onclick="closeModalDirect('artModal')" style="background:none; border:none; color:#444; cursor:pointer; font-family:'Press Start 2P'; font-size:10px;">X</button>
                 </div>
                 <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a;">
@@ -245,8 +244,8 @@
                     <span onclick="document.getElementById('layersPopup').classList.remove('active')" style="cursor:pointer;">X</span>
                 </div>
                 <div id="layerList">
-                    <div class="layer-row active" data-id="2">LAYER_02 (TOP)</div>
-                    <div class="layer-row" data-id="1">LAYER_01 (BACK)</div>
+                    <div class="layer-row active" data-id="2">LAYER 02 (TOP)</div>
+                    <div class="layer-row" data-id="1">LAYER 01 (BACK)</div>
                 </div>
             </div>
         </div>
