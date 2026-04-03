@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="theme.css">
     <style>
         body {
-            background: transparent;
+            background: transparent !important;
             min-height: 100vh;
             color: #fff;
             margin: 0;
@@ -35,6 +35,434 @@
             background-position: center;
         }
 
+        /* Контейнер */
+        .journal-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Заголовок */
+        .journal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .journal-title {
+            font-size: 1rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+        }
+
+        .journal-sub {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* Блоки */
+        .block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #b97272;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .block-title {
+            font-size: 8px;
+            color: #a84d6b;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Кнопки */
+        .retro-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #fff;
+            padding: 8px 16px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.1s;
+        }
+
+        .retro-btn:active {
+            transform: scale(0.95);
+            background: #a84d6b;
+            color: #000;
+        }
+
+        /* Бегущая строка */
+        .ticker-wrapper {
+            background: #0a0a0a;
+            border: 1px solid #a27791;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: tickerScroll 25s linear infinite;
+            font-size: 7px;
+            color: #d4a0a0;
+        }
+
+        .ticker span {
+            margin-right: 30px;
+        }
+
+        .ticker span::before {
+            content: "✦ ";
+            color: #b97272;
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Лидерборд */
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .leaderboard-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+            font-size: 7px;
+            color: #ccc;
+        }
+
+        .leaderboard-rank {
+            color: #a84d6b;
+        }
+
+        /* Картинка форума */
+        .forum-preview {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .forum-preview img {
+            width: 100%;
+            max-width: 200px;
+            border: 1px solid #a84d6b;
+            margin-bottom: 10px;
+        }
+
+        /* Модальные окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 400px;
+            background: #000;
+            border: 2px solid #fff;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .coming-soon {
+            font-size: 7px;
+            color: #888;
+            margin: 20px 0;
+        }
+
+        /* Виджет Telegram */
+        .telegram-widget-wrapper {
+            margin-top: 15px;
+            min-height: 150px;
+        }
+
+        @media (max-width: 550px) {
+            body { padding: 10px; }
+            .block { padding: 15px; }
+            .block-title { font-size: 7px; }
+            .retro-btn { font-size: 6px; padding: 6px 12px; }
+            .ticker { font-size: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-button-wrapper">
+        <a href="index.html" class="back-button"></a>
+    </div>
+
+    <div class="journal-container">
+        
+        <!-- ЗАГОЛОВОК -->
+        <div class="journal-header">
+            <div class="journal-title">JOURNAL</div>
+            <div class="journal-sub">print / archive / rss feed</div>
+        </div>
+
+        <!-- 1. СПОТИФАЙ ПЛЕЕР -->
+        <div class="block">
+            <div class="block-title">✦ STUDIO MIX ✦</div>
+            <div style="display: flex; justify-content: center;">
+                <iframe style="border-radius:12px; width:280px; height:80px;" 
+                    src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
+                    frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- 2. БАРАБАН АРТОВ + ПЕЙНТ -->
+        <div class="block">
+            <div class="block-title">🎨 ART STUDIO</div>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button id="openPaintBtn" class="retro-btn">🖌️ OPEN PAINT</button>
+                <button id="saveArtBtn" class="retro-btn">💾 SAVE ART</button>
+            </div>
+            <div style="margin-top: 15px; text-align: center; font-size: 6px; color: #666;">
+                🎭 multilayer paint — создавай свои шедевры
+            </div>
+        </div>
+
+        <!-- 3. ТВИТТЕР МОРСТРИКСА -->
+        <div class="block">
+            <div class="block-title">🐦 MORSTRIX / X</div>
+            <div style="text-align: center;">
+                <div class="twitter-post" id="morstrixTweet" style="font-size: 8px; color: #ccc; margin-bottom: 15px;">Loading...</div>
+                <div class="twitter-date" id="morstrixTweetDate" style="font-size: 5px; color: #666; margin-bottom: 15px;"></div>
+                <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">→ ПЕРЕЙТИ В TWITTER ←</a>
+            </div>
+        </div>
+
+        <!-- 4. БЕХАНС -->
+        <div class="block">
+            <div class="block-title">🎯 BEHANCE</div>
+            <div style="text-align: center;">
+                <iframe src="https://www.behance.net/embed/project/206295147?ilo0=1" height="250" width="100%" frameborder="0" allowfullscreen style="margin-bottom: 10px;"></iframe>
+                <a href="https://behance.net/ada_morsova" target="_blank" class="retro-btn">→ ВСЕ ПРОЕКТЫ ←</a>
+            </div>
+        </div>
+
+        <!-- 5. RSS ЛЕНТА (бегущая строка) -->
+        <div class="block">
+            <div class="block-title">📡 RSS FEEDS / ART JOURNALS</div>
+            <div class="ticker-wrapper">
+                <div class="ticker" id="rssTicker">LOADING FEEDS...</div>
+            </div>
+        </div>
+
+        <!-- 6. ПИНТЕРЕСТ ВИДЖЕТ -->
+        <div class="block">
+            <div class="block-title">📌 PINTEREST / MOOD BOARD</div>
+            <div style="text-align: center;">
+                <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
+                <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+            </div>
+        </div>
+
+        <!-- 7. ТОП-4 ЛИДЕРБОРД ТЕТРИСА -->
+        <div class="block">
+            <div class="block-title">🎮 TETRIS LEADERBOARD</div>
+            <ul class="leaderboard-list" id="leaderboardList">
+                <li><span class="leaderboard-rank">1.</span> <span>---</span> <span>0</span></li>
+                <li><span class="leaderboard-rank">2.</span> <span>---</span> <span>0</span></li>
+                <li><span class="leaderboard-rank">3.</span> <span>---</span> <span>0</span></li>
+                <li><span class="leaderboard-rank">4.</span> <span>---</span> <span>0</span></li>
+            </ul>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="tetris.html" class="retro-btn">🎮 PLAY TETRIS</a>
+            </div>
+            <div style="text-align: center; margin-top: 10px; font-size: 5px; color: #666;">
+                * результаты сохраняются в вашем браузере
+            </div>
+        </div>
+
+        <!-- 8. ФОРУМ (картинка + дисклеймер) -->
+        <div class="block">
+            <div class="block-title">💬 FORUM / DISCUSSION</div>
+            <div class="forum-preview" id="forumPreviewBtn">
+                <img src="assets/forum.png" alt="Forum preview" style="width: 80px;">
+                <div style="font-size: 6px; color: #a84d6b; margin-top: 5px;">→ НАТИСНИ ДЛЯ ВХОДУ ←</div>
+            </div>
+        </div>
+
+        <!-- 9. АРХИВНЫЙ ТЕЛЕГРАМ ВИДЖЕТ -->
+        <div class="block">
+            <div class="block-title">📡 LAST BROADCAST / TG</div>
+            <div class="telegram-widget-wrapper">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                    data-telegram-discussion="morstrix"
+                    data-width="100%"
+                    data-dark="1"
+                    data-color="a84d6b"
+                    data-limit="1">
+                </script>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="https://t.me/morstrix" target="_blank" class="retro-btn">→ ПРИЄДНАТИСЯ ДО ЧАТУ ←</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ДИСКЛЕЙМЕР ДЛЯ ФОРУМА -->
+    <div id="disclaimerModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDisclaimerModal">✜</button>
+            <div class="block-title" style="margin-bottom: 15px;">⚠️ ПОПЕРЕДЖЕННЯ</div>
+            <div class="coming-soon">
+                ВИ ПЕРЕХОДИТЕ ДО ТЕЛЕГРАМ ФОРУМУ<br><br>
+                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ<br>
+                ДОТРИМУЙТЕСЬ ПРАВИЛ СПІЛКУВАННЯ<br><br>
+                🛡️ ПОВАГА ТА КОНСТРУКТИВ
+            </div>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button id="confirmForumBtn" class="retro-btn">ENTER</button>
+                <button id="cancelForumBtn" class="retro-btn">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ЗАГЛУШКА ДЛЯ ПЕЙНТА (пока) -->
+    <div id="paintPlaceholderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closePaintPlaceholder">✜</button>
+            <div class="block-title">🎨 PAINT</div>
+            <div class="coming-soon">🚧 МУЛЬТИСЛОЙНА РИСОВАЛКА В РАЗРАБОТКЕ 🚧</div>
+            <button id="paintPlaceholderOk" class="retro-btn" style="margin-top: 15px;">OK</button>
+        </div>
+    </div>
+
+    <script src="background.js"></script>
+    <script>
+        // ========== ТВИТТЕР ЗАГЛУШКА ==========
+        function loadMorstrixTweet() {
+            document.getElementById('morstrixTweet').innerHTML = `"Архив — это never neutral. Каждый сохраненный пиксель — политический акт."`;
+            document.getElementById('morstrixTweetDate').innerHTML = `posted: 2026-04-03 / 12:00`;
+        }
+        loadMorstrixTweet();
+
+        // ========== RSS ЛЕНТА (бегущая строка) ==========
+        async function loadRSSFeeds() {
+            const blogs = [
+                'https://hyperallergic.com/feed/',
+                'https://www.artnews.com/feed/',
+                'https://rhizome.org/feed/',
+                'https://www.artforum.com/feed/'
+            ];
+            let allTitles = [];
+            for (let blog of blogs) {
+                try {
+                    const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(blog);
+                    const res = await fetch(proxy);
+                    const data = await res.json();
+                    if (data.items) {
+                        const titles = data.items.slice(0, 2).map(item => item.title);
+                        allTitles.push(...titles);
+                    }
+                } catch(e) {
+                    console.log('RSS error:', blog);
+                }
+            }
+            const ticker = document.getElementById('rssTicker');
+            if (allTitles.length > 0) {
+                let content = '';
+                for (let i = 0; i < 3; i++) {
+                    allTitles.forEach(title => {
+                        content += `<span>${title}</span>`;
+                    });
+                }
+                ticker.innerHTML = content;
+            } else {
+                ticker.innerHTML = '<span>✦ CONNECTING TO RSS FEEDS ✦</span><span>✦ ARTFORUM</span><span>✦ E-FLUX</span><span>✦ RHIZOME</span>';
+            }
+        }
+        loadRSSFeeds();
+
+        // ========== ЛИДЕРБОРД ТЕТРИСА ==========
+        function loadLeaderboard() {
+            const leaderboard = JSON.parse(localStorage.getItem('tetris_leaderboard') || '[]');
+            const listContainer = document.getElementById('leaderboardList');
+            if (leaderboard.length === 0) {
+                listContainer.innerHTML = `
+                    <li><span class="leaderboard-rank">1.</span> <span>---</span> <span>0</span></li>
+                    <li><span class="leaderboard-rank">2.</span> <span>---</span> <span>0</span></li>
+                    <li><span class="leaderboard-rank">3.</span> <span>---</span> <span>0</span></li>
+                    <li><span class="leaderboard-rank">4.</span> <span>---</span> <span>0</span></li>
+                `;
+            } else {
+                listContainer.innerHTML = leaderboard.slice(0, 4).map((entry, idx) => `
+                    <li><span class="leaderboard-rank">${idx+1}.</span> <span>${entry.name || 'PLAYER'}</span> <span>${entry.score}</span></li>
+                `).join('');
+                // если меньше 4 записей, добиваем пустыми
+                for (let i = leaderboard.length; i < 4; i++) {
+                    listContainer.innerHTML += `<li><span class="leaderboard-rank">${i+1}.</span> <span>---</span> <span>0</span></li>`;
+                }
+            }
+        }
+        loadLeaderboard();
+
+        // ========== ПЕЙНТ (заглушка) ==========
+        const paintModal = document.getElementById('paintPlaceholderModal');
+        document.getElementById('openPaintBtn').onclick = () => paintModal.classList.add('active');
+        document.getElementById('closePaintPlaceholder').onclick = () => paintModal.classList.remove('active');
+        document.getElementById('paintPlaceholderOk').onclick = () => paintModal.classList.remove('active');
+
+        // ========== КНОПКА СЕЙВ АРТ (заглушка) ==========
+        document.getElementById('saveArtBtn').onclick = () => {
+            alert('🎨 Функция сохранения будет доступна в PAINT. Откройте редактор, создайте арт и сохраните его.');
+        };
+
+        // ========== ДИСКЛЕЙМЕР ДЛЯ ФОРУМА ==========
+        const disclaimerModal = document.getElementById('disclaimerModal');
+        document.getElementById('forumPreviewBtn').onclick = () => disclaimerModal.classList.add('active');
+        document.getElementById('closeDisclaimerModal').onclick = () => disclaimerModal.classList.remove('active');
+        document.getElementById('cancelForumBtn').onclick = () => disclaimerModal.classList.remove('active');
+        document.getElementById('confirmForumBtn').onclick = () => {
+            window.open('https://t.me/morstrix', '_blank');
+            disclaimerModal.classList.remove('active');
+        };
+
+        // Закрытие модалок по клику на оверлей
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+        });
+    </script>
+</body>
+</html>
         /* Контейнер */
         .journal-container {
             max-width: 600px;
