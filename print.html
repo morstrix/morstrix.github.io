@@ -167,10 +167,10 @@
             <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
         </div>
         
-<!-- RSS FEEDS -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="rssBtn" class="retro-btn">📡 RSS FEEDS</button>
-        </div>       
+<!-- RSS ЛЕНТА (медленная бегущая строка) -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="rssTicker">✦ LOADING FEEDS... ✦</div>
+        </div>      
         
         <!-- ART STUDIO -->
         <div style="text-align: center; margin-bottom: 20px;">
@@ -270,18 +270,43 @@
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
-    </script>
-</body>
-</html>            window.open('https://t.me/morstrix', '_blank');
-            closeModal(disclaimerModal);
-        };
-
-        // Закрытие по клику на оверлей
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-        });
-    </script>
-      
+        
+// RSS ЛЕНТА (реальные заголовки)
+        async function loadRSSFeeds() {
+            const blogs = [
+                'https://hyperallergic.com/feed/',
+                'https://www.artnews.com/feed/',
+                'https://rhizome.org/feed/',
+                'https://www.artforum.com/feed/'
+            ];
+            let allTitles = [];
+            for (let blog of blogs) {
+                try {
+                    const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(blog);
+                    const res = await fetch(proxy);
+                    const data = await res.json();
+                    if (data.items) {
+                        const titles = data.items.slice(0, 2).map(item => item.title);
+                        allTitles.push(...titles);
+                    }
+                } catch(e) {
+                    console.log('RSS error:', blog);
+                }
+            }
+            const ticker = document.getElementById('rssTicker');
+            if (allTitles.length > 0) {
+                let content = '';
+                for (let i = 0; i < 4; i++) {
+                    allTitles.forEach(title => {
+                        content += `<span>${title}</span>`;
+                    });
+                }
+                ticker.innerHTML = content;
+            } else {
+                ticker.innerHTML = '<span>✦ ARTFORUM</span><span>✦ E-FLUX</span><span>✦ RHIZOME</span><span>✦ HYPERALLERGIC</span><span>✦ CONTEMPORARY ART DAILY</span>';
+            }
+        }
+        loadRSSFeeds();
+          </script>               
 </head>
-
 </html>
