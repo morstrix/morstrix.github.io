@@ -221,13 +221,6 @@
             text-align: center;
         }
 
-        /* Spotify плеер */
-        .spotify-iframe {
-            border-radius: 12px;
-            width: 250px;
-            height: 70px;
-        }
-
         /* Адаптация под телефоны */
         @media (max-width: 550px) {
             .main-grid, .second-grid {
@@ -274,14 +267,6 @@
 
     <div class="grid-container">
         
-        <!-- СПОТИФАЙ ПЛЕЕР ПО ЦЕНТРУ -->
-        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-            <iframe class="spotify-iframe" 
-                src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
-                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
-            </iframe>
-        </div>
-
         <!-- ПЕРВАЯ СЕТКА: ЖУРНАЛ + СТОР -->
         <div class="main-grid">
             
@@ -289,7 +274,6 @@
             <a href="print.html" class="grid-item">
                 <img src="assets/print.png" alt="Journal" class="grid-icon">
                 <div>
-                    <span class="label-sub">PRINT</span>
                     <span class="label-main">JOURNAL</span>
                 </div>
             </a>
@@ -298,7 +282,7 @@
             <a href="shop.html" class="grid-item">
                 <img src="assets/shop.png" alt="Store" class="grid-icon">
                 <div>
-                    <span class="label-main">DIY GEAR</span>
+                    <span class="label-main">store</span>
                 </div>
             </a>
         </div>
@@ -340,20 +324,7 @@
     <div id="adaModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeAdaModal">✜</button>
-            <div class="modal-title">ADA MORSOVA</div>
-            
-            <div class="twitter-block">
-                <div class="twitter-header">
-                    <span class="twitter-icon">🐦</span>
-                    <span class="twitter-label">LAST POST / X</span>
-                </div>
-                <div class="twitter-post" id="adaTwitterPost">Loading...</div>
-                <div class="twitter-date" id="adaTwitterDate"></div>
-            </div>
-            
-            <div style="margin: 15px 0;">
-                <a href="https://behance.net/ada_morsova" target="_blank" class="retro-btn" style="display: block; width: 100%;">🎨 BEHANCE</a>
-            </div>
+            <div class="modal-title">designer</div>
             
             <h4 style="font-size: 8px; color: #a84d6b; margin-top: 10px;">INSTAGRAM</h4>
             <div class="insta-widget">
@@ -366,10 +337,7 @@
     <div id="xModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeXModal">✜</button>
-            <div class="modal-title">GRIM EX FRAME</div>
-            
-            <h4 style="font-size: 8px; color: #a84d6b;">THREADS / RSS</h4>
-            <div id="threadsContent" style="font-size: 7px; color: #ccc; line-height: 1.6; max-height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px; margin-bottom: 15px;">Loading threads...</div>
+            <div class="modal-title">developer</div>
             
             <div style="margin: 15px 0;">
                 <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🧵 THREADS</a>
@@ -384,47 +352,6 @@
             <div style="margin-bottom: 10px;">
                 <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🎵 @grimexframe</a>
             </div>
-        </div>
-    </div>
-
-    <!-- ========== ЗАГЛУШКИ ДЛЯ ДРУГИХ КОМНАТ ========== -->
-    <!-- PAINT (заглушка) -->
-    <div id="paintModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closePaintModal">✜</button>
-            <div class="modal-title">🎨 PAINT</div>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button class="retro-btn" id="paintComingSoonBtn" style="margin-top: 20px;">OK</button>
-        </div>
-    </div>
-
-    <!-- TETRIS (заглушка) -->
-    <div id="tetrisModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeTetrisModal">✜</button>
-            <div class="modal-title">🎮 TETRIS</div>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button class="retro-btn" id="tetrisComingSoonBtn" style="margin-top: 20px;">OK</button>
-        </div>
-    </div>
-
-    <!-- MOOD (заглушка) -->
-    <div id="moodModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeMoodModal">✜</button>
-            <div class="modal-title">🌸 MOOD</div>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button class="retro-btn" id="moodComingSoonBtn" style="margin-top: 20px;">OK</button>
-        </div>
-    </div>
-
-    <!-- FORUM (заглушка) -->
-    <div id="forumModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeForumModal">✜</button>
-            <div class="modal-title">💬 FORUM</div>
-            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
-            <button class="retro-btn" id="forumComingSoonBtn" style="margin-top: 20px;">OK</button>
         </div>
     </div>
 
@@ -451,12 +378,6 @@
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
 
-        // ========== ADA TWITTER ЗАГЛУШКА ==========
-        function loadAdaTweet() {
-            document.getElementById('adaTwitterPost').innerHTML = `"Digital preservation as resistance. The archive is never neutral."`;
-            document.getElementById('adaTwitterDate').innerHTML = `posted: 2026-04-03 / 10:32`;
-        }
-        loadAdaTweet();
 
         // ========== X THREADS (diary.json) ==========
         async function loadThreads() {
