@@ -12,33 +12,30 @@
             background: #050508;
             color: #f0f0f0;
             font-family: 'Press Start 2P', monospace;
-            /* Увеличиваем боковые отступы body, чтобы контент не пересекался с крестиком */
-            padding: 0 80px 60px; 
+            padding: 20px 15px; /* Минимальные отступы по бокам */
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ - ПРИЖАТА К УГЛУ */
+        /* КНОПКА ЗАКРЫТИЯ - ТЕПЕРЬ ОНА СКРОЛЛИТСЯ (ABSOLUTE) */
         .close-site {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 9999;
-            padding: 15px; /* небольшое поле внутри для удобства нажатия */
+            position: absolute; /* Не ездит при скролле */
+            top: 15px;
+            right: 15px;
+            z-index: 999;
         }
         .close-site img { 
-            width: 35px; 
-            height: 35px; 
-            display: block;
+            width: 30px; 
+            height: 30px; 
             image-rendering: pixelated; 
         }
 
         .container {
-            max-width: 600px; /* Ширина контента */
+            max-width: 600px;
             width: 100%;
-            margin-top: 60px; /* Отступ сверху */
+            margin-top: 50px; /* Отступ от верхнего края */
             display: flex;
             flex-direction: column;
             gap: 40px;
@@ -46,7 +43,7 @@
 
         .section { width: 100%; text-align: center; }
 
-        /* КАРУСЕЛЬ - ЧИСТО КАРТИНКИ */
+        /* КАРУСЕЛЬ */
         .carousel {
             width: 100%;
             position: relative;
@@ -85,7 +82,7 @@
         /* КНОПКИ-ИКОНКИ */
         .img-nav {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -97,9 +94,32 @@
         }
         .nav-icon:hover { transform: scale(1.05); }
 
-        /* ТЕКСТОВЫЕ КНОПКИ */
+        /* БЛОК ART STUDIO */
+        .art-studio-block {
+            position: relative;
+            width: 100%;
+            height: 180px; /* Высота блока */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .art-studio-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* Затемняем картинку, чтобы кнопка читалась */
+            z-index: 1;
+        }
+        .art-studio-btn {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* РЕТРО КНОПКА */
         .retro-btn {
-            background: transparent;
+            background: rgba(0,0,0,0.6);
             border: 1px solid #a84d6b;
             color: #ffb7c7;
             padding: 12px 20px;
@@ -109,19 +129,15 @@
             text-decoration: none;
             display: inline-block;
         }
+        .retro-btn:hover { background: #a84d6b; color: #fff; }
 
-        /* ЗАГЛУШКА */
+        /* ФОНТ СТАЙЛЕР (ЗАГЛУШКА) */
         .font-styler-box {
             padding: 25px;
             color: #444;
             font-size: 7px;
             border: 1px dashed #222;
         }
-
-        /* ЛИДЕРБОРД */
-        .leaderboard { padding: 20px; }
-        .leaderboard h4 { font-size: 8px; color: #a84d6b; margin-bottom: 15px; }
-        .leaderboard ol { list-style: none; font-size: 8px; color: #777; line-height: 2; }
 
         /* МОДАЛКИ */
         .modal-overlay {
@@ -132,10 +148,11 @@
             z-index: 10000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             text-align: center;
         }
@@ -164,24 +181,25 @@
             <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')">
         </div>
 
-        <div class="section" style="padding: 30px 0;">
-             <button class="retro-btn" onclick="openModal('artModal')">🎨 ART STUDIO // PAINT</button>
+        <div class="section art-studio-block">
+            <img src="assets/mx2.jpg" class="art-studio-bg" alt="Art BG">
+            <button class="retro-btn art-studio-btn" onclick="openModal('artModal')">🎨 OPEN PAINT STUDIO</button>
         </div>
 
         <div class="section">
             <div class="font-styler-box">
                 [ FONT_STYLER_V.1.0 ]<br><br>
-                OFFLINE
+                STATUS: ENCRYPTED
             </div>
         </div>
 
-        <div class="section leaderboard">
-            <h4>🏆 HALL OF FAME</h4>
-            <ol>
-                <li>MORPHINE_DRIP — 12450</li>
-                <li>GL1TCH_WITCH — 9820</li>
-                <li>VHS_GHOST — 7650</li>
-            </ol>
+        <div class="section" style="text-align: center; padding-bottom: 40px;">
+            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">🏆 HALL OF FAME</h4>
+            <div style="font-size: 8px; color: #666; line-height: 2;">
+                MORPHINE_DRIP — 12450<br>
+                GL1TCH_WITCH — 9820<br>
+                VHS_GHOST — 7650
+            </div>
             <div style="margin-top: 25px;">
                 <a href="tetris.html" class="retro-btn">🎮 PLAY TETRIS</a>
             </div>
@@ -191,27 +209,29 @@
 
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; margin-bottom: 20px;">GO TO TELEGRAM?</p>
+            <p style="font-size: 8px; margin-bottom: 20px;">REDIRECT TO TELEGRAM?</p>
             <a href="https://t.me/morstrix" target="_blank" class="retro-btn">YES</a>
         </div>
     </div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px;">CONTACT: support@morstrix.com</p>
+            <p style="font-size: 8px;">EMAIL: support@morstrix.com</p>
         </div>
     </div>
 
     <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; margin-bottom: 20px;">📌 MOODBOARD</p>
+            <p style="font-size: 8px; margin-bottom: 20px;">📌 PINTEREST MOOD</p>
             <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="350" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 
     <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px;">ART STUDIO // COMING SOON</p>
+            <p style="font-size: 8px;">[ ART STUDIO ]<br><br>🚧 UNDER DEVELOPMENT 🚧</p>
+            <br>
+            <button class="retro-btn" onclick="document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'))">CLOSE</button>
         </div>
     </div>
 
