@@ -16,7 +16,6 @@
             padding: 20px;
         }
 
-        /* Крестик справа вверху */
         .back-button-wrapper {
             text-align: right;
             margin-bottom: 20px;
@@ -35,6 +34,225 @@
             background-position: center;
         }
 
+        .journal-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .journal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .journal-title {
+            font-size: 1rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+        }
+
+        .journal-sub {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        .retro-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #fff;
+            padding: 8px 16px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.1s;
+        }
+
+        .retro-btn:active {
+            transform: scale(0.95);
+            background: #a84d6b;
+            color: #000;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 400px;
+            background: #000;
+            border: 2px solid #fff;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .coming-soon {
+            font-size: 7px;
+            color: #888;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 550px) {
+            body { padding: 10px; }
+            .retro-btn { font-size: 6px; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-button-wrapper">
+        <a href="index.html" class="back-button"></a>
+    </div>
+
+    <div class="journal-container">
+        
+        <div class="journal-header">
+            <div class="journal-title">JOURNAL</div>
+            <div class="journal-sub">print / archive / rss feed</div>
+        </div>
+
+        <!-- СПОТИФАЙ ПЛЕЕР -->
+        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+            <iframe style="border-radius:12px; width:280px; height:80px;" 
+                src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen" loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- БАРАБАН АРТОВ (ЗАГЛУШКА) -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
+        </div>
+
+        <!-- ТВИТТЕР -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
+        </div>
+
+        <!-- БЕХАНС -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="https://behance.net/ada_morsova" target="_blank" class="retro-btn">🎯 BEHANCE</a>
+        </div>
+
+        <!-- RSS ЛЕНТА -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="rssBtn" class="retro-btn">📡 RSS FEEDS</button>
+        </div>
+
+        <!-- ПИНТЕРЕСТ -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="pinterestBtn" class="retro-btn">📌 PINTEREST</button>
+        </div>
+
+        <!-- ТЕТРИС ЛИДЕРБОРД -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="tetrisBtn" class="retro-btn">🎮 TETRIS</button>
+        </div>
+
+        <!-- ФОРУМ -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="forumBtn" class="retro-btn">💬 FORUM</button>
+        </div>
+
+        <!-- АРХИВНЫЙ ТГ ВИДЖЕТ -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="tgWidgetBtn" class="retro-btn">📡 LAST BROADCAST</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ЗАГЛУШКА -->
+    <div id="placeholderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">✜</button>
+            <div class="coming-soon">🚧 КОМНАТА В РАЗРАБОТКЕ 🚧</div>
+            <button id="modalOkBtn" class="retro-btn" style="margin-top: 15px;">OK</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ДИСКЛЕЙМЕР ДЛЯ ФОРУМА -->
+    <div id="disclaimerModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDisclaimerModal">✜</button>
+            <div class="coming-soon">
+                ⚠️ ВИ ПЕРЕХОДИТЕ ДО ТЕЛЕГРАМ ФОРУМУ<br><br>
+                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ<br>
+                ДОТРИМУЙТЕСЬ ПРАВИЛ СПІЛКУВАННЯ
+            </div>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button id="confirmForumBtn" class="retro-btn">ENTER</button>
+                <button id="cancelForumBtn" class="retro-btn">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="background.js"></script>
+    <script>
+        const placeholderModal = document.getElementById('placeholderModal');
+        const disclaimerModal = document.getElementById('disclaimerModal');
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+        }
+
+        function showPlaceholder() {
+            placeholderModal.classList.add('active');
+        }
+
+        // ЗАГЛУШКИ
+        document.getElementById('artBtn').onclick = showPlaceholder;
+        document.getElementById('rssBtn').onclick = showPlaceholder;
+        document.getElementById('pinterestBtn').onclick = showPlaceholder;
+        document.getElementById('tetrisBtn').onclick = showPlaceholder;
+        document.getElementById('tgWidgetBtn').onclick = showPlaceholder;
+
+        // ФОРУМ С ДИСКЛЕЙМЕРОМ
+        document.getElementById('forumBtn').onclick = () => disclaimerModal.classList.add('active');
+
+        // ЗАКРЫТИЕ МОДАЛОК
+        document.getElementById('closeModal').onclick = () => closeModal(placeholderModal);
+        document.getElementById('modalOkBtn').onclick = () => closeModal(placeholderModal);
+        document.getElementById('closeDisclaimerModal').onclick = () => closeModal(disclaimerModal);
+        document.getElementById('cancelForumBtn').onclick = () => closeModal(disclaimerModal);
+        document.getElementById('confirmForumBtn').onclick = () => {
+            window.open('https://t.me/morstrix', '_blank');
+            closeModal(disclaimerModal);
+        };
+
+        // Закрытие по клику на оверлей
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+        });
+    </script>
+</body>
+</html>
         /* Контейнер */
         .journal-container {
             max-width: 600px;
