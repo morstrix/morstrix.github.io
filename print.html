@@ -5,28 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>JOURNAL | MORSTRIX</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
     <style>
-        /* ----------------------------- */
-        /* RESET & GLOBAL RETRO STYLES   */
-        /* ----------------------------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             background: transparent !important;
             min-height: 100vh;
-            color: #e0e0e0;
+            color: #fff;
             margin: 0;
             padding: 20px;
-            font-family: 'Press Start 2P', monospace;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* динамический фон из background.js (имитируем, если нет) */
         .back-button-wrapper {
             text-align: right;
             margin-bottom: 20px;
@@ -34,7 +23,342 @@
 
         .back-button {
             display: inline-flex !important;
-            background: rgba(0, 0, 0, 0.6) !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            width: 44px !important;
+            height: 44px !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-image: url('assets/close.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .journal-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .journal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .journal-title {
+            font-size: 1rem;
+            color: #a84d6b;
+            letter-spacing: 2px;
+        }
+
+        .journal-sub {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        .retro-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #fff;
+            padding: 8px 16px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.1s;
+        }
+
+        .retro-btn:active {
+            transform: scale(0.95);
+            background: #a84d6b;
+            color: #000;
+        }
+
+        .block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #b97272;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .block-title {
+            font-size: 8px;
+            color: #a84d6b;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* ========== БЕГУЩАЯ СТРОКА RSS (только это новое) ========== */
+        .ticker-wrapper {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #a84d6b;
+            padding: 12px 0;
+            margin-bottom: 25px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            color: #ffc0cb;
+            animation: scrollTicker 45s linear infinite;
+            padding-right: 30px;
+        }
+
+        .ticker span {
+            display: inline-block;
+            margin-right: 40px;
+        }
+
+        .ticker span::before {
+            content: "✦ ";
+            color: #a84d6b;
+        }
+
+        @keyframes scrollTicker {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 550px) {
+            .ticker { font-size: 6px; animation-duration: 55s; }
+            .ticker span { margin-right: 25px; }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 400px;
+            background: #000;
+            border: 2px solid #fff;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .coming-soon {
+            font-size: 7px;
+            color: #888;
+            margin: 20px 0;
+        }
+
+        .telegram-widget-wrapper {
+            margin-top: 15px;
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-button-wrapper">
+        <a href="index.html" class="back-button"></a>
+    </div>
+
+    <div class="journal-container">
+        
+        <div class="journal-header">
+            <div class="journal-title">JOURNAL</div>
+            <div class="journal-sub">print / archive / rss feed</div>
+        </div>
+
+        <!-- TWITTER -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="https://twitter.com/morstrix" target="_blank" class="retro-btn">🐦 TWITTER / X</a>
+        </div>
+        
+        <!-- RSS ЛЕНТА (МЕДЛЕННАЯ БЕГУЩАЯ СТРОКА) -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="rssTicker">✦ LOADING FEEDS... ✦</div>
+        </div>      
+        
+        <!-- ART STUDIO -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="artBtn" class="retro-btn">🎨 ART STUDIO</button>
+        </div>
+        
+        <!-- BEHANCE -->
+        <div class="block">
+            <div class="block-title">🎯 BEHANCE</div>
+            <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="100%" allowfullscreen lazyload frameborder="0"></iframe>
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="https://behance.net/ada_morsova1" target="_blank" class="retro-btn">→ ВСЕ ПРОЕКТЫ ←</a>
+            </div>
+        </div>
+
+        <!-- PINTEREST -->
+        <div class="block">
+            <div class="block-title">📌 PINTEREST</div>
+            <a data-pin-do="embedBoard" href="https://ru.pinterest.com/morstrix/re-f-erences/" data-pin-scale-width="80" data-pin-scale-height="200" data-pin-board-width="300"></a>
+            <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+        </div>
+
+        <!-- СПОТИФАЙ -->
+        <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+            </iframe>
+        </div>
+        
+        <!-- TETRIS -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="tetrisBtn" class="retro-btn">🎮 TETRIS</button>
+        </div>
+
+        <!-- FORUM -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="forumBtn" class="retro-btn">💬 FORUM</button>
+        </div>
+
+        <!-- TELEGRAM WIDGET -->
+        <div class="block">
+            <div class="block-title">📡 TELEGRAM</div>
+            <div class="telegram-widget-wrapper">
+                <script async src="https://telegram.org/js/telegram-widget.js?23"
+                    data-telegram-discussion="morstrixxx/71"
+                    data-width="100%"
+                    data-dark="1"
+                    data-color="a84d6b"
+                    data-limit="10">
+                </script>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- МОДАЛКА ЗАГЛУШКА -->
+    <div id="placeholderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">✜</button>
+            <div class="coming-soon">🚧 В РАЗРАБОТКЕ 🚧</div>
+            <button id="modalOkBtn" class="retro-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ДИСКЛЕЙМЕР -->
+    <div id="disclaimerModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDisclaimerModal">✜</button>
+            <div class="coming-soon">
+                ⚠️ ПЕРЕХОД В TELEGRAM<br><br>
+                ВСІ ПОВІДОМЛЕННЯ ПУБЛІЧНІ
+            </div>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button id="confirmForumBtn" class="retro-btn">ENTER</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="background.js"></script>
+    <script>
+        // Модалки
+        const placeholderModal = document.getElementById('placeholderModal');
+        const disclaimerModal = document.getElementById('disclaimerModal');
+
+        document.getElementById('artBtn').onclick = () => placeholderModal.classList.add('active');
+        document.getElementById('tetrisBtn').onclick = () => placeholderModal.classList.add('active');
+        document.getElementById('forumBtn').onclick = () => disclaimerModal.classList.add('active');
+
+        document.getElementById('closeModal').onclick = () => placeholderModal.classList.remove('active');
+        document.getElementById('modalOkBtn').onclick = () => placeholderModal.classList.remove('active');
+        document.getElementById('closeDisclaimerModal').onclick = () => disclaimerModal.classList.remove('active');
+        document.getElementById('confirmForumBtn').onclick = () => {
+            window.open('https://t.me/morstrix', '_blank');
+            disclaimerModal.classList.remove('active');
+        };
+        document.getElementById('cancelForumBtn')?.onclick = () => disclaimerModal.classList.remove('active');
+
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+        });
+        
+        // ========== RSS БЕГУЩАЯ СТРОКА (реальные заголовки) ==========
+        async function loadRSSFeeds() {
+            const blogs = [
+                'https://hyperallergic.com/feed/',
+                'https://www.artnews.com/feed/',
+                'https://rhizome.org/feed/',
+                'https://www.artforum.com/feed/'
+            ];
+            let allTitles = [];
+            
+            for (let blog of blogs) {
+                try {
+                    const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(blog);
+                    const res = await fetch(proxy);
+                    const data = await res.json();
+                    if (data.items) {
+                        const titles = data.items.slice(0, 2).map(item => item.title);
+                        allTitles.push(...titles);
+                    }
+                } catch(e) {
+                    console.log('RSS error:', blog);
+                }
+            }
+            
+            const ticker = document.getElementById('rssTicker');
+            if (allTitles.length > 0) {
+                // Убираем дубликаты
+                allTitles = [...new Set(allTitles)];
+                let content = '';
+                // Повторяем 4 раза для длинной непрерывной строки
+                for (let i = 0; i < 4; i++) {
+                    allTitles.forEach(title => {
+                        // Экранируем спецсимволы
+                        const safe = title.replace(/[&<>]/g, function(m) {
+                            if (m === '&') return '&amp;';
+                            if (m === '<') return '&lt;';
+                            if (m === '>') return '&gt;';
+                            return m;
+                        });
+                        content += `<span>${safe}</span>`;
+                    });
+                }
+                ticker.innerHTML = content;
+            } else {
+                // Fallback, если RSS не загрузились
+                ticker.innerHTML = '<span>✦ ARTFORUM</span><span>✦ E-FLUX</span><span>✦ RHIZOME</span><span>✦ HYPERALLERGIC</span><span>✦ CONTEMPORARY ART DAILY</span><span>✦ ARTNEWS</span><span>✦ FRIEZE</span><span>✦ MORSTRIX JOURNAL</span>'.repeat(3);
+            }
+        }
+        
+        loadRSSFeeds();
+        // Обновляем раз в 10 минут
+        setInterval(loadRSSFeeds, 10 * 60 * 1000);
+    </script>               
+</body>
+</html>            background: rgba(0, 0, 0, 0.6) !important;
             width: 44px !important;
             height: 44px !important;
             align-items: center !important;
