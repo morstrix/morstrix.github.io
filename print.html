@@ -19,7 +19,6 @@
             min-height: 100vh;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ (В ПОТОКЕ) */
         .close-site {
             position: absolute;
             top: 15px;
@@ -34,12 +33,12 @@
             margin-top: 50px;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 35px;
         }
 
         .section { width: 100%; text-align: center; }
 
-        /* 1. КАРУСЕЛЬ */
+        /* КАРУСЕЛЬ */
         .carousel { width: 100%; position: relative; line-height: 0; }
         .carousel img {
             width: 100%; height: auto; opacity: 0;
@@ -50,44 +49,60 @@
 
         .x-btn-img {
             cursor: pointer;
-            width: 45px;
-            margin-top: 15px;
+            width: 40px;
+            margin-top: 10px;
             transition: 0.2s;
         }
-        .x-btn-img:hover { transform: scale(1.1); }
 
-        /* 2. RSS СТРОКА */
+        /* RSS */
         .ticker-wrapper {
-            padding: 15px 0; overflow: hidden; white-space: nowrap;
+            padding: 12px 0; overflow: hidden; white-space: nowrap;
             border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
         }
         .ticker { display: inline-block; font-size: 8px; color: #ffd9e6; animation: scrollTicker 40s linear infinite; }
         .ticker span { margin-right: 50px; }
         @keyframes scrollTicker { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
 
-        /* 3. НАВИГАЦИЯ (ФОРУМ, САППОРТ, МУД) */
-        .img-nav { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .nav-icon { cursor: pointer; width: 100px; transition: 0.2s; }
-        .nav-icon:hover { transform: scale(1.05); }
+        /* ЕДИНЫЙ СТИЛЬ ДЛЯ ВСЕХ КНОПОК-КАРТИНОК */
+        .nav-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        
+        .nav-btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
 
-        /* 4. АРТ СТУДИЯ */
+        .nav-btn-img {
+            cursor: pointer;
+            width: 80px; /* Твой новый единый размер */
+            height: auto;
+            transition: 0.2s;
+            image-rendering: pixelated;
+        }
+        .nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        .label-small { font-size: 6px; color: #a84d6b; letter-spacing: 1px; }
+
+        /* АРТ БЛОК */
         .art-square-frame {
             width: 100%;
             max-width: 300px;
             aspect-ratio: 1 / 1;
             border: 1px solid #1a1a1a;
             background: #0a0a0f;
-            margin: 0 auto 15px;
+            margin: 0 auto 20px;
             overflow: hidden;
         }
         .art-square-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-        
-        .paint-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .paint-btn-img { cursor: pointer; width: 130px; transition: 0.2s; }
-        .paint-btn-img:hover { transform: scale(1.05); }
-        .paint-label { font-size: 7px; color: #a84d6b; letter-spacing: 2px; }
 
-        /* 5. ФОНТ СТАЙЛЕР */
+        /* STYLER */
         .styler-label { font-size: 7px; color: #444; margin-bottom: 10px; text-align: left; max-width: 450px; margin-inline: auto; }
         .styler-container {
             display: flex; align-items: center; background: #0a0a0f; border: 1px solid #1a1a1a;
@@ -98,9 +113,9 @@
             font-family: 'Press Start 2P', monospace; font-size: 9px; padding: 12px 5px; outline: none;
         }
         .styler-icon-btn { background: transparent; border: none; cursor: pointer; padding: 5px; }
-        .styler-icon-btn img { width: 20px; height: 20px; image-rendering: pixelated; }
+        .styler-icon-btn img { width: 20px; height: 20px; }
 
-        /* ОБЩЕЕ */
+        /* МОДАЛКИ */
         .retro-btn {
             background: transparent; border: 1px solid #a84d6b; color: #ffb7c7;
             padding: 10px 18px; font-family: 'Press Start 2P', monospace;
@@ -127,17 +142,17 @@
                 <img src="assets/mx1.jpg" class="active">
                 <img src="assets/mx2.jpg">
             </div>
-            <img src="assets/x.png" class="x-btn-img" onclick="openModal('disclaimerModal')" alt="X">
+            <img src="assets/x.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
         </div>
 
         <div class="ticker-wrapper">
             <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
-        <div class="section img-nav">
-            <img src="assets/forum.png" class="nav-icon" onclick="openModal('forumModal')">
-            <img src="assets/support.png" class="nav-icon" onclick="openModal('supportModal')">
-            <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')">
+        <div class="section nav-grid">
+            <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
+            <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
+            <img src="assets/mood.png" class="nav-btn-img" onclick="openModal('moodModal')">
         </div>
 
         <hr style="border: 0; border-top: 1px solid #111;">
@@ -146,9 +161,9 @@
             <div class="art-square-frame">
                 <img src="assets/mx1.jpg" alt="Preview">
             </div>
-            <div class="paint-btn-wrapper">
-                <img src="assets/paint.png" class="paint-btn-img" onclick="openModal('artModal')">
-                <div class="paint-label">PAINT</div>
+            <div class="nav-btn-container">
+                <img src="assets/paint.png" class="nav-btn-img" onclick="openModal('artModal')">
+                <div class="label-small">PAINT</div>
             </div>
         </div>
 
@@ -181,7 +196,7 @@
 
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">⚠️ ATTENTION ⚠️<br><br>DATA STREAM IS EXPERIMENTAL.<br>USE AT YOUR OWN RISK.</p>
+            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">⚠️ ATTENTION ⚠️<br><br>EXPERIMENTAL DATA STREAM.</p>
             <button class="retro-btn" onclick="closeModalDirect('disclaimerModal')">ENTER</button>
         </div>
     </div>
@@ -194,7 +209,7 @@
     </div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content"><p style="font-size: 8px;">CONTACT: support@morstrix.com</p></div>
+        <div class="modal-content"><p style="font-size: 8px;">EMAIL: support@morstrix.com</p></div>
     </div>
 
     <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
@@ -210,7 +225,6 @@
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
-        // КАРУСЕЛЬ
         const slides = document.querySelectorAll('#mainCarousel img');
         let currentSlide = 0;
         setInterval(() => {
@@ -219,19 +233,13 @@
             slides[currentSlide].classList.add('active');
         }, 3500);
 
-        // МОДАЛКИ
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
         }
-        function closeModal(e) {
-            if (e.target.classList.contains('modal-overlay')) {
-                e.target.classList.remove('active');
-            }
-        }
+        function closeModal(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
         function closeModalDirect(id) { document.getElementById(id).classList.remove('active'); }
 
-        // FONT STYLER ЛОГИКА
         const smallCapsMap = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'ꜱ','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
         let isTransformed = false;
 
@@ -258,7 +266,6 @@
             }
         }
 
-        // RSS
         const ticker = document.getElementById('rssTicker');
         const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
         ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
