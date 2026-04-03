@@ -19,7 +19,7 @@
             min-height: 100vh;
         }
 
-        /* КНОПКА ЗАКРЫТИЯ (УХОДИТ ВВЕРХ) */
+        /* КНОПКА ЗАКРЫТИЯ (В ПОТОКЕ) */
         .close-site {
             position: absolute;
             top: 15px;
@@ -39,7 +39,7 @@
 
         .section { width: 100%; text-align: center; }
 
-        /* КАРУСЕЛЬ */
+        /* 1. КАРУСЕЛЬ */
         .carousel { width: 100%; position: relative; line-height: 0; }
         .carousel img {
             width: 100%; height: auto; opacity: 0;
@@ -48,16 +48,15 @@
         .carousel img.active { opacity: 1; position: relative; }
         .carousel img:not(.active) { position: absolute; top: 0; left: 0; }
 
-        /* КНОПКА X (ДИСКЛЕЙМЕР) */
         .x-btn-img {
             cursor: pointer;
             width: 45px;
-            margin-top: -10px; /* Немного приподнимаем к карусели */
+            margin-top: 15px;
             transition: 0.2s;
         }
-        .x-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
+        .x-btn-img:hover { transform: scale(1.1); }
 
-        /* RSS СТРОКА */
+        /* 2. RSS СТРОКА */
         .ticker-wrapper {
             padding: 15px 0; overflow: hidden; white-space: nowrap;
             border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
@@ -66,57 +65,53 @@
         .ticker span { margin-right: 50px; }
         @keyframes scrollTicker { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
 
-        /* КНОПКИ-ИКОНКИ */
+        /* 3. НАВИГАЦИЯ (ФОРУМ, САППОРТ, МУД) */
         .img-nav { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .nav-icon { cursor: pointer; width: 100px; transition: 0.2s; }
         .nav-icon:hover { transform: scale(1.05); }
 
-        /* АРТ БЛОК */
-        .art-block-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
+        /* 4. АРТ СТУДИЯ */
         .art-square-frame {
             width: 100%;
             max-width: 300px;
             aspect-ratio: 1 / 1;
-            border: 1px solid #332233;
+            border: 1px solid #1a1a1a;
             background: #0a0a0f;
+            margin: 0 auto 15px;
             overflow: hidden;
         }
-        .art-square-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .art-square-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
         
-        .paint-btn-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-top: 5px;
-        }
+        .paint-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .paint-btn-img { cursor: pointer; width: 130px; transition: 0.2s; }
         .paint-btn-img:hover { transform: scale(1.05); }
         .paint-label { font-size: 7px; color: #a84d6b; letter-spacing: 2px; }
 
-        /* ФОНТ СТАЙЛЕР */
-        .font-styler-box { padding: 25px; color: #444; font-size: 7px; border: 1px dashed #222; }
+        /* 5. ФОНТ СТАЙЛЕР */
+        .styler-label { font-size: 7px; color: #444; margin-bottom: 10px; text-align: left; max-width: 450px; margin-inline: auto; }
+        .styler-container {
+            display: flex; align-items: center; background: #0a0a0f; border: 1px solid #1a1a1a;
+            padding: 5px 10px; width: 100%; max-width: 450px; margin: 0 auto;
+        }
+        .styler-input {
+            flex-grow: 1; background: transparent; border: none; color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace; font-size: 9px; padding: 12px 5px; outline: none;
+        }
+        .styler-icon-btn { background: transparent; border: none; cursor: pointer; padding: 5px; }
+        .styler-icon-btn img { width: 20px; height: 20px; image-rendering: pixelated; }
 
-        /* РЕТРО КНОПКА */
+        /* ОБЩЕЕ */
         .retro-btn {
             background: transparent; border: 1px solid #a84d6b; color: #ffb7c7;
             padding: 10px 18px; font-family: 'Press Start 2P', monospace;
-            font-size: 8px; cursor: pointer; text-decoration: none; display: inline-block;
+            font-size: 8px; cursor: pointer; text-decoration: none;
         }
-
-        /* МОДАЛКИ */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98);
             z-index: 10000; align-items: center; justify-content: center; padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-content { width: 100%; max-width: 500px; text-align: center; }
-        .warning-text { font-size: 8px; line-height: 1.8; color: #f0f0f0; margin-bottom: 25px; }
     </style>
 </head>
 <body>
@@ -132,9 +127,7 @@
                 <img src="assets/mx1.jpg" class="active">
                 <img src="assets/mx2.jpg">
             </div>
-            <div style="margin-top: 15px;">
-                <img src="assets/x.png" class="x-btn-img" onclick="openModal('disclaimerModal')" alt="Disclaimer">
-            </div>
+            <img src="assets/x.png" class="x-btn-img" onclick="openModal('disclaimerModal')" alt="X">
         </div>
 
         <div class="ticker-wrapper">
@@ -147,28 +140,34 @@
             <img src="assets/mood.png" class="nav-icon" onclick="openModal('moodModal')">
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #1a1a1a;">
+        <hr style="border: 0; border-top: 1px solid #111;">
 
-        <div class="section art-block-container">
+        <div class="section">
             <div class="art-square-frame">
-                <img src="assets/mx1.jpg" alt="Art Preview" style="opacity: 0.4;">
+                <img src="assets/mx1.jpg" alt="Preview">
             </div>
             <div class="paint-btn-wrapper">
-                <img src="assets/paint.png" class="paint-btn-img" onclick="openModal('artModal')" alt="Paint Button">
+                <img src="assets/paint.png" class="paint-btn-img" onclick="openModal('artModal')">
                 <div class="paint-label">PAINT</div>
             </div>
         </div>
 
         <div class="section">
-            <div class="font-styler-box">
-                [ FONT_STYLER_V.1.0 ]<br><br>
-                STATUS: ENCRYPTED
+            <div class="styler-label">[ FONT_STYLER_V.1.0 ]</div>
+            <div class="styler-container">
+                <button class="styler-icon-btn" onclick="copyStylerText()">
+                    <img src="assets/x.png" style="filter: hue-rotate(290deg) brightness(0.8);">
+                </button>
+                <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
+                <button class="styler-icon-btn" onclick="handleAction()">
+                    <img src="assets/close.png" id="actionIcon">
+                </button>
             </div>
         </div>
 
-        <div class="section" style="padding-bottom: 50px;">
+        <div class="section" style="padding-bottom: 60px;">
             <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 20px;">🏆 HALL OF FAME</h4>
-            <div style="font-size: 8px; color: #666; line-height: 2.5;">
+            <div style="font-size: 8px; color: #444; line-height: 2.5;">
                 MORPHINE_DRIP — 12450<br>
                 GL1TCH_WITCH — 9820<br>
                 VHS_GHOST — 7650
@@ -182,62 +181,80 @@
 
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <div class="warning-text">
-                ⚠️ DISCLAIMER ⚠️<br><br>
-                THIS SECTION CONTAINS ARCHIVED DATA<br>
-                AND EXPERIMENTAL VISUALS.<br>
-                PROCEED WITH CAUTION.
-            </div>
-            <button class="retro-btn" onclick="document.getElementById('disclaimerModal').classList.remove('active')">ENTER</button>
+            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">⚠️ ATTENTION ⚠️<br><br>DATA STREAM IS EXPERIMENTAL.<br>USE AT YOUR OWN RISK.</p>
+            <button class="retro-btn" onclick="closeModalDirect('disclaimerModal')">ENTER</button>
         </div>
     </div>
 
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; margin-bottom: 20px;">GO TO TELEGRAM?</p>
+            <p style="font-size: 8px; margin-bottom: 20px;">OPEN TELEGRAM?</p>
             <a href="https://t.me/morstrix" target="_blank" class="retro-btn">YES</a>
         </div>
     </div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <p style="font-size: 8px;">EMAIL: support@morstrix.com</p>
-        </div>
+        <div class="modal-content"><p style="font-size: 8px;">CONTACT: support@morstrix.com</p></div>
     </div>
 
     <div id="moodModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; margin-bottom: 20px;">📌 PINTEREST MOOD</p>
+            <p style="font-size: 8px; margin-bottom: 20px;">📌 PINTEREST</p>
             <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="350" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 
     <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <p style="font-size: 8px;">[ ART STUDIO ]<br><br>🚧 UNDER DEVELOPMENT 🚧</p>
-        </div>
+        <div class="modal-content"><p style="font-size: 8px;">[ ART STUDIO ]<br><br>🚧 UNDER DEVELOPMENT 🚧</p></div>
     </div>
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
-        // Карусель
+        // КАРУСЕЛЬ
         const slides = document.querySelectorAll('#mainCarousel img');
         let currentSlide = 0;
-        function nextSlide() {
+        setInterval(() => {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-        }
-        setInterval(nextSlide, 3500);
+        }, 3500);
 
-        // Модалки
+        // МОДАЛКИ
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             if(id === 'moodModal' && window.PinUtils) window.PinUtils.build();
         }
         function closeModal(e) {
             if (e.target.classList.contains('modal-overlay')) {
-                document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+                e.target.classList.remove('active');
+            }
+        }
+        function closeModalDirect(id) { document.getElementById(id).classList.remove('active'); }
+
+        // FONT STYLER ЛОГИКА
+        const smallCapsMap = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'ꜱ','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
+        let isTransformed = false;
+
+        function handleAction() {
+            const input = document.getElementById('fontInput');
+            if (!input.value) { input.focus(); return; }
+            if (!isTransformed) {
+                input.value = input.value.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
+                isTransformed = true;
+                document.getElementById('actionIcon').style.filter = "invert(1) sepia(1) saturate(5) hue-rotate(300deg)";
+            } else {
+                input.value = "";
+                isTransformed = false;
+                document.getElementById('actionIcon').style.filter = "none";
+            }
+        }
+
+        function copyStylerText() {
+            const input = document.getElementById('fontInput');
+            if (input.value && input.value !== "COPIED!") {
+                navigator.clipboard.writeText(input.value);
+                const val = input.value; input.value = "COPIED!";
+                setTimeout(() => { input.value = val; }, 1000);
             }
         }
 
