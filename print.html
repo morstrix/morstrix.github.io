@@ -54,16 +54,14 @@
         .ticker span { margin-right: 50px; }
         @keyframes scrollTicker { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
 
-        /* 3. НАВИГАЦИЯ (ФОРУМ И САППОРТ) */
-        .nav-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        /* 3. НАВИГАЦИЯ */
+        .nav-grid { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
         .nav-btn-img { cursor: pointer; width: 85px; height: auto; transition: 0.2s; image-rendering: pixelated; }
         .nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* 4. ПИНТЕРЕСТ ВИДЖЕТ В ЛЕНТЕ */
+        /* 4. ПИНТЕРЕСТ ВИДЖЕТ (БЕЗ КОНТУРА) */
         .pin-wrapper {
-            background: #0a0a0f;
-            border: 1px solid #1a1a1a;
-            padding: 10px;
+            padding: 0;
             margin: 0 auto;
             width: 100%;
             max-width: 450px;
@@ -77,7 +75,7 @@
             margin: 0 auto 20px; overflow: hidden;
         }
         .art-square-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-        .paint-label { font-size: 6px; color: #a84d6b; letter-spacing: 1px; margin-top: 8px; }
+        .paint-label { font-size: 6px; color: #a84d6b; letter-spacing: 1px; margin-top: 8px; text-transform: uppercase; }
 
         /* 6. FONT STYLER */
         .styler-label { font-size: 7px; color: #444; margin-bottom: 10px; text-align: left; max-width: 450px; margin-inline: auto; }
@@ -105,7 +103,7 @@
             font-size: 8px; cursor: pointer; text-decoration: none; display: inline-block;
         }
 
-        /* PAINT ENGINE STYLES */
+        /* PAINT ENGINE */
         .paint-window { width: 100%; max-width: 420px; background: #0a0a0f; border: 1px solid #1a1a1a; display: flex; flex-direction: column; margin: 0 auto; }
         .paint-header-bar { background: #1a1a1a; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 7px; color: #444; }
         .canvas-container { position: relative; width: 100%; aspect-ratio: 1/1; background: #000; overflow: hidden; }
@@ -138,8 +136,14 @@
         </div>
 
         <div class="section nav-grid">
-            <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
-            <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
+                <div class="paint-label">FORUM</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
+                <div class="paint-label">SUPPORT</div>
+            </div>
         </div>
 
         <div class="section">
@@ -185,13 +189,12 @@
                 GL1TCH_WITCH — 9820<br>
                 VHS_GHOST — 7650
             </div>
-            <div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center;">
-    <a href="tetris.html">
-        <img src="assets/tetris.png" class="nav-btn-img" alt="Play Tetris">
-    </a>
-    <div class="paint-label">PLAY TETRIS</div>
-</div>
-
+            <div style="margin-top: 40px; display: flex; flex-direction: column; align-items: center;">
+                <a href="tetris.html">
+                    <img src="assets/tetris.png" class="nav-btn-img" alt="Play Tetris">
+                </a>
+                <div class="paint-label">PLAY TETRIS</div>
+            </div>
         </div>
     </div>
 
@@ -251,7 +254,6 @@
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script>
-        // Карусель
         const slides = document.querySelectorAll('#mainCarousel img');
         let currentSlide = 0;
         setInterval(() => {
@@ -260,7 +262,6 @@
             slides[currentSlide].classList.add('active');
         }, 3500);
 
-        // Модалки
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             if(id === 'artModal' && !paintInit) {
@@ -271,7 +272,6 @@
         function closeModal(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
         function closeModalDirect(id) { document.getElementById(id).classList.remove('active'); }
 
-        // Font Styler
         const smallCapsMap = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'ꜱ','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
         let isTransformed = false;
         function handleAction() {
@@ -295,12 +295,10 @@
             }
         }
 
-        // Ticker
         const ticker = document.getElementById('rssTicker');
         const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
         ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
 
-        // Paint Logic
         let paintInit = false;
         function startPaintLogic() {
             const l1 = document.getElementById('layer1');
@@ -366,7 +364,6 @@
             save();
         }
 
-        // Обновление виджетов при загрузке
         window.onload = () => { if(window.PinUtils) window.PinUtils.build(); };
     </script>
 </body>
