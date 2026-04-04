@@ -1,0 +1,331 @@
+/* ============================================
+   JOURNAL.CSS — стили страницы журнала
+============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #050508;
+    color: #f0f0f0;
+    font-family: 'Press Start 2P', monospace;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* КРЕСТИК */
+.close-site {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+}
+.close-site img {
+    width: 30px;
+    height: 30px;
+    image-rendering: pixelated;
+}
+
+/* КОНТЕЙНЕР */
+.container {
+    max-width: 600px;
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.section {
+    width: 100%;
+    text-align: center;
+}
+
+/* КАРУСЕЛЬ */
+.carousel {
+    width: 100%;
+    position: relative;
+    line-height: 0;
+    background: #000;
+}
+.carousel img {
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: block;
+}
+.carousel img.active {
+    opacity: 1;
+    position: relative;
+}
+.carousel img:not(.active) {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.x-btn-img {
+    cursor: pointer;
+    width: 40px;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+/* RSS СТРОКА */
+.ticker-wrapper {
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+}
+.ticker {
+    display: inline-block;
+    font-size: 8px;
+    color: #ffd9e6;
+    animation: scrollTicker 40s linear infinite;
+}
+.ticker span {
+    margin-right: 50px;
+}
+@keyframes scrollTicker {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+/* НАВИГАЦИЯ */
+.nav-grid {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.nav-btn-img {
+    cursor: pointer;
+    width: 85px;
+    height: auto;
+    transition: 0.2s;
+    image-rendering: pixelated;
+}
+.nav-btn-img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* ПИНТЕРЕСТ */
+.pin-wrapper {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 450px;
+}
+
+/* АРТ БЛОК */
+.art-square-frame {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1/1;
+    border: 1px solid #1a1a1a;
+    background: #0a0a0f;
+    margin: 0 auto 20px;
+    overflow: hidden;
+}
+.art-square-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+.paint-label {
+    font-size: 6px;
+    color: #a84d6b;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+/* FONT STYLER */
+.styler-label {
+    font-size: 7px;
+    color: #444;
+    margin-bottom: 10px;
+    text-align: left;
+    max-width: 450px;
+    margin-inline: auto;
+}
+.styler-container {
+    display: flex;
+    align-items: center;
+    background: #0a0a0f;
+    border: 1px solid #1a1a1a;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+.styler-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: #ffb7c7;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 12px 5px;
+    outline: none;
+}
+.styler-icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.styler-icon-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* МОДАЛКИ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.98);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-content {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    position: relative;
+    background: #0a0a0a;
+    border: 1px solid #a84d6b;
+    border-radius: 4px;
+    padding: 10px;
+}
+.retro-btn {
+    background: transparent;
+    border: 1px solid #a84d6b;
+    color: #ffb7c7;
+    padding: 10px 18px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* PAINT ENGINE */
+.paint-window {
+    width: 100%;
+    max-width: 420px;
+    background: #0a0a0f;
+    border: 1px solid #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.paint-header-bar {
+    background: #1a1a1a;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7px;
+    color: #444;
+}
+.canvas-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #000;
+    overflow: hidden;
+}
+.canvas-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+.paint-tools-panel {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #050508;
+    border-top: 1px solid #1a1a1a;
+    gap: 10px;
+    align-items: center;
+}
+.layers-sub-modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    background: #0a0a0f;
+    border: 1px solid #ffb7c7;
+    z-index: 11000;
+}
+.layers-sub-modal.active {
+    display: block;
+}
+.layer-row {
+    padding: 15px;
+    font-size: 7px;
+    border-bottom: 1px solid #111;
+    cursor: pointer;
+    color: #444;
+    text-align: left;
+}
+.layer-row.active {
+    color: #ffb7c7;
+    background: #0d0d14;
+    border-left: 3px solid #ffb7c7;
+}
+
+/* АДАПТАЦИЯ */
+@media (max-width: 600px) {
+    .container {
+        margin-top: 40px;
+        gap: 25px;
+    }
+    .nav-btn-img {
+        width: 70px;
+    }
+    .modal-content {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-top: 30px;
+        gap: 20px;
+    }
+    .nav-btn-img {
+        width: 60px;
+    }
+    .close-site img {
+        width: 25px;
+        height: 25px;
+    }
+    .modal-content {
+        max-width: 280px;
+    }
+}
