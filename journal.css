@@ -1,5 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — UPDATED STRUCTURE
+   JOURNAL.CSS — стили страницы журнала
 ============================================ */
 
 :root {
@@ -15,13 +15,12 @@
     box-sizing: border-box;
 }
 
-/* 1. БАЗОВЫЙ СЛОЙ */
 html {
     background: var(--bg-dark);
 }
 
 body {
-    background: transparent; /* Чтобы видеть канвас */
+    background: transparent;
     color: #f0f0f0;
     font-family: 'Press Start 2P', monospace;
     padding: 20px 15px;
@@ -33,31 +32,28 @@ body {
     position: relative;
 }
 
-/* 2. СЛОЙ ФОНА (z-index: 1 как в index.css) */
+/* ФОН (канвас) */
 #neuro-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; 
+    z-index: 1;
     pointer-events: none;
 }
 
-/* 3. КНОПКА ЗАКРЫТИЯ (Логика из store.css) */
+/* КРЕСТИК КАК В STORE */
 .close-site {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.5);
-    width: auto; /* Авто-размер */
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    width: auto;
     height: auto;
-    display: flex;
-    padding: 5px;
-    text-decoration: none;
+    display: block;
+    z-index: 1000;
 }
-
 .close-site img {
     width: 30px;
     height: 30px;
@@ -65,7 +61,7 @@ body {
     image-rendering: pixelated;
 }
 
-/* 4. КОНТЕНТ (z-index: 10 как в index.css) */
+/* КОНТЕЙНЕР */
 .container {
     max-width: 600px;
     width: 100%;
@@ -74,7 +70,7 @@ body {
     flex-direction: column;
     gap: 50px;
     position: relative;
-    z-index: 10; 
+    z-index: 10;
 }
 
 .section {
@@ -239,6 +235,7 @@ body {
     z-index: 10000;
     align-items: center;
     justify-content: center;
+    padding: 80px 0;
 }
 .modal-overlay.active {
     display: flex;
@@ -298,6 +295,33 @@ body {
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    margin-top: 10px;
+}
+
+.retro-btn:active {
+    transform: scale(0.95);
+    background: var(--muted-pink);
+    color: #010101;
+}
+
+/* Telegram-виджет */
+.telegram-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+    background: #000000;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.telegram-wrapper iframe,
+.telegram-wrapper .telegram-widget {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    display: block;
+    background: #000000 !important;
+    border: none !important;
 }
 
 /* PAINT ENGINE */
@@ -324,6 +348,7 @@ body {
     width: 100%;
     aspect-ratio: 1/1;
     background: #000;
+    overflow: hidden;
 }
 .canvas-container canvas {
     position: absolute;
@@ -339,11 +364,62 @@ body {
     padding: 10px;
     background: #050508;
     border-top: 1px solid #1a1a1a;
+    gap: 10px;
     align-items: center;
+}
+.layers-sub-modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    background: #0a0a0f;
+    border: 1px solid #ffb7c7;
+    z-index: 11000;
+}
+.layers-sub-modal.active {
+    display: block;
+}
+.layer-row {
+    padding: 15px;
+    font-size: 7px;
+    border-bottom: 1px solid #111;
+    cursor: pointer;
+    color: #444;
+    text-align: left;
+}
+.layer-row.active {
+    color: #ffb7c7;
+    background: #0d0d14;
+    border-left: 3px solid #ffb7c7;
 }
 
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
-    .container { margin-top: 80px; gap: 40px; }
-    .nav-btn-img { width: 70px; }
+    .container {
+        margin-top: 80px;
+        gap: 40px;
+    }
+    .nav-btn-img {
+        width: 70px;
+    }
+    .modal-overlay {
+        padding: 60px 0;
+    }
+    .modal-content {
+        max-height: calc(100vh - 120px);
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-btn-img {
+        width: 60px;
+    }
+    .modal-overlay {
+        padding: 40px 0;
+    }
+    .modal-content {
+        max-height: calc(100vh - 80px);
+    }
 }
