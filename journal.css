@@ -423,3 +423,22 @@ body {
         max-height: calc(100vh - 80px);
     }
 }
+
+/* РАДИО КНОПКА В ЛЕВОМ УГЛУ */
+.radio-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: transparent;
+    width: auto;
+    height: auto;
+    display: block;
+    z-index: 1000;
+    cursor: pointer;
+}
+.radio-btn img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    image-rendering: pixelated;
+}
