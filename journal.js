@@ -170,3 +170,6 @@ function startPaintLogic() {
 window.onload = () => { 
     if(window.PinUtils) window.PinUtils.build(); 
 };
+
+// ОТКРЫТИЕ РАДИО
+document.getElementById('radioBtn').onclick = () => openModal('radioModal');
