@@ -27,6 +27,17 @@ function closeModalDirect(id) {
     document.getElementById(id).classList.remove('active'); 
 }
 
+// РАДИО КНОПКА — ОТКРЫТИЕ МОДАЛКИ
+const radioBtn = document.getElementById('radioBtn');
+const radioModal = document.getElementById('radioModal');
+
+if (radioBtn && radioModal) {
+    radioBtn.onclick = (e) => {
+        e.stopPropagation();
+        radioModal.classList.add('active');
+    };
+}
+
 // FONT STYLER
 const smallCapsMap = {
     'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ',
