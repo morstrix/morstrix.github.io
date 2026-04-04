@@ -39,13 +39,13 @@ body {
     z-index: 10;
 }
 
-/* Радио кнопка */
+/* РАДИО – 100px */
 .radio-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     background: rgba(0,0,0,0.6);
     border-radius: 50%;
     display: flex;
@@ -57,8 +57,8 @@ body {
 }
 .radio-btn:active { transform: scale(0.9); }
 .radio-btn img {
-    width: 42px;
-    height: 42px;
+    width: 60px;
+    height: 60px;
     image-rendering: pixelated;
 }
 
@@ -96,7 +96,7 @@ body {
 }
 .index-card:active { transform: scale(0.9); }
 
-/* ИКОНКИ – ОЧЕНЬ БОЛЬШИЕ */
+/* ОСНОВНЫЕ ИКОНКИ – 140px */
 .index-card img {
     width: 140px !important;
     height: 140px !important;
@@ -226,8 +226,8 @@ body {
     .index-grid { gap: 50px 70px; }
     .index-card img { width: 110px !important; height: 110px !important; margin-bottom: 18px; }
     .index-card span { font-size: 10px; }
-    .radio-btn { width: 60px; height: 60px; }
-    .radio-btn img { width: 36px; height: 36px; }
+    .radio-btn { width: 80px; height: 80px; }
+    .radio-btn img { width: 48px; height: 48px; }
     .donate-line { width: 220px; }
 }
 
@@ -236,8 +236,8 @@ body {
     .index-grid { gap: 40px 50px; }
     .index-card img { width: 90px !important; height: 90px !important; margin-bottom: 14px; }
     .index-card span { font-size: 9px; }
-    .radio-btn { width: 52px; height: 52px; }
-    .radio-btn img { width: 32px; height: 32px; }
+    .radio-btn { width: 70px; height: 70px; }
+    .radio-btn img { width: 42px; height: 42px; }
     .donate-line { width: 190px; }
     .donate-label { font-size: 10px; }
 }
@@ -247,14 +247,15 @@ body {
     .index-card img { width: 75px !important; height: 75px !important; }
     .index-card span { font-size: 8px; }
     .donate-line { width: 170px; }
-    .bottom-section { gap: 30px; }
+    .radio-btn { width: 60px; height: 60px; }
+    .radio-btn img { width: 36px; height: 36px; }
 }
 
 @media (max-width: 380px) {
     .index-grid { gap: 25px 25px; }
     .index-card img { width: 65px !important; height: 65px !important; }
     .index-card span { font-size: 7px; }
-    .radio-btn { width: 48px; height: 48px; }
-    .radio-btn img { width: 28px; height: 28px; }
+    .radio-btn { width: 55px; height: 55px; }
+    .radio-btn img { width: 32px; height: 32px; }
     .donate-line { width: 150px; }
 }
