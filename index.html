@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-        /* ========== ОСНОВНЫЕ СТИЛИ ========== */
+        /* ========== ПЕРЕОПРЕДЕЛЯЕМ СТИЛИ С !IMPORTANT ========== */
         * {
             user-select: none;
             -webkit-tap-highlight-color: transparent;
@@ -64,10 +64,11 @@
             gap: 35px;
         }
 
+        /* Радио кнопка */
         .radio-top {
             cursor: pointer;
-            width: 50px;
-            height: 50px;
+            width: 55px !important;
+            height: 55px !important;
             background: rgba(0,0,0,0.6);
             border-radius: 50%;
             display: inline-flex;
@@ -79,11 +80,12 @@
             transform: scale(0.9);
         }
         .radio-top img {
-            width: 32px;
-            height: 32px;
+            width: 35px !important;
+            height: 35px !important;
             image-rendering: pixelated;
         }
 
+        /* Сетки */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -96,6 +98,25 @@
             gap: 80px 100px;
         }
 
+        /* ========== ГЛАВНОЕ - ПРИНУДИТЕЛЬНЫЙ РАЗМЕР ИКОНОК ========== */
+        .grid-icon {
+            width: 110px !important;
+            height: auto !important;
+            image-rendering: pixelated;
+            margin-bottom: 20px !important;
+        }
+
+        .label-main {
+            display: block;
+            font-size: 11px !important;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 4px #000;
+            text-align: center;
+        }
+
+        /* Донаты */
         .donate-center {
             display: flex;
             justify-content: center;
@@ -156,42 +177,6 @@
             color: #8a6a6a;
             margin-top: 8px;
             letter-spacing: 1px;
-        }
-
-        /* ========== КНОПКИ - БОЛЬШИЕ ИКОНКИ ========== */
-        .grid-item {
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            transition: transform 0.2s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .grid-item:active {
-            transform: scale(0.9);
-        }
-
-        .grid-icon {
-            width: 105px;           /* 90px + 15px */
-            height: auto;
-            image-rendering: pixelated;
-            margin-bottom: 20px;
-        }
-
-        .label-main {
-            display: block;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 4px #000;
-            text-align: center;
         }
 
         /* Модальные окна */
@@ -291,7 +276,7 @@
             border-radius: 12px;
         }
 
-        /* ========== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ========== */
+        /* Адаптация под телефоны */
         @media (max-width: 600px) {
             .main-grid {
                 gap: 50px 60px;
@@ -300,17 +285,22 @@
                 gap: 50px 60px;
             }
             .grid-icon {
-                width: 85px;        /* 70px + 15px */
-                margin-bottom: 16px;
+                width: 85px !important;
+                margin-bottom: 16px !important;
             }
             .label-main {
-                font-size: 10px;
+                font-size: 10px !important;
             }
             .donate-top-line {
                 width: 170px;
             }
-            .bottom-section {
-                gap: 28px;
+            .radio-top {
+                width: 48px !important;
+                height: 48px !important;
+            }
+            .radio-top img {
+                width: 30px !important;
+                height: 30px !important;
             }
         }
 
@@ -322,22 +312,14 @@
                 gap: 40px 45px;
             }
             .grid-icon {
-                width: 75px;        /* 60px + 15px */
-                margin-bottom: 14px;
+                width: 75px !important;
+                margin-bottom: 14px !important;
             }
             .label-main {
-                font-size: 9px;
+                font-size: 9px !important;
             }
             .donate-top-line {
                 width: 150px;
-            }
-            .radio-top {
-                width: 44px;
-                height: 44px;
-            }
-            .radio-top img {
-                width: 26px;
-                height: 26px;
             }
         }
 
@@ -349,22 +331,22 @@
                 gap: 30px 35px;
             }
             .grid-icon {
-                width: 65px;        /* 50px + 15px */
-                margin-bottom: 12px;
+                width: 65px !important;
+                margin-bottom: 12px !important;
             }
             .label-main {
-                font-size: 8px;
+                font-size: 8px !important;
             }
             .donate-top-line {
                 width: 130px;
             }
             .radio-top {
-                width: 38px;
-                height: 38px;
+                width: 40px !important;
+                height: 40px !important;
             }
             .radio-top img {
-                width: 22px;
-                height: 22px;
+                width: 24px !important;
+                height: 24px !important;
             }
         }
 
