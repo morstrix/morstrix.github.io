@@ -46,7 +46,7 @@ body {
 
 /* 3. КНОПКА ЗАКРЫТИЯ (Логика из store.css) */
 .close-site {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     z-index: 1000;
@@ -350,7 +350,7 @@ body {
 
 /* RADIO BUTTON - Слева вверху */
 .radio-btn {
-    position: fixed;
+    position: absolute;
     top: 20px;
     left: 20px; /* Перенесли в левый угол */
     width: 44px;
