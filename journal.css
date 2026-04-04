@@ -201,24 +201,26 @@ body {
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    padding: 30px 0;  /* ← отступы только сверху и снизу */
+    padding: 50px 0;  /* ← отступы только сверху и снизу 50px, по бокам 0 */
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
-    width: 100%;           /* ← на всю ширину экрана */
-    max-width: 100%;       /* ← без ограничений */
+    width: 100vw;           /* ← 100% ширины окна */
+    max-width: 100vw;       /* ← без ограничений */
+    margin: 0;              /* ← убираем отступы */
     height: auto;
-    max-height: 70vh;      /* ← высота 70% экрана (вытянутый горизонтально) */
+    max-height: calc(100vh - 100px);  /* ← высота с учётом отступов */
     text-align: center;
     position: relative;
     background: #0a0a0a;
-    border: 1px solid #a84d6b;
-    border-left: none;     /* ← убираем левую границу */
-    border-right: none;    /* ← убираем правую границу */
+    border-top: 1px solid #a84d6b;
+    border-bottom: 1px solid #a84d6b;
+    border-left: none;
+    border-right: none;
     border-radius: 0;
-    padding: 15px;
+    padding: 20px;
     overflow-y: auto;
     overflow-x: hidden;
 }
