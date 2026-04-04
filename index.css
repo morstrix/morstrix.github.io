@@ -1,4 +1,4 @@
-/* index.css — только для главной страницы */
+/* index.css – стили только для главной страницы */
 * {
     margin: 0;
     padding: 0;
@@ -35,16 +35,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 70px 20px 40px 20px;
+    padding: 80px 20px 50px 20px;
     z-index: 10;
 }
 
+/* Радио кнопка */
 .radio-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: rgba(0,0,0,0.6);
     border-radius: 50%;
     display: flex;
@@ -56,32 +57,34 @@ body {
 }
 .radio-btn:active { transform: scale(0.9); }
 .radio-btn img {
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
     image-rendering: pixelated;
 }
 
+/* Центр и низ */
 .index-center {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .index-bottom {
     flex: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 35px;
+    gap: 45px;
 }
 
+/* Сетка 2 колонки */
 .index-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px 90px;
+    gap: 80px 120px;
 }
 
+/* Карточка кнопки */
 .index-card {
     display: flex;
     flex-direction: column;
@@ -93,43 +96,46 @@ body {
 }
 .index-card:active { transform: scale(0.9); }
 
+/* ИКОНКИ – ОЧЕНЬ БОЛЬШИЕ */
 .index-card img {
-    width: 110px !important;
-    height: 110px !important;
+    width: 140px !important;
+    height: 140px !important;
     object-fit: contain;
-    margin-bottom: 18px;
+    margin-bottom: 25px;
     image-rendering: crisp-edges;
 }
 
+/* Текст под иконками */
 .index-card span {
     font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: white;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
+/* Донаты */
 .donate-block {
     text-align: center;
     cursor: pointer;
 }
 .donate-line {
-    width: 220px;
-    height: 4px;
+    width: 260px;
+    height: 5px;
     background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
-    margin: 0 auto 12px;
+    margin: 0 auto 15px;
 }
 .donate-label {
-    font-size: 10px;
+    font-size: 12px;
     color: #d4a0a0;
     text-transform: uppercase;
 }
 .donate-sub {
-    font-size: 8px;
+    font-size: 9px;
     color: #8a6a6a;
     display: block;
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
 /* Модалки */
@@ -215,25 +221,40 @@ body {
 }
 .insta-widget { margin: 20px 0; }
 
-/* Адаптация */
-@media (max-width: 600px) {
-    .index-grid { gap: 40px 50px; }
-    .index-card img { width: 85px !important; height: 85px !important; margin-bottom: 14px; }
-    .index-card span { font-size: 9px; }
-    .radio-btn { width: 50px; height: 50px; }
-    .radio-btn img { width: 30px; height: 30px; }
-    .donate-line { width: 180px; }
+/* Адаптация под планшеты и телефоны */
+@media (max-width: 700px) {
+    .index-grid { gap: 50px 70px; }
+    .index-card img { width: 110px !important; height: 110px !important; margin-bottom: 18px; }
+    .index-card span { font-size: 10px; }
+    .radio-btn { width: 60px; height: 60px; }
+    .radio-btn img { width: 36px; height: 36px; }
+    .donate-line { width: 220px; }
 }
+
+@media (max-width: 550px) {
+    .index-container { padding: 70px 15px 35px 15px; }
+    .index-grid { gap: 40px 50px; }
+    .index-card img { width: 90px !important; height: 90px !important; margin-bottom: 14px; }
+    .index-card span { font-size: 9px; }
+    .radio-btn { width: 52px; height: 52px; }
+    .radio-btn img { width: 32px; height: 32px; }
+    .donate-line { width: 190px; }
+    .donate-label { font-size: 10px; }
+}
+
 @media (max-width: 450px) {
     .index-grid { gap: 30px 35px; }
-    .index-card img { width: 70px !important; height: 70px !important; }
+    .index-card img { width: 75px !important; height: 75px !important; }
     .index-card span { font-size: 8px; }
-    .donate-line { width: 160px; }
+    .donate-line { width: 170px; }
+    .bottom-section { gap: 30px; }
 }
+
 @media (max-width: 380px) {
     .index-grid { gap: 25px 25px; }
-    .index-card img { width: 60px !important; height: 60px !important; }
+    .index-card img { width: 65px !important; height: 65px !important; }
     .index-card span { font-size: 7px; }
-    .radio-btn { width: 45px; height: 45px; }
-    .radio-btn img { width: 26px; height: 26px; }
+    .radio-btn { width: 48px; height: 48px; }
+    .radio-btn img { width: 28px; height: 28px; }
+    .donate-line { width: 150px; }
 }
