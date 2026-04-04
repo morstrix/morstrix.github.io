@@ -20,20 +20,24 @@ body {
     overflow-x: hidden;
 }
 
-/* КРЕСТИК КАК В STORE — просто картинка, без фона */
+/* КРЕСТИК КАК В STORE — С ПРИНУДИТЕЛЬНЫМИ СТИЛЯМИ */
 .close-site {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 999;
-    background: transparent;
-    width: auto;
-    height: auto;
-    display: block;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    background: transparent !important;
+    width: auto !important;
+    height: auto !important;
+    z-index: 999 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 .close-site img {
-    width: 40px;
-    height: 40px;
+    width: 30px !important;
+    height: 30px !important;
     image-rendering: pixelated;
 }
 
@@ -404,8 +408,8 @@ body {
         max-height: calc(100vh - 120px);
     }
     .close-site img {
-        width: 25px;
-        height: 25px;
+        width: 25px !important;
+        height: 25px !important;
     }
 }
 
