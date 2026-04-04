@@ -1,14 +1,6 @@
 /* ============================================
-   JOURNAL.CSS — FINAL SYSTEM SYMMETRY
+   JOURNAL.CSS — BACK TO PERFECT LOGIC
 ============================================ */
-
-:root {
-    --accent-pink: #a84d6b;
-    --muted-pink: #b97272;
-    --deep-pink: #a27791;
-    --bg-dark: #050508;
-    --system-red: #79434a;
-}
 
 * {
     margin: 0;
@@ -18,9 +10,8 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* 1. БАЗОВЫЙ СЛОЙ */
 body {
-    background-color: var(--bg-dark);
+    background-color: #050508;
     color: #f0f0f0;
     font-family: 'Press Start 2P', monospace;
     padding: 20px 15px;
@@ -29,10 +20,9 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative; /* Для абсолютного позиционирования кнопок */
+    position: relative;
 }
 
-/* 2. СЛОЙ ФОНА (z-index: 1) */
 #neuro-bg {
     position: fixed;
     top: 0;
@@ -43,26 +33,19 @@ body {
     pointer-events: none;
 }
 
-/* 3. ВЕРХНИЕ КНОПКИ (Симметричные) */
+/* КНОПКИ СВЕРХУ — СИММЕТРИЯ */
 .radio-btn, .close-site {
     position: absolute;
     top: 20px;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: transparent;
     cursor: pointer;
     transition: transform 0.1s;
-    text-decoration: none;
 }
 
-/* Радио слева, Закрыть справа */
 .radio-btn { left: 20px; }
 .close-site { right: 20px; }
 
-/* Иконки строго одного размера */
 .radio-btn img, .close-site img {
     width: 30px;
     height: 30px;
@@ -72,11 +55,11 @@ body {
 
 .radio-btn:active, .close-site:active { transform: scale(0.9); }
 
-/* 4. КОНТЕНТ (z-index: 10) */
+/* КОНТЕНТ */
 .container {
     max-width: 600px;
     width: 100%;
-    margin-top: 80px; /* Отступ под кнопки */
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -84,36 +67,25 @@ body {
     z-index: 10;
 }
 
-.section {
-    width: 100%;
-    text-align: center;
-}
+.section { width: 100%; text-align: center; }
 
 /* КАРУСЕЛЬ */
 .carousel {
     width: 100%;
     position: relative;
-    line-height: 0;
     background: #000;
 }
 .carousel img {
     width: 100%;
     height: auto;
     opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+    transition: opacity 0.8s ease;
     display: block;
 }
-.carousel img.active {
-    opacity: 1;
-    position: relative;
-}
-.carousel img:not(.active) {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+.carousel img.active { opacity: 1; position: relative; }
+.carousel img:not(.active) { position: absolute; top: 0; left: 0; }
 
-/* RSS СТРОКА */
+/* RSS */
 .ticker-wrapper {
     padding: 12px 0;
     overflow: hidden;
@@ -128,7 +100,6 @@ body {
     animation: scrollTicker 40s linear infinite;
 }
 .ticker span { margin-right: 50px; }
-
 @keyframes scrollTicker {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
@@ -144,57 +115,42 @@ body {
 .nav-btn-img {
     cursor: pointer;
     width: 85px;
-    transition: 0.2s;
     image-rendering: pixelated;
+    transition: 0.2s;
 }
-.nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
+.nav-btn-img:active { transform: scale(0.9); }
 
-/* ПИНТЕРЕСТ */
-.pin-wrapper {
-    width: 100%;
-    max-width: 450px;
-    margin: 0 auto;
-}
-
-/* PAINT WINDOW (Системный стиль) */
+/* ПЕИНТ ОКНО (СТИЛЬ ФОРУМА/ТВИТТЕРА) */
 .paint-window {
     width: 100%;
     max-width: 450px;
-    background: var(--deep-pink);
-    border: 2px solid var(--muted-pink);
+    background: #a27791;
+    border: 2px solid #b97272;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    overflow: hidden;
 }
 
 .paint-header-bar {
-    background: var(--system-red);
-    padding: 10px 12px;
+    background: #79434a;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--muted-pink);
+    border-bottom: 1px solid #b97272;
 }
 
-.paint-title {
-    font-size: 8px;
-    font-weight: bold;
-    color: #010101;
-    text-transform: uppercase;
-}
+.paint-title { font-size: 8px; color: #000; }
 
 .paint-clear-btn {
-    background: #010101;
-    border: 1px solid var(--muted-pink);
-    color: #ffffff;
-    font-size: 14px;
-    width: 24px;
-    height: 24px;
+    background: #000;
+    border: 1px solid #b97272;
+    color: #fff;
+    font-size: 10px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
 }
 
 .canvas-container {
@@ -202,10 +158,9 @@ body {
     width: 100%;
     aspect-ratio: 1/1;
     background: #000;
-    cursor: crosshair;
 }
 
-/* Функционал слоев */
+/* СЛОИ ПЕИНТА */
 .canvas-container canvas {
     position: absolute;
     top: 0;
@@ -217,126 +172,76 @@ body {
 
 .paint-tools-panel {
     display: flex;
-    justify-content: space-around;
-    padding: 15px 10px;
-    background: var(--deep-pink);
-    border-top: 1px solid var(--muted-pink);
-    align-items: center;
+    padding: 15px;
+    background: #a27791;
+    border-top: 1px solid #b97272;
     gap: 10px;
 }
 
 .tool-btn {
-    background: #010101;
-    border: 1px solid var(--muted-pink);
-    color: var(--muted-pink);
-    padding: 8px;
+    background: #000;
+    border: 1px solid #b97272;
+    color: #b97272;
+    padding: 10px;
     font-family: 'Press Start 2P', monospace;
     font-size: 7px;
     cursor: pointer;
-    flex-grow: 1;
+    flex: 1;
 }
 
 .color-indicator {
-    width: 28px;
-    height: 28px;
-    border: 2px solid #010101;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #000;
 }
 
-.paint-label {
-    font-size: 6px;
-    color: var(--accent-pink);
-    margin-top: 10px;
-    letter-spacing: 1px;
-}
+.paint-label { font-size: 6px; color: #a84d6b; margin-top: 10px; }
 
-/* FONT STYLER */
-.styler-container {
-    display: flex;
-    align-items: center;
-    background: #0a0a0f;
-    border: 1px solid var(--muted-pink);
-    padding: 5px 10px;
-    width: 100%;
-    max-width: 450px;
-    margin: 0 auto;
-}
-.styler-input {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    color: var(--muted-pink);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    padding: 12px 5px;
-    outline: none;
-}
-.styler-icon-btn img {
-    width: 20px;
-    filter: brightness(0) invert(1);
-}
-
-/* МОДАЛКИ (z-index: 10000) */
+/* МОДАЛКИ */
 .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 10000;
+    background: rgba(0,0,0,0.9);
+    z-index: 5000;
     align-items: center;
     justify-content: center;
-    padding: 20px;
 }
 .modal-overlay.active { display: flex; }
 
 .modal-content {
-    width: 100%;
+    width: 90%;
     max-width: 500px;
-    background: var(--deep-pink);
-    border: 2px solid var(--muted-pink);
-    max-height: 85vh;
+    background: #a27791;
+    border: 2px solid #b97272;
+    max-height: 80vh;
     overflow-y: auto;
 }
 
 .modal-header {
-    background: var(--system-red);
-    padding: 10px 12px;
+    background: #79434a;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--muted-pink);
 }
 
-.modal-title-text {
-    font-size: 10px;
-    color: #010101;
-}
+.modal-title-text { font-size: 9px; color: #000; }
 
 .modal-close-btn {
-    background: #010101;
-    border: 1px solid var(--muted-pink);
+    background: #000;
+    border: 1px solid #b97272;
     color: #fff;
     width: 24px;
     height: 24px;
     cursor: pointer;
 }
 
-.modal-inner {
-    padding: 20px;
-}
-
-.spotify-wrapper {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    line-height: 0;
-}
+.modal-inner { padding: 20px; }
 
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
-    .container { margin-top: 80px; gap: 35px; }
+    .container { margin-top: 80px; gap: 40px; }
     .nav-btn-img { width: 70px; }
-    .radio-btn, .close-site { top: 15px; }
-    .radio-btn { left: 15px; }
-    .close-site { right: 15px; }
     .radio-btn img, .close-site img { width: 24px; height: 24px; }
 }
