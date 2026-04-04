@@ -59,7 +59,7 @@
         .nav-btn-img { cursor: pointer; width: 85px; height: auto; transition: 0.2s; image-rendering: pixelated; }
         .nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* 4. ПИНТЕРЕСТ ВИДЖЕТ (БЕЗ КОНТУРА) */
+        /* 4. ПИНТЕРЕСТ ВИДЖЕТ */
         .pin-wrapper {
             padding: 0;
             margin: 0 auto;
@@ -211,8 +211,11 @@
         </div>
     </div>
 
+    <!-- SUPPORT MODAL С ВИДЖЕТОМ TELEGRAM -->
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content"><p style="font-size: 8px;">EMAIL: support@morstrix.com</p></div>
+        <div class="modal-content">
+            <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-post="morstrixxx/71" data-width="100%"></script>
+        </div>
     </div>
 
     <div id="artModal" class="modal-overlay">
