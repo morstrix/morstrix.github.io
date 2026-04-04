@@ -18,41 +18,29 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
 }
 
-/* ФОН (канвас) */
-#neuro-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+/* КРЕСТИК КАК В STORE — С ФОНОМ И БОЛЬШОЙ */
+.close-site {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999 !important;
+    border-radius: 0 !important;
+    text-decoration: none !important;
 }
-
-/* СИММЕТРИЧНЫЕ КНОПКИ СВЕРХУ */
-.radio-btn, .close-site {
-    position: fixed;
-    top: 20px;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.5);
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.radio-btn { left: 20px; }
-.close-site { right: 20px; }
-
-.radio-btn img, .close-site img {
-    width: 30px;
-    height: 30px;
+.close-site img {
+    width: 30px !important;
+    height: 30px !important;
     image-rendering: pixelated;
 }
 
@@ -64,8 +52,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    position: relative;
-    z-index: 10;
 }
 
 .section {
@@ -95,6 +81,13 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.x-btn-img {
+    cursor: pointer;
+    width: 40px;
+    margin-top: 15px;
+    transition: 0.2s;
 }
 
 /* RSS СТРОКА */
@@ -138,87 +131,80 @@ body {
     filter: brightness(1.2);
 }
 
-/* ПЕИНТ (СТИЛЬ ПОД МОДАЛКИ) */
-.paint-window {
-    width: 100%;
-    max-width: 420px;
-    background: #a27791; /* Твой цвет фона модалок */
-    border: 2px solid #b97272; /* Твой цвет бордера */
-    display: flex;
-    flex-direction: column;
+/* ПИНТЕРЕСТ */
+.pin-wrapper {
+    padding: 0;
     margin: 0 auto;
+    width: 100%;
+    max-width: 450px;
 }
 
-.paint-header-bar {
-    background: #79434a; /* Твой цвет хедера модалок */
-    padding: 10px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #b97272;
+/* АРТ БЛОК */
+.art-square-frame {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1/1;
+    border: 1px solid #1a1a1a;
+    background: #0a0a0f;
+    margin: 0 auto 20px;
+    overflow: hidden;
 }
-
-.paint-title-text {
-    font-size: 8px;
-    font-weight: bold;
-    color: #010101;
-    font-family: 'Press Start 2P', monospace;
+.art-square-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+.paint-label {
+    font-size: 6px;
+    color: #a84d6b;
+    letter-spacing: 1px;
+    margin-top: 8px;
     text-transform: uppercase;
 }
 
-.paint-clear-btn {
-    background: #010101;
-    border: 1px solid #b97272;
-    color: #ffffff;
-    font-size: 10px;
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.canvas-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    background: #000;
-    overflow: hidden;
-}
-
-.canvas-container canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    touch-action: none;
-}
-
-.paint-tools-panel {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #a27791;
-    border-top: 1px solid #b97272;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Кнопки инструментов внутри пеинта */
-.paint-tool-btn {
-    background: #010101;
-    border: 1px solid #b97272;
-    color: #b97272;
-    padding: 8px;
+/* FONT STYLER */
+.styler-label {
     font-size: 7px;
+    color: #b97272;
+    margin-bottom: 10px;
+    text-align: left;
+    max-width: 450px;
+    margin-inline: auto;
+}
+.styler-container {
+    display: flex;
+    align-items: center;
+    background: #0a0a0f;
+    border: 1px solid #b97272;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+.styler-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: #b97272;
     font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 12px 5px;
+    outline: none;
+}
+.styler-icon-btn {
+    background: transparent;
+    border: none;
     cursor: pointer;
-    flex: 1;
+    padding: 5px;
+}
+.styler-icon-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
 }
 
-/* МОДАЛКИ (Без изменений) */
+/* МОДАЛКИ В ГРАНЖЕВЫХ ТОНАХ */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -248,6 +234,7 @@ body {
     position: relative;
 }
 
+/* Хедер */
 .modal-header {
     background: #79434a;
     padding: 10px 12px;
@@ -267,6 +254,7 @@ body {
     text-transform: uppercase;
 }
 
+/* Крестик закрытия */
 .modal-close-btn {
     background: #010101;
     border: 1px solid #b97272;
@@ -283,17 +271,173 @@ body {
     padding: 0;
 }
 
+.modal-close-btn:active {
+    transform: scale(0.95);
+    background: #b97272;
+    color: #010101;
+}
+
+/* Внутреннее содержимое модалки */
 .modal-inner {
     padding: 20px;
     background: #a27791;
     color: #010101;
 }
 
+/* Кнопки в стиле ретро */
+.retro-btn {
+    background: #010101;
+    border: 2px solid #b97272;
+    color: #b97272;
+    padding: 8px 16px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.retro-btn:active {
+    transform: scale(0.95);
+    background: #b97272;
+    color: #010101;
+}
+
+/* Telegram-виджет */
+.telegram-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+    background: #000000;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.telegram-wrapper iframe,
+.telegram-wrapper .telegram-widget {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    display: block;
+    background: #000000 !important;
+    border: none !important;
+}
+
+/* PAINT ENGINE */
+.paint-window {
+    width: 100%;
+    max-width: 420px;
+    background: #0a0a0f;
+    border: 1px solid #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.paint-header-bar {
+    background: #1a1a1a;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7px;
+    color: #444;
+}
+.canvas-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #000;
+    overflow: hidden;
+}
+.canvas-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+.paint-tools-panel {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #050508;
+    border-top: 1px solid #1a1a1a;
+    gap: 10px;
+    align-items: center;
+}
+.layers-sub-modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    background: #0a0a0f;
+    border: 1px solid #ffb7c7;
+    z-index: 11000;
+}
+.layers-sub-modal.active {
+    display: block;
+}
+.layer-row {
+    padding: 15px;
+    font-size: 7px;
+    border-bottom: 1px solid #111;
+    cursor: pointer;
+    color: #444;
+    text-align: left;
+}
+.layer-row.active {
+    color: #ffb7c7;
+    background: #0d0d14;
+    border-left: 3px solid #ffb7c7;
+}
+
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
-    .container { margin-top: 80px; gap: 40px; }
-    .radio-btn, .close-site { width: 38px; height: 38px; top: 15px; }
-    .radio-btn { left: 15px; }
-    .close-site { right: 15px; }
-    .radio-btn img, .close-site img { width: 24px; height: 24px; }
+    .container {
+        margin-top: 80px;
+        gap: 40px;
+    }
+    .nav-btn-img {
+        width: 70px;
+    }
+    .modal-overlay {
+        padding: 60px 0;
+    }
+    .modal-content {
+        max-height: calc(100vh - 120px);
+    }
+    .close-site {
+        width: 38px !important;
+        height: 38px !important;
+        top: 15px !important;
+        right: 15px !important;
+    }
+    .close-site img {
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-btn-img {
+        width: 60px;
+    }
+    .modal-overlay {
+        padding: 40px 0;
+    }
+    .modal-content {
+        max-height: calc(100vh - 80px);
+    }
+    .close-site {
+        width: 34px !important;
+        height: 34px !important;
+    }
+    .close-site img {
+        width: 22px !important;
+        height: 22px !important;
+    }
 }
