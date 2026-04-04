@@ -42,26 +42,24 @@ body {
     pointer-events: none;
 }
 
-/* КРЕСТИК – всегда справа сверху */
-.back-button {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    left: auto !important;
-    margin: 0 !important;
-    z-index: 1000;
-    width: 44px;
-    height: 44px;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    border-radius: 0;
+/* Крестик как в journal.html */
+.page-shop .back-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    left: auto;
+    bottom: auto;
+    margin: 0;
+    background: transparent;
+    width: auto;
+    height: auto;
+    z-index: 999;
+    padding: 0;
 }
-.back-button img {
+.page-shop .back-button img {
     width: 30px;
     height: 30px;
+    image-rendering: pixelated;
 }
 
 .container {
