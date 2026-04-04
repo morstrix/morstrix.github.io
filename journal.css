@@ -45,7 +45,7 @@ body {
 
 /* КРЕСТИК КАК В STORE */
 .close-site {
-    position: absolute;
+    position: fixed;
     top: 15px;
     right: 15px;
     background: transparent;
@@ -55,6 +55,25 @@ body {
     z-index: 1000;
 }
 .close-site img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    image-rendering: pixelated;
+}
+
+/* РАДИО КНОПКА В ЛЕВОМ ВЕРХНЕМ УГЛУ */
+.radio-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: transparent;
+    width: auto;
+    height: auto;
+    display: block;
+    z-index: 1000;
+    cursor: pointer;
+}
+.radio-btn img {
     width: 30px;
     height: 30px;
     display: block;
@@ -304,6 +323,16 @@ body {
     color: #010101;
 }
 
+/* Spotify плеер */
+.spotify-wrapper {
+    width: 100%;
+    margin: 0;
+}
+.spotify-wrapper iframe {
+    width: 100%;
+    border-radius: 0;
+}
+
 /* Telegram-виджет */
 .telegram-wrapper {
     width: 100%;
@@ -422,23 +451,4 @@ body {
     .modal-content {
         max-height: calc(100vh - 80px);
     }
-}
-
-/* РАДИО КНОПКА В ЛЕВОМ УГЛУ */
-.radio-btn {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: transparent;
-    width: auto;
-    height: auto;
-    display: block;
-    z-index: 1000;
-    cursor: pointer;
-}
-.radio-btn img {
-    width: 30px;
-    height: 30px;
-    display: block;
-    image-rendering: pixelated;
 }
