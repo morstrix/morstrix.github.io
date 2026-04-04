@@ -1,17 +1,15 @@
 /* ============================================
-   JOURNAL.CSS — BACK TO PERFECT LOGIC
+   JOURNAL.CSS — стили страницы журнала
 ============================================ */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: #050508;
+    background: #050508;
     color: #f0f0f0;
     font-family: 'Press Start 2P', monospace;
     padding: 20px 15px;
@@ -23,24 +21,30 @@ body {
     position: relative;
 }
 
+/* ФОН (канвас) */
 #neuro-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
 }
 
-/* КНОПКИ СВЕРХУ — СИММЕТРИЯ */
+/* СИММЕТРИЧНЫЕ КНОПКИ СВЕРХУ */
 .radio-btn, .close-site {
-    position: absolute;
+    position: fixed;
     top: 20px;
     z-index: 1000;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.5);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     cursor: pointer;
-    transition: transform 0.1s;
 }
 
 .radio-btn { left: 20px; }
@@ -49,13 +53,10 @@ body {
 .radio-btn img, .close-site img {
     width: 30px;
     height: 30px;
-    display: block;
     image-rendering: pixelated;
 }
 
-.radio-btn:active, .close-site:active { transform: scale(0.9); }
-
-/* КОНТЕНТ */
+/* КОНТЕЙНЕР */
 .container {
     max-width: 600px;
     width: 100%;
@@ -67,25 +68,36 @@ body {
     z-index: 10;
 }
 
-.section { width: 100%; text-align: center; }
+.section {
+    width: 100%;
+    text-align: center;
+}
 
 /* КАРУСЕЛЬ */
 .carousel {
     width: 100%;
     position: relative;
+    line-height: 0;
     background: #000;
 }
 .carousel img {
     width: 100%;
     height: auto;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease-in-out;
     display: block;
 }
-.carousel img.active { opacity: 1; position: relative; }
-.carousel img:not(.active) { position: absolute; top: 0; left: 0; }
+.carousel img.active {
+    opacity: 1;
+    position: relative;
+}
+.carousel img:not(.active) {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
-/* RSS */
+/* RSS СТРОКА */
 .ticker-wrapper {
     padding: 12px 0;
     overflow: hidden;
@@ -99,7 +111,9 @@ body {
     color: #ffd9e6;
     animation: scrollTicker 40s linear infinite;
 }
-.ticker span { margin-right: 50px; }
+.ticker span {
+    margin-right: 50px;
+}
 @keyframes scrollTicker {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
@@ -115,42 +129,54 @@ body {
 .nav-btn-img {
     cursor: pointer;
     width: 85px;
-    image-rendering: pixelated;
+    height: auto;
     transition: 0.2s;
+    image-rendering: pixelated;
 }
-.nav-btn-img:active { transform: scale(0.9); }
+.nav-btn-img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
 
-/* ПЕИНТ ОКНО (СТИЛЬ ФОРУМА/ТВИТТЕРА) */
+/* ПЕИНТ (СТИЛЬ ПОД МОДАЛКИ) */
 .paint-window {
     width: 100%;
-    max-width: 450px;
-    background: #a27791;
-    border: 2px solid #b97272;
+    max-width: 420px;
+    background: #a27791; /* Твой цвет фона модалок */
+    border: 2px solid #b97272; /* Твой цвет бордера */
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
 
 .paint-header-bar {
-    background: #79434a;
-    padding: 10px;
+    background: #79434a; /* Твой цвет хедера модалок */
+    padding: 10px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #b97272;
 }
 
-.paint-title { font-size: 8px; color: #000; }
+.paint-title-text {
+    font-size: 8px;
+    font-weight: bold;
+    color: #010101;
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+}
 
 .paint-clear-btn {
-    background: #000;
+    background: #010101;
     border: 1px solid #b97272;
-    color: #fff;
+    color: #ffffff;
     font-size: 10px;
     width: 22px;
     height: 22px;
     cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .canvas-container {
@@ -158,9 +184,9 @@ body {
     width: 100%;
     aspect-ratio: 1/1;
     background: #000;
+    overflow: hidden;
 }
 
-/* СЛОИ ПЕИНТА */
 .canvas-container canvas {
     position: absolute;
     top: 0;
@@ -172,76 +198,102 @@ body {
 
 .paint-tools-panel {
     display: flex;
-    padding: 15px;
+    justify-content: space-between;
+    padding: 10px;
     background: #a27791;
     border-top: 1px solid #b97272;
     gap: 10px;
+    align-items: center;
 }
 
-.tool-btn {
-    background: #000;
+/* Кнопки инструментов внутри пеинта */
+.paint-tool-btn {
+    background: #010101;
     border: 1px solid #b97272;
     color: #b97272;
-    padding: 10px;
-    font-family: 'Press Start 2P', monospace;
+    padding: 8px;
     font-size: 7px;
+    font-family: 'Press Start 2P', monospace;
     cursor: pointer;
     flex: 1;
 }
 
-.color-indicator {
-    width: 32px;
-    height: 32px;
-    border: 2px solid #000;
-}
-
-.paint-label { font-size: 6px; color: #a84d6b; margin-top: 10px; }
-
-/* МОДАЛКИ */
+/* МОДАЛКИ (Без изменений) */
 .modal-overlay {
     display: none;
     position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.9);
-    z-index: 5000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 80px 0;
 }
-.modal-overlay.active { display: flex; }
-
+.modal-overlay.active {
+    display: flex;
+}
 .modal-content {
-    width: 90%;
-    max-width: 500px;
+    width: 100%;
+    margin: 0;
     background: #a27791;
     border: 2px solid #b97272;
-    max-height: 80vh;
+    padding: 0;
     overflow-y: auto;
+    max-height: calc(100vh - 160px);
+    box-sizing: border-box;
+    position: relative;
 }
 
 .modal-header {
     background: #79434a;
-    padding: 10px;
+    padding: 10px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: default;
+    border-bottom: 1px solid #b97272;
 }
 
-.modal-title-text { font-size: 9px; color: #000; }
+.modal-title-text {
+    font-size: 10px;
+    font-weight: bold;
+    color: #010101;
+    letter-spacing: 1px;
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+}
 
 .modal-close-btn {
-    background: #000;
+    background: #010101;
     border: 1px solid #b97272;
-    color: #fff;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
     width: 24px;
     height: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    padding: 0;
 }
 
-.modal-inner { padding: 20px; }
+.modal-inner {
+    padding: 20px;
+    background: #a27791;
+    color: #010101;
+}
 
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
     .container { margin-top: 80px; gap: 40px; }
-    .nav-btn-img { width: 70px; }
+    .radio-btn, .close-site { width: 38px; height: 38px; top: 15px; }
+    .radio-btn { left: 15px; }
+    .close-site { right: 15px; }
     .radio-btn img, .close-site img { width: 24px; height: 24px; }
 }
