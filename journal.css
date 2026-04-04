@@ -213,8 +213,8 @@ body {
 .modal-content {
     width: 100%;
     margin: 0;
-    background: #a27791;  /* ← цвет фрейма */
-    border: 2px solid #b97272;  /* ← обводка */
+    background: #a27791;
+    border: 2px solid #b97272;
     padding: 0;
     overflow-y: auto;
     max-height: calc(100vh - 160px);
@@ -224,7 +224,7 @@ body {
 
 /* Хедер — тёмно-бордовый */
 .modal-header {
-    background: #79434a;  /* ← цвет плашки */
+    background: #79434a;
     padding: 10px 12px;
     display: flex;
     justify-content: space-between;
@@ -236,17 +236,17 @@ body {
 .modal-title-text {
     font-size: 10px;
     font-weight: bold;
-    color: #010101;  /* ← почти чёрный текст */
+    color: #010101;
     letter-spacing: 1px;
     font-family: 'Press Start 2P', monospace;
     text-transform: uppercase;
 }
 
-/* Крестик закрытия — чёрная кнопка, крестик цвета обводки */
+/* Крестик закрытия — чёрная кнопка, белый крестик */
 .modal-close-btn {
     background: #010101;
     border: 1px solid #b97272;
-    color: #b97272;
+    color: #ffffff;
     font-size: 14px;
     font-weight: bold;
     width: 24px;
@@ -292,7 +292,7 @@ body {
     color: #010101;
 }
 
-/* Telegram-виджет — без лишних рамок, просто чёрный фон */
+/* Telegram-виджет — без лишних рамок */
 .telegram-wrapper {
     width: 100%;
     overflow-x: hidden;
