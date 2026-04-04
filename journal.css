@@ -293,13 +293,25 @@ body {
     transform: translate(1px, 1px);
 }
 
-/* Стили для Telegram-виджета внутри модалки */
+/* Telegram-виджет — чёрный фон, без горизонтального скролла */
 .telegram-wrapper {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    background: #c0c0c0;
-    padding: 5px;
+    overflow-x: hidden;
+    background: #000000;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.telegram-wrapper iframe,
+.telegram-wrapper .telegram-widget {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    display: block;
+    background: #000000 !important;
+    border: 2px solid #808080 !important;
+    border-radius: 0 !important;
 }
 
 /* PAINT ENGINE */
