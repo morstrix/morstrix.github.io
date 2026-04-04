@@ -201,25 +201,24 @@ body {
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    padding: 50px 0;  /* ← большие отступы сверху и снизу (50px), по бокам 0 */
+    padding: 30px 0;  /* ← отступы только сверху и снизу */
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
-    width: 100%;           /* ← на всю ширину */
+    width: 100%;           /* ← на всю ширину экрана */
     max-width: 100%;       /* ← без ограничений */
     height: auto;
-    max-height: calc(100vh - 100px);  /* ← высота с учётом отступов */
+    max-height: 70vh;      /* ← высота 70% экрана (вытянутый горизонтально) */
     text-align: center;
     position: relative;
     background: #0a0a0a;
-    border-top: 1px solid #a84d6b;
-    border-bottom: 1px solid #a84d6b;
-    border-left: none;
-    border-right: none;
+    border: 1px solid #a84d6b;
+    border-left: none;     /* ← убираем левую границу */
+    border-right: none;    /* ← убираем правую границу */
     border-radius: 0;
-    padding: 10px;
+    padding: 15px;
     overflow-y: auto;
     overflow-x: hidden;
 }
