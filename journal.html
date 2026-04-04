@@ -11,6 +11,11 @@
 
     <canvas id="neuro-bg"></canvas>
 
+    <!-- РАДИО КНОПКА В ЛЕВОМ ВЕРХНЕМ УГЛУ -->
+    <div class="radio-btn" id="radioBtn">
+        <img src="assets/radio.png" alt="Radio">
+    </div>
+
     <a href="index.html" class="close-site">
         <img src="assets/close.png" alt="Close">
     </a>
@@ -179,6 +184,21 @@
                 <div id="layerList">
                     <div class="layer-row active" data-id="2">LAYER 02 (TOP)</div>
                     <div class="layer-row" data-id="1">LAYER 01 (BACK)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА РАДИО (SPOTIFY) -->
+    <div id="radioModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title-text">MORSTRIX RADIO</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('radioModal')">✜</button>
+            </div>
+            <div class="modal-inner">
+                <div class="spotify-wrapper">
+                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
