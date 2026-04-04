@@ -212,10 +212,7 @@ body {
     display: flex;
 }
 .modal-content {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100vw;           /* ← принудительно 100% ширины экрана */
+    width: 100%;
     background: #0a0a0a;
     border-top: 1px solid #a84d6b;
     border-bottom: 1px solid #a84d6b;
@@ -231,6 +228,13 @@ body {
     max-width: 100% !important;
     overflow-x: hidden !important;
 }
+
+.telegram-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .retro-btn {
     background: transparent;
     border: 1px solid #a84d6b;
@@ -323,8 +327,11 @@ body {
     .nav-btn-img {
         width: 70px;
     }
+    .modal-overlay {
+        padding: 30px 0;
+    }
     .modal-content {
-        max-width: 320px;
+        max-height: calc(100vh - 60px);
     }
 }
 
@@ -340,7 +347,10 @@ body {
         width: 25px;
         height: 25px;
     }
+    .modal-overlay {
+        padding: 20px 0;
+    }
     .modal-content {
-        max-width: 280px;
+        max-height: calc(100vh - 40px);
     }
 }
