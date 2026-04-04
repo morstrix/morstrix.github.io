@@ -347,3 +347,51 @@ body {
     .container { margin-top: 80px; gap: 40px; }
     .nav-btn-img { width: 70px; }
 }
+
+/* RADIO BUTTON - Слева вверху */
+.radio-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px; /* Перенесли в левый угол */
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+
+.radio-btn:active { transform: scale(0.9); }
+
+.radio-btn img {
+    width: 30px;
+    height: 30px;
+    image-rendering: pixelated;
+}
+
+/* SPOTIFY WRAPPER */
+.spotify-wrapper {
+    width: 100%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    line-height: 0;
+}
+
+/* Адаптация под мобилки */
+@media (max-width: 600px) {
+    .radio-btn {
+        width: 38px;
+        height: 38px;
+        top: 15px;
+        left: 15px;
+    }
+    .radio-btn img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
