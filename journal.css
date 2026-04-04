@@ -206,7 +206,7 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: 50px 0;
+    padding: 100px 0;  /* ← 100px сверху и снизу */
 }
 .modal-overlay.active {
     display: flex;
@@ -219,7 +219,7 @@ body {
     border-bottom: 1px solid #a84d6b;
     padding: 20px;
     overflow-y: auto;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 200px);  /* ← 100+100 = 200 */
     box-sizing: border-box;
     position: relative;
 }
