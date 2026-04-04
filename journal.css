@@ -323,18 +323,12 @@ body {
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
     .modal-overlay {
-        padding: 30px 0;
-    }
-    .modal-content {
-        max-height: calc(100vh - 60px);
+        padding: 60px 0;  /* ← было 30px */
     }
 }
 
 @media (max-width: 480px) {
     .modal-overlay {
-        padding: 20px 0;
-    }
-    .modal-content {
-        max-height: calc(100vh - 40px);
+        padding: 50px 0;  /* ← было 20px */
     }
 }
