@@ -200,24 +200,29 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+    width: 100%;
     background: rgba(0, 0, 0, 0.95);
     z-index: 10000;
     align-items: center;
     justify-content: center;
     padding: 50px 0;
+    margin: 0;
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
-    width: 100%;           /* ← на всю ширину родителя */
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100vw;           /* ← принудительно 100% ширины экрана */
     background: #0a0a0a;
     border-top: 1px solid #a84d6b;
     border-bottom: 1px solid #a84d6b;
     padding: 20px;
     overflow-y: auto;
     max-height: calc(100vh - 100px);
+    box-sizing: border-box;
 }
 
 /* Стили для Telegram-виджета внутри модалки */
