@@ -45,7 +45,7 @@
             overflow: hidden;
         }
 
-        /* Верхняя часть с радио (пустая, только для отступа) */
+        /* Верхняя часть с радио */
         .top-section {
             flex: 0 0 auto;
             text-align: right;
@@ -65,14 +65,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 35px;
         }
 
         /* Кнопка RADIO в правом верхнем углу */
         .radio-top {
             cursor: pointer;
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             background: rgba(0,0,0,0.6);
             border-radius: 50%;
             display: inline-flex;
@@ -84,8 +84,8 @@
             transform: scale(0.9);
         }
         .radio-top img {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             image-rendering: pixelated;
         }
 
@@ -93,14 +93,14 @@
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px 80px;
+            gap: 80px 100px;
         }
         
         /* Сетка ADA + EX */
         .second-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px 80px;
+            gap: 80px 100px;
         }
 
         /* Донаты */
@@ -115,8 +115,8 @@
         }
 
         .donate-top-line {
-            width: 180px;
-            height: 3px;
+            width: 200px;
+            height: 4px;
             background: linear-gradient(90deg, 
                 #4a1515 0%,
                 #8B3A3A 25%,
@@ -124,7 +124,7 @@
                 #8B3A3A 75%,
                 #4a1515 100%
             );
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             position: relative;
             overflow: hidden;
             border-radius: 2px;
@@ -152,7 +152,7 @@
         }
 
         .donate-label {
-            font-size: 8px;
+            font-size: 9px;
             color: #d4a0a0;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -160,13 +160,13 @@
 
         .donate-sub {
             display: block;
-            font-size: 6px;
+            font-size: 7px;
             color: #8a6a6a;
-            margin-top: 6px;
+            margin-top: 8px;
             letter-spacing: 1px;
         }
 
-        /* Кнопки */
+        /* Кнопки - УВЕЛИЧЕННЫЕ ИКОНКИ */
         .grid-item {
             text-decoration: none;
             color: #fff;
@@ -186,16 +186,16 @@
         }
 
         .grid-icon {
-            width: 70px;
+            width: 90px;           /* ← БОЛЬШИЕ ИКОНКИ */
             height: auto;
             image-rendering: pixelated;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
         }
 
         .label-main {
             display: block;
-            font-size: 8px;
-            letter-spacing: 1px;
+            font-size: 10px;       /* ← БОЛЬШЕ ТЕКСТ */
+            letter-spacing: 2px;
             color: #fff;
             text-transform: uppercase;
             text-shadow: 0 0 4px #000;
@@ -299,19 +299,50 @@
             border-radius: 12px;
         }
 
-        /* Адаптация под телефоны */
+        /* ========== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ (иконки меньше, но всё ещё большие) ========== */
         @media (max-width: 600px) {
             .main-grid {
-                gap: 40px 50px;
+                gap: 50px 60px;
             }
             .second-grid {
-                gap: 40px 50px;
+                gap: 50px 60px;
             }
             .grid-icon {
-                width: 60px;
+                width: 70px;        /* ← на планшетах/телефонах 70px */
+                margin-bottom: 14px;
             }
             .label-main {
-                font-size: 7px;
+                font-size: 9px;
+            }
+            .donate-top-line {
+                width: 170px;
+            }
+            .bottom-section {
+                gap: 28px;
+            }
+            .radio-top {
+                width: 44px;
+                height: 44px;
+            }
+            .radio-top img {
+                width: 26px;
+                height: 26px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-grid {
+                gap: 40px 45px;
+            }
+            .second-grid {
+                gap: 40px 45px;
+            }
+            .grid-icon {
+                width: 60px;        /* ← на маленьких телефонах 60px */
+                margin-bottom: 12px;
+            }
+            .label-main {
+                font-size: 8px;
             }
             .donate-top-line {
                 width: 150px;
@@ -321,24 +352,22 @@
             }
         }
 
-        @media (max-width: 450px) {
+        @media (max-width: 380px) {
             .main-grid {
-                gap: 50px;
+                gap: 30px 35px;
             }
             .second-grid {
-                gap: 30px 40px;
+                gap: 30px 35px;
             }
             .grid-icon {
-                width: 45px;
+                width: 50px;        /* ← на очень маленьких 50px */
+                margin-bottom: 10px;
             }
             .label-main {
-                font-size: 6px;
+                font-size: 7px;
             }
             .donate-top-line {
                 width: 130px;
-            }
-            .bottom-section {
-                gap: 20px;
             }
             .radio-top {
                 width: 38px;
@@ -350,28 +379,10 @@
             }
         }
 
-        @media (max-width: 380px) {
-            .main-grid {
-                gap: 25px 30px;
-            }
-            .second-grid {
-                gap: 25px 30px;
-            }
-            .grid-icon {
-                width: 38px;
-            }
-            .label-main {
-                font-size: 5.5px;
-            }
-            .donate-top-line {
-                width: 110px;
-            }
-        }
-
-        /* Для очень высоких экранов - увеличиваем отступы */
+        /* Для очень высоких экранов */
         @media (min-height: 800px) {
             .bottom-section {
-                gap: 50px;
+                gap: 60px;
             }
         }
     </style>
