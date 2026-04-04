@@ -6,6 +6,51 @@
     <title>MORSTRIX | PORTAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
+    <style>
+        /* Стили для новой кнопки TEAM */
+        .team-trigger {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: #a84d6b;
+            cursor: pointer;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            transition: 0.2s;
+        }
+        .team-trigger:hover { transform: scale(1.1); color: #fff; }
+
+        /* Контент модалки TEAM */
+        .team-selection {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px 0;
+        }
+        .team-choice {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .team-choice img {
+            width: 120px;
+            height: 120px;
+            image-rendering: pixelated;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+        .team-choice span {
+            font-size: 8px;
+            color: #fff;
+        }
+        .team-choice:hover { transform: translateY(-5px); }
+        
+        @media (max-width: 450px) {
+            .team-selection { gap: 20px; }
+            .team-choice img { width: 90px; height: 90px; }
+        }
+    </style>
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
@@ -25,17 +70,8 @@
         </div>
 
         <div class="index-bottom">
-            <div class="index-grid">
-                <div class="index-card" id="adaBtn">
-                    <img src="assets/ada.png" alt="Ada">
-                    <span>ADA MORSOVA</span>
-                </div>
-                <div class="index-card" id="xBtn">
-                    <img src="assets/ex.png" alt="X">
-                    <span>GRIM EX FRAME</span>
-                </div>
-            </div>
-
+            <div class="team-trigger" id="teamBtn">✦ TEAM ✦</div>
+            
             <div class="donate-block" id="donateWrapper">
                 <div class="donate-line"></div>
                 <div class="donate-label">DONATE</div>
@@ -44,52 +80,34 @@
         </div>
     </div>
 
-    <div id="adaModal" class="modal-overlay">
+    <div id="teamModal" class="modal-overlay">
         <div class="modal-content">
-            <button class="modal-close" id="closeAdaModal">✜</button>
-            <div class="modal-title">DESIGNER</div>
-            <h4 style="font-size:8px;color:#a84d6b;">BEHANCE</h4>
-            <div class="behance-wrapper">
-                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write"></iframe>
+            <button class="modal-close" id="closeTeamModal">✜</button>
+            <div class="modal-title">SELECT MEMBER</div>
+            <div class="team-selection">
+                <a href="ada.html" class="team-choice">
+                    <img src="assets/ada.png" alt="Ada">
+                    <span>ADA MORSOVA</span>
+                </a>
+                <a href="ex.html" class="team-choice">
+                    <img src="assets/ex.png" alt="Ex">
+                    <span>GRIM EX FRAME</span>
+                </a>
             </div>
-            <h4 style="font-size:8px;color:#a84d6b;">INSTAGRAM</h4>
-            <div class="insta-widget">
-                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
-            </div>
-        </div>
-    </div>
-
-    <div id="xModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeXModal">✜</button>
-            <div class="modal-title">DEVELOPER</div>
-            <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn" style="display:block;">THREADS</a>
-            <h4 style="font-size:8px;color:#a84d6b;">INSTAGRAM</h4>
-            <div class="insta-widget">
-                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
-            </div>
-            <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn" style="display:block;">TIKTOK</a>
         </div>
     </div>
 
     <script src="background.js"></script>
-    <script type="module" src="https://w.behold.so/widget.js"></script>
     <script>
         // Донат
         document.getElementById('donateWrapper').onclick = () => window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
 
-        // Модалка ADA
-        document.getElementById('adaBtn').onclick = () => document.getElementById('adaModal').classList.add('active');
-        document.getElementById('closeAdaModal').onclick = () => document.getElementById('adaModal').classList.remove('active');
+        // Логика TEAM модалки
+        const teamModal = document.getElementById('teamModal');
+        document.getElementById('teamBtn').onclick = () => teamModal.classList.add('active');
+        document.getElementById('closeTeamModal').onclick = () => teamModal.classList.remove('active');
 
-        // Модалка X
-        document.getElementById('xBtn').onclick = () => document.getElementById('xModal').classList.add('active');
-        document.getElementById('closeXModal').onclick = () => document.getElementById('xModal').classList.remove('active');
-
-        // Закрытие по фону
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-        });
+        window.onclick = (e) => { if (e.target === teamModal) teamModal.classList.remove('active'); };
     </script>
 </body>
 </html>
