@@ -215,6 +215,15 @@ body {
     border: 1px solid #a84d6b;
     border-radius: 4px;
     padding: 10px;
+    overflow-x: hidden;  /* ← скрываем горизонтальный скролл */
+    word-wrap: break-word;  /* ← переносим длинные слова */
+}
+
+/* Стили для Telegram-виджета внутри модалки */
+.modal-content iframe,
+.modal-content .telegram-widget {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
 .retro-btn {
     background: transparent;
