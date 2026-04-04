@@ -196,33 +196,28 @@ body {
 .modal-overlay {
     display: none;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.95);
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    padding: 50px 0;  /* ← отступы только сверху и снизу 50px, по бокам 0 */
+    padding: 50px 0;
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
-    width: 100vw;           /* ← 100% ширины окна */
-    max-width: 100vw;       /* ← без ограничений */
-    margin: 0;              /* ← убираем отступы */
-    height: auto;
-    max-height: calc(100vh - 100px);  /* ← высота с учётом отступов */
-    text-align: center;
+    width: 100%;           /* ← на всю ширину родителя */
     position: relative;
     background: #0a0a0a;
     border-top: 1px solid #a84d6b;
     border-bottom: 1px solid #a84d6b;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
     padding: 20px;
     overflow-y: auto;
-    overflow-x: hidden;
+    max-height: calc(100vh - 100px);
 }
 
 /* Стили для Telegram-виджета внутри модалки */
