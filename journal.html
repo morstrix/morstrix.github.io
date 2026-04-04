@@ -15,7 +15,8 @@
 
     <div class="container">
         
-        <div class="section">
+        <!-- КАРУСЕЛЬ -->
+        <div class="section carousel-section" style="margin-bottom: 50px;">
             <div class="carousel" id="mainCarousel">
                 <img src="assets/mx1.jpeg" class="active">
                 <img src="assets/mx2.jpg">
@@ -23,11 +24,13 @@
             <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
         </div>
 
-        <div class="ticker-wrapper">
+        <!-- RSS СТРОКА -->
+        <div class="ticker-wrapper" style="margin-bottom: 50px;">
             <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
-        <div class="section nav-grid">
+        <!-- FORUM + SUPPORT -->
+        <div class="section nav-grid" style="margin-bottom: 50px;">
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
                 <div class="paint-label">FORUM</div>
@@ -38,7 +41,7 @@
             </div>
         </div>
 
-        <!-- ПИНТЕРЕСТ С БОЛЬШИМ ОТСТУПОМ СНИЗУ -->
+        <!-- ПИНТЕРЕСТ -->
         <div class="section pin-section" style="margin-bottom: 60px;">
             <div class="pin-wrapper">
                 <a data-pin-do="embedBoard" 
@@ -49,9 +52,9 @@
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #111;">
+        <hr style="border: 0; border-top: 1px solid #111; margin-bottom: 60px;">
 
-        <!-- АРТ БЛОК С БОЛЬШИМ ОТСТУПОМ СНИЗУ -->
+        <!-- АРТ БЛОК PAINT -->
         <div class="section art-section" style="margin-bottom: 60px;">
             <div class="art-square-frame">
                 <img src="assets/art.jpg" alt="Preview">
@@ -62,7 +65,7 @@
             </div>
         </div>
 
-        <!-- FONT STYLER С БОЛЬШИМ ОТСТУПОМ СНИЗУ -->
+        <!-- FONT STYLER -->
         <div class="section styler-section" style="margin-bottom: 60px;">
             <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
@@ -93,7 +96,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА DISCLAIMER -->
+    <!-- МОДАЛКИ (без изменений) -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -107,7 +110,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА FORUM -->
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -121,7 +123,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА SUPPORT (КОММЕНТАРИИ) -->
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -141,7 +142,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА PAINT -->
     <div id="artModal" class="modal-overlay">
         <div class="modal-content" style="padding:0;">
             <div class="paint-window">
