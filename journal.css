@@ -152,10 +152,10 @@ body {
     text-transform: uppercase;
 }
 
-/* FONT STYLER */
+/* FONT STYLER — иконки теперь видны */
 .styler-label {
     font-size: 7px;
-    color: #444;
+    color: #b97272;
     margin-bottom: 10px;
     text-align: left;
     max-width: 450px;
@@ -165,7 +165,7 @@ body {
     display: flex;
     align-items: center;
     background: #0a0a0f;
-    border: 1px solid #1a1a1a;
+    border: 1px solid #b97272;
     padding: 5px 10px;
     width: 100%;
     max-width: 450px;
@@ -175,7 +175,7 @@ body {
     flex-grow: 1;
     background: transparent;
     border: none;
-    color: #ffb7c7;
+    color: #b97272;
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     padding: 12px 5px;
@@ -190,6 +190,7 @@ body {
 .styler-icon-btn img {
     width: 20px;
     height: 20px;
+    filter: brightness(0) invert(1);  /* ← делает иконки белыми */
 }
 
 /* МОДАЛКИ В ГРАНЖЕВЫХ ТОНАХ */
