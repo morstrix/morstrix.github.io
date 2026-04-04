@@ -193,6 +193,7 @@ body {
 }
 
 /* МОДАЛКИ В СТИЛЕ СТАРОГО ИНТЕРНЕТА */
+/* МОДАЛКИ В СТИЛЕ ПАИНТА (чёрная рамка, серый заголовок) */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -213,25 +214,24 @@ body {
 .modal-content {
     width: 100%;
     margin: 0;
-    background: #c0c0c0;
-    border: 3px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
+    background: #000000;  /* ← чёрный фон */
+    border: 2px solid #444;  /* ← тёмная рамка */
     padding: 0;
     overflow-y: auto;
     max-height: calc(100vh - 160px);
     box-sizing: border-box;
     position: relative;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
 }
 
-/* Хедер в стиле Windows 95 */
+/* Хедер как в Paint — серый */
 .modal-header {
-    background: #000080;
+    background: #808080;  /* ← серый как в Paint */
     padding: 8px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: default;
+    border-bottom: 1px solid #444;
 }
 
 .modal-title-text {
@@ -266,19 +266,19 @@ body {
     transform: translate(1px, 1px);
 }
 
-/* Внутреннее содержимое модалки */
+/* Внутреннее содержимое модалки — чёрное */
 .modal-inner {
     padding: 20px;
-    background: #c0c0c0;
-    color: #000000;
+    background: #000000;
+    color: #ffffff;
 }
 
 /* Кнопки в стиле ретро */
 .retro-btn {
-    background: #c0c0c0;
+    background: #808080;
     border: 3px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
-    color: #000000;
+    border-color: #ffffff #444 #444 #ffffff;
+    color: #ffffff;
     padding: 8px 16px;
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
@@ -289,7 +289,7 @@ body {
 }
 
 .retro-btn:active {
-    border-color: #808080 #ffffff #ffffff #808080;
+    border-color: #444 #ffffff #ffffff #444;
     transform: translate(1px, 1px);
 }
 
@@ -310,7 +310,7 @@ body {
     margin: 0 !important;
     display: block;
     background: #000000 !important;
-    border: 2px solid #808080 !important;
+    border: 1px solid #444 !important;
     border-radius: 0 !important;
 }
 
