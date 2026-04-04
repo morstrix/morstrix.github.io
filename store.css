@@ -1,6 +1,5 @@
 /* ============================================
    STORE.CSS — стили страницы магазина
-   (без общих style.css и theme.css)
 ============================================ */
 
 :root {
@@ -66,15 +65,15 @@ body {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 10px 20px 20px;
+    padding: 20px 20px 20px;  /* ← уменьшай это число */
     position: relative;
     z-index: 10;
 }
 
 .shop-header {
     text-align: center;
-    margin: 0px 0 30px;
-    padding: 20px 10px;
+    margin: 0;
+    padding: 10px 10px 20px;
 }
 
 .shop-title {
@@ -270,9 +269,7 @@ body {
     .cat-price { font-size: 0.5rem; }
     .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
     .cart-bottom-total { font-size: 0.55rem; }
-    .back-button { width: 38px; height: 38px; top: 15px; right: 15px; }
-    .back-button img { width: 24px; height: 24px; }
-    .container { padding-top: 70px; }
+    /* УБРАЛ .back-button и .container padding-top */
 }
 
 @media (max-width: 480px) {
