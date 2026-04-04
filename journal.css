@@ -1,6 +1,13 @@
 /* ============================================
-   JOURNAL.CSS — стили страницы журнала
+   JOURNAL.CSS — UPDATED STRUCTURE
 ============================================ */
+
+:root {
+    --accent-pink: #a84d6b;
+    --muted-pink: #b97272;
+    --deep-pink: #a27791;
+    --bg-dark: #050508;
+}
 
 * {
     margin: 0;
@@ -8,8 +15,13 @@
     box-sizing: border-box;
 }
 
+/* 1. БАЗОВЫЙ СЛОЙ */
+html {
+    background: var(--bg-dark);
+}
+
 body {
-    background: #050508;
+    background: transparent; /* Чтобы видеть канвас */
     color: #f0f0f0;
     font-family: 'Press Start 2P', monospace;
     padding: 20px 15px;
@@ -21,38 +33,39 @@ body {
     position: relative;
 }
 
-/* ФОН (канвас) */
+/* 2. СЛОЙ ФОНА (z-index: 1 как в index.css) */
 #neuro-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 1; 
     pointer-events: none;
 }
 
-/* КРЕСТИК КАК В STORE */
+/* 3. КНОПКА ЗАКРЫТИЯ (Логика из store.css) */
 .close-site {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
     background: rgba(0, 0, 0, 0.5);
-    width: 44px;
-    height: 44px;
+    width: auto; /* Авто-размер */
+    height: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 5px;
     text-decoration: none;
 }
+
 .close-site img {
     width: 30px;
     height: 30px;
+    display: block;
     image-rendering: pixelated;
 }
 
-/* КОНТЕЙНЕР */
+/* 4. КОНТЕНТ (z-index: 10 как в index.css) */
 .container {
     max-width: 600px;
     width: 100%;
@@ -61,7 +74,7 @@ body {
     flex-direction: column;
     gap: 50px;
     position: relative;
-    z-index: 10;
+    z-index: 10; 
 }
 
 .section {
@@ -167,7 +180,7 @@ body {
 }
 .paint-label {
     font-size: 6px;
-    color: #a84d6b;
+    color: var(--accent-pink);
     letter-spacing: 1px;
     margin-top: 8px;
     text-transform: uppercase;
@@ -176,7 +189,7 @@ body {
 /* FONT STYLER */
 .styler-label {
     font-size: 7px;
-    color: #b97272;
+    color: var(--muted-pink);
     margin-bottom: 10px;
     text-align: left;
     max-width: 450px;
@@ -186,7 +199,7 @@ body {
     display: flex;
     align-items: center;
     background: #0a0a0f;
-    border: 1px solid #b97272;
+    border: 1px solid var(--muted-pink);
     padding: 5px 10px;
     width: 100%;
     max-width: 450px;
@@ -196,7 +209,7 @@ body {
     flex-grow: 1;
     background: transparent;
     border: none;
-    color: #b97272;
+    color: var(--muted-pink);
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     padding: 12px 5px;
@@ -214,7 +227,7 @@ body {
     filter: brightness(0) invert(1);
 }
 
-/* МОДАЛКИ В ГРАНЖЕВЫХ ТОНАХ */
+/* МОДАЛКИ */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -226,112 +239,65 @@ body {
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    padding: 80px 0;
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
     width: 100%;
-    margin: 0;
-    background: #a27791;
-    border: 2px solid #b97272;
+    background: var(--deep-pink);
+    border: 2px solid var(--muted-pink);
     padding: 0;
     overflow-y: auto;
     max-height: calc(100vh - 160px);
-    box-sizing: border-box;
     position: relative;
 }
 
-/* Хедер */
 .modal-header {
     background: #79434a;
     padding: 10px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: default;
-    border-bottom: 1px solid #b97272;
+    border-bottom: 1px solid var(--muted-pink);
 }
 
 .modal-title-text {
     font-size: 10px;
     font-weight: bold;
     color: #010101;
-    letter-spacing: 1px;
     font-family: 'Press Start 2P', monospace;
-    text-transform: uppercase;
 }
 
-/* Крестик закрытия */
 .modal-close-btn {
     background: #010101;
-    border: 1px solid #b97272;
+    border: 1px solid var(--muted-pink);
     color: #ffffff;
     font-size: 14px;
-    font-weight: bold;
     width: 24px;
     height: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Press Start 2P', monospace;
-    padding: 0;
 }
 
-.modal-close-btn:active {
-    transform: scale(0.95);
-    background: #b97272;
-    color: #010101;
-}
-
-/* Внутреннее содержимое модалки */
 .modal-inner {
     padding: 20px;
-    background: #a27791;
+    background: var(--deep-pink);
     color: #010101;
 }
 
-/* Кнопки в стиле ретро */
 .retro-btn {
     background: #010101;
-    border: 2px solid #b97272;
-    color: #b97272;
+    border: 2px solid var(--muted-pink);
+    color: var(--muted-pink);
     padding: 8px 16px;
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    margin-top: 10px;
-}
-
-.retro-btn:active {
-    transform: scale(0.95);
-    background: #b97272;
-    color: #010101;
-}
-
-/* Telegram-виджет */
-.telegram-wrapper {
-    width: 100%;
-    overflow-x: hidden;
-    background: #000000;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.telegram-wrapper iframe,
-.telegram-wrapper .telegram-widget {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    display: block;
-    background: #000000 !important;
-    border: none !important;
 }
 
 /* PAINT ENGINE */
@@ -358,7 +324,6 @@ body {
     width: 100%;
     aspect-ratio: 1/1;
     background: #000;
-    overflow: hidden;
 }
 .canvas-container canvas {
     position: absolute;
@@ -374,80 +339,11 @@ body {
     padding: 10px;
     background: #050508;
     border-top: 1px solid #1a1a1a;
-    gap: 10px;
     align-items: center;
-}
-.layers-sub-modal {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 240px;
-    background: #0a0a0f;
-    border: 1px solid #ffb7c7;
-    z-index: 11000;
-}
-.layers-sub-modal.active {
-    display: block;
-}
-.layer-row {
-    padding: 15px;
-    font-size: 7px;
-    border-bottom: 1px solid #111;
-    cursor: pointer;
-    color: #444;
-    text-align: left;
-}
-.layer-row.active {
-    color: #ffb7c7;
-    background: #0d0d14;
-    border-left: 3px solid #ffb7c7;
 }
 
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
-    .container {
-        margin-top: 80px;
-        gap: 40px;
-    }
-    .nav-btn-img {
-        width: 70px;
-    }
-    .modal-overlay {
-        padding: 60px 0;
-    }
-    .modal-content {
-        max-height: calc(100vh - 120px);
-    }
-    .close-site {
-        width: 38px;
-        height: 38px;
-        top: 15px;
-        right: 15px;
-    }
-    .close-site img {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-btn-img {
-        width: 60px;
-    }
-    .modal-overlay {
-        padding: 40px 0;
-    }
-    .modal-content {
-        max-height: calc(100vh - 80px);
-    }
-    .close-site {
-        width: 34px;
-        height: 34px;
-    }
-    .close-site img {
-        width: 22px;
-        height: 22px;
-    }
+    .container { margin-top: 80px; gap: 40px; }
+    .nav-btn-img { width: 70px; }
 }
