@@ -20,12 +20,16 @@ body {
     overflow-x: hidden;
 }
 
-/* КРЕСТИК */
+/* КРЕСТИК КАК В STORE */
 .close-site {
     position: absolute;
     top: 15px;
     right: 15px;
     z-index: 999;
+    background: transparent;
+    width: auto;
+    height: auto;
+    padding: 0;
 }
 .close-site img {
     width: 30px;
@@ -152,7 +156,7 @@ body {
     text-transform: uppercase;
 }
 
-/* FONT STYLER — иконки теперь видны */
+/* FONT STYLER */
 .styler-label {
     font-size: 7px;
     color: #b97272;
@@ -190,7 +194,7 @@ body {
 .styler-icon-btn img {
     width: 20px;
     height: 20px;
-    filter: brightness(0) invert(1);  /* ← делает иконки белыми */
+    filter: brightness(0) invert(1);
 }
 
 /* МОДАЛКИ В ГРАНЖЕВЫХ ТОНАХ */
@@ -223,7 +227,7 @@ body {
     position: relative;
 }
 
-/* Хедер — тёмно-бордовый */
+/* Хедер */
 .modal-header {
     background: #79434a;
     padding: 10px 12px;
@@ -243,7 +247,7 @@ body {
     text-transform: uppercase;
 }
 
-/* Крестик закрытия — чёрная кнопка, белый крестик */
+/* Крестик закрытия */
 .modal-close-btn {
     background: #010101;
     border: 1px solid #b97272;
@@ -293,7 +297,7 @@ body {
     color: #010101;
 }
 
-/* Telegram-виджет — без лишних рамок */
+/* Telegram-виджет */
 .telegram-wrapper {
     width: 100%;
     overflow-x: hidden;
