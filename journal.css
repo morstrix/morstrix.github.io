@@ -201,16 +201,16 @@ body {
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
+    padding: 50px 0;  /* ← большие отступы сверху и снизу (50px), по бокам 0 */
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
-    width: 100%;
-    max-width: 100%;
+    width: 100%;           /* ← на всю ширину */
+    max-width: 100%;       /* ← без ограничений */
     height: auto;
-    max-height: calc(100vh - 40px);
+    max-height: calc(100vh - 100px);  /* ← высота с учётом отступов */
     text-align: center;
     position: relative;
     background: #0a0a0a;
