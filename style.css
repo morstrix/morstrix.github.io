@@ -1,4 +1,4 @@
-/* --- БАЗОВЫЙ СБРОС --- */
+/* index.css — только для главной страницы */
 * {
     margin: 0;
     padding: 0;
@@ -7,17 +7,17 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Убираем черный фон у всего, кроме самого нижнего слоя body */
-html, body {
+body {
+    background: transparent;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    font-family: 'Press Start 2P', cursive;
-    color: #fff;
-    overflow-x: hidden;
+    font-family: 'Press Start 2P', monospace;
 }
 
-/* --- ФОН (КАНВАС) --- */
 #neuro-bg {
     position: fixed;
     top: 0;
@@ -25,183 +25,114 @@ html, body {
     width: 100%;
     height: 100%;
     z-index: 1;
-    display: block;
     pointer-events: none;
 }
 
-/* --- ГЛАВНЫЙ КОНТЕЙНЕР --- */
-.floating-hub {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 45px 20px;
-    padding: 100px 20px 60px;
-    max-width: 500px;
-    margin: 0 auto;
+.index-container {
     position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 70px 20px 40px 20px;
     z-index: 10;
-    background: transparent !important;
 }
 
-/* --- ЭЛЕМЕНТЫ ХАБА --- */
-.float-item {
-    text-decoration: none;
-    color: #fff;
+.radio-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 200;
+    transition: transform 0.2s;
+}
+.radio-btn:active { transform: scale(0.9); }
+.radio-btn img {
+    width: 35px;
+    height: 35px;
+    image-rendering: pixelated;
+}
+
+.index-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.index-bottom {
+    flex: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+
+.index-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 90px;
+}
+
+.index-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
-    background: transparent !important;
-    border: none;
+    text-decoration: none;
+    cursor: pointer;
     transition: transform 0.2s;
 }
+.index-card:active { transform: scale(0.9); }
 
-.float-item:active {
-    transform: scale(0.9);
+.index-card img {
+    width: 110px !important;
+    height: 110px !important;
+    object-fit: contain;
+    margin-bottom: 18px;
+    image-rendering: crisp-edges;
 }
 
-.float-item.wide {
-    grid-column: span 2;
-    width: 100%;
-}
-
-/* ИКОНКИ И ТЕКСТ */
-.float-icon {
-    width: 55px;
-    height: auto;
-    image-rendering: pixelated;
-    margin-bottom: 12px;
-}
-
-.icon-big {
-    font-size: 32px;
-    margin-bottom: 12px;
-    display: block;
-}
-
-.float-label {
-    font-size: 8px;
-    letter-spacing: 1px;
+.index-card span {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: white;
     text-align: center;
     text-transform: uppercase;
-    text-shadow: 0 0 5px #000;
+    letter-spacing: 1px;
 }
 
-/* --- ДИНАМИЧЕСКИЙ ТЕГ (FORUM) --- */
-.dynamic-tag {
-    position: absolute;
-    top: -5px;
-    right: -75px;
-    background: #970000;
-    color: #fff;
-    padding: 3px 7px;
-    font-size: 6px;
-    white-space: nowrap;
-    z-index: 5;
+.donate-block {
+    text-align: center;
+    cursor: pointer;
 }
-
-/* --- КРЕСТИК (back-button) --- */
-.back-button {
-    position: static !important;
-    display: inline-flex !important;
-    background: rgba(0, 0, 0, 0.5) !important;
-    width: 44px !important;
-    height: 44px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-decoration: none !important;
-    margin: 20px 20px 0 0 !important;
-    float: right !important;
-    background-image: url('assets/close.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.back-button span {
-    display: none;
-}
-
-/* --- ПОДПИСИ --- */
-.grid-label {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.label-main {
-    font-size: 8px;
-    color: #fff;
-}
-
-.label-sub {
-    font-size: 6px;
-    color: #888;
-    text-transform: none;
-}
-
-/* ========== ДОНАТЫ В СТИЛЕ КНОПКИ CLOSE ========== */
-.donate-top-line {
-    width: 280px;
+.donate-line {
+    width: 220px;
     height: 4px;
-    background: linear-gradient(90deg, 
-        #4a1515 0%,
-        #8B3A3A 25%,
-        #a84d6b 50%,
-        #8B3A3A 75%,
-        #4a1515 100%
-    );
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 4px rgba(168, 77, 107, 0.3);
-    border-radius: 2px;
+    background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+    margin: 0 auto 12px;
+}
+.donate-label {
+    font-size: 10px;
+    color: #d4a0a0;
+    text-transform: uppercase;
+}
+.donate-sub {
+    font-size: 8px;
+    color: #8a6a6a;
+    display: block;
+    margin-top: 5px;
 }
 
-/* Бегущий луч */
-.donate-top-line::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(212, 160, 160, 0.5),
-        transparent
-    );
-    animation: skifLight 3s ease-in-out infinite;
-}
-
-@keyframes skifLight {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
-}
-
-/* Мерцание */
-.donate-top-line::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(168, 77, 107, 0.2);
-    animation: pulseGlow 2s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
-}
-
-.donate-bottom-line {
-    display: none;
-}
-
-/* --- МОДАЛЬНЫЕ ОКНА --- */
+/* Модалки */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -212,22 +143,17 @@ html, body {
     justify-content: center;
     backdrop-filter: blur(8px);
 }
-
-.modal-overlay.active {
-    display: flex;
-}
-
+.modal-overlay.active { display: flex; }
 .modal-content {
     width: 90%;
-    max-width: 400px;
-    max-height: 80vh;
+    max-width: 500px;
+    max-height: 85vh;
     background: #000;
     border: 2px solid #fff;
     position: relative;
     overflow-y: auto;
     padding: 20px;
 }
-
 .modal-close {
     position: absolute;
     top: 10px;
@@ -239,162 +165,75 @@ html, body {
     cursor: pointer;
     font-family: 'Press Start 2P', monospace;
 }
-
 .modal-title {
     font-size: 10px;
     color: #a84d6b;
     margin-bottom: 20px;
     text-align: center;
 }
-
-.widget-container {
-    margin: 15px 0;
-}
-
-.insta-widget {
-    margin: 20px 0;
-}
-
-/* --- СТАРЫЙ СТИЛЬ МОДАЛКИ (для совместимости) --- */
-.modal-box {
-    border: 1px solid #fff;
-    background: #000;
-    padding: 40px 20px;
-    position: relative;
-    width: 280px;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-family: 'Press Start 2P';
-}
-
-.insta-links a {
-    display: block;
+.retro-btn {
+    background: transparent;
+    border: 1px solid #a84d6b;
     color: #fff;
+    padding: 8px 16px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    cursor: pointer;
     text-decoration: none;
-    border: 1px solid #fff;
-    padding: 15px;
-    margin: 10px 0;
-    font-size: 9px;
+    display: inline-block;
+    margin-top: 10px;
     text-align: center;
 }
-
-/* ========== ФИКС ДЛЯ A.HTML ========== */
-.page-a .back-button {
-    position: fixed !important;
-    top: 30px !important;
-    right: 30px !important;
-    left: auto !important;
-    float: none !important;
-    margin: 0 !important;
-    background: rgba(0, 0, 0, 0.5) !important;
-    width: 44px !important;
-    height: 44px !important;
-    background-image: url('assets/close.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.retro-btn:active {
+    transform: scale(0.95);
+    background: #a84d6b;
+    color: #000;
 }
-
-.page-a .back-button span {
-    display: none;
-}
-
-/* ========== ФИКС ДЛЯ X.HTML ========== */
-.page-x .back-button {
-    position: fixed !important;
-    top: 25px !important;
-    right: 25px !important;
-    left: auto !important;
-    float: none !important;
-    margin: 0 !important;
-    background: rgba(0, 0, 0, 0.5) !important;
-    width: 44px !important;
-    height: 44px !important;
-    background-image: url('assets/close.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.page-x .back-button span {
-    display: none;
-}
-
-/* ========== ФИКС ДЛЯ HELPER.HTML ========== */
-.page-helper .back-button {
-    position: static !important;
-    float: right !important;
-    margin: 20px 20px 0 0 !important;
-}
-
-/* ========== ФИКС ДЛЯ SHOP.HTML ========== */
-.page-shop .back-button {
-    position: static !important;
-    float: right !important;
-    margin: 20px 20px 0 0 !important;
-}
-
-/* ========== ФИКС ДЛЯ FORUM.HTML ========== */
-.page-forum .back-button {
-    position: static !important;
-    float: right !important;
-    margin: 20px 20px 0 0 !important;
-}
-
-/* ========== ФИКС ДЛЯ SUPPORT.HTML (ТЕТРИС) ========== */
-.page-support {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.back-button-wrapper {
+.behance-wrapper {
+    position: relative;
     width: 100%;
-    max-width: 500px;
-    text-align: right;
-    padding: 20px 20px 0 0;
+    padding-bottom: 78%;
+    height: 0;
+    overflow: hidden;
+    margin: 15px 0;
 }
-
-.page-support .back-button {
-    position: relative !important;
-    float: right !important;
-    margin: 0 !important;
-    display: inline-flex !important;
-    right: auto !important;
-    left: auto !important;
+.behance-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
-
-/* --- АДАПТАЦИЯ --- */
-@media (max-width: 550px) {
-    .floating-hub {
-        gap: 30px 20px;
-        padding-top: 80px;
-    }
-    .grid-icon {
-        width: 45px;
-    }
-    .label-main {
-        font-size: 7px;
-    }
-    .label-sub {
-        font-size: 5px;
-    }
-    .dynamic-tag {
-        font-size: 5px;
-        top: -5px;
-        right: -60px;
-        padding: 2px 5px;
-    }
-    .donate-top-line {
-        width: 220px;
-    }
+.spotify-wrapper {
+    margin: 15px 0;
+    width: 100%;
 }
+.spotify-wrapper iframe {
+    width: 100%;
+    border-radius: 12px;
+}
+.insta-widget { margin: 20px 0; }
 
+/* Адаптация */
+@media (max-width: 600px) {
+    .index-grid { gap: 40px 50px; }
+    .index-card img { width: 85px !important; height: 85px !important; margin-bottom: 14px; }
+    .index-card span { font-size: 9px; }
+    .radio-btn { width: 50px; height: 50px; }
+    .radio-btn img { width: 30px; height: 30px; }
+    .donate-line { width: 180px; }
+}
+@media (max-width: 450px) {
+    .index-grid { gap: 30px 35px; }
+    .index-card img { width: 70px !important; height: 70px !important; }
+    .index-card span { font-size: 8px; }
+    .donate-line { width: 160px; }
+}
+@media (max-width: 380px) {
+    .index-grid { gap: 25px 25px; }
+    .index-card img { width: 60px !important; height: 60px !important; }
+    .index-card span { font-size: 7px; }
+    .radio-btn { width: 45px; height: 45px; }
+    .radio-btn img { width: 26px; height: 26px; }
+}
