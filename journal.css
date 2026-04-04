@@ -20,16 +20,20 @@ body {
     overflow-x: hidden;
 }
 
-/* КРЕСТИК КАК В STORE */
+/* КРЕСТИК КАК В STORE — БОЛЬШОЙ И С ОТСТУПОМ */
 .close-site {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
     z-index: 999;
-    background: transparent;
-    width: auto;
-    height: auto;
-    padding: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    text-decoration: none;
 }
 .close-site img {
     width: 30px;
@@ -41,15 +45,9 @@ body {
 .container {
     max-width: 600px;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
-    gap: 35px;
-}
-
-.section {
-    width: 100%;
-    text-align: center;
 }
 
 /* КАРУСЕЛЬ */
@@ -391,8 +389,7 @@ body {
 /* АДАПТАЦИЯ */
 @media (max-width: 600px) {
     .container {
-        margin-top: 40px;
-        gap: 25px;
+        margin-top: 70px;
     }
     .nav-btn-img {
         width: 70px;
@@ -403,19 +400,29 @@ body {
     .modal-content {
         max-height: calc(100vh - 120px);
     }
+    .close-site {
+        width: 38px;
+        height: 38px;
+        top: 15px;
+        right: 15px;
+    }
+    .close-site img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 @media (max-width: 480px) {
-    .container {
-        margin-top: 30px;
-        gap: 20px;
-    }
     .nav-btn-img {
         width: 60px;
     }
+    .close-site {
+        width: 34px;
+        height: 34px;
+    }
     .close-site img {
-        width: 25px;
-        height: 25px;
+        width: 22px;
+        height: 22px;
     }
     .modal-overlay {
         padding: 40px 0;
