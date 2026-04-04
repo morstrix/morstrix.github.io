@@ -11,7 +11,8 @@ setInterval(() => {
 
 // МОДАЛКИ
 function openModal(id) {
-    document.getElementById(id).classList.add('active');
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.add('active');
     if(id === 'artModal' && !paintInit) {
         setTimeout(startPaintLogic, 100);
         paintInit = true;
@@ -24,7 +25,8 @@ function closeModal(e) {
 }
 
 function closeModalDirect(id) { 
-    document.getElementById(id).classList.remove('active'); 
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('active');
 }
 
 // РАДИО КНОПКА — ОТКРЫТИЕ МОДАЛКИ
@@ -32,10 +34,10 @@ const radioBtn = document.getElementById('radioBtn');
 const radioModal = document.getElementById('radioModal');
 
 if (radioBtn && radioModal) {
-    radioBtn.onclick = (e) => {
+    radioBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         radioModal.classList.add('active');
-    };
+    });
 }
 
 // FONT STYLER
@@ -53,17 +55,19 @@ function handleAction() {
     if (!isTransformed) {
         input.value = input.value.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
         isTransformed = true;
-        document.getElementById('stylerIcon2').style.filter = "brightness(0) invert(1) sepia(1) hue-rotate(300deg)";
+        const icon = document.getElementById('stylerIcon2');
+        if (icon) icon.style.filter = "brightness(0) invert(1) sepia(1) hue-rotate(300deg)";
     } else {
         input.value = "";
         isTransformed = false;
-        document.getElementById('stylerIcon2').style.filter = "brightness(0) invert(1)";
+        const icon = document.getElementById('stylerIcon2');
+        if (icon) icon.style.filter = "brightness(0) invert(1)";
     }
 }
 
 function copyStylerText() {
     const input = document.getElementById('fontInput');
-    if (input.value && input.value !== "COPIED!") {
+    if (input && input.value && input.value !== "COPIED!") {
         navigator.clipboard.writeText(input.value);
         const val = input.value;
         input.value = "COPIED!";
@@ -73,8 +77,10 @@ function copyStylerText() {
 
 // RSS ТИКЕР
 const ticker = document.getElementById('rssTicker');
-const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
-ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
+if (ticker) {
+    const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
+    ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
+}
 
 // PAINT ENGINE
 let paintInit = false;
@@ -82,6 +88,8 @@ let paintInit = false;
 function startPaintLogic() {
     const l1 = document.getElementById('layer1');
     const l2 = document.getElementById('layer2');
+    if (!l1 || !l2) return;
+    
     const ctx1 = l1.getContext('2d', { willReadFrequently: true });
     const ctx2 = l2.getContext('2d', { willReadFrequently: true });
     const area = document.getElementById('paintArea');
@@ -103,7 +111,8 @@ function startPaintLogic() {
     const save = () => {
         undoStack.push({l1: l1.toDataURL(), l2: l2.toDataURL()});
         if(undoStack.length > 15) undoStack.shift();
-        document.getElementById('pUndo').disabled = undoStack.length <= 1;
+        const undoBtn = document.getElementById('pUndo');
+        if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
     };
 
     const getCoords = (e) => {
@@ -116,7 +125,8 @@ function startPaintLogic() {
     const draw = (e) => {
         if(!isDrawing) return;
         const p = getCoords(e);
-        currentCtx.strokeStyle = document.getElementById('pColor').value;
+        const colorPicker = document.getElementById('pColor');
+        if (colorPicker) currentCtx.strokeStyle = colorPicker.value;
         currentCtx.lineTo(p.x, p.y);
         currentCtx.stroke();
     };
@@ -156,15 +166,20 @@ function startPaintLogic() {
         } 
     });
 
-    document.getElementById('pClear').onclick = () => {
-        ctx2.clearRect(0, 0, l2.width, l2.height);
-        ctx1.fillStyle = "#000";
-        ctx1.fillRect(0, 0, l1.width, l1.height);
-        save();
-    };
+    const clearBtn = document.getElementById('pClear');
+    if (clearBtn) {
+        clearBtn.onclick = () => {
+            ctx2.clearRect(0, 0, l2.width, l2.height);
+            ctx1.fillStyle = "#000";
+            ctx1.fillRect(0, 0, l1.width, l1.height);
+            save();
+        };
+    }
 
-    document.getElementById('btnLayersOpen').onclick = () => 
-        document.getElementById('layersPopup').classList.add('active');
+    const layersBtn = document.getElementById('btnLayersOpen');
+    if (layersBtn) {
+        layersBtn.onclick = () => document.getElementById('layersPopup').classList.add('active');
+    }
     
     document.querySelectorAll('.layer-row').forEach(row => {
         row.onclick = () => {
