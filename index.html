@@ -3,514 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta property="og:title" content="➞ ᴢ☻ɴǝ">
-    <meta property="og:description" content="пᴏᴘᴛᴀʌ">
-    <meta property="og:image" content="https://morstrix.zone/assets/preview.jpg">
     <title>MORSTRIX | PORTAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css">
-    <style>
-        /* ========== ПЕРЕОПРЕДЕЛЯЕМ СТИЛИ С !IMPORTANT ========== */
-        * {
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            overflow: hidden;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .main-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-            z-index: 10;
-            overflow: hidden;
-        }
-
-        .top-section {
-            flex: 0 0 auto;
-            text-align: right;
-        }
-
-        .center-section {
-            flex: 1 1 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .bottom-section {
-            flex: 0 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 35px;
-        }
-
-        /* Радио кнопка */
-        .radio-top {
-            cursor: pointer;
-            width: 55px !important;
-            height: 55px !important;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-        .radio-top:active {
-            transform: scale(0.9);
-        }
-        .radio-top img {
-            width: 35px !important;
-            height: 35px !important;
-            image-rendering: pixelated;
-        }
-
-        /* Сетки */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px 100px;
-        }
-        
-        .second-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px 100px;
-        }
-
-        /* ========== ГЛАВНОЕ - ПРИНУДИТЕЛЬНЫЙ РАЗМЕР ИКОНОК ========== */
-        .grid-icon {
-            width: 110px !important;
-            height: auto !important;
-            image-rendering: pixelated;
-            margin-bottom: 20px !important;
-        }
-
-        .label-main {
-            display: block;
-            font-size: 11px !important;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 4px #000;
-            text-align: center;
-        }
-
-        /* Донаты */
-        .donate-center {
-            display: flex;
-            justify-content: center;
-        }
-
-        .donate-wrapper {
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .donate-top-line {
-            width: 200px;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                #4a1515 0%,
-                #8B3A3A 25%,
-                #a84d6b 50%,
-                #8B3A3A 75%,
-                #4a1515 100%
-            );
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 2px;
-        }
-
-        .donate-top-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(212, 160, 160, 0.5),
-                transparent
-            );
-            animation: skifLight 3s ease-in-out infinite;
-        }
-
-        @keyframes skifLight {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        .donate-label {
-            font-size: 9px;
-            color: #d4a0a0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .donate-sub {
-            display: block;
-            font-size: 7px;
-            color: #8a6a6a;
-            margin-top: 8px;
-            letter-spacing: 1px;
-        }
-
-        /* Модальные окна */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 5000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            width: 90%;
-            max-width: 500px;
-            max-height: 85vh;
-            background: #000;
-            border: 2px solid #fff;
-            position: relative;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            font-family: 'Press Start 2P', monospace;
-        }
-
-        .modal-title {
-            font-size: 10px;
-            color: #a84d6b;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .insta-widget {
-            margin: 20px 0;
-        }
-
-        .retro-btn {
-            background: transparent;
-            border: 1px solid #a84d6b;
-            color: #fff;
-            padding: 8px 16px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 7px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .retro-btn:active {
-            transform: scale(0.95);
-            background: #a84d6b;
-            color: #000;
-        }
-
-        .behance-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 78%;
-            height: 0;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-        .behance-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .spotify-wrapper {
-            margin: 15px 0;
-            width: 100%;
-        }
-        .spotify-wrapper iframe {
-            width: 100%;
-            border-radius: 12px;
-        }
-
-        /* Адаптация под телефоны */
-        @media (max-width: 600px) {
-            .main-grid {
-                gap: 50px 60px;
-            }
-            .second-grid {
-                gap: 50px 60px;
-            }
-            .grid-icon {
-                width: 85px !important;
-                margin-bottom: 16px !important;
-            }
-            .label-main {
-                font-size: 10px !important;
-            }
-            .donate-top-line {
-                width: 170px;
-            }
-            .radio-top {
-                width: 48px !important;
-                height: 48px !important;
-            }
-            .radio-top img {
-                width: 30px !important;
-                height: 30px !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-grid {
-                gap: 40px 45px;
-            }
-            .second-grid {
-                gap: 40px 45px;
-            }
-            .grid-icon {
-                width: 75px !important;
-                margin-bottom: 14px !important;
-            }
-            .label-main {
-                font-size: 9px !important;
-            }
-            .donate-top-line {
-                width: 150px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .main-grid {
-                gap: 30px 35px;
-            }
-            .second-grid {
-                gap: 30px 35px;
-            }
-            .grid-icon {
-                width: 65px !important;
-                margin-bottom: 12px !important;
-            }
-            .label-main {
-                font-size: 8px !important;
-            }
-            .donate-top-line {
-                width: 130px;
-            }
-            .radio-top {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .radio-top img {
-                width: 24px !important;
-                height: 24px !important;
-            }
-        }
-
-        @media (min-height: 800px) {
-            .bottom-section {
-                gap: 60px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
 
-    <div class="main-wrapper">
-        
-        <div class="top-section">
-            <div class="radio-top" id="radioBtn">
-                <img src="assets/radio.png" alt="Radio">
-            </div>
+    <div class="index-container">
+        <div class="radio-btn" id="radioBtn">
+            <img src="assets/radio.png" alt="Radio">
         </div>
 
-        <div class="center-section">
-            <div class="main-grid">
-                <a href="journal.html" class="grid-item">
-                    <img src="assets/journal.png" alt="Journal" class="grid-icon">
-                    <span class="label-main">JOURNAL</span>
+        <div class="index-center">
+            <div class="index-grid">
+                <a href="journal.html" class="index-card">
+                    <img src="assets/journal.png" alt="Journal">
+                    <span>JOURNAL</span>
                 </a>
-                <a href="store.html" class="grid-item">
-                    <img src="assets/space.png" alt="Store" class="grid-icon">
-                    <span class="label-main">STORE</span>
+                <a href="store.html" class="index-card">
+                    <img src="assets/space.png" alt="Store">
+                    <span>STORE</span>
                 </a>
             </div>
         </div>
 
-        <div class="bottom-section">
-            <div class="second-grid">
-                <div class="grid-item" id="adaBtn">
-                    <img src="assets/ada.png" alt="Ada" class="grid-icon">
-                    <span class="label-main">ADA MORSOVA</span>
+        <div class="index-bottom">
+            <div class="index-grid">
+                <div class="index-card" id="adaBtn">
+                    <img src="assets/ada.png" alt="Ada">
+                    <span>ADA MORSOVA</span>
                 </div>
-                <div class="grid-item" id="xBtn">
-                    <img src="assets/ex.png" alt="X" class="grid-icon">
-                    <span class="label-main">GRIM EX FRAME</span>
+                <div class="index-card" id="xBtn">
+                    <img src="assets/ex.png" alt="X">
+                    <span>GRIM EX FRAME</span>
                 </div>
             </div>
 
-            <div class="donate-center">
-                <div class="donate-wrapper" id="donateWrapper">
-                    <div class="donate-top-line"></div>
-                    <div class="donate-text">
-                        <span class="donate-label">DONATE</span>
-                        <span class="donate-sub">monobank</span>
-                    </div>
-                </div>
+            <div class="donate-block" id="donateWrapper">
+                <div class="donate-line"></div>
+                <div class="donate-label">DONATE</div>
+                <div class="donate-sub">monobank</div>
             </div>
         </div>
     </div>
 
-    <!-- ПОПАП RADIO -->
+    <!-- Модалки -->
     <div id="radioModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeRadioModal">✜</button>
             <div class="modal-title">MORSTRIX RADIO</div>
             <div class="spotify-wrapper">
-                <iframe 
-                    data-testid="embed-iframe" 
-                    style="border-radius:12px" 
-                    src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" 
-                    width="100%" 
-                    height="352" 
-                    frameBorder="0" 
-                    allowfullscreen="" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="lazy">
-                </iframe>
+                <iframe src="https://open.spotify.com/embed/album/56cjl8GlCjzRYJvYOZqXUC?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- ПОПАП ADA -->
     <div id="adaModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeAdaModal">✜</button>
             <div class="modal-title">ADA MORSOVA — DESIGNER</div>
-            
-            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 10px;">BEHANCE</h4>
+            <h4 style="font-size:8px;color:#a84d6b;">BEHANCE</h4>
             <div class="behance-wrapper">
-                <iframe 
-                    src="https://www.behance.net/embed/project/246943027?ilo0=1" 
-                    height="316" 
-                    width="404" 
-                    allowfullscreen 
-                    lazyload 
-                    frameborder="0" 
-                    allow="clipboard-write" 
-                    refererPolicy="strict-origin-when-cross-origin">
-                </iframe>
+                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write"></iframe>
             </div>
-            
-            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 15px;">INSTAGRAM</h4>
+            <h4 style="font-size:8px;color:#a84d6b;">INSTAGRAM</h4>
             <div class="insta-widget">
                 <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
             </div>
         </div>
     </div>
 
-    <!-- ПОПАП X -->
     <div id="xModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="closeXModal">✜</button>
             <div class="modal-title">GRIM EX FRAME — DEVELOPER</div>
-            
-            <div style="margin: 15px 0;">
-                <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🧵 THREADS</a>
-            </div>
-            
-            <h4 style="font-size: 8px; color: #a84d6b;">INSTAGRAM</h4>
+            <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn" style="display:block;">🧵 THREADS</a>
+            <h4 style="font-size:8px;color:#a84d6b;">INSTAGRAM</h4>
             <div class="insta-widget">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
-            
-            <h4 style="font-size: 8px; color: #a84d6b; margin-top: 15px;">TIKTOK</h4>
-            <div style="margin-bottom: 10px;">
-                <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn" style="display: block; width: 100%;">🎵 @grimexframe</a>
-            </div>
+            <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn" style="display:block;">🎵 TIKTOK</a>
         </div>
     </div>
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
     <script>
-        document.getElementById('donateWrapper').onclick = () => {
-            window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
-        };
-
-        const radioModal = document.getElementById('radioModal');
-        document.getElementById('radioBtn').onclick = () => radioModal.classList.add('active');
-        document.getElementById('closeRadioModal').onclick = () => radioModal.classList.remove('active');
-
-        const adaModal = document.getElementById('adaModal');
-        const xModal = document.getElementById('xModal');
-        
-        document.getElementById('adaBtn').onclick = () => adaModal.classList.add('active');
-        document.getElementById('closeAdaModal').onclick = () => adaModal.classList.remove('active');
-        
-        document.getElementById('xBtn').onclick = () => xModal.classList.add('active');
-        document.getElementById('closeXModal').onclick = () => xModal.classList.remove('active');
-        
+        document.getElementById('donateWrapper').onclick = () => window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
+        document.getElementById('radioBtn').onclick = () => document.getElementById('radioModal').classList.add('active');
+        document.getElementById('closeRadioModal').onclick = () => document.getElementById('radioModal').classList.remove('active');
+        document.getElementById('adaBtn').onclick = () => document.getElementById('adaModal').classList.add('active');
+        document.getElementById('closeAdaModal').onclick = () => document.getElementById('adaModal').classList.remove('active');
+        document.getElementById('xBtn').onclick = () => document.getElementById('xModal').classList.add('active');
+        document.getElementById('closeXModal').onclick = () => document.getElementById('xModal').classList.remove('active');
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (!link.hasAttribute('target') && link.getAttribute('href') !== 'index.html') {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
-                    if (href && !href.startsWith('#')) {
-                        e.preventDefault();
-                        document.body.style.opacity = '0';
-                        document.body.style.transition = 'opacity 0.2s';
-                        setTimeout(() => window.location.href = href, 200);
-                    }
-                });
-            }
         });
     </script>
 </body>
