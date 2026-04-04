@@ -39,7 +39,7 @@ body {
     z-index: 10;
 }
 
-/* РАДИО – 100px */
+/* РАДИО – 100px на десктопе */
 .radio-btn {
     position: fixed;
     top: 20px;
@@ -96,7 +96,7 @@ body {
 }
 .index-card:active { transform: scale(0.9); }
 
-/* ОСНОВНЫЕ ИКОНКИ – 140px */
+/* ОСНОВНЫЕ ИКОНКИ – 140px на десктопе */
 .index-card img {
     width: 140px !important;
     height: 140px !important;
@@ -221,41 +221,41 @@ body {
 }
 .insta-widget { margin: 20px 0; }
 
-/* Адаптация под планшеты и телефоны */
+/* ========== АДАПТАЦИЯ – ТЕПЕРЬ ИКОНКИ БОЛЬШИЕ НА МОБИЛЬНЫХ ========== */
 @media (max-width: 700px) {
-    .index-grid { gap: 50px 70px; }
-    .index-card img { width: 110px !important; height: 110px !important; margin-bottom: 18px; }
-    .index-card span { font-size: 10px; }
-    .radio-btn { width: 80px; height: 80px; }
-    .radio-btn img { width: 48px; height: 48px; }
-    .donate-line { width: 220px; }
+    .index-grid { gap: 60px 80px; }
+    .index-card img { width: 130px !important; height: 130px !important; margin-bottom: 20px; }
+    .index-card span { font-size: 11px; }
+    .radio-btn { width: 90px; height: 90px; }
+    .radio-btn img { width: 54px; height: 54px; }
+    .donate-line { width: 240px; }
 }
 
 @media (max-width: 550px) {
     .index-container { padding: 70px 15px 35px 15px; }
-    .index-grid { gap: 40px 50px; }
-    .index-card img { width: 90px !important; height: 90px !important; margin-bottom: 14px; }
+    .index-grid { gap: 50px 60px; }
+    .index-card img { width: 110px !important; height: 110px !important; margin-bottom: 18px; }
+    .index-card span { font-size: 10px; }
+    .radio-btn { width: 80px; height: 80px; }
+    .radio-btn img { width: 48px; height: 48px; }
+    .donate-line { width: 210px; }
+    .donate-label { font-size: 11px; }
+}
+
+@media (max-width: 450px) {
+    .index-grid { gap: 40px 45px; }
+    .index-card img { width: 95px !important; height: 95px !important; margin-bottom: 15px; }
     .index-card span { font-size: 9px; }
     .radio-btn { width: 70px; height: 70px; }
     .radio-btn img { width: 42px; height: 42px; }
     .donate-line { width: 190px; }
-    .donate-label { font-size: 10px; }
-}
-
-@media (max-width: 450px) {
-    .index-grid { gap: 30px 35px; }
-    .index-card img { width: 75px !important; height: 75px !important; }
-    .index-card span { font-size: 8px; }
-    .donate-line { width: 170px; }
-    .radio-btn { width: 60px; height: 60px; }
-    .radio-btn img { width: 36px; height: 36px; }
 }
 
 @media (max-width: 380px) {
-    .index-grid { gap: 25px 25px; }
-    .index-card img { width: 65px !important; height: 65px !important; }
-    .index-card span { font-size: 7px; }
-    .radio-btn { width: 55px; height: 55px; }
-    .radio-btn img { width: 32px; height: 32px; }
-    .donate-line { width: 150px; }
+    .index-grid { gap: 30px 35px; }
+    .index-card img { width: 85px !important; height: 85px !important; margin-bottom: 12px; }
+    .index-card span { font-size: 8px; }
+    .radio-btn { width: 65px; height: 65px; }
+    .radio-btn img { width: 38px; height: 38px; }
+    .donate-line { width: 170px; }
 }
