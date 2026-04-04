@@ -16,21 +16,23 @@
     <div class="container">
         
         <!-- КАРУСЕЛЬ -->
-        <div class="section carousel-section" style="margin-bottom: 50px;">
+        <div class="section carousel-section">
             <div class="carousel" id="mainCarousel">
                 <img src="assets/mx1.jpeg" class="active">
                 <img src="assets/mx2.jpg">
             </div>
-            <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
+            <div style="display: flex; justify-content: center;">
+                <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
+            </div>
         </div>
 
         <!-- RSS СТРОКА -->
-        <div class="ticker-wrapper" style="margin-bottom: 50px;">
+        <div class="ticker-wrapper">
             <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
         <!-- FORUM + SUPPORT -->
-        <div class="section nav-grid" style="margin-bottom: 50px;">
+        <div class="section nav-grid">
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
                 <div class="paint-label">FORUM</div>
@@ -42,7 +44,7 @@
         </div>
 
         <!-- ПИНТЕРЕСТ -->
-        <div class="section pin-section" style="margin-bottom: 60px;">
+        <div class="section pin-section">
             <div class="pin-wrapper">
                 <a data-pin-do="embedBoard" 
                    data-pin-board-width="400" 
@@ -52,10 +54,10 @@
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #111; margin-bottom: 60px;">
+        <hr style="border: 0; border-top: 1px solid #111;">
 
         <!-- АРТ БЛОК PAINT -->
-        <div class="section art-section" style="margin-bottom: 60px;">
+        <div class="section art-section">
             <div class="art-square-frame">
                 <img src="assets/art.jpg" alt="Preview">
             </div>
@@ -66,7 +68,7 @@
         </div>
 
         <!-- FONT STYLER -->
-        <div class="section styler-section" style="margin-bottom: 60px;">
+        <div class="section styler-section">
             <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
                 <button class="styler-icon-btn" onclick="copyStylerText()">
@@ -80,7 +82,7 @@
         </div>
 
         <!-- TOP PLAYERS -->
-        <div class="section" style="padding-bottom: 60px;">
+        <div class="section">
             <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 20px;">TOP PLAYERS:</h4>
             <div style="font-size: 8px; color: #444; line-height: 2.5;">
                 MORPH — 12450<br>
@@ -96,7 +98,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛКИ (без изменений) -->
+    <!-- МОДАЛКИ -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
