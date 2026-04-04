@@ -45,7 +45,7 @@ body {
 
 /* КРЕСТИК КАК В STORE */
 .close-site {
-    position: fixed;
+    position: absolute;
     top: 15px;
     right: 15px;
     background: transparent;
@@ -426,7 +426,7 @@ body {
 
 /* РАДИО КНОПКА В ЛЕВОМ УГЛУ */
 .radio-btn {
-    position: fixed;
+    position: absolute;
     top: 15px;
     left: 15px;
     background: transparent;
