@@ -1,5 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — UPDATED STRUCTURE
+   JOURNAL.CSS — FINAL SYSTEM SYMMETRY
 ============================================ */
 
 :root {
@@ -7,21 +7,20 @@
     --muted-pink: #b97272;
     --deep-pink: #a27791;
     --bg-dark: #050508;
+    --system-red: #79434a;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* 1. БАЗОВЫЙ СЛОЙ */
-html {
-    background: var(--bg-dark);
-}
-
 body {
-    background: transparent; /* Чтобы видеть канвас */
+    background-color: var(--bg-dark);
     color: #f0f0f0;
     font-family: 'Press Start 2P', monospace;
     padding: 20px 15px;
@@ -30,51 +29,59 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
+    position: relative; /* Для абсолютного позиционирования кнопок */
 }
 
-/* 2. СЛОЙ ФОНА (z-index: 1 как в index.css) */
+/* 2. СЛОЙ ФОНА (z-index: 1) */
 #neuro-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; 
+    z-index: 1;
     pointer-events: none;
 }
 
-/* 3. КНОПКА ЗАКРЫТИЯ (Логика из store.css) */
-.close-site {
+/* 3. ВЕРХНИЕ КНОПКИ (Симметричные) */
+.radio-btn, .close-site {
     position: absolute;
     top: 20px;
-    right: 20px;
     z-index: 1000;
     background: rgba(0, 0, 0, 0.5);
-    width: auto; /* Авто-размер */
-    height: auto;
-    display: flex;
     padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s;
     text-decoration: none;
 }
 
-.close-site img {
+/* Радио слева, Закрыть справа */
+.radio-btn { left: 20px; }
+.close-site { right: 20px; }
+
+/* Иконки строго одного размера */
+.radio-btn img, .close-site img {
     width: 30px;
     height: 30px;
     display: block;
     image-rendering: pixelated;
 }
 
-/* 4. КОНТЕНТ (z-index: 10 как в index.css) */
+.radio-btn:active, .close-site:active { transform: scale(0.9); }
+
+/* 4. КОНТЕНТ (z-index: 10) */
 .container {
     max-width: 600px;
     width: 100%;
-    margin-top: 70px;
+    margin-top: 80px; /* Отступ под кнопки */
     display: flex;
     flex-direction: column;
     gap: 50px;
     position: relative;
-    z-index: 10; 
+    z-index: 10;
 }
 
 .section {
@@ -106,13 +113,6 @@ body {
     left: 0;
 }
 
-.x-btn-img {
-    cursor: pointer;
-    width: 40px;
-    margin-top: 15px;
-    transition: 0.2s;
-}
-
 /* RSS СТРОКА */
 .ticker-wrapper {
     padding: 12px 0;
@@ -127,9 +127,8 @@ body {
     color: #ffd9e6;
     animation: scrollTicker 40s linear infinite;
 }
-.ticker span {
-    margin-right: 50px;
-}
+.ticker span { margin-right: 50px; }
+
 @keyframes scrollTicker {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
@@ -145,56 +144,112 @@ body {
 .nav-btn-img {
     cursor: pointer;
     width: 85px;
-    height: auto;
     transition: 0.2s;
     image-rendering: pixelated;
 }
-.nav-btn-img:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
+.nav-btn-img:hover { transform: scale(1.1); filter: brightness(1.2); }
 
 /* ПИНТЕРЕСТ */
 .pin-wrapper {
-    padding: 0;
-    margin: 0 auto;
     width: 100%;
     max-width: 450px;
+    margin: 0 auto;
 }
 
-/* АРТ БЛОК */
-.art-square-frame {
+/* PAINT WINDOW (Системный стиль) */
+.paint-window {
     width: 100%;
-    max-width: 300px;
-    aspect-ratio: 1/1;
-    border: 1px solid #1a1a1a;
-    background: #0a0a0f;
-    margin: 0 auto 20px;
+    max-width: 450px;
+    background: var(--deep-pink);
+    border: 2px solid var(--muted-pink);
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
     overflow: hidden;
 }
-.art-square-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.5;
+
+.paint-header-bar {
+    background: var(--system-red);
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--muted-pink);
 }
-.paint-label {
-    font-size: 6px;
-    color: var(--accent-pink);
-    letter-spacing: 1px;
-    margin-top: 8px;
+
+.paint-title {
+    font-size: 8px;
+    font-weight: bold;
+    color: #010101;
     text-transform: uppercase;
 }
 
-/* FONT STYLER */
-.styler-label {
-    font-size: 7px;
-    color: var(--muted-pink);
-    margin-bottom: 10px;
-    text-align: left;
-    max-width: 450px;
-    margin-inline: auto;
+.paint-clear-btn {
+    background: #010101;
+    border: 1px solid var(--muted-pink);
+    color: #ffffff;
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #000;
+    cursor: crosshair;
+}
+
+/* Функционал слоев */
+.canvas-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+.paint-tools-panel {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 10px;
+    background: var(--deep-pink);
+    border-top: 1px solid var(--muted-pink);
+    align-items: center;
+    gap: 10px;
+}
+
+.tool-btn {
+    background: #010101;
+    border: 1px solid var(--muted-pink);
+    color: var(--muted-pink);
+    padding: 8px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.color-indicator {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #010101;
+}
+
+.paint-label {
+    font-size: 6px;
+    color: var(--accent-pink);
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* FONT STYLER */
 .styler-container {
     display: flex;
     align-items: center;
@@ -215,46 +270,35 @@ body {
     padding: 12px 5px;
     outline: none;
 }
-.styler-icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
 .styler-icon-btn img {
     width: 20px;
-    height: 20px;
     filter: brightness(0) invert(1);
 }
 
-/* МОДАЛКИ */
+/* МОДАЛКИ (z-index: 10000) */
 .modal-overlay {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0, 0, 0, 0.9);
     z-index: 10000;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
-.modal-overlay.active {
-    display: flex;
-}
+.modal-overlay.active { display: flex; }
+
 .modal-content {
     width: 100%;
+    max-width: 500px;
     background: var(--deep-pink);
     border: 2px solid var(--muted-pink);
-    padding: 0;
+    max-height: 85vh;
     overflow-y: auto;
-    max-height: calc(100vh - 160px);
-    position: relative;
 }
 
 .modal-header {
-    background: #79434a;
+    background: var(--system-red);
     padding: 10px 12px;
     display: flex;
     justify-content: space-between;
@@ -264,134 +308,35 @@ body {
 
 .modal-title-text {
     font-size: 10px;
-    font-weight: bold;
     color: #010101;
-    font-family: 'Press Start 2P', monospace;
 }
 
 .modal-close-btn {
     background: #010101;
     border: 1px solid var(--muted-pink);
-    color: #ffffff;
-    font-size: 14px;
+    color: #fff;
     width: 24px;
     height: 24px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .modal-inner {
     padding: 20px;
-    background: var(--deep-pink);
-    color: #010101;
 }
 
-.retro-btn {
-    background: #010101;
-    border: 2px solid var(--muted-pink);
-    color: var(--muted-pink);
-    padding: 8px 16px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-}
-
-/* PAINT ENGINE */
-.paint-window {
-    width: 100%;
-    max-width: 420px;
-    background: #0a0a0f;
-    border: 1px solid #1a1a1a;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-}
-.paint-header-bar {
-    background: #1a1a1a;
-    padding: 8px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 7px;
-    color: #444;
-}
-.canvas-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    background: #000;
-}
-.canvas-container canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    touch-action: none;
-}
-.paint-tools-panel {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #050508;
-    border-top: 1px solid #1a1a1a;
-    align-items: center;
-}
-
-/* АДАПТАЦИЯ */
-@media (max-width: 600px) {
-    .container { margin-top: 80px; gap: 40px; }
-    .nav-btn-img { width: 70px; }
-}
-
-/* RADIO BUTTON - Слева вверху */
-.radio-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px; /* Перенесли в левый угол */
-    width: 44px;
-    height: 44px;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    transition: transform 0.2s;
-}
-
-.radio-btn:active { transform: scale(0.9); }
-
-.radio-btn img {
-    width: 30px;
-    height: 30px;
-    image-rendering: pixelated;
-}
-
-/* SPOTIFY WRAPPER */
 .spotify-wrapper {
     width: 100%;
-    background: #000;
     border-radius: 8px;
     overflow: hidden;
     line-height: 0;
 }
 
-/* Адаптация под мобилки */
+/* АДАПТАЦИЯ */
 @media (max-width: 600px) {
-    .radio-btn {
-        width: 38px;
-        height: 38px;
-        top: 15px;
-        left: 15px;
-    }
-    .radio-btn img {
-        width: 24px;
-        height: 24px;
-    }
+    .container { margin-top: 80px; gap: 35px; }
+    .nav-btn-img { width: 70px; }
+    .radio-btn, .close-site { top: 15px; }
+    .radio-btn { left: 15px; }
+    .close-site { right: 15px; }
+    .radio-btn img, .close-site img { width: 24px; height: 24px; }
 }
-
