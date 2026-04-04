@@ -17,10 +17,12 @@ function openModal(id) {
         paintInit = true;
     }
 }
+
 function closeModal(e) { 
     if (e.target.classList.contains('modal-overlay')) 
         e.target.classList.remove('active'); 
 }
+
 function closeModalDirect(id) { 
     document.getElementById(id).classList.remove('active'); 
 }
@@ -40,11 +42,11 @@ function handleAction() {
     if (!isTransformed) {
         input.value = input.value.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
         isTransformed = true;
-        document.getElementById('actionIcon').style.filter = "invert(1) sepia(1) saturate(5) hue-rotate(300deg)";
+        document.getElementById('stylerIcon2').style.filter = "brightness(0) invert(1) sepia(1) hue-rotate(300deg)";
     } else {
         input.value = "";
         isTransformed = false;
-        document.getElementById('actionIcon').style.filter = "none";
+        document.getElementById('stylerIcon2').style.filter = "brightness(0) invert(1)";
     }
 }
 
