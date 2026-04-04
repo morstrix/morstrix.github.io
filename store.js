@@ -1,6 +1,6 @@
 // ==================== SHOP LOGIC ====================
 
-// ДАННЫЕ ТОВАРОВ (легко редактировать)
+// ДАННЫЕ ТОВАРОВ
 const categories = [
     { id: 1, name: "PRINT",     price: 15, image: "https://i.pinimg.com/736x/99/da/55/99da554066b71319b89effdf0866a332.jpg" },
     { id: 2, name: "DESIGN",    price: 25, image: "https://i.pinimg.com/1200x/bb/15/67/bb15672d7aa14685cc00931db281b1a8.jpg" },
@@ -15,6 +15,8 @@ let cart = JSON.parse(localStorage.getItem('morstrix_cart')) || [];
 // Отрисовка товаров
 function renderCategories() {
     const container = document.getElementById('categoriesGrid');
+    if (!container) return;
+    
     container.innerHTML = categories.map(cat => `
         <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}">
             <img src="${cat.image}" class="cat-image" onerror="this.src='https://via.placeholder.com/300x300?text=${cat.name}'">
@@ -31,7 +33,6 @@ function renderCategories() {
                 price: parseFloat(card.dataset.price) 
             });
             
-            // Визуальный фидбек
             const priceDiv = card.querySelector('.cat-price');
             const orig = priceDiv.innerHTML;
             priceDiv.innerHTML = 'додано';
@@ -74,33 +75,39 @@ function updateCartUI() {
     const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
     const totalPrice = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     
-    document.getElementById('cartCount').textContent = totalItems;
-    document.getElementById('cartTotalBottom').textContent = `$${totalPrice.toFixed(2)}`;
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalBottomEl = document.getElementById('cartTotalBottom');
+    const cartTotalModalEl = document.getElementById('cartTotalModal');
+    
+    if (cartCountEl) cartCountEl.textContent = totalItems;
+    if (cartTotalBottomEl) cartTotalBottomEl.textContent = `$${totalPrice.toFixed(2)}`;
     
     const cartItemsDiv = document.getElementById('cartItems');
-    if (cart.length === 0) {
-        cartItemsDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#a1a1a1;">пусто</div>';
-    } else {
-        cartItemsDiv.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <span style="color:#a1a1a1;">${item.name} x${item.quantity}</span>
-                <span>
-                    <span style="color:#a1a1a1;">$${(item.price * item.quantity).toFixed(2)}</span>
-                    <button class="remove-item" data-id="${item.id}">✖</button>
-                </span>
-            </div>
-        `).join('');
-        
-        document.querySelectorAll('.remove-item').forEach(btn => {
-            btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
-        });
+    if (cartItemsDiv) {
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#a1a1a1;">пусто</div>';
+        } else {
+            cartItemsDiv.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span style="color:#a1a1a1;">${item.name} x${item.quantity}</span>
+                    <span>
+                        <span style="color:#a1a1a1;">$${(item.price * item.quantity).toFixed(2)}</span>
+                        <button class="remove-item" data-id="${item.id}">✖</button>
+                    </span>
+                </div>
+            `).join('');
+            
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            });
+        }
     }
     
-    document.getElementById('cartTotalModal').innerHTML = `ИТОГО: $${totalPrice.toFixed(2)}`;
+    if (cartTotalModalEl) cartTotalModalEl.innerHTML = `ИТОГО: $${totalPrice.toFixed(2)}`;
     localStorage.setItem('morstrix_cart', JSON.stringify(cart));
 }
 
-// Оформление заказа
+// Оформление заказа — переход в Telegram
 function checkout() {
     if (cart.length === 0) {
         alert('Корзина пуста');
@@ -110,29 +117,42 @@ function checkout() {
     const totalPrice = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     const itemsList = cart.map(i => `${i.name} x${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`).join('%0A');
     
-    // СОХРАНЯЕМ ДАННЫЕ для отправки (можно использовать любой из вариантов ниже)
-    const orderData = {
-        items: cart,
-        total: totalPrice,
-        date: new Date().toLocaleString()
-    };
+    // Формируем сообщение для Telegram
+    const message = `🛒 НОВЫЙ ЗАКАЗ!%0A%0A📦 Товары:%0A${itemsList}%0A%0A💰 Итого: $${totalPrice.toFixed(2)}%0A%0A👤 Заказ от:%0A📍 Доставка:`;
     
-    // Временно сохраняем в localStorage для другой страницы
-    localStorage.setItem('pending_order', JSON.stringify(orderData));
+    // ЗАМЕНИ 'morstrix' НА НУЖНЫЙ TELEGRAM USERNAME
+    const telegramUrl = `https://t.me/morsova?text=${message}`;
     
-    // Открываем страницу оформления
-    window.location.href = 'checkout.html';
+    // Открываем Telegram
+    window.open(telegramUrl, '_blank');
 }
 
 // Модальное окно
 const modal = document.getElementById('cartModal');
-document.getElementById('cartBtn').onclick = () => { 
-    updateCartUI(); 
-    modal.classList.add('active'); 
-};
-document.querySelector('.close-modal').onclick = () => modal.classList.remove('active');
-modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-document.getElementById('checkoutBtn').onclick = checkout;
+const cartBtn = document.getElementById('cartBtn');
+const closeModalBtn = document.querySelector('.close-modal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+if (cartBtn) {
+    cartBtn.onclick = () => { 
+        updateCartUI(); 
+        if (modal) modal.classList.add('active'); 
+    };
+}
+
+if (closeModalBtn) {
+    closeModalBtn.onclick = () => {
+        if (modal) modal.classList.remove('active');
+    };
+}
+
+if (modal) {
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+}
+
+if (checkoutBtn) {
+    checkoutBtn.onclick = checkout;
+}
 
 // Запуск
 renderCategories();
