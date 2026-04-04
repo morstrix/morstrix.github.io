@@ -64,11 +64,11 @@
             <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
                 <button class="styler-icon-btn" onclick="copyStylerText()">
-                    <img src="assets/st1.png" style="filter: hue-rotate(290deg) brightness(0.8);">
+                    <img src="assets/st1.png" id="stylerIcon1">
                 </button>
                 <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
                 <button class="styler-icon-btn" onclick="handleAction()">
-                    <img src="assets/st2.png" id="actionIcon">
+                    <img src="assets/st2.png" id="stylerIcon2">
                 </button>
             </div>
         </div>
@@ -96,7 +96,7 @@
                 <span class="modal-title-text">⚠️ ATTENTION</span>
                 <button class="modal-close-btn" onclick="closeModalDirect('disclaimerModal')">✜</button>
             </div>
-            <div class="modal-inner">
+            <div class="modal-inner" style="text-align: center;">
                 <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">EXPERIMENTAL DATA STREAM.</p>
                 <button class="retro-btn" onclick="closeModalDirect('disclaimerModal')">ENTER</button>
             </div>
@@ -110,7 +110,7 @@
                 <span class="modal-title-text">FORUM</span>
                 <button class="modal-close-btn" onclick="closeModalDirect('forumModal')">✜</button>
             </div>
-            <div class="modal-inner">
+            <div class="modal-inner" style="text-align: center;">
                 <p style="font-size: 8px; margin-bottom: 20px;">OPEN TELEGRAM?</p>
                 <a href="https://t.me/morstrix" target="_blank" class="retro-btn">YES</a>
             </div>
