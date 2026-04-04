@@ -1,19 +1,76 @@
 /* ============================================
-   SHOP.CSS — стили страницы магазина
+   STORE.CSS — стили страницы магазина
+   (без общих style.css и theme.css)
 ============================================ */
 
+:root {
+    --shop-text-white: #ffffff;
+    --shop-text-gray: #a1a1a1;
+    --shop-bg-card: #050505;
+    --shop-border-white: #ffffff;
+    --shop-border-dark: #2a2a2a;
+    --shop-bg-cart: #050505;
+    --shop-bg-modal: #050505;
+    --shop-accent: #a84d6b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
-    display: block;
+    background-color: #000;
+    font-family: 'Press Start 2P', monospace;
+    color: #fff;
     overflow-y: auto;
-    align-items: flex-start;
     padding-bottom: 90px;
+    min-height: 100vh;
+}
+
+/* ФОН (канвас) */
+#neuro-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* КРЕСТИК – всегда справа сверху */
+.back-button {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    margin: 0 !important;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 0;
+}
+.back-button img {
+    width: 30px;
+    height: 30px;
 }
 
 .container {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 80px 20px 20px;
+    position: relative;
+    z-index: 10;
 }
 
 .shop-header {
@@ -75,7 +132,7 @@ body {
 .cat-price {
     margin-top: 10px;
     font-size: 0.6rem;
-    color: var(--shop-text-gray);
+    color: #7e7e7e;
 }
 
 /* КОРЗИНА */
@@ -94,9 +151,9 @@ body {
 }
 
 .cart-bottom-btn {
-    background: transparent;
-    border: 1px solid var(--shop-border-white);
-    color: var(--shop-text-white);
+    background: #a27791;
+    border: 1px solid #b97272;
+    color: #000000;
     font-family: 'Press Start 2P', monospace;
     font-size: 0.7rem;
     padding: 10px 20px;
@@ -108,13 +165,13 @@ body {
 
 .cart-bottom-btn:active {
     transform: scale(0.95);
-    background: var(--shop-text-white);
-    color: #000;
+    background: #b97272;
+    color: #010101;
 }
 
 .cart-bottom-count {
-    background: var(--shop-text-white);
-    color: #000;
+    background: #b97272;
+    color: #010101;
     padding: 2px 8px;
     border-radius: 20px;
     font-size: 0.7rem;
@@ -153,7 +210,7 @@ body {
 .close-modal {
     background: none;
     border: none;
-    color: var(--shop-text-white);
+    color: #b97272;
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
@@ -177,48 +234,6 @@ body {
 }
 
 .checkout-btn {
-    background: var(--shop-text-white);
-    color: #000;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    margin-top: 15px;
-    cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-}
-
-.checkout-btn:active {
-    transform: scale(0.98);
-    background: var(--shop-accent);
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: var(--shop-text-white);
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.8rem;
-}
-
-@media (max-width: 680px) {
-    .categories-grid { gap: 15px; }
-    .shop-title { font-size: 1rem; }
-    .cat-name { font-size: 0.65rem; }
-    .cat-price { font-size: 0.5rem; }
-    .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
-    .cart-bottom-total { font-size: 0.55rem; }
-}
-
-@media (max-width: 480px) {
-    .cat-card { padding: 10px; }
-    .cat-name { font-size: 0.55rem; }
-}
-
-/* ========== КНОПКИ В СТИЛЕ ПАЛИТРЫ ========== */
-
-/* Кнопка ОФОРМИТЬ */
-.checkout-btn {
     background: #a27791 !important;
     border: 1px solid #b97272 !important;
     color: #000000 !important;
@@ -233,12 +248,6 @@ body {
     letter-spacing: 1px;
 }
 
-.checkout-btn:hover {
-    background: #8a4a52 !important;
-    border-color: #000000 !important;
-    color: #a27791 !important;
-}
-
 .checkout-btn:active {
     transform: scale(0.97);
     background: #5a3035 !important;
@@ -246,50 +255,29 @@ body {
     color: #b97272 !important;
 }
 
-/* Кнопка ПАКЕТ внизу */
-.cart-bottom-btn {
-    background: #a27791 !important;
-    border: 1px solid #b97272 !important;
-    color: #000000 !important;
-}
-
-.cart-bottom-btn:active {
-    background: #b97272 !important;
-    color: #010101 !important;
-}
-
-/* Счетчик корзины */
-.cart-bottom-count {
-    background: #b97272 !important;
-    color: #010101 !important;
-}
-
-/* Кнопка закрытия модалки */
-.close-modal {
-    color: #b97272 !important;
-    transition: all 0.2s;
-}
-
-.close-modal:active {
-    color: #a27791 !important;
-    transform: scale(1.1);
-}
-
-/* Кнопка удаления товара */
 .remove-item {
-    color: #b97272 !important;
+    background: none;
+    border: none;
+    color: #b97272;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.8rem;
 }
 
-.remove-item:active {
-    color: #a27791 !important;
+/* Адаптация */
+@media (max-width: 680px) {
+    .categories-grid { gap: 15px; }
+    .shop-title { font-size: 1rem; }
+    .cat-name { font-size: 0.65rem; }
+    .cat-price { font-size: 0.5rem; }
+    .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
+    .cart-bottom-total { font-size: 0.55rem; }
+    .back-button { width: 38px; height: 38px; top: 15px; right: 15px; }
+    .back-button img { width: 24px; height: 24px; }
+    .container { padding-top: 70px; }
 }
 
-/* Цены товаров */
-.cat-price {
-    color: #7e7e7e !important;
-}
-
-/* Карточки товаров при нажатии */
-.cat-card:active {
-    border-color: #b97272 !important;
+@media (max-width: 480px) {
+    .cat-card { padding: 10px; }
+    .cat-name { font-size: 0.55rem; }
 }
