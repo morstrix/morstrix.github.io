@@ -250,3 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (finalClosePopup) finalClosePopup.onclick = closeSocialPopup;
 });
+
+// РАДИО КНОПКА
+const radioBtn = document.getElementById('radioBtn');
+const radioModal = document.getElementById('radioModal');
+if (radioBtn) {
+    radioBtn.onclick = () => {
+        radioModal.classList.add('active');
+    };
+}
