@@ -89,34 +89,49 @@
         </div>
     </div>
 
-    <!-- МОДАЛКИ -->
+    <!-- МОДАЛКА DISCLAIMER -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">⚠️ ATTENTION ⚠️<br><br>EXPERIMENTAL DATA STREAM.</p>
+            <div class="modal-header">
+                <span class="modal-title-text">⚠️ ATTENTION</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('disclaimerModal')">✜</button>
+            </div>
+            <p style="font-size: 8px; line-height: 1.8; margin-bottom: 30px;">EXPERIMENTAL DATA STREAM.</p>
             <button class="retro-btn" onclick="closeModalDirect('disclaimerModal')">ENTER</button>
         </div>
     </div>
 
+    <!-- МОДАЛКА FORUM -->
     <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title-text">FORUM</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('forumModal')">✜</button>
+            </div>
             <p style="font-size: 8px; margin-bottom: 20px;">OPEN TELEGRAM?</p>
             <a href="https://t.me/morstrix" target="_blank" class="retro-btn">YES</a>
         </div>
     </div>
 
+    <!-- МОДАЛКА SUPPORT (КОММЕНТАРИИ) -->
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-content">
-        <div class="telegram-wrapper" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-            <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-discussion="morstrixxx/71"
-                data-comments-limit="10"
-                data-colorful="1"
-                data-dark="1">
-            </script>
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title-text">COMMENTS</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('supportModal')">✜</button>
+            </div>
+            <div class="telegram-wrapper">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                    data-telegram-discussion="morstrixxx/71"
+                    data-comments-limit="10"
+                    data-colorful="1"
+                    data-dark="1">
+                </script>
+            </div>
         </div>
     </div>
-</div>
 
+    <!-- МОДАЛКА PAINT -->
     <div id="artModal" class="modal-overlay">
         <div class="modal-content" style="padding:0;">
             <div class="paint-window">
