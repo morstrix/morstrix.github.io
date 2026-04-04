@@ -197,26 +197,31 @@ body {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.98);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 10000;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 20px 0;
 }
 .modal-overlay.active {
     display: flex;
 }
 .modal-content {
     width: 100%;
-    max-width: 380px;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(100vh - 40px);
     text-align: center;
     position: relative;
     background: #0a0a0a;
-    border: 1px solid #a84d6b;
-    border-radius: 4px;
+    border-top: 1px solid #a84d6b;
+    border-bottom: 1px solid #a84d6b;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
     padding: 10px;
-    overflow-x: hidden;  /* ← скрываем горизонтальный скролл */
-    word-wrap: break-word;  /* ← переносим длинные слова */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Стили для Telegram-виджета внутри модалки */
