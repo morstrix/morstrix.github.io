@@ -662,3 +662,84 @@ body {
         width: 75px;
     }
 }
+
+/* ===== НОВЫЕ БЛОКИ ДЛЯ JOURNAL ===== */
+
+/* Конструктор мерча */
+.merch-container {
+    background: #0a0a0f;
+    border: 1px solid #a84d6b;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.merch-container:hover {
+    background: #1a1a1f;
+    border-color: #ffb7c7;
+}
+.merch-container:active {
+    transform: scale(0.98);
+}
+
+/* Конвертер пиксель/см — использует существующий .styler-container */
+
+/* Кнопка TEAM в стиле журнала */
+.team-btn-journal {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #a84d6b;
+    background: transparent;
+    border: 1px solid #a84d6b;
+    padding: 12px 20px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.2s;
+    animation: teamBreath 3s infinite ease-in-out;
+}
+.team-btn-journal:hover {
+    background: #a84d6b;
+    color: #000;
+    animation: none;
+    transform: scale(1.02);
+}
+@keyframes teamBreath {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 3px #a84d6b; }
+}
+
+/* Блок DONATE (как на главной) */
+.donate-block-journal {
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+.donate-block-journal .donate-line {
+    width: 260px;
+    height: 5px;
+    background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+    margin: 0 auto 15px;
+}
+.donate-block-journal .donate-label {
+    font-size: 12px;
+    color: #d4a0a0;
+    text-transform: uppercase;
+}
+.donate-block-journal .donate-sub {
+    font-size: 9px;
+    color: #8a6a6a;
+    margin-top: 6px;
+}
+
+/* Адаптация */
+@media (max-width: 600px) {
+    .merch-container img { width: 30px; }
+    .team-btn-journal { font-size: 8px; padding: 10px 16px; }
+    .donate-block-journal .donate-line { width: 200px; }
+    .donate-block-journal .donate-label { font-size: 10px; }
+}

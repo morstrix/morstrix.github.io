@@ -103,3 +103,9 @@ document.addEventListener('keydown', (e) => {
         activeModals.forEach(modal => modal.classList.remove('active'));
     }
 });
+
+// ===== ДОПОЛНИТЕЛЬНАЯ ЛОГИКА ДЛЯ НОВЫХ БЛОКОВ =====
+// Конструктор мерча – уже обработан через onclick в HTML
+// Конвертер пиксель/см – уже обработан в inline-скрипте
+// TEAM и DONATE – уже обработаны в inline-скрипте
+// (оставляем существующий код без изменений)

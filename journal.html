@@ -11,16 +11,22 @@
 
     <canvas id="neuro-bg"></canvas>
 
+    <!-- РАДИО И КРЕСТИК (углы) -->
     <div class="radio-btn" id="radioBtn">
         <img src="assets/radio.png" alt="Radio">
     </div>
-
     <a href="index.html" class="close-site">
         <img src="assets/close.png" alt="Close">
     </a>
 
     <div class="container">
         
+        <!-- 1. RSS строка -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
+        </div>
+
+        <!-- 2. Горизонтальный барабан картинок + твиттер -->
         <div class="section carousel-section">
             <div class="carousel" id="mainCarousel">
                 <img src="assets/mx1.jpeg" class="active">
@@ -31,10 +37,7 @@
             </div>
         </div>
 
-        <div class="ticker-wrapper">
-            <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
-        </div>
-
+        <!-- 3. ФОРУМ / САПОРТ -->
         <div class="section nav-grid">
             <div class="forum-wrapper">
                 <div class="forum-corner">
@@ -59,6 +62,7 @@
             </div>
         </div>
 
+        <!-- 4. ПИНТЕРЕСТ -->
         <div class="section pin-section">
             <div class="pin-wrapper">
                 <a data-pin-do="embedBoard" 
@@ -69,18 +73,7 @@
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #111;">
-
-        <div class="section art-section">
-            <div class="art-square-frame">
-                <img src="assets/art.jpg" alt="Preview">
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" onclick="openModal('artModal')">
-                <div class="paint-label">PAINT</div>
-            </div>
-        </div>
-
+        <!-- 5. ФОНТ СТАЙЛЕР -->
         <div class="section styler-section">
             <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
@@ -94,6 +87,39 @@
             </div>
         </div>
 
+        <!-- 6. АРТ КАРУСЕЛЬ + ПЕИНТ -->
+        <div class="section art-section">
+            <div class="art-square-frame">
+                <img src="assets/art.jpg" alt="Preview">
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" onclick="openModal('artModal')">
+                <div class="paint-label">PAINT</div>
+            </div>
+        </div>
+
+        <!-- 7. КОНСТРУКТОР МЕРЧА (заглушка) -->
+        <div class="section merch-block">
+            <div class="styler-label">MERCH CONSTRUCTOR</div>
+            <div class="merch-container" onclick="alert('🔧 Конструктор мерча – скоро!')">
+                <img src="assets/space.png" alt="Merch" style="width: 40px; image-rendering: pixelated;">
+                <span style="font-size: 7px; margin-left: 10px;">ATTACH ITEM</span>
+            </div>
+        </div>
+
+        <!-- 8. КОНВЕРТЕР ПИКСЕЛЬ/СМ (заглушка) -->
+        <div class="section converter-block">
+            <div class="styler-label">PX ↔ CM CONVERTER</div>
+            <div class="styler-container">
+                <input type="text" id="pxInput" class="styler-input" placeholder="Pixels" autocomplete="off">
+                <button class="styler-icon-btn" onclick="alert('⚙️ Демо-режим: 1 см = 37.8 px')">
+                    <img src="assets/st2.png" style="filter: invert(1);">
+                </button>
+                <input type="text" id="cmInput" class="styler-input" placeholder="cm" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- 9. ТОП ПЛЕЕРС + ТЕТРИС -->
         <div class="section dual-row" style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
             <div style="text-align: left;">
                 <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4>
@@ -110,9 +136,22 @@
                 <div class="paint-label">TETRIS</div>
             </div>
         </div>
-    </div>
 
-    <!-- Модалки -->
+        <!-- 10. TEAM (попап кнопка) -->
+        <div class="section team-block">
+            <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
+        </div>
+
+        <!-- 11. DONATE -->
+        <div class="section donate-block-journal" id="donateJournal">
+            <div class="donate-line"></div>
+            <div class="donate-label">DONATE</div>
+            <div class="donate-sub">monobank</div>
+        </div>
+
+    </div> <!-- container -->
+
+    <!-- ========== МОДАЛКИ (существующие) ========== -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,9 +247,59 @@
         </div>
     </div>
 
+    <!-- НОВАЯ МОДАЛКА TEAM (GitHub + Behance) -->
+    <div id="teamModalJournal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title-text">TEAM MORSTRIX</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('teamModalJournal')">✜</button>
+            </div>
+            <div class="modal-inner" style="text-align: center; display: flex; flex-direction: column; gap: 15px;">
+                <a href="https://github.com/morstrix" target="_blank" class="retro-btn">GITHUB</a>
+                <a href="https://www.behance.net/morstrix" target="_blank" class="retro-btn">BEHANCE</a>
+            </div>
+        </div>
+    </div>
+
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script src="background.js"></script>
     <script src="paint.js"></script>
     <script src="journal.js"></script>
+    <!-- Дополнительный скрипт для новых элементов -->
+    <script>
+        (function() {
+            // Кнопка TEAM
+            const teamBtn = document.getElementById('teamBtnJournal');
+            const teamModal = document.getElementById('teamModalJournal');
+            if (teamBtn && teamModal) {
+                teamBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    teamModal.classList.add('active');
+                };
+            }
+            // DONATE
+            const donateBlock = document.getElementById('donateJournal');
+            if (donateBlock) {
+                donateBlock.onclick = () => {
+                    window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
+                };
+            }
+            // Заглушка для конвертера (простой обмен)
+            const pxInput = document.getElementById('pxInput');
+            const cmInput = document.getElementById('cmInput');
+            if (pxInput && cmInput) {
+                pxInput.addEventListener('input', () => {
+                    let px = parseFloat(pxInput.value);
+                    if (!isNaN(px)) cmInput.value = (px / 37.8).toFixed(2);
+                    else cmInput.value = '';
+                });
+                cmInput.addEventListener('input', () => {
+                    let cm = parseFloat(cmInput.value);
+                    if (!isNaN(cm)) pxInput.value = Math.round(cm * 37.8);
+                    else pxInput.value = '';
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
