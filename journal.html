@@ -11,7 +11,6 @@
 
     <canvas id="neuro-bg"></canvas>
 
-    <!-- РАДИО КНОПКА В ЛЕВОМ ВЕРХНЕМ УГЛУ -->
     <div class="radio-btn" id="radioBtn">
         <img src="assets/radio.png" alt="Radio">
     </div>
@@ -22,7 +21,6 @@
 
     <div class="container">
         
-        <!-- КАРУСЕЛЬ -->
         <div class="section carousel-section">
             <div class="carousel" id="mainCarousel">
                 <img src="assets/mx1.jpeg" class="active">
@@ -33,14 +31,11 @@
             </div>
         </div>
 
-        <!-- RSS СТРОКА -->
         <div class="ticker-wrapper">
             <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
-        <!-- FORUM + SUPPORT с динамической плашкой слева -->
         <div class="section nav-grid">
-            <!-- Левый блок: FORUM с плашкой слева -->
             <div class="forum-wrapper">
                 <div class="forum-corner">
                     <div class="tv-screen">
@@ -53,7 +48,6 @@
                 <div class="paint-label">FORUM</div>
             </div>
             
-            <!-- Правый блок: SUPPORT с точками -->
             <div class="support-wrapper">
                 <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
                 <div class="paint-label">SUPPORT</div>
@@ -65,7 +59,6 @@
             </div>
         </div>
 
-        <!-- ПИНТЕРЕСТ -->
         <div class="section pin-section">
             <div class="pin-wrapper">
                 <a data-pin-do="embedBoard" 
@@ -78,7 +71,6 @@
 
         <hr style="border: 0; border-top: 1px solid #111;">
 
-        <!-- АРТ БЛОК PAINT -->
         <div class="section art-section">
             <div class="art-square-frame">
                 <img src="assets/art.jpg" alt="Preview">
@@ -89,7 +81,6 @@
             </div>
         </div>
 
-        <!-- FONT STYLER -->
         <div class="section styler-section">
             <div class="styler-label">FONT STYLER</div>
             <div class="styler-container">
@@ -103,7 +94,6 @@
             </div>
         </div>
 
-        <!-- TOP PLAYERS + TETRIS -->
         <div class="section dual-row" style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
             <div style="text-align: left;">
                 <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4>
@@ -122,7 +112,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛКИ -->
+    <!-- Модалки -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -168,7 +158,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА PAINT -->
     <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="padding:0;">
             <div class="modal-header">
@@ -205,7 +194,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА РАДИО (SPOTIFY) -->
     <div id="radioModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">

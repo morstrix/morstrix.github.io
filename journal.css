@@ -32,7 +32,6 @@ body {
     position: relative;
 }
 
-/* ФОН (канвас) */
 #neuro-bg {
     position: fixed;
     top: 0;
@@ -43,7 +42,6 @@ body {
     pointer-events: none;
 }
 
-/* КРЕСТИК */
 .close-site {
     position: absolute;
     top: 15px;
@@ -61,7 +59,6 @@ body {
     image-rendering: pixelated;
 }
 
-/* РАДИО КНОПКА */
 .radio-btn {
     position: absolute;
     top: 15px;
@@ -80,7 +77,6 @@ body {
     image-rendering: pixelated;
 }
 
-/* КОНТЕЙНЕР */
 .container {
     max-width: 600px;
     width: 100%;
@@ -97,7 +93,6 @@ body {
     text-align: center;
 }
 
-/* КАРУСЕЛЬ */
 .carousel {
     width: 100%;
     position: relative;
@@ -128,7 +123,6 @@ body {
     transition: 0.2s;
 }
 
-/* RSS СТРОКА */
 .ticker-wrapper {
     padding: 12px 0;
     overflow: hidden;
@@ -150,19 +144,19 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* НАВИГАЦИЯ — FORUM и SUPPORT в ряд */
 .nav-grid {
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 60px;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
 }
 
+/* Увеличенные картинки FORUM и SUPPORT */
 .nav-btn-img {
     cursor: pointer;
-    width: 100px;
+    width: 120px;
     height: auto;
     transition: 0.2s;
     image-rendering: pixelated;
@@ -172,7 +166,6 @@ body {
     filter: brightness(1.2);
 }
 
-/* ПИНТЕРЕСТ */
 .pin-wrapper {
     padding: 0;
     margin: 0 auto;
@@ -180,7 +173,6 @@ body {
     max-width: 450px;
 }
 
-/* АРТ БЛОК */
 .art-square-frame {
     width: 100%;
     max-width: 300px;
@@ -204,7 +196,6 @@ body {
     text-transform: uppercase;
 }
 
-/* FONT STYLER */
 .styler-label {
     font-size: 7px;
     color: var(--muted-pink);
@@ -245,9 +236,7 @@ body {
     filter: brightness(0) invert(1);
 }
 
-/* ============================================
-   МОДАЛКИ — АДАПТИВНЫЕ
-   ============================================ */
+/* МОДАЛКИ */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -264,7 +253,6 @@ body {
 .modal-overlay.active {
     display: flex;
 }
-
 .modal-content {
     background: var(--deep-pink);
     border: 2px solid var(--muted-pink);
@@ -275,7 +263,6 @@ body {
     max-width: 90vw;
     max-height: 85vh;
 }
-
 .modal-header {
     background: #79434a;
     padding: 10px 12px;
@@ -284,14 +271,12 @@ body {
     align-items: center;
     border-bottom: 1px solid var(--muted-pink);
 }
-
 .modal-title-text {
     font-size: 10px;
     font-weight: bold;
     color: #010101;
     font-family: 'Press Start 2P', monospace;
 }
-
 .modal-close-btn {
     background: #010101;
     border: 1px solid var(--muted-pink);
@@ -304,13 +289,11 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .modal-inner {
     padding: 20px;
     background: var(--deep-pink);
     color: #010101;
 }
-
 .retro-btn {
     background: #010101;
     border: 2px solid var(--muted-pink);
@@ -323,14 +306,11 @@ body {
     display: inline-block;
     margin-top: 10px;
 }
-
 .retro-btn:active {
     transform: scale(0.95);
     background: var(--muted-pink);
     color: #010101;
 }
-
-/* Spotify плеер */
 .spotify-wrapper {
     width: 100%;
     margin: 0;
@@ -339,8 +319,6 @@ body {
     width: 100%;
     border-radius: 0;
 }
-
-/* Telegram-виджет */
 .telegram-wrapper {
     width: 100%;
     overflow-x: hidden;
@@ -349,7 +327,6 @@ body {
     margin: 0;
     box-sizing: border-box;
 }
-
 .telegram-wrapper iframe,
 .telegram-wrapper .telegram-widget {
     width: 100% !important;
@@ -422,9 +399,7 @@ body {
     border-left: 3px solid #ffb7c7;
 }
 
-/* ============================================
-   АДАПТАЦИЯ МОДАЛОК — НА МОБИЛЬНЫХ ТОЛЬКО ШИРИНА
-   ============================================ */
+/* АДАПТАЦИЯ МОДАЛОК */
 @media (min-width: 769px) {
     .modal-content {
         width: auto;
@@ -446,7 +421,6 @@ body {
         padding: 20px;
         align-items: center;
     }
-    
     .modal-content {
         width: 100%;
         max-width: 100%;
@@ -457,11 +431,9 @@ body {
         border-left: 2px solid var(--muted-pink);
         border-right: 2px solid var(--muted-pink);
     }
-    
     .modal-inner {
         padding: 15px;
     }
-    
     #artModal .modal-content {
         width: 95%;
         max-width: 95%;
@@ -470,28 +442,41 @@ body {
         display: flex;
         flex-direction: column;
     }
-    
     #artModal .modal-content .paint-window {
         flex: 1;
         display: flex;
         flex-direction: column;
         max-width: 100%;
     }
-    
     #artModal .canvas-container {
         flex: 1;
         aspect-ratio: auto;
         min-height: 250px;
     }
-    
     .modal-title-text {
         font-size: 8px;
     }
-    
+    /* Увеличенный крестик */
     .modal-close-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 24px !important;
+    }
+    .retro-btn,
+    .modal-inner .retro-btn {
+        padding: 14px 24px !important;
+        font-size: 10px !important;
+        min-width: 120px;
+    }
+    /* Кнопки Paint увеличены */
+    .paint-tools-panel .retro-btn {
+        padding: 10px 16px !important;
+        font-size: 9px !important;
+        min-width: 70px;
+    }
+    #pColor {
+        width: 50px !important;
+        height: 40px !important;
     }
 }
 
@@ -499,28 +484,23 @@ body {
     .modal-overlay {
         padding: 10px;
     }
-    
     .modal-content {
         max-height: 85vh;
     }
-    
     .modal-title-text {
         font-size: 7px;
     }
-    
     .modal-close-btn {
-        width: 26px;
-        height: 26px;
-        font-size: 14px;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 22px !important;
     }
-    
     .modal-inner {
         padding: 12px;
     }
-    
     .retro-btn {
-        padding: 6px 12px;
-        font-size: 7px;
+        padding: 12px 20px !important;
+        font-size: 9px !important;
     }
 }
 
@@ -529,34 +509,36 @@ body {
         margin-top: 80px;
         gap: 40px;
     }
+    .nav-btn-img {
+        width: 100px;
+    }
 }
 
-/* ============================================
-   FORUM — ТЕЛЕВИЗОР СЛЕВА ОТ КАРТИНКИ
-   ============================================ */
+@media (max-width: 480px) {
+    .nav-btn-img {
+        width: 85px;
+    }
+}
 
+/* FORUM — ТЕЛЕВИЗОР СЛЕВА (ЕЩЁ ЛЕВЕЕ) */
 .forum-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
-
 .forum-corner {
     position: relative;
     display: inline-block;
 }
-
 .forum-corner .nav-btn-img {
     display: block;
     margin: 0;
 }
-
-/* ТЕЛЕВИЗОР — слева от картинки */
 .tv-screen {
     position: absolute;
     top: 50%;
-    left: -75px;
+    left: -80px;
     transform: translateY(-50%);
     background: #0a0a0a;
     padding: 5px 10px;
@@ -572,7 +554,6 @@ body {
     border-radius: 4px 4px 5px 4px;
     white-space: nowrap;
 }
-
 .tv-scanlines {
     position: absolute;
     top: 0;
@@ -589,7 +570,6 @@ body {
     pointer-events: none;
     border-radius: 3px;
 }
-
 .tv-glare {
     position: absolute;
     top: 0;
@@ -604,7 +584,6 @@ body {
     pointer-events: none;
     border-radius: 3px;
 }
-
 .tv-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 6px;
@@ -617,30 +596,24 @@ body {
     text-shadow: 0 0 2px #a84d6b;
     animation: tvFlicker 0.1s infinite alternate;
 }
-
 @keyframes tvFlicker {
     0% { opacity: 0.9; text-shadow: 0 0 1px #a84d6b; }
     100% { opacity: 1; text-shadow: 0 0 4px #a84d6b, 0 0 1px #ff69b4; }
 }
 
-/* ============================================
-   SUPPORT — МЕРЦАЮЩИЕ ТОЧКИ
-   ============================================ */
-
+/* SUPPORT — точки */
 .support-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
-
 .support-dots {
     display: flex;
     justify-content: center;
     gap: 5px;
     margin-top: 6px;
 }
-
 .sdot {
     width: 4px;
     height: 4px;
@@ -648,38 +621,18 @@ body {
     display: inline-block;
     animation: dotFade 1.5s ease-in-out infinite;
 }
-
-.sdot:nth-child(1) {
-    animation-delay: 0s;
-    background: #ff69b4;
-}
-
-.sdot:nth-child(2) {
-    animation-delay: 0.3s;
-    background: #a84d6b;
-}
-
-.sdot:nth-child(3) {
-    animation-delay: 0.6s;
-    background: #ffb7c7;
-}
-
+.sdot:nth-child(1) { animation-delay: 0s; background: #ff69b4; }
+.sdot:nth-child(2) { animation-delay: 0.3s; background: #a84d6b; }
+.sdot:nth-child(3) { animation-delay: 0.6s; background: #ffb7c7; }
 @keyframes dotFade {
-    0%, 100% {
-        opacity: 0.25;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-        box-shadow: 0 0 3px currentColor;
-    }
+    0%, 100% { opacity: 0.25; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 3px currentColor; }
 }
 
-/* Адаптация для мобильных */
+/* Адаптация телевизора и картинок под мобильные */
 @media (max-width: 550px) {
     .tv-screen {
-        left: -35px;
+        left: -55px;
         padding: 4px 8px;
     }
     .tv-text {
@@ -687,7 +640,7 @@ body {
         letter-spacing: 1px;
     }
     .nav-btn-img {
-        width: 80px;
+        width: 85px;
     }
     .sdot {
         width: 3.5px;
@@ -697,16 +650,15 @@ body {
         gap: 4px;
     }
 }
-
 @media (max-width: 450px) {
     .tv-screen {
-        left: -30px;
+        left: -45px;
         padding: 3px 6px;
     }
     .tv-text {
         font-size: 4.5px;
     }
     .nav-btn-img {
-        width: 70px;
+        width: 75px;
     }
 }

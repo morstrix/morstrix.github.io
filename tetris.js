@@ -1,7 +1,7 @@
 // ==================== TETRIS GAME LOGIC ====================
 
 const COLS = 16;
-const ROWS = 24;
+const ROWS = 22;   // было 24, убрал 2 ряда
 let BLOCK_SIZE = 30;
 const BASE_SPEED = 1000;
 
@@ -46,21 +46,16 @@ function init() {
 }
 
 function calcCanvasSize() {
-    // Получаем доступную ширину и высоту экрана
-    const maxWidth = window.innerWidth - 40;  // отступы по бокам
-    const maxHeight = window.innerHeight - 200; // отступ под крестик и кнопки
+    const maxWidth = window.innerWidth - 40;
+    const maxHeight = window.innerHeight - 200;
     
-    // Рассчитываем размер блока
     let blockW = Math.floor(maxWidth / COLS);
     let blockH = Math.floor(maxHeight / ROWS);
     
-    // Блок не больше 24px на телефонах
-    let maxBlockSize = 24;
-    if (window.innerWidth > 700) maxBlockSize = 32;
+    let maxBlockSize = 26;
+    if (window.innerWidth > 700) maxBlockSize = 34;
     
     BLOCK_SIZE = Math.min(blockW, blockH, maxBlockSize);
-    
-    // Минимальный размер блока
     if (BLOCK_SIZE < 10) BLOCK_SIZE = 10;
     
     canvas.width = COLS * BLOCK_SIZE;
@@ -236,49 +231,34 @@ function drawNext() {
 function drawBlock(x, y, color) {
     const bx = x * BLOCK_SIZE;
     const by = y * BLOCK_SIZE;
-    
-    // Основной цвет блока — #79434a
     ctx.fillStyle = '#79434a';
     ctx.fillRect(bx, by, BLOCK_SIZE, BLOCK_SIZE);
-    
-    // Хаотичные чёрные пиксельные линии (глитч-контуры)
     ctx.strokeStyle = '#010101';
     ctx.lineWidth = 1;
-    
-    // Рандомно рисуем контуры: где-то есть, где-то нет
-    // Верхняя граница (рандомно)
     if (Math.random() > 0.3) {
         ctx.beginPath();
         ctx.moveTo(bx, by);
         ctx.lineTo(bx + BLOCK_SIZE, by);
         ctx.stroke();
     }
-    
-    // Левая граница (рандомно)
     if (Math.random() > 0.4) {
         ctx.beginPath();
         ctx.moveTo(bx, by);
         ctx.lineTo(bx, by + BLOCK_SIZE);
         ctx.stroke();
     }
-    
-    // Правая граница (рандомно)
     if (Math.random() > 0.5) {
         ctx.beginPath();
         ctx.moveTo(bx + BLOCK_SIZE, by);
         ctx.lineTo(bx + BLOCK_SIZE, by + BLOCK_SIZE);
         ctx.stroke();
     }
-    
-    // Нижняя граница (рандомно)
     if (Math.random() > 0.35) {
         ctx.beginPath();
         ctx.moveTo(bx, by + BLOCK_SIZE);
         ctx.lineTo(bx + BLOCK_SIZE, by + BLOCK_SIZE);
         ctx.stroke();
     }
-    
-    // Дополнительные случайные пиксельные точки
     for (let i = 0; i < 3; i++) {
         if (Math.random() > 0.7) {
             const px = bx + Math.random() * BLOCK_SIZE;
@@ -291,25 +271,14 @@ function drawBlock(x, y, color) {
 
 function drawGhost() {
     if (!currentPiece || isPaused || isGameOver) return;
-    
-    const ghost = { 
-        matrix: currentPiece.matrix, 
-        color: currentPiece.color, 
-        pos: { ...currentPiece.pos } 
-    };
-    
-    while (!checkCollision(ghost)) {
-        ghost.pos.y++;
-    }
+    const ghost = { matrix: currentPiece.matrix, color: currentPiece.color, pos: { ...currentPiece.pos } };
+    while (!checkCollision(ghost)) ghost.pos.y++;
     ghost.pos.y--;
-    
     if (ghost.pos.y > currentPiece.pos.y) {
         ctx.globalAlpha = 0.25;
         ghost.matrix.forEach((row, y) => {
             row.forEach((cell, x) => {
-                if (cell) {
-                    drawBlock(x + ghost.pos.x, y + ghost.pos.y, ghost.color);
-                }
+                if (cell) drawBlock(x + ghost.pos.x, y + ghost.pos.y, ghost.color);
             });
         });
         ctx.globalAlpha = 1;
@@ -319,14 +288,12 @@ function drawGhost() {
 function drawGrid() {
     ctx.strokeStyle = '#1a1a1a';
     ctx.lineWidth = 0.5;
-    
     for (let x = 0; x <= COLS; x++) {
         ctx.beginPath();
         ctx.moveTo(x * BLOCK_SIZE, 0);
         ctx.lineTo(x * BLOCK_SIZE, canvas.height);
         ctx.stroke();
     }
-    
     for (let y = 0; y <= ROWS; y++) {
         ctx.beginPath();
         ctx.moveTo(0, y * BLOCK_SIZE);
@@ -339,27 +306,19 @@ function draw() {
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawGrid();
-    
     for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
-            if (board[y][x]) {
-                drawBlock(x, y, board[y][x]);
-            }
+            if (board[y][x]) drawBlock(x, y, board[y][x]);
         }
     }
-    
     drawGhost();
-    
     if (currentPiece) {
         currentPiece.matrix.forEach((row, y) => {
             row.forEach((cell, x) => {
-                if (cell) {
-                    drawBlock(x + currentPiece.pos.x, y + currentPiece.pos.y, currentPiece.color);
-                }
+                if (cell) drawBlock(x + currentPiece.pos.x, y + currentPiece.pos.y, currentPiece.color);
             });
         });
     }
-    
     if (isPaused) {
         ctx.fillStyle = 'rgba(0,0,0,0.85)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -368,7 +327,6 @@ function draw() {
         ctx.textAlign = 'center';
         ctx.fillText('PAUSED', canvas.width / 2, canvas.height / 2);
     }
-    
     if (isGameOver) {
         ctx.fillStyle = 'rgba(0,0,0,0.85)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -385,37 +343,15 @@ function setupEvents() {
     document.getElementById('right-btn').onclick = () => movePiece(1);
     document.getElementById('down-btn').onclick = () => hardDrop();
     document.getElementById('pause-btn').onclick = togglePause;
-    
     document.addEventListener('keydown', (e) => {
         if (isGameOver) return;
-        
         switch(e.key) {
-            case 'ArrowLeft': 
-                e.preventDefault();
-                movePiece(-1); 
-                break;
-            case 'ArrowRight': 
-                e.preventDefault();
-                movePiece(1);  
-                break;
-            case 'ArrowDown':  
-                e.preventDefault();
-                dropPiece(); 
-                draw(); 
-                break;
-            case 'ArrowUp':    
-                e.preventDefault();
-                rotatePiece(); 
-                break;
-            case ' ':          
-                e.preventDefault();
-                hardDrop(); 
-                break;
-            case 'p': 
-            case 'P': 
-                e.preventDefault();
-                togglePause(); 
-                break;
+            case 'ArrowLeft': e.preventDefault(); movePiece(-1); break;
+            case 'ArrowRight': e.preventDefault(); movePiece(1); break;
+            case 'ArrowDown': e.preventDefault(); dropPiece(); draw(); break;
+            case 'ArrowUp': e.preventDefault(); rotatePiece(); break;
+            case ' ': e.preventDefault(); hardDrop(); break;
+            case 'p': case 'P': e.preventDefault(); togglePause(); break;
         }
         draw();
     });
@@ -423,10 +359,8 @@ function setupEvents() {
 
 function gameLoop(time) {
     if (isGameOver) return;
-    
     const delta = time - lastTime;
     lastTime = time;
-    
     if (!isPaused) {
         dropCounter += delta;
         if (dropCounter > gameSpeed) {
@@ -434,10 +368,8 @@ function gameLoop(time) {
             draw();
         }
     }
-    
     draw();
     requestAnimationFrame(gameLoop);
 }
 
-// Запуск игры после загрузки DOM
 window.addEventListener('DOMContentLoaded', init);
