@@ -1,4 +1,4 @@
-// paint.js - отдельная логика рисовалки с единым стилем заголовка
+// paint.js - отдельная логика рисовалки
 
 function startPaintLogic() {
     const l1 = document.getElementById('layer1');

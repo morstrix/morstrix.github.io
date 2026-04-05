@@ -556,7 +556,7 @@ body {
 .tv-screen {
     position: absolute;
     top: 50%;
-    left: -45px;
+    left: -75px;
     transform: translateY(-50%);
     background: #0a0a0a;
     padding: 5px 10px;
