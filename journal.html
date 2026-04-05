@@ -137,21 +137,19 @@
             </div>
         </div>
 
-        <!-- 10. TEAM (попап кнопка) -->
-        <div class="section team-block">
-            <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
-        </div>
-
-        <!-- 11. DONATE -->
-        <div class="section donate-block-journal" id="donateJournal">
-            <div class="donate-line"></div>
-            <div class="donate-label">DONATE</div>
-            <div class="donate-sub">monobank</div>
-        </div>
+        <!-- 10. TEAM + DONATE (слитно) -->
+<div class="section team-donate-wrapper">
+    <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
+    <div class="donate-block-journal" id="donateJournal">
+        <div class="donate-line"></div>
+        <div class="donate-label">DONATE</div>
+        <div class="donate-sub">monobank</div>
+    </div>
+</div>
 
     </div> <!-- container -->
 
-    <!-- ========== МОДАЛКИ (существующие) ========== -->
+    <!-- ========== МОДАЛКИ ========== -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -247,16 +245,22 @@
         </div>
     </div>
 
-    <!-- НОВАЯ МОДАЛКА TEAM (GitHub + Behance) -->
+    <!-- МОДАЛКА TEAM (выбор участника) -->
     <div id="teamModalJournal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="modal-title-text">TEAM MORSTRIX</span>
+                <span class="modal-title-text">SELECT MEMBER</span>
                 <button class="modal-close-btn" onclick="closeModalDirect('teamModalJournal')">✜</button>
             </div>
-            <div class="modal-inner" style="text-align: center; display: flex; flex-direction: column; gap: 15px;">
-                <a href="https://github.com/morstrix" target="_blank" class="retro-btn">GITHUB</a>
-                <a href="https://www.behance.net/morstrix" target="_blank" class="retro-btn">BEHANCE</a>
+            <div class="team-selection">
+                <a href="ada.html" class="team-choice">
+                    <img src="assets/ada.png" alt="Ada">
+                    <span>ADA MORSOVA</span>
+                </a>
+                <a href="ex.html" class="team-choice">
+                    <img src="assets/ex.png" alt="Ex">
+                    <span>GRIM EX FRAME</span>
+                </a>
             </div>
         </div>
     </div>
@@ -265,7 +269,8 @@
     <script src="background.js"></script>
     <script src="paint.js"></script>
     <script src="journal.js"></script>
-    <!-- Дополнительный скрипт для новых элементов -->
+    
+    <!-- Дополнительный скрипт -->
     <script>
         (function() {
             // Кнопка TEAM
@@ -284,7 +289,7 @@
                     window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
                 };
             }
-            // Заглушка для конвертера (простой обмен)
+            // Конвертер PX ↔ CM
             const pxInput = document.getElementById('pxInput');
             const cmInput = document.getElementById('cmInput');
             if (pxInput && cmInput) {

@@ -1,5 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — стили страницы журнала
+   JOURNAL.CSS — полные стили для страницы журнала
 ============================================ */
 
 :root {
@@ -83,7 +83,7 @@ body {
     margin-top: 70px;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 80px;
     position: relative;
     z-index: 10;
 }
@@ -93,6 +93,7 @@ body {
     text-align: center;
 }
 
+/* Карусель */
 .carousel {
     width: 100%;
     position: relative;
@@ -123,6 +124,7 @@ body {
     transition: 0.2s;
 }
 
+/* Ticker */
 .ticker-wrapper {
     padding: 12px 0;
     overflow: hidden;
@@ -144,6 +146,7 @@ body {
     100% { transform: translateX(-50%); }
 }
 
+/* Nav Grid */
 .nav-grid {
     display: flex;
     flex-direction: row;
@@ -152,8 +155,6 @@ body {
     align-items: flex-start;
     flex-wrap: wrap;
 }
-
-/* Увеличенные картинки FORUM и SUPPORT */
 .nav-btn-img {
     cursor: pointer;
     width: 120px;
@@ -166,6 +167,7 @@ body {
     filter: brightness(1.2);
 }
 
+/* Pinterest */
 .pin-wrapper {
     padding: 0;
     margin: 0 auto;
@@ -173,6 +175,7 @@ body {
     max-width: 450px;
 }
 
+/* Art */
 .art-square-frame {
     width: 100%;
     max-width: 300px;
@@ -196,6 +199,7 @@ body {
     text-transform: uppercase;
 }
 
+/* Font styler */
 .styler-label {
     font-size: 7px;
     color: var(--muted-pink);
@@ -236,7 +240,112 @@ body {
     filter: brightness(0) invert(1);
 }
 
-/* МОДАЛКИ */
+/* Merch Constructor */
+.merch-container {
+    background: #0a0a0f;
+    border: 1px solid #a84d6b;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    max-width: 450px;
+    margin: 0 auto;
+}
+.merch-container:hover {
+    background: #1a1a1f;
+    border-color: #ffb7c7;
+}
+.merch-container:active {
+    transform: scale(0.98);
+}
+
+/* TEAM Button */
+.team-btn-journal {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #a84d6b;
+    background: transparent;
+    border: 1px solid #a84d6b;
+    padding: 12px 20px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.2s;
+    animation: teamBreath 3s infinite ease-in-out;
+}
+.team-btn-journal:hover {
+    background: #a84d6b;
+    color: #000;
+    animation: none;
+    transform: scale(1.02);
+}
+@keyframes teamBreath {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 3px #a84d6b; }
+}
+
+/* DONATE Block */
+.donate-block-journal {
+    text-align: center;
+    cursor: pointer;
+    margin-top: 0px;
+    padding: 10px 0;
+}
+.donate-block-journal .donate-line {
+    width: 320px;
+    height: 2px;
+    background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+    margin: 0 auto 15px;
+}
+.donate-block-journal .donate-label {
+    font-size: 12px;
+    color: #d4a0a0;
+    text-transform: uppercase;
+}
+.donate-block-journal .donate-sub {
+    font-size: 9px;
+    color: #8a6a6a;
+    margin-top: 6px;
+}
+
+/* TEAM Selection (модалка) */
+.team-selection {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 30px 0;
+}
+.team-choice {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s;
+}
+.team-choice img {
+    width: 130px;
+    height: 130px;
+    image-rendering: pixelated;
+    margin-bottom: 15px;
+    border: 2px solid #1a1a1a;
+    background: #050505;
+}
+.team-choice span {
+    font-size: 8px;
+    color: #fff;
+    letter-spacing: 1px;
+}
+.team-choice:hover { 
+    transform: translateY(-10px);
+}
+.team-choice:hover img {
+    border-color: #a84d6b;
+}
+
+/* МОДАЛКИ общие */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -311,14 +420,8 @@ body {
     background: var(--muted-pink);
     color: #010101;
 }
-.spotify-wrapper {
-    width: 100%;
-    margin: 0;
-}
-.spotify-wrapper iframe {
-    width: 100%;
-    border-radius: 0;
-}
+
+/* Telegram widget */
 .telegram-wrapper {
     width: 100%;
     overflow-x: hidden;
@@ -337,7 +440,7 @@ body {
     border: none !important;
 }
 
-/* PAINT ENGINE */
+/* Paint window */
 .paint-window {
     width: 100%;
     max-width: 420px;
@@ -399,128 +502,7 @@ body {
     border-left: 3px solid #ffb7c7;
 }
 
-/* АДАПТАЦИЯ МОДАЛОК */
-@media (min-width: 769px) {
-    .modal-content {
-        width: auto;
-        min-width: 320px;
-        max-width: 600px;
-        border-radius: 0;
-    }
-    #artModal .modal-content {
-        width: auto;
-        max-width: 550px;
-    }
-    .paint-window {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .modal-overlay {
-        padding: 20px;
-        align-items: center;
-    }
-    .modal-content {
-        width: 100%;
-        max-width: 100%;
-        min-width: auto;
-        height: auto;
-        max-height: 80vh;
-        border-radius: 0;
-        border-left: 2px solid var(--muted-pink);
-        border-right: 2px solid var(--muted-pink);
-    }
-    .modal-inner {
-        padding: 15px;
-    }
-    #artModal .modal-content {
-        width: 95%;
-        max-width: 95%;
-        height: auto;
-        max-height: 85vh;
-        display: flex;
-        flex-direction: column;
-    }
-    #artModal .modal-content .paint-window {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        max-width: 100%;
-    }
-    #artModal .canvas-container {
-        flex: 1;
-        aspect-ratio: auto;
-        min-height: 250px;
-    }
-    .modal-title-text {
-        font-size: 8px;
-    }
-    /* Увеличенный крестик */
-    .modal-close-btn {
-        width: 44px !important;
-        height: 44px !important;
-        font-size: 24px !important;
-    }
-    .retro-btn,
-    .modal-inner .retro-btn {
-        padding: 14px 24px !important;
-        font-size: 10px !important;
-        min-width: 120px;
-    }
-    /* Кнопки Paint увеличены */
-    .paint-tools-panel .retro-btn {
-        padding: 10px 16px !important;
-        font-size: 9px !important;
-        min-width: 70px;
-    }
-    #pColor {
-        width: 50px !important;
-        height: 40px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal-overlay {
-        padding: 10px;
-    }
-    .modal-content {
-        max-height: 85vh;
-    }
-    .modal-title-text {
-        font-size: 7px;
-    }
-    .modal-close-btn {
-        width: 44px !important;
-        height: 44px !important;
-        font-size: 22px !important;
-    }
-    .modal-inner {
-        padding: 12px;
-    }
-    .retro-btn {
-        padding: 12px 20px !important;
-        font-size: 9px !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .container {
-        margin-top: 80px;
-        gap: 40px;
-    }
-    .nav-btn-img {
-        width: 100px;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-btn-img {
-        width: 85px;
-    }
-}
-
-/* FORUM — ТЕЛЕВИЗОР СЛЕВА (ЕЩЁ ЛЕВЕЕ) */
+/* TV Screen (Forum) */
 .forum-wrapper {
     display: flex;
     flex-direction: column;
@@ -560,13 +542,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.2) 0px,
-        rgba(0, 0, 0, 0.2) 1px,
-        transparent 1px,
-        transparent 2px
-    );
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 1px, transparent 1px, transparent 2px);
     pointer-events: none;
     border-radius: 3px;
 }
@@ -576,11 +552,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-        ellipse at 30% 30%,
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 60%
-    );
+    background: radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 60%);
     pointer-events: none;
     border-radius: 3px;
 }
@@ -601,7 +573,7 @@ body {
     100% { opacity: 1; text-shadow: 0 0 4px #a84d6b, 0 0 1px #ff69b4; }
 }
 
-/* SUPPORT — точки */
+/* Support dots */
 .support-wrapper {
     display: flex;
     flex-direction: column;
@@ -629,117 +601,42 @@ body {
     50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 3px currentColor; }
 }
 
-/* Адаптация телевизора и картинок под мобильные */
+/* Адаптация */
+@media (max-width: 700px) {
+    .container { margin-top: 80px; gap: 40px; }
+    .nav-btn-img { width: 100px; }
+    .tv-screen { left: -55px; padding: 4px 8px; }
+    .tv-text { font-size: 5px; }
+    .team-selection { gap: 20px; }
+    .team-choice img { width: 100px; height: 100px; }
+    .team-choice span { font-size: 7px; }
+    .donate-block-journal .donate-line { width: 200px; }
+}
 @media (max-width: 550px) {
-    .tv-screen {
-        left: -55px;
-        padding: 4px 8px;
-    }
-    .tv-text {
-        font-size: 5px;
-        letter-spacing: 1px;
-    }
-    .nav-btn-img {
-        width: 85px;
-    }
-    .sdot {
-        width: 3.5px;
-        height: 3.5px;
-    }
-    .support-dots {
-        gap: 4px;
-    }
+    .nav-btn-img { width: 85px; }
+    .tv-screen { left: -45px; padding: 3px 6px; }
+    .tv-text { font-size: 4.5px; }
+    .modal-close-btn { width: 44px !important; height: 44px !important; font-size: 24px !important; }
+    .retro-btn { padding: 12px 20px !important; font-size: 9px !important; }
 }
 @media (max-width: 450px) {
-    .tv-screen {
-        left: -45px;
-        padding: 3px 6px;
-    }
-    .tv-text {
-        font-size: 4.5px;
-    }
-    .nav-btn-img {
-        width: 75px;
-    }
-}
-
-/* ===== НОВЫЕ БЛОКИ ДЛЯ JOURNAL ===== */
-
-/* Конструктор мерча */
-.merch-container {
-    background: #0a0a0f;
-    border: 1px solid #a84d6b;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.merch-container:hover {
-    background: #1a1a1f;
-    border-color: #ffb7c7;
-}
-.merch-container:active {
-    transform: scale(0.98);
-}
-
-/* Конвертер пиксель/см — использует существующий .styler-container */
-
-/* Кнопка TEAM в стиле журнала */
-.team-btn-journal {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: #a84d6b;
-    background: transparent;
-    border: 1px solid #a84d6b;
-    padding: 12px 20px;
-    text-align: center;
-    cursor: pointer;
-    display: inline-block;
-    transition: 0.2s;
-    animation: teamBreath 3s infinite ease-in-out;
-}
-.team-btn-journal:hover {
-    background: #a84d6b;
-    color: #000;
-    animation: none;
-    transform: scale(1.02);
-}
-@keyframes teamBreath {
-    0%, 100% { opacity: 0.7; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 3px #a84d6b; }
-}
-
-/* Блок DONATE (как на главной) */
-.donate-block-journal {
-    text-align: center;
-    cursor: pointer;
-    margin-top: 20px;
-    padding: 10px 0;
-}
-.donate-block-journal .donate-line {
-    width: 260px;
-    height: 5px;
-    background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
-    margin: 0 auto 15px;
-}
-.donate-block-journal .donate-label {
-    font-size: 12px;
-    color: #d4a0a0;
-    text-transform: uppercase;
-}
-.donate-block-journal .donate-sub {
-    font-size: 9px;
-    color: #8a6a6a;
-    margin-top: 6px;
-}
-
-/* Адаптация */
-@media (max-width: 600px) {
-    .merch-container img { width: 30px; }
-    .team-btn-journal { font-size: 8px; padding: 10px 16px; }
-    .donate-block-journal .donate-line { width: 200px; }
+    .team-choice img { width: 80px; height: 80px; }
+    .team-selection { gap: 15px; }
+    .donate-block-journal .donate-line { width: 180px; }
     .donate-block-journal .donate-label { font-size: 10px; }
+}
+
+/* TEAM + DONATE — слитный блок */
+.team-donate-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;  /* расстояние между кнопкой и полоской — маленькое */
+}
+
+.team-donate-wrapper .team-btn-journal {
+    margin-bottom: 0;
+}
+
+.team-donate-wrapper .donate-block-journal {
+    margin-top: 0;
 }

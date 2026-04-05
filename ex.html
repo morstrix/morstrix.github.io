@@ -10,7 +10,7 @@
 <body style="overflow-y: auto;">
     <canvas id="neuro-bg"></canvas>
 
-    <a href="index.html" class="close-site">
+    <a href="journal.html" class="close-site">
         <img src="assets/close.png" alt="Close">
     </a>
 
@@ -19,11 +19,15 @@
         <h2 style="font-size: 12px; color: #fff; margin: 20px 0;">GRIM EX FRAME</h2>
         <p style="font-size: 8px; color: #a84d6b; margin-bottom: 30px;">CREATIVE DEVELOPER</p>
 
-        <div class="section" style="display: flex; flex-direction: column; gap: 15px;">
-            <a href="https://threads.net/@grimexframe" target="_blank" class="retro-btn">THREADS</a>
-            <a href="https://tiktok.com/@grimexframe" target="_blank" class="retro-btn">TIKTOK</a>
+        <!-- GITHUB WIDGET сверху -->
+        <div class="section">
+            <h4 style="font-size:8px;color:#a84d6b;margin-bottom:15px;text-align:left;">GITHUB</h4>
+            <div class="github-widget-container" id="githubWidgetEx">
+                <div class="github-loading">✦ LOADING PROFILE ✦</div>
+            </div>
         </div>
 
+        <!-- INSTAGRAM -->
         <div class="section" style="margin-top: 40px;">
             <h4 style="font-size:8px;color:#a84d6b;margin-bottom:15px;text-align:left;">INSTAGRAM</h4>
             <div class="insta-widget">
@@ -34,5 +38,61 @@
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
+    
+    <!-- GitHub API скрипт -->
+    <script>
+        (function() {
+            const GITHUB_USERNAME = 'grimexframe'; // ЗАМЕНИТЕ НА РЕАЛЬНЫЙ НИК
+            
+            function fetchGitHubProfile() {
+                const container = document.getElementById('githubWidgetEx');
+                if (!container) return;
+                
+                fetch(`https://api.github.com/users/${GITHUB_USERNAME}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.message === 'Not Found') {
+                            container.innerHTML = '<div style="color:#a84d6b; text-align:center; padding:20px;">✖ PROFILE NOT FOUND ✖</div>';
+                            return;
+                        }
+                        
+                        container.innerHTML = `
+                            <div class="github-card">
+                                <div class="github-header">
+                                    <img src="${data.avatar_url}" class="github-avatar" alt="avatar">
+                                    <div class="github-info">
+                                        <div class="github-name">${data.name || data.login}</div>
+                                        <div class="github-login">@${data.login}</div>
+                                        <div class="github-bio">${data.bio || '✦ CREATIVE DEVELOPER ✦'}</div>
+                                    </div>
+                                </div>
+                                <div class="github-stats">
+                                    <div class="github-stat">
+                                        <span class="stat-number">${data.public_repos}</span>
+                                        <span class="stat-label">REPOS</span>
+                                    </div>
+                                    <div class="github-stat">
+                                        <span class="stat-number">${data.followers}</span>
+                                        <span class="stat-label">FOLLOWERS</span>
+                                    </div>
+                                    <div class="github-stat">
+                                        <span class="stat-number">${data.following}</span>
+                                        <span class="stat-label">FOLLOWING</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="retro-btn" style="font-size:7px;">→ OPEN GITHUB ←</a>
+                                </div>
+                            </div>
+                        `;
+                    })
+                    .catch(() => {
+                        container.innerHTML = '<div style="color:#a84d6b; text-align:center; padding:20px;">⚠ API ERROR ⚠</div>';
+                    });
+            }
+            
+            fetchGitHubProfile();
+        })();
+    </script>
 </body>
 </html>
