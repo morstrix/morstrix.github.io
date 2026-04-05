@@ -13,9 +13,12 @@ setInterval(() => {
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active');
-    if(id === 'artModal' && !paintInit) {
-        setTimeout(startPaintLogic, 100);
-        paintInit = true;
+    if(id === 'artModal' && window.startPaintLogic) {
+        setTimeout(() => {
+            if (typeof window.startPaintLogic === 'function') {
+                window.startPaintLogic();
+            }
+        }, 150);
     }
 }
 
@@ -29,7 +32,7 @@ function closeModalDirect(id) {
     if (modal) modal.classList.remove('active');
 }
 
-// РАДИО КНОПКА — ОТКРЫТИЕ МОДАЛКИ
+// РАДИО КНОПКА
 const radioBtn = document.getElementById('radioBtn');
 const radioModal = document.getElementById('radioModal');
 
@@ -51,7 +54,10 @@ let isTransformed = false;
 
 function handleAction() {
     const input = document.getElementById('fontInput');
-    if (!input.value) { input.focus(); return; }
+    if (!input.value) { 
+        input.focus(); 
+        return; 
+    }
     if (!isTransformed) {
         input.value = input.value.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
         isTransformed = true;
@@ -71,7 +77,9 @@ function copyStylerText() {
         navigator.clipboard.writeText(input.value);
         const val = input.value;
         input.value = "COPIED!";
-        setTimeout(() => { input.value = val; }, 1000);
+        setTimeout(() => { 
+            if (input) input.value = val; 
+        }, 1000);
     }
 }
 
@@ -82,117 +90,37 @@ if (ticker) {
     ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
 }
 
-// PAINT ENGINE
-let paintInit = false;
+// ДИНАМИЧЕСКОЕ СЛОВО (телевизор)
+const wordsList = [
+    "wellness", "diy gear", "radio", "design", 
+    "interior", "print", "travel", "IT/AI", 
+    "english", "tattoo", "money", "barbering"
+];
 
-function startPaintLogic() {
-    const l1 = document.getElementById('layer1');
-    const l2 = document.getElementById('layer2');
-    if (!l1 || !l2) return;
-    
-    const ctx1 = l1.getContext('2d', { willReadFrequently: true });
-    const ctx2 = l2.getContext('2d', { willReadFrequently: true });
-    const area = document.getElementById('paintArea');
-
-    l1.width = l2.width = area.offsetWidth;
-    l1.height = l2.height = area.offsetHeight;
-
-    ctx1.fillStyle = "#000";
-    ctx1.fillRect(0, 0, l1.width, l1.height);
-    [ctx1, ctx2].forEach(c => { 
-        c.lineCap = 'round'; 
-        c.lineWidth = 4; 
-    });
-
-    let currentCtx = ctx2;
-    let isDrawing = false;
-    let undoStack = [];
-
-    const save = () => {
-        undoStack.push({l1: l1.toDataURL(), l2: l2.toDataURL()});
-        if(undoStack.length > 15) undoStack.shift();
-        const undoBtn = document.getElementById('pUndo');
-        if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
-    };
-
-    const getCoords = (e) => {
-        const r = l2.getBoundingClientRect();
-        const cx = e.touches ? e.touches[0].clientX : e.clientX;
-        const cy = e.touches ? e.touches[0].clientY : e.clientY;
-        return { x: cx - r.left, y: cy - r.top };
-    };
-
-    const draw = (e) => {
-        if(!isDrawing) return;
-        const p = getCoords(e);
-        const colorPicker = document.getElementById('pColor');
-        if (colorPicker) currentCtx.strokeStyle = colorPicker.value;
-        currentCtx.lineTo(p.x, p.y);
-        currentCtx.stroke();
-    };
-
-    l2.addEventListener('mousedown', (e) => { 
-        isDrawing = true; 
-        currentCtx.beginPath(); 
-        const p = getCoords(e); 
-        currentCtx.moveTo(p.x, p.y); 
-    });
-    
-    window.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', () => { 
-        if(isDrawing) { 
-            isDrawing = false; 
-            save(); 
-        } 
-    });
-    
-    l2.addEventListener('touchstart', (e) => { 
-        e.preventDefault(); 
-        isDrawing = true; 
-        currentCtx.beginPath(); 
-        const p = getCoords(e); 
-        currentCtx.moveTo(p.x, p.y); 
-    });
-    
-    l2.addEventListener('touchmove', (e) => { 
-        e.preventDefault(); 
-        draw(e); 
-    });
-    
-    l2.addEventListener('touchend', () => { 
-        if(isDrawing) { 
-            isDrawing = false; 
-            save(); 
-        } 
-    });
-
-    const clearBtn = document.getElementById('pClear');
-    if (clearBtn) {
-        clearBtn.onclick = () => {
-            ctx2.clearRect(0, 0, l2.width, l2.height);
-            ctx1.fillStyle = "#000";
-            ctx1.fillRect(0, 0, l1.width, l1.height);
-            save();
-        };
-    }
-
-    const layersBtn = document.getElementById('btnLayersOpen');
-    if (layersBtn) {
-        layersBtn.onclick = () => document.getElementById('layersPopup').classList.add('active');
-    }
-    
-    document.querySelectorAll('.layer-row').forEach(row => {
-        row.onclick = () => {
-            document.querySelectorAll('.layer-row').forEach(r => r.classList.remove('active'));
-            row.classList.add('active');
-            currentCtx = (row.dataset.id === "1") ? ctx1 : ctx2;
-            document.getElementById('layersPopup').classList.remove('active');
-        };
-    });
-    save();
+const dynamicWordSpan = document.getElementById('dynamicWord');
+if (dynamicWordSpan) {
+    let wordIndex = 0;
+    setInterval(() => {
+        wordIndex = (wordIndex + 1) % wordsList.length;
+        dynamicWordSpan.style.opacity = '0';
+        setTimeout(() => {
+            dynamicWordSpan.textContent = wordsList[wordIndex];
+            dynamicWordSpan.style.opacity = '1';
+        }, 150);
+    }, 2000);
 }
 
 // ПИНТЕРЕСТ
 window.onload = () => { 
     if(window.PinUtils) window.PinUtils.build(); 
 };
+
+// Закрытие модалок по Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const activeModals = document.querySelectorAll('.modal-overlay.active');
+        activeModals.forEach(modal => {
+            modal.classList.remove('active');
+        });
+    }
+});

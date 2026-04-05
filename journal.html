@@ -38,15 +38,30 @@
             <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
         </div>
 
-        <!-- FORUM + SUPPORT -->
+        <!-- FORUM + SUPPORT с динамической плашкой на углу -->
         <div class="section nav-grid">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
+            <!-- Левый блок: FORUM с уголковой плашкой -->
+            <div class="forum-wrapper">
+                <div class="forum-corner">
+                    <div class="tv-screen">
+                        <div class="tv-scanlines"></div>
+                        <div class="tv-glare"></div>
+                        <span id="dynamicWord" class="tv-text">wellness</span>
+                    </div>
+                    <img src="assets/forum.png" class="nav-btn-img" onclick="openModal('forumModal')">
+                </div>
                 <div class="paint-label">FORUM</div>
             </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
+            
+            <!-- Правый блок: SUPPORT с точками -->
+            <div class="support-wrapper">
                 <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
                 <div class="paint-label">SUPPORT</div>
+                <div class="support-dots">
+                    <span class="sdot"></span>
+                    <span class="sdot"></span>
+                    <span class="sdot"></span>
+                </div>
             </div>
         </div>
 
@@ -153,13 +168,14 @@
         </div>
     </div>
 
-    <div id="artModal" class="modal-overlay">
+    <!-- МОДАЛКА PAINT -->
+    <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="padding:0;">
-            <div class="paint-window">
-                <div class="paint-header-bar">
-                    <span>PAINT.EXE</span>
-                    <button onclick="closeModalDirect('artModal')" style="background:none; border:none; color:#444; cursor:pointer; font-family:'Press Start 2P'; font-size:10px;">✜</button>
-                </div>
+            <div class="modal-header">
+                <span class="modal-title-text">PAINT.EXE</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('artModal')">✜</button>
+            </div>
+            <div class="paint-window" style="border: none; border-radius: 0;">
                 <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a;">
                     <div style="display:flex; gap:5px;">
                         <button class="retro-btn" id="pUndo" style="padding:5px 8px;" disabled>&lt;</button>
@@ -206,6 +222,7 @@
 
     <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
     <script src="background.js"></script>
+    <script src="paint.js"></script>
     <script src="journal.js"></script>
 </body>
 </html>
