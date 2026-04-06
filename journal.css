@@ -976,3 +976,14 @@ body {
         font-size: 7px;
     }
 }
+
+/* Скрываем стандартную надпись "Выберите файл" */
+input[type="file"] {
+    font-size: 0;
+    color: transparent;
+    width: 100%;
+    padding: 8px;
+}
+input[type="file"]::file-selector-button {
+    display: none;
+}
