@@ -295,6 +295,11 @@
             modalDiv.addEventListener('click', closeOverlay);
             closeBtn.addEventListener('click', () => modalDiv.remove());
         });
+
+document.getElementById('closeForumBtn').addEventListener('click', () => {
+    // Возврат на предыдущую страницу (журнал) или на главную
+    window.location.href = 'journal.html';
+});
     </script>
 </body>
 </html>
