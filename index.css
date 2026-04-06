@@ -260,7 +260,7 @@ body {
     .donate-line { width: 170px; }
 }
 
-/* ========== ВРАЩАЮЩАЯСЯ КУПЮРА ДОЛЛАРА (CSS) ========== */
+/* ========== ПИКСЕЛЬНАЯ ПАЧКА ДЕНЕГ ========== */
 
 .store-wrapper {
     position: relative;
@@ -269,108 +269,103 @@ body {
     align-items: center;
 }
 
-.rotate-coin {
+.pixel-money {
     position: absolute;
-    top: -30px;
-    right: -40px;
-    width: 70px;
-    height: 35px;
-    animation: spinBill 2.5s ease-in-out infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #2e7d32 0%, #1b5e20 50%, #2e7d32 100%);
-    border: 1px solid #d4af37;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    top: -25px;
+    right: -30px;
+    width: 48px;
+    height: 32px;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    animation: floatMoney 2s ease-in-out infinite;
 }
 
-.dollar-sign {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 18px;
-    font-weight: bold;
-    color: #d4af37;
-    text-shadow: 0 1px 0 #8B6914;
-    background: #0a4a0e;
-    padding: 2px 6px;
-    border-radius: 2px;
+/* Пиксельная пачка купюр */
+.pixel-bill {
+    width: 100%;
+    height: 100%;
+    background: #2e7d32;
+    position: relative;
+    box-shadow: 
+        /* тень для объёма (нижняя купюра) */
+        2px 2px 0 0 #1b5e20,
+        4px 4px 0 0 #0a4a0e,
+        /* рамка купюры */
+        inset 0 0 0 1px #d4af37;
 }
 
-/* Детали купюры — линии по краям */
-.rotate-coin::before,
-.rotate-coin::after {
+/* Линии на купюре (пиксельные) */
+.pixel-bill::before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, #d4af37, #d4af37 5px, #8B6914 5px, #8B6914 10px);
-    left: 0;
-}
-
-.rotate-coin::before {
     top: 4px;
+    left: 4px;
+    width: calc(100% - 8px);
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #d4af37, #d4af37 4px, #8B6914 4px, #8B6914 8px);
 }
 
-.rotate-coin::after {
-    bottom: 4px;
+.pixel-bill::after {
+    content: '$';
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #d4af37;
 }
 
-@keyframes spinBill {
-    0% { 
-        transform: rotateY(0deg) scale(1);
-        opacity: 1;
-    }
-    25% {
-        transform: rotateY(90deg) scale(0.9);
-        opacity: 0.8;
-    }
-    50% { 
-        transform: rotateY(180deg) scale(1);
-        opacity: 1;
-    }
-    75% {
-        transform: rotateY(270deg) scale(0.9);
-        opacity: 0.8;
-    }
-    100% { 
-        transform: rotateY(360deg) scale(1);
-        opacity: 1;
-    }
+/* Дополнительная купюра сверху (уголок) */
+.pixel-bill .corner-bill {
+    position: absolute;
+    bottom: -3px;
+    right: -3px;
+    width: 20px;
+    height: 12px;
+    background: #3c8c40;
+    box-shadow: inset 0 0 0 1px #d4af37;
+    z-index: -1;
+}
+
+@keyframes floatMoney {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
 }
 
 /* Адаптация для мобильных */
 @media (max-width: 700px) {
-    .rotate-coin {
-        width: 55px;
+    .pixel-money {
+        width: 42px;
         height: 28px;
-        top: -25px;
-        right: -35px;
+        top: -20px;
+        right: -25px;
     }
-    .dollar-sign {
-        font-size: 14px;
+    .pixel-bill::after {
+        font-size: 10px;
     }
 }
 
 @media (max-width: 550px) {
-    .rotate-coin {
-        width: 50px;
+    .pixel-money {
+        width: 38px;
         height: 25px;
-        top: -20px;
-        right: -30px;
+        top: -18px;
+        right: -22px;
     }
-    .dollar-sign {
-        font-size: 12px;
+    .pixel-bill::after {
+        font-size: 9px;
     }
 }
 
 @media (max-width: 450px) {
-    .rotate-coin {
-        width: 45px;
+    .pixel-money {
+        width: 34px;
         height: 22px;
-        top: -18px;
-        right: -25px;
+        top: -15px;
+        right: -20px;
     }
-    .dollar-sign {
-        font-size: 11px;
+    .pixel-bill::after {
+        font-size: 8px;
     }
 }
