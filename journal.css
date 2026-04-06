@@ -887,17 +887,13 @@ body {
     margin: 0 auto;
 }
 
-.tshirt-base-canvas {
+.tshirt-svg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    background: #0a0a0f;
-    border: 1px solid #79434a;
 }
 
 .print-canvas {
@@ -905,8 +901,8 @@ body {
     top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     z-index: 2;
     pointer-events: none;
     image-rendering: crisp-edges;
@@ -969,21 +965,10 @@ body {
         height: 160px;
     }
     .print-canvas {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
     }
     .upload-text {
         font-size: 7px;
     }
-}
-
-/* Скрываем стандартную надпись "Выберите файл" */
-input[type="file"] {
-    font-size: 0;
-    color: transparent;
-    width: 100%;
-    padding: 8px;
-}
-input[type="file"]::file-selector-button {
-    display: none;
 }
