@@ -163,18 +163,19 @@
         </div>
     </div>
 
-    <div id="forumModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="modal-title-text">ARCHIVE</span>
-                <button class="modal-close-btn" onclick="closeModalDirect('forumModal')">✜</button>
-            </div>
-            <div class="modal-inner" style="text-align: center;">
-                <p style="font-size: 8px; margin-bottom: 20px;">OPEN TELEGRAM?</p>
-                <a href="https://t.me/morstrix" target="_blank" class="retro-btn">ENTER</a>
-            </div>
+    <!-- МОДАЛКА ДЛЯ ФОРУМА: OPEN MINI? -->
+<div id="openMiniModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">FORUM ACCESS</span>
+            <button class="modal-close-btn" onclick="closeModalDirect('openMiniModal')">✜</button>
+        </div>
+        <div class="modal-inner" style="text-align: center;">
+            <p style="font-size: 10px; line-height: 1.8; margin-bottom: 30px;">OPEN MINI?</p>
+            <button class="retro-btn" onclick="window.location.href='forum.html'">ENTER</button>
         </div>
     </div>
+</div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
