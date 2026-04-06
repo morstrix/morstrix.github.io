@@ -259,3 +259,77 @@ body {
     .radio-btn img { width: 38px; height: 38px; }
     .donate-line { width: 170px; }
 }
+
+/* ========== ВРАЩАЮЩАЯСЯ ИКОНКА ДОЛЛАРА (CSS) ========== */
+
+.store-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rotate-coin {
+    position: absolute;
+    top: -25px;
+    right: -35px;
+    width: 55px;
+    height: 55px;
+    animation: spinCoin 3s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d4af37;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+.dollar-sign {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    font-weight: bold;
+    color: #2e7d32;
+    text-shadow: 0 1px 0 #1b5e20;
+}
+
+@keyframes spinCoin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 700px) {
+    .rotate-coin {
+        width: 45px;
+        height: 45px;
+        top: -20px;
+        right: -30px;
+    }
+    .dollar-sign {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 550px) {
+    .rotate-coin {
+        width: 40px;
+        height: 40px;
+        top: -15px;
+        right: -25px;
+    }
+    .dollar-sign {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .rotate-coin {
+        width: 35px;
+        height: 35px;
+        top: -12px;
+        right: -20px;
+    }
+    .dollar-sign {
+        font-size: 18px;
+    }
+}
