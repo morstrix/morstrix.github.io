@@ -76,9 +76,7 @@ if (ticker) {
 }
 
 const wordsList = [
-    "wellness", "diy gear", "radio", "design", 
-    "interior", "print", "travel", "IT/AI", 
-    "english", "tattoo", "money", "barbering"
+    "wellness", "radio", "travel"
 ];
 const dynamicWordSpan = document.getElementById('dynamicWord');
 if (dynamicWordSpan) {
