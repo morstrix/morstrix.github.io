@@ -260,7 +260,7 @@ body {
     .donate-line { width: 170px; }
 }
 
-/* ========== ПИКСЕЛЬНАЯ ПАЧКА ДЕНЕГ (ТОЛЬКО ЗЕЛЁНЫЙ) ========== */
+/* ========== ПИКСЕЛЬНАЯ КУПЮРА С КРУЖКОМ ========== */
 
 .store-wrapper {
     position: relative;
@@ -271,88 +271,114 @@ body {
 
 .pixel-money {
     position: absolute;
-    top: -25px;
-    right: -30px;
-    width: 48px;
-    height: 32px;
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
+    top: -35px;
+    right: -40px;
+    width: 55px;
+    height: 35px;
     animation: floatMoney 2s ease-in-out infinite;
+    z-index: 20;
 }
 
-/* Пиксельная пачка купюр */
+/* Пиксельная купюра */
 .pixel-bill {
     width: 100%;
     height: 100%;
-    background: #2e7d32;
+    background: #4caf50;
+    border: 2px solid #1b5e20;
     position: relative;
-    box-shadow: 
-        2px 2px 0 0 #1b5e20,
-        4px 4px 0 0 #0a4a0e;
+    box-shadow: 2px 2px 0 0 #0a4a0e;
 }
 
-/* Пиксельные линии на купюре */
+/* Верхняя полоска */
 .pixel-bill::before {
     content: '';
     position: absolute;
     top: 4px;
     left: 4px;
     width: calc(100% - 8px);
-    height: 2px;
+    height: 3px;
     background: #1b5e20;
 }
 
+/* Нижняя полоска */
 .pixel-bill::after {
     content: '';
     position: absolute;
     bottom: 4px;
     left: 4px;
     width: calc(100% - 8px);
-    height: 2px;
+    height: 3px;
     background: #1b5e20;
 }
 
-/* Дополнительная купюра снизу */
-.pixel-bill .corner-bill {
+/* Кружок внутри купюры */
+.bill-circle {
     position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 24px;
-    height: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid #1b5e20;
+    border-radius: 50%;
     background: #3c8c40;
-    z-index: -1;
+}
+
+/* Маленькая точка в центре кружка */
+.bill-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background: #1b5e20;
+    border-radius: 50%;
 }
 
 @keyframes floatMoney {
     0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-5px) rotate(3deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
     100% { transform: translateY(0px) rotate(0deg); }
 }
 
-/* Адаптация для мобильных */
+/* Адаптация */
 @media (max-width: 700px) {
     .pixel-money {
-        width: 42px;
-        height: 28px;
-        top: -20px;
-        right: -25px;
+        width: 48px;
+        height: 30px;
+        top: -30px;
+        right: -35px;
+    }
+    .bill-circle {
+        width: 14px;
+        height: 14px;
     }
 }
 
 @media (max-width: 550px) {
     .pixel-money {
-        width: 38px;
-        height: 25px;
-        top: -18px;
-        right: -22px;
+        width: 42px;
+        height: 26px;
+        top: -25px;
+        right: -30px;
+    }
+    .bill-circle {
+        width: 12px;
+        height: 12px;
     }
 }
 
 @media (max-width: 450px) {
     .pixel-money {
-        width: 34px;
-        height: 22px;
-        top: -15px;
-        right: -20px;
+        width: 38px;
+        height: 24px;
+        top: -22px;
+        right: -28px;
+    }
+    .bill-circle {
+        width: 10px;
+        height: 10px;
     }
 }
