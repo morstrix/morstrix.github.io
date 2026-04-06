@@ -113,20 +113,16 @@
 <div class="section merch-block">
     <div class="styler-label">MERCH CONSTRUCTOR</div>
     <div class="merch-constructor">
-        <div class="tshirt-preview">
-            <!-- Футболка нарисована CSS -->
-            <div class="tshirt-css">
-                <div class="tshirt-body"></div>
-                <div class="tshirt-neck"></div>
-                <div class="tshirt-sleeve left"></div>
-                <div class="tshirt-sleeve right"></div>
-            </div>
-            <canvas id="printCanvas" class="print-canvas" width="200" height="200"></canvas>
+        <div class="tshirt-preview" id="tshirtPreview">
+            <!-- Пиксельная футболка (рисована на canvas) -->
+            <canvas id="tshirtCanvas" width="200" height="200" class="tshirt-base-canvas"></canvas>
+            <!-- Место для принта -->
+            <canvas id="printCanvas" class="print-canvas" width="120" height="120"></canvas>
         </div>
         <div class="upload-area" id="uploadArea">
             <div class="dashed-box">
                 <span class="upload-icon">🖼️</span>
-                <span class="upload-text">CLICK TO UPLOAD</span>
+                <span class="upload-text">UPLOAD PRINT</span>
                 <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif">
             </div>
         </div>
