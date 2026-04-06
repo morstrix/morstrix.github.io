@@ -645,3 +645,84 @@ body {
     .donate-block-journal .donate-line { width: 180px; }
     .donate-block-journal .donate-label { font-size: 10px; }
 }
+
+/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ ========== */
+
+/* RSS строка */
+.ticker-wrapper {
+    margin-bottom: 80px;
+}
+
+/* Барабан карусели + твиттер (секция с carousel и x-btn-img) */
+.carousel-section {
+    margin-bottom: 80px;
+}
+
+/* Форум / Сапорт (рядом стоящие) */
+.nav-grid {
+    margin-bottom: 80px;
+}
+
+/* Pinterest */
+.pin-section {
+    margin-bottom: 80px;
+}
+
+/* Font Styler */
+.styler-section {
+    margin-bottom: 80px;
+}
+
+/* Art + Paint */
+.art-section {
+    margin-bottom: 80px;
+}
+
+/* Merch Constructor */
+.merch-block {
+    margin-bottom: 80px;
+}
+
+/* Converter PX/CM */
+.converter-block {
+    margin-bottom: 80px;
+}
+
+/* Top Players + Tetris */
+.dual-row {
+    margin-bottom: 80px;
+}
+
+/* Team + Donate (слитный блок) */
+.team-donate-wrapper {
+    margin-bottom: 0;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 700px) {
+    .ticker-wrapper,
+    .carousel-section,
+    .nav-grid,
+    .pin-section,
+    .styler-section,
+    .art-section,
+    .merch-block,
+    .converter-block,
+    .dual-row {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .ticker-wrapper,
+    .carousel-section,
+    .nav-grid,
+    .pin-section,
+    .styler-section,
+    .art-section,
+    .merch-block,
+    .converter-block,
+    .dual-row {
+        margin-bottom: 35px;
+    }
+}
