@@ -7,183 +7,166 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="journal.css">
     <style>
-    /* Базовые стили (оставляем как есть) */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { overflow: hidden; background: black; }
-    .forum-layout { display: flex; height: 100vh; width: 100%; position: relative; z-index: 10; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow: hidden; background: black; }
+        .forum-layout { display: flex; height: 100vh; width: 100%; position: relative; z-index: 10; }
 
-    /* ========== ПАНЕЛЬ ВКЛАДОК ========== */
-    .forum-tabs {
-        width: 220px;
-        background: rgba(0,0,0,0.85);
-        backdrop-filter: blur(4px);
-        border-right: 2px solid #a84d6b;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;  /* равномерно распределяем: вкладки вверху, кнопка внизу */
-        padding: 20px 10px;
-        height: 100%;
-        overflow-y: auto;
-    }
-    .tabs-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        flex: 1;
-        justify-content: space-evenly; /* равномерный промежуток между вкладками */
-    }
-    .tab-btn {
-        background: transparent;
-        border: 1px solid #a84d6b;
-        color: #ffb7c7;
-        font-family: 'Press Start 2P', monospace;
-        font-size: 10px;
-        padding: 12px 6px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.2s;
-        width: 100%;
-    }
-    .tab-btn:hover, .tab-btn.active {
-        background: #a84d6b;
-        color: black;
-        border-color: white;
-    }
-    /* Кнопка закрытия (крестик) */
-    .close-panel-btn {
-        background: transparent;
-        border: 1px solid #a84d6b;
-        color: #ffb7c7;
-        font-family: 'Press Start 2P', monospace;
-        font-size: 16px;
-        padding: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-        margin-top: 20px;
-        width: 100%;
-        text-align: center;
-    }
-    .close-panel-btn:hover {
-        background: #a84d6b;
-        color: black;
-    }
-
-    /* Правая область контента – без изменений */
-    .forum-content {
-        flex: 1;
-        padding: 30px;
-        overflow-y: auto;
-        background: rgba(0,0,0,0.6);
-        backdrop-filter: blur(2px);
-    }
-    .tab-pane {
-        display: none;
-        animation: fadeIn 0.3s ease;
-    }
-    .tab-pane.active { display: block; }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px);}
-        to { opacity: 1; transform: translateY(0);}
-    }
-    .tab-pane h2 {
-        font-size: 16px;
-        color: #a84d6b;
-        border-bottom: 2px solid #a84d6b;
-        display: inline-block;
-        padding-bottom: 6px;
-        margin-bottom: 20px;
-    }
-    .tab-pane p {
-        font-size: 11px;
-        line-height: 1.6;
-        color: #ddd;
-    }
-    /* Кнопка "ЧЕК ФУЛ" остаётся */
-    .full-check-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: black;
-        border: 2px solid #a84d6b;
-        color: #ffb7c7;
-        font-family: 'Press Start 2P', monospace;
-        font-size: 10px;
-        padding: 10px 16px;
-        cursor: pointer;
-        z-index: 100;
-        transition: 0.2s;
-    }
-    .full-check-btn:hover {
-        background: #a84d6b;
-        color: black;
-        box-shadow: 0 0 10px #a84d6b;
-    }
-
-    /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
-    @media (max-width: 700px) {
+        /* ========== ПАНЕЛЬ С ПОЛОСКАМИ ========== */
         .forum-tabs {
-            width: 170px;          /* чуть уже */
-            padding: 15px 8px;
+            width: 220px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            border-right: 2px solid #a84d6b;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 20px 0 20px 0;
         }
-        .tab-btn {
-            font-size: 7px;
-            padding: 10px 4px;
+        .tabs-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
         }
+        .tab-item {
+            position: relative;
+            cursor: pointer;
+            padding: 12px 0 12px 20px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: #ffb7c7;
+            transition: 0.2s;
+            border-bottom: 1px solid rgba(168, 77, 107, 0.4);
+        }
+        /* Полоска сверху у первого элемента */
+        .tab-item:first-child {
+            border-top: 1px solid rgba(168, 77, 107, 0.4);
+        }
+        .tab-item.active {
+            color: white;
+            background: rgba(168, 77, 107, 0.2);
+            border-left: 3px solid #a84d6b;
+        }
+        .tab-item:hover {
+            background: rgba(168, 77, 107, 0.3);
+            color: white;
+        }
+
+        /* Кнопка закрытия (крестик) внизу */
         .close-panel-btn {
-            font-size: 14px;
-            padding: 8px;
-            margin-top: 15px;
+            background: transparent;
+            border: none;
+            border-top: 1px solid rgba(168, 77, 107, 0.6);
+            color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 18px;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
         }
+        .close-panel-btn:hover {
+            background: #a84d6b;
+            color: black;
+        }
+
+        /* Правая область контента */
         .forum-content {
-            padding: 15px;
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
         }
-        .tab-pane h2 { font-size: 12px; }
-        .tab-pane p { font-size: 8px; }
-        .full-check-btn { font-size: 7px; padding: 6px 12px; }
-    }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-pane.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .tab-pane h2 {
+            font-size: 16px;
+            color: #a84d6b;
+            border-bottom: 2px solid #a84d6b;
+            display: inline-block;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+        }
+        .tab-pane p {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #ddd;
+        }
 
-    @media (max-width: 500px) {
-        .forum-tabs {
-            width: 130px;          /* ещё уже */
-            padding: 10px 5px;
+        /* Кнопка "ЧЕК ФУЛ" */
+        .full-check-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: black;
+            border: 2px solid #a84d6b;
+            color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            z-index: 100;
+            transition: 0.2s;
         }
-        .tab-btn {
-            font-size: 6px;
-            padding: 8px 2px;
+        .full-check-btn:hover {
+            background: #a84d6b;
+            color: black;
+            box-shadow: 0 0 10px #a84d6b;
         }
-        .close-panel-btn {
-            font-size: 12px;
-            padding: 6px;
-        }
-    }
 
-    /* Скролл */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #111; }
-    ::-webkit-scrollbar-thumb { background: #a84d6b; }
-</style>
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        @media (max-width: 700px) {
+            .forum-tabs { width: 170px; }
+            .tab-item { font-size: 7px; padding: 10px 0 10px 15px; }
+            .close-panel-btn { font-size: 14px; padding: 12px 0; }
+            .forum-content { padding: 15px; }
+            .tab-pane h2 { font-size: 12px; }
+            .tab-pane p { font-size: 8px; }
+            .full-check-btn { font-size: 7px; padding: 6px 12px; }
+        }
+        @media (max-width: 500px) {
+            .forum-tabs { width: 130px; }
+            .tab-item { font-size: 6px; padding: 8px 0 8px 10px; }
+            .close-panel-btn { font-size: 12px; padding: 10px 0; }
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #a84d6b; }
+    </style>
 </head>
 <body>
     <canvas id="neuro-bg"></canvas>
 
     <div class="forum-layout">
-        <!-- Левая панель с вкладками -->
+        <!-- Левая панель: список с полосками -->
         <div class="forum-tabs">
-    <div class="tabs-container">
-        <button class="tab-btn" data-tab="wellness">ВЕЛНЕС</button>
-        <button class="tab-btn" data-tab="interior">ДИУЖИР/INTERIOR</button>
-        <button class="tab-btn" data-tab="radio">РАДІО</button>
-        <button class="tab-btn" data-tab="itai">IT/AI</button>
-        <button class="tab-btn" data-tab="english">ENGLISH</button>
-        <button class="tab-btn" data-tab="design">DESIGN/PRINT</button>
-        <button class="tab-btn" data-tab="tattoo">TATTOO</button>
-        <button class="tab-btn" data-tab="money">MONEY</button>
-        <button class="tab-btn" data-tab="barbering">BARBERING</button>
-    </div>
-    <button class="close-panel-btn" id="closeForumBtn">✜</button>
-</div>
+            <div class="tabs-list">
+                <div class="tab-item" data-tab="wellness">ВЕЛНЕС</div>
+                <div class="tab-item" data-tab="interior">ДИУЖИР/INTERIOR</div>
+                <div class="tab-item" data-tab="radio">РАДІО</div>
+                <div class="tab-item" data-tab="itai">IT/AI</div>
+                <div class="tab-item" data-tab="english">ENGLISH</div>
+                <div class="tab-item" data-tab="design">DESIGN/PRINT</div>
+                <div class="tab-item" data-tab="tattoo">TATTOO</div>
+                <div class="tab-item" data-tab="money">MONEY</div>
+                <div class="tab-item" data-tab="barbering">BARBERING</div>
+            </div>
+            <button class="close-panel-btn" id="closeForumBtn">✜</button>
+        </div>
 
-        <!-- Правая область с контентом -->
+        <!-- Правая область контента -->
         <div class="forum-content">
             <div id="wellness" class="tab-pane">
                 <h2>🌿 ВЕЛНЕС</h2>
@@ -228,8 +211,8 @@
 
     <script src="background.js"></script>
     <script>
-        // Управление вкладками
-        const tabs = document.querySelectorAll('.tab-btn');
+        // Переключение вкладок по клику на строку с полоской
+        const tabItems = document.querySelectorAll('.tab-item');
         const panes = document.querySelectorAll('.tab-pane');
 
         function activateTab(tabId) {
@@ -237,28 +220,32 @@
             const activePane = document.getElementById(tabId);
             if (activePane) activePane.classList.add('active');
 
-            tabs.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-tab') === tabId) {
-                    btn.classList.add('active');
+            tabItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-tab') === tabId) {
+                    item.classList.add('active');
                 }
             });
         }
 
-        tabs.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabId = btn.getAttribute('data-tab');
+        tabItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const tabId = item.getAttribute('data-tab');
                 activateTab(tabId);
             });
         });
 
-        // Активируем первую вкладку по умолчанию
-        if (tabs.length) activateTab(tabs[0].getAttribute('data-tab'));
+        // Активируем первую вкладку
+        if (tabItems.length) activateTab(tabItems[0].getAttribute('data-tab'));
+
+        // Крестик закрытия
+        document.getElementById('closeForumBtn').addEventListener('click', () => {
+            window.location.href = 'journal.html';
+        });
 
         // Кнопка "ЧЕК ФУЛ" — дисклеймер с переходом в Telegram
         const fullBtn = document.getElementById('fullCheckBtn');
         fullBtn.addEventListener('click', () => {
-            // Создаём модалку прямо в DOM
             const modalDiv = document.createElement('div');
             modalDiv.className = 'modal-overlay';
             modalDiv.style.display = 'flex';
@@ -285,7 +272,6 @@
 
             document.body.appendChild(modalDiv);
 
-            // Закрытие по крестику или клику на overlay
             const closeBtn = modalDiv.querySelector('.modal-close-btn');
             const closeOverlay = (e) => {
                 if (e.target === modalDiv || e.target === closeBtn) {
@@ -295,11 +281,6 @@
             modalDiv.addEventListener('click', closeOverlay);
             closeBtn.addEventListener('click', () => modalDiv.remove());
         });
-
-document.getElementById('closeForumBtn').addEventListener('click', () => {
-    // Возврат на предыдущую страницу (журнал) или на главную
-    window.location.href = 'journal.html';
-});
     </script>
 </body>
 </html>
