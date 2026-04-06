@@ -74,13 +74,25 @@
         <span class="mood-text">MOOD</span>
         <span class="mood-arrow">▼</span>
     </div>
-    
-    <div class="mood-dropdown" id="moodDropdown">
-        <div class="mood-category" data-board="print">PRINT</div>
-        <div class="mood-category" data-board="design">DESIGN</div>
-        <div class="mood-category" data-board="diygear">DIY GEAR</div>
-        <div class="mood-category" data-board="tattoo">TATTOO</div>
-        <div class="mood-category" data-board="barbering">BARBERING</div>
+</div>
+
+<!-- Единая модалка для всех Pinterest папок -->
+<div id="pinterestModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content pinterest-modal">
+        <div class="modal-header">
+            <span class="modal-title-text" id="pinterestModalTitle">PINTEREST BOARD</span>
+            <button class="modal-close-btn" onclick="closeModalDirect('pinterestModal')">✜</button>
+        </div>
+        <div class="pinterest-tabs" id="pinterestTabs">
+            <button class="pin-tab" data-board="print">PRINT</button>
+            <button class="pin-tab" data-board="design">DESIGN</button>
+            <button class="pin-tab" data-board="diygear">DIY GEAR</button>
+            <button class="pin-tab" data-board="tattoo">TATTOO</button>
+            <button class="pin-tab" data-board="barbering">BARBERING</button>
+        </div>
+        <div class="pin-embed-container" id="pinEmbedContainer">
+            <a id="pinEmbedLink" data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="300" href=""></a>
+        </div>
     </div>
 </div>
 
