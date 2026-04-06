@@ -728,8 +728,7 @@ body {
 }
 
 
-/* ========== MOOD КНОПКА И ВЫПАДАЮЩЕЕ МЕНЮ ========== */
-
+/* ========== MOOD КНОПКА ========== */
 .pin-mood-btn {
     display: flex;
     align-items: center;
@@ -765,56 +764,40 @@ body {
     transform: rotate(180deg);
 }
 
-/* Выпадающий список */
-.mood-dropdown {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
-    margin-top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-.mood-dropdown.open {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 20px;
-}
-.mood-category {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    color: #a27791;
-    border: 1px solid #79434a;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: 0.2s;
-    background: #0a0a0f;
-    text-align: center;
-    width: 200px;
-}
-.mood-category:hover {
-    background: #79434a;
-    color: #000;
-}
-
-/* Модалка Pinterest */
+/* ========== ПИНТЕРЕСТ МОДАЛКА С ВКЛАДКАМИ ========== */
 .pinterest-modal {
-    max-width: 500px;
+    max-width: 550px;
     width: 90%;
     background: #0a0a0f;
     border: 2px solid #79434a;
-    padding: 20px;
-    text-align: center;
+    padding: 0;
 }
-.pinterest-modal .modal-header {
+.pinterest-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    background: #050508;
+    border-bottom: 1px solid #79434a;
+}
+.pin-tab {
+    background: transparent;
+    border: 1px solid #79434a;
+    color: #a27791;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.pin-tab:hover, .pin-tab.active {
     background: #79434a;
-    padding: 10px;
-    margin-bottom: 15px;
+    color: #000;
 }
-.pinterest-modal .pin-embed {
-    min-height: 300px;
+.pin-embed-container {
+    padding: 20px;
+    min-height: 350px;
     background: #000;
 }
 
