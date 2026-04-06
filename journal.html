@@ -27,21 +27,18 @@
         </div>
 
         <!-- 2. Горизонтальный барабан картинок + твиттер -->
-<div class="section carousel-section">
-    <div class="carousel" id="mainCarousel">
-        <img src="assets/mx1.jpeg" class="active">
-        <img src="assets/mx2.jpg">
-    </div>
-    
-    <!-- Ряд хештегов -->
-    <div class="hashtag-row">
-        <span class="hashtag">#layoutporn</span>
-    </div>
-    
-    <div style="display: flex; justify-content: center;">
-        <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
-    </div>
-</div>
+        <div class="section carousel-section">
+            <div class="carousel" id="mainCarousel">
+                <img src="assets/mx1.jpeg" class="active">
+                <img src="assets/mx2.jpg">
+            </div>
+            <div class="hashtag-row">
+                <span class="hashtag">#layoutporn</span>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <img src="assets/twit.png" class="x-btn-img" onclick="openModal('disclaimerModal')">
+            </div>
+        </div>
 
         <!-- 3. ФОРУМ / САПОРТ -->
         <div class="section nav-grid">
@@ -56,7 +53,6 @@
                 </div>
                 <div class="paint-label">FORUM</div>
             </div>
-            
             <div class="support-wrapper">
                 <img src="assets/support.png" class="nav-btn-img" onclick="openModal('supportModal')">
                 <div class="paint-label">SUPPORT</div>
@@ -68,33 +64,26 @@
             </div>
         </div>
 
-        <!-- Pinterest с выпадающим меню -->
-<div class="section pin-section">
-    <div class="pin-mood-btn" id="moodBtn">
-        <span class="mood-text">MOOD</span>
-        <span class="mood-arrow">▼</span>
-    </div>
-</div>
+        <!-- Pinterest MOOD кнопка (один виджет) -->
+        <div class="section pin-section">
+            <div class="pin-mood-btn" id="moodBtn">
+                <span class="mood-text">MOOD</span>
+                <span class="mood-arrow">▼</span>
+            </div>
+        </div>
 
-<!-- Единая модалка для всех Pinterest папок -->
-<div id="pinterestModal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-content pinterest-modal">
-        <div class="modal-header">
-            <span class="modal-title-text" id="pinterestModalTitle">PINTEREST BOARD</span>
-            <button class="modal-close-btn" onclick="closeModalDirect('pinterestModal')">✜</button>
+        <!-- Модалка Pinterest (один виджет, без вкладок) -->
+        <div id="pinterestModal" class="modal-overlay" onclick="closeModal(event)">
+            <div class="modal-content pinterest-modal">
+                <div class="modal-header">
+                    <span class="modal-title-text">MORSTRIX / PINTEREST</span>
+                    <button class="modal-close-btn" onclick="closeModalDirect('pinterestModal')">✜</button>
+                </div>
+                <div class="pin-embed-container" id="pinEmbedContainer">
+                    <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+                </div>
+            </div>
         </div>
-        <div class="pinterest-tabs" id="pinterestTabs">
-            <button class="pin-tab" data-board="print">PRINT</button>
-            <button class="pin-tab" data-board="design">DESIGN</button>
-            <button class="pin-tab" data-board="diygear">DIY GEAR</button>
-            <button class="pin-tab" data-board="tattoo">TATTOO</button>
-            <button class="pin-tab" data-board="barbering">BARBERING</button>
-        </div>
-        <div class="pin-embed-container" id="pinEmbedContainer">
-            <a id="pinEmbedLink" data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="300" href=""></a>
-        </div>
-    </div>
-</div>
 
         <!-- 5. ФОНТ СТАЙЛЕР -->
         <div class="section styler-section">
@@ -121,29 +110,30 @@
             </div>
         </div>
 
+        <!-- 7. КОНСТРУКТОР МЕРЧА -->
         <div class="section merch-block">
-    <div class="styler-label">MERCH CONSTRUCTOR</div>
-    <div class="merch-constructor">
-        <div class="tshirt-preview">
-            <img src="assets/tshirt.jpeg" alt="T-shirt" class="tshirt-img">
-            <canvas id="printCanvas" class="print-canvas"></canvas>
-        </div>
-        <div class="upload-area" id="uploadArea">
-            <div class="dashed-box">
-                <span class="upload-text">UPLOAD PRINT</span>
-                <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif">
+            <div class="styler-label">MERCH CONSTRUCTOR</div>
+            <div class="merch-constructor">
+                <div class="tshirt-preview">
+                    <img src="assets/tshirt.jpeg" alt="T-shirt" class="tshirt-img">
+                    <canvas id="printCanvas" class="print-canvas"></canvas>
+                </div>
+                <div class="upload-area" id="uploadArea">
+                    <div class="dashed-box">
+                        <span class="upload-text">UPLOAD PRINT</span>
+                        <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif">
+                    </div>
+                </div>
+                <button class="reset-btn" id="resetPrint">✜ CLEAR</button>
             </div>
         </div>
-        <button class="reset-btn" id="resetPrint">✜ CLEAR</button>
-    </div>
-</div>
 
-        <!-- 8. КОНВЕРТЕР ПИКСЕЛЬ/СМ (заглушка) -->
+        <!-- 8. КОНВЕРТЕР ПИКСЕЛЬ/СМ -->
         <div class="section converter-block">
             <div class="styler-label">CONVERTER</div>
             <div class="styler-container">
                 <input type="text" id="pxInput" class="styler-input" placeholder="Pixels" autocomplete="off">
-                <button class="styler-icon-btn" onclick="alert('⚙️ Демо-режим: 1 см = 37.8 px')">
+                <button class="styler-icon-btn" onclick="alert('⚙️ 1 cm = 37.8 px')">
                     <img src="assets/st2.png" style="filter: invert(1);">
                 </button>
                 <input type="text" id="cmInput" class="styler-input" placeholder="cm" autocomplete="off">
@@ -169,14 +159,14 @@
         </div>
 
         <!-- 10. TEAM + DONATE (слитно) -->
-<div class="section team-donate-wrapper">
-    <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
-    <div class="donate-block-journal" id="donateJournal">
-        <div class="donate-line"></div>
-        <div class="donate-label">DONATE</div>
-        <div class="donate-sub">monobank</div>
-    </div>
-</div>
+        <div class="section team-donate-wrapper">
+            <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
+            <div class="donate-block-journal" id="donateJournal">
+                <div class="donate-line"></div>
+                <div class="donate-label">DONATE</div>
+                <div class="donate-sub">monobank</div>
+            </div>
+        </div>
 
     </div> <!-- container -->
 
@@ -194,19 +184,18 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ДЛЯ ФОРУМА: OPEN MINI? -->
-<div id="openMiniModal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title-text">FORUM ACCESS</span>
-            <button class="modal-close-btn" onclick="closeModalDirect('openMiniModal')">✜</button>
-        </div>
-        <div class="modal-inner" style="text-align: center;">
-            <p style="font-size: 10px; line-height: 1.8; margin-bottom: 30px;">OPEN MINI?</p>
-            <button class="retro-btn" onclick="window.location.href='forum.html'">ENTER</button>
+    <div id="openMiniModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title-text">FORUM ACCESS</span>
+                <button class="modal-close-btn" onclick="closeModalDirect('openMiniModal')">✜</button>
+            </div>
+            <div class="modal-inner" style="text-align: center;">
+                <p style="font-size: 10px; line-height: 1.8; margin-bottom: 30px;">OPEN MINI?</p>
+                <button class="retro-btn" onclick="window.location.href='forum.html'">ENTER</button>
+            </div>
         </div>
     </div>
-</div>
 
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
@@ -277,7 +266,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА TEAM (выбор участника) -->
     <div id="teamModalJournal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -305,7 +293,6 @@
     <!-- Дополнительный скрипт -->
     <script>
         (function() {
-            // Кнопка TEAM
             const teamBtn = document.getElementById('teamBtnJournal');
             const teamModal = document.getElementById('teamModalJournal');
             if (teamBtn && teamModal) {
@@ -314,14 +301,12 @@
                     teamModal.classList.add('active');
                 };
             }
-            // DONATE
             const donateBlock = document.getElementById('donateJournal');
             if (donateBlock) {
                 donateBlock.onclick = () => {
                     window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
                 };
             }
-            // Конвертер PX/CM
             const pxInput = document.getElementById('pxInput');
             const cmInput = document.getElementById('cmInput');
             if (pxInput && cmInput) {
