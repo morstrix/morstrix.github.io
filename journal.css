@@ -640,3 +640,120 @@ body {
 .team-donate-wrapper .donate-block-journal {
     margin-top: 0;
 }
+
+/* ========== НОВЫЙ СТИЛЬ ДЛЯ ТЕКСТА: ОГНЕННОЕ СВЕЧЕНИЕ + ТЕЛЕВИЗОР ========== */
+
+/* 1. Основные цвета */
+:root {
+    --cherry: #a84d6b;
+    --cherry-dark: #8B3A3A;
+    --cherry-light: #b85a7a;
+    --orange-fire: #ff7b24;
+    --orange-glow: #ffa500;
+    --white-glow: #fff5e0;
+}
+
+/* 2. Базовое свечение для всего текста */
+body, .container, .styler-label, .paint-label, .donate-label, .team-btn-journal {
+    color: var(--orange-fire);
+}
+
+/* 3. Градиентное свечение для заголовков и важного текста */
+.tv-text, .styler-label, .paint-label, .donate-label, .team-btn-journal, .tab-item {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(135deg, var(--orange-fire) 0%, var(--orange-glow) 50%, var(--white-glow) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 5px var(--orange-fire),
+        0 0 10px var(--orange-glow),
+        0 0 15px rgba(255, 165, 0, 0.5);
+    animation: flickerGlow 3s infinite alternate;
+}
+
+/* 4. Анимация мерцания свечения */
+@keyframes flickerGlow {
+    0% { text-shadow: 0 0 3px var(--orange-fire), 0 0 6px var(--orange-glow); }
+    50% { text-shadow: 0 0 8px var(--orange-fire), 0 0 15px var(--orange-glow), 0 0 20px var(--white-glow); }
+    100% { text-shadow: 0 0 5px var(--orange-fire), 0 0 12px var(--orange-glow), 0 0 18px rgba(255, 245, 224, 0.8); }
+}
+
+/* 5. Эффект телевизионной текстуры (только на текст) */
+.tv-text::before, .styler-label::before, .paint-label::before, .donate-label::before, .team-btn-journal::before, .tab-item::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 120%;
+    height: 140%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.03) 2px,
+        transparent 2px,
+        transparent 8px
+    );
+    mix-blend-mode: overlay;
+    z-index: 1;
+    opacity: 0.6;
+    animation: tvNoise 0.15s steps(2) infinite;
+}
+
+/* 6. Хаотичная текстура поверх текста */
+@keyframes tvNoise {
+    0% { background-position: 0 0; opacity: 0.4; }
+    50% { background-position: 4px 4px; opacity: 0.7; }
+    100% { background-position: -2px 2px; opacity: 0.5; }
+}
+
+/* 7. Дополнительный слой с точками (обрывистые края) */
+.tv-text::after, .styler-label::after, .paint-label::after, .donate-label::after, .team-btn-journal::after, .tab-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 20% 40%, rgba(255, 165, 0, 0.2) 1px, transparent 1px);
+    background-size: 8px 8px;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    animation: staticShift 0.2s steps(3) infinite;
+}
+
+@keyframes staticShift {
+    0% { background-position: 0 0; opacity: 0.3; }
+    100% { background-position: 3px 5px; opacity: 0.6; }
+}
+
+/* 8. Вишнёвые рамки для всех блоков */
+.container .section, .carousel, .ticker-wrapper, .styler-container, .merch-container, .forum-wrapper, .support-wrapper {
+    border: 1px solid var(--cherry);
+    box-shadow: 0 0 5px rgba(168, 77, 107, 0.3);
+}
+
+/* 9. Активные элементы при наведении */
+.tab-item:hover, .team-btn-journal:hover, .nav-btn-img:hover {
+    filter: drop-shadow(0 0 8px var(--orange-fire));
+    transition: 0.2s;
+}
+
+/* 10. Адаптация для мобильных */
+@media (max-width: 700px) {
+    .tv-text, .styler-label, .paint-label, .donate-label, .team-btn-journal, .tab-item {
+        font-size: 7px;
+        background-size: 100% 100%;
+    }
+    .tv-text::before, .styler-label::before {
+        background-size: 4px 4px;
+    }
+}
+
+@media (max-width: 500px) {
+    .tv-text, .styler-label, .paint-label, .donate-label, .team-btn-journal, .tab-item {
+        font-size: 6px;
+    }
+}
