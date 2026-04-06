@@ -211,44 +211,81 @@ document.addEventListener('keydown', (e) => {
         function drawPixelTshirt() {
     ctx.clearRect(0, 0, size, size);
     
-    // Светлое тело футболки
-    ctx.fillStyle = '#d0d0d0';
-    ctx.fillRect(40, 50, 120, 130);
+    // ===== ОСНОВНОЙ СИЛУЭТ ФУТБОЛКИ =====
+    ctx.fillStyle = '#e8e8e8';
     
-    // Область для принта (светлее)
-    ctx.fillStyle = '#f0f0f0';
-    ctx.fillRect(55, 70, 90, 90);
+    // Тело (прямоугольник срезанными углами)
+    ctx.fillRect(45, 55, 110, 125);
+    
+    // Скругление углов (пиксельное)
+    ctx.fillStyle = '#e8e8e8';
+    ctx.fillRect(42, 58, 3, 3);
+    ctx.fillRect(155, 58, 3, 3);
+    ctx.fillRect(42, 175, 3, 3);
+    ctx.fillRect(155, 175, 3, 3);
     
     // Рукава
-    ctx.fillStyle = '#c0c0c0';
-    ctx.fillRect(20, 60, 25, 50);
-    ctx.fillRect(155, 60, 25, 50);
+    ctx.fillStyle = '#d4d4d4';
+    ctx.fillRect(25, 65, 20, 55);
+    ctx.fillRect(155, 65, 20, 55);
     
-    // Вырез горловины
-    ctx.fillStyle = '#a0a0a0';
-    ctx.fillRect(80, 45, 40, 15);
+    // Скругление рукавов
+    ctx.fillRect(22, 68, 3, 3);
+    ctx.fillRect(175, 68, 3, 3);
+    ctx.fillRect(22, 115, 3, 3);
+    ctx.fillRect(175, 115, 3, 3);
     
-    // Пиксельные линии (швы) — тёмные для контраста
-    ctx.fillStyle = '#555555';
-    ctx.fillRect(40, 50, 120, 2);
-    ctx.fillRect(40, 180, 120, 2);
-    ctx.fillRect(40, 50, 2, 130);
-    ctx.fillRect(158, 50, 2, 130);
+    // Вырез горловины (V-образный)
+    ctx.fillStyle = '#cccccc';
+    ctx.fillRect(85, 50, 30, 8);
+    ctx.fillRect(90, 42, 20, 8);
     
-    // Тёмные точки (TV-эффект) — редкие, чтобы не перегружать
-    for (let i = 0; i < 200; i++) {
+    // ===== ДЕТАЛИ И ШВЫ =====
+    ctx.fillStyle = '#666666';
+    
+    // Линия плеч
+    ctx.fillRect(45, 55, 110, 2);
+    
+    // Боковые швы
+    ctx.fillRect(45, 55, 2, 125);
+    ctx.fillRect(153, 55, 2, 125);
+    
+    // Линия низа
+    ctx.fillRect(45, 177, 110, 3);
+    
+    // Линия на рукавах
+    ctx.fillRect(25, 65, 20, 2);
+    ctx.fillRect(155, 65, 20, 2);
+    ctx.fillRect(25, 118, 20, 2);
+    ctx.fillRect(155, 118, 20, 2);
+    
+    // ===== ЗОНА ДЛЯ ПРИНТА (СВЕТЛЫЙ КВАДРАТ) =====
+    ctx.fillStyle = '#fafafa';
+    ctx.fillRect(65, 85, 70, 70);
+    
+    // Рамка зоны принта (пунктир)
+    ctx.fillStyle = '#999999';
+    for (let i = 0; i < 70; i += 6) {
+        ctx.fillRect(65 + i, 85, 3, 2);
+        ctx.fillRect(65 + i, 153, 3, 2);
+        ctx.fillRect(65, 85 + i, 2, 3);
+        ctx.fillRect(133, 85 + i, 2, 3);
+    }
+    
+    // ===== TV-ЭФФЕКТ (ТОЧКИ) =====
+    for (let i = 0; i < 150; i++) {
         const x = Math.random() * size;
         const y = Math.random() * size;
-        ctx.fillStyle = `rgba(0, 0, 0, 0.15)`;
+        ctx.fillStyle = `rgba(0, 0, 0, 0.08)`;
         ctx.fillRect(x, y, 1, 1);
     }
     
-    // Редкие белые пиксели (блики)
-    for (let i = 0; i < 30; i++) {
+    // Редкие белые блики
+    for (let i = 0; i < 40; i++) {
         const x = Math.random() * size;
         const y = Math.random() * size;
-        if (Math.random() > 0.95) {
-            ctx.fillStyle = `rgba(255, 255, 255, 0.9)`;
+        if (Math.random() > 0.96) {
+            ctx.fillStyle = `rgba(255, 255, 255, 0.7)`;
             ctx.fillRect(x, y, 1, 1);
         }
     }
