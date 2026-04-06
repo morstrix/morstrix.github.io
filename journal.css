@@ -868,3 +868,118 @@ body {
         font-size: 4.5px;
     }
 }
+
+/* ========== КОНСТРУКТОР МЕРЧА ========== */
+
+.merch-constructor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.tshirt-preview {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+#tshirtBase {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: crisp-edges;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.print-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.upload-area {
+    cursor: pointer;
+    width: 100%;
+}
+
+.dashed-box {
+    border: 2px dashed #79434a;
+    background: #0a0a0f;
+    padding: 20px;
+    text-align: center;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashed-box:hover {
+    border-color: #a27791;
+    background: #1a1a1f;
+}
+
+.upload-icon {
+    font-size: 24px;
+    filter: grayscale(1);
+}
+
+.upload-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #a27791;
+}
+
+.reset-btn {
+    background: transparent;
+    border: 1px solid #79434a;
+    color: #a27791;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reset-btn:hover {
+    background: #79434a;
+    color: #000;
+}
+
+/* Адаптация */
+@media (max-width: 700px) {
+    .tshirt-preview {
+        width: 160px;
+        height: 160px;
+    }
+    .print-canvas {
+        width: 80px;
+        height: 80px;
+    }
+    .upload-text {
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 550px) {
+    .tshirt-preview {
+        width: 140px;
+        height: 140px;
+    }
+    .print-canvas {
+        width: 70px;
+        height: 70px;
+    }
+}
