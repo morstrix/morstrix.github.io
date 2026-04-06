@@ -235,10 +235,10 @@ document.addEventListener('keydown', (e) => {
     ctx.fillRect(22, 115, 3, 3);
     ctx.fillRect(175, 115, 3, 3);
     
-    // Вырез горловины (V-образный)
-    ctx.fillStyle = '#cccccc';
-    ctx.fillRect(85, 50, 30, 8);
-    ctx.fillRect(90, 42, 20, 8);
+   // Круглый вырез
+ctx.fillStyle = '#cccccc';
+ctx.fillRect(82, 48, 36, 10);
+ctx.fillRect(86, 42, 28, 8);
     
     // ===== ДЕТАЛИ И ШВЫ =====
     ctx.fillStyle = '#666666';
