@@ -242,28 +242,86 @@ body {
 }
 
 /* Merch Constructor */
-.merch-container {
-    background: #0a0a0f;
-    border: 1px solid #79434a;
-    padding: 15px;
+.merch-constructor {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: 0.2s;
+    gap: 20px;
     max-width: 450px;
     margin: 0 auto;
 }
-.merch-container span {
+
+.tshirt-preview {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.tshirt-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.print-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    pointer-events: none;
+}
+
+.upload-area {
+    cursor: pointer;
+    width: 100%;
+}
+
+.dashed-box {
+    border: 2px dashed #79434a;
+    background: #0a0a0f;
+    padding: 20px;
+    text-align: center;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashed-box:hover {
+    border-color: #a27791;
+    background: #1a1a1f;
+}
+
+.upload-icon {
+    font-size: 24px;
+    filter: grayscale(1);
+}
+
+.upload-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
     color: #a27791;
 }
-.merch-container:hover {
-    background: #1a1a1f;
-    border-color: #a27791;
+
+/* Новая серая кнопка CLEAR */
+.reset-btn {
+    background: #888888;
+    border: 1px solid #555555;
+    color: #000000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.2s;
 }
-.merch-container:active {
-    transform: scale(0.98);
+.reset-btn:hover {
+    background: #aaaaaa;
+    color: #000;
 }
 
 /* Converter блок */
@@ -610,131 +668,36 @@ body {
     flex-direction: column;
     gap: 5px;
 }
-
 .team-donate-wrapper .team-btn-journal {
     margin-bottom: 0;
 }
-
 .team-donate-wrapper .donate-block-journal {
     margin-top: 0;
 }
 
-/* Адаптация */
-@media (max-width: 700px) {
-    .container { margin-top: 80px; gap: 40px; }
-    .nav-btn-img { width: 100px; }
-    .tv-screen { left: -55px; padding: 4px 8px; }
-    .tv-text { font-size: 5px; }
-    .team-selection { gap: 20px; }
-    .team-choice img { width: 100px; height: 100px; }
-    .team-choice span { font-size: 7px; }
-    .donate-block-journal .donate-line { width: 200px; }
-}
-
-@media (max-width: 550px) {
-    .nav-btn-img { width: 85px; }
-    .tv-screen { left: -45px; padding: 3px 6px; }
-    .tv-text { font-size: 4.5px; }
-    .modal-close-btn { width: 44px !important; height: 44px !important; font-size: 24px !important; }
-    .retro-btn { padding: 12px 20px !important; font-size: 9px !important; }
-}
-
-@media (max-width: 450px) {
-    .team-choice img { width: 80px; height: 80px; }
-    .team-selection { gap: 15px; }
-    .donate-block-journal .donate-line { width: 180px; }
-    .donate-block-journal .donate-label { font-size: 10px; }
-}
-
-/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ ========== */
-
-/* RSS строка */
-.ticker-wrapper {
-    margin-bottom: 80px;
-}
-
-/* Барабан карусели + твиттер (секция с carousel и x-btn-img) */
-.carousel-section {
-    margin-bottom: 80px;
-}
-
-/* Форум / Сапорт (рядом стоящие) */
-.nav-grid {
-    margin-bottom: 80px;
-}
-
-/* Pinterest */
-.pin-section {
-    margin-bottom: 80px;
-}
-
-/* Font Styler */
-.styler-section {
-    margin-bottom: 80px;
-}
-
-/* Art + Paint */
-.art-section {
-    margin-bottom: 80px;
-}
-
-/* Merch Constructor */
-.merch-block {
-    margin-bottom: 80px;
-}
-
-/* Converter PX/CM */
-.converter-block {
-    margin-bottom: 80px;
-}
-
-/* Top Players + Tetris */
+/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ (увеличенные) ========== */
+.ticker-wrapper,
+.carousel-section,
+.nav-grid,
+.pin-section,
+.styler-section,
+.art-section,
+.merch-block,
+.converter-block,
 .dual-row {
-    margin-bottom: 80px;
+    margin-bottom: 90px;
 }
-
-/* Team + Donate (слитный блок) */
 .team-donate-wrapper {
     margin-bottom: 0;
 }
 
-/* Мобильная адаптация */
-@media (max-width: 700px) {
-    .ticker-wrapper,
-    .carousel-section,
-    .nav-grid,
-    .pin-section,
-    .styler-section,
-    .art-section,
-    .merch-block,
-    .converter-block,
-    .dual-row {
-        margin-bottom: 50px;
-    }
-}
-
-@media (max-width: 500px) {
-    .ticker-wrapper,
-    .carousel-section,
-    .nav-grid,
-    .pin-section,
-    .styler-section,
-    .art-section,
-    .merch-block,
-    .converter-block,
-    .dual-row {
-        margin-bottom: 35px;
-    }
-}
-
-
-/* ========== MOOD КНОПКА ========== */
+/* ========== MOOD КНОПКА (ЗАКРАШЕНА) ========== */
 .pin-mood-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: transparent;
+    background: #79434a;  /* закрашенный фон */
     border: 1px solid #79434a;
     padding: 12px 24px;
     cursor: pointer;
@@ -743,21 +706,17 @@ body {
     transition: 0.2s;
 }
 .pin-mood-btn:hover {
-    background: #79434a;
-}
-.pin-mood-btn:hover .mood-text,
-.pin-mood-btn:hover .mood-arrow {
-    color: #000;
+    background: #a84d6b;
 }
 .mood-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    color: #a27791;
+    color: #000000;  /* чёрный текст */
     letter-spacing: 2px;
 }
 .mood-arrow {
     font-size: 12px;
-    color: #a27791;
+    color: #000000;  /* чёрная стрелка */
     transition: transform 0.3s ease;
 }
 .mood-arrow.open {
@@ -802,7 +761,6 @@ body {
 }
 
 /* ========== РЯД ХЕШТЕГОВ ========== */
-
 .hashtag-row {
     display: flex;
     flex-wrap: wrap;
@@ -810,7 +768,6 @@ body {
     gap: 16px;
     margin: 15px 0 10px 0;
 }
-
 .hashtag {
     font-family: 'Press Start 2P', monospace;
     font-size: 7px;
@@ -819,134 +776,70 @@ body {
     transition: 0.2s;
     cursor: pointer;
 }
-
 .hashtag:hover {
     color: #79434a;
 }
 
-/* Адаптация для мобильных */
+/* ========== АДАПТАЦИЯ ========== */
 @media (max-width: 700px) {
-    .hashtag-row {
-        gap: 12px;
+    .container { margin-top: 80px; gap: 40px; }
+    .nav-btn-img { width: 100px; }
+    .tv-screen { left: -55px; padding: 4px 8px; }
+    .tv-text { font-size: 5px; }
+    .team-selection { gap: 20px; }
+    .team-choice img { width: 100px; height: 100px; }
+    .team-choice span { font-size: 7px; }
+    .donate-block-journal .donate-line { width: 200px; }
+
+    /* Уменьшаем отступы на планшете */
+    .ticker-wrapper,
+    .carousel-section,
+    .nav-grid,
+    .pin-section,
+    .styler-section,
+    .art-section,
+    .merch-block,
+    .converter-block,
+    .dual-row {
+        margin-bottom: 55px;
     }
-    .hashtag {
-        font-size: 6px;
-    }
+    .hashtag-row { gap: 12px; }
+    .hashtag { font-size: 6px; }
 }
 
 @media (max-width: 550px) {
-    .hashtag-row {
-        gap: 10px;
-    }
-    .hashtag {
-        font-size: 5px;
+    .nav-btn-img { width: 85px; }
+    .tv-screen { left: -45px; padding: 3px 6px; }
+    .tv-text { font-size: 4.5px; }
+    .modal-close-btn { width: 44px !important; height: 44px !important; font-size: 24px !important; }
+    .retro-btn { padding: 12px 20px !important; font-size: 9px !important; }
+}
+
+@media (max-width: 500px) {
+    /* Ещё меньше отступы на телефонах */
+    .ticker-wrapper,
+    .carousel-section,
+    .nav-grid,
+    .pin-section,
+    .styler-section,
+    .art-section,
+    .merch-block,
+    .converter-block,
+    .dual-row {
+        margin-bottom: 40px;
     }
 }
 
 @media (max-width: 450px) {
-    .hashtag-row {
-        gap: 8px;
-    }
-    .hashtag {
-        font-size: 4.5px;
-    }
+    .team-choice img { width: 80px; height: 80px; }
+    .team-selection { gap: 15px; }
+    .donate-block-journal .donate-line { width: 180px; }
+    .donate-block-journal .donate-label { font-size: 10px; }
+    .hashtag-row { gap: 10px; }
+    .hashtag { font-size: 5px; }
 }
 
-/* ========== КОНСТРУКТОР МЕРЧА ========== */
-
-.merch-constructor {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    max-width: 450px;
-    margin: 0 auto;
-}
-
-.tshirt-preview {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 0 auto;
-}
-
-.tshirt-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-.print-canvas {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90px;
-    height: 90px;
-    pointer-events: none;
-}
-
-.upload-area {
-    cursor: pointer;
-    width: 100%;
-}
-
-.dashed-box {
-    border: 2px dashed #79434a;
-    background: #0a0a0f;
-    padding: 20px;
-    text-align: center;
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.dashed-box:hover {
-    border-color: #a27791;
-    background: #1a1a1f;
-}
-
-.upload-icon {
-    font-size: 24px;
-    filter: grayscale(1);
-}
-
-.upload-text {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    color: #a27791;
-}
-
-.reset-btn {
-    background: transparent;
-    border: 1px solid #79434a;
-    color: #a27791;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.reset-btn:hover {
-    background: #79434a;
-    color: #000;
-}
-
-/* Адаптация */
-@media (max-width: 700px) {
-    .tshirt-preview {
-        width: 160px;
-        height: 160px;
-    }
-    .print-canvas {
-        width: 80px;
-        height: 80px;
-    }
-    .upload-text {
-        font-size: 7px;
-    }
+@media (max-width: 380px) {
+    .hashtag-row { gap: 8px; }
+    .hashtag { font-size: 4.5px; }
 }
