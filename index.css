@@ -260,7 +260,7 @@ body {
     .donate-line { width: 170px; }
 }
 
-/* ========== ПИКСЕЛЬНАЯ КУПЮРА С КРУЖКОМ ========== */
+/* ========== ПИКСЕЛЬНАЯ КУПЮРА С КРУЖКОМ (ВРАЩАЕТСЯ) ========== */
 
 .store-wrapper {
     position: relative;
@@ -275,7 +275,7 @@ body {
     right: -40px;
     width: 55px;
     height: 35px;
-    animation: floatMoney 2s ease-in-out infinite;
+    animation: spinAndFloat 3s ease-in-out infinite;
     z-index: 20;
 }
 
@@ -337,10 +337,23 @@ body {
     border-radius: 50%;
 }
 
-@keyframes floatMoney {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-8px) rotate(4deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+/* Вращение + покачивание */
+@keyframes spinAndFloat {
+    0% { 
+        transform: translateY(0px) rotateY(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotateY(90deg);
+    }
+    50% { 
+        transform: translateY(0px) rotateY(180deg);
+    }
+    75% {
+        transform: translateY(-5px) rotateY(270deg);
+    }
+    100% { 
+        transform: translateY(0px) rotateY(360deg);
+    }
 }
 
 /* Адаптация */
