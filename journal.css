@@ -83,7 +83,7 @@ body {
     margin-top: 70px;
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 60px;
     position: relative;
     z-index: 10;
 }
@@ -99,6 +99,7 @@ body {
     position: relative;
     line-height: 0;
     background: #000;
+    border: 1px solid #79434a;
 }
 .carousel img {
     width: 100%;
@@ -129,13 +130,13 @@ body {
     padding: 12px 0;
     overflow: hidden;
     white-space: nowrap;
-    border-top: 1px solid #1a1a1a;
-    border-bottom: 1px solid #1a1a1a;
+    border-top: 1px solid #79434a;
+    border-bottom: 1px solid #79434a;
 }
 .ticker {
     display: inline-block;
     font-size: 8px;
-    color: #ffd9e6;
+    color: #a27791;
     animation: scrollTicker 40s linear infinite;
 }
 .ticker span {
@@ -180,7 +181,7 @@ body {
     width: 100%;
     max-width: 300px;
     aspect-ratio: 1/1;
-    border: 1px solid #1a1a1a;
+    border: 1px solid #79434a;
     background: #0a0a0f;
     margin: 0 auto 20px;
     overflow: hidden;
@@ -193,7 +194,7 @@ body {
 }
 .paint-label {
     font-size: 6px;
-    color: var(--accent-pink);
+    color: #a27791;
     letter-spacing: 1px;
     margin-top: 8px;
     text-transform: uppercase;
@@ -202,7 +203,7 @@ body {
 /* Font styler */
 .styler-label {
     font-size: 7px;
-    color: var(--muted-pink);
+    color: #a27791;
     margin-bottom: 10px;
     text-align: left;
     max-width: 450px;
@@ -212,7 +213,7 @@ body {
     display: flex;
     align-items: center;
     background: #0a0a0f;
-    border: 1px solid var(--muted-pink);
+    border: 1px solid #79434a;
     padding: 5px 10px;
     width: 100%;
     max-width: 450px;
@@ -222,7 +223,7 @@ body {
     flex-grow: 1;
     background: transparent;
     border: none;
-    color: var(--muted-pink);
+    color: #a27791;
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     padding: 12px 5px;
@@ -243,7 +244,7 @@ body {
 /* Merch Constructor */
 .merch-container {
     background: #0a0a0f;
-    border: 1px solid #a84d6b;
+    border: 1px solid #79434a;
     padding: 15px;
     display: flex;
     align-items: center;
@@ -254,37 +255,45 @@ body {
     max-width: 450px;
     margin: 0 auto;
 }
+.merch-container span {
+    color: #a27791;
+}
 .merch-container:hover {
     background: #1a1a1f;
-    border-color: #ffb7c7;
+    border-color: #a27791;
 }
 .merch-container:active {
     transform: scale(0.98);
+}
+
+/* Converter блок */
+.converter-block .styler-label {
+    color: #a27791;
+}
+.converter-block .styler-container {
+    border-color: #79434a;
+}
+.converter-block .styler-input {
+    color: #a27791;
 }
 
 /* TEAM Button */
 .team-btn-journal {
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    color: #a84d6b;
+    color: #a27791;
     background: transparent;
-    border: 1px solid #a84d6b;
+    border: 1px solid #79434a;
     padding: 12px 20px;
     text-align: center;
     cursor: pointer;
     display: inline-block;
     transition: 0.2s;
-    animation: teamBreath 3s infinite ease-in-out;
 }
 .team-btn-journal:hover {
-    background: #a84d6b;
+    background: #79434a;
     color: #000;
-    animation: none;
     transform: scale(1.02);
-}
-@keyframes teamBreath {
-    0%, 100% { opacity: 0.7; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 3px #a84d6b; }
 }
 
 /* DONATE Block */
@@ -302,12 +311,12 @@ body {
 }
 .donate-block-journal .donate-label {
     font-size: 12px;
-    color: #d4a0a0;
+    color: #a27791;
     text-transform: uppercase;
 }
 .donate-block-journal .donate-sub {
     font-size: 9px;
-    color: #8a6a6a;
+    color: #a27791;
     margin-top: 6px;
 }
 
@@ -364,7 +373,7 @@ body {
 }
 .modal-content {
     background: var(--deep-pink);
-    border: 2px solid var(--muted-pink);
+    border: 2px solid #79434a;
     position: relative;
     overflow-y: auto;
     width: auto;
@@ -378,7 +387,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--muted-pink);
+    border-bottom: 1px solid #79434a;
 }
 .modal-title-text {
     font-size: 10px;
@@ -388,7 +397,7 @@ body {
 }
 .modal-close-btn {
     background: #010101;
-    border: 1px solid var(--muted-pink);
+    border: 1px solid #79434a;
     color: #ffffff;
     font-size: 14px;
     width: 24px;
@@ -405,8 +414,8 @@ body {
 }
 .retro-btn {
     background: #010101;
-    border: 2px solid var(--muted-pink);
-    color: var(--muted-pink);
+    border: 2px solid #79434a;
+    color: #a27791;
     padding: 8px 16px;
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
@@ -417,7 +426,7 @@ body {
 }
 .retro-btn:active {
     transform: scale(0.95);
-    background: var(--muted-pink);
+    background: #79434a;
     color: #010101;
 }
 
@@ -559,18 +568,12 @@ body {
 .tv-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 6px;
-    color: #a84d6b;
+    color: #a27791;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: inline-block;
     position: relative;
     z-index: 2;
-    text-shadow: 0 0 2px #a84d6b;
-    animation: tvFlicker 0.1s infinite alternate;
-}
-@keyframes tvFlicker {
-    0% { opacity: 0.9; text-shadow: 0 0 1px #a84d6b; }
-    100% { opacity: 1; text-shadow: 0 0 4px #a84d6b, 0 0 1px #ff69b4; }
 }
 
 /* Support dots */
@@ -601,6 +604,21 @@ body {
     50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 3px currentColor; }
 }
 
+/* TEAM + DONATE — слитный блок */
+.team-donate-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.team-donate-wrapper .team-btn-journal {
+    margin-bottom: 0;
+}
+
+.team-donate-wrapper .donate-block-journal {
+    margin-top: 0;
+}
+
 /* Адаптация */
 @media (max-width: 700px) {
     .container { margin-top: 80px; gap: 40px; }
@@ -612,6 +630,7 @@ body {
     .team-choice span { font-size: 7px; }
     .donate-block-journal .donate-line { width: 200px; }
 }
+
 @media (max-width: 550px) {
     .nav-btn-img { width: 85px; }
     .tv-screen { left: -45px; padding: 3px 6px; }
@@ -619,90 +638,10 @@ body {
     .modal-close-btn { width: 44px !important; height: 44px !important; font-size: 24px !important; }
     .retro-btn { padding: 12px 20px !important; font-size: 9px !important; }
 }
+
 @media (max-width: 450px) {
     .team-choice img { width: 80px; height: 80px; }
     .team-selection { gap: 15px; }
     .donate-block-journal .donate-line { width: 180px; }
     .donate-block-journal .donate-label { font-size: 10px; }
-}
-
-/* TEAM + DONATE — слитный блок */
-.team-donate-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;  /* расстояние между кнопкой и полоской — маленькое */
-}
-
-.team-donate-wrapper .team-btn-journal {
-    margin-bottom: 0;
-}
-
-.team-donate-wrapper .donate-block-journal {
-    margin-top: 0;
-}
-
-/* ========== ПРОСТЫЕ ЦВЕТА: ТЕКСТ a27791, РАМКИ 79434a ========== */
-
-/* Текст везде, где нужно */
-.styler-label,
-.styler-input,
-.ticker,
-.merch-container span,
-.converter-block .styler-label,
-.converter-block .styler-input,
-.donate-label,
-.donate-sub,
-.paint-label,
-.team-btn-journal,
-.modal-title-text,
-.retro-btn,
-.tv-text {
-    color: #a27791 !important;
-}
-
-/* Рамки и контура */
-.styler-container,
-.merch-container,
-.converter-block .styler-container,
-.ticker-wrapper,
-.carousel,
-.art-square-frame,
-.forum-wrapper,
-.support-wrapper,
-.modal-content,
-.modal-header,
-.retro-btn,
-.team-btn-journal,
-.close-panel-btn,
-.tab-item {
-    border-color: #79434a !important;
-}
-
-/* Дополнительно: фон для полей ввода */
-.styler-input,
-.merch-container {
-    background: #0a0a0f;
-    border: 1px solid #79434a;
-}
-
-/* Убираем старые эффекты */
-.tv-text::before,
-.tv-text::after,
-.styler-label::before,
-.styler-label::after {
-    display: none !important;
-}
-
-/* Убираем свечения и тени */
-.tv-text,
-.styler-label,
-.paint-label,
-.donate-label,
-.team-btn-journal,
-.tab-item {
-    text-shadow: none !important;
-    background: none !important;
-    -webkit-background-clip: unset !important;
-    background-clip: unset !important;
-    animation: none !important;
 }
