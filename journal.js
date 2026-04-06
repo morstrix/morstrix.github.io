@@ -204,95 +204,148 @@ document.addEventListener('keydown', (e) => {
 
 // ========== КОНСТРУКТОР МЕРЧА ==========
 (function() {
+    // Рисуем пиксельную футболку с TV-текстурой
+    const tshirtCanvas = document.getElementById('tshirtCanvas');
+    if (tshirtCanvas) {
+        const ctx = tshirtCanvas.getContext('2d');
+        const size = 200;
+        
+        function drawPixelTshirt() {
+            ctx.clearRect(0, 0, size, size);
+            
+            // Тело футболки (пиксельное)
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(40, 50, 120, 130);
+            
+            // Светлая область для принта
+            ctx.fillStyle = '#2a2a2a';
+            ctx.fillRect(55, 70, 90, 90);
+            
+            // Рукава
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(20, 60, 25, 50);
+            ctx.fillRect(155, 60, 25, 50);
+            
+            // Вырез горловины
+            ctx.fillStyle = '#0a0a0f';
+            ctx.fillRect(80, 45, 40, 15);
+            
+            // Пиксельные линии (швы)
+            ctx.fillStyle = '#79434a';
+            ctx.fillRect(40, 50, 120, 2);
+            ctx.fillRect(40, 180, 120, 2);
+            ctx.fillRect(40, 50, 2, 130);
+            ctx.fillRect(158, 50, 2, 130);
+            
+            // TV-точки (хаотичные)
+            for (let i = 0; i < 300; i++) {
+                const x = Math.random() * size;
+                const y = Math.random() * size;
+                const brightness = Math.random() > 0.7 ? 0.6 : 0.2;
+                ctx.fillStyle = `rgba(255, 255, 255, ${brightness * 0.15})`;
+                ctx.fillRect(x, y, 1, 1);
+            }
+            
+            // Рандомные белые пиксели (эффект статики)
+            for (let i = 0; i < 50; i++) {
+                const x = Math.random() * size;
+                const y = Math.random() * size;
+                if (Math.random() > 0.95) {
+                    ctx.fillStyle = `rgba(255, 255, 255, 0.8)`;
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+        
+        drawPixelTshirt();
+        
+        // Обновляем текстуру каждые 2 секунды (TV-эффект)
+        setInterval(() => {
+            if (document.querySelector('.merch-block')) {
+                drawPixelTshirt();
+            }
+        }, 2000);
+    }
+    
+    // Логика загрузки принта
     const imageInput = document.getElementById('imageUpload');
     const printCanvas = document.getElementById('printCanvas');
     const resetBtn = document.getElementById('resetPrint');
     const uploadArea = document.getElementById('uploadArea');
     
-    if (!printCanvas) return;
-    
-    let ctx = printCanvas.getContext('2d');
-    let currentImage = null;
-    
-    // Настройка canvas (фиксированный размер)
-    printCanvas.width = 200;
-    printCanvas.height = 200;
-    clearCanvas();
-    
-    // Клик по области загрузки
-    if (uploadArea && imageInput) {
-        uploadArea.addEventListener('click', function(e) {
-            e.stopPropagation();
-            imageInput.click();
-        });
-    }
-    
-    // Обработка выбора файла
-    if (imageInput) {
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            if (!file.type.match('image.*')) {
-                alert('Please upload an image file (PNG, JPG, GIF)');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    currentImage = img;
-                    drawImageOnCanvas(img);
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-    
-    // Рисование картинки на canvas (с сохранением пропорций)
-    function drawImageOnCanvas(img) {
-        if (!ctx) return;
+    if (printCanvas) {
+        let ctx = printCanvas.getContext('2d');
+        printCanvas.width = 120;
+        printCanvas.height = 120;
+        clearPrint();
         
-        const canvasSize = 200;
-        const maxSize = 140;
-        
-        let width = img.width;
-        let height = img.height;
-        
-        // Масштабируем, чтобы влезло
-        if (width > height) {
-            if (width > maxSize) {
-                height = (height * maxSize) / width;
-                width = maxSize;
-            }
-        } else {
-            if (height > maxSize) {
-                width = (width * maxSize) / height;
-                height = maxSize;
-            }
+        function clearPrint() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
+            // Рисуем пунктирную рамку (место для принта)
+            ctx.strokeStyle = '#79434a';
+            ctx.setLineDash([5, 5]);
+            ctx.strokeRect(10, 10, printCanvas.width - 20, printCanvas.height - 20);
+            ctx.setLineDash([]);
         }
         
-        const x = (canvasSize - width) / 2;
-        const y = (canvasSize - height) / 2;
+        // Клик по области загрузки
+        if (uploadArea && imageInput) {
+            uploadArea.addEventListener('click', function(e) {
+                e.stopPropagation();
+                imageInput.click();
+            });
+        }
         
-        ctx.clearRect(0, 0, canvasSize, canvasSize);
-        ctx.drawImage(img, x, y, width, height);
-    }
-    
-    // Очистка canvas
-    function clearCanvas() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
-        currentImage = null;
-    }
-    
-    // Кнопка сброса
-    if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-            clearCanvas();
-            if (imageInput) imageInput.value = '';
-        });
+        // Загрузка файла
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (!file.type.match('image.*')) {
+                    alert('Please upload PNG, JPG or GIF');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        const maxSize = 90;
+                        
+                        if (width > height) {
+                            if (width > maxSize) {
+                                height = (height * maxSize) / width;
+                                width = maxSize;
+                            }
+                        } else {
+                            if (height > maxSize) {
+                                width = (width * maxSize) / height;
+                                height = maxSize;
+                            }
+                        }
+                        
+                        const x = (printCanvas.width - width) / 2;
+                        const y = (printCanvas.height - height) / 2;
+                        ctx.drawImage(img, x, y, width, height);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Кнопка сброса
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                clearPrint();
+                if (imageInput) imageInput.value = '';
+            });
+        }
     }
 })();
