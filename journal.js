@@ -211,51 +211,50 @@ document.addEventListener('keydown', (e) => {
         const size = 200;
         
         function drawPixelTshirt() {
-            ctx.clearRect(0, 0, size, size);
-            
-            // Тело футболки (пиксельное)
-            ctx.fillStyle = '#1a1a1a';
-            ctx.fillRect(40, 50, 120, 130);
-            
-            // Светлая область для принта
-            ctx.fillStyle = '#2a2a2a';
-            ctx.fillRect(55, 70, 90, 90);
-            
-            // Рукава
-            ctx.fillStyle = '#1a1a1a';
-            ctx.fillRect(20, 60, 25, 50);
-            ctx.fillRect(155, 60, 25, 50);
-            
-            // Вырез горловины
-            ctx.fillStyle = '#0a0a0f';
-            ctx.fillRect(80, 45, 40, 15);
-            
-            // Пиксельные линии (швы)
-            ctx.fillStyle = '#79434a';
-            ctx.fillRect(40, 50, 120, 2);
-            ctx.fillRect(40, 180, 120, 2);
-            ctx.fillRect(40, 50, 2, 130);
-            ctx.fillRect(158, 50, 2, 130);
-            
-            // TV-точки (хаотичные)
-            for (let i = 0; i < 300; i++) {
-                const x = Math.random() * size;
-                const y = Math.random() * size;
-                const brightness = Math.random() > 0.7 ? 0.6 : 0.2;
-                ctx.fillStyle = `rgba(255, 255, 255, ${brightness * 0.15})`;
-                ctx.fillRect(x, y, 1, 1);
-            }
-            
-            // Рандомные белые пиксели (эффект статики)
-            for (let i = 0; i < 50; i++) {
-                const x = Math.random() * size;
-                const y = Math.random() * size;
-                if (Math.random() > 0.95) {
-                    ctx.fillStyle = `rgba(255, 255, 255, 0.8)`;
-                    ctx.fillRect(x, y, 1, 1);
-                }
-            }
+    ctx.clearRect(0, 0, size, size);
+    
+    // Светлое тело футболки
+    ctx.fillStyle = '#d0d0d0';
+    ctx.fillRect(40, 50, 120, 130);
+    
+    // Область для принта (светлее)
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(55, 70, 90, 90);
+    
+    // Рукава
+    ctx.fillStyle = '#c0c0c0';
+    ctx.fillRect(20, 60, 25, 50);
+    ctx.fillRect(155, 60, 25, 50);
+    
+    // Вырез горловины
+    ctx.fillStyle = '#a0a0a0';
+    ctx.fillRect(80, 45, 40, 15);
+    
+    // Пиксельные линии (швы) — тёмные для контраста
+    ctx.fillStyle = '#555555';
+    ctx.fillRect(40, 50, 120, 2);
+    ctx.fillRect(40, 180, 120, 2);
+    ctx.fillRect(40, 50, 2, 130);
+    ctx.fillRect(158, 50, 2, 130);
+    
+    // Тёмные точки (TV-эффект) — редкие, чтобы не перегружать
+    for (let i = 0; i < 200; i++) {
+        const x = Math.random() * size;
+        const y = Math.random() * size;
+        ctx.fillStyle = `rgba(0, 0, 0, 0.15)`;
+        ctx.fillRect(x, y, 1, 1);
+    }
+    
+    // Редкие белые пиксели (блики)
+    for (let i = 0; i < 30; i++) {
+        const x = Math.random() * size;
+        const y = Math.random() * size;
+        if (Math.random() > 0.95) {
+            ctx.fillStyle = `rgba(255, 255, 255, 0.9)`;
+            ctx.fillRect(x, y, 1, 1);
         }
+    }
+}
         
         drawPixelTshirt();
         
