@@ -411,100 +411,71 @@ window.startPaintLogic = startPaintLogic;
     }
 })();
 
-// ========== MOOD КНОПКА И ПИНТЕРЕСТ ПОПАПЫ ==========
+// ========== MOOD КНОПКА И ПИНТЕРЕСТ ПОПАП ==========
 (function() {
     const moodBtn = document.getElementById('moodBtn');
-    const dropdown = document.getElementById('moodDropdown');
-    const arrow = document.querySelector('.mood-arrow');
+    const pinterestModal = document.getElementById('pinterestModal');
+    const modalTitle = document.getElementById('pinterestModalTitle');
+    const pinEmbedLink = document.getElementById('pinEmbedLink');
     
-    if (moodBtn) {
-        moodBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (dropdown) dropdown.classList.toggle('open');
-            if (arrow) arrow.classList.toggle('open');
-        });
-    }
-    
-    document.addEventListener('click', (e) => {
-        if (dropdown && moodBtn && !moodBtn.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.remove('open');
-            if (arrow) arrow.classList.remove('open');
-        }
-    });
-    
-    const boardUrls = {
-        'print': 'https://www.pinterest.com/morstrix/print/',
-        'design': 'https://www.pinterest.com/morstrix/design/',
-        'diygear': 'https://www.pinterest.com/morstrix/diy-gear/',
-        'tattoo': 'https://www.pinterest.com/morstrix/tattoo/',
-        'barbering': 'https://www.pinterest.com/morstrix/barbering/'
+    // Ссылки на Pinterest папки (ЗАМЕНИТЕ НА СВОИ)
+    const boards = {
+        print: { name: 'PRINT', url: 'https://www.pinterest.com/morstrix/print/' },
+        design: { name: 'DESIGN', url: 'https://www.pinterest.com/morstrix/design/' },
+        diygear: { name: 'DIY GEAR', url: 'https://www.pinterest.com/morstrix/diy-gear/' },
+        tattoo: { name: 'TATTOO', url: 'https://www.pinterest.com/morstrix/tattoo/' },
+        barbering: { name: 'BARBERING', url: 'https://www.pinterest.com/morstrix/barbering/' }
     };
     
-    const categories = document.querySelectorAll('.mood-category');
-    categories.forEach(cat => {
-        cat.addEventListener('click', () => {
-            const board = cat.getAttribute('data-board');
-            const boardUrl = boardUrls[board];
-            if (boardUrl) {
-                openPinterestModal(boardUrl);
-            }
-            if (dropdown) dropdown.classList.remove('open');
-            if (arrow) arrow.classList.remove('open');
+    let currentBoard = 'print';
+    
+    // Открытие модалки при клике на MOOD
+    if (moodBtn && pinterestModal) {
+        moodBtn.addEventListener('click', () => {
+            pinterestModal.classList.add('active');
+            loadBoard(currentBoard);
+        });
+    }
+    
+    // Переключение вкладок
+    const tabs = document.querySelectorAll('.pin-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentBoard = tab.getAttribute('data-board');
+            loadBoard(currentBoard);
         });
     });
     
-    function openPinterestModal(boardUrl) {
-        const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'modal-overlay';
-        modalOverlay.style.display = 'flex';
+    // Загрузка Pinterest виджета
+    function loadBoard(boardId) {
+        const board = boards[boardId];
+        if (!board) return;
         
-        modalOverlay.innerHTML = `
-            <div class="modal-content pinterest-modal">
-                <div class="modal-header">
-                    <span class="modal-title-text">PINTEREST BOARD</span>
-                    <button class="modal-close-btn">✜</button>
-                </div>
-                <div class="pin-embed" id="pinEmbedContainer">
-                    <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="300" href="${boardUrl}"></a>
-                </div>
-            </div>
-        `;
+        modalTitle.textContent = board.name.toUpperCase();
+        pinEmbedLink.href = board.url;
         
-        document.body.appendChild(modalOverlay);
-        
-        if (!window.PinUtils) {
-            const script = document.createElement('script');
-            script.src = 'https://assets.pinterest.com/js/pinit.js';
-            script.async = true;
-            script.onload = () => {
-                if (window.PinUtils) window.PinUtils.build();
-            };
-            document.body.appendChild(script);
+        // Перезагружаем Pinterest виджет
+        if (window.PinUtils) {
+            pinEmbedLink.innerHTML = '';
+            window.PinUtils.build(pinEmbedLink);
         } else {
-            setTimeout(() => window.PinUtils.build(), 100);
+            // Если PinUtils ещё не загружен, ждём
+            const checkPinUtils = setInterval(() => {
+                if (window.PinUtils) {
+                    clearInterval(checkPinUtils);
+                    window.PinUtils.build(pinEmbedLink);
+                }
+            }, 100);
         }
-        
-        const closeBtn = modalOverlay.querySelector('.modal-close-btn');
-        const closeModal = () => modalOverlay.remove();
-        closeBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
+    }
+    
+    // Загрузка Pinterest скрипта, если ещё нет
+    if (!window.PinUtils) {
+        const script = document.createElement('script');
+        script.src = 'https://assets.pinterest.com/js/pinit.js';
+        script.async = true;
+        document.body.appendChild(script);
     }
 })();
-
-// Плавный переход для ссылок
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('#') && !link.target && !href.startsWith('javascript:')) {
-            e.preventDefault();
-            if (navigator.vibrate) navigator.vibrate(10);
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.2s ease';
-            setTimeout(() => {
-                window.location.href = href;
-            }, 200);
-        }
-    });
-});
