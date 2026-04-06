@@ -109,3 +109,91 @@ document.addEventListener('keydown', (e) => {
 // Конвертер пиксель/см – уже обработан в inline-скрипте
 // TEAM и DONATE – уже обработаны в inline-скрипте
 // (оставляем существующий код без изменений)
+
+
+// ========== MOOD КНОПКА И ПИНТЕРЕСТ ПОПАПЫ ==========
+(function() {
+    const moodBtn = document.getElementById('moodBtn');
+    const dropdown = document.getElementById('moodDropdown');
+    const arrow = document.querySelector('.mood-arrow');
+    
+    // Открыть/закрыть выпадающий список
+    if (moodBtn) {
+        moodBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+            if (arrow) arrow.classList.toggle('open');
+        });
+    }
+    
+    // Закрыть dropdown при клике вне
+    document.addEventListener('click', (e) => {
+        if (dropdown && moodBtn && !moodBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+            if (arrow) arrow.classList.remove('open');
+        }
+    });
+    
+    // Обработка клика по категории
+    const categories = document.querySelectorAll('.mood-category');
+    categories.forEach(cat => {
+        cat.addEventListener('click', () => {
+            const board = cat.getAttribute('data-board');
+            openPinterestModal(board);
+            // Закрываем dropdown после выбора
+            dropdown.classList.remove('open');
+            if (arrow) arrow.classList.remove('open');
+        });
+    });
+    
+    // Функция открытия модалки с Pinterest
+    function openPinterestModal(board) {
+        // Ссылки на Pinterest папки (замените на свои)
+        const boardUrls = {
+            'print-design-tattoo': 'https://www.pinterest.com/morstrix/print-design-tattoo/',
+            'diygear-barbering': 'https://www.pinterest.com/morstrix/diygear-barbering/'
+        };
+        
+        const boardUrl = boardUrls[board] || 'https://www.pinterest.com/morstrix/';
+        
+        // Создаём модалку
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.style.display = 'flex';
+        
+        modalOverlay.innerHTML = `
+            <div class="modal-content pinterest-modal">
+                <div class="modal-header">
+                    <span class="modal-title-text">PINTEREST BOARD</span>
+                    <button class="modal-close-btn">✜</button>
+                </div>
+                <div class="pin-embed" id="pinEmbedContainer">
+                    <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="300" href="${boardUrl}"></a>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modalOverlay);
+        
+        // Загружаем Pinterest скрипт, если ещё не загружен
+        if (!window.PinUtils) {
+            const script = document.createElement('script');
+            script.src = 'https://assets.pinterest.com/js/pinit.js';
+            script.async = true;
+            script.onload = () => {
+                if (window.PinUtils) window.PinUtils.build();
+            };
+            document.body.appendChild(script);
+        } else {
+            setTimeout(() => window.PinUtils.build(), 100);
+        }
+        
+        // Закрытие модалки
+        const closeBtn = modalOverlay.querySelector('.modal-close-btn');
+        const closeModal = () => modalOverlay.remove();
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+    }
+})();
