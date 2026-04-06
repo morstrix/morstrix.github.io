@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MORSTRIX | FORUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="journal.css">
+    <style>
+        /* Переопределяем стили для форума */
+        body {
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden;
+            background: black;
+        }
+        .forum-layout {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+        /* Левая панель вкладок */
+        .forum-tabs {
+            width: 220px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            border-right: 2px solid #a84d6b;
+            padding: 20px 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid #a84d6b;
+            color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn:hover, .tab-btn.active {
+            background: #a84d6b;
+            color: black;
+            border-color: white;
+        }
+        /* Правая область контента */
+        .forum-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
+        }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .tab-pane h2 {
+            font-size: 16px;
+            color: #a84d6b;
+            border-bottom: 2px solid #a84d6b;
+            display: inline-block;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+        }
+        .tab-pane p {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+        /* Кнопка "ЧЕК ФУЛ" */
+        .full-check-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: black;
+            border: 2px solid #a84d6b;
+            color: #ffb7c7;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            z-index: 100;
+            transition: 0.2s;
+        }
+        .full-check-btn:hover {
+            background: #a84d6b;
+            color: black;
+            box-shadow: 0 0 10px #a84d6b;
+        }
+        /* Адаптив */
+        @media (max-width: 700px) {
+            .forum-tabs { width: 170px; }
+            .tab-btn { font-size: 7px; padding: 8px 4px; }
+            .forum-content { padding: 15px; }
+            .tab-pane h2 { font-size: 12px; }
+            .tab-pane p { font-size: 8px; }
+            .full-check-btn { font-size: 7px; padding: 6px 12px; }
+        }
+        @media (max-width: 500px) {
+            .forum-tabs { width: 130px; }
+            .tab-btn { font-size: 6px; }
+        }
+        /* Кастомный скролл */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #a84d6b; }
+    </style>
+</head>
+<body>
+    <canvas id="neuro-bg"></canvas>
+
+    <div class="forum-layout">
+        <!-- Левая панель с вкладками -->
+        <div class="forum-tabs">
+            <button class="tab-btn" data-tab="wellness">ВЕЛНЕС</button>
+            <button class="tab-btn" data-tab="interior">ДИУЖИР/INTERIOR</button>
+            <button class="tab-btn" data-tab="radio">РАДІО</button>
+            <button class="tab-btn" data-tab="itai">IT/AI</button>
+            <button class="tab-btn" data-tab="english">ENGLISH</button>
+            <button class="tab-btn" data-tab="design">DESIGN/PRINT</button>
+            <button class="tab-btn" data-tab="tattoo">TATTOO</button>
+            <button class="tab-btn" data-tab="money">MONEY</button>
+            <button class="tab-btn" data-tab="barbering">BARBERING</button>
+        </div>
+
+        <!-- Правая область с контентом -->
+        <div class="forum-content">
+            <div id="wellness" class="tab-pane">
+                <h2>🌿 ВЕЛНЕС</h2>
+                <p>Йога, медитации, дыхательные практики, осознанность. Здесь будут появляться полезные материалы и обсуждения.</p>
+            </div>
+            <div id="interior" class="tab-pane">
+                <h2>🛋️ ДИУЖИР / INTERIOR</h2>
+                <p>Дизайн интерьеров, мебель, декор, атмосфера. Делитесь своими проектами и идеями.</p>
+            </div>
+            <div id="radio" class="tab-pane">
+                <h2>📻 РАДІО</h2>
+                <p>Музыка, подкасты, плейлисты, радиоэфиры. Обсуждаем треки и новинки.</p>
+            </div>
+            <div id="itai" class="tab-pane">
+                <h2>🤖 IT / AI</h2>
+                <p>Нейросети, программирование, железо, софт. Технологии будущего.</p>
+            </div>
+            <div id="english" class="tab-pane">
+                <h2>📖 ENGLISH</h2>
+                <p>Изучение английского, ресурсы, разговорный клуб, лексика и мемы.</p>
+            </div>
+            <div id="design" class="tab-pane">
+                <h2>🎨 DESIGN / PRINT</h2>
+                <p>Графический дизайн, типографика, печатная продукция, креатив.</p>
+            </div>
+            <div id="tattoo" class="tab-pane">
+                <h2>💉 TATTOO</h2>
+                <p>Тату-культура, эскизы, мастера, уход за татуировками.</p>
+            </div>
+            <div id="money" class="tab-pane">
+                <h2>💰 MONEY</h2>
+                <p>Финансовая грамотность, заработок, инвестиции, криптовалюты.</p>
+            </div>
+            <div id="barbering" class="tab-pane">
+                <h2>✂️ BARBERING</h2>
+                <p>Барберинг, стрижки, стиль, уход за бородой.</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="fullCheckBtn" class="full-check-btn">ЧЕК ФУЛ</button>
+
+    <script src="background.js"></script>
+    <script>
+        // Управление вкладками
+        const tabs = document.querySelectorAll('.tab-btn');
+        const panes = document.querySelectorAll('.tab-pane');
+
+        function activateTab(tabId) {
+            panes.forEach(pane => pane.classList.remove('active'));
+            const activePane = document.getElementById(tabId);
+            if (activePane) activePane.classList.add('active');
+
+            tabs.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        tabs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                activateTab(tabId);
+            });
+        });
+
+        // Активируем первую вкладку по умолчанию
+        if (tabs.length) activateTab(tabs[0].getAttribute('data-tab'));
+
+        // Кнопка "ЧЕК ФУЛ" — дисклеймер с переходом в Telegram
+        const fullBtn = document.getElementById('fullCheckBtn');
+        fullBtn.addEventListener('click', () => {
+            // Создаём модалку прямо в DOM
+            const modalDiv = document.createElement('div');
+            modalDiv.className = 'modal-overlay';
+            modalDiv.style.display = 'flex';
+            modalDiv.style.alignItems = 'center';
+            modalDiv.style.justifyContent = 'center';
+            modalDiv.style.position = 'fixed';
+            modalDiv.style.inset = '0';
+            modalDiv.style.backgroundColor = 'rgba(0,0,0,0.95)';
+            modalDiv.style.backdropFilter = 'blur(8px)';
+            modalDiv.style.zIndex = '10000';
+
+            modalDiv.innerHTML = `
+                <div class="modal-content" style="max-width: 500px; background: #a27791; border: 2px solid #ffb7c7;">
+                    <div class="modal-header" style="background: #79434a; padding: 10px;">
+                        <span class="modal-title-text" style="font-size: 10px;">FULL DISCLAIMER</span>
+                        <button class="modal-close-btn" style="background: black; color: white; border: 1px solid #ffb7c7;">✜</button>
+                    </div>
+                    <div class="modal-inner" style="padding: 20px; text-align: center;">
+                        <p style="font-size: 9px; line-height: 1.6; margin-bottom: 30px;">⚠️ Внимание! Вы переходите в Telegram-форум. Весь контент предназначен для лиц старше 18 лет. Нажимая "ENTER", вы подтверждаете согласие.<br><br>➡️ TELEGRAM FORUM ⬅️</p>
+                        <a href="https://t.me/morstrix" target="_blank" class="retro-btn" style="background: black; color: #ffb7c7; border: 2px solid #ffb7c7;">ENTER</a>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modalDiv);
+
+            // Закрытие по крестику или клику на overlay
+            const closeBtn = modalDiv.querySelector('.modal-close-btn');
+            const closeOverlay = (e) => {
+                if (e.target === modalDiv || e.target === closeBtn) {
+                    modalDiv.remove();
+                }
+            };
+            modalDiv.addEventListener('click', closeOverlay);
+            closeBtn.addEventListener('click', () => modalDiv.remove());
+        });
+    </script>
+</body>
+</html>
