@@ -201,3 +201,92 @@ document.addEventListener('keydown', (e) => {
         });
     }
 })();
+
+// ========== КОНСТРУКТОР МЕРЧА ==========
+(function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageUpload');
+    const printCanvas = document.getElementById('printCanvas');
+    const resetBtn = document.getElementById('resetPrint');
+    let ctx = printCanvas ? printCanvas.getContext('2d') : null;
+    let uploadedImage = null;
+    
+    // Настройка canvas
+    if (printCanvas) {
+        printCanvas.width = 200;
+        printCanvas.height = 200;
+        ctx = printCanvas.getContext('2d');
+        clearCanvas();
+    }
+    
+    // Клик по области загрузки
+    if (uploadArea) {
+        uploadArea.addEventListener('click', () => {
+            imageInput.click();
+        });
+    }
+    
+    // Обработка загрузки файла
+    if (imageInput) {
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/gif')) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedImage = img;
+                        drawImageOnCanvas(img);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload PNG, JPG or GIF file');
+            }
+        });
+    }
+    
+    // Рисование картинки на canvas (с сохранением пропорций)
+    function drawImageOnCanvas(img) {
+        if (!ctx || !printCanvas) return;
+        
+        const canvasSize = 200;
+        const maxWidth = 140;
+        const maxHeight = 140;
+        
+        let width = img.width;
+        let height = img.height;
+        
+        // Масштабируем, чтобы влезло
+        if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+        }
+        if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+        }
+        
+        const x = (canvasSize - width) / 2;
+        const y = (canvasSize - height) / 2;
+        
+        ctx.clearRect(0, 0, canvasSize, canvasSize);
+        ctx.drawImage(img, x, y, width, height);
+    }
+    
+    // Очистка canvas
+    function clearCanvas() {
+        if (!ctx || !printCanvas) return;
+        ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
+        uploadedImage = null;
+    }
+    
+    // Кнопка сброса
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            clearCanvas();
+            if (imageInput) imageInput.value = '';
+        });
+    }
+})();
