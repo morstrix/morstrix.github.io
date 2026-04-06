@@ -40,7 +40,7 @@ if (radioBtn && radioModal) {
     });
 }
 
-// Font styler (маленькие капители)
+// Font styler
 const smallCapsMap = {
     'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ',
     'i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ',
@@ -99,12 +99,7 @@ if (dynamicWordSpan) {
     }, 2000);
 }
 
-// Pinterest
-window.onload = () => { 
-    if(window.PinUtils) window.PinUtils.build(); 
-};
-
-// Закрытие модалок по Escape
+// Закрытие по Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const activeModals = document.querySelectorAll('.modal-overlay.active');
@@ -112,7 +107,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// TEAM кнопка
+// TEAM кнопка (дублируем, но основной скрипт уже есть в HTML, оставим для надёжности)
 const teamBtn = document.getElementById('teamBtnJournal');
 const teamModal = document.getElementById('teamModalJournal');
 if (teamBtn && teamModal) {
@@ -122,15 +117,7 @@ if (teamBtn && teamModal) {
     };
 }
 
-// DONATE
-const donateBlock = document.getElementById('donateJournal');
-if (donateBlock) {
-    donateBlock.onclick = () => {
-        window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
-    };
-}
-
-// Конвертер PX ↔ CM
+// Конвертер PX ↔ CM (дублируется в HTML, но пусть будет)
 const pxInput = document.getElementById('pxInput');
 const cmInput = document.getElementById('cmInput');
 if (pxInput && cmInput) {
@@ -151,7 +138,6 @@ function startPaintLogic() {
     const l1 = document.getElementById('layer1');
     const l2 = document.getElementById('layer2');
     if (!l1 || !l2) return;
-    
     if (l1.dataset.paintInitialized === 'true') return;
     l1.dataset.paintInitialized = 'true';
     
@@ -163,32 +149,25 @@ function startPaintLogic() {
         if (!area) return;
         const width = area.offsetWidth;
         const height = area.offsetHeight;
-        
         if (width === 0 || height === 0) return;
-        
         l1.width = width;
         l1.height = height;
         l2.width = width;
         l2.height = height;
-        
         ctx1.fillStyle = "#000";
         ctx1.fillRect(0, 0, width, height);
-        
         [ctx1, ctx2].forEach(c => { 
             c.lineCap = 'round'; 
             c.lineJoin = 'round';
             c.lineWidth = 4; 
         });
     };
-    
     resizeCanvases();
-    
     let resizeObserver;
     if (window.ResizeObserver) {
         resizeObserver = new ResizeObserver(() => resizeCanvases());
         if (area) resizeObserver.observe(area);
     }
-    
     window.addEventListener('resize', () => setTimeout(resizeCanvases, 50));
 
     let currentCtx = ctx2;
@@ -197,13 +176,9 @@ function startPaintLogic() {
     let redoStack = [];
 
     const saveState = () => {
-        undoStack.push({
-            l1: l1.toDataURL(), 
-            l2: l2.toDataURL()
-        });
+        undoStack.push({ l1: l1.toDataURL(), l2: l2.toDataURL() });
         if (undoStack.length > 20) undoStack.shift();
         redoStack = [];
-        
         const undoBtn = document.getElementById('pUndo');
         const redoBtn = document.getElementById('pRedo');
         if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
@@ -213,7 +188,6 @@ function startPaintLogic() {
     const restoreState = (state) => {
         const img1 = new Image();
         const img2 = new Image();
-        
         return new Promise((resolve) => {
             img1.onload = () => {
                 ctx1.clearRect(0, 0, l1.width, l1.height);
@@ -232,7 +206,6 @@ function startPaintLogic() {
     const getCoords = (e) => {
         const r = l2.getBoundingClientRect();
         let cx, cy;
-        
         if (e.touches) {
             cx = e.touches[0].clientX;
             cy = e.touches[0].clientY;
@@ -240,16 +213,12 @@ function startPaintLogic() {
             cx = e.clientX;
             cy = e.clientY;
         }
-        
         const scaleX = l2.width / r.width;
         const scaleY = l2.height / r.height;
-        
         let x = (cx - r.left) * scaleX;
         let y = (cy - r.top) * scaleY;
-        
         x = Math.min(Math.max(x, 0), l2.width);
         y = Math.min(Math.max(y, 0), l2.height);
-        
         return { x, y };
     };
 
@@ -260,7 +229,6 @@ function startPaintLogic() {
         currentCtx.beginPath();
         currentCtx.moveTo(p.x, p.y);
     };
-
     const draw = (e) => {
         if (!isDrawing) return;
         e.preventDefault();
@@ -272,7 +240,6 @@ function startPaintLogic() {
         currentCtx.beginPath();
         currentCtx.moveTo(p.x, p.y);
     };
-
     const endDrawing = () => {
         if (isDrawing) {
             isDrawing = false;
@@ -297,7 +264,6 @@ function startPaintLogic() {
             saveState();
         };
     }
-
     const undoBtn = document.getElementById('pUndo');
     if (undoBtn) {
         undoBtn.onclick = async () => {
@@ -306,14 +272,12 @@ function startPaintLogic() {
                 redoStack.push(current);
                 const prev = undoStack[undoStack.length - 1];
                 await restoreState(prev);
-                
                 const redoBtnEl = document.getElementById('pRedo');
                 if (redoBtnEl) redoBtnEl.disabled = false;
                 if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
             }
         };
     }
-
     const redoBtn = document.getElementById('pRedo');
     if (redoBtn) {
         redoBtn.onclick = async () => {
@@ -321,14 +285,12 @@ function startPaintLogic() {
                 const next = redoStack.pop();
                 undoStack.push(next);
                 await restoreState(next);
-                
                 if (redoBtn) redoBtn.disabled = redoStack.length === 0;
                 const undoBtnEl = document.getElementById('pUndo');
                 if (undoBtnEl) undoBtnEl.disabled = false;
             }
         };
     }
-
     const layersBtn = document.getElementById('btnLayersOpen');
     if (layersBtn) {
         layersBtn.onclick = () => {
@@ -336,7 +298,6 @@ function startPaintLogic() {
             if (popup) popup.classList.add('active');
         };
     }
-    
     document.querySelectorAll('.layer-row').forEach(row => {
         row.onclick = () => {
             document.querySelectorAll('.layer-row').forEach(r => r.classList.remove('active'));
@@ -346,10 +307,8 @@ function startPaintLogic() {
             if (popup) popup.classList.remove('active');
         };
     });
-    
     saveState();
 }
-
 window.startPaintLogic = startPaintLogic;
 
 // ========== КОНСТРУКТОР МЕРЧА ==========
@@ -358,27 +317,21 @@ window.startPaintLogic = startPaintLogic;
     const printCanvas = document.getElementById('printCanvas');
     const resetBtn = document.getElementById('resetPrint');
     const uploadArea = document.getElementById('uploadArea');
-    
     if (!printCanvas) return;
-    
     const ctx = printCanvas.getContext('2d');
     printCanvas.width = 200;
     printCanvas.height = 200;
-    
     function clearPrint() {
         ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
-        // Рисуем пунктирную рамку
         ctx.strokeStyle = '#79434a';
         ctx.setLineDash([5, 5]);
         ctx.strokeRect(50, 50, 100, 100);
         ctx.setLineDash([]);
     }
     clearPrint();
-    
     if (uploadArea && imageInput) {
         uploadArea.addEventListener('click', () => imageInput.click());
     }
-    
     if (imageInput) {
         imageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -402,7 +355,6 @@ window.startPaintLogic = startPaintLogic;
             reader.readAsDataURL(file);
         });
     }
-    
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             clearPrint();
@@ -411,71 +363,40 @@ window.startPaintLogic = startPaintLogic;
     }
 })();
 
-// ========== MOOD КНОПКА И ПИНТЕРЕСТ ПОПАП ==========
+// ========== MOOD КНОПКА (простой Pinterest, один виджет) ==========
 (function() {
     const moodBtn = document.getElementById('moodBtn');
     const pinterestModal = document.getElementById('pinterestModal');
-    const modalTitle = document.getElementById('pinterestModalTitle');
-    const pinEmbedLink = document.getElementById('pinEmbedLink');
-    
-    // Ссылки на Pinterest папки (ЗАМЕНИТЕ НА СВОИ)
-    const boards = {
-        print: { name: 'PRINT', url: 'https://www.pinterest.com/morstrix/print/' },
-        design: { name: 'DESIGN', url: 'https://www.pinterest.com/morstrix/design/' },
-        diygear: { name: 'DIY GEAR', url: 'https://www.pinterest.com/morstrix/diy-gear/' },
-        tattoo: { name: 'TATTOO', url: 'https://www.pinterest.com/morstrix/tattoo/' },
-        barbering: { name: 'BARBERING', url: 'https://www.pinterest.com/morstrix/barbering/' }
-    };
-    
-    let currentBoard = 'print';
-    
-    // Открытие модалки при клике на MOOD
     if (moodBtn && pinterestModal) {
         moodBtn.addEventListener('click', () => {
             pinterestModal.classList.add('active');
-            loadBoard(currentBoard);
+            if (!window.PinUtils) {
+                const script = document.createElement('script');
+                script.src = 'https://assets.pinterest.com/js/pinit.js';
+                script.async = true;
+                script.onload = () => {
+                    if (window.PinUtils) window.PinUtils.build();
+                };
+                document.body.appendChild(script);
+            } else {
+                setTimeout(() => window.PinUtils.build(), 100);
+            }
         });
-    }
-    
-    // Переключение вкладок
-    const tabs = document.querySelectorAll('.pin-tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            currentBoard = tab.getAttribute('data-board');
-            loadBoard(currentBoard);
-        });
-    });
-    
-    // Загрузка Pinterest виджета
-    function loadBoard(boardId) {
-        const board = boards[boardId];
-        if (!board) return;
-        
-        modalTitle.textContent = board.name.toUpperCase();
-        pinEmbedLink.href = board.url;
-        
-        // Перезагружаем Pinterest виджет
-        if (window.PinUtils) {
-            pinEmbedLink.innerHTML = '';
-            window.PinUtils.build(pinEmbedLink);
-        } else {
-            // Если PinUtils ещё не загружен, ждём
-            const checkPinUtils = setInterval(() => {
-                if (window.PinUtils) {
-                    clearInterval(checkPinUtils);
-                    window.PinUtils.build(pinEmbedLink);
-                }
-            }, 100);
-        }
-    }
-    
-    // Загрузка Pinterest скрипта, если ещё нет
-    if (!window.PinUtils) {
-        const script = document.createElement('script');
-        script.src = 'https://assets.pinterest.com/js/pinit.js';
-        script.async = true;
-        document.body.appendChild(script);
     }
 })();
+
+// Плавный переход для ссылок
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !link.target && !href.startsWith('javascript:')) {
+            e.preventDefault();
+            if (navigator.vibrate) navigator.vibrate(10);
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.2s ease';
+            setTimeout(() => {
+                window.location.href = href;
+            }, 200);
+        }
+    });
+});
