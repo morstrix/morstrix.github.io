@@ -134,12 +134,24 @@ document.addEventListener('keydown', (e) => {
         }
     });
     
+    // Ссылки на Pinterest папки (ЗАМЕНИТЕ НА СВОИ)
+    const boardUrls = {
+        'print': 'https://www.pinterest.com/morstrix/print/',
+        'design': 'https://www.pinterest.com/morstrix/design/',
+        'diygear': 'https://www.pinterest.com/morstrix/diy-gear/',
+        'tattoo': 'https://www.pinterest.com/morstrix/tattoo/',
+        'barbering': 'https://www.pinterest.com/morstrix/barbering/'
+    };
+    
     // Обработка клика по категории
     const categories = document.querySelectorAll('.mood-category');
     categories.forEach(cat => {
         cat.addEventListener('click', () => {
             const board = cat.getAttribute('data-board');
-            openPinterestModal(board);
+            const boardUrl = boardUrls[board];
+            if (boardUrl) {
+                openPinterestModal(boardUrl);
+            }
             // Закрываем dropdown после выбора
             dropdown.classList.remove('open');
             if (arrow) arrow.classList.remove('open');
@@ -147,15 +159,7 @@ document.addEventListener('keydown', (e) => {
     });
     
     // Функция открытия модалки с Pinterest
-    function openPinterestModal(board) {
-        // Ссылки на Pinterest папки (замените на свои)
-        const boardUrls = {
-            'print-design-tattoo': 'https://www.pinterest.com/morstrix/print-design-tattoo/',
-            'diygear-barbering': 'https://www.pinterest.com/morstrix/diygear-barbering/'
-        };
-        
-        const boardUrl = boardUrls[board] || 'https://www.pinterest.com/morstrix/';
-        
+    function openPinterestModal(boardUrl) {
         // Создаём модалку
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'modal-overlay';
