@@ -1,5 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — финальная версия
+   JOURNAL.CSS — финальная версия с движением плашки
 ============================================ */
 
 :root {
@@ -567,7 +567,7 @@ body {
     border-left: 3px solid #ffb7c7;
 }
 
-/* TV Screen (Forum) */
+/* TV Screen (Forum) – плавное хаотичное движение всей плашки */
 .forum-wrapper {
     display: flex;
     flex-direction: column;
@@ -588,7 +588,7 @@ body {
     left: -80px;
     transform: translateY(-50%);
     background: #0a0a0a;
-    padding: 5px 6px;  /* уже на 30% */
+    padding: 5px 6px;
     z-index: 20;
     border: 2px solid #4a4a4a;
     border-top-color: #6a6a6a;
@@ -596,6 +596,14 @@ body {
     box-shadow: inset 0 0 0 1px #1a1a1a, inset 0 0 8px rgba(0,0,0,0.8), 0 0 0 2px #0a0a0a, 2px 2px 0px 0px rgba(0,0,0,0.4);
     border-radius: 4px 4px 5px 4px;
     white-space: nowrap;
+    animation: slowChaoticMove 4s infinite alternate ease-in-out;
+}
+@keyframes slowChaoticMove {
+    0% { transform: translateY(-50%) translate(0px, 0px); }
+    25% { transform: translateY(-50%) translate(3px, -2px); }
+    50% { transform: translateY(-50%) translate(-2px, 4px); }
+    75% { transform: translateY(-50%) translate(4px, 2px); }
+    100% { transform: translateY(-50%) translate(-3px, -3px); }
 }
 .tv-scanlines {
     position: absolute;
@@ -620,20 +628,12 @@ body {
 .tv-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 6px;
-    color: #cc7b3e;   /* грязно-оранжевый */
+    color: #cc7b3e;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: inline-block;
     position: relative;
     z-index: 2;
-    animation: chaoticMove 0.8s infinite alternate ease-in-out;
-}
-@keyframes chaoticMove {
-    0% { transform: translate(0px, 0px); }
-    25% { transform: translate(3px, -2px); }
-    50% { transform: translate(-2px, 4px); }
-    75% { transform: translate(4px, 2px); }
-    100% { transform: translate(-3px, -3px); }
 }
 
 /* Support dots */
