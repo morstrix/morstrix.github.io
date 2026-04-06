@@ -887,28 +887,70 @@ body {
     margin: 0 auto;
 }
 
-#tshirtBase {
+/* CSS-футболка */
+.tshirt-css {
+    position: relative;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    image-rendering: crisp-edges;
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 1;
 }
 
+.tshirt-body {
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+    background: #ffffff;
+    border-radius: 80px 80px 30px 30px;
+    box-shadow: inset 0 0 0 2px #ccc, 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tshirt-neck {
+    position: absolute;
+    top: 25px;
+    left: 80px;
+    width: 40px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 0 0 20px 20px;
+    box-shadow: inset 0 2px 0 0 #ccc;
+    z-index: 2;
+}
+
+.tshirt-sleeve {
+    position: absolute;
+    top: 45px;
+    width: 45px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 30px;
+    box-shadow: inset 0 0 0 2px #ccc;
+}
+
+.tshirt-sleeve.left {
+    left: 5px;
+    transform: rotate(-15deg);
+}
+
+.tshirt-sleeve.right {
+    right: 5px;
+    transform: rotate(15deg);
+}
+
+/* Canvas для принта */
 .print-canvas {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    z-index: 2;
+    width: 120px;
+    height: 120px;
+    z-index: 3;
     pointer-events: none;
 }
 
+/* Область загрузки */
 .upload-area {
     cursor: pointer;
     width: 100%;
@@ -965,21 +1007,10 @@ body {
         height: 160px;
     }
     .print-canvas {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
     }
     .upload-text {
         font-size: 7px;
-    }
-}
-
-@media (max-width: 550px) {
-    .tshirt-preview {
-        width: 140px;
-        height: 140px;
-    }
-    .print-canvas {
-        width: 70px;
-        height: 70px;
     }
 }
