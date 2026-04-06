@@ -1,5 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — полные стили для страницы журнала
+   JOURNAL.CSS — финальная версия
 ============================================ */
 
 :root {
@@ -168,14 +168,6 @@ body {
     filter: brightness(1.2);
 }
 
-/* Pinterest */
-.pin-wrapper {
-    padding: 0;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 450px;
-}
-
 /* Art */
 .art-square-frame {
     width: 100%;
@@ -202,12 +194,19 @@ body {
 
 /* Font styler */
 .styler-label {
-    font-size: 7px;
+    font-size: 9px;
     color: #a27791;
     margin-bottom: 10px;
     text-align: left;
     max-width: 450px;
     margin-inline: auto;
+    transition: all 0.2s ease;
+    animation: gentlePulse 2s infinite;
+}
+@keyframes gentlePulse {
+    0% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); letter-spacing: 2px; }
+    100% { opacity: 0.8; transform: scale(1); }
 }
 .styler-container {
     display: flex;
@@ -225,9 +224,14 @@ body {
     border: none;
     color: #a27791;
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
+    font-size: 11px;
     padding: 12px 5px;
     outline: none;
+    transition: all 0.2s;
+}
+.styler-input:focus {
+    transform: scale(1.02);
+    color: #c48a6b;
 }
 .styler-icon-btn {
     background: transparent;
@@ -250,21 +254,18 @@ body {
     max-width: 450px;
     margin: 0 auto;
 }
-
 .tshirt-preview {
     position: relative;
     width: 200px;
     height: 200px;
     margin: 0 auto;
 }
-
 .tshirt-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
 }
-
 .print-canvas {
     position: absolute;
     top: 50%;
@@ -274,15 +275,13 @@ body {
     height: 90px;
     pointer-events: none;
 }
-
 .upload-area {
     cursor: pointer;
     width: 100%;
 }
-
 .dashed-box {
     border: 2px dashed #79434a;
-    background: #0a0a0f;
+    background: #2a2a2a;
     padding: 20px;
     text-align: center;
     transition: 0.2s;
@@ -291,24 +290,15 @@ body {
     align-items: center;
     gap: 10px;
 }
-
 .dashed-box:hover {
+    background: #3a3a3a;
     border-color: #a27791;
-    background: #1a1a1f;
 }
-
-.upload-icon {
-    font-size: 24px;
-    filter: grayscale(1);
-}
-
 .upload-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
-    color: #a27791;
+    color: #cccccc;
 }
-
-/* Новая серая кнопка CLEAR */
 .reset-btn {
     background: #888888;
     border: 1px solid #555555;
@@ -324,9 +314,10 @@ body {
     color: #000;
 }
 
-/* Converter блок */
+/* Converter */
 .converter-block .styler-label {
-    color: #a27791;
+    font-size: 9px;
+    animation: gentlePulse 2s infinite;
 }
 .converter-block .styler-container {
     border-color: #79434a;
@@ -362,10 +353,17 @@ body {
     padding: 10px 0;
 }
 .donate-block-journal .donate-line {
-    width: 320px;
-    height: 2px;
+    width: 100%;
+    max-width: 380px;
+    height: 3px;
     background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
     margin: 0 auto 15px;
+    transition: width 0.3s ease;
+    animation: stretchLine 3s infinite alternate;
+}
+@keyframes stretchLine {
+    0% { width: 60%; max-width: 300px; }
+    100% { width: 100%; max-width: 380px; }
 }
 .donate-block-journal .donate-label {
     font-size: 12px;
@@ -590,16 +588,12 @@ body {
     left: -80px;
     transform: translateY(-50%);
     background: #0a0a0a;
-    padding: 5px 10px;
+    padding: 5px 6px;  /* уже на 30% */
     z-index: 20;
     border: 2px solid #4a4a4a;
     border-top-color: #6a6a6a;
     border-left-color: #6a6a6a;
-    box-shadow: 
-        inset 0 0 0 1px #1a1a1a,
-        inset 0 0 8px rgba(0, 0, 0, 0.8),
-        0 0 0 2px #0a0a0a,
-        2px 2px 0px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 0 1px #1a1a1a, inset 0 0 8px rgba(0,0,0,0.8), 0 0 0 2px #0a0a0a, 2px 2px 0px 0px rgba(0,0,0,0.4);
     border-radius: 4px 4px 5px 4px;
     white-space: nowrap;
 }
@@ -626,12 +620,20 @@ body {
 .tv-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 6px;
-    color: #a27791;
+    color: #cc7b3e;   /* грязно-оранжевый */
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: inline-block;
     position: relative;
     z-index: 2;
+    animation: chaoticMove 0.8s infinite alternate ease-in-out;
+}
+@keyframes chaoticMove {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(3px, -2px); }
+    50% { transform: translate(-2px, 4px); }
+    75% { transform: translate(4px, 2px); }
+    100% { transform: translate(-3px, -3px); }
 }
 
 /* Support dots */
@@ -644,12 +646,12 @@ body {
 .support-dots {
     display: flex;
     justify-content: center;
-    gap: 5px;
-    margin-top: 6px;
+    gap: 12px;
+    margin-top: 8px;
 }
 .sdot {
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     display: inline-block;
     animation: dotFade 1.5s ease-in-out infinite;
@@ -662,7 +664,7 @@ body {
     50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 3px currentColor; }
 }
 
-/* TEAM + DONATE — слитный блок */
+/* TEAM + DONATE */
 .team-donate-wrapper {
     display: flex;
     flex-direction: column;
@@ -675,7 +677,7 @@ body {
     margin-top: 0;
 }
 
-/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ (увеличенные) ========== */
+/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ ========== */
 .ticker-wrapper,
 .carousel-section,
 .nav-grid,
@@ -691,13 +693,13 @@ body {
     margin-bottom: 0;
 }
 
-/* ========== MOOD КНОПКА (ЗАКРАШЕНА) ========== */
+/* ========== MOOD КНОПКА (закрашена) ========== */
 .pin-mood-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: #79434a;  /* закрашенный фон */
+    background: #79434a;
     border: 1px solid #79434a;
     padding: 12px 24px;
     cursor: pointer;
@@ -711,19 +713,19 @@ body {
 .mood-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    color: #000000;  /* чёрный текст */
+    color: #000000;
     letter-spacing: 2px;
 }
 .mood-arrow {
     font-size: 12px;
-    color: #000000;  /* чёрная стрелка */
+    color: #000000;
     transition: transform 0.3s ease;
 }
 .mood-arrow.open {
     transform: rotate(180deg);
 }
 
-/* ========== ПИНТЕРЕСТ МОДАЛКА С ВКЛАДКАМИ ========== */
+/* Pinterest модалка (один виджет) */
 .pinterest-modal {
     max-width: 550px;
     width: 90%;
@@ -731,36 +733,13 @@ body {
     border: 2px solid #79434a;
     padding: 0;
 }
-.pinterest-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    padding: 15px;
-    background: #050508;
-    border-bottom: 1px solid #79434a;
-}
-.pin-tab {
-    background: transparent;
-    border: 1px solid #79434a;
-    color: #a27791;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.pin-tab:hover, .pin-tab.active {
-    background: #79434a;
-    color: #000;
-}
 .pin-embed-container {
     padding: 20px;
-    min-height: 350px;
+    min-height: 400px;
     background: #000;
 }
 
-/* ========== РЯД ХЕШТЕГОВ ========== */
+/* Хештег #layoutporn */
 .hashtag-row {
     display: flex;
     flex-wrap: wrap;
@@ -770,28 +749,26 @@ body {
 }
 .hashtag {
     font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    color: #a27791;
+    font-size: 11px;
+    color: #888888;
     letter-spacing: 0.5px;
     transition: 0.2s;
     cursor: pointer;
 }
 .hashtag:hover {
-    color: #79434a;
+    color: #aaaaaa;
 }
 
-/* ========== АДАПТАЦИЯ ========== */
+/* Адаптация */
 @media (max-width: 700px) {
     .container { margin-top: 80px; gap: 40px; }
     .nav-btn-img { width: 100px; }
-    .tv-screen { left: -55px; padding: 4px 8px; }
+    .tv-screen { left: -55px; padding: 4px 6px; }
     .tv-text { font-size: 5px; }
     .team-selection { gap: 20px; }
     .team-choice img { width: 100px; height: 100px; }
     .team-choice span { font-size: 7px; }
-    .donate-block-journal .donate-line { width: 200px; }
-
-    /* Уменьшаем отступы на планшете */
+    .donate-block-journal .donate-line { max-width: 300px; }
     .ticker-wrapper,
     .carousel-section,
     .nav-grid,
@@ -804,19 +781,16 @@ body {
         margin-bottom: 55px;
     }
     .hashtag-row { gap: 12px; }
-    .hashtag { font-size: 6px; }
+    .hashtag { font-size: 9px; }
 }
-
 @media (max-width: 550px) {
     .nav-btn-img { width: 85px; }
-    .tv-screen { left: -45px; padding: 3px 6px; }
+    .tv-screen { left: -45px; padding: 3px 5px; }
     .tv-text { font-size: 4.5px; }
     .modal-close-btn { width: 44px !important; height: 44px !important; font-size: 24px !important; }
     .retro-btn { padding: 12px 20px !important; font-size: 9px !important; }
 }
-
 @media (max-width: 500px) {
-    /* Ещё меньше отступы на телефонах */
     .ticker-wrapper,
     .carousel-section,
     .nav-grid,
@@ -829,17 +803,15 @@ body {
         margin-bottom: 40px;
     }
 }
-
 @media (max-width: 450px) {
     .team-choice img { width: 80px; height: 80px; }
     .team-selection { gap: 15px; }
-    .donate-block-journal .donate-line { width: 180px; }
+    .donate-block-journal .donate-line { max-width: 250px; }
     .donate-block-journal .donate-label { font-size: 10px; }
     .hashtag-row { gap: 10px; }
-    .hashtag { font-size: 5px; }
+    .hashtag { font-size: 8px; }
 }
-
 @media (max-width: 380px) {
     .hashtag-row { gap: 8px; }
-    .hashtag { font-size: 4.5px; }
+    .hashtag { font-size: 7px; }
 }
