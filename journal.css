@@ -641,8 +641,15 @@ body {
 .support-dots {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 24px;           /* дальше друг от друга */
     margin-top: 8px;
+}
+.sdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: dotFade 1.5s ease-in-out infinite;
 }
 .sdot {
     width: 8px;
