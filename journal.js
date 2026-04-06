@@ -1,5 +1,6 @@
 // ==================== JOURNAL.JS ====================
 
+// Карусель картинок
 const slides = document.querySelectorAll('#mainCarousel img');
 let currentSlide = 0;
 setInterval(() => {
@@ -8,6 +9,7 @@ setInterval(() => {
     slides[currentSlide].classList.add('active');
 }, 3500);
 
+// Открытие модалок
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active');
@@ -28,6 +30,7 @@ function closeModalDirect(id) {
     if (modal) modal.classList.remove('active');
 }
 
+// Радио кнопка
 const radioBtn = document.getElementById('radioBtn');
 const radioModal = document.getElementById('radioModal');
 if (radioBtn && radioModal) {
@@ -37,6 +40,7 @@ if (radioBtn && radioModal) {
     });
 }
 
+// Font styler (маленькие капители)
 const smallCapsMap = {
     'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ',
     'i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ',
@@ -69,14 +73,18 @@ function copyStylerText() {
     }
 }
 
+// RSS тикер
 const ticker = document.getElementById('rssTicker');
 if (ticker) {
     const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
     ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
 }
 
+// Динамическое слово на TV-экране
 const wordsList = [
-    "wellness", "radio", "travel"
+    "wellness", "diy gear", "radio", "design", 
+    "interior", "print", "travel", "IT/AI", 
+    "english", "tattoo", "money", "barbering"
 ];
 const dynamicWordSpan = document.getElementById('dynamicWord');
 if (dynamicWordSpan) {
@@ -91,10 +99,12 @@ if (dynamicWordSpan) {
     }, 2000);
 }
 
+// Pinterest
 window.onload = () => { 
     if(window.PinUtils) window.PinUtils.build(); 
 };
 
+// Закрытие модалок по Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const activeModals = document.querySelectorAll('.modal-overlay.active');
@@ -102,12 +112,304 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ===== ДОПОЛНИТЕЛЬНАЯ ЛОГИКА ДЛЯ НОВЫХ БЛОКОВ =====
-// Конструктор мерча – уже обработан через onclick в HTML
-// Конвертер пиксель/см – уже обработан в inline-скрипте
-// TEAM и DONATE – уже обработаны в inline-скрипте
-// (оставляем существующий код без изменений)
+// TEAM кнопка
+const teamBtn = document.getElementById('teamBtnJournal');
+const teamModal = document.getElementById('teamModalJournal');
+if (teamBtn && teamModal) {
+    teamBtn.onclick = (e) => {
+        e.stopPropagation();
+        teamModal.classList.add('active');
+    };
+}
 
+// DONATE
+const donateBlock = document.getElementById('donateJournal');
+if (donateBlock) {
+    donateBlock.onclick = () => {
+        window.open('https://send.monobank.ua/jar/8q9Kk2hkDV', '_blank');
+    };
+}
+
+// Конвертер PX ↔ CM
+const pxInput = document.getElementById('pxInput');
+const cmInput = document.getElementById('cmInput');
+if (pxInput && cmInput) {
+    pxInput.addEventListener('input', () => {
+        let px = parseFloat(pxInput.value);
+        if (!isNaN(px)) cmInput.value = (px / 37.8).toFixed(2);
+        else cmInput.value = '';
+    });
+    cmInput.addEventListener('input', () => {
+        let cm = parseFloat(cmInput.value);
+        if (!isNaN(cm)) pxInput.value = Math.round(cm * 37.8);
+        else pxInput.value = '';
+    });
+}
+
+// ========== PAINT.EXE ЛОГИКА ==========
+function startPaintLogic() {
+    const l1 = document.getElementById('layer1');
+    const l2 = document.getElementById('layer2');
+    if (!l1 || !l2) return;
+    
+    if (l1.dataset.paintInitialized === 'true') return;
+    l1.dataset.paintInitialized = 'true';
+    
+    const ctx1 = l1.getContext('2d', { willReadFrequently: true });
+    const ctx2 = l2.getContext('2d', { willReadFrequently: true });
+    const area = document.getElementById('paintArea');
+
+    const resizeCanvases = () => {
+        if (!area) return;
+        const width = area.offsetWidth;
+        const height = area.offsetHeight;
+        
+        if (width === 0 || height === 0) return;
+        
+        l1.width = width;
+        l1.height = height;
+        l2.width = width;
+        l2.height = height;
+        
+        ctx1.fillStyle = "#000";
+        ctx1.fillRect(0, 0, width, height);
+        
+        [ctx1, ctx2].forEach(c => { 
+            c.lineCap = 'round'; 
+            c.lineJoin = 'round';
+            c.lineWidth = 4; 
+        });
+    };
+    
+    resizeCanvases();
+    
+    let resizeObserver;
+    if (window.ResizeObserver) {
+        resizeObserver = new ResizeObserver(() => resizeCanvases());
+        if (area) resizeObserver.observe(area);
+    }
+    
+    window.addEventListener('resize', () => setTimeout(resizeCanvases, 50));
+
+    let currentCtx = ctx2;
+    let isDrawing = false;
+    let undoStack = [];
+    let redoStack = [];
+
+    const saveState = () => {
+        undoStack.push({
+            l1: l1.toDataURL(), 
+            l2: l2.toDataURL()
+        });
+        if (undoStack.length > 20) undoStack.shift();
+        redoStack = [];
+        
+        const undoBtn = document.getElementById('pUndo');
+        const redoBtn = document.getElementById('pRedo');
+        if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
+        if (redoBtn) redoBtn.disabled = true;
+    };
+
+    const restoreState = (state) => {
+        const img1 = new Image();
+        const img2 = new Image();
+        
+        return new Promise((resolve) => {
+            img1.onload = () => {
+                ctx1.clearRect(0, 0, l1.width, l1.height);
+                ctx1.drawImage(img1, 0, 0);
+                img2.onload = () => {
+                    ctx2.clearRect(0, 0, l2.width, l2.height);
+                    ctx2.drawImage(img2, 0, 0);
+                    resolve();
+                };
+                img2.src = state.l2;
+            };
+            img1.src = state.l1;
+        });
+    };
+
+    const getCoords = (e) => {
+        const r = l2.getBoundingClientRect();
+        let cx, cy;
+        
+        if (e.touches) {
+            cx = e.touches[0].clientX;
+            cy = e.touches[0].clientY;
+        } else {
+            cx = e.clientX;
+            cy = e.clientY;
+        }
+        
+        const scaleX = l2.width / r.width;
+        const scaleY = l2.height / r.height;
+        
+        let x = (cx - r.left) * scaleX;
+        let y = (cy - r.top) * scaleY;
+        
+        x = Math.min(Math.max(x, 0), l2.width);
+        y = Math.min(Math.max(y, 0), l2.height);
+        
+        return { x, y };
+    };
+
+    const startDrawing = (e) => {
+        e.preventDefault();
+        isDrawing = true;
+        const p = getCoords(e);
+        currentCtx.beginPath();
+        currentCtx.moveTo(p.x, p.y);
+    };
+
+    const draw = (e) => {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const p = getCoords(e);
+        const colorPicker = document.getElementById('pColor');
+        if (colorPicker) currentCtx.strokeStyle = colorPicker.value;
+        currentCtx.lineTo(p.x, p.y);
+        currentCtx.stroke();
+        currentCtx.beginPath();
+        currentCtx.moveTo(p.x, p.y);
+    };
+
+    const endDrawing = () => {
+        if (isDrawing) {
+            isDrawing = false;
+            saveState();
+        }
+    };
+
+    l2.addEventListener('mousedown', startDrawing);
+    window.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', endDrawing);
+    l2.addEventListener('touchstart', startDrawing, { passive: false });
+    l2.addEventListener('touchmove', draw, { passive: false });
+    l2.addEventListener('touchend', endDrawing);
+    l2.addEventListener('touchcancel', endDrawing);
+
+    const clearBtn = document.getElementById('pClear');
+    if (clearBtn) {
+        clearBtn.onclick = () => {
+            ctx2.clearRect(0, 0, l2.width, l2.height);
+            ctx1.fillStyle = "#000";
+            ctx1.fillRect(0, 0, l1.width, l1.height);
+            saveState();
+        };
+    }
+
+    const undoBtn = document.getElementById('pUndo');
+    if (undoBtn) {
+        undoBtn.onclick = async () => {
+            if (undoStack.length > 1) {
+                const current = undoStack.pop();
+                redoStack.push(current);
+                const prev = undoStack[undoStack.length - 1];
+                await restoreState(prev);
+                
+                const redoBtnEl = document.getElementById('pRedo');
+                if (redoBtnEl) redoBtnEl.disabled = false;
+                if (undoBtn) undoBtn.disabled = undoStack.length <= 1;
+            }
+        };
+    }
+
+    const redoBtn = document.getElementById('pRedo');
+    if (redoBtn) {
+        redoBtn.onclick = async () => {
+            if (redoStack.length > 0) {
+                const next = redoStack.pop();
+                undoStack.push(next);
+                await restoreState(next);
+                
+                if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+                const undoBtnEl = document.getElementById('pUndo');
+                if (undoBtnEl) undoBtnEl.disabled = false;
+            }
+        };
+    }
+
+    const layersBtn = document.getElementById('btnLayersOpen');
+    if (layersBtn) {
+        layersBtn.onclick = () => {
+            const popup = document.getElementById('layersPopup');
+            if (popup) popup.classList.add('active');
+        };
+    }
+    
+    document.querySelectorAll('.layer-row').forEach(row => {
+        row.onclick = () => {
+            document.querySelectorAll('.layer-row').forEach(r => r.classList.remove('active'));
+            row.classList.add('active');
+            currentCtx = (row.dataset.id === "1") ? ctx1 : ctx2;
+            const popup = document.getElementById('layersPopup');
+            if (popup) popup.classList.remove('active');
+        };
+    });
+    
+    saveState();
+}
+
+window.startPaintLogic = startPaintLogic;
+
+// ========== КОНСТРУКТОР МЕРЧА ==========
+(function() {
+    const imageInput = document.getElementById('imageUpload');
+    const printCanvas = document.getElementById('printCanvas');
+    const resetBtn = document.getElementById('resetPrint');
+    const uploadArea = document.getElementById('uploadArea');
+    
+    if (!printCanvas) return;
+    
+    const ctx = printCanvas.getContext('2d');
+    printCanvas.width = 200;
+    printCanvas.height = 200;
+    
+    function clearPrint() {
+        ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
+        // Рисуем пунктирную рамку
+        ctx.strokeStyle = '#79434a';
+        ctx.setLineDash([5, 5]);
+        ctx.strokeRect(50, 50, 100, 100);
+        ctx.setLineDash([]);
+    }
+    clearPrint();
+    
+    if (uploadArea && imageInput) {
+        uploadArea.addEventListener('click', () => imageInput.click());
+    }
+    
+    if (imageInput) {
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.match('image.*')) {
+                alert('Please upload PNG, JPG or GIF');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
+                    const size = 90;
+                    const x = (printCanvas.width - size) / 2;
+                    const y = (printCanvas.height - size) / 2;
+                    ctx.drawImage(img, x, y, size, size);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            clearPrint();
+            if (imageInput) imageInput.value = '';
+        });
+    }
+})();
 
 // ========== MOOD КНОПКА И ПИНТЕРЕСТ ПОПАПЫ ==========
 (function() {
@@ -115,16 +417,14 @@ document.addEventListener('keydown', (e) => {
     const dropdown = document.getElementById('moodDropdown');
     const arrow = document.querySelector('.mood-arrow');
     
-    // Открыть/закрыть выпадающий список
     if (moodBtn) {
         moodBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            dropdown.classList.toggle('open');
+            if (dropdown) dropdown.classList.toggle('open');
             if (arrow) arrow.classList.toggle('open');
         });
     }
     
-    // Закрыть dropdown при клике вне
     document.addEventListener('click', (e) => {
         if (dropdown && moodBtn && !moodBtn.contains(e.target) && !dropdown.contains(e.target)) {
             dropdown.classList.remove('open');
@@ -132,7 +432,6 @@ document.addEventListener('keydown', (e) => {
         }
     });
     
-    // Ссылки на Pinterest папки (ЗАМЕНИТЕ НА СВОИ)
     const boardUrls = {
         'print': 'https://www.pinterest.com/morstrix/print/',
         'design': 'https://www.pinterest.com/morstrix/design/',
@@ -141,7 +440,6 @@ document.addEventListener('keydown', (e) => {
         'barbering': 'https://www.pinterest.com/morstrix/barbering/'
     };
     
-    // Обработка клика по категории
     const categories = document.querySelectorAll('.mood-category');
     categories.forEach(cat => {
         cat.addEventListener('click', () => {
@@ -150,15 +448,12 @@ document.addEventListener('keydown', (e) => {
             if (boardUrl) {
                 openPinterestModal(boardUrl);
             }
-            // Закрываем dropdown после выбора
-            dropdown.classList.remove('open');
+            if (dropdown) dropdown.classList.remove('open');
             if (arrow) arrow.classList.remove('open');
         });
     });
     
-    // Функция открытия модалки с Pinterest
     function openPinterestModal(boardUrl) {
-        // Создаём модалку
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'modal-overlay';
         modalOverlay.style.display = 'flex';
@@ -177,7 +472,6 @@ document.addEventListener('keydown', (e) => {
         
         document.body.appendChild(modalOverlay);
         
-        // Загружаем Pinterest скрипт, если ещё не загружен
         if (!window.PinUtils) {
             const script = document.createElement('script');
             script.src = 'https://assets.pinterest.com/js/pinit.js';
@@ -190,7 +484,6 @@ document.addEventListener('keydown', (e) => {
             setTimeout(() => window.PinUtils.build(), 100);
         }
         
-        // Закрытие модалки
         const closeBtn = modalOverlay.querySelector('.modal-close-btn');
         const closeModal = () => modalOverlay.remove();
         closeBtn.addEventListener('click', closeModal);
@@ -200,186 +493,18 @@ document.addEventListener('keydown', (e) => {
     }
 })();
 
-// ========== КОНСТРУКТОР МЕРЧА ==========
-(function() {
-    // Рисуем пиксельную футболку с TV-текстурой
-    const tshirtCanvas = document.getElementById('tshirtCanvas');
-    if (tshirtCanvas) {
-        const ctx = tshirtCanvas.getContext('2d');
-        const size = 200;
-        
-        function drawPixelTshirt() {
-    ctx.clearRect(0, 0, size, size);
-    
-    // ===== ОСНОВНОЙ СИЛУЭТ ФУТБОЛКИ =====
-    ctx.fillStyle = '#e8e8e8';
-    
-    // Тело (прямоугольник срезанными углами)
-    ctx.fillRect(45, 55, 110, 125);
-    
-    // Скругление углов (пиксельное)
-    ctx.fillStyle = '#e8e8e8';
-    ctx.fillRect(42, 58, 3, 3);
-    ctx.fillRect(155, 58, 3, 3);
-    ctx.fillRect(42, 175, 3, 3);
-    ctx.fillRect(155, 175, 3, 3);
-    
-    // Рукава
-    ctx.fillStyle = '#d4d4d4';
-    ctx.fillRect(25, 65, 20, 55);
-    ctx.fillRect(155, 65, 20, 55);
-    
-    // Скругление рукавов
-    ctx.fillRect(22, 68, 3, 3);
-    ctx.fillRect(175, 68, 3, 3);
-    ctx.fillRect(22, 115, 3, 3);
-    ctx.fillRect(175, 115, 3, 3);
-    
-   // Круглый вырез
-ctx.fillStyle = '#cccccc';
-ctx.fillRect(82, 48, 36, 10);
-ctx.fillRect(86, 42, 28, 8);
-    
-    // ===== ДЕТАЛИ И ШВЫ =====
-    ctx.fillStyle = '#666666';
-    
-    // Линия плеч
-    ctx.fillRect(45, 55, 110, 2);
-    
-    // Боковые швы
-    ctx.fillRect(45, 55, 2, 125);
-    ctx.fillRect(153, 55, 2, 125);
-    
-    // Линия низа
-    ctx.fillRect(45, 177, 110, 3);
-    
-    // Линия на рукавах
-    ctx.fillRect(25, 65, 20, 2);
-    ctx.fillRect(155, 65, 20, 2);
-    ctx.fillRect(25, 118, 20, 2);
-    ctx.fillRect(155, 118, 20, 2);
-    
-    // ===== ЗОНА ДЛЯ ПРИНТА (СВЕТЛЫЙ КВАДРАТ) =====
-    ctx.fillStyle = '#fafafa';
-    ctx.fillRect(65, 85, 70, 70);
-    
-    // Рамка зоны принта (пунктир)
-    ctx.fillStyle = '#999999';
-    for (let i = 0; i < 70; i += 6) {
-        ctx.fillRect(65 + i, 85, 3, 2);
-        ctx.fillRect(65 + i, 153, 3, 2);
-        ctx.fillRect(65, 85 + i, 2, 3);
-        ctx.fillRect(133, 85 + i, 2, 3);
-    }
-    
-    // ===== TV-ЭФФЕКТ (ТОЧКИ) =====
-    for (let i = 0; i < 150; i++) {
-        const x = Math.random() * size;
-        const y = Math.random() * size;
-        ctx.fillStyle = `rgba(0, 0, 0, 0.08)`;
-        ctx.fillRect(x, y, 1, 1);
-    }
-    
-    // Редкие белые блики
-    for (let i = 0; i < 40; i++) {
-        const x = Math.random() * size;
-        const y = Math.random() * size;
-        if (Math.random() > 0.96) {
-            ctx.fillStyle = `rgba(255, 255, 255, 0.7)`;
-            ctx.fillRect(x, y, 1, 1);
+// Плавный переход для ссылок
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !link.target && !href.startsWith('javascript:')) {
+            e.preventDefault();
+            if (navigator.vibrate) navigator.vibrate(10);
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.2s ease';
+            setTimeout(() => {
+                window.location.href = href;
+            }, 200);
         }
-    }
-}
-        
-        drawPixelTshirt();
-        
-        // Обновляем текстуру каждые 2 секунды (TV-эффект)
-        setInterval(() => {
-            if (document.querySelector('.merch-block')) {
-                drawPixelTshirt();
-            }
-        }, 2000);
-    }
-    
-    // Логика загрузки принта
-    const imageInput = document.getElementById('imageUpload');
-    const printCanvas = document.getElementById('printCanvas');
-    const resetBtn = document.getElementById('resetPrint');
-    const uploadArea = document.getElementById('uploadArea');
-    
-    if (printCanvas) {
-        let ctx = printCanvas.getContext('2d');
-        printCanvas.width = 120;
-        printCanvas.height = 120;
-        clearPrint();
-        
-        function clearPrint() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
-            // Рисуем пунктирную рамку (место для принта)
-            ctx.strokeStyle = '#79434a';
-            ctx.setLineDash([5, 5]);
-            ctx.strokeRect(10, 10, printCanvas.width - 20, printCanvas.height - 20);
-            ctx.setLineDash([]);
-        }
-        
-        // Клик по области загрузки
-        if (uploadArea && imageInput) {
-            uploadArea.addEventListener('click', function(e) {
-                e.stopPropagation();
-                imageInput.click();
-            });
-        }
-        
-        // Загрузка файла
-        if (imageInput) {
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                
-                if (!file.type.match('image.*')) {
-                    alert('Please upload PNG, JPG or GIF');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
-                        
-                        let width = img.width;
-                        let height = img.height;
-                        const maxSize = 90;
-                        
-                        if (width > height) {
-                            if (width > maxSize) {
-                                height = (height * maxSize) / width;
-                                width = maxSize;
-                            }
-                        } else {
-                            if (height > maxSize) {
-                                width = (width * maxSize) / height;
-                                height = maxSize;
-                            }
-                        }
-                        
-                        const x = (printCanvas.width - width) / 2;
-                        const y = (printCanvas.height - height) / 2;
-                        ctx.drawImage(img, x, y, width, height);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-        
-        // Кнопка сброса
-        if (resetBtn) {
-            resetBtn.addEventListener('click', function() {
-                clearPrint();
-                if (imageInput) imageInput.value = '';
-            });
-        }
-    }
-})();
+    });
+});
