@@ -204,68 +204,74 @@ document.addEventListener('keydown', (e) => {
 
 // ========== КОНСТРУКТОР МЕРЧА ==========
 (function() {
-    const uploadArea = document.getElementById('uploadArea');
     const imageInput = document.getElementById('imageUpload');
     const printCanvas = document.getElementById('printCanvas');
     const resetBtn = document.getElementById('resetPrint');
-    let ctx = printCanvas ? printCanvas.getContext('2d') : null;
-    let uploadedImage = null;
+    const uploadArea = document.getElementById('uploadArea');
     
-    // Настройка canvas
-    if (printCanvas) {
-        printCanvas.width = 200;
-        printCanvas.height = 200;
-        ctx = printCanvas.getContext('2d');
-        clearCanvas();
-    }
+    if (!printCanvas) return;
+    
+    let ctx = printCanvas.getContext('2d');
+    let currentImage = null;
+    
+    // Настройка canvas (фиксированный размер)
+    printCanvas.width = 200;
+    printCanvas.height = 200;
+    clearCanvas();
     
     // Клик по области загрузки
-    if (uploadArea) {
-        uploadArea.addEventListener('click', () => {
+    if (uploadArea && imageInput) {
+        uploadArea.addEventListener('click', function(e) {
+            e.stopPropagation();
             imageInput.click();
         });
     }
     
-    // Обработка загрузки файла
+    // Обработка выбора файла
     if (imageInput) {
-        imageInput.addEventListener('change', (e) => {
+        imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (file && (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/gif')) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        uploadedImage = img;
-                        drawImageOnCanvas(img);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Please upload PNG, JPG or GIF file');
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                alert('Please upload an image file (PNG, JPG, GIF)');
+                return;
             }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImage = img;
+                    drawImageOnCanvas(img);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
         });
     }
     
     // Рисование картинки на canvas (с сохранением пропорций)
     function drawImageOnCanvas(img) {
-        if (!ctx || !printCanvas) return;
+        if (!ctx) return;
         
         const canvasSize = 200;
-        const maxWidth = 140;
-        const maxHeight = 140;
+        const maxSize = 140;
         
         let width = img.width;
         let height = img.height;
         
         // Масштабируем, чтобы влезло
-        if (width > maxWidth) {
-            height = (height * maxWidth) / width;
-            width = maxWidth;
-        }
-        if (height > maxHeight) {
-            width = (width * maxHeight) / height;
-            height = maxHeight;
+        if (width > height) {
+            if (width > maxSize) {
+                height = (height * maxSize) / width;
+                width = maxSize;
+            }
+        } else {
+            if (height > maxSize) {
+                width = (width * maxSize) / height;
+                height = maxSize;
+            }
         }
         
         const x = (canvasSize - width) / 2;
@@ -277,14 +283,14 @@ document.addEventListener('keydown', (e) => {
     
     // Очистка canvas
     function clearCanvas() {
-        if (!ctx || !printCanvas) return;
+        if (!ctx) return;
         ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
-        uploadedImage = null;
+        currentImage = null;
     }
     
     // Кнопка сброса
     if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
+        resetBtn.addEventListener('click', function() {
             clearCanvas();
             if (imageInput) imageInput.value = '';
         });
