@@ -381,7 +381,7 @@ async function saveHighScore(finalScore) {
     if (!playerName) playerName = 'ANON';
     playerName = playerName.slice(0, 10);
     
-    // Ждём, пока Firebase загрузится
+    // Проверяем, загружен ли Firebase
     if (!window.addDoc || !window.collection || !window.db) {
         console.error('Firebase не загружен');
         alert('Ошибка: Firebase не инициализирован. Обновите страницу.');
@@ -400,5 +400,3 @@ async function saveHighScore(finalScore) {
         alert('Не удалось сохранить рекорд. Проверьте интернет.');
     }
 }
-
-window.addEventListener('DOMContentLoaded', init);
