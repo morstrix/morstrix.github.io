@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx1.fillStyle = '#000000';
         ctx1.fillRect(0, 0, layer1.width, layer1.height);
-        
-        // Прозрачный верхний слой
-        ctx2.clearRect(0, 0, layer2.width, layer2.height);
+        ctx2.lineCap = 'round';
+        ctx2.lineJoin = 'round';
         saveState();
     }
 
@@ -68,9 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.touches) e.preventDefault();
         const pos = getPos(e);
         activeCtx.lineTo(pos.x, pos.y);
-        activeCtx.strokeStyle = colorPicker.value;
+        activeCtx.strokeStyle = colorPicker.value || '#a27791';
         activeCtx.lineWidth = 5;
-        activeCtx.lineCap = 'round';
         activeCtx.stroke();
     };
 
@@ -88,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchmove', move, {passive: false});
     window.addEventListener('touchend', stop);
 
-    // УПРАВЛЕНИЕ КНОПКАМИ
+    // Кнопка UNDO (Назад)
     document.getElementById('pUndo').onclick = () => {
         if (step > 0) {
             step--;
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState();
     };
 
-    // КАНАЛЫ (СЛОИ)
+    // Переключение КАНАЛОВ
     document.getElementById('btnLayersOpen').onclick = () => {
         layersPopup.style.display = layersPopup.style.display === 'block' ? 'none' : 'block';
     };
