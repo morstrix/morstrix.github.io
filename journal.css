@@ -1,6 +1,5 @@
 /* ============================================
-   JOURNAL.CSS — финальная версия с движением плашки
-   + фикс горизонтального скролла + TEAM как MOOD
+   JOURNAL.CSS — финальная версия с изменениями
 ============================================ */
 
 :root {
@@ -32,7 +31,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden !important;
     position: relative;
-    touch-action: pan-y pinch-zoom; /* запрет горизонтального скролла на iOS */
+    touch-action: pan-y pinch-zoom;
 }
 
 #neuro-bg {
@@ -129,7 +128,7 @@ body {
     transition: 0.2s;
 }
 
-/* Ticker */
+/* Ticker — уменьшенная скорость */
 .ticker-wrapper {
     padding: 12px 0;
     overflow: hidden;
@@ -141,7 +140,7 @@ body {
     display: inline-block;
     font-size: 8px;
     color: #a27791;
-    animation: scrollTicker 40s linear infinite;
+    animation: scrollTicker 80s linear infinite; /* было 40s */
 }
 .ticker span {
     margin-right: 50px;
@@ -186,7 +185,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.5;
 }
 .paint-label {
     font-size: 6px;
@@ -196,7 +194,7 @@ body {
     text-transform: uppercase;
 }
 
-/* Font styler */
+/* Font styler, Merch, Converter — убрана анимация названия */
 .styler-label {
     font-size: 9px;
     color: #a27791;
@@ -204,13 +202,7 @@ body {
     text-align: left;
     max-width: 450px;
     margin-inline: auto;
-    transition: all 0.2s ease;
-    animation: gentlePulse 2s infinite;
-}
-@keyframes gentlePulse {
-    0% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.02); letter-spacing: 2px; }
-    100% { opacity: 0.8; transform: scale(1); }
+    /* animation removed */
 }
 .styler-container {
     display: flex;
@@ -249,7 +241,7 @@ body {
     filter: brightness(0) invert(1);
 }
 
-/* Merch Constructor */
+/* Merch Constructor — поднят квадратик */
 .merch-constructor {
     display: flex;
     flex-direction: column;
@@ -262,7 +254,7 @@ body {
     position: relative;
     width: 200px;
     height: 200px;
-    margin: 0 auto;
+    margin: -15px auto 0 auto; /* подняли выше */
 }
 .tshirt-img {
     width: 100%;
@@ -318,10 +310,10 @@ body {
     color: #000;
 }
 
-/* Converter */
+/* Converter — убрана анимация */
 .converter-block .styler-label {
     font-size: 9px;
-    animation: gentlePulse 2s infinite;
+    /* animation removed */
 }
 .converter-block .styler-container {
     border-color: #79434a;
@@ -330,7 +322,7 @@ body {
     color: #a27791;
 }
 
-/* TEAM Button – теперь такой же, как MOOD */
+/* TEAM Button – такой же, как MOOD */
 .team-btn-journal {
     display: flex;
     align-items: center;
@@ -352,7 +344,7 @@ body {
     background: #a84d6b;
 }
 
-/* DONATE Block */
+/* DONATE Block — элегантная полоска */
 .donate-block-journal {
     text-align: center;
     cursor: pointer;
@@ -362,15 +354,16 @@ body {
 .donate-block-journal .donate-line {
     width: 100%;
     max-width: 380px;
-    height: 3px;
+    height: 2px; /* тоньше */
     background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
     margin: 0 auto 15px;
     transition: width 0.3s ease;
     animation: stretchLine 3s infinite alternate;
+    box-shadow: 0 0 4px rgba(168,77,107,0.6); /* свечение */
 }
 @keyframes stretchLine {
-    0% { width: 60%; max-width: 300px; }
-    100% { width: 100%; max-width: 380px; }
+    0% { width: 60%; max-width: 300px; opacity: 0.8; }
+    100% { width: 100%; max-width: 380px; opacity: 1; }
 }
 .donate-block-journal .donate-label {
     font-size: 12px;
@@ -493,10 +486,10 @@ body {
     color: #010101;
 }
 
-/* Telegram widget */
+/* Telegram widget — растянут на весь попап */
 .telegram-wrapper {
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     background: #000000;
     padding: 0;
     margin: 0;
@@ -510,6 +503,7 @@ body {
     display: block;
     background: #000000 !important;
     border: none !important;
+    min-height: 400px;
 }
 
 /* Paint window */
@@ -574,7 +568,7 @@ body {
     border-left: 3px solid #ffb7c7;
 }
 
-/* TV Screen (Forum) – узкий экран, без движения, только свечение */
+/* TV Screen */
 .forum-wrapper {
     display: flex;
     flex-direction: column;
@@ -678,7 +672,7 @@ body {
     margin-top: 0;
 }
 
-/* ========== ОТСТУПЫ МЕЖДУ БЛОКАМИ ========== */
+/* Отступы */
 .ticker-wrapper,
 .carousel-section,
 .nav-grid,
@@ -694,7 +688,7 @@ body {
     margin-bottom: 0;
 }
 
-/* ========== MOOD КНОПКА (закрашена) ========== */
+/* MOOD кнопка */
 .pin-mood-btn {
     display: flex;
     align-items: center;
@@ -726,7 +720,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* Pinterest модалка (один виджет) */
+/* Pinterest модалка */
 .pinterest-modal {
     max-width: 550px;
     width: 90%;
@@ -740,7 +734,7 @@ body {
     background: #000;
 }
 
-/* Хештег #layoutporn */
+/* Хештег */
 .hashtag-row {
     display: flex;
     flex-wrap: wrap;

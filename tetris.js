@@ -1,7 +1,7 @@
-// ==================== TETRIS GAME LOGIC ====================
+// ==================== TETRIS GAME LOGIC + FIREBASE HIGH SCORES ====================
 
 const COLS = 16;
-const ROWS = 22;   // было 24, убрал 2 ряда
+const ROWS = 22;
 let BLOCK_SIZE = 30;
 const BASE_SPEED = 1000;
 
@@ -101,6 +101,7 @@ function spawnPiece() {
     drawNext();
     if (checkCollision(currentPiece)) {
         isGameOver = true;
+        saveHighScore(score);
         setTimeout(() => { 
             alert(`GAME OVER\nSCORE: ${score}`); 
             location.reload(); 
@@ -168,7 +169,7 @@ function togglePause() {
     isPaused = !isPaused;
     const btn = document.getElementById('pause-btn');
     if (btn) {
-        btn.innerHTML = isPaused ? '▶<span class="pause-label">PLAY</span>' : '⏸<span class="pause-label">PAUSE</span>';
+        btn.innerHTML = isPaused ? '▶ PLAY' : '⏸ PAUSE';
     }
     draw();
 }
@@ -370,6 +371,34 @@ function gameLoop(time) {
     }
     draw();
     requestAnimationFrame(gameLoop);
+}
+
+// ========== СОХРАНЕНИЕ РЕКОРДОВ В FIREBASE ==========
+async function saveHighScore(finalScore) {
+    if (finalScore === 0) return;
+    
+    let playerName = prompt('Введите ваше имя (макс 10 символов):', 'ANON');
+    if (!playerName) playerName = 'ANON';
+    playerName = playerName.slice(0, 10);
+    
+    // Ждём, пока Firebase загрузится
+    if (!window.addDoc || !window.collection || !window.db) {
+        console.error('Firebase не загружен');
+        alert('Ошибка: Firebase не инициализирован. Обновите страницу.');
+        return;
+    }
+    
+    try {
+        await window.addDoc(window.collection(window.db, 'tetris_scores'), {
+            name: playerName,
+            score: finalScore,
+            timestamp: Date.now()
+        });
+        alert(`Рекорд ${finalScore} сохранён!`);
+    } catch (error) {
+        console.error('Ошибка сохранения в Firebase:', error);
+        alert('Не удалось сохранить рекорд. Проверьте интернет.');
+    }
 }
 
 window.addEventListener('DOMContentLoaded', init);

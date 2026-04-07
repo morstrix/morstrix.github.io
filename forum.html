@@ -19,15 +19,14 @@
             border-right: 2px solid #a84d6b;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             height: 100%;
-            padding: 20px 0 20px 0;
+            padding: 20px 0 0 0;
         }
         .tabs-list {
             flex: 1;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
         }
         .tab-item {
             cursor: pointer;
@@ -41,8 +40,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex: 1;
+            padding: 15px 10px;
             border-bottom: 1px solid rgba(168, 77, 107, 0.4);
+        }
+        /* Убираем нижнюю полоску у последнего элемента */
+        .tab-item:last-child {
+            border-bottom: none;
         }
         .tab-item:first-child {
             border-top: 1px solid rgba(168, 77, 107, 0.4);
@@ -57,30 +60,37 @@
             color: white;
         }
 
-        /* Кнопка закрытия — теперь картинка */
-        .close-panel-img {
+        /* Кнопка закрытия с картинкой и надписью BACK */
+        .close-panel-box {
             background: transparent;
-            border: none;
-            border-top: 1px solid rgba(168, 77, 107, 0.6);
-            padding: 15px 0;
+            border-top: none; /* убрали полоску */
+            padding: 15px 0 25px 0;
             cursor: pointer;
-            transition: 0.2s;
             width: 100%;
-            text-align: center;
-            margin-top: 10px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .close-panel-img img {
+        .close-panel-box img {
             width: 32px;
             height: 32px;
             image-rendering: pixelated;
             transition: transform 0.2s;
         }
-        .close-panel-img:hover img {
+        .close-panel-box span {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            color: #ffb7c7;
+            letter-spacing: 1px;
+        }
+        .close-panel-box:hover img {
             transform: scale(0.9);
             filter: brightness(0.8);
+        }
+        .close-panel-box:hover span {
+            color: white;
         }
 
         /* Правая область контента */
@@ -138,19 +148,19 @@
         /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
         @media (max-width: 700px) {
             .forum-tabs { width: 170px; }
-            .tab-item { font-size: 7px; padding: 10px 0 10px 15px; }
-            .close-panel-img { padding: 12px 0; }
-            .close-panel-img img { width: 28px; height: 28px; }
+            .tab-item { font-size: 7px; padding: 12px 10px; }
+            .close-panel-box img { width: 28px; height: 28px; }
+            .close-panel-box span { font-size: 7px; }
             .forum-content { padding: 15px; }
             .tab-pane h2 { font-size: 12px; }
             .tab-pane p { font-size: 8px; }
             .full-check-btn { font-size: 7px; padding: 6px 12px; }
         }
         @media (max-width: 500px) {
-            .forum-tabs { width: 130px; }
-            .tab-item { font-size: 6px; padding: 8px 0 8px 10px; }
-            .close-panel-img { padding: 10px 0; }
-            .close-panel-img img { width: 24px; height: 24px; }
+            .forum-tabs { width: 140px; }
+            .tab-item { font-size: 6px; padding: 10px 5px; }
+            .close-panel-box img { width: 24px; height: 24px; }
+            .close-panel-box span { font-size: 6px; }
         }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -175,9 +185,10 @@
                 <div class="tab-item" data-tab="money">MONEY</div>
                 <div class="tab-item" data-tab="barbering">BARBERING</div>
             </div>
-            <!-- Картинка вместо кнопки с крестиком -->
-            <div class="close-panel-img" id="closeForumBtn">
+            <!-- Картинка + BACK -->
+            <div class="close-panel-box" id="closeForumBtn">
                 <img src="assets/close.png" alt="Close">
+                <span>BACK</span>
             </div>
         </div>
 
@@ -226,7 +237,7 @@
 
     <script src="background.js"></script>
     <script>
-        // Переключение вкладок по клику на строку с полоской
+        // Переключение вкладок
         const tabItems = document.querySelectorAll('.tab-item');
         const panes = document.querySelectorAll('.tab-pane');
 
@@ -250,18 +261,14 @@
             });
         });
 
-        // Активируем первую вкладку
         if (tabItems.length) activateTab(tabItems[0].getAttribute('data-tab'));
 
-        // Картинка закрытия — переход на journal.html
-        const closeImg = document.getElementById('closeForumBtn');
-        if (closeImg) {
-            closeImg.addEventListener('click', () => {
-                window.location.href = 'journal.html';
-            });
-        }
+        // Закрытие по картинке BACK
+        document.getElementById('closeForumBtn').addEventListener('click', () => {
+            window.location.href = 'journal.html';
+        });
 
-        // Кнопка "ЧЕК ФУЛ" — дисклеймер с переходом в Telegram
+        // ЧЕК ФУЛ
         const fullBtn = document.getElementById('fullCheckBtn');
         fullBtn.addEventListener('click', () => {
             const modalDiv = document.createElement('div');
@@ -300,5 +307,32 @@
             closeBtn.addEventListener('click', () => modalDiv.remove());
         });
     </script>
+
+    <!-- Firebase -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+  import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+    authDomain: "helper-e10b2.firebaseapp.com",
+    projectId: "helper-e10b2",
+    storageBucket: "helper-e10b2.firebasestorage.app",
+    messagingSenderId: "131536876451",
+    appId: "1:131536876451:web:eeaef494c83dfc4849e016",
+    measurementId: "G-KPM4SEVG8R"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.query = query;
+  window.orderBy = orderBy;
+  window.limit = limit;
+  window.getDocs = getDocs;
+</script>
 </body>
 </html>

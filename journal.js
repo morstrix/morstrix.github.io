@@ -73,12 +73,27 @@ function copyStylerText() {
     }
 }
 
-// RSS тикер
-const ticker = document.getElementById('rssTicker');
-if (ticker) {
-    const items = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
-    ticker.innerHTML = `<span>✦ ${items.join('</span><span>✦ ')}</span>`.repeat(6);
+// ========== RSS – реальные заголовки статей (Hyperallergic) ==========
+async function loadRSSFeed() {
+    const ticker = document.getElementById('rssTicker');
+    if (!ticker) return;
+    const rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://hyperallergic.com/feed/';
+    try {
+        const response = await fetch(rssUrl);
+        const data = await response.json();
+        if (data.items && data.items.length) {
+            const titles = data.items.map(item => item.title).slice(0, 20);
+            ticker.innerHTML = `<span>✦ ${titles.join('</span><span>✦ ')}</span>`.repeat(2);
+        } else {
+            throw new Error('No items');
+        }
+    } catch (error) {
+        // fallback
+        const fallback = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
+        ticker.innerHTML = `<span>✦ ${fallback.join('</span><span>✦ ')}</span>`.repeat(6);
+    }
 }
+loadRSSFeed();
 
 // Динамическое слово на TV-экране
 const wordsList = [
@@ -107,7 +122,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// TEAM кнопка (дублируем, но основной скрипт уже есть в HTML, оставим для надёжности)
+// TEAM кнопка
 const teamBtn = document.getElementById('teamBtnJournal');
 const teamModal = document.getElementById('teamModalJournal');
 if (teamBtn && teamModal) {
@@ -117,7 +132,7 @@ if (teamBtn && teamModal) {
     };
 }
 
-// Конвертер PX ↔ CM (дублируется в HTML, но пусть будет)
+// Конвертер PX ↔ CM
 const pxInput = document.getElementById('pxInput');
 const cmInput = document.getElementById('cmInput');
 if (pxInput && cmInput) {
@@ -133,7 +148,7 @@ if (pxInput && cmInput) {
     });
 }
 
-// ========== PAINT.EXE ЛОГИКА ==========
+// ========== PAINT.EXE ЛОГИКА + СОХРАНЕНИЕ АРТА ==========
 function startPaintLogic() {
     const l1 = document.getElementById('layer1');
     const l2 = document.getElementById('layer2');
@@ -307,11 +322,63 @@ function startPaintLogic() {
             if (popup) popup.classList.remove('active');
         };
     });
+    
+    // ДОБАВЛЯЕМ КНОПКУ "SAVE TO ART" в панель Paint
+    const saveArtBtn = document.createElement('button');
+    saveArtBtn.textContent = 'SAVE ART';
+    saveArtBtn.className = 'retro-btn';
+    saveArtBtn.style.fontSize = '7px';
+    saveArtBtn.style.padding = '5px 10px';
+    saveArtBtn.onclick = () => {
+        // Объединяем layer1 и layer2
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = l1.width;
+        tempCanvas.height = l1.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(l1, 0, 0);
+        tempCtx.drawImage(l2, 0, 0);
+        const dataURL = tempCanvas.toDataURL('image/png');
+        localStorage.setItem('savedArt', dataURL);
+        // Обновляем картинку в журнале
+        const artImg = document.querySelector('.art-square-frame img');
+        if (artImg) artImg.src = dataURL;
+        alert('Art saved!');
+    };
+    const toolsPanel = document.querySelector('.paint-tools-panel');
+    if (toolsPanel) toolsPanel.appendChild(saveArtBtn);
+    
     saveState();
 }
 window.startPaintLogic = startPaintLogic;
 
-// ========== КОНСТРУКТОР МЕРЧА — ИСПРАВЛЕНА ЗАГРУЗКА НА iOS ==========
+// Загрузка сохранённого арта при загрузке страницы
+function loadSavedArt() {
+    const saved = localStorage.getItem('savedArt');
+    const artImg = document.querySelector('.art-square-frame img');
+    if (saved && artImg && artImg.src !== saved) {
+        artImg.src = saved;
+    }
+}
+loadSavedArt();
+
+// Кнопка сброса арта (добавим в блок ART)
+const resetArtBtn = document.createElement('button');
+resetArtBtn.textContent = 'RESET ART';
+resetArtBtn.className = 'retro-btn';
+resetArtBtn.style.fontSize = '7px';
+resetArtBtn.style.marginTop = '10px';
+resetArtBtn.onclick = () => {
+    localStorage.removeItem('savedArt');
+    const artImg = document.querySelector('.art-square-frame img');
+    if (artImg) artImg.src = 'assets/art.jpg';
+};
+const artSection = document.querySelector('.art-section');
+if (artSection) {
+    const artContainer = artSection.querySelector('.art-square-frame');
+    if (artContainer) artContainer.after(resetArtBtn);
+}
+
+// ========== КОНСТРУКТОР МЕРЧА ==========
 (function() {
     const imageInput = document.getElementById('imageUpload');
     const printCanvas = document.getElementById('printCanvas');
@@ -343,8 +410,6 @@ window.startPaintLogic = startPaintLogic;
                 alert('Please upload PNG, JPG or GIF');
                 return;
             }
-            
-            // Используем FileReader для максимальной совместимости (iOS)
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
@@ -356,12 +421,12 @@ window.startPaintLogic = startPaintLogic;
                     ctx.drawImage(img, x, y, size, size);
                 };
                 img.onerror = () => {
-                    alert('Ошибка загрузки изображения на iOS. Попробуйте другой файл.');
+                    alert('Ошибка загрузки изображения. Попробуйте другой файл.');
                 };
                 img.src = event.target.result;
             };
             reader.onerror = () => {
-                alert('Ошибка чтения файла. Возможно, формат не поддерживается.');
+                alert('Ошибка чтения файла.');
             };
             reader.readAsDataURL(file);
         });
@@ -375,7 +440,35 @@ window.startPaintLogic = startPaintLogic;
     }
 })();
 
-// ========== MOOD КНОПКА (простой Pinterest, один виджет) ==========
+// ========== ТОП ТЕТРИС – загрузка рекордов ==========
+function loadTetrisHighScores() {
+    const scores = JSON.parse(localStorage.getItem('tetris_scores')) || [];
+    scores.sort((a,b) => b.score - a.score);
+    const top3 = scores.slice(0,3);
+    const topContainer = document.querySelector('.top-players-list');
+    if (!topContainer) {
+        // создадим контейнер, если его нет
+        const dualRow = document.querySelector('.dual-row');
+        if (dualRow) {
+            const leftDiv = dualRow.querySelector('div:first-child');
+            if (leftDiv) {
+                const oldHTML = leftDiv.innerHTML;
+                leftDiv.innerHTML = `<h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4><div class="top-players-list" style="font-size: 8px; color: #444; line-height: 2;"></div>`;
+            }
+        }
+    }
+    const listDiv = document.querySelector('.top-players-list');
+    if (listDiv) {
+        if (top3.length === 0) {
+            listDiv.innerHTML = '— НЕТ РЕКОРДОВ —';
+        } else {
+            listDiv.innerHTML = top3.map((p, idx) => `${p.name || 'ANON'} — ${p.score}`).join('<br>');
+        }
+    }
+}
+loadTetrisHighScores();
+
+// ========== MOOD КНОПКА ==========
 (function() {
     const moodBtn = document.getElementById('moodBtn');
     const pinterestModal = document.getElementById('pinterestModal');
