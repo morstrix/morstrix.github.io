@@ -311,7 +311,7 @@ function startPaintLogic() {
 }
 window.startPaintLogic = startPaintLogic;
 
-// ========== КОНСТРУКТОР МЕРЧА ==========
+// ========== КОНСТРУКТОР МЕРЧА — ИСПРАВЛЕНА ЗАГРУЗКА НА iOS ==========
 (function() {
     const imageInput = document.getElementById('imageUpload');
     const printCanvas = document.getElementById('printCanvas');
@@ -321,6 +321,7 @@ window.startPaintLogic = startPaintLogic;
     const ctx = printCanvas.getContext('2d');
     printCanvas.width = 200;
     printCanvas.height = 200;
+    
     function clearPrint() {
         ctx.clearRect(0, 0, printCanvas.width, printCanvas.height);
         ctx.strokeStyle = '#79434a';
@@ -329,9 +330,11 @@ window.startPaintLogic = startPaintLogic;
         ctx.setLineDash([]);
     }
     clearPrint();
+    
     if (uploadArea && imageInput) {
         uploadArea.addEventListener('click', () => imageInput.click());
     }
+    
     if (imageInput) {
         imageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -340,6 +343,8 @@ window.startPaintLogic = startPaintLogic;
                 alert('Please upload PNG, JPG or GIF');
                 return;
             }
+            
+            // Используем FileReader для максимальной совместимости (iOS)
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
@@ -350,11 +355,18 @@ window.startPaintLogic = startPaintLogic;
                     const y = (printCanvas.height - size) / 2;
                     ctx.drawImage(img, x, y, size, size);
                 };
+                img.onerror = () => {
+                    alert('Ошибка загрузки изображения на iOS. Попробуйте другой файл.');
+                };
                 img.src = event.target.result;
+            };
+            reader.onerror = () => {
+                alert('Ошибка чтения файла. Возможно, формат не поддерживается.');
             };
             reader.readAsDataURL(file);
         });
     }
+    
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             clearPrint();

@@ -6,6 +6,17 @@
     <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="journal.css">
+    <style>
+        /* Дополнительная блокировка горизонтального скролла для iOS */
+        body {
+            overflow-x: hidden !important;
+            position: relative;
+            touch-action: pan-y pinch-zoom; /* запрещаем горизонтальный тач-скролл */
+        }
+        .container {
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <body>
 
@@ -160,6 +171,7 @@
 
         <!-- 10. TEAM + DONATE (слитно) -->
         <div class="section team-donate-wrapper">
+            <!-- TEAM кнопка теперь стилизована как MOOD -->
             <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
             <div class="donate-block-journal" id="donateJournal">
                 <div class="donate-line"></div>

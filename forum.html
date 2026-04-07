@@ -24,32 +24,29 @@
             padding: 20px 0 20px 0;
         }
         .tabs-list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;  /* равные промежутки между вкладками */
-}
-
-.tab-item {
-    cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    font-weight: bold;
-    color: #ffb7c7;
-    transition: 0.2s;
-    text-align: center;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;                       /* каждая вкладка растягивается на равную высоту */
-    border-bottom: 1px solid rgba(168, 77, 107, 0.4);
-}
-
-/* Первая вкладка — полоска сверху */
-.tab-item:first-child {
-    border-top: 1px solid rgba(168, 77, 107, 0.4);
-}
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+        .tab-item {
+            cursor: pointer;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffb7c7;
+            transition: 0.2s;
+            text-align: center;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            border-bottom: 1px solid rgba(168, 77, 107, 0.4);
+        }
+        .tab-item:first-child {
+            border-top: 1px solid rgba(168, 77, 107, 0.4);
+        }
         .tab-item.active {
             color: white;
             background: rgba(168, 77, 107, 0.2);
@@ -60,24 +57,30 @@
             color: white;
         }
 
-        /* Кнопка закрытия (крестик) внизу */
-        .close-panel-btn {
+        /* Кнопка закрытия — теперь картинка */
+        .close-panel-img {
             background: transparent;
             border: none;
             border-top: 1px solid rgba(168, 77, 107, 0.6);
-            color: #ffb7c7;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 18px;
             padding: 15px 0;
             cursor: pointer;
             transition: 0.2s;
             width: 100%;
             text-align: center;
             margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .close-panel-btn:hover {
-            background: #a84d6b;
-            color: black;
+        .close-panel-img img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+            transition: transform 0.2s;
+        }
+        .close-panel-img:hover img {
+            transform: scale(0.9);
+            filter: brightness(0.8);
         }
 
         /* Правая область контента */
@@ -136,7 +139,8 @@
         @media (max-width: 700px) {
             .forum-tabs { width: 170px; }
             .tab-item { font-size: 7px; padding: 10px 0 10px 15px; }
-            .close-panel-btn { font-size: 14px; padding: 12px 0; }
+            .close-panel-img { padding: 12px 0; }
+            .close-panel-img img { width: 28px; height: 28px; }
             .forum-content { padding: 15px; }
             .tab-pane h2 { font-size: 12px; }
             .tab-pane p { font-size: 8px; }
@@ -145,7 +149,8 @@
         @media (max-width: 500px) {
             .forum-tabs { width: 130px; }
             .tab-item { font-size: 6px; padding: 8px 0 8px 10px; }
-            .close-panel-btn { font-size: 12px; padding: 10px 0; }
+            .close-panel-img { padding: 10px 0; }
+            .close-panel-img img { width: 24px; height: 24px; }
         }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -170,7 +175,10 @@
                 <div class="tab-item" data-tab="money">MONEY</div>
                 <div class="tab-item" data-tab="barbering">BARBERING</div>
             </div>
-            <button class="close-panel-btn" id="closeForumBtn">✜</button>
+            <!-- Картинка вместо кнопки с крестиком -->
+            <div class="close-panel-img" id="closeForumBtn">
+                <img src="assets/close.png" alt="Close">
+            </div>
         </div>
 
         <!-- Правая область контента -->
@@ -245,10 +253,13 @@
         // Активируем первую вкладку
         if (tabItems.length) activateTab(tabItems[0].getAttribute('data-tab'));
 
-        // Крестик закрытия
-        document.getElementById('closeForumBtn').addEventListener('click', () => {
-            window.location.href = 'journal.html';
-        });
+        // Картинка закрытия — переход на journal.html
+        const closeImg = document.getElementById('closeForumBtn');
+        if (closeImg) {
+            closeImg.addEventListener('click', () => {
+                window.location.href = 'journal.html';
+            });
+        }
 
         // Кнопка "ЧЕК ФУЛ" — дисклеймер с переходом в Telegram
         const fullBtn = document.getElementById('fullCheckBtn');
