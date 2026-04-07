@@ -475,7 +475,7 @@ body {
 /* Кнопка ENTER в попапах */
 .popup-enter-btn {
     background: #000000;
-    color: #ffffff;
+    color: #a27791 !important;
     border: 2px solid #b97272;
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
@@ -807,4 +807,29 @@ body {
 @media (max-width: 380px) {
     .hashtag-row { gap: 8px; }
     .hashtag { font-size: 7px; }
+}
+
+/* Кнопка ENTER в попапах */
+.popup-enter-btn {
+    background: #000000;
+    color: #a27791 !important;
+    border: 2px solid #b97272;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: inset -2px -2px 0 0 #4a4a4a, inset 2px 2px 0 0 #ffffff;
+}
+.popup-enter-btn:active {
+    transform: scale(0.95);
+}
+
+/* Текст в попапах - ЧЁРНЫЙ */
+.modal-inner p {
+    font-size: 8px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: #000000 !important;
+    text-shadow: 1px 1px 0 #aaaaaa !important;
 }

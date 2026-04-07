@@ -15,11 +15,6 @@
         .container {
             overflow-x: hidden;
         }
-        /* Принудительный чёрный текст в попапах */
-        .modal-inner p {
-            color: #000000 !important;
-            text-shadow: 1px 1px 0 #aaaaaa !important;
-        }
     </style>
 </head>
 <body>
@@ -160,6 +155,7 @@
 
     <!-- ========== МОДАЛКИ ========== -->
 
+    <!-- 1. DISCLAIMER (Twitter) -->
     <div id="disclaimerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -173,6 +169,7 @@
         </div>
     </div>
 
+    <!-- 2. FORUM ACCESS -->
     <div id="openMiniModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -186,6 +183,7 @@
         </div>
     </div>
 
+    <!-- 3. AI HELPER BOT -->
     <div id="supportModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -205,6 +203,7 @@
         </div>
     </div>
 
+    <!-- 4. RADIO -->
     <div id="radioModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -219,6 +218,7 @@
         </div>
     </div>
 
+    <!-- 5. SELECT MEMBER (TEAM) -->
     <div id="teamModalJournal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -240,6 +240,7 @@
         </div>
     </div>
 
+    <!-- 6. PINTEREST -->
     <div id="pinterestModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content pinterest-modal" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
@@ -252,6 +253,7 @@
         </div>
     </div>
 
+    <!-- 7. ART MODAL (Paint) -->
     <div id="artModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" style="padding:0; background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
             <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
