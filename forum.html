@@ -43,7 +43,6 @@
             padding: 15px 10px;
             border-bottom: 1px solid rgba(168, 77, 107, 0.4);
         }
-        /* Убираем нижнюю полоску у последнего элемента */
         .tab-item:last-child {
             border-bottom: none;
         }
@@ -63,7 +62,7 @@
         /* Кнопка закрытия с картинкой и надписью BACK */
         .close-panel-box {
             background: transparent;
-            border-top: none; /* убрали полоску */
+            border-top: none;
             padding: 15px 0 25px 0;
             cursor: pointer;
             width: 100%;
@@ -124,25 +123,30 @@
             color: #ddd;
         }
 
-        /* Кнопка "ЧЕК ФУЛ" */
+        /* ========== КНОПКА ЧЕК ФУЛ – РОЗОВАЯ (a84d6b) ========== */
         .full-check-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: black;
-            border: 2px solid #a84d6b;
-            color: #ffb7c7;
+            background: #a84d6b;
+            border: 2px solid #ffb7c7;
+            color: #000000;
             font-family: 'Press Start 2P', monospace;
             font-size: 10px;
-            padding: 10px 16px;
+            padding: 12px 20px;
             cursor: pointer;
             z-index: 100;
             transition: 0.2s;
+            box-shadow: 0 0 8px rgba(168, 77, 107, 0.5);
         }
         .full-check-btn:hover {
-            background: #a84d6b;
-            color: black;
-            box-shadow: 0 0 10px #a84d6b;
+            background: #ffb7c7;
+            color: #000000;
+            box-shadow: 0 0 15px #a84d6b;
+            transform: scale(1.02);
+        }
+        .full-check-btn:active {
+            transform: scale(0.98);
         }
 
         /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
@@ -154,13 +158,14 @@
             .forum-content { padding: 15px; }
             .tab-pane h2 { font-size: 12px; }
             .tab-pane p { font-size: 8px; }
-            .full-check-btn { font-size: 7px; padding: 6px 12px; }
+            .full-check-btn { font-size: 8px; padding: 10px 16px; bottom: 15px; right: 15px; }
         }
         @media (max-width: 500px) {
             .forum-tabs { width: 140px; }
             .tab-item { font-size: 6px; padding: 10px 5px; }
             .close-panel-box img { width: 24px; height: 24px; }
             .close-panel-box span { font-size: 6px; }
+            .full-check-btn { font-size: 7px; padding: 8px 14px; }
         }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -172,7 +177,6 @@
     <canvas id="neuro-bg"></canvas>
 
     <div class="forum-layout">
-        <!-- Левая панель: список с полосками -->
         <div class="forum-tabs">
             <div class="tabs-list">
                 <div class="tab-item" data-tab="wellness">ВЕЛНЕС</div>
@@ -185,14 +189,12 @@
                 <div class="tab-item" data-tab="money">MONEY</div>
                 <div class="tab-item" data-tab="barbering">BARBERING</div>
             </div>
-            <!-- Картинка + BACK -->
             <div class="close-panel-box" id="closeForumBtn">
                 <img src="assets/close.png" alt="Close">
                 <span>BACK</span>
             </div>
         </div>
 
-        <!-- Правая область контента -->
         <div class="forum-content">
             <div id="wellness" class="tab-pane">
                 <h2>🌿 ВЕЛНЕС</h2>
@@ -268,7 +270,7 @@
             window.location.href = 'journal.html';
         });
 
-        // ЧЕК ФУЛ
+        // КНОПКА ЧЕК ФУЛ – розовый стиль
         const fullBtn = document.getElementById('fullCheckBtn');
         fullBtn.addEventListener('click', () => {
             const modalDiv = document.createElement('div');
@@ -283,14 +285,14 @@
             modalDiv.style.zIndex = '10000';
 
             modalDiv.innerHTML = `
-                <div class="modal-content" style="max-width: 500px; background: #a27791; border: 2px solid #ffb7c7;">
+                <div class="modal-content" style="max-width: 500px; background: #a27791; border: 2px solid #a84d6b;">
                     <div class="modal-header" style="background: #79434a; padding: 10px;">
                         <span class="modal-title-text" style="font-size: 10px;">FULL DISCLAIMER</span>
-                        <button class="modal-close-btn" style="background: black; color: white; border: 1px solid #ffb7c7;">✜</button>
+                        <button class="modal-close-btn" style="background: black; color: #a84d6b; border: 1px solid #a84d6b;">✜</button>
                     </div>
                     <div class="modal-inner" style="padding: 20px; text-align: center;">
                         <p style="font-size: 9px; line-height: 1.6; margin-bottom: 30px;">⚠️ Внимание! Вы переходите в Telegram-форум. Весь контент предназначен для лиц старше 18 лет. Нажимая "ENTER", вы подтверждаете согласие.<br><br>➡️ TELEGRAM FORUM ⬅️</p>
-                        <a href="https://t.me/morstrix" target="_blank" class="retro-btn" style="background: black; color: #ffb7c7; border: 2px solid #ffb7c7;">ENTER</a>
+                        <a href="https://t.me/morstrix" target="_blank" class="retro-btn" style="background: #a84d6b; color: #000; border: 2px solid #ffb7c7;">ENTER</a>
                     </div>
                 </div>
             `;
@@ -307,32 +309,5 @@
             closeBtn.addEventListener('click', () => modalDiv.remove());
         });
     </script>
-
-    <!-- Firebase -->
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-  import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-    authDomain: "helper-e10b2.firebaseapp.com",
-    projectId: "helper-e10b2",
-    storageBucket: "helper-e10b2.firebasestorage.app",
-    messagingSenderId: "131536876451",
-    appId: "1:131536876451:web:eeaef494c83dfc4849e016",
-    measurementId: "G-KPM4SEVG8R"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.db = db;
-  window.collection = collection;
-  window.addDoc = addDoc;
-  window.query = query;
-  window.orderBy = orderBy;
-  window.limit = limit;
-  window.getDocs = getDocs;
-</script>
 </body>
 </html>

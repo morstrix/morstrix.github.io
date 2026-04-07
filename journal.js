@@ -1,6 +1,5 @@
 // ==================== JOURNAL.JS ====================
 
-// Карусель картинок
 const slides = document.querySelectorAll('#mainCarousel img');
 let currentSlide = 0;
 setInterval(() => {
@@ -9,7 +8,6 @@ setInterval(() => {
     slides[currentSlide].classList.add('active');
 }, 3500);
 
-// Открытие модалок
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active');
@@ -30,7 +28,6 @@ function closeModalDirect(id) {
     if (modal) modal.classList.remove('active');
 }
 
-// Радио кнопка
 const radioBtn = document.getElementById('radioBtn');
 const radioModal = document.getElementById('radioModal');
 if (radioBtn && radioModal) {
@@ -40,7 +37,6 @@ if (radioBtn && radioModal) {
     });
 }
 
-// Font styler
 const smallCapsMap = {
     'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ',
     'i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ',
@@ -73,7 +69,6 @@ function copyStylerText() {
     }
 }
 
-// ========== RSS – реальные заголовки статей (Hyperallergic) ==========
 async function loadRSSFeed() {
     const ticker = document.getElementById('rssTicker');
     if (!ticker) return;
@@ -88,14 +83,12 @@ async function loadRSSFeed() {
             throw new Error('No items');
         }
     } catch (error) {
-        // fallback
         const fallback = ["HYPERALLERGIC", "ARTNEWS", "RHIZOME", "ARTFORUM", "E-FLUX"];
         ticker.innerHTML = `<span>✦ ${fallback.join('</span><span>✦ ')}</span>`.repeat(6);
     }
 }
 loadRSSFeed();
 
-// Динамическое слово на TV-экране
 const wordsList = [
     "wellness", "diy gear", "radio", "design", 
     "interior", "print", "travel", "IT/AI", 
@@ -114,7 +107,6 @@ if (dynamicWordSpan) {
     }, 2000);
 }
 
-// Закрытие по Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const activeModals = document.querySelectorAll('.modal-overlay.active');
@@ -122,7 +114,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// TEAM кнопка
 const teamBtn = document.getElementById('teamBtnJournal');
 const teamModal = document.getElementById('teamModalJournal');
 if (teamBtn && teamModal) {
@@ -132,7 +123,6 @@ if (teamBtn && teamModal) {
     };
 }
 
-// Конвертер PX ↔ CM
 const pxInput = document.getElementById('pxInput');
 const cmInput = document.getElementById('cmInput');
 if (pxInput && cmInput) {
@@ -148,7 +138,6 @@ if (pxInput && cmInput) {
     });
 }
 
-// ========== PAINT.EXE ЛОГИКА + СОХРАНЕНИЕ АРТА ==========
 function startPaintLogic() {
     const l1 = document.getElementById('layer1');
     const l2 = document.getElementById('layer2');
@@ -323,14 +312,12 @@ function startPaintLogic() {
         };
     });
     
-    // ДОБАВЛЯЕМ КНОПКУ "SAVE TO ART" в панель Paint
     const saveArtBtn = document.createElement('button');
     saveArtBtn.textContent = 'SAVE ART';
     saveArtBtn.className = 'retro-btn';
     saveArtBtn.style.fontSize = '7px';
     saveArtBtn.style.padding = '5px 10px';
     saveArtBtn.onclick = () => {
-        // Объединяем layer1 и layer2
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = l1.width;
         tempCanvas.height = l1.height;
@@ -339,8 +326,7 @@ function startPaintLogic() {
         tempCtx.drawImage(l2, 0, 0);
         const dataURL = tempCanvas.toDataURL('image/png');
         localStorage.setItem('savedArt', dataURL);
-        // Обновляем картинку в журнале
-        const artImg = document.querySelector('.art-square-frame img');
+        const artImg = document.getElementById('artPreview');
         if (artImg) artImg.src = dataURL;
         alert('Art saved!');
     };
@@ -351,34 +337,24 @@ function startPaintLogic() {
 }
 window.startPaintLogic = startPaintLogic;
 
-// Загрузка сохранённого арта при загрузке страницы
 function loadSavedArt() {
     const saved = localStorage.getItem('savedArt');
-    const artImg = document.querySelector('.art-square-frame img');
+    const artImg = document.getElementById('artPreview');
     if (saved && artImg && artImg.src !== saved) {
         artImg.src = saved;
     }
 }
 loadSavedArt();
 
-// Кнопка сброса арта (добавим в блок ART)
-const resetArtBtn = document.createElement('button');
-resetArtBtn.textContent = 'RESET ART';
-resetArtBtn.className = 'retro-btn';
-resetArtBtn.style.fontSize = '7px';
-resetArtBtn.style.marginTop = '10px';
-resetArtBtn.onclick = () => {
-    localStorage.removeItem('savedArt');
-    const artImg = document.querySelector('.art-square-frame img');
-    if (artImg) artImg.src = 'assets/art.jpg';
-};
-const artSection = document.querySelector('.art-section');
-if (artSection) {
-    const artContainer = artSection.querySelector('.art-square-frame');
-    if (artContainer) artContainer.after(resetArtBtn);
+const resetArtBtn = document.getElementById('resetArtBtn');
+if (resetArtBtn) {
+    resetArtBtn.onclick = () => {
+        localStorage.removeItem('savedArt');
+        const artImg = document.getElementById('artPreview');
+        if (artImg) artImg.src = 'assets/art.jpg';
+    };
 }
 
-// ========== КОНСТРУКТОР МЕРЧА ==========
 (function() {
     const imageInput = document.getElementById('imageUpload');
     const printCanvas = document.getElementById('printCanvas');
@@ -440,23 +416,10 @@ if (artSection) {
     }
 })();
 
-// ========== ТОП ТЕТРИС – загрузка рекордов ==========
 function loadTetrisHighScores() {
     const scores = JSON.parse(localStorage.getItem('tetris_scores')) || [];
     scores.sort((a,b) => b.score - a.score);
     const top3 = scores.slice(0,3);
-    const topContainer = document.querySelector('.top-players-list');
-    if (!topContainer) {
-        // создадим контейнер, если его нет
-        const dualRow = document.querySelector('.dual-row');
-        if (dualRow) {
-            const leftDiv = dualRow.querySelector('div:first-child');
-            if (leftDiv) {
-                const oldHTML = leftDiv.innerHTML;
-                leftDiv.innerHTML = `<h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4><div class="top-players-list" style="font-size: 8px; color: #444; line-height: 2;"></div>`;
-            }
-        }
-    }
     const listDiv = document.querySelector('.top-players-list');
     if (listDiv) {
         if (top3.length === 0) {
@@ -468,7 +431,6 @@ function loadTetrisHighScores() {
 }
 loadTetrisHighScores();
 
-// ========== MOOD КНОПКА ==========
 (function() {
     const moodBtn = document.getElementById('moodBtn');
     const pinterestModal = document.getElementById('pinterestModal');
@@ -490,7 +452,6 @@ loadTetrisHighScores();
     }
 })();
 
-// Плавный переход для ссылок
 document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
