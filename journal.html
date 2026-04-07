@@ -290,11 +290,12 @@
 
 <script>
     // ========== УНИВЕРСАЛЬНЫЙ КОД ДЛЯ МОДАЛОК (100% РАБОТАЕТ) ==========
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
         // Функция открытия модалки
         function openModal(id) {
             var modal = document.getElementById(id);
             if (modal) modal.classList.add('active');
+            else console.warn('Modal not found:', id);
         }
         
         // Функция закрытия модалки
@@ -318,7 +319,7 @@
         closeBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var modalId = btn.getAttribute('data-modal');
-                closeModal(modalId);
+                if (modalId) closeModal(modalId);
             });
         });
         
@@ -330,20 +331,33 @@
                 var href = btn.getAttribute('data-href');
                 if (href) {
                     window.location.href = href;
-                } else {
+                } else if (modalId) {
                     closeModal(modalId);
                 }
             });
         });
         
-        // Кнопки вызова модалок
-        document.getElementById('twitterBtn')?.addEventListener('click', function() { openModal('disclaimerModal'); });
-        document.getElementById('forumBtn')?.addEventListener('click', function() { openModal('openMiniModal'); });
-        document.getElementById('supportBtn')?.addEventListener('click', function() { openModal('supportModal'); });
-        document.getElementById('radioBtn')?.addEventListener('click', function() { openModal('radioModal'); });
-        document.getElementById('moodBtn')?.addEventListener('click', function() { openModal('pinterestModal'); });
-        document.getElementById('paintBtn')?.addEventListener('click', function() { openModal('artModal'); });
-        document.getElementById('teamBtnJournal')?.addEventListener('click', function() { openModal('teamModalJournal'); });
+        // Привязка кнопок (с проверкой существования)
+        var twitterBtn = document.getElementById('twitterBtn');
+        if (twitterBtn) twitterBtn.addEventListener('click', function() { openModal('disclaimerModal'); });
+        
+        var forumBtn = document.getElementById('forumBtn');
+        if (forumBtn) forumBtn.addEventListener('click', function() { openModal('openMiniModal'); });
+        
+        var supportBtn = document.getElementById('supportBtn');
+        if (supportBtn) supportBtn.addEventListener('click', function() { openModal('supportModal'); });
+        
+        var radioBtn = document.getElementById('radioBtn');
+        if (radioBtn) radioBtn.addEventListener('click', function() { openModal('radioModal'); });
+        
+        var moodBtn = document.getElementById('moodBtn');
+        if (moodBtn) moodBtn.addEventListener('click', function() { openModal('pinterestModal'); });
+        
+        var paintBtn = document.getElementById('paintBtn');
+        if (paintBtn) paintBtn.addEventListener('click', function() { openModal('artModal'); });
+        
+        var teamBtn = document.getElementById('teamBtnJournal');
+        if (teamBtn) teamBtn.addEventListener('click', function() { openModal('teamModalJournal'); });
         
         // Закрытие по ESC
         document.addEventListener('keydown', function(e) {
@@ -354,7 +368,17 @@
                 });
             }
         });
-    });
+        
+        // Дополнительно: загружаем Pinterest SDK, если есть модалка с пином
+        var pinterestModal = document.getElementById('pinterestModal');
+        if (pinterestModal && !window.pinSDKLoaded) {
+            var pinScript = document.createElement('script');
+            pinScript.src = '//assets.pinterest.com/js/pinit.js';
+            pinScript.async = true;
+            pinScript.onload = function() { window.pinSDKLoaded = true; };
+            document.head.appendChild(pinScript);
+        }
+    })();
 </script>
 </body>
 </html>
