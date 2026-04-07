@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0a0a0a">
     <title>MORSTRIX | TETRIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tetris.css">
-    <link rel="stylesheet" href="theme.css">
 </head>
 <body class="page-support">
 
-<!-- Крестик справа вверху -->
 <div class="back-button-wrapper">
     <a href="index.html" class="back-button">
-        <img src="assets/close.png" alt="Back">
+        <img src="assets/close.png" alt="Back" style="width:30px;">
     </a>
 </div>
 
@@ -29,11 +25,8 @@
         <div class="right-stats">
             <div class="next-box">
                 <div class="stat-label">NEXT</div>
-                <canvas id="next-piece-canvas" width="50" height="50"></canvas>
+                <canvas id="next-piece-canvas" width="60" height="60"></canvas>
             </div>
-            <button id="pause-btn" class="pause-btn">
-                ⏸<span class="pause-label">PAUSE</span>
-            </button>
         </div>
     </div>
 
@@ -42,51 +35,14 @@
     </div>
 
     <div class="control-bar">
-        <button id="left-btn" class="control-btn">
-            <div class="arrow-left"></div>
-        </button>
-        <button id="rotate-btn" class="control-btn">
-            <div class="rotate-icon"></div>
-        </button>
-        <button id="right-btn" class="control-btn">
-            <div class="arrow-right"></div>
-        </button>
-        <button id="down-btn" class="control-btn">
-            <div class="arrow-down"></div>
-        </button>
+        <button id="left-btn" class="control-btn"><div class="arrow-left"></div></button>
+        <button id="rotate-btn" class="control-btn"><div class="rotate-icon"></div></button>
+        <button id="right-btn" class="control-btn"><div class="arrow-right"></div></button>
+        <button id="down-btn" class="control-btn"><div class="arrow-down"></div></button>
     </div>
 </div>
 
-<!-- Firebase SDK -->
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-    import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-        authDomain: "helper-e10b2.firebaseapp.com",
-        projectId: "helper-e10b2",
-        storageBucket: "helper-e10b2.firebasestorage.app",
-        messagingSenderId: "131536876451",
-        appId: "1:131536876451:web:eeaef494c83dfc4849e016",
-        measurementId: "G-KPM4SEVG8R"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.db = db;
-    window.collection = collection;
-    window.addDoc = addDoc;
-    window.query = query;
-    window.orderBy = orderBy;
-    window.limit = limit;
-    window.getDocs = getDocs;
-    
-    console.log('Firebase инициализирован!');
-</script>
-
 <script src="background.js"></script>
-<script src="tetris.js"></script>
+<script type="module" src="tetris.js"></script>
 </body>
 </html>

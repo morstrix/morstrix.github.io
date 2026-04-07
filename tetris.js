@@ -1,3 +1,18 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+    authDomain: "helper-e10b2.firebaseapp.com",
+    projectId: "helper-e10b2",
+    storageBucket: "helper-e10b2.firebasestorage.app",
+    messagingSenderId: "131536876451",
+    appId: "1:131536876451:web:eeaef494c83dfc4849e016"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('tetris-canvas');
     const context = canvas.getContext('2d');
@@ -5,27 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const nCtx = nextCanvas.getContext('2d');
     const scoreElement = document.getElementById('score');
 
-    let blockSize = 20; // Значение по умолчанию
-
-    function resizeGame() {
-        // Вычисляем доступную высоту (минус запас под кнопки и заголовок ~180px)
-        const availableHeight = window.innerHeight - 200;
-        const availableWidth = window.innerWidth - 40;
-
-        // Размер блока должен быть таким, чтобы 20 блоков влезли в высоту
-        const sizeByHeight = Math.floor(availableHeight / 20);
-        const sizeByWidth = Math.floor(availableWidth / 10);
+    function resize() {
+        const parent = canvas.parentElement;
+        const availableHeight = parent.clientHeight - 10;
+        const availableWidth = parent.clientWidth - 10;
+        const size = Math.floor(Math.min(availableHeight / 20, availableWidth / 10));
         
-        blockSize = Math.min(sizeByHeight, sizeByWidth, 25); // Максимум 25px
-
-        canvas.width = blockSize * 10;
-        canvas.height = blockSize * 20;
-        
+        canvas.width = size * 10;
+        canvas.height = size * 20;
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.scale(blockSize, blockSize);
-        
+        context.scale(size, size);
+
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
-        nCtx.scale(blockSize * 0.7, blockSize * 0.7);
+        nCtx.scale(size * 0.8, size * 0.8);
     }
 
     const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
@@ -40,31 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
     }
 
-    function draw() {
-        context.fillStyle = '#000';
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        
-        drawMatrix(arena, {x: 0, y: 0}, context);
-        drawGhost(); // Рисуем фантом (VHS стиль)
-        drawMatrix(player.matrix, player.pos, context);
-        
-        nCtx.fillStyle = '#000';
-        nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-        drawMatrix(player.next, {x: 0.5, y: 0.5}, nCtx);
-    }
-
-    function drawGhost() {
-        const ghostPos = { x: player.pos.x, y: player.pos.y };
-        while (!collide(arena, { pos: ghostPos, matrix: player.matrix })) {
-            ghostPos.y++;
-        }
-        ghostPos.y--; 
-
-        context.globalAlpha = 0.15; // Тусклый призрачный эффект
-        drawMatrix(player.matrix, ghostPos, context);
-        context.globalAlpha = 1.0;
-    }
-
     function drawMatrix(m, o, ctx) {
         m.forEach((row, y) => {
             row.forEach((v, x) => {
@@ -76,17 +58,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const arena = Array.from({length: 20}, () => Array(10).fill(0));
-    const player = { pos: {x: 0, y: 0}, matrix: null, next: createPiece('T'), score: 0 };
+    function draw() {
+        context.fillStyle = '#000';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        drawMatrix(arena, {x: 0, y: 0}, context);
 
-    function playerReset() {
-        const p = 'ILJOTSZ';
-        player.matrix = player.next;
-        player.next = createPiece(p[p.length * Math.random() | 0]);
-        player.pos.y = 0;
-        player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-        if (collide(arena, player)) { arena.forEach(r => r.fill(0)); player.score = 0; updateScore(); }
+        // ПРИЗРАК
+        const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
+        while (!collide(arena, ghost)) { ghost.pos.y++; }
+        ghost.pos.y--;
+        context.save();
+        context.globalAlpha = 0.2;
+        drawMatrix(ghost.matrix, ghost.pos, context);
+        context.restore();
+
+        drawMatrix(player.matrix, player.pos, context);
+
+        nCtx.fillStyle = '#000';
+        nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+        drawMatrix(player.next, {x: 0.5, y: 0.5}, nCtx);
     }
+
+    const arena = Array.from({length: 20}, () => Array(10).fill(0));
+    const player = { pos: {x: 0, y: 0}, matrix: null, next: createPiece('I'), score: 0 };
 
     function collide(a, p) {
         const [m, o] = [p.matrix, p.pos];
@@ -98,11 +93,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
-    function rotate(m) {
-        for (let y = 0; y < m.length; ++y) {
-            for (let x = 0; x < y; ++x) [m[x][y], m[y][x]] = [m[y][x], m[x][y]];
+    function merge(a, p) {
+        p.matrix.forEach((row, y) => {
+            row.forEach((v, x) => { if (v !== 0) a[y + p.pos.y][x + p.pos.x] = v; });
+        });
+    }
+
+    function rotate(matrix) {
+        for (let y = 0; y < matrix.length; ++y) {
+            for (let x = 0; x < y; ++x) [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
         }
-        m.forEach(row => row.reverse());
+        matrix.forEach(row => row.reverse());
+    }
+
+    function arenaSweep() {
+        outer: for (let y = arena.length - 1; y > 0; --y) {
+            for (let x = 0; x < arena[y].length; ++x) { if (arena[y][x] === 0) continue outer; }
+            const row = arena.splice(y, 1)[0].fill(0);
+            arena.unshift(row);
+            ++y;
+            player.score += 10;
+        }
+        scoreElement.innerText = player.score;
     }
 
     function playerDrop() {
@@ -116,25 +128,26 @@ document.addEventListener('DOMContentLoaded', () => {
         dropCounter = 0;
     }
 
-    function merge(a, p) {
-        p.matrix.forEach((row, y) => {
-            row.forEach((v, x) => { if (v !== 0) a[y + p.pos.y][x + p.pos.x] = v; });
-        });
-    }
-
-    function arenaSweep() {
-        let rowCount = 1;
-        outer: for (let y = arena.length - 1; y > 0; --y) {
-            for (let x = 0; x < arena[y].length; ++x) { if (arena[y][x] === 0) continue outer; }
-            const row = arena.splice(y, 1)[0].fill(0);
-            arena.unshift(row);
-            ++y;
-            player.score += rowCount * 10;
+    async function playerReset() {
+        const pieces = 'ILJOTSZ';
+        player.matrix = player.next || createPiece('T');
+        player.next = createPiece(pieces[pieces.length * Math.random() | 0]);
+        player.pos.y = 0;
+        player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+        
+        if (collide(arena, player)) {
+            // Game Over
+            if (player.score > 0) {
+                await addDoc(collection(db, "top_players"), {
+                    score: player.score,
+                    date: new Date().toISOString()
+                });
+            }
+            arena.forEach(row => row.fill(0));
+            player.score = 0;
+            scoreElement.innerText = 0;
         }
-        updateScore();
     }
-
-    function updateScore() { scoreElement.innerText = player.score; }
 
     let dropCounter = 0;
     let lastTime = 0;
@@ -147,21 +160,17 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(update);
     }
 
-    // Кнопки
     document.getElementById('left-btn').onclick = () => { player.pos.x--; if(collide(arena, player)) player.pos.x++; };
     document.getElementById('right-btn').onclick = () => { player.pos.x++; if(collide(arena, player)) player.pos.x--; };
     document.getElementById('rotate-btn').onclick = () => { 
-        rotate(player.matrix); 
-        if(collide(arena, player)) rotate(player.matrix); 
+        const oldX = player.pos.x;
+        rotate(player.matrix);
+        if(collide(arena, player)) player.pos.x = oldX; 
     };
-    // Исправленная кнопка падения
-    document.getElementById('down-btn').onclick = (e) => {
-        e.preventDefault();
-        playerDrop();
-    };
+    document.getElementById('down-btn').onclick = (e) => { e.preventDefault(); playerDrop(); };
 
-    window.addEventListener('resize', resizeGame);
-    resizeGame();
+    window.addEventListener('resize', resize);
+    resize();
     playerReset();
     update();
 });
