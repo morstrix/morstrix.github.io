@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.scale(cellSize, cellSize);
 
-        const nextSize = cellSize * 0.6;
+        const nextSize = Math.max(20, cellSize * 0.6);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function rotate(matrix) {
-        const rotated = matrix[0].map((_, idx) => matrix.map(row => row[idx]).reverse());
-        return rotated;
+        return matrix[0].map((_, idx) => matrix.map(row => row[idx]).reverse());
     }
 
     function arenaSweep() {
@@ -138,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             player.score += addScore;
             scoreElement.innerText = player.score;
             
-            // Анимация приземления — визуальный фидбек
+            // Анимация приземления
             canvas.style.transform = 'scale(0.98)';
             setTimeout(() => { canvas.style.transform = 'scale(1)'; }, 50);
         }
@@ -158,12 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             playerReset();
             arenaSweep();
-            updateGhost();
         }
         dropCounter = 0;
     }
 
-    // Мгновенный сброс блока вниз
+    // Мгновенный сброс блока вниз (крайняя правая кнопка)
     function hardDrop() {
         if (!gameActive) return;
         
@@ -179,11 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
         merge(arena, player);
         playerReset();
         arenaSweep();
-        updateGhost();
-    }
-
-    function updateGhost() {
-        // просто для перерисовки
     }
 
     function getRandomPiece() {
@@ -216,13 +209,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showScoreModal(score) {
         const modal = document.createElement('div');
-        modal.className = 'modal-overlay active';
+        modal.className = 'modal-overlay';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        `;
         modal.innerHTML = `
-            <div class="score-modal">
-                <h3>✦ GAME OVER ✦</h3>
-                <p style="font-size:14px; margin:10px 0;">SCORE: ${score}</p>
-                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off">
-                <button id="saveScoreBtn">SAVE</button>
+            <div style="background: #0a0a0f; border: 3px solid #a84d6b; padding: 25px; text-align: center; max-width: 300px; width: 90%;">
+                <h3 style="font-size: 10px; margin-bottom: 15px; color: #a84d6b;">✦ GAME OVER ✦</h3>
+                <p style="font-size: 14px; margin: 10px 0; color: #fff;">SCORE: ${score}</p>
+                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off" style="background: #000; border: 2px solid #a84d6b; color: #fff; font-family: 'Press Start 2P', monospace; font-size: 12px; padding: 12px; width: 100%; text-align: center; margin-bottom: 20px;">
+                <button id="saveScoreBtn" style="background: #a84d6b; border: none; color: #000; font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 10px 20px; cursor: pointer;">SAVE</button>
             </div>
         `;
         document.body.appendChild(modal);
@@ -253,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 score: score,
                 date: new Date().toISOString()
             });
-            console.log('Score saved');
+            console.log('Score saved:', name, score);
         } catch (e) {
             console.error('Error saving score:', e);
         }
@@ -287,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lastTime = time;
             dropCounter += dt;
             
-            if (dropCounter > 500) { // 500ms скорость падения
+            if (dropCounter > 500) {
                 playerDrop();
                 dropCounter = 0;
             }
@@ -300,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animationId = requestAnimationFrame(update);
     }
 
-    // Управление
+    // Управление кнопками
     document.getElementById('left-btn').onclick = () => {
         if (!gameActive) return;
         player.pos.x--;
@@ -326,13 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
         draw();
     };
     
+    // Кнопка DOWN (крайняя справа) - мгновенный сброс
     document.getElementById('down-btn').onclick = (e) => {
         e.preventDefault();
         if (!gameActive) return;
         hardDrop();
     };
 
-    // Клавиатура
+    // Управление с клавиатуры
     window.addEventListener('keydown', (e) => {
         if (!gameActive) return;
         switch(e.key) {
