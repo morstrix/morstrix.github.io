@@ -25,23 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let glitchTimeout = null;
 
     const COLS = 10;
-    const ROWS = 14; // Укоротил с 16 до 14, чтобы кнопки влезали
+    const ROWS = 14;
 
-    // ТУСКЛЫЕ ЦВЕТА
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // Уменьшаем размер блоков на 30% (было 320, стало ~220)
-        const maxWidth = Math.min(container.clientWidth, 240);
+        // УМЕНЬШАЕМ БЛОКИ ЕЩЁ БОЛЬШЕ — было 240, стало 180
+        const maxWidth = Math.min(container.clientWidth, 180);
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(cellSize, cellSize);
 
-        const nextSize = Math.max(14, cellSize * 0.5);
+        const nextSize = Math.max(12, cellSize * 0.5);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -273,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         animationId = requestAnimationFrame(update);
     }
 
-    // Управление
     document.getElementById('left-btn').onclick = () => {
         if (!gameActive) return;
         player.pos.x--;
