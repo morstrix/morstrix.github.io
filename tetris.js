@@ -150,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Glitch эффект при приземлении
     function applyGlitch() {
         if (glitchTimeout) clearTimeout(glitchTimeout);
         const canvasEl = document.getElementById('tetris-canvas');
