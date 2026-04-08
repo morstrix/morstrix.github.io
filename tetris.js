@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastTimestamp = 0;
 
     const COLS = 18;
-    const ROWS = 18;
+    const ROWS = 22;
 
     // ПЛАВНОЕ ПАДЕНИЕ
     let smoothY = 0;           // плавная Y-позиция (в клетках, может быть дробной)
