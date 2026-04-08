@@ -22,13 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationId = null;
     let gameActive = true;
-    let flashTimeout = null;
+    let glitchTimeout = null;
 
     const COLS = 10;
     const ROWS = 16;
 
     const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
-    let originalColors = [...colors];
 
     function resize() {
         const container = canvas.parentElement;
@@ -151,15 +150,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Анимация приземления только на блоке (вспышка белым)
-    function flashPiece(matrix, pos) {
-        if (flashTimeout) clearTimeout(flashTimeout);
-        for (let i = 1; i < colors.length; i++) colors[i] = '#ffffff';
-        draw();
-        flashTimeout = setTimeout(() => {
-            for (let i = 1; i < colors.length; i++) colors[i] = originalColors[i];
-            draw();
-        }, 100);
+    // Glitch эффект при приземлении
+    function applyGlitch() {
+        if (glitchTimeout) clearTimeout(glitchTimeout);
+        const canvasEl = document.getElementById('tetris-canvas');
+        if (!canvasEl) return;
+        canvasEl.style.filter = 'blur(2px) contrast(200%) hue-rotate(270deg) brightness(1.5)';
+        canvasEl.style.transform = 'translate(1px, -1px)';
+        glitchTimeout = setTimeout(() => {
+            canvasEl.style.filter = 'none';
+            canvasEl.style.transform = 'none';
+        }, 120);
     }
 
     function playerDrop() {
@@ -167,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         player.pos.y++;
         if (collide(arena, player)) {
             player.pos.y--;
-            flashPiece(player.matrix, player.pos);
+            applyGlitch();
             merge(arena, player);
             playerReset();
             arenaSweep();
@@ -179,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameActive) return;
         while (!collide(arena, player)) player.pos.y++;
         player.pos.y--;
-        flashPiece(player.matrix, player.pos);
+        applyGlitch();
         merge(arena, player);
         playerReset();
         arenaSweep();
