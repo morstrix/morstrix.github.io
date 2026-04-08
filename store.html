@@ -19,14 +19,12 @@
         <div class="shop-subtitle">індивідуальні замовлення</div>
     </div>
 
-    <!-- КАРУСЕЛЬ (вбудована в сторінку) -->
+    <!-- КАРУСЕЛЬ (виправлено: стрілки по боках, трек по центру) -->
     <div class="carousel-section">
         <div class="carousel-container">
             <div class="carousel-arrow arrow-left" id="carouselPrev">‹</div>
+            <div class="carousel-track" id="carouselTrack"></div>
             <div class="carousel-arrow arrow-right" id="carouselNext">›</div>
-            <div class="carousel-track" id="carouselTrack">
-                <!-- картки будуть додаватись js -->
-            </div>
         </div>
     </div>
 
@@ -35,6 +33,28 @@
 </div>
 
 <div class="cart-bottom">
+    <button class="cart-bottom-btn" id="cartBtn">
+        ПАКЕТ
+        <span id="cartCount" class="cart-bottom-count">0</span>
+    </button>
+    <div class="cart-bottom-total" id="cartTotalBottom">0 ₴</div>
+</div>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal">✜</button>
+        <h3 style="margin-bottom:20px;font-size:0.8rem;color:#ffffff;">ПАКЕТ</h3>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotalModal"></div>
+        <button id="checkoutBtn" class="checkout-btn">ENTER</button>
+        <div style="font-size:0.5rem;color:#a1a1a1;margin-top:12px;text-align:center;">* узгодити питання</div>
+    </div>
+</div>
+
+<script src="store.js"></script>
+<script src="background.js"></script>
+</body>
+</html><div class="cart-bottom">
     <button class="cart-bottom-btn" id="cartBtn">
         ПАКЕТ
         <span id="cartCount" class="cart-bottom-count">0</span>
