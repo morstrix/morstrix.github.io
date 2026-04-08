@@ -19,12 +19,11 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 55px 8px 12px 8px;
-    gap: 8px;
+    align-items: center;
+    padding: 55px 12px 12px 12px;
+    gap: 10px;
 }
 
 /* Крестик */
@@ -40,14 +39,14 @@ body {
     image-rendering: pixelated;
 }
 
-/* Верхняя панель — компактная */
+/* Верхняя панель */
 .stats-panel {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    max-width: 320px;
     padding: 5px 12px;
-    background: transparent;
-    border: none;
 }
 .stat-card {
     text-align: left;
@@ -64,33 +63,25 @@ body {
 .right-stats {
     text-align: center;
 }
-.next-box {
-    text-align: center;
-}
 #next-piece-canvas {
     width: 45px;
     height: 45px;
     display: block;
-    margin: 0 auto;
     background: #000;
     border: 1px solid #5a2a3a;
 }
 
-/* Игровая область — сетка и блоки меньше */
+/* Игровая область — канвас центрирован */
 .game-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 #tetris-canvas {
     background: #000;
     border: 2px solid #5a2a3a;
     box-shadow: 0 0 10px rgba(90, 42, 58, 0.4);
     display: block;
-    width: 100%;
-    height: auto;
-    max-width: 100%;
     image-rendering: crisp-edges;
 }
 
@@ -100,17 +91,13 @@ body {
     justify-content: center;
     gap: 20px;
     width: 100%;
-    padding: 15px 0 10px 0;
-    margin-top: 5px;
+    padding: 10px 0;
 }
 .control-btn {
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 0.05s linear;
 }
 .control-btn:active {
@@ -125,23 +112,23 @@ body {
 
 /* Размеры PNG кнопок */
 @media (min-width: 768px) {
-    .control-btn { width: 80px; height: 80px; }
+    .control-btn { width: 70px; height: 70px; }
     .control-bar { gap: 30px; }
 }
 @media (max-width: 767px) {
-    .control-btn { width: 70px; height: 70px; }
+    .control-btn { width: 60px; height: 60px; }
     .control-bar { gap: 25px; }
 }
 @media (max-width: 550px) {
-    .control-btn { width: 60px; height: 60px; }
+    .control-btn { width: 55px; height: 55px; }
     .control-bar { gap: 20px; }
 }
 @media (max-width: 450px) {
-    .control-btn { width: 55px; height: 55px; }
+    .control-btn { width: 50px; height: 50px; }
     .control-bar { gap: 16px; }
 }
 @media (max-width: 380px) {
-    .control-btn { width: 48px; height: 48px; }
+    .control-btn { width: 45px; height: 45px; }
     .control-bar { gap: 12px; }
 }
 
