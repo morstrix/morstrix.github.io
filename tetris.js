@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationId = null;
     let gameActive = true;
-    let fallAnimation = null; // для анимации падения блока
+    let fallAnimation = null;
 
     const COLS = 14;
     const ROWS = 20;
+
+    // Плавное падение
+    let smoothY = 0;           // плавная Y-позиция (в клетках)
+    let targetY = 0;           // целевая Y-позиция
+    let isAnimating = false;    // идёт ли анимация падения
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
@@ -56,14 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
     }
 
-    function drawMatrix(m, o, context, alpha = 1) {
+    function drawMatrix(m, o, context, alpha = 1, yOffset = 0) {
         context.save();
         if (alpha < 1) context.globalAlpha = alpha;
         m.forEach((row, y) => {
             row.forEach((v, x) => {
                 if (v !== 0) {
                     context.fillStyle = colors[v];
-                    context.fillRect(x + o.x, y + o.y, 1, 1);
+                    context.fillRect(x + o.x, y + o.y + yOffset, 1, 1);
                 }
             });
         });
@@ -76,20 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         drawMatrix(arena, {x:0, y:0}, ctx);
 
-        const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
-        while (!collide(arena, ghost)) ghost.pos.y++;
-        ghost.pos.y--;
+        // Призрак (показываем на целевой позиции)
+        const ghost = { pos: {x: player.pos.x, y: targetY}, matrix: player.matrix };
+        let ghostY = targetY;
+        while (!collideArena(arena, ghost.matrix, ghost.pos.x, ghostY + 1)) {
+            ghostY++;
+        }
         ctx.save();
         ctx.globalAlpha = 0.25;
-        drawMatrix(ghost.matrix, ghost.pos, ctx);
+        drawMatrix(ghost.matrix, {x: player.pos.x, y: ghostY}, ctx);
         ctx.restore();
 
-        // Падающий блок (с возможной анимацией прозрачности)
-        if (player.fallingAlpha !== undefined) {
-            drawMatrix(player.matrix, player.pos, ctx, player.fallingAlpha);
-        } else {
-            drawMatrix(player.matrix, player.pos, ctx);
-        }
+        // Падающий блок с плавной Y-позицией
+        const yOffset = smoothY - player.pos.y;
+        drawMatrix(player.matrix, {x: player.pos.x, y: player.pos.y}, ctx, 1, yOffset);
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
@@ -100,35 +105,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const arena = Array(ROWS).fill().map(() => Array(COLS).fill(0));
-    const player = { 
-        pos: {x:0, y:0}, 
-        matrix: null, 
-        next: null, 
-        score: 0,
-        fallingAlpha: 1 
-    };
-
-    function collide(a, p) {
-        const [m, o] = [p.matrix, p.pos];
-        for (let y=0; y<m.length; y++) {
-            for (let x=0; x<m[y].length; x++) {
-                if (m[y][x] !== 0) {
-                    if (!a[y+o.y] || a[y+o.y][x+o.x] !== 0) return true;
+    function collideArena(arena, matrix, posX, posY) {
+        for (let y = 0; y < matrix.length; y++) {
+            for (let x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] !== 0) {
+                    const arenaY = Math.floor(posY) + y;
+                    const arenaX = posX + x;
+                    if (arenaY >= ROWS || arenaY < 0 || arenaX >= COLS || arenaX < 0) return true;
+                    if (arenaY >= 0 && arena[arenaY][arenaX] !== 0) return true;
                 }
             }
         }
         return false;
     }
 
-    function merge(a, p) {
-        p.matrix.forEach((row, y) => {
-            row.forEach((v, x) => {
-                if (v !== 0 && a[y+p.pos.y] && a[y+p.pos.y][x+p.pos.x] !== undefined) {
-                    a[y+p.pos.y][x+p.pos.x] = v;
+    const arena = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+    const player = { 
+        pos: {x: 0, y: 0}, 
+        matrix: null, 
+        next: null, 
+        score: 0
+    };
+
+    function mergeToArena() {
+        for (let y = 0; y < player.matrix.length; y++) {
+            for (let x = 0; x < player.matrix[y].length; x++) {
+                if (player.matrix[y][x] !== 0) {
+                    const arenaY = targetY + y;
+                    const arenaX = player.pos.x + x;
+                    if (arenaY >= 0 && arenaY < ROWS && arenaX >= 0 && arenaX < COLS) {
+                        arena[arenaY][arenaX] = player.matrix[y][x];
+                    }
                 }
-            });
-        });
+            }
+        }
     }
 
     function rotate(matrix) {
@@ -137,63 +147,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function arenaSweep() {
         let rowsCleared = 0;
-        for (let y=arena.length-1; y>=0; y--) {
+        for (let y = arena.length - 1; y >= 0; y--) {
             let full = true;
-            for (let x=0; x<arena[y].length; x++) {
-                if (arena[y][x] === 0) { full=false; break; }
+            for (let x = 0; x < arena[y].length; x++) {
+                if (arena[y][x] === 0) { full = false; break; }
             }
             if (full) {
-                arena.splice(y,1);
+                arena.splice(y, 1);
                 arena.unshift(Array(COLS).fill(0));
                 y++;
                 rowsCleared++;
             }
         }
         if (rowsCleared > 0) {
-            const points = [0,10,30,60,100];
-            player.score += points[Math.min(rowsCleared,4)];
+            const points = [0, 10, 30, 60, 100];
+            player.score += points[Math.min(rowsCleared, 4)];
             scoreElement.innerText = player.score;
         }
     }
 
-    // Анимация падения блока (плавное появление)
-    function animateBlockLanding() {
-        if (fallAnimation) clearTimeout(fallAnimation);
-        player.fallingAlpha = 0.3;
-        draw();
-        fallAnimation = setTimeout(() => {
-            player.fallingAlpha = 1;
+    // Анимация плавного падения
+    function startSmoothDrop() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        function animate() {
+            if (!gameActive) return;
+            if (Math.abs(smoothY - targetY) < 0.05) {
+                smoothY = targetY;
+                isAnimating = false;
+                draw();
+                return;
+            }
+            // Плавное движение (easing)
+            smoothY += (targetY - smoothY) * 0.25;
             draw();
-            fallAnimation = null;
-        }, 150);
+            requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
     }
 
     function playerDrop() {
         if (!gameActive) return;
-        player.pos.y++;
-        if (collide(arena, player)) {
-            player.pos.y--;
-            animateBlockLanding(); // анимация приземления
-            merge(arena, player);
+        
+        const newY = targetY + 1;
+        if (!collideArena(arena, player.matrix, player.pos.x, newY)) {
+            targetY = newY;
+            startSmoothDrop();
+        } else {
+            // Блок приземлился
+            mergeToArena();
             playerReset();
             arenaSweep();
+            smoothY = targetY;
         }
         dropCounter = 0;
     }
 
     function hardDrop() {
         if (!gameActive) return;
-        while (!collide(arena, player)) player.pos.y++;
-        player.pos.y--;
-        animateBlockLanding(); // анимация приземления
-        merge(arena, player);
+        while (!collideArena(arena, player.matrix, player.pos.x, targetY + 1)) {
+            targetY++;
+        }
+        smoothY = targetY;
+        mergeToArena();
         playerReset();
         arenaSweep();
     }
 
     function getRandomPiece() {
         const pieces = 'ILJOTSZ';
-        return createPiece(pieces[Math.floor(Math.random()*pieces.length)]);
+        return createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
     }
 
     function getRandomStartX(matrix) {
@@ -207,11 +231,16 @@ document.addEventListener('DOMContentLoaded', () => {
         player.next = getRandomPiece();
         player.pos.y = 0;
         player.pos.x = getRandomStartX(player.matrix);
-        player.fallingAlpha = 1;
-        if (collide(arena, player)) gameOver();
+        targetY = 0;
+        smoothY = 0;
+        isAnimating = false;
+        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
+            gameOver();
+        }
+        draw();
     }
 
-    // ========== РАССЫПАНИЕ ВСЕГО БЛОКА ПО ТАПУ ==========
+    // Тап по падающему блоку — рассыпается
     function isTapOnFallingBlock(clientX, clientY) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
@@ -227,13 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = Math.floor(canvasY / cellSizeY);
         
         const matrix = player.matrix;
-        const pos = player.pos;
+        const posX = player.pos.x;
+        const posY = smoothY;
         
         for (let y = 0; y < matrix.length; y++) {
             for (let x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] !== 0) {
-                    const blockCol = pos.x + x;
-                    const blockRow = pos.y + y;
+                    const blockCol = posX + x;
+                    const blockRow = Math.floor(posY) + y;
                     if (blockRow === row && blockCol === col) {
                         return true;
                     }
@@ -246,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function destroyWholeFallingBlock() {
         if (!gameActive) return;
         
-        // Подсчитываем количество блоков в фигуре для очков
         let blockCount = 0;
         for (let y = 0; y < player.matrix.length; y++) {
             for (let x = 0; x < player.matrix[y].length; x++) {
@@ -254,17 +283,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // Добавляем очки (10 за блок)
         player.score += blockCount * 10;
         scoreElement.innerText = player.score;
         
-        // Эффект "рассыпания" — просто спавним новую фигуру
-        playerReset();
-        arenaSweep();
+        // Сразу спавним новый блок
+        player.matrix = player.next || getRandomPiece();
+        player.next = getRandomPiece();
+        player.pos.x = getRandomStartX(player.matrix);
+        targetY = 0;
+        smoothY = 0;
+        isAnimating = false;
+        
+        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
+            gameOver();
+        }
         draw();
     }
 
-    // Обработчик тапа по падающему блоку
     canvas.addEventListener('click', (e) => {
         if (!gameActive) return;
         if (isTapOnFallingBlock(e.clientX, e.clientY)) {
@@ -334,8 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetGame() {
-        for (let y=0; y<arena.length; y++) {
-            for (let x=0; x<arena[y].length; x++) arena[y][x]=0;
+        for (let y = 0; y < arena.length; y++) {
+            for (let x = 0; x < arena[y].length; x++) arena[y][x] = 0;
         }
         player.score = 0;
         scoreElement.innerText = '0';
@@ -348,12 +383,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let dropCounter = 0, lastTime = 0;
     function startGameLoop() {
         if (animationId) cancelAnimationFrame(animationId);
-        function update(time=0) {
+        function update(time = 0) {
             if (!gameActive) return;
             const dt = time - lastTime;
             lastTime = time;
             dropCounter += dt;
-            if (dropCounter > 500) { playerDrop(); dropCounter = 0; }
+            if (dropCounter > 500) {
+                playerDrop();
+                dropCounter = 0;
+            }
             draw();
             animationId = requestAnimationFrame(update);
         }
@@ -363,22 +401,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('left-btn').onclick = () => {
         if (!gameActive) return;
-        player.pos.x--;
-        if (collide(arena, player)) player.pos.x++;
-        draw();
+        const newX = player.pos.x - 1;
+        if (!collideArena(arena, player.matrix, newX, targetY)) {
+            player.pos.x = newX;
+            draw();
+        }
     };
     document.getElementById('right-btn').onclick = () => {
         if (!gameActive) return;
-        player.pos.x++;
-        if (collide(arena, player)) player.pos.x--;
-        draw();
+        const newX = player.pos.x + 1;
+        if (!collideArena(arena, player.matrix, newX, targetY)) {
+            player.pos.x = newX;
+            draw();
+        }
     };
     document.getElementById('rotate-btn').onclick = () => {
         if (!gameActive) return;
         const rotated = rotate(player.matrix);
         const old = player.matrix;
         player.matrix = rotated;
-        if (collide(arena, player)) player.matrix = old;
+        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
+            player.matrix = old;
+        }
         draw();
     };
     document.getElementById('down-btn').onclick = (e) => {
@@ -389,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('keydown', (e) => {
         if (!gameActive) return;
-        switch(e.key) {
+        switch (e.key) {
             case 'ArrowLeft': document.getElementById('left-btn').click(); break;
             case 'ArrowRight': document.getElementById('right-btn').click(); break;
             case 'ArrowUp': document.getElementById('rotate-btn').click(); break;
