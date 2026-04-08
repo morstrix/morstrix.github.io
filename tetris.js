@@ -25,29 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let glitchTimeout = null;
 
     const COLS = 10;
-    const ROWS = 16;
+    const ROWS = 14; // Укоротил с 16 до 14
 
-    const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
+    // ТУСКЛЫЕ ЦВЕТА (приглушённая палитра)
+    const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        const maxWidth = container.clientWidth;
-        const maxHeight = container.clientHeight;
-        const aspect = COLS / ROWS;
-        let width = maxWidth;
-        let height = width / aspect;
-        if (height > maxHeight) {
-            height = maxHeight;
-            width = height * aspect;
-        }
-        const cellSize = Math.floor(width / COLS);
+        const maxWidth = Math.min(container.clientWidth, 450);
+        const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(cellSize, cellSize);
 
-        const nextSize = Math.max(20, cellSize * 0.6);
+        const nextSize = Math.max(18, cellSize * 0.55);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -85,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         while (!collide(arena, ghost)) ghost.pos.y++;
         ghost.pos.y--;
         ctx.save();
-        ctx.globalAlpha = 0.3;
+        ctx.globalAlpha = 0.25;
         drawMatrix(ghost.matrix, ghost.pos, ctx);
         ctx.restore();
 
@@ -154,12 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (glitchTimeout) clearTimeout(glitchTimeout);
         const canvasEl = document.getElementById('tetris-canvas');
         if (!canvasEl) return;
-        canvasEl.style.filter = 'blur(2px) contrast(200%) hue-rotate(270deg) brightness(1.5)';
+        canvasEl.style.filter = 'blur(2px) contrast(150%) hue-rotate(270deg) brightness(1.2)';
         canvasEl.style.transform = 'translate(1px, -1px)';
         glitchTimeout = setTimeout(() => {
             canvasEl.style.filter = 'none';
             canvasEl.style.transform = 'none';
-        }, 120);
+        }, 100);
     }
 
     function playerDrop() {
