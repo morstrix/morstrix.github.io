@@ -22,15 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationId = null;
     let gameActive = true;
-    let fallAnimation = null;
+    let lastTimestamp = 0;
 
     const COLS = 14;
     const ROWS = 20;
 
-    // Плавное падение
-    let smoothY = 0;           // плавная Y-позиция (в клетках)
-    let targetY = 0;           // целевая Y-позиция
-    let isAnimating = false;    // идёт ли анимация падения
+    // ПЛАВНОЕ ПАДЕНИЕ
+    let smoothY = 0;           // плавная Y-позиция (в клетках, может быть дробной)
+    let targetY = 0;           // целевая клетка по Y
+    let fallSpeed = 0.008;     // скорость падения (клеток за миллисекунду)
+    let lastFallTime = 0;
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
@@ -82,19 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
         drawMatrix(arena, {x:0, y:0}, ctx);
 
         // Призрак (показываем на целевой позиции)
-        const ghost = { pos: {x: player.pos.x, y: targetY}, matrix: player.matrix };
         let ghostY = targetY;
-        while (!collideArena(arena, ghost.matrix, ghost.pos.x, ghostY + 1)) {
+        while (!collideArena(arena, player.matrix, player.pos.x, ghostY + 1)) {
             ghostY++;
         }
         ctx.save();
         ctx.globalAlpha = 0.25;
-        drawMatrix(ghost.matrix, {x: player.pos.x, y: ghostY}, ctx);
+        drawMatrix(player.matrix, {x: player.pos.x, y: ghostY}, ctx);
         ctx.restore();
 
         // Падающий блок с плавной Y-позицией
-        const yOffset = smoothY - player.pos.y;
-        drawMatrix(player.matrix, {x: player.pos.x, y: player.pos.y}, ctx, 1, yOffset);
+        const yOffset = smoothY - targetY;
+        drawMatrix(player.matrix, {x: player.pos.x, y: targetY}, ctx, 1, yOffset);
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
@@ -106,10 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function collideArena(arena, matrix, posX, posY) {
+        const intPosY = Math.floor(posY);
         for (let y = 0; y < matrix.length; y++) {
             for (let x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] !== 0) {
-                    const arenaY = Math.floor(posY) + y;
+                    const arenaY = intPosY + y;
                     const arenaX = posX + x;
                     if (arenaY >= ROWS || arenaY < 0 || arenaX >= COLS || arenaX < 0) return true;
                     if (arenaY >= 0 && arena[arenaY][arenaX] !== 0) return true;
@@ -128,10 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function mergeToArena() {
+        const intTargetY = Math.floor(targetY);
         for (let y = 0; y < player.matrix.length; y++) {
             for (let x = 0; x < player.matrix[y].length; x++) {
                 if (player.matrix[y][x] !== 0) {
-                    const arenaY = targetY + y;
+                    const arenaY = intTargetY + y;
                     const arenaX = player.pos.x + x;
                     if (arenaY >= 0 && arenaY < ROWS && arenaX >= 0 && arenaX < COLS) {
                         arena[arenaY][arenaX] = player.matrix[y][x];
@@ -166,50 +168,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Анимация плавного падения
-    function startSmoothDrop() {
-        if (isAnimating) return;
-        isAnimating = true;
-        
-        function animate() {
-            if (!gameActive) return;
-            if (Math.abs(smoothY - targetY) < 0.05) {
-                smoothY = targetY;
-                isAnimating = false;
-                draw();
-                return;
-            }
-            // Плавное движение (easing)
-            smoothY += (targetY - smoothY) * 0.25;
-            draw();
-            requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-    }
-
-    function playerDrop() {
+    // Обновление падения (вызывается каждый кадр)
+    function updateFall(deltaTime) {
         if (!gameActive) return;
         
-        const newY = targetY + 1;
-        if (!collideArena(arena, player.matrix, player.pos.x, newY)) {
-            targetY = newY;
-            startSmoothDrop();
-        } else {
-            // Блок приземлился
-            mergeToArena();
-            playerReset();
-            arenaSweep();
+        // Плавное движение вниз
+        smoothY += fallSpeed * deltaTime;
+        
+        // Если дошли до следующей клетки
+        while (smoothY >= targetY + 1) {
+            targetY++;
             smoothY = targetY;
+            
+            // Проверяем столкновение после перемещения на клетку
+            if (collideArena(arena, player.matrix, player.pos.x, targetY + 1)) {
+                // Блок приземлился
+                mergeToArena();
+                playerReset();
+                arenaSweep();
+                smoothY = targetY;
+                break;
+            }
         }
-        dropCounter = 0;
+        
+        // Ограничиваем smoothY, чтобы не улетел далеко
+        if (smoothY > targetY + 1) smoothY = targetY + 1;
     }
 
     function hardDrop() {
         if (!gameActive) return;
         while (!collideArena(arena, player.matrix, player.pos.x, targetY + 1)) {
             targetY++;
+            smoothY = targetY;
         }
-        smoothY = targetY;
         mergeToArena();
         playerReset();
         arenaSweep();
@@ -233,14 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
         player.pos.x = getRandomStartX(player.matrix);
         targetY = 0;
         smoothY = 0;
-        isAnimating = false;
         if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
             gameOver();
         }
         draw();
     }
 
-    // Тап по падающему блоку — рассыпается
+    // Тап по падающему блоку
     function isTapOnFallingBlock(clientX, clientY) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
@@ -257,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const matrix = player.matrix;
         const posX = player.pos.x;
-        const posY = smoothY;
+        const posY = targetY;
         
         for (let y = 0; y < matrix.length; y++) {
             for (let x = 0; x < matrix[y].length; x++) {
@@ -286,13 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
         player.score += blockCount * 10;
         scoreElement.innerText = player.score;
         
-        // Сразу спавним новый блок
         player.matrix = player.next || getRandomPiece();
         player.next = getRandomPiece();
         player.pos.x = getRandomStartX(player.matrix);
         targetY = 0;
         smoothY = 0;
-        isAnimating = false;
         
         if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
             gameOver();
@@ -380,22 +368,30 @@ document.addEventListener('DOMContentLoaded', () => {
         startGameLoop();
     }
 
-    let dropCounter = 0, lastTime = 0;
+    let lastFrameTime = 0;
     function startGameLoop() {
         if (animationId) cancelAnimationFrame(animationId);
-        function update(time = 0) {
+        
+        function update(currentTime = 0) {
             if (!gameActive) return;
-            const dt = time - lastTime;
-            lastTime = time;
-            dropCounter += dt;
-            if (dropCounter > 500) {
-                playerDrop();
-                dropCounter = 0;
+            
+            if (lastFrameTime === 0) {
+                lastFrameTime = currentTime;
+                requestAnimationFrame(update);
+                return;
             }
+            
+            const deltaTime = Math.min(16, currentTime - lastFrameTime); // ограничиваем до 16ms
+            lastFrameTime = currentTime;
+            
+            // Плавное падение каждый кадр
+            updateFall(deltaTime);
             draw();
+            
             animationId = requestAnimationFrame(update);
         }
-        lastTime = 0;
+        
+        lastFrameTime = 0;
         animationId = requestAnimationFrame(update);
     }
 
