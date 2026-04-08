@@ -24,16 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameActive = true;
     let glitchTimeout = null;
 
-    // УВЕЛИЧЕННАЯ СЕТКА: больше колонок и строк
-    const COLS = 22;   // было 10
-    const ROWS = 22;   // было 14
+    const COLS = 14;
+    const ROWS = 20;
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // НА ВСЮ ШИРИНУ ЭКРАНА — убираем ограничение
         const maxWidth = container.clientWidth - 20;
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
@@ -184,14 +182,106 @@ document.addEventListener('DOMContentLoaded', () => {
         return createPiece(pieces[Math.floor(Math.random()*pieces.length)]);
     }
 
+    function getRandomStartX(matrix) {
+        const maxX = COLS - matrix[0].length;
+        return Math.floor(Math.random() * (maxX + 1));
+    }
+
     function playerReset() {
         if (!gameActive) return;
         player.matrix = player.next || getRandomPiece();
         player.next = getRandomPiece();
         player.pos.y = 0;
-        player.pos.x = Math.floor((COLS - player.matrix[0].length)/2);
+        player.pos.x = getRandomStartX(player.matrix);
         if (collide(arena, player)) gameOver();
     }
+
+    // ========== КЛИК ТОЛЬКО ПО ПАДАЮЩЕМУ БЛОКУ ==========
+    function isPointInFallingBlock(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        const canvasX = (clientX - rect.left) * scaleX;
+        const canvasY = (clientY - rect.top) * scaleY;
+        
+        const cellSizeX = canvas.width / COLS;
+        const cellSizeY = canvas.height / ROWS;
+        
+        const col = Math.floor(canvasX / cellSizeX);
+        const row = Math.floor(canvasY / cellSizeY);
+        
+        // Проверяем, попадает ли точка в текущий падающий блок
+        const matrix = player.matrix;
+        const pos = player.pos;
+        
+        for (let y = 0; y < matrix.length; y++) {
+            for (let x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] !== 0) {
+                    const blockCol = pos.x + x;
+                    const blockRow = pos.y + y;
+                    if (blockRow === row && blockCol === col) {
+                        return { x: x, y: y, value: matrix[y][x] };
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    function destroyFallingBlock(blockInfo) {
+        if (!gameActive) return;
+        if (!blockInfo) return;
+        
+        // Удаляем клетку из падающей фигуры
+        player.matrix[blockInfo.y][blockInfo.x] = 0;
+        
+        // Добавляем очки
+        player.score += 10;
+        scoreElement.innerText = player.score;
+        
+        // Glitch эффект
+        applyGlitch();
+        
+        // Если вся фигура пустая — создаём новую
+        let hasBlocks = false;
+        for (let y = 0; y < player.matrix.length; y++) {
+            for (let x = 0; x < player.matrix[y].length; x++) {
+                if (player.matrix[y][x] !== 0) {
+                    hasBlocks = true;
+                    break;
+                }
+            }
+        }
+        
+        if (!hasBlocks) {
+            // Фигура полностью рассыпалась — сразу спавним новую
+            playerReset();
+            arenaSweep();
+        }
+        
+        draw();
+    }
+
+    // Обработчик клика по канвасу — только по падающему блоку
+    canvas.addEventListener('click', (e) => {
+        if (!gameActive) return;
+        const hit = isPointInFallingBlock(e.clientX, e.clientY);
+        if (hit) {
+            destroyFallingBlock(hit);
+        }
+    });
+
+    // Для тач-устройств
+    canvas.addEventListener('touchstart', (e) => {
+        if (!gameActive) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const hit = isPointInFallingBlock(touch.clientX, touch.clientY);
+        if (hit) {
+            destroyFallingBlock(hit);
+        }
+    });
 
     async function gameOver() {
         gameActive = false;
