@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let glitchTimeout = null;
 
     const COLS = 10;
-    const ROWS = 16;
+    const ROWS = 14; // Укоротил с 16 до 14, чтобы кнопки влезали
 
     // ТУСКЛЫЕ ЦВЕТА
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // Уменьшаем максимальную ширину, чтобы клетки были мельче
-        const maxWidth = Math.min(container.clientWidth, 320);
+        // Уменьшаем размер блоков на 30% (было 320, стало ~220)
+        const maxWidth = Math.min(container.clientWidth, 240);
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(cellSize, cellSize);
 
-        const nextSize = Math.max(16, cellSize * 0.55);
+        const nextSize = Math.max(14, cellSize * 0.5);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
