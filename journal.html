@@ -255,25 +255,22 @@
             <button class="modal-close-btn" data-modal="artModal">✜</button>
         </div>
         <div class="paint-window" style="border: none; border-radius: 0; background: #a27791;">
-            <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a; background: #79434a;">
-                <div style="display:flex; gap:5px;">
-                    <button class="retro-btn" id="pUndo" style="padding:5px 8px;" disabled>&lt;</button>
-                    <button class="retro-btn" id="pRedo" style="padding:5px 8px;" disabled>&gt;</button>
-<div class="paint-tools-panel" style="background: #79434a;">
-    <input type="color" id="pColor" value="#ffb7c7" style="width:35px; height:25px;">
-    <button class="retro-btn" id="pSave" style="font-size:7px;">SAVE</button>
-    <button class="retro-btn" id="pClear" style="font-size:7px;">CLEAR</button>
-</div>
+            <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a; background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;">
+                <div style="display: flex; gap: 8px;">
+                    <button class="retro-btn" id="pUndo" style="padding: 4px 10px; font-size: 8px;" disabled>&lt;</button>
+                    <button class="retro-btn" id="pRedo" style="padding: 4px 10px; font-size: 8px;" disabled>&gt;</button>
                 </div>
-                <button class="retro-btn" id="btnLayersOpen" style="font-size:7px;">CHANNELS</button>
+                <button class="retro-btn" id="btnLayersOpen" style="padding: 4px 10px; font-size: 8px;">CHANNELS</button>
             </div>
             <div class="canvas-container" id="paintArea">
                 <canvas id="layer1"></canvas>
                 <canvas id="layer2"></canvas>
             </div>
-            <div class="paint-tools-panel" style="background: #79434a;">
-                <input type="color" id="pColor" value="#ffb7c7" style="width:35px; height:25px; border:1px solid #1a1a1a; background:none;">
-                <button class="retro-btn" id="pClear" style="font-size:7px;">CLEAR</button>
+            <!-- НИЖНЯЯ ПАНЕЛЬ — ТОЛЬКО ЦВЕТ, SAVE, CLEAR (всё в ряд, компактно) -->
+            <div class="paint-tools-panel" style="background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; gap: 10px;">
+                <input type="color" id="pColor" value="#ffb7c7" style="width: 40px; height: 28px; border: 1px solid #1a1a1a; background: #000; cursor: pointer;">
+                <button class="retro-btn" id="pSave" style="padding: 5px 12px; font-size: 8px;">💾 SAVE</button>
+                <button class="retro-btn" id="pClear" style="padding: 5px 12px; font-size: 8px;">CLEAR</button>
             </div>
         </div>
         <div id="layersPopup" class="layers-sub-modal">
