@@ -24,26 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameActive = true;
     let glitchTimeout = null;
 
-    const COLS = 10;
-    const ROWS = 14;
+    // УВЕЛИЧЕННАЯ СЕТКА: больше колонок и строк
+    const COLS = 14;   // было 10
+    const ROWS = 20;   // было 14
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
-
-    // Масштаб для падающих блоков (уменьшены на 40%)
-    const BLOCK_SCALE = 0.6;
 
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // Размер сетки оставляем как было (240px)
-        const maxWidth = Math.min(container.clientWidth, 240);
+        // НА ВСЮ ШИРИНУ ЭКРАНА — убираем ограничение
+        const maxWidth = container.clientWidth - 20;
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(cellSize, cellSize);
 
-        const nextSize = Math.max(12, cellSize * 0.5);
+        const nextSize = Math.max(14, cellSize * 0.6);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -60,25 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
     }
 
-    function drawMatrix(m, o, context, scale = 1) {
-        const offset = scale === 1 ? 0 : (1 - scale) / 2;
-        const size = scale;
-        
+    function drawMatrix(m, o, context) {
         m.forEach((row, y) => {
             row.forEach((v, x) => {
                 if (v !== 0) {
                     context.fillStyle = colors[v];
-                    if (scale === 1) {
-                        context.fillRect(x + o.x, y + o.y, 1, 1);
-                    } else {
-                        // Уменьшенные блоки с отступом для центрирования
-                        context.fillRect(
-                            x + o.x + offset, 
-                            y + o.y + offset, 
-                            size, 
-                            size
-                        );
-                    }
+                    context.fillRect(x + o.x, y + o.y, 1, 1);
                 }
             });
         });
@@ -88,43 +73,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameActive) return;
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Статические блоки (уже упавшие) — нормального размера
-        drawMatrix(arena, {x:0, y:0}, ctx, 1);
+        drawMatrix(arena, {x:0, y:0}, ctx);
 
-        // Призрак — тоже уменьшенный
         const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
         while (!collide(arena, ghost)) ghost.pos.y++;
         ghost.pos.y--;
         ctx.save();
         ctx.globalAlpha = 0.25;
-        drawMatrix(ghost.matrix, ghost.pos, ctx, BLOCK_SCALE);
+        drawMatrix(ghost.matrix, ghost.pos, ctx);
         ctx.restore();
 
-        // Падающий блок — УМЕНЬШЕННЫЙ на 40%
-        drawMatrix(player.matrix, player.pos, ctx, BLOCK_SCALE);
+        drawMatrix(player.matrix, player.pos, ctx);
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
         if (player.next) {
             const offX = (4 - player.next[0].length)/2;
             const offY = (4 - player.next.length)/2;
-            // NEXT блоки тоже уменьшенные
-            const nextScale = 0.7;
-            const nextOffset = (1 - nextScale) / 2;
-            player.next.forEach((row, y) => {
-                row.forEach((v, x) => {
-                    if (v !== 0) {
-                        nCtx.fillStyle = colors[v];
-                        nCtx.fillRect(
-                            offX + x + nextOffset,
-                            offY + y + nextOffset,
-                            nextScale,
-                            nextScale
-                        );
-                    }
-                });
-            });
+            drawMatrix(player.next, {x: offX, y: offY}, nCtx);
         }
     }
 
