@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // УВЕЛИЧЕННАЯ СЕТКА: больше колонок и строк
     const COLS = 14;   // было 10
-    const ROWS = 20;   // было 14
+    const ROWS = 16;   // было 14
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
