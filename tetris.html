@@ -9,23 +9,19 @@
 </head>
 <body>
 
-<div class="back-button-wrapper">
-    <a href="index.html" class="back-button">
-        <img src="assets/close.png" alt="Back">
-    </a>
-</div>
-
 <div class="game-container">
-    <div class="stats-panel">
-        <div class="stat-card">
-            <div class="stat-label">SCORE</div>
-            <div id="score" class="stat-value">0</div>
+    <!-- Всё в одном ряду: крестик, SCORE, NEXT -->
+    <div class="top-bar">
+        <button class="close-btn" onclick="location.href='index.html'">
+            <img src="assets/close.png" alt="Close">
+        </button>
+        <div class="score-box">
+            <div class="score-label">SCORE</div>
+            <div id="score" class="score-value">0</div>
         </div>
-        <div class="right-stats">
-            <div class="next-box">
-                <div class="stat-label">NEXT</div>
-                <canvas id="next-piece-canvas" width="60" height="60"></canvas>
-            </div>
+        <div class="next-box">
+            <div class="next-label">NEXT</div>
+            <canvas id="next-piece-canvas" width="60" height="60"></canvas>
         </div>
     </div>
 
