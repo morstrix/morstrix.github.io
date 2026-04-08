@@ -5,44 +5,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>GRIM EX FRAME | DEVELOPER</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="journal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #050508;
+            font-family: 'Press Start 2P', monospace;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        #neuro-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .close-site {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            z-index: 1000;
+        }
+        .close-site img {
+            width: 30px;
+            height: 30px;
+            image-rendering: pixelated;
+        }
+        .container {
+            max-width: 550px;
+            width: 100%;
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            position: relative;
+            z-index: 10;
+        }
+        .section {
+            width: 100%;
+            background: #0a0a0f;
+            border: 2px solid #79434a;
+            padding: 20px;
+            box-shadow: 4px 4px 0 #3d2a2f;
+        }
+        .section-title {
+            font-size: 8px;
+            color: #a84d6b;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .avatar {
+            width: 100px;
+            image-rendering: pixelated;
+            border: 1px solid #a84d6b;
+            padding: 5px;
+            background: #000;
+        }
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0 10px;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            font-size: 28px;
+            color: #a27791;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            color: #ffb7c7;
+            transform: scale(1.1);
+        }
+        .retro-btn {
+            background: #010101;
+            border: 2px solid #79434a;
+            color: #a27791;
+            padding: 8px 16px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .retro-btn:hover {
+            background: #79434a;
+            color: #010101;
+        }
+        .github-card {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .github-header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .github-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #a84d6b;
+        }
+        .github-info {
+            flex: 1;
+        }
+        .github-name {
+            font-size: 10px;
+            color: #fff;
+        }
+        .github-login {
+            font-size: 7px;
+            color: #a84d6b;
+        }
+        .github-bio {
+            font-size: 7px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        .github-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .github-stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 12px;
+            color: #ffb7c7;
+        }
+        .stat-label {
+            font-size: 6px;
+            color: #888;
+        }
+        .github-loading {
+            color: #a27791;
+            font-size: 7px;
+            text-align: center;
+            padding: 20px;
+        }
+        .small-note {
+            font-size: 6px;
+            color: #555;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .badge-base {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
-<body style="overflow-y: auto;">
+<body>
     <canvas id="neuro-bg"></canvas>
 
     <a href="journal.html" class="close-site">
         <img src="assets/close.png" alt="Close">
     </a>
 
-    <div class="container" style="margin-top: 80px; align-items: center;">
-        <img src="assets/ex.png" style="width: 100px; image-rendering: pixelated; border: 1px solid #a84d6b; padding: 5px;">
-        <h2 style="font-size: 12px; color: #fff; margin: 20px 0;">GRIM EX FRAME</h2>
-        <p style="font-size: 8px; color: #a84d6b; margin-bottom: 30px;">CREATIVE DEVELOPER</p>
+    <div class="container">
+        <!-- Аватар + имя -->
+        <div style="text-align: center;">
+            <img src="assets/ex.png" class="avatar">
+            <h2 style="font-size: 12px; color: #fff; margin: 20px 0 5px;">GRIM EX FRAME</h2>
+            <p style="font-size: 8px; color: #a84d6b;">CREATIVE DEVELOPER</p>
+        </div>
 
-        <!-- GITHUB WIDGET сверху -->
+        <!-- LinkedIn Badge -->
         <div class="section">
-            <h4 style="font-size:8px;color:#a84d6b;margin-bottom:15px;text-align:left;">GITHUB</h4>
-            <div class="github-widget-container" id="githubWidgetEx">
+            <div class="section-title">✦ LINKEDIN ✦</div>
+            <!-- Замени ВАШ_VANITY на свой username из ссылки LinkedIn -->
+            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="ВАШ_VANITY" data-version="v1"></div>
+            <div class="small-note">[ linkedin profile badge ]</div>
+        </div>
+
+        <!-- GitHub Widget -->
+        <div class="section">
+            <div class="section-title">✦ GITHUB ✦</div>
+            <div id="githubWidgetEx">
                 <div class="github-loading">✦ LOADING PROFILE ✦</div>
             </div>
         </div>
 
-        <!-- INSTAGRAM -->
-        <div class="section" style="margin-top: 40px;">
-            <h4 style="font-size:8px;color:#a84d6b;margin-bottom:15px;text-align:left;">INSTAGRAM</h4>
-            <div class="insta-widget">
+        <!-- Instagram + Соцсети -->
+        <div class="section">
+            <div class="section-title">✦ INSTAGRAM & SOCIAL ✦</div>
+            
+            <!-- Instagram виджет Behold -->
+            <div class="insta-widget" style="margin-bottom: 20px;">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
+            
+            <!-- Иконки соцсетей -->
+            <div class="social-row">
+                <a href="https://www.instagram.com/ВАШ_USERNAME/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.threads.net/@ВАШ_USERNAME/" target="_blank" class="social-icon"><i class="fab fa-threads"></i></a>
+                <a href="https://www.tiktok.com/@ВАШ_USERNAME" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                <a href="https://github.com/ВАШ_GITHUB" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="small-note">[ instagram • threads • tiktok • github ]</div>
         </div>
     </div>
 
     <script src="background.js"></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
     
     <!-- GitHub API скрипт -->
     <script>
         (function() {
-            const GITHUB_USERNAME = 'grimexframe'; // ЗАМЕНИТЕ НА РЕАЛЬНЫЙ НИК
+            // ЗАМЕНИ НА РЕАЛЬНЫЙ НИКНЕЙМ GITHUB
+            const GITHUB_USERNAME = 'grimexframe';
             
             function fetchGitHubProfile() {
                 const container = document.getElementById('githubWidgetEx');
