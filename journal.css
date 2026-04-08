@@ -832,3 +832,24 @@ body {
     text-shadow: 0 0 3px #ff8c42, 0 0 5px #ff5500;
     transition: opacity 0.2s ease;
 }
+
+/* Добавить в journal.css — стиль для рисованной кнопки MOOD */
+.pin-mood-btn {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    transition: transform 0.1s steps(2);
+}
+
+.pin-mood-btn:active {
+    transform: scale(0.95);
+}
+
+.pin-mood-btn img {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
