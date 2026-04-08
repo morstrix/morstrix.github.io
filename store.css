@@ -1,5 +1,5 @@
 /* ============================================
-   STORE.CSS — стили страницы магазина
+   STORE.CSS — стилі сторінки магазину + карусель
 ============================================ */
 
 :root {
@@ -11,6 +11,9 @@
     --shop-bg-cart: #050505;
     --shop-bg-modal: #050505;
     --shop-accent: #a84d6b;
+    --toggle-bg: #2c2c2c;
+    --toggle-knob: #f0f0f0;
+    --toggle-active: #a27791;
 }
 
 * {
@@ -30,7 +33,6 @@ body {
     min-height: 100vh;
 }
 
-/* ФОН (канвас) */
 #neuro-bg {
     position: fixed;
     top: 0;
@@ -41,7 +43,6 @@ body {
     pointer-events: none;
 }
 
-/* Крестик как в journal.html */
 .page-shop .back-button {
     position: absolute;
     top: 15px;
@@ -55,6 +56,7 @@ body {
     z-index: 999;
     padding: 0;
 }
+
 .page-shop .back-button img {
     width: 30px;
     height: 30px;
@@ -65,7 +67,7 @@ body {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 20px 20px;  /* ← уменьшай это число */
+    padding: 20px 20px 20px;
     position: relative;
     z-index: 10;
 }
@@ -74,6 +76,86 @@ body {
     text-align: center;
     margin: 0;
     padding: 10px 10px 20px;
+    position: relative;
+}
+
+.currency-zone {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.toggle-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(2px);
+    padding: 6px 14px;
+    border-radius: 60px;
+    border: 1px solid var(--shop-border-dark);
+}
+
+.toggle-label {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    color: var(--shop-text-gray);
+}
+
+.toggle-label.active {
+    color: var(--shop-text-white);
+    text-shadow: 0 0 2px #b97272;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 58px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-bg);
+    transition: 0.2s;
+    border-radius: 34px;
+    border: 1px solid #5a5a5a;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 2px;
+    background-color: var(--toggle-knob);
+    transition: 0.2s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--toggle-active);
+    border-color: #cfa5b5;
+}
+
+input:checked + .slider:before {
+    transform: translateX(28px);
+    background-color: #ffffff;
 }
 
 .shop-title {
@@ -132,7 +214,6 @@ body {
     color: #7e7e7e;
 }
 
-/* КОРЗИНА */
 .cart-bottom {
     position: fixed;
     bottom: 0;
@@ -179,7 +260,6 @@ body {
     font-size: 0.7rem;
 }
 
-/* МОДАЛКА */
 .modal {
     display: none;
     position: fixed;
@@ -261,7 +341,140 @@ body {
     font-size: 0.8rem;
 }
 
-/* Адаптация */
+/* ========== CAROUSEL MODAL ========== */
+.carousel-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.96);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.carousel-modal.active {
+    display: flex;
+}
+
+.carousel-container {
+    background: #050505;
+    border: 2px solid var(--shop-border-white);
+    width: 90%;
+    max-width: 550px;
+    position: relative;
+    border-radius: 0px;
+    padding: 20px 15px 25px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.close-carousel {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #b97272;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 30;
+    font-family: monospace;
+    line-height: 1;
+}
+
+.close-carousel:hover {
+    color: #fff;
+}
+
+.carousel-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.carousel-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 1px solid var(--shop-border-dark);
+    background: #000;
+    margin-bottom: 20px;
+}
+
+.carousel-item-name {
+    font-size: 1rem;
+    color: var(--shop-text-white);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.carousel-item-desc {
+    font-size: 0.65rem;
+    color: var(--shop-text-gray);
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.carousel-add-btn {
+    background: #a27791;
+    border: 1px solid #b97272;
+    color: #000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    padding: 10px 18px;
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 auto;
+    transition: 0.1s;
+}
+
+.carousel-add-btn:active {
+    transform: scale(0.96);
+    background: #b97272;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: 2px solid #a27791;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: 0.1s;
+    font-family: monospace;
+    user-select: none;
+    z-index: 25;
+}
+
+.carousel-arrow:active {
+    background: #a27791;
+    color: black;
+    border-color: white;
+}
+
+.arrow-left {
+    left: 5px;
+}
+
+.arrow-right {
+    right: 5px;
+}
+
 @media (max-width: 680px) {
     .categories-grid { gap: 15px; }
     .shop-title { font-size: 1rem; }
@@ -269,7 +482,9 @@ body {
     .cat-price { font-size: 0.5rem; }
     .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
     .cart-bottom-total { font-size: 0.55rem; }
-    /* УБРАЛ .back-button и .container padding-top */
+    .carousel-arrow { width: 40px; height: 40px; font-size: 2.2rem; }
+    .carousel-item-name { font-size: 0.8rem; }
+    .carousel-item-desc { font-size: 0.55rem; }
 }
 
 @media (max-width: 480px) {
