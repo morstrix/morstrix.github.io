@@ -7,11 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #050508;
             font-family: 'Press Start 2P', monospace;
@@ -54,19 +50,17 @@
             position: relative;
             z-index: 10;
         }
-        
-        /* LinkedIn бейдж — по центру, без рамки */
         .linkedin-wrapper {
             width: 100%;
             display: flex;
             justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
         .badge-base {
             display: flex;
             justify-content: center;
         }
-        
-        /* 3D кнопка GitHub */
         .github-3d-btn {
             display: inline-block;
             background: #0a0a0f;
@@ -84,8 +78,6 @@
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0 #3d2a2f;
         }
-        
-        /* Кнопка Threads (PNG) */
         .threads-btn {
             background: transparent;
             border: none;
@@ -101,13 +93,9 @@
         .threads-btn img:hover {
             transform: scale(1.05);
         }
-        
-        /* Instagram виджет */
         .insta-widget {
             width: 100%;
         }
-        
-        /* Twitter иконка — открывает попап */
         .twitter-icon {
             font-size: 32px;
             color: #a27791;
@@ -119,8 +107,6 @@
             color: #ffb7c7;
             transform: scale(1.1);
         }
-        
-        /* Модалка для дисклеймера */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -134,9 +120,7 @@
             align-items: center;
             z-index: 20000;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
         .modal-content {
             background: #a27791;
             position: relative;
@@ -192,7 +176,15 @@
             padding: 10px 20px;
             cursor: pointer;
         }
-        
+        .fallback-link {
+            margin-top: 10px;
+        }
+        .fallback-link a {
+            color: #a27791;
+            font-size: 8px;
+            text-decoration: none;
+            border-bottom: 1px dotted #a27791;
+        }
         .small-note {
             font-size: 6px;
             color: #555;
@@ -209,24 +201,31 @@
     </a>
 
     <div class="container">
-        <!-- LinkedIn Badge -->
+        <!-- LinkedIn Badge (с fallback) -->
         <div class="linkedin-wrapper">
-            <div class="badge-base LI-profile-badge" 
-                 data-locale="ru_RU" 
-                 data-size="medium" 
-                 data-theme="dark" 
-                 data-type="VERTICAL" 
-                 data-vanity="grimexframe" 
-                 data-version="v1">
+            <div id="linkedinBadgeContainer">
+                <div class="badge-base LI-profile-badge" 
+                     data-locale="ru_RU" 
+                     data-size="medium" 
+                     data-theme="dark" 
+                     data-type="VERTICAL" 
+                     data-vanity="grimexframe" 
+                     data-version="v1">
+                </div>
+            </div>
+            <div id="linkedinFallback" style="display: none; margin-top: 10px;">
+                <a href="https://www.linkedin.com/in/grimexframe" target="_blank" class="github-3d-btn" style="font-size: 9px; padding: 10px 20px;">
+                    <i class="fab fa-linkedin"></i> LINKEDIN
+                </a>
             </div>
         </div>
 
-        <!-- 3D кнопка GitHub (с дисклеймером) -->
+        <!-- GitHub кнопка (с дисклеймером) -->
         <button class="github-3d-btn" id="githubBtn">
             <i class="fab fa-github"></i> GITHUB
         </button>
 
-        <!-- Кнопка Threads PNG (с дисклеймером) -->
+        <!-- Threads PNG (с дисклеймером) -->
         <button class="threads-btn" id="threadsBtn">
             <img src="assets/threads.png" alt="Threads">
         </button>
@@ -236,12 +235,12 @@
             <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
         </div>
 
-        <!-- Twitter иконка (дисклеймер → TikTok) -->
+        <!-- Twitter иконка → TikTok -->
         <i class="fab fa-twitter twitter-icon" id="twitterPopupBtn"></i>
         <div class="small-note">[ twitter → tiktok ]</div>
     </div>
 
-    <!-- Единая модалка дисклеймер (динамический переход) -->
+    <!-- Модалка дисклеймер -->
     <div id="disclaimerModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -260,6 +259,19 @@
     <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
     
     <script>
+        // Fallback для LinkedIn бейджа — если не загрузился через 3 секунды, показываем обычную кнопку
+        setTimeout(function() {
+            const badgeContainer = document.getElementById('linkedinBadgeContainer');
+            const fallback = document.getElementById('linkedinFallback');
+            if (badgeContainer && fallback) {
+                const badgeDiv = badgeContainer.querySelector('.badge-base');
+                if (badgeDiv && badgeDiv.innerHTML.trim() === '') {
+                    badgeContainer.style.display = 'none';
+                    fallback.style.display = 'block';
+                }
+            }
+        }, 3000);
+        
         // --- Данные для переходов ---
         const links = {
             github: 'https://github.com/grimexframe',
@@ -268,9 +280,7 @@
         };
         
         let pendingUrl = '';
-        let pendingMessage = '';
         
-        // Элементы модалки
         const modal = document.getElementById('disclaimerModal');
         const modalMessage = document.getElementById('modalMessage');
         const enterBtn = document.getElementById('enterBtn');
@@ -287,7 +297,6 @@
             pendingUrl = '';
         }
         
-        // Переход по сохранённой ссылке
         function executeRedirect() {
             if (pendingUrl) {
                 window.open(pendingUrl, '_blank');
@@ -295,7 +304,7 @@
             }
         }
         
-        // --- GitHub (с дисклеймером) ---
+        // GitHub
         const githubBtn = document.getElementById('githubBtn');
         if (githubBtn) {
             githubBtn.addEventListener('click', function(e) {
@@ -304,7 +313,7 @@
             });
         }
         
-        // --- Threads (с дисклеймером) ---
+        // Threads
         const threadsBtn = document.getElementById('threadsBtn');
         if (threadsBtn) {
             threadsBtn.addEventListener('click', function() {
@@ -312,7 +321,7 @@
             });
         }
         
-        // --- Twitter → TikTok (с дисклеймером) ---
+        // Twitter → TikTok
         const twitterBtn = document.getElementById('twitterPopupBtn');
         if (twitterBtn) {
             twitterBtn.addEventListener('click', function() {
@@ -320,19 +329,15 @@
             });
         }
         
-        // --- Закрытие модалки ---
+        // Закрытие
         if (closeModalBtn) {
             closeModalBtn.addEventListener('click', closeModal);
         }
         
-        // Закрытие по клику на фон
         modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
+            if (e.target === modal) closeModal();
         });
         
-        // Кнопка ENTER
         if (enterBtn) {
             enterBtn.addEventListener('click', executeRedirect);
         }
