@@ -22,8 +22,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 8px 0px 8px;
-    gap: 8px;
+    padding: 0px 8px 0px 0px;
+    gap: 8px0
 }
 
 /* Верхняя панель — всё в одном ряду */
