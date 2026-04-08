@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameActive = true;
     let lastTimestamp = 0;
 
-    const COLS = 14;
-    const ROWS = 20;
+    const COLS = 18;
+    const ROWS = 18;
 
     // ПЛАВНОЕ ПАДЕНИЕ
     let smoothY = 0;           // плавная Y-позиция (в клетках, может быть дробной)
