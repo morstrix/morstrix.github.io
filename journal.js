@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cmInp.oninput = () => pxInp.value = Math.round(cmInp.value * 37.8);
     }
 
-    async function loadTopPlayers() {
+async function loadTopPlayers() {
     const container = document.querySelector('.top-players-list');
     if (!container) return;
     try {
@@ -86,8 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         container.innerHTML = html;
     } catch(e) {
-        console.error(e);
+        console.error('Top players error:', e);
         container.innerHTML = '<div style="color:#a84d6b;">⚠️ ERROR</div>';
     }
 }
-if (document.querySelector('.top-players-list')) loadTopPlayers();
+// Вызов при загрузке страницы
+if (document.querySelector('.top-players-list')) {
+    loadTopPlayers();
+}
