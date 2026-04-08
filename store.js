@@ -15,7 +15,7 @@ var carouselItems = [
 // ========== КОРЗИНА ==========
 var cart = [];
 
-// Завантажуємо збережену корзину
+// Завантажити збережену корзину
 try {
     var saved = localStorage.getItem('morstrix_cart');
     if (saved) {
@@ -23,18 +23,17 @@ try {
     }
 } catch(e) {}
 
-// Збереження корзини
+// Зберегти корзину
 function saveCart() {
     try {
         localStorage.setItem('morstrix_cart', JSON.stringify(cart));
     } catch(e) {}
 }
 
-// Оновлення відображення корзини
+// Оновити відображення корзини
 function updateCartUI() {
     var totalItems = 0;
     var totalPrice = 0;
-    
     for (var i = 0; i < cart.length; i++) {
         totalItems += cart[i].quantity;
         totalPrice += cart[i].price * cart[i].quantity;
@@ -62,7 +61,7 @@ function updateCartUI() {
             }
             cartItemsDiv.innerHTML = html;
             
-            // кнопки видалення
+            // Обробники для кнопок видалення
             var removeBtns = document.querySelectorAll('.remove-item');
             for (var i = 0; i < removeBtns.length; i++) {
                 removeBtns[i].addEventListener('click', function(e) {
@@ -77,7 +76,7 @@ function updateCartUI() {
     saveCart();
 }
 
-// Додати в корзину
+// Додати товар
 function addToCart(product) {
     var found = null;
     for (var i = 0; i < cart.length; i++) {
@@ -86,7 +85,6 @@ function addToCart(product) {
             break;
         }
     }
-    
     if (found) {
         found.quantity++;
     } else {
@@ -97,12 +95,11 @@ function addToCart(product) {
             quantity: 1
         });
     }
-    
     updateCartUI();
     if (navigator.vibrate) navigator.vibrate(50);
 }
 
-// Видалити з корзини
+// Видалити товар
 function removeFromCart(id) {
     for (var i = 0; i < cart.length; i++) {
         if (cart[i].id == id) {
@@ -117,24 +114,22 @@ function removeFromCart(id) {
     updateCartUI();
 }
 
-// Оформити замовлення
+// Оформити замовлення (Telegram)
 function checkout() {
     if (cart.length === 0) {
         alert('Корзина пуста');
         return;
     }
-    
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
         totalPrice += cart[i].price * cart[i].quantity;
     }
-    
     var itemsList = '';
     for (var i = 0; i < cart.length; i++) {
         itemsList += cart[i].name + ' x' + cart[i].quantity + ' — ' + (cart[i].price * cart[i].quantity) + ' ₴%0A';
     }
-    
     var message = '🛒 НОВЫЙ ЗАКАЗ!%0A%0A📦 Товары:%0A' + itemsList + '%0A💰 Итого: ' + totalPrice + ' ₴%0A%0A👤 Заказ от:%0A📍 Доставка:';
+    // ЗАМІНИ 'morsova' на свій Telegram username
     window.open('https://t.me/morsova?text=' + message, '_blank');
 }
 
@@ -157,7 +152,6 @@ function renderCarousel() {
     slidesHtml += '</div>';
     track.innerHTML = slidesHtml;
     
-    // додаємо обробники на картки каруселі
     var cards = document.querySelectorAll('.carousel-card');
     for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click', function(e) {
@@ -165,14 +159,12 @@ function renderCarousel() {
             var name = this.getAttribute('data-name');
             var price = parseInt(this.getAttribute('data-price'));
             addToCart({ id: id, name: name, price: price });
-            
             var nameDiv = this.querySelector('.carousel-name');
             var original = nameDiv.innerHTML;
             nameDiv.innerHTML = 'додано!';
             setTimeout(function() { nameDiv.innerHTML = original; }, 600);
         });
     }
-    
     updateCarouselPosition();
 }
 
@@ -216,7 +208,6 @@ function renderCategories() {
             var name = this.getAttribute('data-name');
             var price = parseInt(this.getAttribute('data-price'));
             addToCart({ id: id, name: name, price: price });
-            
             var priceDiv = this.querySelector('.cat-price');
             var original = priceDiv.innerHTML;
             priceDiv.innerHTML = 'додано';
@@ -225,7 +216,7 @@ function renderCategories() {
     }
 }
 
-// ========== МОДАЛКА ==========
+// ========== МОДАЛЬНЕ ВІКНО (ПАКЕТ) ==========
 var modal = document.getElementById('cartModal');
 var cartBtn = document.getElementById('cartBtn');
 var closeModalBtn = document.querySelector('.close-modal');
@@ -251,7 +242,7 @@ if (checkoutBtn) {
     checkoutBtn.onclick = checkout;
 }
 
-// ========== СТРІЛКИ ==========
+// ========== СТРІЛКИ КАРУСЕЛІ ==========
 var prevBtn = document.getElementById('carouselPrev');
 var nextBtn = document.getElementById('carouselNext');
 if (prevBtn) prevBtn.onclick = prevSlide;
