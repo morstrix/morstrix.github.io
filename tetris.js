@@ -22,13 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationId = null;
     let gameActive = true;
+    let flashTimeout = null;
 
     const COLS = 10;
-    const ROWS = 16; // короче, чтобы было шире
+    const ROWS = 16;
 
-    // Функция изменения размера – вписывает canvas в доступную область
+    const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
+    let originalColors = [...colors];
+
     function resize() {
-        const container = canvas.parentElement; // .game-area
+        const container = canvas.parentElement;
         if (!container) return;
         const maxWidth = container.clientWidth;
         const maxHeight = container.clientHeight;
@@ -51,8 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
         nCtx.scale(nextSize, nextSize);
     }
-
-    const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
 
     function createPiece(t) {
         if (t === 'I') return [[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]];
@@ -81,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         drawMatrix(arena, {x:0, y:0}, ctx);
 
-        // Призрак
         const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
         while (!collide(arena, ghost)) ghost.pos.y++;
         ghost.pos.y--;
@@ -148,9 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const points = [0,10,30,60,100];
             player.score += points[Math.min(rowsCleared,4)];
             scoreElement.innerText = player.score;
-            canvas.style.transform = 'scale(0.98)';
-            setTimeout(() => canvas.style.transform = 'scale(1)', 50);
         }
+    }
+
+    // Анимация приземления только на блоке (вспышка белым)
+    function flashPiece(matrix, pos) {
+        if (flashTimeout) clearTimeout(flashTimeout);
+        for (let i = 1; i < colors.length; i++) colors[i] = '#ffffff';
+        draw();
+        flashTimeout = setTimeout(() => {
+            for (let i = 1; i < colors.length; i++) colors[i] = originalColors[i];
+            draw();
+        }, 100);
     }
 
     function playerDrop() {
@@ -158,9 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
         player.pos.y++;
         if (collide(arena, player)) {
             player.pos.y--;
+            flashPiece(player.matrix, player.pos);
             merge(arena, player);
-            canvas.style.transform = 'scale(0.97)';
-            setTimeout(() => canvas.style.transform = 'scale(1)', 60);
             playerReset();
             arenaSweep();
         }
@@ -171,8 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameActive) return;
         while (!collide(arena, player)) player.pos.y++;
         player.pos.y--;
-        canvas.style.transform = 'scale(0.95)';
-        setTimeout(() => canvas.style.transform = 'scale(1)', 80);
+        flashPiece(player.matrix, player.pos);
         merge(arena, player);
         playerReset();
         arenaSweep();
@@ -272,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animationId = requestAnimationFrame(update);
     }
 
-    // Кнопки управления
+    // Управление
     document.getElementById('left-btn').onclick = () => {
         if (!gameActive) return;
         player.pos.x--;
