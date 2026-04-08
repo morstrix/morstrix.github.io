@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationId = null;
     let gameActive = true;
-    let glitchTimeout = null;
+    let fallAnimation = null; // для анимации падения блока
 
     const COLS = 14;
     const ROWS = 20;
@@ -56,7 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
     }
 
-    function drawMatrix(m, o, context) {
+    function drawMatrix(m, o, context, alpha = 1) {
+        context.save();
+        if (alpha < 1) context.globalAlpha = alpha;
         m.forEach((row, y) => {
             row.forEach((v, x) => {
                 if (v !== 0) {
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+        context.restore();
     }
 
     function draw() {
@@ -81,7 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
         drawMatrix(ghost.matrix, ghost.pos, ctx);
         ctx.restore();
 
-        drawMatrix(player.matrix, player.pos, ctx);
+        // Падающий блок (с возможной анимацией прозрачности)
+        if (player.fallingAlpha !== undefined) {
+            drawMatrix(player.matrix, player.pos, ctx, player.fallingAlpha);
+        } else {
+            drawMatrix(player.matrix, player.pos, ctx);
+        }
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
@@ -93,7 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const arena = Array(ROWS).fill().map(() => Array(COLS).fill(0));
-    const player = { pos: {x:0, y:0}, matrix: null, next: null, score: 0 };
+    const player = { 
+        pos: {x:0, y:0}, 
+        matrix: null, 
+        next: null, 
+        score: 0,
+        fallingAlpha: 1 
+    };
 
     function collide(a, p) {
         const [m, o] = [p.matrix, p.pos];
@@ -142,16 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function applyGlitch() {
-        if (glitchTimeout) clearTimeout(glitchTimeout);
-        const canvasEl = document.getElementById('tetris-canvas');
-        if (!canvasEl) return;
-        canvasEl.style.filter = 'blur(2px) contrast(150%) hue-rotate(270deg) brightness(1.2)';
-        canvasEl.style.transform = 'translate(1px, -1px)';
-        glitchTimeout = setTimeout(() => {
-            canvasEl.style.filter = 'none';
-            canvasEl.style.transform = 'none';
-        }, 100);
+    // Анимация падения блока (плавное появление)
+    function animateBlockLanding() {
+        if (fallAnimation) clearTimeout(fallAnimation);
+        player.fallingAlpha = 0.3;
+        draw();
+        fallAnimation = setTimeout(() => {
+            player.fallingAlpha = 1;
+            draw();
+            fallAnimation = null;
+        }, 150);
     }
 
     function playerDrop() {
@@ -159,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         player.pos.y++;
         if (collide(arena, player)) {
             player.pos.y--;
-            applyGlitch();
+            animateBlockLanding(); // анимация приземления
             merge(arena, player);
             playerReset();
             arenaSweep();
@@ -171,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameActive) return;
         while (!collide(arena, player)) player.pos.y++;
         player.pos.y--;
-        applyGlitch();
+        animateBlockLanding(); // анимация приземления
         merge(arena, player);
         playerReset();
         arenaSweep();
@@ -193,11 +207,12 @@ document.addEventListener('DOMContentLoaded', () => {
         player.next = getRandomPiece();
         player.pos.y = 0;
         player.pos.x = getRandomStartX(player.matrix);
+        player.fallingAlpha = 1;
         if (collide(arena, player)) gameOver();
     }
 
-    // ========== КЛИК ТОЛЬКО ПО ПАДАЮЩЕМУ БЛОКУ ==========
-    function isPointInFallingBlock(clientX, clientY) {
+    // ========== РАССЫПАНИЕ ВСЕГО БЛОКА ПО ТАПУ ==========
+    function isTapOnFallingBlock(clientX, clientY) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
@@ -211,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const col = Math.floor(canvasX / cellSizeX);
         const row = Math.floor(canvasY / cellSizeY);
         
-        // Проверяем, попадает ли точка в текущий падающий блок
         const matrix = player.matrix;
         const pos = player.pos;
         
@@ -221,65 +235,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     const blockCol = pos.x + x;
                     const blockRow = pos.y + y;
                     if (blockRow === row && blockCol === col) {
-                        return { x: x, y: y, value: matrix[y][x] };
+                        return true;
                     }
                 }
             }
         }
-        return null;
+        return false;
     }
 
-    function destroyFallingBlock(blockInfo) {
+    function destroyWholeFallingBlock() {
         if (!gameActive) return;
-        if (!blockInfo) return;
         
-        // Удаляем клетку из падающей фигуры
-        player.matrix[blockInfo.y][blockInfo.x] = 0;
-        
-        // Добавляем очки
-        player.score += 10;
-        scoreElement.innerText = player.score;
-        
-        // Glitch эффект
-        applyGlitch();
-        
-        // Если вся фигура пустая — создаём новую
-        let hasBlocks = false;
+        // Подсчитываем количество блоков в фигуре для очков
+        let blockCount = 0;
         for (let y = 0; y < player.matrix.length; y++) {
             for (let x = 0; x < player.matrix[y].length; x++) {
-                if (player.matrix[y][x] !== 0) {
-                    hasBlocks = true;
-                    break;
-                }
+                if (player.matrix[y][x] !== 0) blockCount++;
             }
         }
         
-        if (!hasBlocks) {
-            // Фигура полностью рассыпалась — сразу спавним новую
-            playerReset();
-            arenaSweep();
-        }
+        // Добавляем очки (10 за блок)
+        player.score += blockCount * 10;
+        scoreElement.innerText = player.score;
         
+        // Эффект "рассыпания" — просто спавним новую фигуру
+        playerReset();
+        arenaSweep();
         draw();
     }
 
-    // Обработчик клика по канвасу — только по падающему блоку
+    // Обработчик тапа по падающему блоку
     canvas.addEventListener('click', (e) => {
         if (!gameActive) return;
-        const hit = isPointInFallingBlock(e.clientX, e.clientY);
-        if (hit) {
-            destroyFallingBlock(hit);
+        if (isTapOnFallingBlock(e.clientX, e.clientY)) {
+            destroyWholeFallingBlock();
         }
     });
 
-    // Для тач-устройств
     canvas.addEventListener('touchstart', (e) => {
         if (!gameActive) return;
         e.preventDefault();
         const touch = e.touches[0];
-        const hit = isPointInFallingBlock(touch.clientX, touch.clientY);
-        if (hit) {
-            destroyFallingBlock(hit);
+        if (isTapOnFallingBlock(touch.clientX, touch.clientY)) {
+            destroyWholeFallingBlock();
         }
     });
 
