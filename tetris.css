@@ -100,7 +100,7 @@ body {
     justify-content: center;
     gap: 35px;
     width: 100%;
-    padding: 0px 0 40px 0;
+    padding: 20px 0 40px 0;
 }
 .control-btn {
     background: transparent;
