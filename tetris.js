@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ПЛАВНОЕ ПАДЕНИЕ
     let smoothY = 0;           // плавная Y-позиция (в клетках, может быть дробной)
     let targetY = 0;           // целевая клетка по Y
-    let fallSpeed = 0.008;     // скорость падения (клеток за миллисекунду)
+    let fallSpeed = 0.004;     // скорость падения (клеток за миллисекунду)
     let lastFallTime = 0;
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
