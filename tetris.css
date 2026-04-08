@@ -19,11 +19,11 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 55px 12px 12px 12px;
+    padding: 55px 8px 12px 8px;
     gap: 8px;
 }
 
@@ -76,7 +76,7 @@ body {
     border: 1px solid #5a2a3a;
 }
 
-/* Игровая область — компактная */
+/* Игровая область — сетка и блоки меньше */
 .game-area {
     display: flex;
     justify-content: center;
@@ -94,11 +94,11 @@ body {
     image-rendering: crisp-edges;
 }
 
-/* Панель управления — большие кнопки с отступами */
+/* Панель управления — PNG кнопки */
 .control-bar {
     display: flex;
     justify-content: center;
-    gap: 24px;
+    gap: 20px;
     width: 100%;
     padding: 15px 0 10px 0;
     margin-top: 5px;
@@ -114,44 +114,35 @@ body {
     transition: 0.05s linear;
 }
 .control-btn:active {
-    transform: translate(2px, 2px);
+    transform: scale(0.9);
+}
+.control-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
 }
 
-/* 3D тени для стрелок (без свечения) */
-.pixel-arrow {
-    font-weight: bold;
-    color: #ff66aa;
-    text-shadow: 
-        -1px -1px 0 #551133,
-        1px -1px 0 #551133,
-        -1px 1px 0 #551133,
-        1px 1px 0 #551133,
-        0 2px 0 #330011,
-        0 3px 0 #220008,
-        0 4px 0 #110004;
-    display: inline-block;
-}
-
-/* Адаптивные размеры стрелок — большие */
+/* Размеры PNG кнопок */
 @media (min-width: 768px) {
-    .pixel-arrow { font-size: 80px; }
-    .control-bar { gap: 35px; }
-}
-@media (max-width: 767px) {
-    .pixel-arrow { font-size: 70px; }
+    .control-btn { width: 80px; height: 80px; }
     .control-bar { gap: 30px; }
 }
-@media (max-width: 550px) {
-    .pixel-arrow { font-size: 60px; }
+@media (max-width: 767px) {
+    .control-btn { width: 70px; height: 70px; }
     .control-bar { gap: 25px; }
 }
-@media (max-width: 450px) {
-    .pixel-arrow { font-size: 52px; }
+@media (max-width: 550px) {
+    .control-btn { width: 60px; height: 60px; }
     .control-bar { gap: 20px; }
 }
-@media (max-width: 380px) {
-    .pixel-arrow { font-size: 48px; }
+@media (max-width: 450px) {
+    .control-btn { width: 55px; height: 55px; }
     .control-bar { gap: 16px; }
+}
+@media (max-width: 380px) {
+    .control-btn { width: 48px; height: 48px; }
+    .control-bar { gap: 12px; }
 }
 
 /* Модалка */
