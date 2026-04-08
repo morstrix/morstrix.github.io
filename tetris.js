@@ -24,9 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameActive = true;
     let glitchTimeout = null;
 
-    // Увеличиваем поле: больше колонок и строк
-    const COLS = 12;      // было 10
-    const ROWS = 16;      // было 14
+    const COLS = 10;
+    const ROWS = 16;
 
     // ТУСКЛЫЕ ЦВЕТА
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
@@ -34,15 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // Размер клетки меньше, чтобы влезало больше блоков
-        const maxWidth = Math.min(container.clientWidth, 500);
+        // Уменьшаем максимальную ширину, чтобы клетки были мельче
+        const maxWidth = Math.min(container.clientWidth, 320);
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(cellSize, cellSize);
 
-        const nextSize = Math.max(16, cellSize * 0.5);
+        const nextSize = Math.max(16, cellSize * 0.55);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
