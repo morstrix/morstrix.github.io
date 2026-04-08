@@ -46,34 +46,13 @@
         .container {
             max-width: 500px;
             width: 100%;
-            margin-top: 80px;
+            margin-top: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 35px;
             position: relative;
             z-index: 10;
-        }
-        
-        /* Аватар и имя */
-        .avatar-section {
-            text-align: center;
-        }
-        .avatar {
-            width: 100px;
-            image-rendering: pixelated;
-            border: 1px solid #a84d6b;
-            padding: 5px;
-            background: #000;
-        }
-        h2 {
-            font-size: 12px;
-            color: #fff;
-            margin: 20px 0 5px;
-        }
-        .role {
-            font-size: 8px;
-            color: #a84d6b;
         }
         
         /* LinkedIn бейдж — по центру, без рамки */
@@ -220,11 +199,6 @@
             text-align: center;
             margin-top: 8px;
         }
-        
-        hr {
-            border-color: #79434a;
-            width: 100%;
-        }
     </style>
 </head>
 <body>
@@ -235,31 +209,24 @@
     </a>
 
     <div class="container">
-        <!-- Аватар + имя -->
-        <div class="avatar-section">
-            <img src="assets/ex.png" class="avatar">
-            <h2>GRIM EX FRAME</h2>
-            <div class="role">CREATIVE DEVELOPER</div>
-        </div>
-
-        <!-- LinkedIn Badge (по центру, без рамки) -->
+        <!-- LinkedIn Badge -->
         <div class="linkedin-wrapper">
             <div class="badge-base LI-profile-badge" 
                  data-locale="ru_RU" 
                  data-size="medium" 
                  data-theme="dark" 
                  data-type="VERTICAL" 
-                 data-vanity="ВАШ_VANITY" 
+                 data-vanity="grimexframe" 
                  data-version="v1">
             </div>
         </div>
 
-        <!-- 3D кнопка GitHub -->
-        <a href="https://github.com/grimexframe" target="_blank" class="github-3d-btn">
+        <!-- 3D кнопка GitHub (с дисклеймером) -->
+        <button class="github-3d-btn" id="githubBtn">
             <i class="fab fa-github"></i> GITHUB
-        </a>
+        </button>
 
-        <!-- Кнопка Threads (PNG) -->
+        <!-- Кнопка Threads PNG (с дисклеймером) -->
         <button class="threads-btn" id="threadsBtn">
             <img src="assets/threads.png" alt="Threads">
         </button>
@@ -269,12 +236,12 @@
             <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
         </div>
 
-        <!-- Twitter иконка (открывает попап → TikTok) -->
+        <!-- Twitter иконка (дисклеймер → TikTok) -->
         <i class="fab fa-twitter twitter-icon" id="twitterPopupBtn"></i>
         <div class="small-note">[ twitter → tiktok ]</div>
     </div>
 
-    <!-- Модалка дисклеймер -->
+    <!-- Единая модалка дисклеймер (динамический переход) -->
     <div id="disclaimerModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -282,8 +249,8 @@
                 <button class="modal-close-btn" id="closeModalBtn">✜</button>
             </div>
             <div class="modal-inner">
-                <p>OPEN TIKTOK?</p>
-                <button class="popup-enter-btn" id="enterTikTokBtn">ENTER</button>
+                <p id="modalMessage">OPEN LINK?</p>
+                <button class="popup-enter-btn" id="enterBtn">ENTER</button>
             </div>
         </div>
     </div>
@@ -293,26 +260,67 @@
     <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
     
     <script>
-        // Модалка для Twitter → TikTok
-        const modal = document.getElementById('disclaimerModal');
-        const twitterBtn = document.getElementById('twitterPopupBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const enterTikTokBtn = document.getElementById('enterTikTokBtn');
+        // --- Данные для переходов ---
+        const links = {
+            github: 'https://github.com/grimexframe',
+            threads: 'https://www.threads.net/grimexframe',
+            tiktok: 'https://www.tiktok.com/grimexframe'
+        };
         
-        function openModal() {
+        let pendingUrl = '';
+        let pendingMessage = '';
+        
+        // Элементы модалки
+        const modal = document.getElementById('disclaimerModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const enterBtn = document.getElementById('enterBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        
+        function openModalWithUrl(url, message) {
+            pendingUrl = url;
+            modalMessage.innerText = message;
             modal.classList.add('active');
         }
         
         function closeModal() {
             modal.classList.remove('active');
+            pendingUrl = '';
         }
         
-        // Клик по иконке Twitter → открыть модалку
+        // Переход по сохранённой ссылке
+        function executeRedirect() {
+            if (pendingUrl) {
+                window.open(pendingUrl, '_blank');
+                closeModal();
+            }
+        }
+        
+        // --- GitHub (с дисклеймером) ---
+        const githubBtn = document.getElementById('githubBtn');
+        if (githubBtn) {
+            githubBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModalWithUrl(links.github, 'OPEN GITHUB?');
+            });
+        }
+        
+        // --- Threads (с дисклеймером) ---
+        const threadsBtn = document.getElementById('threadsBtn');
+        if (threadsBtn) {
+            threadsBtn.addEventListener('click', function() {
+                openModalWithUrl(links.threads, 'OPEN THREADS?');
+            });
+        }
+        
+        // --- Twitter → TikTok (с дисклеймером) ---
+        const twitterBtn = document.getElementById('twitterPopupBtn');
         if (twitterBtn) {
-            twitterBtn.addEventListener('click', openModal);
+            twitterBtn.addEventListener('click', function() {
+                openModalWithUrl(links.tiktok, 'OPEN TIKTOK?');
+            });
         }
         
-        // Закрытие по крестику
+        // --- Закрытие модалки ---
         if (closeModalBtn) {
             closeModalBtn.addEventListener('click', closeModal);
         }
@@ -324,19 +332,9 @@
             }
         });
         
-        // Кнопка ENTER → переход на TikTok
-        if (enterTikTokBtn) {
-            enterTikTokBtn.addEventListener('click', function() {
-                window.location.href = 'https://www.tiktok.com/grimexframe';
-            });
-        }
-        
-        // Кнопка Threads (PNG) → переход на Threads
-        const threadsBtnElem = document.getElementById('threadsBtn');
-        if (threadsBtnElem) {
-            threadsBtnElem.addEventListener('click', function() {
-                window.open('https://www.threads.net/grimexframe', '_blank');
-            });
+        // Кнопка ENTER
+        if (enterBtn) {
+            enterBtn.addEventListener('click', executeRedirect);
         }
     </script>
 </body>
