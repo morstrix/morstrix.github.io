@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let glitchTimeout = null;
 
     const COLS = 10;
-    const ROWS = 14; // Укоротил с 16 до 14
+    const ROWS = 10; // Укоротил с 16 до 14
 
     // ТУСКЛЫЕ ЦВЕТА (приглушённая палитра)
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
