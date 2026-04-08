@@ -17,7 +17,19 @@
     <div class="shop-header">
         <div class="shop-title">DIY GEAR</div>
         <div class="shop-subtitle">індивідуальні замовлення</div>
+        
+        <div class="currency-zone">
+            <div class="toggle-wrapper">
+                <span class="toggle-label" id="usdLabel">USD</span>
+                <label class="switch">
+                    <input type="checkbox" id="currencyToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="uahLabel">UAH</span>
+            </div>
+        </div>
     </div>
+    
     <div class="categories-grid" id="categoriesGrid"></div>
 </div>
 
@@ -37,6 +49,21 @@
         <div class="cart-total" id="cartTotalModal"></div>
         <button id="checkoutBtn" class="checkout-btn">ENTER</button>
         <div style="font-size:0.5rem;color:#a1a1a1;margin-top:12px;text-align:center;">* узгодити питання</div>
+    </div>
+</div>
+
+<!-- CAROUSEL MODAL (попап з каруселлю для DIY GEAR) -->
+<div id="carouselModal" class="carousel-modal">
+    <div class="carousel-container">
+        <button class="close-carousel" id="closeCarouselBtn">✖</button>
+        <div class="carousel-arrow arrow-left" id="carouselPrev">‹</div>
+        <div class="carousel-arrow arrow-right" id="carouselNext">›</div>
+        <div id="carouselSlide" class="carousel-slide">
+            <img id="carouselImg" class="carousel-image" src="" alt="carousel item">
+            <div id="carouselName" class="carousel-item-name"></div>
+            <div id="carouselDesc" class="carousel-item-desc"></div>
+            <button id="carouselAddToCartBtn" class="carousel-add-btn">ДОДАТИ В ПАКЕТ</button>
+        </div>
     </div>
 </div>
 
