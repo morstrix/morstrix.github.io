@@ -24,18 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationId = null;
     let gameActive = true;
 
+    // Фиксированные размеры поля: 10x20
+    const COLS = 10;
+    const ROWS = 20;
+
     function resize() {
         const parent = canvas.parentElement;
-        const availableWidth = parent.clientWidth - 20;
-        const cellSize = Math.floor(availableWidth / 10);
-        const canvasHeight = cellSize * 20;
+        // Берём ширину родителя, но не больше 400px для комфортной игры
+        const maxWidth = Math.min(parent.clientWidth - 20, 400);
+        const cellSize = Math.floor(maxWidth / COLS);
+        // Высота = cellSize * ROWS, но не больше высоты родителя
+        const canvasHeight = Math.min(cellSize * ROWS, parent.clientHeight - 20);
+        const finalCellSize = Math.floor(canvasHeight / ROWS);
         
-        canvas.width = cellSize * 10;
-        canvas.height = canvasHeight;
+        canvas.width = finalCellSize * COLS;
+        canvas.height = finalCellSize * ROWS;
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.scale(cellSize, cellSize);
+        context.scale(finalCellSize, finalCellSize);
 
-        const nextSize = Math.max(20, cellSize * 0.6);
+        // Размер next canvas
+        const nextSize = Math.max(20, finalCellSize * 0.6);
         nextCanvas.width = nextSize * 4;
         nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -93,14 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const arena = Array.from({length: 20}, () => Array(10).fill(0));
+    const arena = Array.from({length: ROWS}, () => Array(COLS).fill(0));
     const player = { pos: {x: 0, y: 0}, matrix: null, next: null, score: 0 };
 
     function collide(a, p) {
         const [m, o] = [p.matrix, p.pos];
         for (let y = 0; y < m.length; ++y) {
             for (let x = 0; x < m[y].length; ++x) {
-                if (m[y][x] !== 0 && (a[y + o.y] && a[y + o.y][x + o.x]) !== 0) return true;
+                if (m[y][x] !== 0) {
+                    if (!a[y + o.y] || a[y + o.y][x + o.x] !== 0) return true;
+                }
             }
         }
         return false;
@@ -108,7 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function merge(a, p) {
         p.matrix.forEach((row, y) => {
-            row.forEach((v, x) => { if (v !== 0) a[y + p.pos.y][x + p.pos.x] = v; });
+            row.forEach((v, x) => {
+                if (v !== 0 && a[y + p.pos.y] && a[y + p.pos.y][x + p.pos.x] !== undefined) {
+                    a[y + p.pos.y][x + p.pos.x] = v;
+                }
+            });
         });
     }
 
@@ -125,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (full) {
                 arena.splice(y, 1);
-                arena.unshift(Array(10).fill(0));
+                arena.unshift(Array(COLS).fill(0));
                 y++;
                 rowsCleared++;
             }
@@ -161,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dropCounter = 0;
     }
 
-    // Мгновенный сброс блока вниз (крайняя правая кнопка)
     function hardDrop() {
         if (!gameActive) return;
         
@@ -170,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         player.pos.y--;
         
-        // Анимация приземления
         canvas.style.transform = 'scale(0.95)';
         setTimeout(() => { canvas.style.transform = 'scale(1)'; }, 80);
         
@@ -190,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         player.matrix = player.next || getRandomPiece();
         player.next = getRandomPiece();
         player.pos.y = 0;
-        player.pos.x = Math.floor((arena[0].length - player.matrix[0].length) / 2);
+        player.pos.x = Math.floor((COLS - player.matrix[0].length) / 2);
         
         if (collide(arena, player)) {
             gameOver();
@@ -200,35 +212,19 @@ document.addEventListener('DOMContentLoaded', () => {
     async function gameOver() {
         gameActive = false;
         if (animationId) cancelAnimationFrame(animationId);
-        
         const finalScore = player.score;
-        
-        // Показываем модалку для ввода ника
         showScoreModal(finalScore);
     }
 
     function showScoreModal(score) {
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        `;
         modal.innerHTML = `
             <div style="background: #0a0a0f; border: 3px solid #a84d6b; padding: 25px; text-align: center; max-width: 300px; width: 90%;">
                 <h3 style="font-size: 10px; margin-bottom: 15px; color: #a84d6b;">✦ GAME OVER ✦</h3>
                 <p style="font-size: 14px; margin: 10px 0; color: #fff;">SCORE: ${score}</p>
-                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off" style="background: #000; border: 2px solid #a84d6b; color: #fff; font-family: 'Press Start 2P', monospace; font-size: 12px; padding: 12px; width: 100%; text-align: center; margin-bottom: 20px;">
-                <button id="saveScoreBtn" style="background: #a84d6b; border: none; color: #000; font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 10px 20px; cursor: pointer;">SAVE</button>
+                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off" style="background: #000; border: 2px solid #a84d6b; color: #fff; font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 10px; width: 100%; text-align: center; margin-bottom: 20px;">
+                <button id="saveScoreBtn" style="background: #a84d6b; border: none; color: #000; font-family: 'Press Start 2P', monospace; font-size: 9px; padding: 10px 20px; cursor: pointer;">SAVE</button>
             </div>
         `;
         document.body.appendChild(modal);
@@ -240,33 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
             let name = input.value.trim();
             if (name === '') name = 'ANON';
             if (name.length > 12) name = name.slice(0, 12);
-            
-            await saveScoreToFirebase(name, score);
+            await addDoc(collection(db, "top_players"), { name, score, date: new Date().toISOString() });
             modal.remove();
             resetGame();
         };
         
-        input.onkeypress = (e) => {
-            if (e.key === 'Enter') saveBtn.click();
-        };
+        input.onkeypress = (e) => { if (e.key === 'Enter') saveBtn.click(); };
         input.focus();
     }
 
-    async function saveScoreToFirebase(name, score) {
-        try {
-            await addDoc(collection(db, "top_players"), {
-                name: name,
-                score: score,
-                date: new Date().toISOString()
-            });
-            console.log('Score saved:', name, score);
-        } catch (e) {
-            console.error('Error saving score:', e);
-        }
-    }
-
     function resetGame() {
-        // Очищаем арену
         for (let y = 0; y < arena.length; y++) {
             for (let x = 0; x < arena[y].length; x++) {
                 arena[y][x] = 0;
@@ -285,61 +264,46 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function startGameLoop() {
         if (animationId) cancelAnimationFrame(animationId);
-        
         function update(time = 0) {
             if (!gameActive) return;
-            
             const dt = time - lastTime;
             lastTime = time;
             dropCounter += dt;
-            
-            if (dropCounter > 500) {
-                playerDrop();
-                dropCounter = 0;
-            }
-            
+            if (dropCounter > 500) { playerDrop(); dropCounter = 0; }
             draw();
             animationId = requestAnimationFrame(update);
         }
-        
         lastTime = 0;
         animationId = requestAnimationFrame(update);
     }
 
-    // Управление кнопками
+    // Управление
     document.getElementById('left-btn').onclick = () => {
         if (!gameActive) return;
         player.pos.x--;
         if (collide(arena, player)) player.pos.x++;
         draw();
     };
-    
     document.getElementById('right-btn').onclick = () => {
         if (!gameActive) return;
         player.pos.x++;
         if (collide(arena, player)) player.pos.x--;
         draw();
     };
-    
     document.getElementById('rotate-btn').onclick = () => {
         if (!gameActive) return;
         const rotated = rotate(player.matrix);
         const oldMatrix = player.matrix;
         player.matrix = rotated;
-        if (collide(arena, player)) {
-            player.matrix = oldMatrix;
-        }
+        if (collide(arena, player)) player.matrix = oldMatrix;
         draw();
     };
-    
-    // Кнопка DOWN (крайняя справа) - мгновенный сброс
     document.getElementById('down-btn').onclick = (e) => {
         e.preventDefault();
         if (!gameActive) return;
         hardDrop();
     };
 
-    // Управление с клавиатуры
     window.addEventListener('keydown', (e) => {
         if (!gameActive) return;
         switch(e.key) {
@@ -351,11 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    window.addEventListener('resize', () => {
-        resize();
-        draw();
-    });
-    
+    window.addEventListener('resize', () => { resize(); draw(); });
     resize();
     player.next = getRandomPiece();
     playerReset();
