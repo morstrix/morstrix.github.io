@@ -24,12 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameActive = true;
 
     const COLS = 10;
-    const ROWS = 16; // Сделали короче — 16 строк вместо 20
+    const ROWS = 16; // короче, чтобы было шире
 
+    // Функция изменения размера – вписывает canvas в доступную область
     function resize() {
-        const container = canvas.parentElement;
-        const maxWidth = container.clientWidth - 20;
-        const cellSize = Math.floor(maxWidth / COLS);
+        const container = canvas.parentElement; // .game-area
+        if (!container) return;
+        const maxWidth = container.clientWidth;
+        const maxHeight = container.clientHeight;
+        const aspect = COLS / ROWS;
+        let width = maxWidth;
+        let height = width / aspect;
+        if (height > maxHeight) {
+            height = maxHeight;
+            width = height * aspect;
+        }
+        const cellSize = Math.floor(width / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
