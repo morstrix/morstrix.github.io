@@ -29,11 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
 
+    // Масштаб для падающих блоков (уменьшены на 40%)
+    const BLOCK_SCALE = 0.6;
+
     function resize() {
         const container = canvas.parentElement;
         if (!container) return;
-        // УМЕНЬШАЕМ БЛОКИ ЕЩЁ БОЛЬШЕ — было 240, стало 180
-        const maxWidth = Math.min(container.clientWidth, 180);
+        // Размер сетки оставляем как было (240px)
+        const maxWidth = Math.min(container.clientWidth, 240);
         const cellSize = Math.floor(maxWidth / COLS);
         canvas.width = cellSize * COLS;
         canvas.height = cellSize * ROWS;
@@ -57,12 +60,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
     }
 
-    function drawMatrix(m, o, context) {
+    function drawMatrix(m, o, context, scale = 1) {
+        const offset = scale === 1 ? 0 : (1 - scale) / 2;
+        const size = scale;
+        
         m.forEach((row, y) => {
             row.forEach((v, x) => {
                 if (v !== 0) {
                     context.fillStyle = colors[v];
-                    context.fillRect(x + o.x, y + o.y, 1, 1);
+                    if (scale === 1) {
+                        context.fillRect(x + o.x, y + o.y, 1, 1);
+                    } else {
+                        // Уменьшенные блоки с отступом для центрирования
+                        context.fillRect(
+                            x + o.x + offset, 
+                            y + o.y + offset, 
+                            size, 
+                            size
+                        );
+                    }
                 }
             });
         });
@@ -72,24 +88,43 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameActive) return;
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        drawMatrix(arena, {x:0, y:0}, ctx);
+        
+        // Статические блоки (уже упавшие) — нормального размера
+        drawMatrix(arena, {x:0, y:0}, ctx, 1);
 
+        // Призрак — тоже уменьшенный
         const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
         while (!collide(arena, ghost)) ghost.pos.y++;
         ghost.pos.y--;
         ctx.save();
         ctx.globalAlpha = 0.25;
-        drawMatrix(ghost.matrix, ghost.pos, ctx);
+        drawMatrix(ghost.matrix, ghost.pos, ctx, BLOCK_SCALE);
         ctx.restore();
 
-        drawMatrix(player.matrix, player.pos, ctx);
+        // Падающий блок — УМЕНЬШЕННЫЙ на 40%
+        drawMatrix(player.matrix, player.pos, ctx, BLOCK_SCALE);
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
         if (player.next) {
             const offX = (4 - player.next[0].length)/2;
             const offY = (4 - player.next.length)/2;
-            drawMatrix(player.next, {x: offX, y: offY}, nCtx);
+            // NEXT блоки тоже уменьшенные
+            const nextScale = 0.7;
+            const nextOffset = (1 - nextScale) / 2;
+            player.next.forEach((row, y) => {
+                row.forEach((v, x) => {
+                    if (v !== 0) {
+                        nCtx.fillStyle = colors[v];
+                        nCtx.fillRect(
+                            offX + x + nextOffset,
+                            offY + y + nextOffset,
+                            nextScale,
+                            nextScale
+                        );
+                    }
+                });
+            });
         }
     }
 
