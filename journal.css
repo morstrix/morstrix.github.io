@@ -74,8 +74,8 @@ body {
     cursor: pointer;
 }
 .radio-btn img {
-    width: 45px;
-    height: 25px;
+    width: 65px;
+    height: 45px;
     display: block;
     image-rendering: pixelated;
 }
