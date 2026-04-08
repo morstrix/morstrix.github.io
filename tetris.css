@@ -22,46 +22,54 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px 8px 5px 8px;  /* уменьшил нижний отступ */
+    padding: 12px 8px 5px 8px;
     gap: 8px;
 }
 
-/* Крестик фиксирован сверху справа */
-.back-button-wrapper {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    z-index: 200;
+/* Верхняя панель — всё в одном ряду */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 8px 12px;
 }
-.back-button img {
+
+/* Крестик слева */
+.close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.close-btn img {
     width: 32px;
     height: 32px;
     image-rendering: pixelated;
 }
 
-/* Верхняя панель — NEXT слева, чтобы не мешать крестику */
-.stats-panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 4px 12px;
+/* SCORE по центру */
+.score-box {
+    text-align: center;
 }
-.stat-card {
-    text-align: left;
-}
-.stat-label {
+.score-label {
     font-size: 7px;
     color: #a84d6b;
     margin-bottom: 2px;
 }
-.stat-value {
+.score-value {
     font-size: 14px;
     color: #fff;
 }
-.right-stats {
-    text-align: right;  /* прижали к правому краю, но не до конца */
-    margin-right: 50px; /* отступ от крестика */
+
+/* NEXT справа */
+.next-box {
+    text-align: center;
+}
+.next-label {
+    font-size: 7px;
+    color: #a84d6b;
+    margin-bottom: 2px;
 }
 #next-piece-canvas {
     width: 40px;
@@ -87,13 +95,12 @@ body {
     image-rendering: crisp-edges;
 }
 
-/* Панель управления — уменьшен отступ снизу */
 .control-bar {
     display: flex;
     justify-content: center;
     gap: 35px;
     width: 100%;
-    padding: 8px 0 8px 0;  /* уменьшил вертикальные отступы */
+    padding: 8px 0 8px 0;
 }
 .control-btn {
     background: transparent;
@@ -112,7 +119,6 @@ body {
     image-rendering: pixelated;
 }
 
-/* Размеры PNG кнопок */
 @media (min-width: 768px) {
     .control-btn { width: 80px; height: 80px; }
     .control-bar { gap: 45px; }
@@ -134,7 +140,6 @@ body {
     .control-bar { gap: 20px; }
 }
 
-/* Модалка */
 .modal-overlay {
     position: fixed;
     top: 0;
