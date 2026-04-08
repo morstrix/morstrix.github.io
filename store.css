@@ -86,27 +86,36 @@ body {
     margin-top: 12px;
 }
 
-/* ========== КАРУСЕЛЬ ========== */
+/* ========== КАРУСЕЛЬ (адаптивна, стрілки збоку) ========== */
 .carousel-section {
     margin-bottom: 40px;
 }
 
 .carousel-container {
     position: relative;
-    max-width: 500px;
+    max-width: 380px;
     margin: 0 auto;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .carousel-track {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.carousel-slides {
     display: flex;
     transition: transform 0.3s ease;
 }
 
 .carousel-card {
     flex: 0 0 100%;
-    padding: 0 10px;
     cursor: pointer;
+    text-align: center;
+    padding: 0 5px;
 }
 
 .carousel-card:active {
@@ -115,59 +124,52 @@ body {
 
 .carousel-image {
     width: 100%;
+    max-width: 280px;
     aspect-ratio: 1/1;
     object-fit: cover;
     border: 2px solid var(--shop-border-white);
     background: #000;
+    margin: 0 auto;
+    display: block;
 }
 
 .carousel-name {
     text-align: center;
     margin-top: 12px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--shop-text-white);
     letter-spacing: 2px;
 }
 
 .carousel-desc {
     text-align: center;
-    margin-top: 8px;
-    font-size: 0.55rem;
+    margin-top: 6px;
+    font-size: 0.5rem;
     color: var(--shop-text-gray);
 }
 
 .carousel-arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    font-size: 3rem;
-    font-weight: bold;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--shop-accent);
     color: #fff;
-    border: 2px solid var(--shop-accent);
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
+    font-size: 2rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-family: monospace;
-    user-select: none;
-    z-index: 20;
     transition: 0.1s;
+    flex-shrink: 0;
+    border-radius: 0;
 }
 
 .carousel-arrow:active {
     background: var(--shop-accent);
     color: #000;
-}
-
-.arrow-left {
-    left: 5px;
-}
-
-.arrow-right {
-    right: 5px;
+    transform: scale(0.95);
 }
 
 /* ========== 4 КАТЕГОРІЇ ========== */
@@ -205,14 +207,14 @@ body {
 }
 
 .cat-name {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--shop-text-white);
     letter-spacing: 2px;
 }
 
 .cat-price {
     margin-top: 10px;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     color: #7e7e7e;
 }
 
@@ -263,7 +265,7 @@ body {
     font-size: 0.7rem;
 }
 
-/* ========== МОДАЛКА КОРЗИНИ ========== */
+/* ========== МОДАЛКА ========== */
 .modal {
     display: none;
     position: fixed;
@@ -324,9 +326,6 @@ body {
     width: 100%;
     margin-top: 15px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .checkout-btn:active {
@@ -345,19 +344,22 @@ body {
     font-size: 0.8rem;
 }
 
+/* ========== АДАПТАЦІЯ ========== */
 @media (max-width: 680px) {
     .categories-grid { gap: 15px; }
     .shop-title { font-size: 1rem; }
-    .cat-name { font-size: 0.65rem; }
-    .cat-price { font-size: 0.5rem; }
+    .cat-name { font-size: 0.6rem; }
+    .cat-price { font-size: 0.45rem; }
     .cart-bottom-btn { font-size: 0.55rem; padding: 8px 12px; }
     .cart-bottom-total { font-size: 0.55rem; }
-    .carousel-arrow { width: 36px; height: 36px; font-size: 2rem; }
-    .carousel-name { font-size: 0.65rem; }
+    .carousel-container { max-width: 300px; gap: 6px; }
+    .carousel-arrow { width: 32px; height: 32px; font-size: 1.6rem; }
+    .carousel-name { font-size: 0.6rem; }
     .carousel-desc { font-size: 0.45rem; }
 }
 
 @media (max-width: 480px) {
     .cat-card { padding: 10px; }
-    .cat-name { font-size: 0.55rem; }
+    .carousel-container { max-width: 260px; }
+    .carousel-arrow { width: 28px; height: 28px; font-size: 1.4rem; }
 }
