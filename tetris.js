@@ -1,5 +1,5 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
@@ -7,7 +7,8 @@ const firebaseConfig = {
     projectId: "helper-e10b2",
     storageBucket: "helper-e10b2.firebasestorage.app",
     messagingSenderId: "131536876451",
-    appId: "1:131536876451:web:eeaef494c83dfc4849e016"
+    appId: "1:131536876451:web:eeaef494c83dfc4849e016",
+    measurementId: "G-KPM4SEVG8R"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,19 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const nCtx = nextCanvas.getContext('2d');
     const scoreElement = document.getElementById('score');
 
+    let animationId = null;
+    let gameActive = true;
+
     function resize() {
         const parent = canvas.parentElement;
-        const availableHeight = parent.clientHeight - 10;
-        const availableWidth = parent.clientWidth - 10;
-        const size = Math.floor(Math.min(availableHeight / 20, availableWidth / 10));
+        const availableWidth = parent.clientWidth - 20;
+        const cellSize = Math.floor(availableWidth / 10);
+        const canvasHeight = cellSize * 20;
         
-        canvas.width = size * 10;
-        canvas.height = size * 20;
+        canvas.width = cellSize * 10;
+        canvas.height = canvasHeight;
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.scale(size, size);
+        context.scale(cellSize, cellSize);
 
+        const nextSize = cellSize * 0.6;
+        nextCanvas.width = nextSize * 4;
+        nextCanvas.height = nextSize * 4;
         nCtx.setTransform(1, 0, 0, 1, 0, 0);
-        nCtx.scale(size * 0.8, size * 0.8);
+        nCtx.scale(nextSize, nextSize);
     }
 
     const colors = [null, '#a84d6b', '#ffb7c7', '#79434a', '#a27791', '#ffffff', '#444444', '#b97272'];
@@ -59,17 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function draw() {
+        if (!gameActive) return;
+        
         context.fillStyle = '#000';
         context.fillRect(0, 0, canvas.width, canvas.height);
         
         drawMatrix(arena, {x: 0, y: 0}, context);
 
-        // ПРИЗРАК
+        // Призрак
         const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
         while (!collide(arena, ghost)) { ghost.pos.y++; }
         ghost.pos.y--;
         context.save();
-        context.globalAlpha = 0.2;
+        context.globalAlpha = 0.3;
         drawMatrix(ghost.matrix, ghost.pos, context);
         context.restore();
 
@@ -77,11 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         nCtx.fillStyle = '#000';
         nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-        drawMatrix(player.next, {x: 0.5, y: 0.5}, nCtx);
+        if (player.next) {
+            const offsetX = (4 - player.next[0].length) / 2;
+            const offsetY = (4 - player.next.length) / 2;
+            drawMatrix(player.next, {x: offsetX, y: offsetY}, nCtx);
+        }
     }
 
     const arena = Array.from({length: 20}, () => Array(10).fill(0));
-    const player = { pos: {x: 0, y: 0}, matrix: null, next: createPiece('I'), score: 0 };
+    const player = { pos: {x: 0, y: 0}, matrix: null, next: null, score: 0 };
 
     function collide(a, p) {
         const [m, o] = [p.matrix, p.pos];
@@ -100,77 +113,244 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function rotate(matrix) {
-        for (let y = 0; y < matrix.length; ++y) {
-            for (let x = 0; x < y; ++x) [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
-        }
-        matrix.forEach(row => row.reverse());
+        const rotated = matrix[0].map((_, idx) => matrix.map(row => row[idx]).reverse());
+        return rotated;
     }
 
     function arenaSweep() {
-        outer: for (let y = arena.length - 1; y > 0; --y) {
-            for (let x = 0; x < arena[y].length; ++x) { if (arena[y][x] === 0) continue outer; }
-            const row = arena.splice(y, 1)[0].fill(0);
-            arena.unshift(row);
-            ++y;
-            player.score += 10;
+        let rowsCleared = 0;
+        for (let y = arena.length - 1; y >= 0; --y) {
+            let full = true;
+            for (let x = 0; x < arena[y].length; ++x) {
+                if (arena[y][x] === 0) { full = false; break; }
+            }
+            if (full) {
+                arena.splice(y, 1);
+                arena.unshift(Array(10).fill(0));
+                y++;
+                rowsCleared++;
+            }
         }
-        scoreElement.innerText = player.score;
+        
+        if (rowsCleared > 0) {
+            const points = [0, 10, 30, 60, 100];
+            const addScore = points[Math.min(rowsCleared, 4)];
+            player.score += addScore;
+            scoreElement.innerText = player.score;
+            
+            // Анимация приземления — визуальный фидбек
+            canvas.style.transform = 'scale(0.98)';
+            setTimeout(() => { canvas.style.transform = 'scale(1)'; }, 50);
+        }
     }
 
     function playerDrop() {
+        if (!gameActive) return;
+        
         player.pos.y++;
         if (collide(arena, player)) {
             player.pos.y--;
             merge(arena, player);
+            
+            // Анимация приземления
+            canvas.style.transform = 'scale(0.97)';
+            setTimeout(() => { canvas.style.transform = 'scale(1)'; }, 60);
+            
             playerReset();
             arenaSweep();
+            updateGhost();
         }
         dropCounter = 0;
     }
 
-    async function playerReset() {
+    // Мгновенный сброс блока вниз
+    function hardDrop() {
+        if (!gameActive) return;
+        
+        while (!collide(arena, player)) {
+            player.pos.y++;
+        }
+        player.pos.y--;
+        
+        // Анимация приземления
+        canvas.style.transform = 'scale(0.95)';
+        setTimeout(() => { canvas.style.transform = 'scale(1)'; }, 80);
+        
+        merge(arena, player);
+        playerReset();
+        arenaSweep();
+        updateGhost();
+    }
+
+    function updateGhost() {
+        // просто для перерисовки
+    }
+
+    function getRandomPiece() {
         const pieces = 'ILJOTSZ';
-        player.matrix = player.next || createPiece('T');
-        player.next = createPiece(pieces[pieces.length * Math.random() | 0]);
+        return createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
+    }
+
+    function playerReset() {
+        if (!gameActive) return;
+        
+        player.matrix = player.next || getRandomPiece();
+        player.next = getRandomPiece();
         player.pos.y = 0;
-        player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+        player.pos.x = Math.floor((arena[0].length - player.matrix[0].length) / 2);
         
         if (collide(arena, player)) {
-            // Game Over
-            if (player.score > 0) {
-                await addDoc(collection(db, "top_players"), {
-                    score: player.score,
-                    date: new Date().toISOString()
-                });
-            }
-            arena.forEach(row => row.fill(0));
-            player.score = 0;
-            scoreElement.innerText = 0;
+            gameOver();
         }
+    }
+
+    async function gameOver() {
+        gameActive = false;
+        if (animationId) cancelAnimationFrame(animationId);
+        
+        const finalScore = player.score;
+        
+        // Показываем модалку для ввода ника
+        showScoreModal(finalScore);
+    }
+
+    function showScoreModal(score) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay active';
+        modal.innerHTML = `
+            <div class="score-modal">
+                <h3>✦ GAME OVER ✦</h3>
+                <p style="font-size:14px; margin:10px 0;">SCORE: ${score}</p>
+                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off">
+                <button id="saveScoreBtn">SAVE</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        const input = modal.querySelector('#playerName');
+        const saveBtn = modal.querySelector('#saveScoreBtn');
+        
+        saveBtn.onclick = async () => {
+            let name = input.value.trim();
+            if (name === '') name = 'ANON';
+            if (name.length > 12) name = name.slice(0, 12);
+            
+            await saveScoreToFirebase(name, score);
+            modal.remove();
+            resetGame();
+        };
+        
+        input.onkeypress = (e) => {
+            if (e.key === 'Enter') saveBtn.click();
+        };
+        input.focus();
+    }
+
+    async function saveScoreToFirebase(name, score) {
+        try {
+            await addDoc(collection(db, "top_players"), {
+                name: name,
+                score: score,
+                date: new Date().toISOString()
+            });
+            console.log('Score saved');
+        } catch (e) {
+            console.error('Error saving score:', e);
+        }
+    }
+
+    function resetGame() {
+        // Очищаем арену
+        for (let y = 0; y < arena.length; y++) {
+            for (let x = 0; x < arena[y].length; x++) {
+                arena[y][x] = 0;
+            }
+        }
+        player.score = 0;
+        scoreElement.innerText = '0';
+        gameActive = true;
+        player.next = getRandomPiece();
+        playerReset();
+        startGameLoop();
     }
 
     let dropCounter = 0;
     let lastTime = 0;
-    function update(time = 0) {
-        const dt = time - lastTime;
-        lastTime = time;
-        dropCounter += dt;
-        if (dropCounter > 1000) playerDrop();
-        draw();
-        requestAnimationFrame(update);
+    
+    function startGameLoop() {
+        if (animationId) cancelAnimationFrame(animationId);
+        
+        function update(time = 0) {
+            if (!gameActive) return;
+            
+            const dt = time - lastTime;
+            lastTime = time;
+            dropCounter += dt;
+            
+            if (dropCounter > 500) { // 500ms скорость падения
+                playerDrop();
+                dropCounter = 0;
+            }
+            
+            draw();
+            animationId = requestAnimationFrame(update);
+        }
+        
+        lastTime = 0;
+        animationId = requestAnimationFrame(update);
     }
 
-    document.getElementById('left-btn').onclick = () => { player.pos.x--; if(collide(arena, player)) player.pos.x++; };
-    document.getElementById('right-btn').onclick = () => { player.pos.x++; if(collide(arena, player)) player.pos.x--; };
-    document.getElementById('rotate-btn').onclick = () => { 
-        const oldX = player.pos.x;
-        rotate(player.matrix);
-        if(collide(arena, player)) player.pos.x = oldX; 
+    // Управление
+    document.getElementById('left-btn').onclick = () => {
+        if (!gameActive) return;
+        player.pos.x--;
+        if (collide(arena, player)) player.pos.x++;
+        draw();
     };
-    document.getElementById('down-btn').onclick = (e) => { e.preventDefault(); playerDrop(); };
+    
+    document.getElementById('right-btn').onclick = () => {
+        if (!gameActive) return;
+        player.pos.x++;
+        if (collide(arena, player)) player.pos.x--;
+        draw();
+    };
+    
+    document.getElementById('rotate-btn').onclick = () => {
+        if (!gameActive) return;
+        const rotated = rotate(player.matrix);
+        const oldMatrix = player.matrix;
+        player.matrix = rotated;
+        if (collide(arena, player)) {
+            player.matrix = oldMatrix;
+        }
+        draw();
+    };
+    
+    document.getElementById('down-btn').onclick = (e) => {
+        e.preventDefault();
+        if (!gameActive) return;
+        hardDrop();
+    };
 
-    window.addEventListener('resize', resize);
+    // Клавиатура
+    window.addEventListener('keydown', (e) => {
+        if (!gameActive) return;
+        switch(e.key) {
+            case 'ArrowLeft': document.getElementById('left-btn').click(); break;
+            case 'ArrowRight': document.getElementById('right-btn').click(); break;
+            case 'ArrowUp': document.getElementById('rotate-btn').click(); break;
+            case 'ArrowDown': document.getElementById('down-btn').click(); break;
+            case ' ': case 'Space': e.preventDefault(); hardDrop(); break;
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        resize();
+        draw();
+    });
+    
     resize();
+    player.next = getRandomPiece();
     playerReset();
-    update();
+    startGameLoop();
 });
