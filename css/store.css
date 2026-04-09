@@ -1,5 +1,6 @@
 /* ============================================
    STORE.CSS — стилі сторінки магазину
+   НЕ переопределяет базовые классы modals.css
 ============================================ */
 
 :root {
@@ -10,7 +11,7 @@
     --shop-border-dark: #2a2a2a;
     --shop-bg-cart: #050505;
     --shop-accent: #a84d6b;
-    --placeholder-color: #6b2e3e; /* тускло-вишнёвый */
+    --placeholder-color: #6b2e3e;
 }
 
 * {
@@ -26,8 +27,8 @@ body {
     font-family: 'Press Start 2P', monospace;
     color: #fff;
     overflow-y: auto;
-    padding-top: 70px;   /* место под верхнюю панель */
-    padding-bottom: 90px; /* место под корзину */
+    padding-top: 70px;
+    padding-bottom: 90px;
     min-height: 100vh;
 }
 
@@ -48,8 +49,8 @@ body {
     left: 0;
     right: 0;
     height: 60px;
-    background: var(--shop-bg-cart);
-    border-bottom: 2px solid var(--shop-border-white);
+    background: #050505;
+    border-bottom: 2px solid #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -59,8 +60,8 @@ body {
 
 .panel-btn {
     background: transparent;
-    border: 2px solid var(--shop-accent);
-    color: var(--shop-text-white);
+    border: 2px solid #a84d6b;
+    color: #fff;
     font-family: 'Press Start 2P', monospace;
     font-size: 0.6rem;
     padding: 8px 16px;
@@ -70,7 +71,7 @@ body {
 }
 
 .panel-btn:active {
-    background: var(--shop-accent);
+    background: #a84d6b;
     color: #000;
     transform: scale(0.95);
 }
@@ -97,12 +98,12 @@ body {
 
 .shop-title {
     font-size: 1.3rem;
-    color: var(--shop-text-white);
+    color: #fff;
 }
 
 .shop-subtitle {
     font-size: 0.6rem;
-    color: var(--shop-text-gray);
+    color: #a1a1a1;
     margin-top: 12px;
 }
 
@@ -116,8 +117,8 @@ body {
 }
 
 .cat-card {
-    background: var(--shop-bg-card);
-    border: 1px solid var(--shop-border-white);
+    background: #050505;
+    border: 1px solid #fff;
     padding: 15px;
     text-align: center;
     cursor: pointer;
@@ -138,11 +139,11 @@ body {
     height: 70%;
     object-fit: cover;
     background: #0a0a0a;
-    border: 1px solid var(--shop-border-dark);
+    border: 1px solid #2a2a2a;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--placeholder-color);
+    color: #6b2e3e;
     font-size: 0.5rem;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -150,7 +151,7 @@ body {
 
 .cat-name {
     font-size: 0.65rem;
-    color: var(--shop-text-white);
+    color: #fff;
     letter-spacing: 1px;
 }
 
@@ -160,8 +161,8 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--shop-bg-cart);
-    border-top: 2px solid var(--shop-border-white);
+    background: #050505;
+    border-top: 2px solid #fff;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -172,7 +173,7 @@ body {
 .cart-bottom-btn {
     background: #a27791;
     border: 1px solid #b97272;
-    color: #000000;
+    color: #000;
     font-family: 'Press Start 2P', monospace;
     font-size: 0.7rem;
     padding: 10px 20px;
@@ -197,90 +198,13 @@ body {
 }
 
 .cart-bottom-total {
-    color: var(--shop-text-gray);
+    color: #a1a1a1;
     font-size: 0.7rem;
 }
 
-/* ========== МОДАЛКА КОРЗИНЫ ========== */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
+/* ========== МОДАЛКИ (только специфичные для магазина) ========== */
 
-.modal.active {
-    display: flex;
-}
-
-.modal .modal-content {
-    background: var(--shop-bg-modal);
-    border: 2px solid var(--shop-border-white);
-    padding: 25px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.close-modal {
-    background: none;
-    border: none;
-    color: #b97272;
-    float: right;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--shop-border-dark);
-    font-size: 0.7rem;
-}
-
-.cart-total {
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 2px solid var(--shop-border-white);
-    text-align: right;
-    font-size: 0.8rem;
-    color: var(--shop-text-white);
-}
-
-.checkout-btn {
-    background: #a27791 !important;
-    border: 1px solid #b97272 !important;
-    color: #000000 !important;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    padding: 12px !important;
-    width: 100%;
-    margin-top: 15px;
-    cursor: pointer;
-}
-
-.checkout-btn:active {
-    transform: scale(0.97);
-    background: #5a3035 !important;
-    border-color: #a27791 !important;
-    color: #b97272 !important;
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: #b97272;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.8rem;
-}
-
-/* ========== КОНВЕРТЕР (в модалке) ========== */
+/* Конвертер */
 .converter-container {
     display: flex;
     align-items: center;
@@ -310,7 +234,7 @@ body {
     font-size: 18px;
 }
 
-/* ========== МЕРЧ-КОНСТРУКТОР (в модалке) ========== */
+/* Мерч-конструктор */
 .merch-constructor {
     display: flex;
     flex-direction: column;
@@ -361,14 +285,14 @@ body {
 .upload-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
-    color: #cccccc;
+    color: #ccc;
     text-transform: uppercase;
 }
 
 .reset-btn {
-    background: #888888;
-    border: 1px solid #555555;
-    color: #000000;
+    background: #888;
+    border: 1px solid #555;
+    color: #000;
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     padding: 8px 16px;
@@ -376,7 +300,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ========== МОДАЛКА ТОВАРА (с каруселью) ========== */
+/* Модалка товара */
 .product-modal {
     max-width: 500px;
     width: 95%;
@@ -394,7 +318,7 @@ body {
     width: 40px;
     height: 40px;
     background: rgba(0,0,0,0.7);
-    border: 1px solid var(--shop-accent);
+    border: 1px solid #a84d6b;
     color: #fff;
     font-size: 2rem;
     display: flex;
@@ -407,14 +331,14 @@ body {
 }
 
 .carousel-arrow:active {
-    background: var(--shop-accent);
+    background: #a84d6b;
     color: #000;
 }
 
 .product-carousel-track {
     flex: 1;
     overflow: hidden;
-    border: 2px solid var(--shop-border-white);
+    border: 2px solid #fff;
     background: #000;
     aspect-ratio: 1 / 1;
 }
@@ -432,7 +356,7 @@ body {
     align-items: center;
     justify-content: center;
     background: #0a0a0a;
-    color: var(--placeholder-color);
+    color: #6b2e3e;
     font-size: 0.6rem;
     text-transform: uppercase;
     text-align: center;
@@ -442,13 +366,40 @@ body {
 .product-description {
     font-size: 0.6rem;
     line-height: 1.6;
-    color: var(--shop-text-gray);
+    color: #a1a1a1;
     margin: 20px 0;
     text-align: center;
     min-height: 60px;
 }
 
-/* ========== АДАПТАЦІЯ ========== */
+/* Убираем возможные конфликты с modals.css */
+.modal-content .cart-total {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 2px solid #fff;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    color: #b97272;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #2a2a2a;
+    font-size: 0.7rem;
+}
+
+/* Адаптация */
 @media (max-width: 680px) {
     .panel-btn { font-size: 0.5rem; padding: 6px 10px; }
     .top-panel { height: 50px; padding: 0 10px; }
