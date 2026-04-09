@@ -86,7 +86,7 @@ body {
     margin-top: 12px;
 }
 
-/* ========== КАРУСЕЛЬ — СТРІЛКИ ПО БОКАХ ========== */
+/* КАРУСЕЛЬ */
 .carousel-section {
     margin-bottom: 40px;
 }
@@ -115,6 +115,7 @@ body {
     font-family: monospace;
     flex-shrink: 0;
     transition: 0.1s;
+    user-select: none;
 }
 
 .carousel-arrow:active {
@@ -167,7 +168,7 @@ body {
     color: var(--shop-text-gray);
 }
 
-/* ========== 4 КАТЕГОРІЇ ========== */
+/* 4 КАТЕГОРІЇ */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -188,17 +189,12 @@ body {
     transform: scale(0.97);
 }
 
-.cat-card:hover {
-    border-color: var(--shop-text-gray);
-}
-
 .cat-image {
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
     margin-bottom: 12px;
     border: 1px solid var(--shop-border-dark);
-    filter: grayscale(0.2);
 }
 
 .cat-name {
@@ -213,7 +209,133 @@ body {
     color: #7e7e7e;
 }
 
-/* ========== КОРЗИНА ========== */
+/* MERCH CONSTRUCTOR */
+.merch-section {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.merch-constructor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tshirt-preview {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+}
+
+.tshirt-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.print-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.upload-area {
+    cursor: pointer;
+    width: 100%;
+}
+
+.dashed-box {
+    border: 2px dashed #79434a;
+    background: #1a1a1a;
+    padding: 20px;
+    text-align: center;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashed-box:hover {
+    background: #2a2a2a;
+    border-color: #a27791;
+}
+
+.upload-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #cccccc;
+    text-transform: uppercase;
+}
+
+.reset-btn {
+    background: #888888;
+    border: 1px solid #555555;
+    color: #000000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-transform: uppercase;
+}
+
+.reset-btn:hover {
+    background: #aaaaaa;
+}
+
+/* CONVERTER */
+.converter-section {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.converter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: #0a0a0f;
+    border: 2px solid #79434a;
+    padding: 15px 20px;
+    box-shadow: 3px 3px 0 #3d2a2f;
+}
+
+.converter-input {
+    background: transparent;
+    border: none;
+    color: #a27791;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 10px 5px;
+    outline: none;
+    width: 120px;
+    text-align: center;
+}
+
+.converter-input:focus {
+    color: #c48a6b;
+    transform: scale(1.02);
+}
+
+.converter-arrow {
+    color: #a27791;
+    font-size: 18px;
+    font-family: monospace;
+}
+
+/* КОРЗИНА */
 .cart-bottom {
     position: fixed;
     bottom: 0;
@@ -260,7 +382,7 @@ body {
     font-size: 0.7rem;
 }
 
-/* ========== МОДАЛКА ========== */
+/* МОДАЛКА КОРЗИНИ */
 .modal {
     display: none;
     position: fixed;
@@ -339,7 +461,7 @@ body {
     font-size: 0.8rem;
 }
 
-/* ========== АДАПТАЦІЯ ========== */
+/* АДАПТАЦІЯ */
 @media (max-width: 680px) {
     .categories-grid { gap: 15px; }
     .shop-title { font-size: 1rem; }
@@ -359,4 +481,5 @@ body {
     .carousel-container { gap: 6px; }
     .carousel-arrow { width: 34px; height: 34px; font-size: 1.6rem; }
     .carousel-track { max-width: 200px; }
+    .converter-input { font-size: 8px; padding: 8px 3px; width: 100px; }
 }
