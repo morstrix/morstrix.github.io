@@ -42,14 +42,18 @@
 <!-- ========== МОДАЛКИ ========== -->
 
 <!-- Модалка корзины -->
-<div id="cartModal" class="modal">
+<div id="cartModal" class="modal-overlay">
     <div class="modal-content">
-        <button class="close-modal">✜</button>
-        <h3 style="margin-bottom:20px;font-size:0.8rem;color:#ffffff;">ПАКЕТ</h3>
-        <div id="cartItems"></div>
-        <div class="cart-total" id="cartTotalModal"></div>
-        <button id="checkoutBtn" class="checkout-btn">ENTER</button>
-        <div style="font-size:0.5rem;color:#a1a1a1;margin-top:12px;text-align:center;">* узгодити питання</div>
+        <div class="modal-header">
+            <span class="modal-title-text">ПАКЕТ</span>
+            <button class="modal-close-btn" data-modal="cartModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotalModal"></div>
+            <button id="checkoutBtn" class="popup-enter-btn">ENTER</button>
+            <div style="font-size:0.5rem;color:#a1a1a1;margin-top:12px;text-align:center;">* узгодити питання</div>
+        </div>
     </div>
 </div>
 
