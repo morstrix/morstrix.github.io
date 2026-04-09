@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Новый файл с общими стилями модалок -->
+    <link rel="stylesheet" href="modals.css">
     <link rel="stylesheet" href="journal.css">
     <style>
         body { overflow-x: hidden !important; touch-action: pan-y pinch-zoom; }
@@ -66,10 +68,10 @@
         </div>
     </div>
 
-<div class="pin-mood-btn" id="moodBtn">
-    <img src="assets/folder.png" alt="Folder Button" style="width: 64px; height: auto; image-rendering: pixelated; display: block;">
-    <span class="mood-text" style="margin-top: 8px;">MOOD</span>
-</div>
+    <div class="pin-mood-btn" id="moodBtn">
+        <img src="assets/folder.png" alt="Folder Button" style="width: 64px; height: auto; image-rendering: pixelated; display: block;">
+        <span class="mood-text" style="margin-top: 8px;">MOOD</span>
+    </div>
 
     <!-- Font styler -->
     <div class="section styler-section">
@@ -153,39 +155,43 @@
 </div>
 
 <!-- ========== МОДАЛКИ ========== -->
+
+<!-- disclaimerModal -->
 <div id="disclaimerModal" class="modal-overlay">
-    <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">MARKETING CREATIVE</span>
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MARKETING CREATIVE</span>
             <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
         </div>
-        <div class="modal-inner" style="padding: 20px; text-align: center; background: #a27791;">
+        <div class="modal-inner" style="text-align: center;">
             <p>OPEN X?</p>
             <button class="popup-enter-btn" data-modal="disclaimerModal">ENTER</button>
         </div>
     </div>
 </div>
 
+<!-- openMiniModal -->
 <div id="openMiniModal" class="modal-overlay">
-    <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">FORUM ACCESS</span>
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">FORUM ACCESS</span>
             <button class="modal-close-btn" data-modal="openMiniModal">✜</button>
         </div>
-        <div class="modal-inner" style="padding: 20px; text-align: center; background: #a27791;">
+        <div class="modal-inner" style="text-align: center;">
             <p>OPEN MINI?</p>
             <button class="popup-enter-btn" data-modal="openMiniModal" data-href="forum.html">ENTER</button>
         </div>
     </div>
 </div>
 
+<!-- supportModal (адаптирован под виджет) -->
 <div id="supportModal" class="modal-overlay">
-    <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">AI HELPER BOT</span>
+    <div class="modal-content support-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">AI HELPER BOT</span>
             <button class="modal-close-btn" data-modal="supportModal">✜</button>
         </div>
-        <div class="modal-inner" style="padding: 20px; background: #a27791;">
+        <div class="telegram-embed-container">
             <div class="telegram-wrapper">
                 <script async src="https://telegram.org/js/telegram-widget.js?22"
                     data-telegram-discussion="morstrixxx/71"
@@ -198,13 +204,14 @@
     </div>
 </div>
 
+<!-- radioModal -->
 <div id="radioModal" class="modal-overlay">
-    <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">MORSTRIX RADIO</span>
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX RADIO</span>
             <button class="modal-close-btn" data-modal="radioModal">✜</button>
         </div>
-        <div class="modal-inner" style="padding: 20px; background: #a27791;">
+        <div class="modal-inner">
             <div class="spotify-wrapper">
                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
@@ -212,50 +219,49 @@
     </div>
 </div>
 
+<!-- teamModalJournal -->
 <div id="teamModalJournal" class="modal-overlay">
-    <div class="modal-content" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000; max-width: 450px;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">SELECT MEMBER</span>
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+            <span class="modal-title-text">SELECT MEMBER</span>
             <button class="modal-close-btn" data-modal="teamModalJournal">✜</button>
         </div>
-        <div class="modal-inner" style="padding: 20px; background: #a27791;">
-            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
-                <a href="ada.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 120px; height: 120px; background: #000000; border: 2px solid #3d2a2f; position: relative; overflow: hidden;">
-                        <img src="assets/ada.png" alt="Ada" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); max-width: 100%; max-height: 100%; width: auto; height: auto; image-rendering: pixelated;">
-                    </div>
-                    <span style="font-size: 9px; color: #000000; text-shadow: 1px 1px 0 #aaaaaa; letter-spacing: 1px; margin-top: 10px;">DESIGNER</span>
+        <div class="modal-inner">
+            <div class="team-selection">
+                <a href="ada.html" class="team-choice">
+                    <img src="assets/ada.png" alt="Ada">
+                    <span>DESIGNER</span>
                 </a>
-                <a href="ex.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 120px; height: 120px; background: #000000; border: 2px solid #3d2a2f; position: relative; overflow: hidden;">
-                        <img src="assets/ex.png" alt="Ex" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); max-width: 100%; max-height: 100%; width: auto; height: auto; image-rendering: pixelated;">
-                    </div>
-                    <span style="font-size: 9px; color: #000000; text-shadow: 1px 1px 0 #aaaaaa; letter-spacing: 1px; margin-top: 10px;">DEVELOPER</span>
+                <a href="ex.html" class="team-choice">
+                    <img src="assets/ex.png" alt="Ex">
+                    <span>DEVELOPER</span>
                 </a>
             </div>
         </div>
     </div>
 </div>
 
+<!-- pinterestModal -->
 <div id="pinterestModal" class="modal-overlay">
-    <div class="modal-content pinterest-modal" style="background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">MORSTRIX / PINTEREST</span>
+    <div class="modal-content pinterest-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX / PINTEREST</span>
             <button class="modal-close-btn" data-modal="pinterestModal">✜</button>
         </div>
-        <div class="pin-embed-container" style="padding: 20px; background: #a27791;">
+        <div class="pin-embed-container">
             <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 </div>
 
+<!-- artModal -->
 <div id="artModal" class="modal-overlay">
-    <div class="modal-content" style="padding:0; background: #a27791; border: 4px solid #b97272; box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;">
-        <div class="modal-header" style="background: #79434a; padding: 10px; border-bottom: 2px solid #000;">
-            <span class="modal-title-text" style="font-size: 10px; color: #ffffff; text-shadow: 2px 2px 0 #000;">PAINT.EXE</span>
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">PAINT.EXE</span>
             <button class="modal-close-btn" data-modal="artModal">✜</button>
         </div>
-        <div class="paint-window" style="border: none; border-radius: 0; background: #a27791;">
+        <div class="paint-window">
             <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a; background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;">
                 <div style="display: flex; gap: 8px;">
                     <button class="retro-btn" id="pUndo" style="padding: 4px 10px; font-size: 8px;" disabled>&lt;</button>
@@ -267,7 +273,6 @@
                 <canvas id="layer1"></canvas>
                 <canvas id="layer2"></canvas>
             </div>
-            <!-- НИЖНЯЯ ПАНЕЛЬ — ТОЛЬКО ЦВЕТ, SAVE, CLEAR (всё в ряд, компактно) -->
             <div class="paint-tools-panel" style="background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; gap: 10px;">
                 <input type="color" id="pColor" value="#ffb7c7" style="width: 40px; height: 28px; border: 1px solid #1a1a1a; background: #000; cursor: pointer;">
                 <button class="retro-btn" id="pSave" style="padding: 5px 12px; font-size: 8px;">💾 SAVE</button>
@@ -292,22 +297,18 @@
 <script src="journal.js"></script>
 
 <script>
-    // ========== УНИВЕРСАЛЬНЫЙ КОД ДЛЯ МОДАЛОК (100% РАБОТАЕТ) ==========
+    // ========== УНИВЕРСАЛЬНЫЙ КОД ДЛЯ МОДАЛОК ==========
     (function() {
-        // Функция открытия модалки
         function openModal(id) {
             var modal = document.getElementById(id);
             if (modal) modal.classList.add('active');
-            else console.warn('Modal not found:', id);
         }
         
-        // Функция закрытия модалки
         function closeModal(id) {
             var modal = document.getElementById(id);
             if (modal) modal.classList.remove('active');
         }
         
-        // Закрытие по клику на фон
         var overlays = document.querySelectorAll('.modal-overlay');
         overlays.forEach(function(overlay) {
             overlay.addEventListener('click', function(e) {
@@ -317,7 +318,6 @@
             });
         });
         
-        // Закрытие по крестику
         var closeBtns = document.querySelectorAll('.modal-close-btn');
         closeBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -326,7 +326,6 @@
             });
         });
         
-        // Кнопки ENTER
         var enterBtns = document.querySelectorAll('.popup-enter-btn');
         enterBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -340,7 +339,6 @@
             });
         });
         
-        // Привязка кнопок (с проверкой существования)
         var twitterBtn = document.getElementById('twitterBtn');
         if (twitterBtn) twitterBtn.addEventListener('click', function() { openModal('disclaimerModal'); });
         
@@ -362,7 +360,6 @@
         var teamBtn = document.getElementById('teamBtnJournal');
         if (teamBtn) teamBtn.addEventListener('click', function() { openModal('teamModalJournal'); });
         
-        // Закрытие по ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 var activeModals = document.querySelectorAll('.modal-overlay.active');
@@ -372,7 +369,6 @@
             }
         });
         
-        // Дополнительно: загружаем Pinterest SDK, если есть модалка с пином
         var pinterestModal = document.getElementById('pinterestModal');
         if (pinterestModal && !window.pinSDKLoaded) {
             var pinScript = document.createElement('script');
