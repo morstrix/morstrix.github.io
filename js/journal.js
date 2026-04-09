@@ -43,15 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // 4. Конвертер Px в Cm
-    const pxInp = document.getElementById('pxInput');
-    const cmInp = document.getElementById('cmInput');
-    if (pxInp && cmInp) {
-        pxInp.oninput = () => cmInp.value = (pxInp.value / 37.8).toFixed(2);
-        cmInp.oninput = () => pxInp.value = Math.round(cmInp.value * 37.8);
-    }
-
-    // 5. Загрузка топа игроков из Firebase
+    // 4. Загрузка топа игроков из Firebase
     async function loadTopPlayers() {
         const container = document.querySelector('.top-players-list');
         if (!container) {
@@ -98,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Загружаем топ при загрузке страницы
     if (document.querySelector('.top-players-list')) {
         loadTopPlayers();
     }
