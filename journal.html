@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- Новый файл с общими стилями модалок -->
-    <link rel="stylesheet" href="modals.css">
-    <link rel="stylesheet" href="journal.css">
+    <!-- Стили -->
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/journal.css">
     <style>
         body { overflow-x: hidden !important; touch-action: pan-y pinch-zoom; }
         .container { overflow-x: hidden; }
@@ -292,44 +292,39 @@
     </div>
 </div>
 
-<script src="background.js"></script>
-<script src="paint.js"></script>
-<script src="journal.js"></script>
+<!-- Скрипты -->
+<script src="js/background.js"></script>
+<script src="js/paint.js"></script>
+<script src="js/journal.js"></script>
 
+<!-- Логика модалок -->
 <script>
 (function() {
     function openModal(id) {
         var modal = document.getElementById(id);
         if (modal) modal.classList.add('active');
     }
-    
     function closeModal(id) {
         var modal = document.getElementById(id);
         if (modal) modal.classList.remove('active');
     }
-    
-    // Ждём полной загрузки DOM
+
     document.addEventListener('DOMContentLoaded', function() {
-        // Закрытие по клику на фон
-        var overlays = document.querySelectorAll('.modal-overlay');
-        overlays.forEach(function(overlay) {
+        // Закрытие по фону
+        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
             overlay.addEventListener('click', function(e) {
                 if (e.target === overlay) overlay.classList.remove('active');
             });
         });
-        
         // Закрытие по крестику
-        var closeBtns = document.querySelectorAll('.modal-close-btn');
-        closeBtns.forEach(function(btn) {
+        document.querySelectorAll('.modal-close-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var modalId = btn.getAttribute('data-modal');
                 if (modalId) closeModal(modalId);
             });
         });
-        
-        // Кнопки ENTER
-        var enterBtns = document.querySelectorAll('.popup-enter-btn');
-        enterBtns.forEach(function(btn) {
+        // ENTER
+        document.querySelectorAll('.popup-enter-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var modalId = btn.getAttribute('data-modal');
                 var href = btn.getAttribute('data-href');
@@ -337,36 +332,27 @@
                 else if (modalId) closeModal(modalId);
             });
         });
-        
         // Привязка кнопок
         var twitterBtn = document.getElementById('twitterBtn');
         if (twitterBtn) twitterBtn.onclick = function() { openModal('disclaimerModal'); };
-        
         var forumBtn = document.getElementById('forumBtn');
         if (forumBtn) forumBtn.onclick = function() { openModal('openMiniModal'); };
-        
         var supportBtn = document.getElementById('supportBtn');
         if (supportBtn) supportBtn.onclick = function() { openModal('supportModal'); };
-        
         var radioBtn = document.getElementById('radioBtn');
         if (radioBtn) radioBtn.onclick = function() { openModal('radioModal'); };
-        
         var moodBtn = document.getElementById('moodBtn');
         if (moodBtn) moodBtn.onclick = function() { openModal('pinterestModal'); };
-        
         var paintBtn = document.getElementById('paintBtn');
         if (paintBtn) paintBtn.onclick = function() { openModal('artModal'); };
-        
         var teamBtn = document.getElementById('teamBtnJournal');
         if (teamBtn) teamBtn.onclick = function() { openModal('teamModalJournal'); };
-        
         // ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
             }
         });
-        
         // Pinterest SDK
         if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
             var pinScript = document.createElement('script');
