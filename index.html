@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #1a1a1a;
+            background: #0f0f12;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,11 +24,24 @@
             overflow: hidden;
         }
 
+        /* Текстурный фон — графит + микро-шум */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, transparent 2px),
+                radial-gradient(circle at 30% 40%, rgba(60,60,80,0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Контейнер кнопок */
         .index-container {
             position: relative;
             z-index: 10;
             display: flex;
-            gap: 100px;
+            gap: 120px;
             justify-content: center;
             align-items: center;
             padding: 0 20px;
@@ -40,83 +53,165 @@
             align-items: center;
             text-decoration: none;
             cursor: pointer;
-            animation: fadeInUp 1.2s ease-out forwards;
+            animation: fadeInUp 1.4s cubic-bezier(0.2, 0.9, 0.1, 1) forwards;
             opacity: 0;
         }
 
         .index-card:nth-child(1) { animation-delay: 0.1s; }
-        .index-card:nth-child(2) { animation-delay: 0.4s; }
+        .index-card:nth-child(2) { animation-delay: 0.5s; }
 
         @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(40px); filter: blur(2px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        /* Картинка — не трясётся */
+        /* Пиксельные иконки */
         .index-card img {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             image-rendering: pixelated;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 6px rgba(168, 77, 107, 0.3));
+            transition: filter 0.3s ease;
         }
 
-        /* Подпись с рамкой — трясётся и улетает при наведении */
+        .index-card:hover img {
+            filter: drop-shadow(0 0 15px rgba(168, 77, 107, 0.7));
+        }
+
+        /* Подпись — сайфайная рамка с гранжем */
         .index-card span {
             display: inline-block;
-            font-size: 14px;
-            color: #cccccc;
+            font-size: 13px;
+            color: #b0b0b0;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            padding: 10px 20px;
-            border: 2px solid #666666;
-            background: transparent;
-            transition: color 0.2s ease, border-color 0.2s ease;
+            letter-spacing: 5px;
+            padding: 12px 24px;
+            border: 2px solid #4a4a5a;
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(2px);
+            box-shadow: 
+                inset 0 0 8px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(168, 77, 107, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        /* Тряска и улетание только для подписи */
+        /* Гранжевые потёртости на рамке */
+        .index-card span::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border: 1px solid transparent;
+            background: repeating-linear-gradient(90deg, 
+                transparent, 
+                transparent 3px, 
+                rgba(255,255,255,0.02) 3px, 
+                rgba(0,0,0,0.1) 6px);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Неон при наведении */
         .index-card:hover span {
-            animation: shakeAndFly 1s ease-in-out forwards;
             color: #ffffff;
             border-color: #a84d6b;
+            background: rgba(20, 15, 25, 0.8);
+            box-shadow: 
+                inset 0 0 12px rgba(168, 77, 107, 0.3),
+                0 0 20px rgba(168, 77, 107, 0.5),
+                0 0 0 1px #a84d6b;
+            text-shadow: 0 0 8px rgba(255, 180, 200, 0.8);
+            animation: glitchFrame 0.4s steps(2) infinite;
         }
 
-        @keyframes shakeAndFly {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            10% { transform: translate(-4px, -2px) scale(1.02); opacity: 1; }
-            20% { transform: translate(4px, 2px) scale(1.05); opacity: 1; }
-            30% { transform: translate(-5px, -3px) scale(1.08); opacity: 1; }
-            40% { transform: translate(5px, 3px) scale(1.11); opacity: 1; }
-            50% { transform: translate(-3px, -4px) scale(1.14); opacity: 1; }
-            60% { transform: translate(3px, 2px) scale(1.11); opacity: 1; }
-            70% { transform: translate(-2px, -3px) scale(1.08); opacity: 1; }
-            80% { transform: translate(2px, 1px) scale(1.05); opacity: 1; }
-            90% { transform: translate(-1px, -1px) scale(1.02); opacity: 1; }
-            100% { transform: translate(0, 0) scale(1); opacity: 1; }
+        /* Глитч-тряска рамки */
+        @keyframes glitchFrame {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-2px, 1px); }
+            40% { transform: translate(2px, -1px); }
+            60% { transform: translate(-1px, 2px); }
+            80% { transform: translate(1px, -2px); }
+            100% { transform: translate(0, 0); }
         }
 
-        /* Шум поверх всего */
+        /* === ЭФФЕКТЫ ПОВЕРХ === */
+
+        /* Шум (помехи) */
         #noise-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 9999;
+            z-index: 100;
             pointer-events: none;
-            opacity: 0.18;
+            opacity: 0.12;
             mix-blend-mode: screen;
         }
 
+        /* Скайнлайны (очень тонкие) */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 101;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, 
+                rgba(0,0,0,0.2) 0px, 
+                rgba(255,255,255,0.01) 1px, 
+                transparent 2px, 
+                transparent 3px);
+            opacity: 0.3;
+            animation: scanMove 12s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(6px); }
+        }
+
+        /* Пыль / царапины (редкие) */
+        .dust {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 102;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 5%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.01) 0%, transparent 8%),
+                repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.005) 40px, transparent 80px);
+            opacity: 0.6;
+        }
+
+        /* Виньетка (тёмные края) */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 103;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+        }
+
+        /* Адаптация */
         @media (max-width: 700px) {
-            .index-container { gap: 50px; }
-            .index-card img { width: 120px; height: 120px; }
-            .index-card span { font-size: 11px; padding: 8px 16px; }
+            .index-container { gap: 60px; }
+            .index-card img { width: 110px; height: 110px; }
+            .index-card span { font-size: 10px; padding: 8px 16px; letter-spacing: 3px; }
         }
 
         @media (max-width: 450px) {
             .index-container { gap: 30px; }
-            .index-card img { width: 90px; height: 90px; }
-            .index-card span { font-size: 9px; padding: 6px 12px; letter-spacing: 2px; }
+            .index-card img { width: 80px; height: 80px; }
+            .index-card span { font-size: 8px; padding: 6px 10px; letter-spacing: 2px; }
         }
     </style>
 </head>
@@ -133,7 +228,11 @@
         </a>
     </div>
 
+    <!-- Слои эффектов -->
     <canvas id="noise-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="dust"></div>
+    <div class="vignette"></div>
 
     <script>
         (function() {
@@ -164,7 +263,7 @@
                 if (!width || !height) return;
                 generateNoise();
                 ctx.putImageData(imageData, 0, 0);
-                setTimeout(() => requestAnimationFrame(draw), 150);
+                setTimeout(() => requestAnimationFrame(draw), 180); // ~5.5 fps, медленно
             }
             
             window.addEventListener('resize', () => {
