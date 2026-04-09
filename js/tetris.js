@@ -1,446 +1,202 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
-import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js';
+// ==================== ДАНІ ====================
+const categories = [
+    { id: 'socks_pants', name: 'НОСКИ/ШТАНЫ', description: 'Комфортні базові речі', price: 800 },
+    { id: 'hoodies_tees', name: 'БАТНИКИ/ФУТБОЛКИ', description: 'Преміум якість', price: 1200 },
+    { id: 'shirts_sweats', name: 'РУБАШКИ/ТОЛСТОВКИ', description: 'Стильний вибір', price: 1500 },
+    { id: 'dokers_caps', name: 'ДОКЕРЫ/КЕПКИ', description: 'Аксесуари', price: 900 }
+];
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-    authDomain: "helper-e10b2.firebaseapp.com",
-    projectId: "helper-e10b2",
-    storageBucket: "helper-e10b2.firebasestorage.app",
-    messagingSenderId: "131536876451",
-    appId: "1:131536876451:web:eeaef494c83dfc4849e016"
+// Заглушки для каруселей (пока пусто, будут изображения)
+const productImages = {
+    socks_pants: [],
+    hoodies_tees: [],
+    shirts_sweats: [],
+    dokers_caps: []
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// ========== КОРЗИНА ==========
+let cart = [];
+try {
+    const saved = localStorage.getItem('morstrix_cart');
+    if (saved) cart = JSON.parse(saved);
+} catch(e) {}
 
-document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('tetris-canvas');
-    const ctx = canvas.getContext('2d');
-    const nextCanvas = document.getElementById('next-piece-canvas');
-    const nCtx = nextCanvas.getContext('2d');
-    const scoreElement = document.getElementById('score');
+function saveCart() {
+    try { localStorage.setItem('morstrix_cart', JSON.stringify(cart)); } catch(e) {}
+}
 
-    let animationId = null;
-    let gameActive = true;
-    let lastTimestamp = 0;
-
-    const COLS = 18;
-    const ROWS = 22;
-
-    // ПЛАВНОЕ ПАДЕНИЕ
-    let smoothY = 0;           // плавная Y-позиция (в клетках, может быть дробной)
-    let targetY = 0;           // целевая клетка по Y
-    let fallSpeed = 0.002;     // скорость падения (клеток за миллисекунду)
-    let lastFallTime = 0;
-
-    const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
-
-    function resize() {
-        const container = canvas.parentElement;
-        if (!container) return;
-        const maxWidth = container.clientWidth - 20;
-        const cellSize = Math.floor(maxWidth / COLS);
-        canvas.width = cellSize * COLS;
-        canvas.height = cellSize * ROWS;
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.scale(cellSize, cellSize);
-
-        const nextSize = Math.max(14, cellSize * 0.6);
-        nextCanvas.width = nextSize * 4;
-        nextCanvas.height = nextSize * 4;
-        nCtx.setTransform(1, 0, 0, 1, 0, 0);
-        nCtx.scale(nextSize, nextSize);
-    }
-
-    function createPiece(t) {
-        if (t === 'I') return [[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]];
-        if (t === 'L') return [[0,2,0],[0,2,0],[0,2,2]];
-        if (t === 'J') return [[0,3,0],[0,3,0],[3,3,0]];
-        if (t === 'O') return [[4,4],[4,4]];
-        if (t === 'Z') return [[5,5,0],[0,5,5],[0,0,0]];
-        if (t === 'S') return [[0,6,6],[6,6,0],[0,0,0]];
-        if (t === 'T') return [[0,7,0],[7,7,7],[0,0,0]];
-    }
-
-    function drawMatrix(m, o, context, alpha = 1, yOffset = 0) {
-        context.save();
-        if (alpha < 1) context.globalAlpha = alpha;
-        m.forEach((row, y) => {
-            row.forEach((v, x) => {
-                if (v !== 0) {
-                    context.fillStyle = colors[v];
-                    context.fillRect(x + o.x, y + o.y + yOffset, 1, 1);
-                }
+function updateCartUI() {
+    let totalItems = 0, totalPrice = 0;
+    cart.forEach(item => { totalItems += item.quantity; totalPrice += item.price * item.quantity; });
+    document.getElementById('cartCount').innerHTML = totalItems;
+    document.getElementById('cartTotalBottom').innerHTML = totalPrice + ' ₴';
+    
+    const cartItemsDiv = document.getElementById('cartItems');
+    if (cartItemsDiv) {
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = '<div style="text-align:center;padding:20px;">пусто</div>';
+        } else {
+            let html = '';
+            cart.forEach(item => {
+                html += `<div class="cart-item"><span>${item.name} x${item.quantity}</span>
+                         <span>${item.price * item.quantity} ₴ <button class="remove-item" data-id="${item.id}">✖</button></span></div>`;
             });
+            cartItemsDiv.innerHTML = html;
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(btn.dataset.id));
+            });
+        }
+    }
+    document.getElementById('cartTotalModal').innerHTML = 'ИТОГО: ' + totalPrice + ' ₴';
+    saveCart();
+}
+
+function addToCart(product) {
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) existing.quantity++;
+    else cart.push({ ...product, quantity: 1 });
+    updateCartUI();
+    if (navigator.vibrate) navigator.vibrate(50);
+}
+
+function removeFromCart(id) {
+    const index = cart.findIndex(item => item.id === id);
+    if (index === -1) return;
+    if (cart[index].quantity > 1) cart[index].quantity--;
+    else cart.splice(index, 1);
+    updateCartUI();
+}
+
+function checkout() {
+    if (cart.length === 0) { alert('Корзина пуста'); return; }
+    let total = 0, items = '';
+    cart.forEach(item => { total += item.price * item.quantity; items += `${item.name} x${item.quantity} — ${item.price * item.quantity} ₴%0A`; });
+    window.open(`https://t.me/morsova?text=🛒 НОВЫЙ ЗАКАЗ!%0A%0A${items}%0A💰 Итого: ${total} ₴`, '_blank');
+}
+
+// ========== ОТРИСОВКА КАТЕГОРИЙ ==========
+function renderCategories() {
+    const grid = document.getElementById('categoriesGrid');
+    if (!grid) return;
+    grid.innerHTML = categories.map(cat => `
+        <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}" data-desc="${cat.description}">
+            <div class="cat-image">товар відсутній</div>
+            <div class="cat-name">${cat.name}</div>
+        </div>
+    `).join('');
+    
+    document.querySelectorAll('.cat-card').forEach(card => {
+        card.addEventListener('click', () => openProductModal(card.dataset));
+    });
+}
+
+// ========== МОДАЛКА ТОВАРА (с каруселью) ==========
+let currentProductData = null;
+let currentCarouselIndex = 0;
+
+function openProductModal(product) {
+    currentProductData = product;
+    document.getElementById('productTitle').textContent = product.name;
+    document.getElementById('productDescription').textContent = product.desc;
+    
+    const slidesContainer = document.getElementById('productCarouselSlides');
+    const images = productImages[product.id] || [];
+    if (images.length === 0) {
+        slidesContainer.innerHTML = `<div class="product-carousel-slide">товар відсутній</div>`;
+    } else {
+        slidesContainer.innerHTML = images.map(src => `<img src="${src}" class="product-carousel-slide" style="object-fit:cover;">`).join('');
+    }
+    currentCarouselIndex = 0;
+    updateCarouselPosition();
+    
+    document.getElementById('productModal').classList.add('active');
+}
+
+function updateCarouselPosition() {
+    const slides = document.getElementById('productCarouselSlides');
+    const images = productImages[currentProductData?.id] || [];
+    const totalSlides = images.length || 1;
+    slides.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+}
+
+document.getElementById('productCarouselPrev').onclick = () => {
+    const images = productImages[currentProductData?.id] || [];
+    const total = images.length || 1;
+    currentCarouselIndex = (currentCarouselIndex - 1 + total) % total;
+    updateCarouselPosition();
+};
+
+document.getElementById('productCarouselNext').onclick = () => {
+    const images = productImages[currentProductData?.id] || [];
+    const total = images.length || 1;
+    currentCarouselIndex = (currentCarouselIndex + 1) % total;
+    updateCarouselPosition();
+};
+
+document.getElementById('addToCartFromModal').onclick = () => {
+    if (currentProductData) {
+        addToCart({
+            id: currentProductData.id,
+            name: currentProductData.name,
+            price: parseInt(currentProductData.price)
         });
-        context.restore();
+        document.getElementById('productModal').classList.remove('active');
     }
+};
 
-    function draw() {
-        if (!gameActive) return;
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        drawMatrix(arena, {x:0, y:0}, ctx);
+// ========== МОДАЛКИ (универсальное открытие/закрытие) ==========
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        // Призрак (показываем на целевой позиции)
-        let ghostY = targetY;
-        while (!collideArena(arena, player.matrix, player.pos.x, ghostY + 1)) {
-            ghostY++;
-        }
-        ctx.save();
-        ctx.globalAlpha = 0.25;
-        drawMatrix(player.matrix, {x: player.pos.x, y: ghostY}, ctx);
-        ctx.restore();
+// ========== КОНВЕРТЕР ==========
+const pxInput = document.getElementById('pxInput');
+const cmInput = document.getElementById('cmInput');
+if (pxInput && cmInput) {
+    pxInput.addEventListener('input', () => { const px = parseFloat(pxInput.value); cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2); });
+    cmInput.addEventListener('input', () => { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
+}
 
-        // Падающий блок с плавной Y-позицией
-        const yOffset = smoothY - targetY;
-        drawMatrix(player.matrix, {x: player.pos.x, y: targetY}, ctx, 1, yOffset);
-
-        nCtx.fillStyle = '#000';
-        nCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-        if (player.next) {
-            const offX = (4 - player.next[0].length)/2;
-            const offY = (4 - player.next.length)/2;
-            drawMatrix(player.next, {x: offX, y: offY}, nCtx);
-        }
-    }
-
-    function collideArena(arena, matrix, posX, posY) {
-        const intPosY = Math.floor(posY);
-        for (let y = 0; y < matrix.length; y++) {
-            for (let x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] !== 0) {
-                    const arenaY = intPosY + y;
-                    const arenaX = posX + x;
-                    if (arenaY >= ROWS || arenaY < 0 || arenaX >= COLS || arenaX < 0) return true;
-                    if (arenaY >= 0 && arena[arenaY][arenaX] !== 0) return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    const arena = Array(ROWS).fill().map(() => Array(COLS).fill(0));
-    const player = { 
-        pos: {x: 0, y: 0}, 
-        matrix: null, 
-        next: null, 
-        score: 0
-    };
-
-    function mergeToArena() {
-        const intTargetY = Math.floor(targetY);
-        for (let y = 0; y < player.matrix.length; y++) {
-            for (let x = 0; x < player.matrix[y].length; x++) {
-                if (player.matrix[y][x] !== 0) {
-                    const arenaY = intTargetY + y;
-                    const arenaX = player.pos.x + x;
-                    if (arenaY >= 0 && arenaY < ROWS && arenaX >= 0 && arenaX < COLS) {
-                        arena[arenaY][arenaX] = player.matrix[y][x];
-                    }
-                }
-            }
-        }
-    }
-
-    function rotate(matrix) {
-        return matrix[0].map((_, idx) => matrix.map(row => row[idx]).reverse());
-    }
-
-    function arenaSweep() {
-        let rowsCleared = 0;
-        for (let y = arena.length - 1; y >= 0; y--) {
-            let full = true;
-            for (let x = 0; x < arena[y].length; x++) {
-                if (arena[y][x] === 0) { full = false; break; }
-            }
-            if (full) {
-                arena.splice(y, 1);
-                arena.unshift(Array(COLS).fill(0));
-                y++;
-                rowsCleared++;
-            }
-        }
-        if (rowsCleared > 0) {
-            const points = [0, 10, 30, 60, 100];
-            player.score += points[Math.min(rowsCleared, 4)];
-            scoreElement.innerText = player.score;
-        }
-    }
-
-    // Обновление падения (вызывается каждый кадр)
-    function updateFall(deltaTime) {
-        if (!gameActive) return;
-        
-        // Плавное движение вниз
-        smoothY += fallSpeed * deltaTime;
-        
-        // Если дошли до следующей клетки
-        while (smoothY >= targetY + 1) {
-            targetY++;
-            smoothY = targetY;
-            
-            // Проверяем столкновение после перемещения на клетку
-            if (collideArena(arena, player.matrix, player.pos.x, targetY + 1)) {
-                // Блок приземлился
-                mergeToArena();
-                playerReset();
-                arenaSweep();
-                smoothY = targetY;
-                break;
-            }
-        }
-        
-        // Ограничиваем smoothY, чтобы не улетел далеко
-        if (smoothY > targetY + 1) smoothY = targetY + 1;
-    }
-
-    function hardDrop() {
-        if (!gameActive) return;
-        while (!collideArena(arena, player.matrix, player.pos.x, targetY + 1)) {
-            targetY++;
-            smoothY = targetY;
-        }
-        mergeToArena();
-        playerReset();
-        arenaSweep();
-    }
-
-    function getRandomPiece() {
-        const pieces = 'ILJOTSZ';
-        return createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
-    }
-
-    function getRandomStartX(matrix) {
-        const maxX = COLS - matrix[0].length;
-        return Math.floor(Math.random() * (maxX + 1));
-    }
-
-    function playerReset() {
-        if (!gameActive) return;
-        player.matrix = player.next || getRandomPiece();
-        player.next = getRandomPiece();
-        player.pos.y = 0;
-        player.pos.x = getRandomStartX(player.matrix);
-        targetY = 0;
-        smoothY = 0;
-        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
-            gameOver();
-        }
-        draw();
-    }
-
-    // Тап по падающему блоку
-    function isTapOnFallingBlock(clientX, clientY) {
-        const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        
-        const canvasX = (clientX - rect.left) * scaleX;
-        const canvasY = (clientY - rect.top) * scaleY;
-        
-        const cellSizeX = canvas.width / COLS;
-        const cellSizeY = canvas.height / ROWS;
-        
-        const col = Math.floor(canvasX / cellSizeX);
-        const row = Math.floor(canvasY / cellSizeY);
-        
-        const matrix = player.matrix;
-        const posX = player.pos.x;
-        const posY = targetY;
-        
-        for (let y = 0; y < matrix.length; y++) {
-            for (let x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] !== 0) {
-                    const blockCol = posX + x;
-                    const blockRow = Math.floor(posY) + y;
-                    if (blockRow === row && blockCol === col) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    function destroyWholeFallingBlock() {
-        if (!gameActive) return;
-        
-        let blockCount = 0;
-        for (let y = 0; y < player.matrix.length; y++) {
-            for (let x = 0; x < player.matrix[y].length; x++) {
-                if (player.matrix[y][x] !== 0) blockCount++;
-            }
-        }
-        
-        player.score += blockCount * 10;
-        scoreElement.innerText = player.score;
-        
-        player.matrix = player.next || getRandomPiece();
-        player.next = getRandomPiece();
-        player.pos.x = getRandomStartX(player.matrix);
-        targetY = 0;
-        smoothY = 0;
-        
-        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
-            gameOver();
-        }
-        draw();
-    }
-
-    canvas.addEventListener('click', (e) => {
-        if (!gameActive) return;
-        if (isTapOnFallingBlock(e.clientX, e.clientY)) {
-            destroyWholeFallingBlock();
-        }
-    });
-
-    canvas.addEventListener('touchstart', (e) => {
-        if (!gameActive) return;
-        e.preventDefault();
-        const touch = e.touches[0];
-        if (isTapOnFallingBlock(touch.clientX, touch.clientY)) {
-            destroyWholeFallingBlock();
-        }
-    });
-
-    async function gameOver() {
-        gameActive = false;
-        if (animationId) cancelAnimationFrame(animationId);
-        const finalScore = player.score;
-        showScoreModal(finalScore);
-    }
-
-    function showScoreModal(score) {
-        const modalDiv = document.createElement('div');
-        modalDiv.className = 'modal-overlay';
-        modalDiv.innerHTML = `
-            <div class="score-modal">
-                <div class="modal-header">
-                    <span class="modal-title-text">✦ GAME OVER ✦</span>
-                    <button class="modal-close-btn" id="modalCloseBtn">✜</button>
-                </div>
-                <div class="modal-inner">
-                    <p>SCORE: ${score}</p>
-                    <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off">
-                    <button id="saveScoreBtn">SAVE</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modalDiv);
-
-        const closeBtn = modalDiv.querySelector('#modalCloseBtn');
-        const saveBtn = modalDiv.querySelector('#saveScoreBtn');
-        const input = modalDiv.querySelector('#playerName');
-
-        const closeModal = () => modalDiv.remove();
-        closeBtn.onclick = closeModal;
-        modalDiv.onclick = (e) => { if (e.target === modalDiv) closeModal(); };
-
-        saveBtn.onclick = async () => {
-            let name = input.value.trim();
-            if (name === '') name = 'ANON';
-            if (name.length > 12) name = name.slice(0,12);
-            try {
-                await addDoc(collection(db, "top_players"), {
-                    name: name,
-                    score: score,
-                    date: new Date().toISOString()
-                });
-                console.log('Saved!', name, score);
-            } catch(e) { console.error('Firestore error:', e); }
-            closeModal();
-            resetGame();
+// ========== МЕРЧ-КОНСТРУКТОР ==========
+const canvas = document.getElementById('printCanvas');
+const upload = document.getElementById('imageUpload');
+if (canvas && upload) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = 90; canvas.height = 90;
+    upload.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            const img = new Image();
+            img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height); };
+            img.src = ev.target.result;
         };
-        input.onkeypress = (e) => { if (e.key === 'Enter') saveBtn.click(); };
-        input.focus();
-    }
-
-    function resetGame() {
-        for (let y = 0; y < arena.length; y++) {
-            for (let x = 0; x < arena[y].length; x++) arena[y][x] = 0;
-        }
-        player.score = 0;
-        scoreElement.innerText = '0';
-        gameActive = true;
-        player.next = getRandomPiece();
-        playerReset();
-        startGameLoop();
-    }
-
-    let lastFrameTime = 0;
-    function startGameLoop() {
-        if (animationId) cancelAnimationFrame(animationId);
-        
-        function update(currentTime = 0) {
-            if (!gameActive) return;
-            
-            if (lastFrameTime === 0) {
-                lastFrameTime = currentTime;
-                requestAnimationFrame(update);
-                return;
-            }
-            
-            const deltaTime = Math.min(16, currentTime - lastFrameTime); // ограничиваем до 16ms
-            lastFrameTime = currentTime;
-            
-            // Плавное падение каждый кадр
-            updateFall(deltaTime);
-            draw();
-            
-            animationId = requestAnimationFrame(update);
-        }
-        
-        lastFrameTime = 0;
-        animationId = requestAnimationFrame(update);
-    }
-
-    document.getElementById('left-btn').onclick = () => {
-        if (!gameActive) return;
-        const newX = player.pos.x - 1;
-        if (!collideArena(arena, player.matrix, newX, targetY)) {
-            player.pos.x = newX;
-            draw();
-        }
-    };
-    document.getElementById('right-btn').onclick = () => {
-        if (!gameActive) return;
-        const newX = player.pos.x + 1;
-        if (!collideArena(arena, player.matrix, newX, targetY)) {
-            player.pos.x = newX;
-            draw();
-        }
-    };
-    document.getElementById('rotate-btn').onclick = () => {
-        if (!gameActive) return;
-        const rotated = rotate(player.matrix);
-        const old = player.matrix;
-        player.matrix = rotated;
-        if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
-            player.matrix = old;
-        }
-        draw();
-    };
-    document.getElementById('down-btn').onclick = (e) => {
-        e.preventDefault();
-        if (!gameActive) return;
-        hardDrop();
-    };
-
-    window.addEventListener('keydown', (e) => {
-        if (!gameActive) return;
-        switch (e.key) {
-            case 'ArrowLeft': document.getElementById('left-btn').click(); break;
-            case 'ArrowRight': document.getElementById('right-btn').click(); break;
-            case 'ArrowUp': document.getElementById('rotate-btn').click(); break;
-            case 'ArrowDown': document.getElementById('down-btn').click(); break;
-            case ' ': case 'Space': e.preventDefault(); hardDrop(); break;
-        }
+        reader.readAsDataURL(file);
     });
+    document.getElementById('resetPrint').addEventListener('click', () => { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
+}
 
-    window.addEventListener('resize', () => { resize(); draw(); });
-    resize();
-    player.next = getRandomPiece();
-    playerReset();
-    startGameLoop();
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+renderCategories();
+updateCartUI();
+
+// Кнопки верхней панели
+document.getElementById('openConverterBtn').addEventListener('click', () => openModal('converterModal'));
+document.getElementById('openConstructorBtn').addEventListener('click', () => openModal('constructorModal'));
+
+// Корзина
+document.getElementById('cartBtn').addEventListener('click', () => { updateCartUI(); document.getElementById('cartModal').classList.add('active'); });
+document.querySelector('#cartModal .close-modal').addEventListener('click', () => document.getElementById('cartModal').classList.remove('active'));
+document.getElementById('cartModal').addEventListener('click', e => { if (e.target === document.getElementById('cartModal')) document.getElementById('cartModal').classList.remove('active'); });
+document.getElementById('checkoutBtn').addEventListener('click', checkout);
+
+// Закрытие модалок через крестик и фон (используем делегирование)
+document.addEventListener('click', e => {
+    if (e.target.classList.contains('modal-close-btn')) {
+        const modalId = e.target.dataset.modal;
+        if (modalId) closeModal(modalId);
+    }
+    if (e.target.classList.contains('modal-overlay') && e.target.classList.contains('active')) {
+        e.target.classList.remove('active');
+    }
 });
