@@ -297,27 +297,28 @@
 <script src="journal.js"></script>
 
 <script>
-    // ========== УНИВЕРСАЛЬНЫЙ КОД ДЛЯ МОДАЛОК ==========
-    (function() {
-        function openModal(id) {
-            var modal = document.getElementById(id);
-            if (modal) modal.classList.add('active');
-        }
-        
-        function closeModal(id) {
-            var modal = document.getElementById(id);
-            if (modal) modal.classList.remove('active');
-        }
-        
+(function() {
+    function openModal(id) {
+        var modal = document.getElementById(id);
+        if (modal) modal.classList.add('active');
+    }
+    
+    function closeModal(id) {
+        var modal = document.getElementById(id);
+        if (modal) modal.classList.remove('active');
+    }
+    
+    // Ждём полной загрузки DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        // Закрытие по клику на фон
         var overlays = document.querySelectorAll('.modal-overlay');
         overlays.forEach(function(overlay) {
             overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
-                    overlay.classList.remove('active');
-                }
+                if (e.target === overlay) overlay.classList.remove('active');
             });
         });
         
+        // Закрытие по крестику
         var closeBtns = document.querySelectorAll('.modal-close-btn');
         closeBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -326,58 +327,56 @@
             });
         });
         
+        // Кнопки ENTER
         var enterBtns = document.querySelectorAll('.popup-enter-btn');
         enterBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var modalId = btn.getAttribute('data-modal');
                 var href = btn.getAttribute('data-href');
-                if (href) {
-                    window.location.href = href;
-                } else if (modalId) {
-                    closeModal(modalId);
-                }
+                if (href) window.location.href = href;
+                else if (modalId) closeModal(modalId);
             });
         });
         
+        // Привязка кнопок
         var twitterBtn = document.getElementById('twitterBtn');
-        if (twitterBtn) twitterBtn.addEventListener('click', function() { openModal('disclaimerModal'); });
+        if (twitterBtn) twitterBtn.onclick = function() { openModal('disclaimerModal'); };
         
         var forumBtn = document.getElementById('forumBtn');
-        if (forumBtn) forumBtn.addEventListener('click', function() { openModal('openMiniModal'); });
+        if (forumBtn) forumBtn.onclick = function() { openModal('openMiniModal'); };
         
         var supportBtn = document.getElementById('supportBtn');
-        if (supportBtn) supportBtn.addEventListener('click', function() { openModal('supportModal'); });
+        if (supportBtn) supportBtn.onclick = function() { openModal('supportModal'); };
         
         var radioBtn = document.getElementById('radioBtn');
-        if (radioBtn) radioBtn.addEventListener('click', function() { openModal('radioModal'); });
+        if (radioBtn) radioBtn.onclick = function() { openModal('radioModal'); };
         
         var moodBtn = document.getElementById('moodBtn');
-        if (moodBtn) moodBtn.addEventListener('click', function() { openModal('pinterestModal'); });
+        if (moodBtn) moodBtn.onclick = function() { openModal('pinterestModal'); };
         
         var paintBtn = document.getElementById('paintBtn');
-        if (paintBtn) paintBtn.addEventListener('click', function() { openModal('artModal'); });
+        if (paintBtn) paintBtn.onclick = function() { openModal('artModal'); };
         
         var teamBtn = document.getElementById('teamBtnJournal');
-        if (teamBtn) teamBtn.addEventListener('click', function() { openModal('teamModalJournal'); });
+        if (teamBtn) teamBtn.onclick = function() { openModal('teamModalJournal'); };
         
+        // ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                var activeModals = document.querySelectorAll('.modal-overlay.active');
-                activeModals.forEach(function(modal) {
-                    modal.classList.remove('active');
-                });
+                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
             }
         });
         
-        var pinterestModal = document.getElementById('pinterestModal');
-        if (pinterestModal && !window.pinSDKLoaded) {
+        // Pinterest SDK
+        if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
             var pinScript = document.createElement('script');
             pinScript.src = '//assets.pinterest.com/js/pinit.js';
             pinScript.async = true;
             pinScript.onload = function() { window.pinSDKLoaded = true; };
             document.head.appendChild(pinScript);
         }
-    })();
+    });
+})();
 </script>
 </body>
 </html>
