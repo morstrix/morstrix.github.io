@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #1a1a1a;  /* графитовый фон */
+            background: #1a1a1a;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,7 +24,6 @@
             overflow: hidden;
         }
 
-        /* Кнопки */
         .index-container {
             position: relative;
             z-index: 10;
@@ -41,7 +40,6 @@
             align-items: center;
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.1s ease;
             animation: fadeInUp 1.2s ease-out forwards;
             opacity: 0;
         }
@@ -54,23 +52,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Тряска и улетание */
-        .index-card:hover {
-            animation: shakeAndFly 0.5s ease-in-out forwards;
-        }
-
-        @keyframes shakeAndFly {
-            0% { transform: translate(0, 0) scale(1); }
-            15% { transform: translate(-4px, -3px) scale(1.03); }
-            30% { transform: translate(4px, 3px) scale(1.06); }
-            45% { transform: translate(-5px, -2px) scale(1.09); }
-            60% { transform: translate(5px, 4px) scale(1.12); }
-            75% { transform: translate(-3px, -4px) scale(1.09); }
-            85% { transform: translate(2px, 2px) scale(1.06); }
-            95% { transform: translate(-1px, -1px) scale(1.03); }
-            100% { transform: translate(0, 0) scale(1); }
-        }
-
+        /* Картинка — не трясётся */
         .index-card img {
             width: 160px;
             height: 160px;
@@ -78,7 +60,9 @@
             margin-bottom: 20px;
         }
 
+        /* Подпись с рамкой — трясётся и улетает при наведении */
         .index-card span {
+            display: inline-block;
             font-size: 14px;
             color: #cccccc;
             text-transform: uppercase;
@@ -86,15 +70,31 @@
             padding: 10px 20px;
             border: 2px solid #666666;
             background: transparent;
-            transition: all 0.2s ease;
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
 
+        /* Тряска и улетание только для подписи */
         .index-card:hover span {
+            animation: shakeAndFly 1s ease-in-out forwards;
             color: #ffffff;
             border-color: #a84d6b;
         }
 
-        /* ШУМ ПОВЕРХ ВСЕГО */
+        @keyframes shakeAndFly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            10% { transform: translate(-4px, -2px) scale(1.02); opacity: 1; }
+            20% { transform: translate(4px, 2px) scale(1.05); opacity: 1; }
+            30% { transform: translate(-5px, -3px) scale(1.08); opacity: 1; }
+            40% { transform: translate(5px, 3px) scale(1.11); opacity: 1; }
+            50% { transform: translate(-3px, -4px) scale(1.14); opacity: 1; }
+            60% { transform: translate(3px, 2px) scale(1.11); opacity: 1; }
+            70% { transform: translate(-2px, -3px) scale(1.08); opacity: 1; }
+            80% { transform: translate(2px, 1px) scale(1.05); opacity: 1; }
+            90% { transform: translate(-1px, -1px) scale(1.02); opacity: 1; }
+            100% { transform: translate(0, 0) scale(1); opacity: 1; }
+        }
+
+        /* Шум поверх всего */
         #noise-canvas {
             position: fixed;
             top: 0;
@@ -103,10 +103,10 @@
             height: 100%;
             z-index: 9999;
             pointer-events: none;
-            opacity: 0.15;
+            opacity: 0.18;
+            mix-blend-mode: screen;
         }
 
-        /* Адаптация */
         @media (max-width: 700px) {
             .index-container { gap: 50px; }
             .index-card img { width: 120px; height: 120px; }
@@ -122,7 +122,6 @@
 </head>
 <body>
 
-    <!-- Кнопки -->
     <div class="index-container">
         <a href="journal.html" class="index-card">
             <img src="assets/journal.png" alt="Journal">
@@ -134,7 +133,6 @@
         </a>
     </div>
 
-    <!-- Шум поверх -->
     <canvas id="noise-canvas"></canvas>
 
     <script>
@@ -166,7 +164,7 @@
                 if (!width || !height) return;
                 generateNoise();
                 ctx.putImageData(imageData, 0, 0);
-                setTimeout(() => requestAnimationFrame(draw), 150); // ~6-7 fps, медленно
+                setTimeout(() => requestAnimationFrame(draw), 150);
             }
             
             window.addEventListener('resize', () => {
