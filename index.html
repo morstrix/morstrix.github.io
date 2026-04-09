@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #000;
+            background: #1a1a1a;  /* графитовый фон */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,130 +24,15 @@
             overflow: hidden;
         }
 
-        /* Canvas с шумом */
-        #static-noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.85;
-        }
-
-        /* CRT-эффект поверх шума */
-        .crt-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
-        }
-
-        .crt-overlay::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, 
-                rgba(0,0,0,0.3) 0px, 
-                rgba(255,255,255,0.05) 2px, 
-                transparent 3px, 
-                transparent 5px);
-            animation: scanlines 0.1s linear infinite;
-        }
-
-        @keyframes scanlines {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(4px); }
-        }
-
-        /* RGB-сплит (глитч) — редкие вспышки */
-        .glitch-flash {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 3;
-            pointer-events: none;
-            background: transparent;
-            animation: rgbGlitch 8s infinite;
-        }
-
-        @keyframes rgbGlitch {
-            0%, 90%, 100% { 
-                box-shadow: none; 
-                opacity: 0;
-            }
-            92% { 
-                box-shadow: 
-                    4px 0 0 rgba(255,0,0,0.2),
-                    -4px 0 0 rgba(0,255,255,0.2);
-                opacity: 1;
-            }
-            94% { 
-                box-shadow: 
-                    -6px 0 0 rgba(255,0,255,0.2),
-                    6px 0 0 rgba(0,255,0,0.2);
-                opacity: 1;
-            }
-            96% { 
-                box-shadow: none; 
-                opacity: 0;
-            }
-        }
-
-        /* Меню */
+        /* Слой 1: Кнопки */
         .index-container {
             position: relative;
             z-index: 10;
             display: flex;
-            flex-direction: column;
+            gap: 100px;
             justify-content: center;
             align-items: center;
             padding: 0 20px;
-            width: 100%;
-            max-width: 700px;
-        }
-
-        .menu-frame {
-            border: 4px solid #a84d6b;
-            padding: 45px 35px;
-            box-shadow: 
-                inset 0 0 0 3px #3d2a2f,
-                0 0 0 3px #1a1a1a,
-                10px 10px 0 #000000;
-            background: rgba(10, 10, 15, 0.65);
-            backdrop-filter: blur(3px);
-            width: 100%;
-            text-align: center;
-        }
-
-        .menu-title {
-            font-size: 22px;
-            color: #ffb7c7;
-            text-shadow: 4px 4px 0 #3d2a2f;
-            letter-spacing: 6px;
-            margin-bottom: 40px;
-            animation: titleFlicker 3s infinite;
-        }
-
-        @keyframes titleFlicker {
-            0%, 100% { opacity: 1; text-shadow: 4px 4px 0 #3d2a2f; }
-            2% { opacity: 0.8; text-shadow: 6px 4px 0 #a84d6b; }
-            4% { opacity: 1; text-shadow: 4px 4px 0 #3d2a2f; }
-            50% { opacity: 1; text-shadow: 4px 4px 0 #3d2a2f; }
-            52% { opacity: 0.9; text-shadow: 2px 6px 0 #ffb7c7; }
-            54% { opacity: 1; text-shadow: 4px 4px 0 #3d2a2f; }
-        }
-
-        .index-grid {
-            display: flex;
-            gap: 80px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
         }
 
         .index-card {
@@ -155,196 +40,168 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            transition: 0.1s;
-            filter: drop-shadow(0 0 6px #a84d6b);
-            position: relative;
+            transition: transform 0.2s ease;
         }
 
         .index-card:hover {
-            transform: scale(1.08);
-            filter: drop-shadow(0 0 15px #ffb7c7);
-        }
-
-        .index-card:hover span {
-            background: #a84d6b;
-            color: #000;
-            border-color: #ffb7c7;
-            animation: glitchText 0.2s steps(2) infinite;
-        }
-
-        @keyframes glitchText {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 1px); }
-            40% { transform: translate(3px, -1px); }
-            60% { transform: translate(-1px, 2px); }
-            80% { transform: translate(1px, -2px); }
-            100% { transform: translate(0); }
+            transform: scale(1.05);
         }
 
         .index-card img {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             image-rendering: pixelated;
+            margin-bottom: 20px;
         }
 
         .index-card span {
-            margin-top: 18px;
-            font-size: 13px;
-            color: #fff;
-            text-shadow: 3px 3px 0 #3d2a2f;
-            letter-spacing: 3px;
-            background: rgba(0,0,0,0.6);
-            padding: 8px 16px;
-            border: 2px solid #a84d6b;
-            transition: 0.1s;
-        }
-
-        .store-wrapper {
-            position: relative;
-        }
-
-        .pixel-money {
-            position: absolute;
-            top: -25px;
-            right: -35px;
-            width: 50px;
-            height: 32px;
-            animation: spinAndFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 5px #4caf50);
-        }
-
-        .pixel-bill {
-            width: 100%;
-            height: 100%;
-            background: #4caf50;
-            border: 2px solid #1b5e20;
-            position: relative;
-            box-shadow: 2px 2px 0 0 #0a4a0e;
-        }
-
-        .pixel-bill::before {
-            content: '';
-            position: absolute;
-            top: 3px; left: 3px; width: calc(100% - 6px); height: 2px;
-            background: #1b5e20;
-        }
-
-        .pixel-bill::after {
-            content: '';
-            position: absolute;
-            bottom: 3px; left: 3px; width: calc(100% - 6px); height: 2px;
-            background: #1b5e20;
-        }
-
-        .bill-circle {
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 16px; height: 16px;
-            border: 2px solid #1b5e20;
-            border-radius: 50%;
-            background: #3c8c40;
-        }
-
-        .bill-circle::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 3px; height: 3px;
-            background: #1b5e20;
-            border-radius: 50%;
-        }
-
-        @keyframes spinAndFloat {
-            0% { transform: translateY(0) rotateY(0deg); }
-            25% { transform: translateY(-5px) rotateY(90deg); }
-            50% { transform: translateY(0) rotateY(180deg); }
-            75% { transform: translateY(-5px) rotateY(270deg); }
-            100% { transform: translateY(0) rotateY(360deg); }
-        }
-
-        .terminal-footer {
-            font-size: 7px;
-            color: #a27791;
+            font-size: 14px;
+            color: #cccccc;
             text-transform: uppercase;
             letter-spacing: 4px;
-            border-top: 2px dashed #79434a;
-            padding-top: 20px;
+            padding: 10px 20px;
+            border: 2px solid #666666;
+            background: transparent;
+            transition: all 0.3s ease;
         }
 
-        .terminal-footer span {
-            animation: blink 1.5s step-end infinite;
+        .index-card:hover span {
+            color: #ffffff;
+            border-color: #a84d6b;
+            text-shadow: 0 0 8px rgba(168, 77, 107, 0.5);
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        /* Анимация появления при заходе */
+        .index-card {
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .index-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .index-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Слой 2: Эффекты поверх кнопок */
+        .effects-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;  /* клики проходят сквозь */
+            opacity: 0.25;         /* тусклый */
+        }
+
+        /* Canvas с медленным шумом */
+        #noise-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0.15;         /* очень тусклый */
+            mix-blend-mode: screen;
+        }
+
+        /* Тонкие scanlines */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 21;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1) 0px,
+                rgba(255, 255, 255, 0.02) 1px,
+                transparent 2px,
+                transparent 4px
+            );
+            opacity: 0.4;
+            animation: scanMove 8s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(8px); }
+        }
+
+        /* Виньетка по краям */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 22;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.5) 100%);
         }
 
         /* Адаптация */
         @media (max-width: 700px) {
-            .menu-frame { padding: 30px 20px; }
-            .menu-title { font-size: 16px; letter-spacing: 4px; }
-            .index-grid { gap: 40px; }
-            .index-card img { width: 100px; height: 100px; }
-            .index-card span { font-size: 10px; padding: 6px 12px; }
+            .index-container { gap: 50px; }
+            .index-card img { width: 120px; height: 120px; }
+            .index-card span { font-size: 11px; padding: 8px 16px; }
         }
 
         @media (max-width: 450px) {
-            .menu-title { font-size: 13px; }
-            .index-grid { gap: 25px; }
-            .index-card img { width: 80px; height: 80px; }
-            .index-card span { font-size: 8px; padding: 5px 8px; }
-            .pixel-money { width: 40px; height: 26px; top: -20px; right: -25px; }
+            .index-container { gap: 30px; }
+            .index-card img { width: 90px; height: 90px; }
+            .index-card span { font-size: 9px; padding: 6px 12px; letter-spacing: 2px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas для анимированного шума -->
-    <canvas id="static-noise"></canvas>
-    
-    <!-- CRT-эффекты -->
-    <div class="crt-overlay"></div>
-    <div class="glitch-flash"></div>
-
-    <!-- Меню -->
+    <!-- Слой 1: Кнопки (z-index: 10) -->
     <div class="index-container">
-        <div class="menu-frame">
-            <div class="menu-title">MORSTRIX</div>
-            <div class="index-grid">
-                <a href="journal.html" class="index-card">
-                    <img src="assets/journal.png" alt="Journal">
-                    <span>JOURNAL</span>
-                </a>
-                <div class="store-wrapper">
-                    <a href="store.html" class="index-card">
-                        <img src="assets/space.png" alt="Store">
-                        <span>STORE</span>
-                    </a>
-                    <div class="pixel-money">
-                        <div class="pixel-bill">
-                            <div class="bill-circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="terminal-footer">
-                <span>█</span> SIGNAL: 87% &nbsp;|&nbsp; CHANNEL: 03 &nbsp;|&nbsp; VHS <span>█</span>
-            </div>
-        </div>
+        <a href="journal.html" class="index-card">
+            <img src="assets/journal.png" alt="Journal">
+            <span>JOURNAL</span>
+        </a>
+        <a href="store.html" class="index-card">
+            <img src="assets/space.png" alt="Store">
+            <span>STORE</span>
+        </a>
     </div>
+
+    <!-- Слой 2: Эффекты поверх (z-index: 20+) -->
+    <canvas id="noise-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
 
     <script>
         (function() {
-            const canvas = document.getElementById('static-noise');
+            const canvas = document.getElementById('noise-canvas');
             const ctx = canvas.getContext('2d');
             
             let width, height;
             let imageData;
             let data;
             
-            // Частота обновления шума (кадров в секунду)
-            const NOISE_FPS = 24;
+            // Очень медленное обновление — 8 fps
+            const NOISE_FPS = 8;
             let lastUpdate = 0;
             const interval = 1000 / NOISE_FPS;
             
@@ -355,28 +212,16 @@
                 data = imageData.data;
             }
             
-            // Генерация шума (чёрно-белый + редкие цветные пиксели)
             function generateNoise() {
                 for (let i = 0; i < data.length; i += 4) {
-                    // Случайная яркость (чёрно-белый)
                     const val = Math.floor(Math.random() * 256);
-                    
-                    // ~3% цветных пикселей (RGB-артефакты)
-                    if (Math.random() < 0.03) {
-                        data[i] = Math.floor(Math.random() * 256);       // R
-                        data[i + 1] = Math.floor(Math.random() * 256);   // G
-                        data[i + 2] = Math.floor(Math.random() * 256);   // B
-                    } else {
-                        data[i] = val;
-                        data[i + 1] = val;
-                        data[i + 2] = val;
-                    }
-                    
-                    data[i + 3] = 255; // Альфа
+                    data[i] = val;
+                    data[i + 1] = val;
+                    data[i + 2] = val;
+                    data[i + 3] = 255;
                 }
             }
             
-            // Отрисовка с ограничением FPS
             function drawNoise(timestamp) {
                 requestAnimationFrame(drawNoise);
                 
