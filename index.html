@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #2a2a2a;  /* графитовый фон */
+            background: #1a1a1a;  /* графитовый фон */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* Слой 1: Кнопки */
+        /* Кнопки */
         .index-container {
             position: relative;
             z-index: 10;
@@ -40,26 +40,34 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            transition: all 0.15s ease;
             cursor: pointer;
+            transition: all 0.1s ease;
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
         }
 
-        /* Тряска и улетание при наведении */
+        .index-card:nth-child(1) { animation-delay: 0.1s; }
+        .index-card:nth-child(2) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Тряска и улетание */
         .index-card:hover {
-            animation: shakeAndZoom 0.4s ease-in-out forwards;
+            animation: shakeAndFly 0.5s ease-in-out forwards;
         }
 
-        @keyframes shakeAndZoom {
+        @keyframes shakeAndFly {
             0% { transform: translate(0, 0) scale(1); }
-            10% { transform: translate(-3px, -2px) scale(1.02); }
-            20% { transform: translate(3px, 2px) scale(1.05); }
-            30% { transform: translate(-4px, -1px) scale(1.08); }
-            40% { transform: translate(4px, 3px) scale(1.12); }
-            50% { transform: translate(-2px, -3px) scale(1.15); }
-            60% { transform: translate(2px, 1px) scale(1.12); }
-            70% { transform: translate(-1px, -2px) scale(1.08); }
-            80% { transform: translate(1px, 1px) scale(1.05); }
-            90% { transform: translate(-1px, -1px) scale(1.02); }
+            15% { transform: translate(-4px, -3px) scale(1.03); }
+            30% { transform: translate(4px, 3px) scale(1.06); }
+            45% { transform: translate(-5px, -2px) scale(1.09); }
+            60% { transform: translate(5px, 4px) scale(1.12); }
+            75% { transform: translate(-3px, -4px) scale(1.09); }
+            85% { transform: translate(2px, 2px) scale(1.06); }
+            95% { transform: translate(-1px, -1px) scale(1.03); }
             100% { transform: translate(0, 0) scale(1); }
         }
 
@@ -86,42 +94,16 @@
             border-color: #a84d6b;
         }
 
-        /* Анимация появления при заходе */
-        .index-card {
-            animation: fadeInUp 1.2s ease-out forwards;
-            opacity: 0;
-        }
-
-        .index-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .index-card:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Слой 2: Шум поверх кнопок */
+        /* ШУМ ПОВЕРХ ВСЕГО */
         #noise-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 20;
+            z-index: 9999;
             pointer-events: none;
-            opacity: 0.12;         /* прозрачный, тусклый */
-            mix-blend-mode: screen;
+            opacity: 0.15;
         }
 
         /* Адаптация */
@@ -140,7 +122,7 @@
 </head>
 <body>
 
-    <!-- Слой 1: Кнопки (z-index: 10) -->
+    <!-- Кнопки -->
     <div class="index-container">
         <a href="journal.html" class="index-card">
             <img src="assets/journal.png" alt="Journal">
@@ -152,22 +134,16 @@
         </a>
     </div>
 
-    <!-- Слой 2: Шум поверх (z-index: 20) -->
+    <!-- Шум поверх -->
     <canvas id="noise-canvas"></canvas>
 
     <script>
         (function() {
             const canvas = document.getElementById('noise-canvas');
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { alpha: true });
             
             let width, height;
-            let imageData;
-            let data;
-            
-            // Медленный шум — 6 fps
-            const NOISE_FPS = 6;
-            let lastUpdate = 0;
-            const interval = 1000 / NOISE_FPS;
+            let imageData, data;
             
             function resize() {
                 width = canvas.width = window.innerWidth;
@@ -178,24 +154,19 @@
             
             function generateNoise() {
                 for (let i = 0; i < data.length; i += 4) {
-                    const val = Math.floor(Math.random() * 256);
+                    const val = Math.random() * 255;
                     data[i] = val;
-                    data[i + 1] = val;
-                    data[i + 2] = val;
-                    data[i + 3] = 255;
+                    data[i+1] = val;
+                    data[i+2] = val;
+                    data[i+3] = 255;
                 }
             }
             
-            function drawNoise(timestamp) {
-                requestAnimationFrame(drawNoise);
-                
-                if (timestamp - lastUpdate < interval) return;
-                lastUpdate = timestamp;
-                
+            function draw() {
                 if (!width || !height) return;
-                
                 generateNoise();
                 ctx.putImageData(imageData, 0, 0);
+                setTimeout(() => requestAnimationFrame(draw), 150); // ~6-7 fps, медленно
             }
             
             window.addEventListener('resize', () => {
@@ -205,9 +176,7 @@
             });
             
             resize();
-            generateNoise();
-            ctx.putImageData(imageData, 0, 0);
-            requestAnimationFrame(drawNoise);
+            draw();
         })();
     </script>
 
