@@ -5,62 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/store.css">
 </head>
 <body class="page-shop">
 
-<a href="index.html" class="back-button">
-    <img src="assets/close.png" alt="Back">
-</a>
+<!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+<div class="top-panel">
+    <button class="panel-btn" id="openConverterBtn">CONVERTER</button>
+    <button class="panel-btn" id="openConstructorBtn">CONSTRUCTOR</button>
+    <a href="index.html" class="panel-close">
+        <img src="assets/close.png" alt="Close">
+    </a>
+</div>
 
-<div class="container">
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="shop-content">
     <div class="shop-header">
         <div class="shop-title">DIY GEAR</div>
         <div class="shop-subtitle">індивідуальні замовлення</div>
     </div>
 
-    <!-- КАРУСЕЛЬ -->
-    <div class="carousel-section">
-        <div class="carousel-container">
-            <div class="carousel-arrow arrow-left" id="carouselPrev">‹</div>
-            <div class="carousel-track" id="carouselTrack"></div>
-            <div class="carousel-arrow arrow-right" id="carouselNext">›</div>
-        </div>
-    </div>
-
-    <!-- 4 КАТЕГОРІЇ -->
+    <!-- Сетка категорий 2x2 -->
     <div class="categories-grid" id="categoriesGrid"></div>
-
-    <!-- MERCH CONSTRUCTOR -->
-    <div class="merch-section">
-        <div class="shop-title" style="font-size: 0.9rem; margin: 30px 0 20px;">MERCH CONSTRUCTOR</div>
-        <div class="merch-constructor">
-            <div class="tshirt-preview">
-                <img src="assets/tshirt.jpeg" alt="T-shirt" class="tshirt-img">
-                <canvas id="printCanvas" class="print-canvas"></canvas>
-            </div>
-            <div class="upload-area" id="uploadArea">
-                <div class="dashed-box">
-                    <span class="upload-text">UPLOAD PRINT</span>
-                    <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif">
-                </div>
-            </div>
-            <button class="reset-btn" id="resetPrint">CLEAR</button>
-        </div>
-    </div>
-
-    <!-- CONVERTER -->
-    <div class="converter-section">
-        <div class="shop-title" style="font-size: 0.9rem; margin: 30px 0 20px;">CONVERTER</div>
-        <div class="converter-container">
-            <input type="text" id="pxInput" class="converter-input" placeholder="Pixels" autocomplete="off" inputmode="numeric">
-            <span class="converter-arrow">⇄</span>
-            <input type="text" id="cmInput" class="converter-input" placeholder="cm" autocomplete="off" inputmode="decimal">
-        </div>
-    </div>
 </div>
 
-<!-- КОРЗИНА -->
+<!-- КОРЗИНА (снизу) -->
 <div class="cart-bottom">
     <button class="cart-bottom-btn" id="cartBtn">
         ПАКЕТ
@@ -69,7 +39,9 @@
     <div class="cart-bottom-total" id="cartTotalBottom">0 ₴</div>
 </div>
 
-<!-- МОДАЛЬНЕ ВІКНО КОРЗИНИ -->
+<!-- ========== МОДАЛКИ ========== -->
+
+<!-- Модалка корзины -->
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <button class="close-modal">✜</button>
@@ -81,6 +53,70 @@
     </div>
 </div>
 
+<!-- Модалка конвертера -->
+<div id="converterModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">CONVERTER</span>
+            <button class="modal-close-btn" data-modal="converterModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="converter-container">
+                <input type="text" id="pxInput" class="converter-input" placeholder="Pixels" autocomplete="off" inputmode="numeric">
+                <span class="converter-arrow">⇄</span>
+                <input type="text" id="cmInput" class="converter-input" placeholder="cm" autocomplete="off" inputmode="decimal">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка конструктора -->
+<div id="constructorModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MERCH CONSTRUCTOR</span>
+            <button class="modal-close-btn" data-modal="constructorModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="merch-constructor">
+                <div class="tshirt-preview">
+                    <img src="assets/tshirt.jpeg" alt="T-shirt" class="tshirt-img">
+                    <canvas id="printCanvas" class="print-canvas"></canvas>
+                </div>
+                <div class="upload-area" id="uploadArea">
+                    <div class="dashed-box">
+                        <span class="upload-text">UPLOAD PRINT</span>
+                        <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif">
+                    </div>
+                </div>
+                <button class="reset-btn" id="resetPrint">CLEAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка товара (с каруселью) -->
+<div id="productModal" class="modal-overlay">
+    <div class="modal-content product-modal">
+        <div class="modal-header">
+            <span class="modal-title-text" id="productTitle">ТОВАР</span>
+            <button class="modal-close-btn" data-modal="productModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="product-carousel-container">
+                <div class="carousel-arrow" id="productCarouselPrev">‹</div>
+                <div class="product-carousel-track" id="productCarouselTrack">
+                    <div class="product-carousel-slides" id="productCarouselSlides"></div>
+                </div>
+                <div class="carousel-arrow" id="productCarouselNext">›</div>
+            </div>
+            <div class="product-description" id="productDescription"></div>
+            <button class="popup-enter-btn" id="addToCartFromModal">$$$</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/background.js"></script>
 <script src="js/store.js"></script>
 </body>
 </html>
