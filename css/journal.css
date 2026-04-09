@@ -88,7 +88,7 @@ body {
 .container {
     max-width: 700px;
     width: 100%;
-    margin-top: 100px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     gap: 120px;
@@ -465,8 +465,8 @@ body {
     margin-top: 10px;
 }
 .sdot {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     display: inline-block;
     animation: dotFade 1.5s ease-in-out infinite;
