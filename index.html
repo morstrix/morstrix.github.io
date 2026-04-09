@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #0f0f12;
+            background: #1e1e1e;  /* графитовый фон */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,18 +22,6 @@
             color: #fff;
             position: relative;
             overflow: hidden;
-        }
-
-        /* Текстурный фон — графит + микро-шум */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, transparent 2px),
-                radial-gradient(circle at 30% 40%, rgba(60,60,80,0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 1;
         }
 
         /* Контейнер кнопок */
@@ -53,7 +41,7 @@
             align-items: center;
             text-decoration: none;
             cursor: pointer;
-            animation: fadeInUp 1.4s cubic-bezier(0.2, 0.9, 0.1, 1) forwards;
+            animation: fadeInUp 1.4s ease-out forwards;
             opacity: 0;
         }
 
@@ -61,11 +49,10 @@
         .index-card:nth-child(2) { animation-delay: 0.5s; }
 
         @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(40px); filter: blur(2px); }
-            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Пиксельные иконки */
         .index-card img {
             width: 150px;
             height: 150px;
@@ -79,7 +66,6 @@
             filter: drop-shadow(0 0 15px rgba(168, 77, 107, 0.7));
         }
 
-        /* Подпись — сайфайная рамка с гранжем */
         .index-card span {
             display: inline-block;
             font-size: 13px;
@@ -97,7 +83,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Гранжевые потёртости на рамке */
         .index-card span::before {
             content: '';
             position: absolute;
@@ -112,7 +97,6 @@
             opacity: 0.5;
         }
 
-        /* Неон при наведении */
         .index-card:hover span {
             color: #ffffff;
             border-color: #a84d6b;
@@ -125,7 +109,6 @@
             animation: glitchFrame 0.4s steps(2) infinite;
         }
 
-        /* Глитч-тряска рамки */
         @keyframes glitchFrame {
             0% { transform: translate(0, 0); }
             20% { transform: translate(-2px, 1px); }
@@ -135,70 +118,40 @@
             100% { transform: translate(0, 0); }
         }
 
-        /* === ЭФФЕКТЫ ПОВЕРХ === */
-
-        /* Шум (помехи) */
-        #noise-canvas {
+        /* БИТМАП-ТЕКСТУРА ПОВЕРХ ГРАФИТА */
+        #bitmap-texture {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 100;
+            z-index: 5;
             pointer-events: none;
-            opacity: 0.12;
-            mix-blend-mode: screen;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
         }
 
-        /* Скайнлайны (очень тонкие) */
+        /* Лёгкие скайнлайны */
         .scanlines {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 101;
+            z-index: 6;
             pointer-events: none;
             background: repeating-linear-gradient(0deg, 
-                rgba(0,0,0,0.2) 0px, 
+                rgba(0,0,0,0.15) 0px, 
                 rgba(255,255,255,0.01) 1px, 
                 transparent 2px, 
                 transparent 3px);
-            opacity: 0.3;
-            animation: scanMove 12s linear infinite;
+            opacity: 0.25;
+            animation: scanMove 10s linear infinite;
         }
 
         @keyframes scanMove {
             0% { transform: translateY(0); }
-            100% { transform: translateY(6px); }
-        }
-
-        /* Пыль / царапины (редкие) */
-        .dust {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 102;
-            pointer-events: none;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 5%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.01) 0%, transparent 8%),
-                repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.005) 40px, transparent 80px);
-            opacity: 0.6;
-        }
-
-        /* Виньетка (тёмные края) */
-        .vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 103;
-            pointer-events: none;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+            100% { transform: translateY(5px); }
         }
 
         /* Адаптация */
@@ -228,52 +181,69 @@
         </a>
     </div>
 
-    <!-- Слои эффектов -->
-    <canvas id="noise-canvas"></canvas>
+    <!-- Битмап-текстура (Canvas) -->
+    <canvas id="bitmap-texture"></canvas>
     <div class="scanlines"></div>
-    <div class="dust"></div>
-    <div class="vignette"></div>
 
     <script>
         (function() {
-            const canvas = document.getElementById('noise-canvas');
-            const ctx = canvas.getContext('2d', { alpha: true });
+            const canvas = document.getElementById('bitmap-texture');
+            const ctx = canvas.getContext('2d');
             
             let width, height;
-            let imageData, data;
             
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
-                imageData = ctx.createImageData(width, height);
-                data = imageData.data;
+                drawTexture();
             }
             
-            function generateNoise() {
-                for (let i = 0; i < data.length; i += 4) {
-                    const val = Math.random() * 255;
-                    data[i] = val;
-                    data[i+1] = val;
-                    data[i+2] = val;
-                    data[i+3] = 255;
-                }
-            }
-            
-            function draw() {
+            function drawTexture() {
                 if (!width || !height) return;
-                generateNoise();
+                
+                // Очищаем
+                ctx.clearRect(0, 0, width, height);
+                
+                // 1. Пиксельная сетка (4x4)
+                ctx.fillStyle = '#000';
+                ctx.globalAlpha = 0.06;
+                for (let x = 0; x < width; x += 4) {
+                    ctx.fillRect(x, 0, 1, height);
+                }
+                for (let y = 0; y < height; y += 4) {
+                    ctx.fillRect(0, y, width, 1);
+                }
+                
+                // 2. Микро-шум (псевдослучайные точки)
+                ctx.globalAlpha = 0.08;
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    if (Math.random() < 0.02) {
+                        data[i] = 255;
+                        data[i+1] = 255;
+                        data[i+2] = 255;
+                    }
+                }
                 ctx.putImageData(imageData, 0, 0);
-                setTimeout(() => requestAnimationFrame(draw), 180); // ~5.5 fps, медленно
+                
+                // 3. Небольшие «артефакты» — горизонтальные полосы
+                ctx.globalAlpha = 0.04;
+                ctx.fillStyle = '#fff';
+                for (let i = 0; i < height; i += 40) {
+                    if (Math.random() < 0.3) {
+                        ctx.fillRect(0, i, width, 1);
+                    }
+                }
+                
+                ctx.globalAlpha = 1.0;
             }
             
             window.addEventListener('resize', () => {
                 resize();
-                generateNoise();
-                ctx.putImageData(imageData, 0, 0);
             });
             
             resize();
-            draw();
         })();
     </script>
 
