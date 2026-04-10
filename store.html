@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/store.css">
 </head>
 <body class="page-shop">
 
 <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
 <div class="top-panel">
+    <span class="panel-title">DIY GEAR</span>
     <a href="index.html" class="panel-close">
         <img src="assets/close.png" alt="Close">
     </a>
@@ -19,12 +19,6 @@
 
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="shop-content">
-    <div class="shop-header">
-        <div class="shop-title">DIY GEAR</div>
-        <div class="shop-subtitle">індивідуальні замовлення</div>
-    </div>
-
-    <!-- Сетка товаров (8 штук, 2 колонки) -->
     <div class="categories-grid" id="categoriesGrid"></div>
 </div>
 
@@ -36,8 +30,6 @@
     </button>
     <div class="cart-bottom-total" id="cartTotalBottom">0 ₴</div>
 </div>
-
-<!-- ========== МОДАЛКИ ========== -->
 
 <!-- Модалка корзины -->
 <div id="cartModal" class="modal-overlay">
@@ -55,7 +47,7 @@
     </div>
 </div>
 
-<!-- Модалка товара (с каруселью) -->
+<!-- Модалка товара -->
 <div id="productModal" class="modal-overlay">
     <div class="modal-content product-modal">
         <div class="modal-header">
@@ -71,7 +63,6 @@
                 <div class="carousel-arrow" id="productCarouselNext">›</div>
             </div>
             <div class="product-description" id="productDescription"></div>
-            <!-- кнопка удалена, добавление по тапу на фото -->
         </div>
     </div>
 </div>
