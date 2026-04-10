@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. RSS тикер
+    // 1. RSS тикер (ускорен в CSS)
     const ticker = document.getElementById('rssTicker');
     if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
 
