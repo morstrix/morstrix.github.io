@@ -3,228 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX | PORTAL</title>
+    <title>MORSTRIX | DIGITAL JOURNAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/journal.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #000000;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            font-family: 'Press Start 2P', monospace;
-            color: #fff;
-        }
-        .index-container {
-            display: flex;
-            gap: 100px;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 20px 20px;
-            flex: 1;
-        }
-        .index-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-        }
-        .index-card img {
-            width: 160px;
-            height: 160px;
-            image-rendering: pixelated;
-            margin-bottom: 20px;
-        }
-        .index-card span {
-            font-size: 14px;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-        .bottom-team-donate {
-            width: 100%;
-            background: #050505;
-            border-top: 2px solid #79434a;
-            padding: 20px 20px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        .team-cards-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .team-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .team-card:hover { transform: translateY(-5px); }
-        .team-img-wrapper {
-            width: 120px;
-            aspect-ratio: 1/1;
-            background: #000;
-            border: 2px solid #b97272;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            margin-bottom: 12px;
-            box-shadow: 4px 4px 0 #3d2a2f;
-        }
-        .team-img-wrapper img {
-            width: 90px;
-            height: auto;
-            image-rendering: pixelated;
-        }
-        .team-card span {
-            font-size: 9px;
-            color: #000;
-            text-shadow: 1px 1px 0 #aaa;
-            letter-spacing: 1px;
-        }
-        .donate-line {
-            width: 80%;
-            max-width: 500px;
-            height: 2px;
-            background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
-            margin: 5px 0;
-        }
-        .donate-label {
-            font-size: 13px;
-            color: #a27791;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .donate-sub {
-            font-size: 9px;
-            color: #a27791;
-            margin-top: 5px;
-        }
-        @media (max-width: 700px) {
-            .index-container { gap: 50px; }
-            .index-card img { width: 120px; height: 120px; }
-            .index-card span { font-size: 11px; }
-        }
-        @media (max-width: 450px) {
-            .index-container { gap: 30px; }
-            .index-card img { width: 90px; height: 90px; }
-            .index-card span { font-size: 9px; letter-spacing: 2px; }
-        }
+        body { overflow: hidden; touch-action: pan-y pinch-zoom; }
     </style>
 </head>
 <body>
-    <div class="index-container">
-        <a href="journal.html" class="index-card">
-            <img src="assets/journal.png" alt="Journal">
-            <span>JOURNAL</span>
-        </a>
-        <a href="store.html" class="index-card">
-            <img src="assets/space.png" alt="Store">
-            <span>STORE</span>
-        </a>
-    </div>
 
-    <div class="bottom-team-donate">
-        <div class="team-cards-row">
-            <div class="team-card" id="teamDesignerBtn">
-                <div class="team-img-wrapper">
-                    <img src="assets/ada.png" alt="Ada">
-                </div>
-                <span>DESIGNER</span>
+<canvas id="neuro-bg"></canvas>
+
+<!-- ВЕРХНЯЯ ПАНЕЛЬ (ЗМІСТ и крестик) -->
+<div class="top-panel">
+    <div></div>
+    <button class="panel-btn" id="contentsBtn">
+        <span>ЗМІСТ</span>
+    </button>
+    <a href="index.html" class="panel-close">
+        <img src="assets/close.png" alt="Close">
+    </a>
+</div>
+
+<!-- ГОРИЗОНТАЛЬНЫЙ ЖУРНАЛ -->
+<div class="journal-horizontal" id="journalHorizontal">
+    <!-- СТРАНИЦА 1: RSS + Карусель + Twitter -->
+    <div class="journal-page" data-page="1">
+        <div class="page-content">
+            <div class="ticker-wrapper">
+                <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
             </div>
-            <div class="team-card" id="teamDeveloperBtn">
-                <div class="team-img-wrapper">
-                    <img src="assets/ex.png" alt="Ex">
-                </div>
-                <span>DEVELOPER</span>
+            <div class="carousel" id="mainCarousel">
+                <img src="assets/mx1.jpeg" class="active">
+                <img src="assets/mx2.jpg">
             </div>
+            <div class="hashtag-row"><span class="hashtag">#layoutporn</span></div>
+            <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
         </div>
-        <div class="donate-line"></div>
-        <div class="donate-label">DONATE</div>
-        <div class="donate-sub">monobank</div>
     </div>
 
-    <!-- Модалки TEAM и внутренние (как ранее) -->
-    <div id="teamModal" class="modal-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
-        <div class="modal-content" style="max-width:450px; background:#a27791; border:4px solid #b97272;">
-            <div class="modal-header" style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
-                <span style="font-size:11px; color:#fff;">SELECT MEMBER</span>
-                <button id="closeTeamModal" style="background:#000; color:#fff; border:2px solid #b97272; width:32px; height:32px;">✜</button>
+    <!-- СТРАНИЦА 2: Font Styler + MX -->
+    <div class="journal-page" data-page="2">
+        <div class="page-content">
+            <div class="styler-embedded">
+                <h3>FONT STYLER</h3>
+                <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="INPUT TEXT...">
+                <div class="styler-preview" id="stylerPreviewEmbedded">EXAMPLE</div>
+                <p class="hint">TAP PREVIEW TO COPY</p>
             </div>
-            <div class="modal-inner" style="padding:20px; display:flex; gap:30px; justify-content:center;">
-                <div class="team-choice" data-member="ada" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ada.png" style="width:100px; image-rendering:pixelated;"><br>
-                    <span style="font-size:9px; color:#000;">DESIGNER</span>
-                </div>
-                <div class="team-choice" data-member="ex" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ex.png" style="width:100px; image-rendering:pixelated;"><br>
-                    <span style="font-size:9px; color:#000;">DEVELOPER</span>
+            <div class="mx-download-block">
+                <img src="assets/folder.png" class="mx-icon-large">
+                <div class="box-button small" id="downloadArchiveBtnEmbedded">
+                    <div class="button"><span>📦 DOWNLOAD</span></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="adaModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div class="modal-content" style="max-width:500px; background:#a27791;">
-            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
-            <div style="padding:20px; text-align:center;">
-                <img src="assets/ada.png" style="width:100px;"><p>DESIGNER / ILLUSTRATOR</p>
-                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
-                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%"></iframe>
-                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+    <!-- СТРАНИЦА 3: Art + Paint -->
+    <div class="journal-page" data-page="3">
+        <div class="page-content">
+            <div class="art-square-frame">
+                <img src="assets/art.jpg" id="artPreview">
             </div>
+            <img src="assets/paint.png" class="paint-trigger" id="paintBtn">
+            <div class="paint-label">PAINT</div>
         </div>
     </div>
-    <div id="exModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div class="modal-content" style="max-width:500px; background:#a27791;">
-            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
-            <div style="padding:20px; text-align:center;">
-                <img src="assets/ex.png" style="width:100px;"><p>DEVELOPER / ENGINEER</p>
-                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
-                <div class="box-button small" data-href="https://github.com/grimexframe"><div class="button"><span>🐙 GITHUB</span></div></div>
-                <div class="box-button small" data-href="https://www.threads.net/grimexframe"><div class="button"><span>🧵 THREADS</span></div></div>
-                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+
+    <!-- СТРАНИЦА 4: Pinterest виджет -->
+    <div class="journal-page" data-page="4">
+        <div class="page-content">
+            <div class="pinterest-embed">
+                <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="600" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
             </div>
         </div>
     </div>
 
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-    <script type="module" src="https://w.behold.so/widget.js"></script>
-    <script>
-        const teamModal = document.getElementById('teamModal');
-        const adaModal = document.getElementById('adaModal');
-        const exModal = document.getElementById('exModal');
-        function openModal(m) { m.style.display = 'flex'; }
-        function closeModal(m) { m.style.display = 'none'; }
-        document.getElementById('teamDesignerBtn').onclick = () => openModal(teamModal);
-        document.getElementById('teamDeveloperBtn').onclick = () => openModal(teamModal);
-        document.getElementById('closeTeamModal').onclick = () => closeModal(teamModal);
-        document.querySelectorAll('.team-choice').forEach(c => c.onclick = (e) => {
-            const member = e.currentTarget.dataset.member;
-            closeModal(teamModal);
-            if (member === 'ada') openModal(adaModal);
-            else if (member === 'ex') openModal(exModal);
-        });
-        document.querySelectorAll('.close-inner').forEach(b => b.onclick = () => {
-            adaModal.style.display = 'none';
-            exModal.style.display = 'none';
-        });
-        window.onclick = (e) => {
-            if (e.target === teamModal) closeModal(teamModal);
-            if (e.target === adaModal) closeModal(adaModal);
-            if (e.target === exModal) closeModal(exModal);
-        };
-    </script>
+    <!-- СТРАНИЦА 5: Merch Constructor + Конвертер px↔cm -->
+    <div class="journal-page" data-page="5">
+        <div class="page-content">
+            <div class="merch-constructor">
+                <h4>MERCH CONSTRUCTOR</h4>
+                <div class="tshirt-preview">
+                    <img src="assets/tshirt.jpeg" alt="T-shirt" class="tshirt-img">
+                    <canvas id="printCanvasEmbedded" class="print-canvas"></canvas>
+                </div>
+                <div class="upload-area">
+                    <input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif">
+                    <button class="reset-btn" id="resetPrintEmbedded">CLEAR</button>
+                </div>
+            </div>
+            <div class="converter-container">
+                <h4>CONVERTER px ↔ cm</h4>
+                <input type="text" id="pxInputEmbedded" class="converter-input" placeholder="Pixels" inputmode="numeric">
+                <span class="converter-arrow">⇄</span>
+                <input type="text" id="cmInputEmbedded" class="converter-input" placeholder="cm" inputmode="decimal">
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 6: Spotify виджет -->
+    <div class="journal-page" data-page="6">
+        <div class="page-content">
+            <div class="spotify-embed">
+                <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 7: Синтезатор текста (заглушка) -->
+    <div class="journal-page" data-page="7">
+        <div class="page-content">
+            <div class="placeholder-block">
+                <h3>✦ TEXT SYNTH ✦</h3>
+                <p>coming soon...</p>
+                <div class="synth-placeholder">[ frequency modulation ]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 8: Топ-10 + Tetris -->
+    <div class="journal-page" data-page="8">
+        <div class="page-content">
+            <h4>TOP PLAYERS</h4>
+            <div class="top-players-list"></div>
+            <a href="tetris.html" class="tetris-big">
+                <img src="assets/tetris.png" alt="TETRIS">
+                <span>PLAY TETRIS</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 9: Support (встроенный) -->
+    <div class="journal-page" data-page="9">
+        <div class="page-content">
+            <div class="support-embedded">
+                <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrixxx/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 10: Форум (встроенный) -->
+    <div class="journal-page" data-page="10">
+        <div class="page-content">
+            <div class="forum-embedded">
+                <div class="forum-tabs-panel-embedded">
+                    <div class="forum-tab active" data-tab="wellness">🌿</div>
+                    <div class="forum-tab" data-tab="interior">🛋️</div>
+                    <div class="forum-tab" data-tab="radio">📻</div>
+                    <div class="forum-tab" data-tab="itai">🤖</div>
+                    <div class="forum-tab" data-tab="english">📖</div>
+                    <div class="forum-tab" data-tab="design">🎨</div>
+                    <div class="forum-tab" data-tab="tattoo">💉</div>
+                    <div class="forum-tab" data-tab="money">💰</div>
+                    <div class="forum-tab" data-tab="barbering">✂️</div>
+                </div>
+                <div class="forum-content-embedded">
+                    <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
+                    <p id="forumTextEmbedded">Йога, медитации...</p>
+                    <a href="https://t.me/morstrix" target="_blank" class="box-button small">📱 OPEN TELEGRAM</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка "ЗМІСТ" -->
+<div id="contentsModal" class="modal-overlay">
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ ЗМІСТ ✦</span>
+            <button class="modal-close-btn" data-modal="contentsModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="contents-list">
+                <div class="contents-item" data-page="1">1. RSS + TWITTER</div>
+                <div class="contents-item" data-page="2">2. FONT STYLER / MX</div>
+                <div class="contents-item" data-page="3">3. ART / PAINT</div>
+                <div class="contents-item" data-page="4">4. PINTEREST</div>
+                <div class="contents-item" data-page="5">5. MERCH + CONVERTER</div>
+                <div class="contents-item" data-page="6">6. SPOTIFY</div>
+                <div class="contents-item" data-page="7">7. TEXT SYNTH</div>
+                <div class="contents-item" data-page="8">8. TOP / TETRIS</div>
+                <div class="contents-item" data-page="9">9. SUPPORT</div>
+                <div class="contents-item" data-page="10">10. FORUM</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- artModal -->
+<div id="artModal" class="modal-overlay">
+    <div class="modal-content paint-full-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">PAINT.EXE</span>
+            <button class="modal-close-btn" data-modal="artModal">✜</button>
+        </div>
+        <div class="paint-window">
+            <div class="paint-tools-panel">
+                <div style="display: flex; gap: 8px;">
+                    <button class="retro-btn" id="pUndo" disabled>&lt;</button>
+                    <button class="retro-btn" id="pRedo" disabled>&gt;</button>
+                </div>
+                <button class="retro-btn" id="btnLayersOpen">CHANNELS</button>
+            </div>
+            <div class="canvas-container" id="paintArea">
+                <canvas id="layer1"></canvas>
+                <canvas id="layer2"></canvas>
+            </div>
+            <div class="paint-tools-panel">
+                <input type="color" id="pColor" value="#888888">
+                <button class="retro-btn" id="pSave">💾 SAVE</button>
+                <button class="retro-btn" id="pClear">CLEAR</button>
+            </div>
+        </div>
+        <div id="layersPopup" class="layers-sub-modal">
+            <div style="background:#ffb7c7; color:#000; padding:8px; font-size:7px; display:flex; justify-content:space-between;">
+                <span>LAYERS</span>
+                <span onclick="document.getElementById('layersPopup').classList.remove('active')" style="cursor:pointer;">✜</span>
+            </div>
+            <div id="layerList">
+                <div class="layer-row active" data-id="2">LAYER 02 (TOP)</div>
+                <div class="layer-row" data-id="1">LAYER 01 (BACK)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/background.js"></script>
+<script src="js/paint.js"></script>
+<script src="js/journal.js"></script>
 </body>
 </html>
