@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const span = downloadBtn.querySelector('.button span'); const orig = span.innerText; span.innerText='✓ DOWNLOADING...'; setTimeout(()=>span.innerText=orig,2000);
     };
 
-    // 5. Firebase top players
+    // 5. Firebase — загрузка основного топа (4 игрока)
     async function loadTopPlayers(){
         const container = document.querySelector('.top-players-list'); if(!container) return;
         try{
@@ -63,9 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML=html;
         }catch(e){ container.innerHTML='<div style="color:#a84d6b;">⚠️ ERROR</div>'; }
     }
-    if(document.querySelector('.top-players-list')) loadTopPlayers();
 
-    // 6. Форум переключение вкладок
+    // 6. Firebase — загрузка мини-топа для верхней панели (3 игрока)
+    async function loadMiniTopPlayers() {
+        const container = document.querySelector('.top-players-list-mini');
+        if (!container) return;
+        try {
+            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+            const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            const firebaseConfig = {
+                apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+                authDomain: "helper-e10b2.firebaseapp.com",
+                projectId: "helper-e10b2",
+                storageBucket: "helper-e10b2.firebasestorage.app",
+                messagingSenderId: "131536876451",
+                appId: "1:131536876451:web:eeaef494c83dfc4849e016"
+            };
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(3));
+            const snap = await getDocs(q);
+            if (snap.empty) {
+                container.innerHTML = '✦';
+                return;
+            }
+            let names = [];
+            snap.forEach(doc => {
+                const data = doc.data();
+                names.push((data.name || 'ANON').slice(0, 6));
+            });
+            container.innerHTML = names.join(' · ');
+        } catch(e) {
+            container.innerHTML = '⚠️';
+        }
+    }
+
+    // Вызов загрузки топов
+    if (document.querySelector('.top-players-list')) loadTopPlayers();
+    if (document.querySelector('.top-players-list-mini')) loadMiniTopPlayers();
+
+    // 7. Форум переключение вкладок
     const tabs = document.querySelectorAll('.forum-tab');
     const titleEl = document.getElementById('forumContentTitle');
     const textEl = document.getElementById('forumContentText');
@@ -85,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = t.dataset.tab; if(contents[id]){ titleEl.innerHTML=contents[id].title; textEl.innerHTML=contents[id].text; }
     }));
 
-    // 7. Модалки
+    // 8. Модалки
     function openModal(id){ const m=document.getElementById(id); if(m){ if(m.classList.contains('inner-modal')) m.style.zIndex='21000'; m.classList.add('active'); } }
     function closeModal(id){ const m=document.getElementById(id); if(m) m.classList.remove('active'); }
     document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
@@ -109,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('paintBtn')?.addEventListener('click',()=>openModal('artModal'));
     document.getElementById('stylerModalBtn')?.addEventListener('click',()=>openModal('stylerModal'));
     document.getElementById('downloadModalBtn')?.addEventListener('click',()=>openModal('downloadModal'));
+    document.getElementById('moodBtn')?.addEventListener('click',()=>openModal('pinterestModal'));
 
     // Обработчики для карточек Designer/Developer
     document.querySelectorAll('.team-card').forEach(card => {
