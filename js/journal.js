@@ -1,16 +1,15 @@
+// journal.js — логика журнала
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Бегущая строка (RSS)
+    // ========== 1. БЕГУЩАЯ СТРОКА (RSS) ==========
     const ticker = document.getElementById('rssTicker');
     if (ticker) {
         const messages = [
-            "✦ MORSTRIX V2.0 СИСТЕМА ЗАПУЩЕНА ✦",
-            "✦ НОВЫЕ ПРИНТЫ В МАГАЗИНЕ ✦",
-            "✦ ПОДПИСЫВАЙТЕСЬ НА НАШ ТЕЛЕГРАМ ✦"
+            "RSS FEED: #FASHION #TECH"
         ];
         ticker.innerText = messages.join(" --- ");
     }
 
-    // 2. Карусель картинок
+    // ========== 2. КАРУСЕЛЬ КАРТИНОК ==========
     const carousel = document.getElementById('mainCarousel');
     if (carousel) {
         const imgs = carousel.querySelectorAll('img');
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // 3. Стилизатор текста (Transform & Copy)
+    // ========== 3. СТИЛИЗАТОР ТЕКСТА ==========
     const fontInput = document.getElementById('fontInput');
     const transformBtn = document.getElementById('transformBtn');
     const copyBtn = document.getElementById('copyBtn');
@@ -43,16 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // 4. Загрузка топа игроков из Firebase
+    // ========== 4. ЗАГРУЗКА ТОПА ИГРОКОВ ==========
     async function loadTopPlayers() {
         const container = document.querySelector('.top-players-list');
-        if (!container) {
-            console.log('Top players container not found');
-            return;
-        }
+        if (!container) return;
+        
         try {
             const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
             const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            
             const firebaseConfig = {
                 apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
                 authDomain: "helper-e10b2.firebaseapp.com",
@@ -61,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messagingSenderId: "131536876451",
                 appId: "1:131536876451:web:eeaef494c83dfc4849e016"
             };
+            
             const app = initializeApp(firebaseConfig);
             const db = getFirestore(app);
             const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(4));
@@ -83,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 rank++;
             });
             container.innerHTML = html;
-            console.log('Top players loaded');
         } catch(e) {
             console.error('Top players error:', e);
             container.innerHTML = '<div style="color:#a84d6b; text-align:center;">⚠️ ERROR</div>';
@@ -92,5 +90,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.querySelector('.top-players-list')) {
         loadTopPlayers();
+    }
+
+    // ========== 5. МОДАЛКИ ==========
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.add('active');
+    }
+    
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.remove('active');
+    }
+
+    // ========== 6. АНИМАЦИЯ КНОПОК ПЕРЕД ПЕРЕХОДОМ ==========
+    function handleButtonClick(btn, href, modalId) {
+        btn.classList.add('clicked');
+        
+        if (href) {
+            setTimeout(() => {
+                if (href.startsWith('http')) {
+                    window.open(href, '_blank');
+                } else {
+                    window.location.href = href;
+                }
+            }, 120);
+        } else if (modalId) {
+            setTimeout(() => {
+                closeModal(modalId);
+                btn.classList.remove('clicked');
+            }, 120);
+        } else {
+            setTimeout(() => {
+                btn.classList.remove('clicked');
+            }, 120);
+        }
+    }
+
+    // ========== 7. НАВЕШИВАНИЕ ОБРАБОТЧИКОВ ==========
+    
+    // Закрытие по фону
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.classList.remove('active');
+        });
+    });
+
+    // Закрытие по крестику
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modalId = btn.getAttribute('data-modal');
+            if (modalId) closeModal(modalId);
+        });
+    });
+
+    // ENTER кнопки с анимацией
+    document.querySelectorAll('.popup-enter-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const href = this.getAttribute('data-href');
+            const modalId = this.getAttribute('data-modal');
+            
+            if (href) {
+                e.preventDefault();
+                handleButtonClick(this, href, modalId);
+            } else {
+                handleButtonClick(this, null, modalId);
+            }
+        });
+    });
+
+    // Привязка кнопок открытия модалок
+    const twitterBtn = document.getElementById('twitterBtn');
+    if (twitterBtn) twitterBtn.onclick = () => openModal('disclaimerModal');
+
+    const forumBtn = document.getElementById('forumBtn');
+    if (forumBtn) forumBtn.onclick = () => openModal('openMiniModal');
+
+    const supportBtn = document.getElementById('supportBtn');
+    if (supportBtn) supportBtn.onclick = () => openModal('supportModal');
+
+    const radioBtn = document.getElementById('radioBtn');
+    if (radioBtn) radioBtn.onclick = () => openModal('radioModal');
+
+    const moodBtn = document.getElementById('moodBtn');
+    if (moodBtn) moodBtn.onclick = () => openModal('pinterestModal');
+
+    const paintBtn = document.getElementById('paintBtn');
+    if (paintBtn) paintBtn.onclick = () => openModal('artModal');
+
+    const teamBtn = document.getElementById('teamBtnJournal');
+    if (teamBtn) teamBtn.onclick = () => openModal('teamModalJournal');
+
+    // ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+        }
+    });
+
+    // Pinterest SDK
+    if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
+        const pinScript = document.createElement('script');
+        pinScript.src = '//assets.pinterest.com/js/pinit.js';
+        pinScript.async = true;
+        pinScript.onload = () => { window.pinSDKLoaded = true; };
+        document.head.appendChild(pinScript);
     }
 });
