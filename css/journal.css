@@ -11,16 +11,9 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html { background: var(--bg-dark); overflow-x: hidden; }
 body {
-    background: transparent;
-    color: #f0f0f0;
-    font-family: 'Press Start 2P', monospace;
-    padding: 80px 20px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden !important;
-    position: relative;
+    background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', monospace;
+    padding: 80px 20px 30px; display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; overflow-x: hidden !important; position: relative;
     touch-action: pan-y pinch-zoom;
 }
 #neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
@@ -33,13 +26,13 @@ body {
     padding: 0 20px; z-index:200;
 }
 .panel-btn {
-    background: transparent; border:2px solid #a84d6b; color:#fff;
+    background: transparent; border: none; color:#fff;
     font-family: 'Press Start 2P', monospace; font-size:0.7rem;
-    padding: 8px 20px; cursor:pointer; transition:0.1s;
+    padding: 8px 0; cursor:pointer; transition:0.1s;
     text-transform: uppercase; display: flex; align-items: center; gap:10px;
 }
 .panel-btn img { width:28px; height:20px; image-rendering: pixelated; }
-.panel-btn:active { background:#a84d6b; color:#000; transform:scale(0.95); }
+.panel-btn:active { color:#a84d6b; transform:scale(0.95); }
 .panel-close { background:transparent; border:none; cursor:pointer; }
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 .radio-btn, .close-site { display:none; }
@@ -81,7 +74,7 @@ body {
     text-transform:uppercase; text-shadow:2px 2px 0 #3d2a2f;
 }
 
-/* MOOD отдельно */
+/* MOOD */
 .mood-section { display:flex; justify-content:center; }
 .mood-section .icon-btn img { width:64px; }
 
@@ -95,7 +88,7 @@ body {
 .icon-btn:hover { transform:scale(1.05); }
 .icon-btn:active { transform:scale(0.95); }
 .icon-btn img { width:64px; image-rendering:pixelated; }
-.mx-btn img { width:96px; } /* в 1.5 раза больше */
+.mx-btn img { width:96px; }
 .icon-label { font-size:8px; color:#a27791; text-transform:uppercase; letter-spacing:1px; text-shadow:2px 2px 0 #3d2a2f; }
 
 /* Art */
@@ -105,24 +98,8 @@ body {
 }
 .art-square-frame img { width:100%; height:100%; object-fit:cover; }
 
-/* Styler preview */
-.styler-preview {
-    background:#0a0a0f; border:2px solid #79434a; padding:15px;
-    font-family:'Press Start 2P', monospace; font-size:12px; color:#a27791;
-    text-align:center; text-transform:uppercase; letter-spacing:4px;
-    word-break:break-all; box-shadow:3px 3px 0 #3d2a2f; cursor:pointer;
-}
-.styler-container {
-    display:flex; align-items:center; background:#0a0a0f;
-    border:2px solid #79434a; padding:5px 10px; width:100%;
-    margin:0 auto; box-shadow:3px 3px 0 #3d2a2f;
-}
-.styler-input {
-    flex-grow:1; background:transparent; border:none; color:#a27791;
-    font-family:'Press Start 2P', monospace; font-size:10px; padding:12px 5px; outline:none;
-}
-
-/* TEAM / DONATE */
+/* TEAM + DONATE */
+.team-donate-wrapper { display:flex; flex-direction:column; align-items:center; gap:30px; }
 .team-btn-journal {
     display:flex; align-items:center; justify-content:center; gap:10px;
     background:#79434a; border:2px solid #79434a; padding:12px 24px;
@@ -130,13 +107,13 @@ body {
     font-size:11px; color:#000; letter-spacing:2px; box-shadow:4px 4px 0 #3d2a2f;
 }
 .team-btn-journal:hover { background:#a84d6b; transform:translate(-2px,-2px); box-shadow:6px 6px 0 #3d2a2f; }
+.donate-spacer { height:10px; }
 .donate-block-journal { text-align:center; cursor:pointer; padding:10px 0; }
 .donate-block-journal .donate-line {
-    width:100%; max-width:350px; height:3px;
+    width:90%; max-width:500px; height:2px;
     background:linear-gradient(90deg,#4a1515,#8B3A3A,#a84d6b,#8B3A3A,#4a1515);
-    margin:0 auto 12px; animation:stretchLine 3s infinite alternate;
+    margin:0 auto 12px;
 }
-@keyframes stretchLine { 0%{width:60%; max-width:250px; opacity:0.8;} 100%{width:100%; max-width:350px; opacity:1;} }
 .donate-label { font-size:13px; color:#a27791; text-transform:uppercase; letter-spacing:2px; }
 .donate-sub { font-size:9px; color:#a27791; margin-top:6px; }
 
@@ -173,7 +150,7 @@ body {
 .sdot:nth-child(3){background:#ffb7c7; animation-delay:0.6s;}
 @keyframes dotFade { 0%,100%{opacity:0.25; transform:scale(0.8);} 50%{opacity:1; transform:scale(1.2);} }
 
-/* Форум модалка на весь экран */
+/* Форум модалка */
 .forum-full-modal { max-width:95vw; width:100%; height:90vh; display:flex; flex-direction:column; }
 .forum-full-layout { display:flex; flex:1; min-height:0; padding:0; }
 .forum-tabs-panel {
@@ -197,9 +174,63 @@ body {
 .forum-content-text { font-size:9px; line-height:1.8; color:#000 !important; max-width:400px; }
 .forum-enter-wrapper { padding:15px 20px 20px; background:#79434a; border-top:2px solid #000; text-align:center; }
 
-/* Внутренние модалки */
-.inner-modal { z-index:21000 !important; }
-.team-choice { cursor:pointer; }
+/* Радио модалка */
+.radio-modal { max-width:500px; }
+.radio-modal .modal-inner { padding:0; }
+.spotify-wrapper iframe { display:block; }
+
+/* MOOD модалка (Pinterest) */
+.mood-full-modal { width:95vw; max-width:1200px; height:85vh; }
+.mood-inner { padding:20px; height:100%; overflow-y:auto; }
+.mood-inner a { display:block; width:100%; }
+
+/* Team выбор */
+.team-select-modal { max-width:500px; }
+.team-selection { display:flex; justify-content:center; gap:40px; padding:20px 0; }
+.team-card {
+    display:flex; flex-direction:column; align-items:center; cursor:pointer;
+    transition:transform 0.2s;
+}
+.team-card:hover { transform:translateY(-5px); }
+.team-img-wrapper {
+    width:140px; height:180px; background:#000; border:2px solid #b97272;
+    display:flex; align-items:flex-end; justify-content:center;
+    margin-bottom:15px; box-shadow:4px 4px 0 #3d2a2f;
+}
+.team-img-wrapper img { width:120px; height:auto; image-rendering:pixelated; }
+.team-card span { font-size:9px; color:#fff; letter-spacing:1px; }
+
+/* Styler */
+.styler-preview {
+    background:#0a0a0f; border:2px solid #79434a; padding:15px;
+    font-family:'Press Start 2P', monospace; font-size:12px; color:#a27791;
+    text-align:center; text-transform:uppercase; letter-spacing:4px;
+    word-break:break-all; box-shadow:3px 3px 0 #3d2a2f; cursor:pointer;
+}
+.styler-container {
+    display:flex; align-items:center; background:#0a0a0f;
+    border:2px solid #79434a; padding:5px 10px; width:100%;
+    margin:0 auto; box-shadow:3px 3px 0 #3d2a2f;
+}
+.styler-input {
+    flex-grow:1; background:transparent; border:none; color:#a27791;
+    font-family:'Press Start 2P', monospace; font-size:10px; padding:12px 5px; outline:none;
+}
+
+/* Paint исправления */
+.paint-window { width:100%; max-width:450px; margin:0 auto; }
+.canvas-container { position:relative; width:100%; aspect-ratio:1/1; background:#000; }
+.canvas-container canvas { position:absolute; top:0; left:0; width:100%; height:100%; touch-action:none; }
+.paint-tools-panel {
+    display:flex; justify-content:space-between; padding:10px;
+    background:#050508; border-top:2px solid #1a1a1a; gap:8px;
+}
+.retro-btn {
+    background:#010101; border:2px solid #79434a; color:#a27791;
+    padding:6px 12px; font-size:8px; cursor:pointer;
+}
+.retro-btn:active { transform:scale(0.95); background:#79434a; color:#010101; }
+#pColor { width:40px; height:28px; border:1px solid #1a1a1a; background:#000; cursor:pointer; }
 
 /* Download карусель */
 .download-carousel-container { display:flex; align-items:center; gap:5px; margin-bottom:20px; }
@@ -210,10 +241,13 @@ body {
 .download-slide.active { display:block; }
 .download-description { font-size:8px; line-height:1.8; color:#000 !important; text-align:center; margin:20px 0; }
 
+/* Внутренние модалки */
+.inner-modal { z-index:21000 !important; }
+
 /* Адаптация */
 @media (max-width:700px){
     .top-panel{height:50px; padding:0 12px;}
-    .panel-btn{font-size:0.5rem; padding:6px 12px;}
+    .panel-btn{font-size:0.5rem;}
     .panel-btn img{width:20px; height:14px;}
     body{padding-top:70px;}
     .container{gap:50px;}
@@ -225,17 +259,17 @@ body {
     .forum-tabs-panel{width:60px;}
     .tab-icon{font-size:20px;}
     .forum-content-title{font-size:14px;}
-}
-@media (max-width:500px){
-    .forum-tabs-panel{width:50px;}
-    .tab-icon{font-size:18px;}
+    .team-img-wrapper{width:120px; height:160px;}
+    .team-img-wrapper img{width:100px;}
 }
 @media (max-width:450px){
-    .panel-btn{font-size:0.4rem; padding:4px 8px;}
+    .panel-btn{font-size:0.4rem;}
     body{padding-top:55px;}
     .icon-btn img{width:48px;}
     .mx-btn img{width:72px;}
     .nav-btn-img{width:80px;}
-    .forum-full-modal{height:95vh;}
     .forum-tabs-panel{width:45px;}
+    .team-selection{gap:20px;}
+    .team-img-wrapper{width:100px; height:140px;}
+    .team-img-wrapper img{width:80px;}
 }
