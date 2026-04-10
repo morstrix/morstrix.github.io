@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDiv.innerHTML = `
             <div class="score-modal">
                 <div class="modal-header">
-                    <span class="modal-title-text">вњ¦ GAME OVER вњ¦</span>
-                    <button class="modal-close-btn" id="modalCloseBtn">вњњ</button>
+                    <span class="modal-title-text">GAME OVER</span>
+                    <button class="modal-close-btn" id="modalCloseBtn">✜</button>
                 </div>
                 <div class="modal-inner">
                     <p>SCORE: ${score}</p>
