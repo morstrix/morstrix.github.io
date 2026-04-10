@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if(modalId) setTimeout(()=>closeModal(modalId),100);
     }));
 
-    // Привязка кнопок (обновлённая)
+    // Привязка кнопок
     document.getElementById('twitterBtn')?.addEventListener('click',()=>openModal('disclaimerModal'));
     document.getElementById('forumBtn')?.addEventListener('click',()=>openModal('openMiniModal'));
     document.getElementById('supportBtn')?.addEventListener('click',()=>openModal('supportModal'));
