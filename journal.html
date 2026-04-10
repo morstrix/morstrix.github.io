@@ -279,6 +279,71 @@
     </div>
 </div>
 
+<!-- stylerModal -->
+<div id="stylerModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+            <span class="modal-title-text">FONT STYLER</span>
+            <button class="modal-close-btn" data-modal="stylerModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <p style="text-align: center; margin-bottom: 20px;">INPUT YOUR TEXT</p>
+            <div class="styler-container" style="margin-bottom: 20px;">
+                <button class="styler-icon-btn" id="copyBtn">
+                    <img src="assets/st1.png" alt="Copy">
+                </button>
+                <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
+                <button class="styler-icon-btn" id="transformBtn">
+                    <img src="assets/st2.png" alt="Transform">
+                </button>
+            </div>
+            <div class="box-button" data-modal="stylerModal" style="margin: 0 auto;">
+                <div class="button">
+                    <span>CLOSE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- downloadModal -->
+<div id="downloadModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ MORSTRIX ARCHIVE ✦</span>
+            <button class="modal-close-btn" data-modal="downloadModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <!-- Карусель картинок -->
+            <div class="download-carousel-container">
+                <div class="carousel-arrow" id="downloadCarouselPrev">‹</div>
+                <div class="download-carousel-track">
+                    <div class="download-carousel-slides" id="downloadCarouselSlides">
+                        <img src="assets/mx1.jpeg" class="download-slide active">
+                        <img src="assets/mx2.jpg" class="download-slide">
+                        <img src="assets/art.jpg" class="download-slide">
+                    </div>
+                </div>
+                <div class="carousel-arrow" id="downloadCarouselNext">›</div>
+            </div>
+            
+            <!-- Описание -->
+            <p class="download-description" id="downloadDescription">
+                MORSTRIX DIGITAL ARCHIVE<br>
+                Коллекция обоев и принтов<br>
+                • 3 файла • 15 MB •
+            </p>
+            
+            <!-- Кнопка скачать архив -->
+            <div class="box-button" id="downloadArchiveBtn">
+                <div class="button">
+                    <span>📦 DOWNLOAD ARCHIVE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Скрипты -->
 <script src="js/background.js"></script>
 <script src="js/paint.js"></script>
