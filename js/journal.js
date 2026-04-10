@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         carousel.onclick = () => { imgs[idx].classList.remove('active'); idx = (idx+1) % imgs.length; imgs[idx].classList.add('active'); };
     }
 
-    // 3. Стилизатор (без кнопок, копирование по клику на превью)
+    // 3. Стилизатор (копирование по клику на превью)
     const fontInput = document.getElementById('fontInput');
     const stylerPreview = document.getElementById('stylerPreview');
     if (fontInput && stylerPreview) {
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadModalBtn')?.addEventListener('click',()=>openModal('downloadModal'));
 
     // Внутренние модалки TEAM
-    document.querySelectorAll('.team-choice').forEach(c=> c.addEventListener('click', e=>{
+    document.querySelectorAll('.team-card').forEach(c=> c.addEventListener('click', e=>{
         e.stopPropagation(); const member=c.dataset.member;
         if(member==='ada') openModal('adaModal'); else if(member==='ex') openModal('exModal');
     }));
