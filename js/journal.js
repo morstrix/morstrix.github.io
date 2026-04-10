@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // ========== 3. СТИЛИЗАТОР ТЕКСТА ==========
+    // ========== 3. СТИЛИЗАТОР ТЕКСТА (В МОДАЛКЕ) ==========
     const fontInput = document.getElementById('fontInput');
     const transformBtn = document.getElementById('transformBtn');
     const copyBtn = document.getElementById('copyBtn');
@@ -38,13 +38,79 @@ document.addEventListener('DOMContentLoaded', () => {
     if (copyBtn && fontInput) {
         copyBtn.onclick = () => {
             navigator.clipboard.writeText(fontInput.value);
-            const originalText = copyBtn.innerText;
-            copyBtn.innerText = "DONE!";
-            setTimeout(() => copyBtn.innerText = originalText, 1000);
+            const img = copyBtn.querySelector('img');
+            if (img) {
+                const originalSrc = img.src;
+                img.src = 'assets/check.png'; // замените на свою иконку галочки или просто скройте
+                setTimeout(() => {
+                    img.src = originalSrc;
+                }, 1000);
+            }
         };
     }
 
-    // ========== 4. ЗАГРУЗКА ТОПА ИГРОКОВ ==========
+    // ========== 4. КАРУСЕЛЬ В МОДАЛКЕ СКАЧИВАНИЯ ==========
+    let currentDownloadSlide = 0;
+    const downloadSlides = document.querySelectorAll('.download-slide');
+    const downloadPrev = document.getElementById('downloadCarouselPrev');
+    const downloadNext = document.getElementById('downloadCarouselNext');
+    const downloadDesc = document.getElementById('downloadDescription');
+
+    const slideDescriptions = [
+        '✦ MX PRINT 01 ✦<br>Абстрактная композиция<br>3508 x 2480 px',
+        '✦ MX PRINT 02 ✦<br>Глитч-эффект<br>3840 x 2160 px',
+        '✦ MX PRINT 03 ✦<br>Пиксель-арт<br>1920 x 1080 px'
+    ];
+
+    function updateDownloadSlide() {
+        downloadSlides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentDownloadSlide);
+        });
+        if (downloadDesc) {
+            downloadDesc.innerHTML = slideDescriptions[currentDownloadSlide] + 
+                '<br><br>MORSTRIX DIGITAL ARCHIVE<br>• 3 файла • 15 MB •';
+        }
+    }
+
+    if (downloadPrev) {
+        downloadPrev.onclick = () => {
+            currentDownloadSlide = (currentDownloadSlide - 1 + downloadSlides.length) % downloadSlides.length;
+            updateDownloadSlide();
+        };
+    }
+
+    if (downloadNext) {
+        downloadNext.onclick = () => {
+            currentDownloadSlide = (currentDownloadSlide + 1) % downloadSlides.length;
+            updateDownloadSlide();
+        };
+    }
+
+    // Кнопка скачивания архива
+    const downloadArchiveBtn = document.getElementById('downloadArchiveBtn');
+    if (downloadArchiveBtn) {
+        downloadArchiveBtn.onclick = () => {
+            // Создаём ссылку на архив
+            const link = document.createElement('a');
+            link.href = 'assets/morstrix_archive.zip';
+            link.download = 'MORSTRIX_archive.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Визуальный фидбек
+            const span = downloadArchiveBtn.querySelector('.button span');
+            if (span) {
+                const originalText = span.innerText;
+                span.innerText = '✓ DOWNLOADING...';
+                setTimeout(() => {
+                    span.innerText = originalText;
+                }, 2000);
+            }
+        };
+    }
+
+    // ========== 5. ЗАГРУЗКА ТОПА ИГРОКОВ ==========
     async function loadTopPlayers() {
         const container = document.querySelector('.top-players-list');
         if (!container) return;
@@ -94,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTopPlayers();
     }
 
-    // ========== 5. МОДАЛКИ ==========
+    // ========== 6. МОДАЛКИ ==========
     function openModal(id) {
         const modal = document.getElementById(id);
         if (modal) modal.classList.add('active');
@@ -105,14 +171,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modal) modal.classList.remove('active');
     }
 
-    // ========== 6. ЗАКРЫТИЕ ПО ФОНУ ==========
+    // ========== 7. ЗАКРЫТИЕ ПО ФОНУ ==========
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) overlay.classList.remove('active');
         });
     });
 
-    // ========== 7. ЗАКРЫТИЕ ПО КРЕСТИКУ ==========
+    // ========== 8. ЗАКРЫТИЕ ПО КРЕСТИКУ ==========
     document.querySelectorAll('.modal-close-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const modalId = btn.getAttribute('data-modal');
@@ -120,9 +186,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ========== 8. КНОПКИ .box-button (UIVERSE) ==========
+    // ========== 9. КНОПКИ .box-button (UIVERSE) ==========
     document.querySelectorAll('.box-button').forEach(box => {
         box.addEventListener('click', function(e) {
+            // Пропускаем специальные кнопки
+            if (this.id === 'downloadArchiveBtn' || 
+                this.id === 'stylerModalBtn' || 
+                this.id === 'downloadModalBtn' ||
+                this.closest('#stylerModal') ||
+                this.closest('#downloadModal')) {
+                return;
+            }
+            
             const href = this.getAttribute('data-href');
             const modalId = this.getAttribute('data-modal');
             
@@ -142,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ========== 9. ПРИВЯЗКА КНОПОК ОТКРЫТИЯ МОДАЛОК ==========
+    // ========== 10. ПРИВЯЗКА КНОПОК ОТКРЫТИЯ МОДАЛОК ==========
     const twitterBtn = document.getElementById('twitterBtn');
     if (twitterBtn) twitterBtn.onclick = () => openModal('disclaimerModal');
 
@@ -164,14 +239,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const teamBtn = document.getElementById('teamBtnJournal');
     if (teamBtn) teamBtn.onclick = () => openModal('teamModalJournal');
 
-    // ========== 10. ESC ==========
+    const stylerModalBtn = document.getElementById('stylerModalBtn');
+    if (stylerModalBtn) stylerModalBtn.onclick = () => openModal('stylerModal');
+
+    const downloadModalBtn = document.getElementById('downloadModalBtn');
+    if (downloadModalBtn) downloadModalBtn.onclick = () => openModal('downloadModal');
+
+    // ========== 11. ESC ==========
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
         }
     });
 
-    // ========== 11. PINTEREST SDK ==========
+    // ========== 12. PINTEREST SDK ==========
     if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
         const pinScript = document.createElement('script');
         pinScript.src = '//assets.pinterest.com/js/pinit.js';
