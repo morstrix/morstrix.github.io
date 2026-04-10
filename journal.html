@@ -17,7 +17,7 @@
 
 <canvas id="neuro-bg"></canvas>
 
-<!-- ========== НОВАЯ ВЕРХНЯЯ ПАНЕЛЬ ========== -->
+<!-- ========== ВЕРХНЯЯ ПАНЕЛЬ ========== -->
 <div class="top-panel">
     <button class="panel-btn" id="radioBtn">
         <img src="assets/radio.png" alt="Radio" style="width: 28px; height: 20px; image-rendering: pixelated; margin-right: 10px;">
@@ -139,7 +139,11 @@
         </div>
         <div class="modal-inner" style="text-align: center;">
             <p>OPEN X?</p>
-            <button class="popup-enter-btn" data-modal="disclaimerModal">ENTER</button>
+            <div class="box-button" data-href="https://x.com" data-modal="disclaimerModal">
+                <div class="button">
+                    <span>ENTER</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -153,12 +157,16 @@
         </div>
         <div class="modal-inner" style="text-align: center;">
             <p>OPEN MINI?</p>
-            <button class="popup-enter-btn" data-modal="openMiniModal" data-href="forum.html">ENTER</button>
+            <div class="box-button" data-href="forum.html" data-modal="openMiniModal">
+                <div class="button">
+                    <span>ENTER</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- supportModal (адаптирован под виджет) -->
+<!-- supportModal -->
 <div id="supportModal" class="modal-overlay">
     <div class="modal-content support-modal">
         <div class="modal-header">
@@ -271,72 +279,5 @@
 <script src="js/paint.js"></script>
 <script src="js/journal.js"></script>
 
-<!-- Логика модалок -->
-<script>
-(function() {
-    function openModal(id) {
-        var modal = document.getElementById(id);
-        if (modal) modal.classList.add('active');
-    }
-    function closeModal(id) {
-        var modal = document.getElementById(id);
-        if (modal) modal.classList.remove('active');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Закрытие по фону
-        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) overlay.classList.remove('active');
-            });
-        });
-        // Закрытие по крестику
-        document.querySelectorAll('.modal-close-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var modalId = btn.getAttribute('data-modal');
-                if (modalId) closeModal(modalId);
-            });
-        });
-        // ENTER
-        document.querySelectorAll('.popup-enter-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var modalId = btn.getAttribute('data-modal');
-                var href = btn.getAttribute('data-href');
-                if (href) window.location.href = href;
-                else if (modalId) closeModal(modalId);
-            });
-        });
-        // Привязка кнопок
-        var twitterBtn = document.getElementById('twitterBtn');
-        if (twitterBtn) twitterBtn.onclick = function() { openModal('disclaimerModal'); };
-        var forumBtn = document.getElementById('forumBtn');
-        if (forumBtn) forumBtn.onclick = function() { openModal('openMiniModal'); };
-        var supportBtn = document.getElementById('supportBtn');
-        if (supportBtn) supportBtn.onclick = function() { openModal('supportModal'); };
-        var radioBtn = document.getElementById('radioBtn');
-        if (radioBtn) radioBtn.onclick = function() { openModal('radioModal'); };
-        var moodBtn = document.getElementById('moodBtn');
-        if (moodBtn) moodBtn.onclick = function() { openModal('pinterestModal'); };
-        var paintBtn = document.getElementById('paintBtn');
-        if (paintBtn) paintBtn.onclick = function() { openModal('artModal'); };
-        var teamBtn = document.getElementById('teamBtnJournal');
-        if (teamBtn) teamBtn.onclick = function() { openModal('teamModalJournal'); };
-        // ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-            }
-        });
-        // Pinterest SDK
-        if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
-            var pinScript = document.createElement('script');
-            pinScript.src = '//assets.pinterest.com/js/pinit.js';
-            pinScript.async = true;
-            pinScript.onload = function() { window.pinSDKLoaded = true; };
-            document.head.appendChild(pinScript);
-        }
-    });
-})();
-</script>
 </body>
 </html>
