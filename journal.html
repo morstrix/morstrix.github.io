@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- Стили -->
     <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/journal.css">
     <style>
@@ -53,8 +52,6 @@
         <div class="forum-wrapper">
             <div class="forum-corner">
                 <div class="tv-screen">
-                    <div class="tv-scanlines"></div>
-                    <div class="tv-glare"></div>
                     <span id="dynamicWord" class="tv-text">wellness</span>
                 </div>
                 <img src="assets/forum.png" class="nav-btn-img" id="forumBtn">
@@ -72,26 +69,20 @@
         </div>
     </div>
 
-    <div class="pin-mood-btn" id="moodBtn">
-        <img src="assets/folder.png" alt="Folder Button" style="width: 64px; height: auto; image-rendering: pixelated; display: block;">
-        <span class="mood-text" style="margin-top: 8px;">MOOD</span>
-    </div>
-
-    <!-- Font styler + Download MX -->
-    <div class="section styler-section">
-        <div class="styler-download-row">
-            <!-- Кнопка стилизатора (открывает модалку) -->
-            <div class="box-button styler-trigger" id="stylerModalBtn">
-                <div class="button">
-                    <span>FONT STYLER</span>
-                </div>
+    <!-- MOOD + STYLER + MX - иконки в ряд -->
+    <div class="section icon-row-section">
+        <div class="icon-row">
+            <div class="icon-btn" id="moodBtn">
+                <img src="assets/mood.png" alt="MOOD">
+                <span class="icon-label">MOOD</span>
             </div>
-            
-            <!-- Кнопка скачивания MX -->
-            <div class="box-button download-trigger" id="downloadModalBtn">
-                <div class="button">
-                    <span>⬇️ MX</span>
-                </div>
+            <div class="icon-btn" id="stylerModalBtn">
+                <img src="assets/x.png" alt="STYLER">
+                <span class="icon-label">STYLER</span>
+            </div>
+            <div class="icon-btn" id="downloadModalBtn">
+                <img src="assets/folder.png" alt="MX">
+                <span class="icon-label">MX</span>
             </div>
         </div>
     </div>
@@ -144,7 +135,7 @@
         </div>
         <div class="modal-inner" style="text-align: center;">
             <p>OPEN X?</p>
-            <div class="box-button" data-href="https://x.com" data-modal="disclaimerModal">
+            <div class="box-button small" data-href="https://x.com" data-modal="disclaimerModal">
                 <div class="button">
                     <span>ENTER</span>
                 </div>
@@ -162,7 +153,7 @@
         </div>
         <div class="modal-inner" style="text-align: center;">
             <p>OPEN MINI?</p>
-            <div class="box-button" data-href="forum.html" data-modal="openMiniModal">
+            <div class="box-button small" data-href="forum.html" data-modal="openMiniModal">
                 <div class="button">
                     <span>ENTER</span>
                 </div>
@@ -279,7 +270,7 @@
     </div>
 </div>
 
-<!-- stylerModal -->
+<!-- stylerModal (обновлён) -->
 <div id="stylerModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 450px;">
         <div class="modal-header">
@@ -289,18 +280,18 @@
         <div class="modal-inner">
             <p style="text-align: center; margin-bottom: 20px;">INPUT YOUR TEXT</p>
             <div class="styler-container" style="margin-bottom: 20px;">
+                <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
+            </div>
+            <div class="styler-preview" id="stylerPreview">
+                EXAMPLE
+            </div>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
                 <button class="styler-icon-btn" id="copyBtn">
                     <img src="assets/st1.png" alt="Copy">
                 </button>
-                <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
                 <button class="styler-icon-btn" id="transformBtn">
                     <img src="assets/st2.png" alt="Transform">
                 </button>
-            </div>
-            <div class="box-button" data-modal="stylerModal" style="margin: 0 auto;">
-                <div class="button">
-                    <span>CLOSE</span>
-                </div>
             </div>
         </div>
     </div>
@@ -314,7 +305,6 @@
             <button class="modal-close-btn" data-modal="downloadModal">✜</button>
         </div>
         <div class="modal-inner">
-            <!-- Карусель картинок -->
             <div class="download-carousel-container">
                 <div class="carousel-arrow" id="downloadCarouselPrev">‹</div>
                 <div class="download-carousel-track">
@@ -326,15 +316,11 @@
                 </div>
                 <div class="carousel-arrow" id="downloadCarouselNext">›</div>
             </div>
-            
-            <!-- Описание -->
             <p class="download-description" id="downloadDescription">
                 ✦ MX PRINT 01 ✦<br>Абстрактная композиция<br>3508 x 2480 px<br><br>
                 MORSTRIX DIGITAL ARCHIVE<br>• 3 файла • 15 MB •
             </p>
-            
-            <!-- Кнопка скачать архив -->
-            <div class="box-button" id="downloadArchiveBtn">
+            <div class="box-button small" id="downloadArchiveBtn">
                 <div class="button">
                     <span>📦 DOWNLOAD ARCHIVE</span>
                 </div>
@@ -343,10 +329,8 @@
     </div>
 </div>
 
-<!-- Скрипты -->
 <script src="js/background.js"></script>
 <script src="js/paint.js"></script>
 <script src="js/journal.js"></script>
-
 </body>
 </html>
