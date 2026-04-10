@@ -333,29 +333,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveBtn = modalDiv.querySelector('#saveScoreBtn');
         const input = modalDiv.querySelector('#playerName');
 
-        const closeModal = () => modalDiv.remove();
-        closeBtn.onclick = closeModal;
-        modalDiv.onclick = (e) => { if (e.target === modalDiv) closeModal(); };
+      const closeModal = () => {
+    modalDiv.remove();
+    resetGame();        // перезапуск игры при любом закрытии модалки
+};
 
-        saveBtn.onclick = async () => {
-            let name = input.value.trim();
-            if (name === '') name = 'ANON';
-            if (name.length > 12) name = name.slice(0,12);
-            try {
-                await addDoc(collection(db, "top_players"), {
-                    name: name,
-                    score: score,
-                    date: new Date().toISOString()
-                });
-                console.log('Saved!', name, score);
-            } catch(e) { console.error('Firestore error:', e); }
-            closeModal();
-            resetGame();
-        };
-        input.onkeypress = (e) => { if (e.key === 'Enter') saveBtn.click(); };
-        input.focus();
+closeBtn.onclick = closeModal;
+modalDiv.onclick = (e) => {
+    if (e.target === modalDiv) closeModal();
+};
+
+saveBtn.onclick = async () => {
+    let name = input.value.trim();
+    if (name === '') name = 'ANON';
+    if (name.length > 12) name = name.slice(0,12);
+    try {
+        await addDoc(collection(db, "top_players"), {
+            name: name,
+            score: score,
+            date: new Date().toISOString()
+        });
+        console.log('Saved!', name, score);
+    } catch(e) {
+        console.error('Firestore error:', e);
     }
+    closeModal();   // закроет модалку и вызовет resetGame
+};
 
+input.onkeypress = (e) => {
+    if (e.key === 'Enter') saveBtn.click();
+};
+input.focus();
     function resetGame() {
         for (let y = 0; y < arena.length; y++) {
             for (let x = 0; x < arena[y].length; x++) arena[y][x] = 0;
