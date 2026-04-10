@@ -11,52 +11,111 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             background: #000000;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             font-family: 'Press Start 2P', monospace;
             color: #fff;
         }
-
         .index-container {
             display: flex;
             gap: 100px;
             justify-content: center;
             align-items: center;
-            padding: 0 20px;
+            padding: 60px 20px 20px;
+            flex: 1;
         }
-
         .index-card {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
         }
-
         .index-card img {
             width: 160px;
             height: 160px;
             image-rendering: pixelated;
             margin-bottom: 20px;
         }
-
         .index-card span {
             font-size: 14px;
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 4px;
         }
-
+        .bottom-team-donate {
+            width: 100%;
+            background: #050505;
+            border-top: 2px solid #79434a;
+            padding: 20px 20px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .team-cards-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .team-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .team-card:hover { transform: translateY(-5px); }
+        .team-img-wrapper {
+            width: 120px;
+            aspect-ratio: 1/1;
+            background: #000;
+            border: 2px solid #b97272;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin-bottom: 12px;
+            box-shadow: 4px 4px 0 #3d2a2f;
+        }
+        .team-img-wrapper img {
+            width: 90px;
+            height: auto;
+            image-rendering: pixelated;
+        }
+        .team-card span {
+            font-size: 9px;
+            color: #000;
+            text-shadow: 1px 1px 0 #aaa;
+            letter-spacing: 1px;
+        }
+        .donate-line {
+            width: 80%;
+            max-width: 500px;
+            height: 2px;
+            background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+            margin: 5px 0;
+        }
+        .donate-label {
+            font-size: 13px;
+            color: #a27791;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .donate-sub {
+            font-size: 9px;
+            color: #a27791;
+            margin-top: 5px;
+        }
         @media (max-width: 700px) {
             .index-container { gap: 50px; }
             .index-card img { width: 120px; height: 120px; }
             .index-card span { font-size: 11px; }
         }
-
         @media (max-width: 450px) {
             .index-container { gap: 30px; }
             .index-card img { width: 90px; height: 90px; }
@@ -65,7 +124,6 @@
     </style>
 </head>
 <body>
-
     <div class="index-container">
         <a href="journal.html" class="index-card">
             <img src="assets/journal.png" alt="Journal">
@@ -77,5 +135,96 @@
         </a>
     </div>
 
+    <div class="bottom-team-donate">
+        <div class="team-cards-row">
+            <div class="team-card" id="teamDesignerBtn">
+                <div class="team-img-wrapper">
+                    <img src="assets/ada.png" alt="Ada">
+                </div>
+                <span>DESIGNER</span>
+            </div>
+            <div class="team-card" id="teamDeveloperBtn">
+                <div class="team-img-wrapper">
+                    <img src="assets/ex.png" alt="Ex">
+                </div>
+                <span>DEVELOPER</span>
+            </div>
+        </div>
+        <div class="donate-line"></div>
+        <div class="donate-label">DONATE</div>
+        <div class="donate-sub">monobank</div>
+    </div>
+
+    <!-- Модалки TEAM и внутренние (как ранее) -->
+    <div id="teamModal" class="modal-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
+        <div class="modal-content" style="max-width:450px; background:#a27791; border:4px solid #b97272;">
+            <div class="modal-header" style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
+                <span style="font-size:11px; color:#fff;">SELECT MEMBER</span>
+                <button id="closeTeamModal" style="background:#000; color:#fff; border:2px solid #b97272; width:32px; height:32px;">✜</button>
+            </div>
+            <div class="modal-inner" style="padding:20px; display:flex; gap:30px; justify-content:center;">
+                <div class="team-choice" data-member="ada" style="cursor:pointer; text-align:center;">
+                    <img src="assets/ada.png" style="width:100px; image-rendering:pixelated;"><br>
+                    <span style="font-size:9px; color:#000;">DESIGNER</span>
+                </div>
+                <div class="team-choice" data-member="ex" style="cursor:pointer; text-align:center;">
+                    <img src="assets/ex.png" style="width:100px; image-rendering:pixelated;"><br>
+                    <span style="font-size:9px; color:#000;">DEVELOPER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adaModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
+        <div class="modal-content" style="max-width:500px; background:#a27791;">
+            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
+            <div style="padding:20px; text-align:center;">
+                <img src="assets/ada.png" style="width:100px;"><p>DESIGNER / ILLUSTRATOR</p>
+                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
+                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%"></iframe>
+                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+            </div>
+        </div>
+    </div>
+    <div id="exModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
+        <div class="modal-content" style="max-width:500px; background:#a27791;">
+            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
+            <div style="padding:20px; text-align:center;">
+                <img src="assets/ex.png" style="width:100px;"><p>DEVELOPER / ENGINEER</p>
+                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
+                <div class="box-button small" data-href="https://github.com/grimexframe"><div class="button"><span>🐙 GITHUB</span></div></div>
+                <div class="box-button small" data-href="https://www.threads.net/grimexframe"><div class="button"><span>🧵 THREADS</span></div></div>
+                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+    <script type="module" src="https://w.behold.so/widget.js"></script>
+    <script>
+        const teamModal = document.getElementById('teamModal');
+        const adaModal = document.getElementById('adaModal');
+        const exModal = document.getElementById('exModal');
+        function openModal(m) { m.style.display = 'flex'; }
+        function closeModal(m) { m.style.display = 'none'; }
+        document.getElementById('teamDesignerBtn').onclick = () => openModal(teamModal);
+        document.getElementById('teamDeveloperBtn').onclick = () => openModal(teamModal);
+        document.getElementById('closeTeamModal').onclick = () => closeModal(teamModal);
+        document.querySelectorAll('.team-choice').forEach(c => c.onclick = (e) => {
+            const member = e.currentTarget.dataset.member;
+            closeModal(teamModal);
+            if (member === 'ada') openModal(adaModal);
+            else if (member === 'ex') openModal(exModal);
+        });
+        document.querySelectorAll('.close-inner').forEach(b => b.onclick = () => {
+            adaModal.style.display = 'none';
+            exModal.style.display = 'none';
+        });
+        window.onclick = (e) => {
+            if (e.target === teamModal) closeModal(teamModal);
+            if (e.target === adaModal) closeModal(adaModal);
+            if (e.target === exModal) closeModal(exModal);
+        };
+    </script>
 </body>
 </html>
