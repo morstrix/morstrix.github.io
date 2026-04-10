@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | DIGITAL JOURNAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
@@ -23,9 +22,7 @@
     <div class="journal-page" data-page="1">
         <div class="page-content">
             <div class="ticker-wrapper"><div class="ticker" id="rssTicker">✦ LOADING... ✦</div></div>
-            <div class="carousel" id="mainCarousel">
-                <img src="assets/mx1.jpg" class="active"><img src="assets/mx2.jpg">
-            </div>
+            <div class="carousel" id="mainCarousel"><img src="assets/mx1.jpeg" class="active"><img src="assets/mx2.jpg"></div>
             <div class="hashtag-row"><span class="hashtag">#layoutporn</span></div>
             <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
         </div>
@@ -40,22 +37,21 @@
                 <p class="hint">TAP PREVIEW TO COPY</p>
             </div>
             <div class="mx-download-block">
-    <div class="mx-carousel">
-        <span class="mx-arrow" id="mxPrev">‹</span>
-        <div class="mx-carousel-track">
-            <div class="mx-carousel-slides">
-                <img src="assets/mx1.jpeg" class="mx-slide active">
-                <img src="assets/x.png" class="mx-slide">
-                <img src="assets/a.png" class="mx-slide">
+                <div class="mx-carousel">
+                    <span class="mx-arrow" id="mxPrev">‹</span>
+                    <div class="mx-carousel-track">
+                        <div class="mx-carousel-slides">
+                            <img src="assets/mx1.jpeg" class="mx-slide active">
+                            <img src="assets/mx2.jpg" class="mx-slide">
+                            <img src="assets/art.jpg" class="mx-slide">
+                        </div>
+                    </div>
+                    <span class="mx-arrow" id="mxNext">›</span>
+                </div>
+                <div class="mx-description" id="mxDescription">✦ MX PRINT 01 ✦<br>Абстрактная композиция</div>
+                <div class="box-button small" id="downloadArchiveBtnEmbedded"><div class="button"><span>📦 DOWNLOAD</span></div></div>
             </div>
         </div>
-        <span class="mx-arrow" id="mxNext">›</span>
-    </div>
-    <div class="mx-description" id="mxDescription">✦ MX PRINT 01 ✦<br>Абстрактная композиция</div>
-    <div class="box-button small" id="downloadArchiveBtnEmbedded">
-        <div class="button"><span>DOWNLOAD</span></div>
-    </div>
-</div>
     </div>
     <!-- 3: Art + Paint -->
     <div class="journal-page" data-page="3">
@@ -177,7 +173,6 @@
     </div>
 </div>
 
-<!-- Paint модалка (полная, как была) -->
 <div id="artModal" class="modal-overlay">
     <div class="modal-content paint-full-modal">
         <div class="modal-header"><span class="modal-title-text">PAINT.EXE</span><button class="modal-close-btn" data-modal="artModal">✜</button></div>
@@ -202,6 +197,7 @@
     </div>
 </div>
 
+<script src="js/background.js"></script>
 <script src="js/paint.js"></script>
 <script src="js/journal.js"></script>
 </body>
