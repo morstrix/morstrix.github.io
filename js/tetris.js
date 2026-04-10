@@ -311,59 +311,61 @@ document.addEventListener('DOMContentLoaded', () => {
         showScoreModal(finalScore);
     }
 
-    function showScoreModal(score) {
-        const modalDiv = document.createElement('div');
-        modalDiv.className = 'modal-overlay';
-        modalDiv.innerHTML = `
-            <div class="score-modal">
-                <div class="modal-header">
-                    <span class="modal-title-text">GAME OVER</span>
-                    <button class="modal-close-btn" id="modalCloseBtn">✜</button>
-                </div>
-                <div class="modal-inner">
-                    <p>SCORE: ${score}</p>
-                    <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off">
-                    <button id="saveScoreBtn">SAVE</button>
-                </div>
+function showScoreModal(score) {
+    const modalDiv = document.createElement('div');
+    modalDiv.className = 'modal-overlay';
+    modalDiv.innerHTML = `
+        <div class="score-modal">
+            <div class="modal-header">
+                <span class="modal-title-text">GAME OVER</span>
+                <button class="modal-close-btn" id="modalCloseBtn">✜</button>
             </div>
-        `;
-        document.body.appendChild(modalDiv);
+            <div class="modal-inner">
+                <p>SCORE: ${score}</p>
+                <input type="text" id="playerName" maxlength="12" placeholder="ENTER NAME" autocomplete="off">
+                <button id="saveScoreBtn">SAVE</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modalDiv);
 
-        const closeBtn = modalDiv.querySelector('#modalCloseBtn');
-        const saveBtn = modalDiv.querySelector('#saveScoreBtn');
-        const input = modalDiv.querySelector('#playerName');
+    const closeBtn = modalDiv.querySelector('#modalCloseBtn');
+    const saveBtn = modalDiv.querySelector('#saveScoreBtn');
+    const input = modalDiv.querySelector('#playerName');
 
-      const closeModal = () => {
-    modalDiv.remove();
-    resetGame();        // перезапуск игры при любом закрытии модалки
-};
+    const closeModal = () => {
+        modalDiv.remove();
+        resetGame();        // перезапуск игры при любом закрытии модалки
+    };
 
-closeBtn.onclick = closeModal;
-modalDiv.onclick = (e) => {
-    if (e.target === modalDiv) closeModal();
-};
+    closeBtn.onclick = closeModal;
+    modalDiv.onclick = (e) => {
+        if (e.target === modalDiv) closeModal();
+    };
 
-saveBtn.onclick = async () => {
-    let name = input.value.trim();
-    if (name === '') name = 'ANON';
-    if (name.length > 12) name = name.slice(0,12);
-    try {
-        await addDoc(collection(db, "top_players"), {
-            name: name,
-            score: score,
-            date: new Date().toISOString()
-        });
-        console.log('Saved!', name, score);
-    } catch(e) {
-        console.error('Firestore error:', e);
-    }
-    closeModal();   // закроет модалку и вызовет resetGame
-};
+    saveBtn.onclick = async () => {
+        let name = input.value.trim();
+        if (name === '') name = 'ANON';
+        if (name.length > 12) name = name.slice(0,12);
+        try {
+            await addDoc(collection(db, "top_players"), {
+                name: name,
+                score: score,
+                date: new Date().toISOString()
+            });
+            console.log('Saved!', name, score);
+        } catch(e) {
+            console.error('Firestore error:', e);
+        }
+        closeModal();   // закроет модалку и вызовет resetGame
+    };
 
-input.onkeypress = (e) => {
-    if (e.key === 'Enter') saveBtn.click();
-};
-input.focus();
+    input.onkeypress = (e) => {
+        if (e.key === 'Enter') saveBtn.click();
+    };
+    input.focus();
+}
+        
     function resetGame() {
         for (let y = 0; y < arena.length; y++) {
             for (let x = 0; x < arena[y].length; x++) arena[y][x] = 0;
