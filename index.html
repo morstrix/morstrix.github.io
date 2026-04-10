@@ -13,16 +13,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             font-family: 'Press Start 2P', monospace;
             color: #fff;
         }
-        .index-container {
+        
+        .top-row {
             display: flex;
-            gap: 80px;
+            gap: 100px;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 60px 20px 20px;
+            flex: 1;
         }
         .index-card {
             display: flex;
@@ -43,33 +45,63 @@
             text-transform: uppercase;
             letter-spacing: 4px;
         }
-        /* TEAM — без картинки */
-        .team-text-btn {
-            width: 140px;
-            height: 140px;
+        
+        .bottom-section {
+            width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            font-size: 24px;
-            color: #a84d6b;
-            text-shadow: 2px 2px 0 #3d2a2f;
-            border: 2px dashed #79434a;
-            background: #0a0a0a;
+            padding: 20px 20px 30px;
+            gap: 30px;
         }
-        #teamBtn {
+        
+        .team-btn {
+            cursor: pointer;
+            text-align: center;
+        }
+        .team-btn span {
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 0 #3d2a2f;
+        }
+        .team-btn:hover span { color: #a84d6b; }
+        
+        .donate-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .donate-line {
+            width: 80%;
+            max-width: 500px;
+            height: 2px;
+            background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+        }
+        .donate-label {
+            font-size: 14px;
+            color: #a27791;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             cursor: pointer;
         }
+        .donate-label:hover { color: #ffb7c7; }
+        .donate-sub {
+            font-size: 9px;
+            color: #a27791;
+        }
+        
         @media (max-width: 700px) {
-            .index-container { gap: 40px; }
-            .index-card img, .team-text-btn { width: 100px; height: 100px; }
-            .team-text-btn { font-size: 18px; }
+            .top-row { gap: 50px; }
+            .index-card img { width: 100px; height: 100px; }
             .index-card span { font-size: 11px; }
         }
         @media (max-width: 450px) {
-            .index-container { gap: 25px; }
-            .index-card img, .team-text-btn { width: 80px; height: 80px; }
-            .team-text-btn { font-size: 14px; }
+            .top-row { gap: 30px; }
+            .index-card img { width: 80px; height: 80px; }
             .index-card span { font-size: 9px; letter-spacing: 2px; }
         }
 
@@ -93,7 +125,6 @@
         }
         .modal-title-text {
             font-size: 11px; color: #fff; text-shadow: 2px 2px 0 #000;
-            font-family: 'Press Start 2P', monospace;
         }
         .modal-close-btn {
             background: #000; color: #fff; border: 2px solid #b97272;
@@ -106,50 +137,64 @@
 
         /* Team выбор */
         .team-choice-container {
-            display: flex; gap: 40px; justify-content: center; padding: 10px 0;
+            display: flex; gap: 30px; justify-content: center; padding: 10px 0;
         }
         .team-choice {
-            cursor: pointer; padding: 15px 25px; background: #000;
-            border: 2px solid #b97272; color: #a27791;
-            font-size: 14px; text-transform: uppercase;
+            cursor: pointer; text-align: center;
         }
-        .team-choice:hover { background: #1a1a1a; }
+        .team-choice img {
+            width: 100px; height: 100px; image-rendering: pixelated;
+            border: 2px solid #b97272; background: #000;
+            object-fit: cover;
+        }
+        .team-choice span {
+            display: block; margin-top: 8px; font-size: 9px; color: #000;
+            text-shadow: 1px 1px 0 #aaa;
+        }
 
         /* Иконки соцсетей */
         .social-icons {
-            display: flex; justify-content: center; gap: 25px; margin: 15px 0;
+            display: flex; justify-content: center; gap: 20px; margin: 15px 0;
         }
         .social-icons a {
-            font-size: 28px; text-decoration: none; color: #fff;
+            font-size: 28px; text-decoration: none; color: #000;
             transition: transform 0.1s;
         }
-        .social-icons a:hover { transform: scale(1.1); color: #a84d6b; }
+        .social-icons a:hover { transform: scale(1.1); color: #fff; }
 
-        /* Виджеты */
+        .linkedin-container {
+            margin: 15px 0; min-height: 200px;
+        }
         .behance-embed { margin: 15px 0; }
         .instagram-widget { margin: 20px 0; }
     </style>
 </head>
 <body>
 
-<div class="index-container">
+<div class="top-row">
     <a href="journal.html" class="index-card">
         <img src="assets/journal.png" alt="Journal">
         <span>JOURNAL</span>
     </a>
-    
-    <div class="index-card" id="teamBtn">
-        <div class="team-text-btn">TEAM</div>
-        <span>TEAM</span>
-    </div>
-    
     <a href="store.html" class="index-card">
         <img src="assets/space.png" alt="Store">
         <span>STORE</span>
     </a>
 </div>
 
-<!-- Модалка выбора TEAM -->
+<div class="bottom-section">
+    <div class="team-btn" id="teamBtn">
+        <span>TEAM</span>
+    </div>
+    
+    <div class="donate-section">
+        <div class="donate-line"></div>
+        <div class="donate-label" id="donateBtn">DONATE</div>
+        <div class="donate-sub">monobank</div>
+    </div>
+</div>
+
+<!-- Модалка TEAM -->
 <div id="teamModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -158,8 +203,14 @@
         </div>
         <div class="modal-inner">
             <div class="team-choice-container">
-                <div class="team-choice" data-member="ada">ADA</div>
-                <div class="team-choice" data-member="ex">EX</div>
+                <div class="team-choice" data-member="ada">
+                    <img src="assets/des.jpg" alt="DESIGNER">
+                    <span>DESIGNER</span>
+                </div>
+                <div class="team-choice" data-member="ex">
+                    <img src="assets/dev.jpg" alt="DEVELOPER">
+                    <span>DEVELOPER</span>
+                </div>
             </div>
         </div>
     </div>
@@ -173,15 +224,13 @@
             <button class="modal-close-btn" data-modal="adaModal">✜</button>
         </div>
         <div class="modal-inner">
-            <!-- LinkedIn Widget -->
-            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
+            <!-- LinkedIn Widget ADA -->
+            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova" data-version="v1"></div>
             
-            <!-- Behance Embed -->
             <div class="behance-embed">
                 <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" style="border:none;"></iframe>
             </div>
             
-            <!-- Instagram Widget -->
             <div class="instagram-widget">
                 <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
             </div>
@@ -197,24 +246,38 @@
             <button class="modal-close-btn" data-modal="exModal">✜</button>
         </div>
         <div class="modal-inner">
-            <!-- LinkedIn Widget -->
-            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
+            <!-- LinkedIn Widget EX -->
+            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe" data-version="v1"></div>
             
-            <!-- GitHub иконка (эмодзи/символ) -->
             <div class="social-icons">
                 <a href="https://github.com/grimexframe" target="_blank" title="GitHub">🐙</a>
             </div>
             
-            <!-- Instagram Widget -->
             <div class="instagram-widget">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
             
-            <!-- Threads + TikTok иконки -->
             <div class="social-icons">
                 <a href="https://www.threads.net/@grimexframe" target="_blank" title="Threads">🧵</a>
                 <a href="https://www.tiktok.com/@grimexframe" target="_blank" title="TikTok">🎵</a>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- DONATE модалка -->
+<div id="donateModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ DONATE ✦</span>
+            <button class="modal-close-btn" data-modal="donateModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <p style="font-size:10px; color:#000; margin-bottom:20px;">monobank</p>
+            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">
+                5375 4141 0000 0000
+            </p>
+            <p id="copyHint" style="font-size:7px; color:#3d2a2f; margin-top:15px; cursor:pointer;">* тап для копіювання</p>
         </div>
     </div>
 </div>
@@ -226,6 +289,7 @@
         const teamModal = document.getElementById('teamModal');
         const adaModal = document.getElementById('adaModal');
         const exModal = document.getElementById('exModal');
+        const donateModal = document.getElementById('donateModal');
         
         function openModal(id) {
             document.getElementById(id)?.classList.add('active');
@@ -234,10 +298,9 @@
             document.getElementById(id)?.classList.remove('active');
         }
         
-        // Открытие TEAM
         document.getElementById('teamBtn').addEventListener('click', () => openModal('teamModal'));
+        document.getElementById('donateBtn').addEventListener('click', () => openModal('donateModal'));
         
-        // Закрытие по кнопкам
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const modalId = btn.dataset.modal;
@@ -245,7 +308,6 @@
             });
         });
         
-        // Клик по выбору ADA / EX
         document.querySelectorAll('.team-choice').forEach(el => {
             el.addEventListener('click', () => {
                 const member = el.dataset.member;
@@ -255,14 +317,24 @@
             });
         });
         
-        // Закрытие по клику на оверлей
+        // Копирование номера карты
+        const cardNumber = document.getElementById('cardNumber');
+        const copyHint = document.getElementById('copyHint');
+        if (cardNumber && copyHint) {
+            copyHint.addEventListener('click', () => {
+                navigator.clipboard.writeText(cardNumber.textContent.trim()).then(() => {
+                    copyHint.textContent = '✓ СКОПИРОВАНО!';
+                    setTimeout(() => copyHint.textContent = '* тап для копіювання', 1500);
+                });
+            });
+        }
+        
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) overlay.classList.remove('active');
             });
         });
         
-        // Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
