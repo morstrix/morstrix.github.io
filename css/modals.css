@@ -4,35 +4,26 @@
 
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(3px);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 20000;
-    pointer-events: auto;
 }
-
-.modal-overlay.active {
-    display: flex;
-}
+.modal-overlay.active { display: flex; }
 
 .modal-content {
     background: #a27791;
     position: relative;
     overflow-y: auto;
-    width: auto;
     min-width: 300px;
     max-width: 90vw;
     max-height: 85vh;
     border: 4px solid #b97272;
     box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;
 }
-
 .modal-header {
     background: #79434a;
     padding: 12px;
@@ -41,165 +32,74 @@
     align-items: center;
     border-bottom: 2px solid #000;
 }
-
 .modal-title-text {
     font-size: 11px;
-    color: #ffffff;
+    color: #fff;
     text-shadow: 2px 2px 0 #000;
     font-family: 'Press Start 2P', monospace;
 }
-
 .modal-close-btn {
-    background: #000000;
-    color: #ffffff;
+    background: #000;
+    color: #fff;
     border: 2px solid #b97272;
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: inset -1px -1px 0 0 #4a4a4a, inset 1px 1px 0 0 #ffffff;
-    font-family: 'Press Start 2P', monospace;
-    transition: all 0.05s linear;
+    box-shadow: inset -1px -1px 0 #4a4a4a, inset 1px 1px 0 #fff;
 }
-.modal-close-btn:active {
-    transform: scale(0.95);
-    box-shadow: inset 2px 2px 0 0 #4a4a4a, inset -2px -2px 0 0 #ffffff;
-}
+.modal-close-btn:active { transform: scale(0.95); }
 
 .modal-inner {
     padding: 20px;
     background: #a27791;
 }
-
 .modal-inner p {
     font-size: 10px;
     line-height: 1.8;
     margin-bottom: 30px;
-    color: #000000 !important;
-    text-shadow: 1px 1px 0 #aaaaaa !important;
+    color: #000 !important;
+    text-shadow: 1px 1px 0 #aaa;
     font-family: 'Press Start 2P', monospace;
 }
 
-/* ========== КНОПКА В СТИЛЕ UIVERSE (arthur_6104) ========== */
+/* Кнопка Uiverse */
 .box-button {
     cursor: pointer;
-    border: 3px solid #000000;
-    background-color: #79434a;
+    border: 3px solid #000;
+    background: #79434a;
     padding-bottom: 8px;
-    transition: 0.08s ease-in-out;
-    user-select: none;
+    transition: 0.08s;
     display: inline-block;
     margin: 20px auto 0;
-    width: auto;
 }
-
 .button {
-    background-color: #a27791;
+    background: #a27791;
     border: 3px solid #b97272;
     padding: 10px 24px;
-    display: block;
     transform: translateY(-6px);
-    transition: 0.08s ease-in-out;
+    transition: 0.08s;
 }
-
 .button span {
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
     letter-spacing: 2px;
-    color: #000000;
+    color: #000;
     text-transform: uppercase;
-    display: block;
-    text-align: center;
 }
+.box-button:active { padding-bottom: 2px; transform: translateY(6px); }
+.box-button:active .button { transform: translateY(0); }
+.box-button:hover { background: #a84d6b; }
+.box-button:hover .button { background: #c48a6b; }
 
-.box-button:active {
-    padding-bottom: 2px;
-    transform: translateY(6px);
-}
+/* Уменьшенная версия */
+.box-button.small .button { padding: 6px 16px; }
+.box-button.small .button span { font-size: 9px; }
 
-.box-button:active .button {
-    transform: translateY(0);
-}
-
-/* Hover эффект */
-.box-button:hover {
-    background-color: #a84d6b;
-}
-
-.box-button:hover .button {
-    background-color: #c48a6b;
-}
-
-/* ========== СОВМЕСТИМОСТЬ С popup-enter-btn ========== */
-.popup-enter-btn {
-    cursor: pointer;
-    border: 3px solid #000000;
-    background-color: #79434a;
-    padding-bottom: 8px;
-    transition: 0.08s ease-in-out;
-    user-select: none;
-    display: inline-block;
-    margin: 20px auto 0;
-    width: auto;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #000000;
-    text-transform: uppercase;
-    text-align: center;
-    background-color: #a27791;
-    border: 3px solid #b97272;
-    padding: 10px 24px;
-    transform: translateY(-6px);
-}
-
-.popup-enter-btn:hover {
-    background-color: #c48a6b;
-}
-
-.popup-enter-btn:active,
-.popup-enter-btn.clicked {
-    transform: translateY(2px);
-    transition: 0.05s ease-in-out;
-}
-
-/* Тёмная версия */
-.popup-enter-btn.dark {
-    background-color: #1a1a1a;
-    border-color: #4a4a4a;
-    color: #e8e8e8;
-}
-
-/* Розовая версия */
-.popup-enter-btn.pink {
-    background-color: #a84d6b;
-    border-color: #ffb7c7;
-    color: #000000;
-}
-
-/* ========== АДАПТАЦИЯ ========== */
-@media (max-width: 700px) {
-    .modal-title-text { font-size: 10px; }
-    .modal-inner p { font-size: 9px; }
-    .button span,
-    .popup-enter-btn { 
-        font-size: 10px; 
-        padding: 8px 20px;
-    }
-}
-
+/* Адаптация */
 @media (max-width: 450px) {
-    .modal-content { min-width: 260px; }
-    .modal-header { padding: 10px; }
     .modal-title-text { font-size: 9px; }
-    .modal-close-btn { width: 28px; height: 28px; font-size: 18px; }
     .modal-inner p { font-size: 8px; }
-    .button span,
-    .popup-enter-btn { 
-        font-size: 9px; 
-        padding: 8px 16px;
-    }
 }
