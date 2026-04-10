@@ -144,23 +144,74 @@
     </div>
 </div>
 
-<!-- openMiniModal -->
+<!-- openMiniModal (FORUM) -->
 <div id="openMiniModal" class="modal-overlay">
-    <div class="modal-content">
+    <div class="modal-content forum-modal">
         <div class="modal-header">
-            <span class="modal-title-text">FORUM ACCESS</span>
+            <span class="modal-title-text">✦ MORSTRIX FORUM ✦</span>
             <button class="modal-close-btn" data-modal="openMiniModal">✜</button>
         </div>
-        <div class="modal-inner" style="text-align: center;">
-            <p>OPEN MINI?</p>
-            <div class="box-button small" data-href="forum.html" data-modal="openMiniModal">
+        <div class="modal-inner forum-layout">
+            <!-- Левая панель с иконками вкладок -->
+            <div class="forum-tabs-panel">
+                <div class="forum-tab active" data-tab="wellness">
+                    <span class="tab-icon">💊</span>
+                    <span class="tab-label">WELLNESS</span>
+                </div>
+                <div class="forum-tab" data-tab="interior">
+                    <span class="tab-icon">🎃</span>
+                    <span class="tab-label">INTERIOR</span>
+                </div>
+                <div class="forum-tab" data-tab="radio">
+                    <span class="tab-icon">🎬</span>
+                    <span class="tab-label">RADIO</span>
+                </div>
+                <div class="forum-tab" data-tab="itai">
+                    <span class="tab-icon">🤖</span>
+                    <span class="tab-label">IT/AI</span>
+                </div>
+                <div class="forum-tab" data-tab="english">
+                    <span class="tab-icon">🔝</span>
+                    <span class="tab-label">ENGLISH</span>
+                </div>
+                <div class="forum-tab" data-tab="design">
+                    <span class="tab-icon">🎨</span>
+                    <span class="tab-label">DESIGN</span>
+                </div>
+                <div class="forum-tab" data-tab="tattoo">
+                    <span class="tab-icon">💘</span>
+                    <span class="tab-label">TATTOO</span>
+                </div>
+                <div class="forum-tab" data-tab="money">
+                    <span class="tab-icon">💸</span>
+                    <span class="tab-label">MONEY</span>
+                </div>
+                <div class="forum-tab" data-tab="barbering">
+                    <span class="tab-icon">✂️</span>
+                    <span class="tab-label">BARBER</span>
+                </div>
+            </div>
+            
+            <!-- Правая область контента -->
+            <div class="forum-content-panel">
+                <h3 class="forum-content-title" id="forumContentTitle">WELLNESS</h3>
+                <p class="forum-content-text" id="forumContentText">
+                    Йога, медитации, дыхательные практики, осознанность.<br><br>
+                    Здесь будут появляться полезные материалы и обсуждения.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Кнопка ENTER внизу -->
+        <div class="forum-enter-wrapper">
+            <div class="box-button small" data-href="https://t.me/morstrix" data-modal="openMiniModal">
                 <div class="button">
-                    <span>ENTER</span>
+                    <span>FULL</span>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>>
 
 <!-- supportModal -->
 <div id="supportModal" class="modal-overlay">
