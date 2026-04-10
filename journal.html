@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/journal.css">
-    <!-- Внешние скрипты для LinkedIn и Instagram -->
+    <!-- Внешние скрипты -->
     <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
     <style>
@@ -22,7 +22,7 @@
 <!-- ========== ВЕРХНЯЯ ПАНЕЛЬ ========== -->
 <div class="top-panel">
     <button class="panel-btn" id="radioBtn">
-        <img src="assets/radio.png" alt="Radio" style="width: 28px; height: 20px; image-rendering: pixelated; margin-right: 10px;">
+        <img src="assets/radio.png" alt="Radio">
         RADIO
     </button>
     <a href="index.html" class="panel-close">
@@ -123,6 +123,7 @@
     <!-- TEAM + DONATE -->
     <div class="section team-donate-wrapper">
         <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
+        <div class="donate-spacer"></div>
         <div class="donate-block-journal" id="donateJournal">
             <div class="donate-line"></div>
             <div class="donate-label">DONATE</div>
@@ -143,9 +144,7 @@
         <div class="modal-inner" style="text-align: center;">
             <p>OPEN X?</p>
             <div class="box-button small" data-href="https://x.com" data-modal="disclaimerModal">
-                <div class="button">
-                    <span>ENTER</span>
-                </div>
+                <div class="button"><span>ENTER</span></div>
             </div>
         </div>
     </div>
@@ -160,47 +159,24 @@
         </div>
         <div class="modal-inner forum-full-layout">
             <div class="forum-tabs-panel">
-                <div class="forum-tab active" data-tab="wellness" title="WELLNESS" aria-label="Wellness">
-                    <span class="tab-icon">🌿</span>
-                </div>
-                <div class="forum-tab" data-tab="interior" title="INTERIOR" aria-label="Interior">
-                    <span class="tab-icon">🛋️</span>
-                </div>
-                <div class="forum-tab" data-tab="radio" title="RADIO" aria-label="Radio">
-                    <span class="tab-icon">📻</span>
-                </div>
-                <div class="forum-tab" data-tab="itai" title="IT/AI" aria-label="IT/AI">
-                    <span class="tab-icon">🤖</span>
-                </div>
-                <div class="forum-tab" data-tab="english" title="ENGLISH" aria-label="English">
-                    <span class="tab-icon">📖</span>
-                </div>
-                <div class="forum-tab" data-tab="design" title="DESIGN" aria-label="Design">
-                    <span class="tab-icon">🎨</span>
-                </div>
-                <div class="forum-tab" data-tab="tattoo" title="TATTOO" aria-label="Tattoo">
-                    <span class="tab-icon">💉</span>
-                </div>
-                <div class="forum-tab" data-tab="money" title="MONEY" aria-label="Money">
-                    <span class="tab-icon">💰</span>
-                </div>
-                <div class="forum-tab" data-tab="barbering" title="BARBER" aria-label="Barber">
-                    <span class="tab-icon">✂️</span>
-                </div>
+                <div class="forum-tab active" data-tab="wellness" title="WELLNESS"><span class="tab-icon">🌿</span></div>
+                <div class="forum-tab" data-tab="interior" title="INTERIOR"><span class="tab-icon">🛋️</span></div>
+                <div class="forum-tab" data-tab="radio" title="RADIO"><span class="tab-icon">📻</span></div>
+                <div class="forum-tab" data-tab="itai" title="IT/AI"><span class="tab-icon">🤖</span></div>
+                <div class="forum-tab" data-tab="english" title="ENGLISH"><span class="tab-icon">📖</span></div>
+                <div class="forum-tab" data-tab="design" title="DESIGN"><span class="tab-icon">🎨</span></div>
+                <div class="forum-tab" data-tab="tattoo" title="TATTOO"><span class="tab-icon">💉</span></div>
+                <div class="forum-tab" data-tab="money" title="MONEY"><span class="tab-icon">💰</span></div>
+                <div class="forum-tab" data-tab="barbering" title="BARBER"><span class="tab-icon">✂️</span></div>
             </div>
             <div class="forum-content-panel">
                 <h3 class="forum-content-title" id="forumContentTitle">🌿 ВЕЛНЕС</h3>
-                <p class="forum-content-text" id="forumContentText">
-                    Йога, медитации, дыхательные практики, осознанность.<br><br>
-                    Здесь будут появляться полезные материалы и обсуждения.
-                </p>
+                <p class="forum-content-text" id="forumContentText">Йога, медитации, дыхательные практики, осознанность.<br><br>Здесь будут появляться полезные материалы и обсуждения.</p>
             </div>
         </div>
         <div class="forum-enter-wrapper">
             <div class="box-button small" data-href="https://t.me/morstrix" data-modal="openMiniModal">
-                <div class="button">
-                    <span>📱 OPEN TELEGRAM</span>
-                </div>
+                <div class="button"><span>📱 OPEN TELEGRAM</span></div>
             </div>
         </div>
     </div>
@@ -215,27 +191,22 @@
         </div>
         <div class="telegram-embed-container">
             <div class="telegram-wrapper">
-                <script async src="https://telegram.org/js/telegram-widget.js?22"
-                    data-telegram-discussion="morstrixxx/71"
-                    data-comments-limit="10"
-                    data-colorful="1"
-                    data-dark="1">
-                </script>
+                <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrixxx/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
             </div>
         </div>
     </div>
 </div>
 
-<!-- radioModal -->
+<!-- radioModal (без рамки) -->
 <div id="radioModal" class="modal-overlay">
-    <div class="modal-content">
+    <div class="modal-content radio-modal">
         <div class="modal-header">
             <span class="modal-title-text">MORSTRIX RADIO</span>
             <button class="modal-close-btn" data-modal="radioModal">✜</button>
         </div>
         <div class="modal-inner">
             <div class="spotify-wrapper">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:0" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </div>
@@ -243,19 +214,23 @@
 
 <!-- teamModalJournal -->
 <div id="teamModalJournal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-content team-select-modal">
         <div class="modal-header">
             <span class="modal-title-text">SELECT MEMBER</span>
             <button class="modal-close-btn" data-modal="teamModalJournal">✜</button>
         </div>
         <div class="modal-inner">
             <div class="team-selection">
-                <div class="team-choice" data-member="ada">
-                    <img src="assets/ada.png" alt="Ada">
+                <div class="team-card" data-member="ada">
+                    <div class="team-img-wrapper">
+                        <img src="assets/ada.png" alt="Ada">
+                    </div>
                     <span>DESIGNER</span>
                 </div>
-                <div class="team-choice" data-member="ex">
-                    <img src="assets/ex.png" alt="Ex">
+                <div class="team-card" data-member="ex">
+                    <div class="team-img-wrapper">
+                        <img src="assets/ex.png" alt="Ex">
+                    </div>
                     <span>DEVELOPER</span>
                 </div>
             </div>
@@ -263,20 +238,20 @@
     </div>
 </div>
 
-<!-- pinterestModal -->
+<!-- pinterestModal (MOOD) на всю ширину с отступами -->
 <div id="pinterestModal" class="modal-overlay">
-    <div class="modal-content pinterest-modal">
+    <div class="modal-content mood-full-modal">
         <div class="modal-header">
             <span class="modal-title-text">MORSTRIX / PINTEREST</span>
             <button class="modal-close-btn" data-modal="pinterestModal">✜</button>
         </div>
-        <div class="pin-embed-container">
-            <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+        <div class="modal-inner mood-inner">
+            <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="800" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 </div>
 
-<!-- artModal -->
+<!-- artModal (исправлен) -->
 <div id="artModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -284,21 +259,21 @@
             <button class="modal-close-btn" data-modal="artModal">✜</button>
         </div>
         <div class="paint-window">
-            <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a; background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;">
+            <div class="paint-tools-panel">
                 <div style="display: flex; gap: 8px;">
-                    <button class="retro-btn" id="pUndo" style="padding: 4px 10px; font-size: 8px;" disabled>&lt;</button>
-                    <button class="retro-btn" id="pRedo" style="padding: 4px 10px; font-size: 8px;" disabled>&gt;</button>
+                    <button class="retro-btn" id="pUndo" disabled>&lt;</button>
+                    <button class="retro-btn" id="pRedo" disabled>&gt;</button>
                 </div>
-                <button class="retro-btn" id="btnLayersOpen" style="padding: 4px 10px; font-size: 8px;">CHANNELS</button>
+                <button class="retro-btn" id="btnLayersOpen">CHANNELS</button>
             </div>
             <div class="canvas-container" id="paintArea">
                 <canvas id="layer1"></canvas>
                 <canvas id="layer2"></canvas>
             </div>
-            <div class="paint-tools-panel" style="background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; gap: 10px;">
-                <input type="color" id="pColor" value="#ffb7c7" style="width: 40px; height: 28px; border: 1px solid #1a1a1a; background: #000; cursor: pointer;">
-                <button class="retro-btn" id="pSave" style="padding: 5px 12px; font-size: 8px;">💾 SAVE</button>
-                <button class="retro-btn" id="pClear" style="padding: 5px 12px; font-size: 8px;">CLEAR</button>
+            <div class="paint-tools-panel">
+                <input type="color" id="pColor" value="#ffb7c7">
+                <button class="retro-btn" id="pSave">💾 SAVE</button>
+                <button class="retro-btn" id="pClear">CLEAR</button>
             </div>
         </div>
         <div id="layersPopup" class="layers-sub-modal">
@@ -314,29 +289,27 @@
     </div>
 </div>
 
-<!-- stylerModal (без кнопок, копирование по клику на превью) -->
+<!-- stylerModal -->
 <div id="stylerModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-content" style="max-width:450px;">
         <div class="modal-header">
             <span class="modal-title-text">FONT STYLER</span>
             <button class="modal-close-btn" data-modal="stylerModal">✜</button>
         </div>
         <div class="modal-inner">
-            <p style="text-align: center; margin-bottom: 20px;">INPUT YOUR TEXT</p>
-            <div class="styler-container" style="margin-bottom: 20px;">
+            <p style="text-align:center; margin-bottom:20px;">INPUT YOUR TEXT</p>
+            <div class="styler-container">
                 <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
             </div>
-            <div class="styler-preview" id="stylerPreview">
-                EXAMPLE
-            </div>
-            <p style="font-size: 7px; margin-top: 15px; opacity: 0.7;">TAP PREVIEW TO COPY</p>
+            <div class="styler-preview" id="stylerPreview">EXAMPLE</div>
+            <p style="font-size:7px; margin-top:15px; opacity:0.7;">TAP PREVIEW TO COPY</p>
         </div>
     </div>
 </div>
 
 <!-- downloadModal -->
 <div id="downloadModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
             <span class="modal-title-text">✦ MORSTRIX ARCHIVE ✦</span>
             <button class="modal-close-btn" data-modal="downloadModal">✜</button>
@@ -345,7 +318,7 @@
             <div class="download-carousel-container">
                 <div class="carousel-arrow" id="downloadCarouselPrev">‹</div>
                 <div class="download-carousel-track">
-                    <div class="download-carousel-slides" id="downloadCarouselSlides">
+                    <div class="download-carousel-slides">
                         <img src="assets/mx1.jpeg" class="download-slide active">
                         <img src="assets/mx2.jpg" class="download-slide">
                         <img src="assets/art.jpg" class="download-slide">
@@ -353,30 +326,25 @@
                 </div>
                 <div class="carousel-arrow" id="downloadCarouselNext">›</div>
             </div>
-            <p class="download-description" id="downloadDescription">
-                ✦ MX PRINT 01 ✦<br>Абстрактная композиция<br>3508 x 2480 px<br><br>
-                MORSTRIX DIGITAL ARCHIVE<br>• 3 файла • 15 MB •
-            </p>
+            <p class="download-description" id="downloadDescription">✦ MX PRINT 01 ✦<br>Абстрактная композиция<br>3508x2480<br><br>MORSTRIX ARCHIVE • 3 files • 15 MB</p>
             <div class="box-button small" id="downloadArchiveBtn">
-                <div class="button">
-                    <span>📦 DOWNLOAD ARCHIVE</span>
-                </div>
+                <div class="button"><span>📦 DOWNLOAD ARCHIVE</span></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- adaModal (внутренняя) -->
+<!-- adaModal -->
 <div id="adaModal" class="modal-overlay inner-modal">
-    <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
             <span class="modal-title-text">✦ ADA MORSOVA ✦</span>
             <button class="modal-close-btn" data-modal="adaModal">✜</button>
         </div>
         <div class="modal-inner">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                <img src="assets/ada.png" alt="Ada" style="width: 100px; image-rendering: pixelated;">
-                <p style="text-align: center;">DESIGNER / ILLUSTRATOR</p>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+                <img src="assets/ada.png" alt="Ada" style="width:100px; image-rendering:pixelated;">
+                <p>DESIGNER / ILLUSTRATOR</p>
                 <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova" data-version="v1"></div>
                 <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" allowfullscreen frameborder="0"></iframe>
                 <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
@@ -385,24 +353,20 @@
     </div>
 </div>
 
-<!-- exModal (внутренняя) -->
+<!-- exModal -->
 <div id="exModal" class="modal-overlay inner-modal">
-    <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
             <span class="modal-title-text">✦ GRIM EX FRAME ✦</span>
             <button class="modal-close-btn" data-modal="exModal">✜</button>
         </div>
         <div class="modal-inner">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                <img src="assets/ex.png" alt="Ex" style="width: 100px; image-rendering: pixelated;">
-                <p style="text-align: center;">DEVELOPER / ENGINEER</p>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+                <img src="assets/ex.png" alt="Ex" style="width:100px; image-rendering:pixelated;">
+                <p>DEVELOPER / ENGINEER</p>
                 <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe" data-version="v1"></div>
-                <div class="box-button small" data-href="https://github.com/grimexframe">
-                    <div class="button"><span>🐙 GITHUB</span></div>
-                </div>
-                <div class="box-button small" data-href="https://www.threads.net/grimexframe">
-                    <div class="button"><span>🧵 THREADS</span></div>
-                </div>
+                <div class="box-button small" data-href="https://github.com/grimexframe"><div class="button"><span>🐙 GITHUB</span></div></div>
+                <div class="box-button small" data-href="https://www.threads.net/grimexframe"><div class="button"><span>🧵 THREADS</span></div></div>
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
         </div>
