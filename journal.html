@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/journal.css">
+    <!-- Внешние скрипты для LinkedIn и Instagram -->
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+    <script type="module" src="https://w.behold.so/widget.js"></script>
     <style>
         body { overflow-x: hidden !important; touch-action: pan-y pinch-zoom; }
         .container { overflow-x: hidden; }
@@ -69,18 +72,22 @@
         </div>
     </div>
 
-    <!-- MOOD + STYLER + MX - иконки в ряд -->
+    <!-- MOOD (отдельно) -->
+    <div class="section mood-section">
+        <div class="icon-btn" id="moodBtn">
+            <img src="assets/mood.png" alt="MOOD">
+            <span class="icon-label">MOOD</span>
+        </div>
+    </div>
+
+    <!-- STYLER + MX (две кнопки в ряд) -->
     <div class="section icon-row-section">
         <div class="icon-row">
-            <div class="icon-btn" id="moodBtn">
-                <img src="assets/mood.png" alt="MOOD">
-                <span class="icon-label">MOOD</span>
-            </div>
             <div class="icon-btn" id="stylerModalBtn">
                 <img src="assets/x.png" alt="STYLER">
                 <span class="icon-label">STYLER</span>
             </div>
-            <div class="icon-btn" id="downloadModalBtn">
+            <div class="icon-btn mx-btn" id="downloadModalBtn">
                 <img src="assets/folder.png" alt="MX">
                 <span class="icon-label">MX</span>
             </div>
@@ -144,74 +151,60 @@
     </div>
 </div>
 
-<!-- openMiniModal (FORUM) -->
+<!-- openMiniModal (FORUM на весь экран) -->
 <div id="openMiniModal" class="modal-overlay">
-    <div class="modal-content forum-modal">
+    <div class="modal-content forum-full-modal">
         <div class="modal-header">
             <span class="modal-title-text">✦ MORSTRIX FORUM ✦</span>
             <button class="modal-close-btn" data-modal="openMiniModal">✜</button>
         </div>
-        <div class="modal-inner forum-layout">
-            <!-- Левая панель с иконками вкладок -->
+        <div class="modal-inner forum-full-layout">
             <div class="forum-tabs-panel">
-                <div class="forum-tab active" data-tab="wellness">
-                    <span class="tab-icon">💊</span>
-                    <span class="tab-label">WELLNESS</span>
+                <div class="forum-tab active" data-tab="wellness" title="WELLNESS" aria-label="Wellness">
+                    <span class="tab-icon">🌿</span>
                 </div>
-                <div class="forum-tab" data-tab="interior">
-                    <span class="tab-icon">🎃</span>
-                    <span class="tab-label">INTERIOR</span>
+                <div class="forum-tab" data-tab="interior" title="INTERIOR" aria-label="Interior">
+                    <span class="tab-icon">🛋️</span>
                 </div>
-                <div class="forum-tab" data-tab="radio">
-                    <span class="tab-icon">🎬</span>
-                    <span class="tab-label">RADIO</span>
+                <div class="forum-tab" data-tab="radio" title="RADIO" aria-label="Radio">
+                    <span class="tab-icon">📻</span>
                 </div>
-                <div class="forum-tab" data-tab="itai">
+                <div class="forum-tab" data-tab="itai" title="IT/AI" aria-label="IT/AI">
                     <span class="tab-icon">🤖</span>
-                    <span class="tab-label">IT/AI</span>
                 </div>
-                <div class="forum-tab" data-tab="english">
-                    <span class="tab-icon">🔝</span>
-                    <span class="tab-label">ENGLISH</span>
+                <div class="forum-tab" data-tab="english" title="ENGLISH" aria-label="English">
+                    <span class="tab-icon">📖</span>
                 </div>
-                <div class="forum-tab" data-tab="design">
+                <div class="forum-tab" data-tab="design" title="DESIGN" aria-label="Design">
                     <span class="tab-icon">🎨</span>
-                    <span class="tab-label">DESIGN</span>
                 </div>
-                <div class="forum-tab" data-tab="tattoo">
-                    <span class="tab-icon">💘</span>
-                    <span class="tab-label">TATTOO</span>
+                <div class="forum-tab" data-tab="tattoo" title="TATTOO" aria-label="Tattoo">
+                    <span class="tab-icon">💉</span>
                 </div>
-                <div class="forum-tab" data-tab="money">
-                    <span class="tab-icon">💸</span>
-                    <span class="tab-label">MONEY</span>
+                <div class="forum-tab" data-tab="money" title="MONEY" aria-label="Money">
+                    <span class="tab-icon">💰</span>
                 </div>
-                <div class="forum-tab" data-tab="barbering">
+                <div class="forum-tab" data-tab="barbering" title="BARBER" aria-label="Barber">
                     <span class="tab-icon">✂️</span>
-                    <span class="tab-label">BARBER</span>
                 </div>
             </div>
-            
-            <!-- Правая область контента -->
             <div class="forum-content-panel">
-                <h3 class="forum-content-title" id="forumContentTitle">WELLNESS</h3>
+                <h3 class="forum-content-title" id="forumContentTitle">🌿 ВЕЛНЕС</h3>
                 <p class="forum-content-text" id="forumContentText">
                     Йога, медитации, дыхательные практики, осознанность.<br><br>
                     Здесь будут появляться полезные материалы и обсуждения.
                 </p>
             </div>
         </div>
-        
-        <!-- Кнопка ENTER внизу -->
         <div class="forum-enter-wrapper">
             <div class="box-button small" data-href="https://t.me/morstrix" data-modal="openMiniModal">
                 <div class="button">
-                    <span>FULL</span>
+                    <span>📱 OPEN TELEGRAM</span>
                 </div>
             </div>
         </div>
     </div>
-</div>>
+</div>
 
 <!-- supportModal -->
 <div id="supportModal" class="modal-overlay">
@@ -257,14 +250,14 @@
         </div>
         <div class="modal-inner">
             <div class="team-selection">
-                <a href="ada.html" class="team-choice">
+                <div class="team-choice" data-member="ada">
                     <img src="assets/ada.png" alt="Ada">
                     <span>DESIGNER</span>
-                </a>
-                <a href="ex.html" class="team-choice">
+                </div>
+                <div class="team-choice" data-member="ex">
                     <img src="assets/ex.png" alt="Ex">
                     <span>DEVELOPER</span>
-                </a>
+                </div>
             </div>
         </div>
     </div>
@@ -321,7 +314,7 @@
     </div>
 </div>
 
-<!-- stylerModal (обновлён) -->
+<!-- stylerModal (без кнопок, копирование по клику на превью) -->
 <div id="stylerModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 450px;">
         <div class="modal-header">
@@ -336,14 +329,7 @@
             <div class="styler-preview" id="stylerPreview">
                 EXAMPLE
             </div>
-            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
-                <button class="styler-icon-btn" id="copyBtn">
-                    <img src="assets/st1.png" alt="Copy">
-                </button>
-                <button class="styler-icon-btn" id="transformBtn">
-                    <img src="assets/st2.png" alt="Transform">
-                </button>
-            </div>
+            <p style="font-size: 7px; margin-top: 15px; opacity: 0.7;">TAP PREVIEW TO COPY</p>
         </div>
     </div>
 </div>
@@ -375,6 +361,49 @@
                 <div class="button">
                     <span>📦 DOWNLOAD ARCHIVE</span>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- adaModal (внутренняя) -->
+<div id="adaModal" class="modal-overlay inner-modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ ADA MORSOVA ✦</span>
+            <button class="modal-close-btn" data-modal="adaModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <img src="assets/ada.png" alt="Ada" style="width: 100px; image-rendering: pixelated;">
+                <p style="text-align: center;">DESIGNER / ILLUSTRATOR</p>
+                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova" data-version="v1"></div>
+                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" allowfullscreen frameborder="0"></iframe>
+                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- exModal (внутренняя) -->
+<div id="exModal" class="modal-overlay inner-modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ GRIM EX FRAME ✦</span>
+            <button class="modal-close-btn" data-modal="exModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <img src="assets/ex.png" alt="Ex" style="width: 100px; image-rendering: pixelated;">
+                <p style="text-align: center;">DEVELOPER / ENGINEER</p>
+                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe" data-version="v1"></div>
+                <div class="box-button small" data-href="https://github.com/grimexframe">
+                    <div class="button"><span>🐙 GITHUB</span></div>
+                </div>
+                <div class="box-button small" data-href="https://www.threads.net/grimexframe">
+                    <div class="button"><span>🧵 THREADS</span></div>
+                </div>
+                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
         </div>
     </div>
