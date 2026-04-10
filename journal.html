@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/modals.css">
     <link rel="stylesheet" href="css/journal.css">
-    <!-- Внешние скрипты -->
     <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
     <script type="module" src="https://w.behold.so/widget.js"></script>
     <style>
@@ -22,7 +21,7 @@
 <!-- ========== ВЕРХНЯЯ ПАНЕЛЬ ========== -->
 <div class="top-panel">
     <button class="panel-btn" id="radioBtn">
-        <img src="assets/radio.png" alt="Radio">
+        <img src="assets/radio.png" alt="Radio" class="radio-icon">
         RADIO
     </button>
     <a href="index.html" class="panel-close">
@@ -31,7 +30,7 @@
 </div>
 
 <div class="container">
-    <!-- RSS -->
+    <!-- RSS (без полосок, на всю ширину) -->
     <div class="ticker-wrapper">
         <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
     </div>
@@ -72,7 +71,7 @@
         </div>
     </div>
 
-    <!-- MOOD (отдельно) -->
+    <!-- MOOD -->
     <div class="section mood-section">
         <div class="icon-btn" id="moodBtn">
             <img src="assets/mood.png" alt="MOOD">
@@ -80,7 +79,7 @@
         </div>
     </div>
 
-    <!-- STYLER + MX (две кнопки в ряд) -->
+    <!-- STYLER + MX -->
     <div class="section icon-row-section">
         <div class="icon-row">
             <div class="icon-btn" id="stylerModalBtn">
@@ -150,7 +149,7 @@
     </div>
 </div>
 
-<!-- openMiniModal (FORUM на весь экран) -->
+<!-- openMiniModal (FORUM) -->
 <div id="openMiniModal" class="modal-overlay">
     <div class="modal-content forum-full-modal">
         <div class="modal-header">
@@ -197,7 +196,7 @@
     </div>
 </div>
 
-<!-- radioModal (без рамки) -->
+<!-- radioModal -->
 <div id="radioModal" class="modal-overlay">
     <div class="modal-content radio-modal">
         <div class="modal-header">
@@ -206,13 +205,13 @@
         </div>
         <div class="modal-inner">
             <div class="spotify-wrapper">
-                <iframe style="border-radius:0" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </div>
 </div>
 
-<!-- teamModalJournal -->
+<!-- teamModalJournal (квадратные обёртки) -->
 <div id="teamModalJournal" class="modal-overlay">
     <div class="modal-content team-select-modal">
         <div class="modal-header">
@@ -238,7 +237,7 @@
     </div>
 </div>
 
-<!-- pinterestModal (MOOD) на всю ширину с отступами -->
+<!-- pinterestModal (MOOD) -->
 <div id="pinterestModal" class="modal-overlay">
     <div class="modal-content mood-full-modal">
         <div class="modal-header">
@@ -251,9 +250,9 @@
     </div>
 </div>
 
-<!-- artModal (исправлен) -->
+<!-- artModal (на всю ширину, исправлен) -->
 <div id="artModal" class="modal-overlay">
-    <div class="modal-content">
+    <div class="modal-content paint-full-modal">
         <div class="modal-header">
             <span class="modal-title-text">PAINT.EXE</span>
             <button class="modal-close-btn" data-modal="artModal">✜</button>
@@ -271,7 +270,7 @@
                 <canvas id="layer2"></canvas>
             </div>
             <div class="paint-tools-panel">
-                <input type="color" id="pColor" value="#ffb7c7">
+                <input type="color" id="pColor" value="#888888">
                 <button class="retro-btn" id="pSave">💾 SAVE</button>
                 <button class="retro-btn" id="pClear">CLEAR</button>
             </div>
@@ -327,14 +326,16 @@
                 <div class="carousel-arrow" id="downloadCarouselNext">›</div>
             </div>
             <p class="download-description" id="downloadDescription">✦ MX PRINT 01 ✦<br>Абстрактная композиция<br>3508x2480<br><br>MORSTRIX ARCHIVE • 3 files • 15 MB</p>
-            <div class="box-button small" id="downloadArchiveBtn">
-                <div class="button"><span>📦 DOWNLOAD ARCHIVE</span></div>
+            <div class="download-button-wrapper">
+                <div class="box-button small" id="downloadArchiveBtn">
+                    <div class="button"><span>📦 DOWNLOAD ARCHIVE</span></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- adaModal -->
+<!-- adaModal (с LinkedIn) -->
 <div id="adaModal" class="modal-overlay inner-modal">
     <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
@@ -353,7 +354,7 @@
     </div>
 </div>
 
-<!-- exModal -->
+<!-- exModal (с LinkedIn) -->
 <div id="exModal" class="modal-overlay inner-modal">
     <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
