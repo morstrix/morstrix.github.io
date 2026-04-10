@@ -1,6 +1,5 @@
 /* ============================================
    STORE.CSS — стилі сторінки магазину
-   НЕ переопределяет базовые классы modals.css
 ============================================ */
 
 :root {
@@ -58,24 +57,6 @@ body {
     z-index: 200;
 }
 
-.panel-btn {
-    background: transparent;
-    border: 2px solid #a84d6b;
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.6rem;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: 0.1s;
-    text-transform: uppercase;
-}
-
-.panel-btn:active {
-    background: #a84d6b;
-    color: #000;
-    transform: scale(0.95);
-}
-
 .panel-close img {
     width: 30px;
     height: 30px;
@@ -107,7 +88,7 @@ body {
     margin-top: 12px;
 }
 
-/* Сетка категорий 2x2 */
+/* Сетка товаров — 2 колонки, автоматические ряды */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -202,9 +183,7 @@ body {
     font-size: 0.7rem;
 }
 
-/* ========== МОДАЛКИ (только специфичные для магазина) ========== */
-
-/* Модалка товара */
+/* ========== МОДАЛКИ ========== */
 .product-modal {
     max-width: 500px;
     width: 95%;
@@ -265,6 +244,8 @@ body {
     text-transform: uppercase;
     text-align: center;
     padding: 10px;
+    cursor: pointer;          /* важно: кликабельность */
+    object-fit: cover;
 }
 
 .product-description {
@@ -276,7 +257,6 @@ body {
     min-height: 60px;
 }
 
-/* Убираем возможные конфликты с modals.css */
 .modal-content .cart-total {
     margin-top: 20px;
     padding-top: 10px;
@@ -305,7 +285,6 @@ body {
 
 /* Адаптация */
 @media (max-width: 680px) {
-    .panel-btn { font-size: 0.5rem; padding: 6px 10px; }
     .top-panel { height: 50px; padding: 0 10px; }
     body { padding-top: 60px; }
     .categories-grid { gap: 15px; }
@@ -316,5 +295,4 @@ body {
 @media (max-width: 480px) {
     .cat-card { padding: 10px; }
     .cat-image { font-size: 0.4rem; }
-    .panel-btn { font-size: 0.4rem; padding: 4px 8px; }
 }
