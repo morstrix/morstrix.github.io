@@ -679,3 +679,114 @@ body {
     .support-modal { max-width: 400px; }
     .telegram-embed-container { padding: 10px; }
 }
+
+/* ========== STYLER + DOWNLOAD ROW ========== */
+.styler-download-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.styler-trigger .button span,
+.download-trigger .button span {
+    font-size: 9px;
+}
+
+/* ========== DOWNLOAD MODAL ========== */
+.download-carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.carousel-arrow {
+    width: 35px;
+    height: 35px;
+    background: #000;
+    border: 2px solid #b97272;
+    color: #a27791;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: monospace;
+    flex-shrink: 0;
+    user-select: none;
+    transition: all 0.1s;
+}
+
+.carousel-arrow:hover {
+    background: #1a1a1a;
+    color: #ffb7c7;
+}
+
+.carousel-arrow:active {
+    transform: scale(0.9);
+}
+
+.download-carousel-track {
+    flex: 1;
+    overflow: hidden;
+    border: 2px solid #000;
+    background: #000;
+    aspect-ratio: 1 / 1;
+    max-width: 250px;
+}
+
+.download-carousel-slides {
+    display: flex;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.download-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.download-slide.active {
+    display: block;
+}
+
+.download-description {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    line-height: 1.8;
+    color: #000 !important;
+    text-shadow: 1px 1px 0 #aaa !important;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* ========== АДАПТАЦИЯ ========== */
+@media (max-width: 700px) {
+    .styler-download-row {
+        gap: 20px;
+    }
+    .download-carousel-track {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 450px) {
+    .styler-download-row {
+        gap: 15px;
+    }
+    .styler-trigger .button span,
+    .download-trigger .button span {
+        font-size: 7px;
+    }
+    .download-carousel-track {
+        max-width: 160px;
+    }
+    .download-description {
+        font-size: 7px;
+    }
+}
