@@ -2,19 +2,27 @@
     'use strict';
 
     // ==================== ДАНІ ====================
-    const categories = [
-        { id: 'socks_pants', name: 'НОСКИ/ШТАНЫ', description: 'Комфортні базові речі', price: 800 },
-        { id: 'hoodies_tees', name: 'БАТНИКИ/ФУТБОЛКИ', description: 'Преміум якість', price: 1200 },
-        { id: 'shirts_sweats', name: 'РУБАШКИ/ТОЛСТОВКИ', description: 'Стильний вибір', price: 1500 },
-        { id: 'dokers_caps', name: 'ДОКЕРЫ/КЕПКИ', description: 'Аксесуари', price: 900 }
+    const products = [
+        { id: 'socks', name: 'НОСКИ', description: 'Комфортні базові носки', price: 400 },
+        { id: 'pants', name: 'ШТАНЫ', description: 'Базові штани вільного крою', price: 800 },
+        { id: 'hoodies', name: 'БАТНИКИ', description: 'Преміум батники з начосом', price: 1200 },
+        { id: 'tees', name: 'ФУТБОЛКИ', description: 'Щільний 100% бавовна', price: 600 },
+        { id: 'shirts', name: 'РУБАШКИ', description: 'Оверсайз рубашки', price: 1500 },
+        { id: 'sweats', name: 'ТОЛСТОВКИ', description: 'Толстовки з капюшоном', price: 1400 },
+        { id: 'dokers', name: 'ДОКЕРЫ', description: 'Докери прямого крою', price: 900 },
+        { id: 'caps', name: 'КЕПКИ', description: 'Бейсболки 5-panel', price: 500 }
     ];
 
-    // Заглушки (пока пусто)
+    // Заглушки изображений (пока пустые, позже добавите ссылки)
     const productImages = {
-        socks_pants: [],
-        hoodies_tees: [],
-        shirts_sweats: [],
-        dokers_caps: []
+        socks: [],
+        pants: [],
+        hoodies: [],
+        tees: [],
+        shirts: [],
+        sweats: [],
+        dokers: [],
+        caps: []
     };
 
     // ========== КОРЗИНА ==========
@@ -81,14 +89,14 @@
         window.open(`https://t.me/morsova?text=🛒 НОВЫЙ ЗАКАЗ!%0A%0A${items}%0A💰 Итого: ${total} ₴`, '_blank');
     }
 
-    // ========== ОТРИСОВКА КАТЕГОРИЙ ==========
-    function renderCategories() {
+    // ========== ОТРИСОВКА ТОВАРОВ ==========
+    function renderProducts() {
         const grid = document.getElementById('categoriesGrid');
         if (!grid) return;
-        grid.innerHTML = categories.map(cat => `
-            <div class="cat-card" data-id="${cat.id}" data-name="${cat.name}" data-price="${cat.price}" data-desc="${cat.description}">
+        grid.innerHTML = products.map(p => `
+            <div class="cat-card" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-desc="${p.description}">
                 <div class="cat-image">товар відсутній</div>
-                <div class="cat-name">${cat.name}</div>
+                <div class="cat-name">${p.name}</div>
             </div>
         `).join('');
         
@@ -115,6 +123,20 @@
         }
         currentCarouselIndex = 0;
         updateCarouselPosition();
+
+        // Добавляем обработчики клика на слайды (после вставки)
+        document.querySelectorAll('.product-carousel-slide').forEach(slide => {
+            slide.addEventListener('click', () => {
+                if (currentProductData) {
+                    addToCart({
+                        id: currentProductData.id,
+                        name: currentProductData.name,
+                        price: parseInt(currentProductData.price)
+                    });
+                    closeModal('productModal');
+                }
+            });
+        });
         
         document.getElementById('productModal').classList.add('active');
     }
@@ -126,14 +148,14 @@
         slides.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
     }
 
+    // ========== УТИЛИТЫ МОДАЛОК ==========
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
     // ========== ИНИЦИАЛИЗАЦИЯ ==========
     function init() {
-        renderCategories();
+        renderProducts();
         updateCartUI();
-
-        // Кнопки панели
-        document.getElementById('openConverterBtn').addEventListener('click', () => openModal('converterModal'));
-        document.getElementById('openConstructorBtn').addEventListener('click', () => openModal('constructorModal'));
 
         // Корзина
         document.getElementById('cartBtn').addEventListener('click', () => {
@@ -154,44 +176,6 @@
             currentCarouselIndex = (currentCarouselIndex + 1) % total;
             updateCarouselPosition();
         });
-        document.getElementById('addToCartFromModal').addEventListener('click', () => {
-            if (currentProductData) {
-                addToCart({
-                    id: currentProductData.id,
-                    name: currentProductData.name,
-                    price: parseInt(currentProductData.price)
-                });
-                closeModal('productModal');
-            }
-        });
-
-        // Конвертер
-        const pxInput = document.getElementById('pxInput');
-        const cmInput = document.getElementById('cmInput');
-        if (pxInput && cmInput) {
-            pxInput.addEventListener('input', () => { const px = parseFloat(pxInput.value); cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2); });
-            cmInput.addEventListener('input', () => { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
-        }
-
-        // Мерч-конструктор
-        const canvas = document.getElementById('printCanvas');
-        const upload = document.getElementById('imageUpload');
-        if (canvas && upload) {
-            const ctx = canvas.getContext('2d');
-            canvas.width = 90; canvas.height = 90;
-            upload.addEventListener('change', e => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    const img = new Image();
-                    img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height); };
-                    img.src = ev.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-            document.getElementById('resetPrint').addEventListener('click', () => { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
-        }
 
         // Закрытие модалок (общее)
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
@@ -209,10 +193,6 @@
         // Кнопка оформления заказа
         document.getElementById('checkoutBtn').addEventListener('click', checkout);
     }
-
-    // Утилиты модалок
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
     // Запуск
     if (document.readyState === 'loading') {
