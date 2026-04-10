@@ -13,16 +13,16 @@
         { id: 'caps', name: 'КЕПКИ', description: 'Бейсболки 5-panel', price: 500 }
     ];
 
-    // Заглушки изображений (пока пустые, позже добавите ссылки)
+    // Заглушки изображений (по 2 фото на товар)
     const productImages = {
-        socks: [],
-        pants: [],
-        hoodies: [],
-        tees: [],
-        shirts: [],
-        sweats: [],
-        dokers: [],
-        caps: []
+        socks:   ['assets/socks1.jpg', 'assets/socks2.jpg'],
+        pants:   ['assets/pants1.jpg', 'assets/pants2.jpg'],
+        hoodies: ['assets/hoodies1.jpg', 'assets/hoodies2.jpg'],
+        tees:    ['assets/tees1.jpg', 'assets/tees2.jpg'],
+        shirts:  ['assets/shirts1.jpg', 'assets/shirts2.jpg'],
+        sweats:  ['assets/sweats1.jpg', 'assets/sweats2.jpg'],
+        dokers:  ['assets/dokers1.jpg', 'assets/dokers2.jpg'],
+        caps:    ['assets/caps1.jpg', 'assets/caps2.jpg']
     };
 
     // ========== КОРЗИНА ==========
@@ -124,7 +124,7 @@
         currentCarouselIndex = 0;
         updateCarouselPosition();
 
-        // Добавляем обработчики клика на слайды (после вставки)
+        // Добавляем обработчики клика на слайды
         document.querySelectorAll('.product-carousel-slide').forEach(slide => {
             slide.addEventListener('click', () => {
                 if (currentProductData) {
@@ -138,7 +138,7 @@
             });
         });
         
-        document.getElementById('productModal').classList.add('active');
+        openModal('productModal');
     }
 
     function updateCarouselPosition() {
@@ -149,21 +149,25 @@
     }
 
     // ========== УТИЛИТЫ МОДАЛОК ==========
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.add('active');
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.remove('active');
+    }
 
     // ========== ИНИЦИАЛИЗАЦИЯ ==========
     function init() {
         renderProducts();
         updateCartUI();
 
-        // Корзина
         document.getElementById('cartBtn').addEventListener('click', () => {
             updateCartUI();
             openModal('cartModal');
         });
 
-        // Карусель товара
         document.getElementById('productCarouselPrev').addEventListener('click', () => {
             const images = productImages[currentProductData?.id] || [];
             const total = images.length || 1;
@@ -177,7 +181,6 @@
             updateCarouselPosition();
         });
 
-        // Закрытие модалок (общее)
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const modalId = btn.dataset.modal;
@@ -190,11 +193,15 @@
             });
         });
 
-        // Кнопка оформления заказа
         document.getElementById('checkoutBtn').addEventListener('click', checkout);
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+            }
+        });
     }
 
-    // Запуск
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
