@@ -3,18 +3,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const ticker = document.getElementById('rssTicker');
     if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
 
-    // Карусель
+    // Карусель авто
     const carousel = document.getElementById('mainCarousel');
+    let carouselInterval;
     if (carousel) {
         const imgs = carousel.querySelectorAll('img');
-        let idx = 0;
-        carousel.onclick = () => { imgs[idx].classList.remove('active'); idx = (idx+1) % imgs.length; imgs[idx].classList.add('active'); };
+        carouselInterval = setInterval(() => {
+            const active = carousel.querySelector('.active');
+            let next = active.nextElementSibling;
+            if (!next) next = imgs[0];
+            active.classList.remove('active');
+            next.classList.add('active');
+        }, 3000);
+        carousel.addEventListener('click', () => clearInterval(carouselInterval));
     }
 
-    // Twitter кнопка
-    document.getElementById('twitterBtn')?.addEventListener('click', ()=> window.open('https://x.com','_blank'));
+    // Twitter -> дисклеймер
+    function openModal(id){ document.getElementById(id)?.classList.add('active'); }
+    function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
+    document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
 
-    // Встроенный стилизатор
+    // Стилизатор
     const embeddedInput = document.getElementById('fontInputEmbedded');
     const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
     if(embeddedInput && embeddedPreview) {
@@ -28,19 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(()=> embeddedPreview.textContent = orig, 800);
         });
     }
-
-    // Скачивание архива
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
-        const a = document.createElement('a');
-        a.href = 'assets/morstrix_archive.zip';
-        a.download = 'MORSTRIX_archive.zip';
-        a.click();
+        const a = document.createElement('a'); a.href = 'assets/morstrix_archive.zip'; a.download = 'MORSTRIX_archive.zip'; a.click();
     });
 
-    // Paint (открытие модалки)
-    document.getElementById('paintBtn')?.addEventListener('click', ()=> {
-        document.getElementById('artModal').classList.add('active');
-    });
+    // Paint
+    document.getElementById('paintBtn')?.addEventListener('click', ()=> openModal('artModal'));
 
     // Конвертер
     const pxInput = document.getElementById('pxInputEmbedded');
@@ -50,15 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
         cmInput.addEventListener('input', ()=> { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
     }
 
-    // Мерч-конструктор
+    // Мерч
     const canvas = document.getElementById('printCanvasEmbedded');
     const upload = document.getElementById('imageUploadEmbedded');
     if(canvas && upload) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = 120; canvas.height = 120;
+        const ctx = canvas.getContext('2d'); canvas.width = 120; canvas.height = 120;
         upload.addEventListener('change', e => {
-            const file = e.target.files[0];
-            if(!file) return;
+            const file = e.target.files[0]; if(!file) return;
             const reader = new FileReader();
             reader.onload = ev => {
                 const img = new Image();
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
     }
 
-    // Топ игроков (основной список)
+    // Топ игроки
     async function loadTopPlayers(){
         const container = document.querySelector('.top-players-list'); if(!container) return;
         try{
@@ -80,15 +80,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const app = initializeApp(firebaseConfig); const db = getFirestore(app);
             const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
             const snap = await getDocs(q);
-            if(snap.empty){ container.innerHTML='<div>✦ NO SCORES ✦</div>'; return; }
-            let html='', rank=1;
-            snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
-            container.innerHTML=html;
-        }catch(e){ container.innerHTML='⚠️ ERROR'; }
+            let realCount = 0;
+            if(!snap.empty){
+                let html=''; let rank=1;
+                snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; realCount++; });
+                container.innerHTML=html;
+            } else { container.innerHTML=''; realCount=0; }
+            const placeholderDiv = document.querySelector('.top-players-placeholder');
+            if(placeholderDiv){
+                let emptyHtml = '';
+                for(let i=0; i<9-realCount; i++) emptyHtml += `<div>— — — — — — — —</div>`;
+                placeholderDiv.innerHTML = emptyHtml;
+            }
+        }catch(e){
+            container.innerHTML='⚠️ ERROR';
+            const placeholderDiv = document.querySelector('.top-players-placeholder');
+            if(placeholderDiv) placeholderDiv.innerHTML = Array(9).fill('<div>— — — — — — — —</div>').join('');
+        }
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 
-    // Форум встроенный
+    // Форум
     const contents = {
         wellness:['🌿 ВЕЛНЕС','Йога, медитации...'],
         interior:['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
@@ -112,9 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Модалки (общие функции)
-    function openModal(id){ document.getElementById(id)?.classList.add('active'); }
-    function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
+    // Индикатор страниц
+    const pages = document.querySelectorAll('.journal-page');
+    const dots = document.querySelectorAll('.dot');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                const idx = [...pages].indexOf(entry.target);
+                dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+            }
+        });
+    }, { threshold: 0.5 });
+    pages.forEach(p => observer.observe(p));
+
+    // Модалки
     document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
         const id = b.dataset.modal; if(id) closeModal(id);
     }));
@@ -134,4 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!window.pinSDKLoaded){
         const s=document.createElement('script'); s.src='//assets.pinterest.com/js/pinit.js'; s.onload=()=>window.pinSDKLoaded=true; document.head.appendChild(s);
     }
+
+    // ESC
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape'){
+        document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));
+    }});
 });
