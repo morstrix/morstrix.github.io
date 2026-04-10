@@ -6,13 +6,9 @@
     <title>MORSTRIX | PORTAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #000000;
+            background: #000;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -43,7 +39,7 @@
         }
         .index-card span {
             font-size: 14px;
-            color: #ffffff;
+            color: #fff;
             text-transform: uppercase;
             letter-spacing: 4px;
         }
@@ -155,29 +151,29 @@
         <div class="donate-sub">monobank</div>
     </div>
 
-    <!-- Модалки TEAM и внутренние (как ранее) -->
-    <div id="teamModal" class="modal-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
-        <div class="modal-content" style="max-width:450px; background:#a27791; border:4px solid #b97272;">
-            <div class="modal-header" style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
+    <!-- Модалки -->
+    <div id="teamModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
+        <div style="max-width:450px; background:#a27791; border:4px solid #b97272;">
+            <div style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
                 <span style="font-size:11px; color:#fff;">SELECT MEMBER</span>
                 <button id="closeTeamModal" style="background:#000; color:#fff; border:2px solid #b97272; width:32px; height:32px;">✜</button>
             </div>
-            <div class="modal-inner" style="padding:20px; display:flex; gap:30px; justify-content:center;">
+            <div style="padding:20px; display:flex; gap:30px; justify-content:center;">
                 <div class="team-choice" data-member="ada" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ada.png" style="width:100px; image-rendering:pixelated;"><br>
+                    <img src="assets/ada.png" style="width:100px;"><br>
                     <span style="font-size:9px; color:#000;">DESIGNER</span>
                 </div>
                 <div class="team-choice" data-member="ex" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ex.png" style="width:100px; image-rendering:pixelated;"><br>
+                    <img src="assets/ex.png" style="width:100px;"><br>
                     <span style="font-size:9px; color:#000;">DEVELOPER</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="adaModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div class="modal-content" style="max-width:500px; background:#a27791;">
-            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
+    <div id="adaModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
+        <div style="max-width:500px; background:#a27791;">
+            <div style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
             <div style="padding:20px; text-align:center;">
                 <img src="assets/ada.png" style="width:100px;"><p>DESIGNER / ILLUSTRATOR</p>
                 <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
@@ -186,9 +182,9 @@
             </div>
         </div>
     </div>
-    <div id="exModal" class="inner-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div class="modal-content" style="max-width:500px; background:#a27791;">
-            <div class="modal-header" style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
+    <div id="exModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
+        <div style="max-width:500px; background:#a27791;">
+            <div style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
             <div style="padding:20px; text-align:center;">
                 <img src="assets/ex.png" style="width:100px;"><p>DEVELOPER / ENGINEER</p>
                 <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
