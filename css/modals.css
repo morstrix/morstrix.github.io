@@ -1,6 +1,5 @@
 /* ============================================
    MODALS.CSS — общие стили модальных окон
-   Кнопки в стиле Uiverse (arthur_6104)
 ============================================ */
 
 .modal-overlay {
@@ -84,188 +83,111 @@
     font-family: 'Press Start 2P', monospace;
 }
 
-/* ========== НОВЫЙ СТИЛЬ КНОПКИ В СТИЛЕ UIVERSE ========== */
-.uiverse-btn {
-    --bg: #000000;
-    --text-color: #a27791;
-    --border-color: #b97272;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --hover-bg: #111111;
-    --hover-text: #c48a6b;
-    --active-bg: #1a1a1a;
-    --active-text: #ffb7c7;
-    
-    position: relative;
-    width: auto;
-    min-width: 160px;
-    padding: 14px 28px;
+/* ========== КНОПКА В СТИЛЕ UIVERSE (arthur_6104) ========== */
+.box-button {
+    cursor: pointer;
+    border: 3px solid #000000;
+    background-color: #79434a;
+    padding-bottom: 8px;
+    transition: 0.08s ease-in-out;
+    user-select: none;
+    display: inline-block;
     margin: 20px auto 0;
+    width: auto;
+}
+
+.button {
+    background-color: #a27791;
+    border: 3px solid #b97272;
+    padding: 10px 24px;
     display: block;
-    
-    background: var(--bg);
-    color: var(--text-color);
+    transform: translateY(-6px);
+    transition: 0.08s ease-in-out;
+}
+
+.button span {
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
-    font-weight: 400;
-    text-transform: uppercase;
     letter-spacing: 2px;
+    color: #000000;
+    text-transform: uppercase;
+    display: block;
     text-align: center;
-    text-decoration: none;
-    
-    border: 3px solid var(--border-color);
-    border-radius: 0;
-    box-shadow: 6px 6px 0 var(--shadow-color);
-    cursor: pointer;
-    outline: none;
-    
-    transition: all 0.08s ease-in-out;
-    -webkit-tap-highlight-color: transparent;
 }
 
-.uiverse-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 var(--shadow-color);
-    background: var(--hover-bg);
-    color: var(--hover-text);
+.box-button:active {
+    padding-bottom: 2px;
+    transform: translateY(6px);
 }
 
-.uiverse-btn:active,
-.uiverse-btn.clicked {
-    transform: translate(4px, 4px);
-    box-shadow: 2px 2px 0 var(--shadow-color);
-    background: var(--active-bg);
-    color: var(--active-text);
-    transition: all 0.03s ease-in-out;
+.box-button:active .button {
+    transform: translateY(0);
 }
 
-/* Маленькая версия кнопки */
-.uiverse-btn.small {
-    min-width: 120px;
-    padding: 10px 20px;
-    font-size: 9px;
-    box-shadow: 4px 4px 0 var(--shadow-color);
-}
-.uiverse-btn.small:hover {
-    box-shadow: 6px 6px 0 var(--shadow-color);
-}
-.uiverse-btn.small:active,
-.uiverse-btn.small.clicked {
-    transform: translate(3px, 3px);
-    box-shadow: 2px 2px 0 var(--shadow-color);
+/* Hover эффект */
+.box-button:hover {
+    background-color: #a84d6b;
 }
 
-/* Большая версия кнопки */
-.uiverse-btn.large {
-    min-width: 200px;
-    padding: 16px 32px;
-    font-size: 13px;
-    box-shadow: 8px 8px 0 var(--shadow-color);
-}
-.uiverse-btn.large:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 10px 10px 0 var(--shadow-color);
-}
-.uiverse-btn.large:active,
-.uiverse-btn.large.clicked {
-    transform: translate(5px, 5px);
-    box-shadow: 3px 3px 0 var(--shadow-color);
+.box-button:hover .button {
+    background-color: #c48a6b;
 }
 
-/* Зелёная версия (для SAVE в Тетрисе) */
-.uiverse-btn.success {
-    --bg: #0a2a0a;
-    --text-color: #8bc34a;
-    --border-color: #4caf50;
-    --shadow-color: rgba(0, 80, 0, 0.5);
-    --hover-bg: #0d350d;
-    --hover-text: #a5d6a5;
-    --active-bg: #144d14;
-    --active-text: #c5e1a5;
-}
-
-/* Красная версия (для сброса/очистки) */
-.uiverse-btn.danger {
-    --bg: #2a0a0a;
-    --text-color: #c48a8a;
-    --border-color: #af4c4c;
-    --shadow-color: rgba(80, 0, 0, 0.5);
-    --hover-bg: #350d0d;
-    --hover-text: #d6a5a5;
-    --active-bg: #4d1414;
-    --active-text: #e1a5a5;
-}
-
-/* Совместимость со старым классом */
+/* ========== СОВМЕСТИМОСТЬ С popup-enter-btn ========== */
 .popup-enter-btn {
-    --bg: #000000;
-    --text-color: #a27791;
-    --border-color: #b97272;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --hover-bg: #111111;
-    --hover-text: #c48a6b;
-    --active-bg: #1a1a1a;
-    --active-text: #ffb7c7;
-    
-    position: relative;
-    width: auto;
-    min-width: 160px;
-    padding: 14px 28px;
+    cursor: pointer;
+    border: 3px solid #000000;
+    background-color: #79434a;
+    padding-bottom: 8px;
+    transition: 0.08s ease-in-out;
+    user-select: none;
+    display: inline-block;
     margin: 20px auto 0;
-    display: block;
-    
-    background: var(--bg);
-    color: var(--text-color);
+    width: auto;
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
-    font-weight: 400;
-    text-transform: uppercase;
     letter-spacing: 2px;
+    color: #000000;
+    text-transform: uppercase;
     text-align: center;
-    
-    border: 3px solid var(--border-color);
-    border-radius: 0;
-    box-shadow: 6px 6px 0 var(--shadow-color);
-    cursor: pointer;
-    outline: none;
-    
-    transition: all 0.08s ease-in-out;
-    -webkit-tap-highlight-color: transparent;
+    background-color: #a27791;
+    border: 3px solid #b97272;
+    padding: 10px 24px;
+    transform: translateY(-6px);
 }
 
 .popup-enter-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 var(--shadow-color);
-    background: var(--hover-bg);
-    color: var(--hover-text);
+    background-color: #c48a6b;
 }
 
 .popup-enter-btn:active,
 .popup-enter-btn.clicked {
-    transform: translate(4px, 4px);
-    box-shadow: 2px 2px 0 var(--shadow-color);
-    background: var(--active-bg);
-    color: var(--active-text);
-    transition: all 0.03s ease-in-out;
+    transform: translateY(2px);
+    transition: 0.05s ease-in-out;
+}
+
+/* Тёмная версия */
+.popup-enter-btn.dark {
+    background-color: #1a1a1a;
+    border-color: #4a4a4a;
+    color: #e8e8e8;
+}
+
+/* Розовая версия */
+.popup-enter-btn.pink {
+    background-color: #a84d6b;
+    border-color: #ffb7c7;
+    color: #000000;
 }
 
 /* ========== АДАПТАЦИЯ ========== */
 @media (max-width: 700px) {
     .modal-title-text { font-size: 10px; }
     .modal-inner p { font-size: 9px; }
-    .uiverse-btn,
+    .button span,
     .popup-enter-btn { 
         font-size: 10px; 
-        padding: 12px 24px; 
-        min-width: 140px;
-        box-shadow: 5px 5px 0 var(--shadow-color);
-    }
-    .uiverse-btn:hover,
-    .popup-enter-btn:hover {
-        box-shadow: 7px 7px 0 var(--shadow-color);
-    }
-    .uiverse-btn:active,
-    .popup-enter-btn:active {
-        box-shadow: 2px 2px 0 var(--shadow-color);
+        padding: 8px 20px;
     }
 }
 
@@ -275,20 +197,9 @@
     .modal-title-text { font-size: 9px; }
     .modal-close-btn { width: 28px; height: 28px; font-size: 18px; }
     .modal-inner p { font-size: 8px; }
-    .uiverse-btn,
+    .button span,
     .popup-enter-btn { 
         font-size: 9px; 
-        padding: 10px 20px; 
-        min-width: 120px;
-        box-shadow: 4px 4px 0 var(--shadow-color);
-    }
-    .uiverse-btn:hover,
-    .popup-enter-btn:hover {
-        box-shadow: 5px 5px 0 var(--shadow-color);
-    }
-    .uiverse-btn:active,
-    .popup-enter-btn:active {
-        transform: translate(3px, 3px);
-        box-shadow: 2px 2px 0 var(--shadow-color);
+        padding: 8px 16px;
     }
 }
