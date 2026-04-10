@@ -3,79 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX | PORTAL</title>
+    <title>MORSTRIX | JOURNAL & PAINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Стили -->
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/journal.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000000;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Press Start 2P', monospace;
-            color: #fff;
-        }
-
-        .index-container {
-            display: flex;
-            gap: 100px;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .index-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .index-card img {
-            width: 160px;
-            height: 160px;
-            image-rendering: pixelated;
-            margin-bottom: 20px;
-        }
-
-        .index-card span {
-            font-size: 14px;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        @media (max-width: 700px) {
-            .index-container { gap: 50px; }
-            .index-card img { width: 120px; height: 120px; }
-            .index-card span { font-size: 11px; }
-        }
-
-        @media (max-width: 450px) {
-            .index-container { gap: 30px; }
-            .index-card img { width: 90px; height: 90px; }
-            .index-card span { font-size: 9px; letter-spacing: 2px; }
-        }
+        body { overflow-x: hidden !important; touch-action: pan-y pinch-zoom; }
+        .container { overflow-x: hidden; }
     </style>
 </head>
 <body>
 
-    <div class="index-container">
-        <a href="journal.html" class="index-card">
-            <img src="assets/journal.png" alt="Journal">
-            <span>JOURNAL</span>
-        </a>
-        <a href="store.html" class="index-card">
-            <img src="assets/space.png" alt="Store">
-            <span>STORE</span>
-        </a>
+<canvas id="neuro-bg"></canvas>
+
+<!-- ========== ВЕРХНЯЯ ПАНЕЛЬ ========== -->
+<div class="top-panel">
+    <button class="panel-btn" id="radioBtn">
+        <img src="assets/radio.png" alt="Radio" style="width: 28px; height: 20px; image-rendering: pixelated; margin-right: 10px;">
+        RADIO
+    </button>
+    <a href="index.html" class="panel-close">
+        <img src="assets/close.png" alt="Close">
+    </a>
+</div>
+
+<div class="container">
+    <!-- RSS -->
+    <div class="ticker-wrapper">
+        <div class="ticker" id="rssTicker">LOADING...</div>
     </div>
+
+    <!-- Карусель + твиттер -->
+    <div class="section carousel-section">
+        <div class="carousel" id="mainCarousel">
+            <img src="assets/mx1.jpeg" class="active">
+            <img src="assets/mx2.jpg">
+        </div>
+        <div class="hashtag-row">
+            <span class="hashtag">#layoutporn</span>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+        </div>
+    </div>
+
+    <!-- Форум / Сапорт -->
+    <div class="section nav-grid">
+        <div class="forum-wrapper">
+            <div class="forum-corner">
+                <div class="tv-screen">
+                    <div class="tv-scanlines"></div>
+                    <div class="tv-glare"></div>
+                    <span id="dynamicWord" class="tv-text">wellness</span>
+                </div>
+                <img src="assets/forum.png" class="nav-btn-img" id="forumBtn">
+            </div>
+            <div class="paint-label">FORUM</div>
+        </div>
+        <div class="support-wrapper">
+            <img src="assets/support.png" class="nav-btn-img" id="supportBtn">
+            <div class="paint-label">SUPPORT</div>
+            <div class="support-dots">
+                <span class="sdot"></span>
+                <span class="sdot"></span>
+                <span class="sdot"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pin-mood-btn" id="moodBtn">
+        <img src="assets/folder.png" alt="Folder Button" style="width: 64px; height: auto; image-rendering: pixelated; display: block;">
+        <span class="mood-text" style="margin-top: 8px;">MOOD</span>
+    </div>
+
+    <!-- Font styler -->
+    <div class="section styler-section">
+        <div class="styler-label">FONT STYLER</div>
+        <div class="styler-container">
+            <button class="styler-icon-btn" id="copyBtn">
+                <img src="assets/st1.png" id="stylerIcon1">
+            </button>
+            <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
+            <button class="styler-icon-btn" id="transformBtn">
+                <img src="assets/st2.png" id="stylerIcon2">
+            </button>
+        </div>
+    </div>
+
+    <!-- ART + PAINT -->
+    <div class="section art-section">
+        <div class="art-square-frame">
+            <img src="assets/art.jpg" alt="Preview" id="artPreview">
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" id="paintBtn">
+            <div class="paint-label">PAINT</div>
+        </div>
+        <button id="resetArtBtn" class="retro-btn" style="margin-top: 10px; font-size: 7px;">RESET ART</button>
+    </div>
+
+    <!-- TOP PLAYERS + TETRIS -->
+    <div class="section dual-row" style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+        <div style="text-align: left;">
+            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4>
+            <div class="top-players-list" style="font-size: 8px; color: #444; line-height: 2;"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <a href="tetris.html">
+                <img src="assets/tetris.png" class="nav-btn-img" alt="Play Tetris" style="width: 65px;">
+            </a>
+            <div class="paint-label">TETRIS</div>
+        </div>
+    </div>
+
+    <!-- TEAM + DONATE -->
+    <div class="section team-donate-wrapper">
+        <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
+        <div class="donate-block-journal" id="donateJournal">
+            <div class="donate-line"></div>
+            <div class="donate-label">DONATE</div>
+            <div class="donate-sub">monobank</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== МОДАЛКИ ========== -->
+
+<!-- disclaimerModal -->
+<div id="disclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MARKETING CREATIVE</span>
+            <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
+        </div>
+        <div class="modal-inner" style="text-align: center;">
+            <p>OPEN X?</p>
+            <button class="popup-enter-btn" data-modal="disclaimerModal" data-href="https://x.com">ENTER</button>
+        </div>
+    </div>
+</div>
+
+<!-- openMiniModal -->
+<div id="openMiniModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">FORUM ACCESS</span>
+            <button class="modal-close-btn" data-modal="openMiniModal">✜</button>
+        </div>
+        <div class="modal-inner" style="text-align: center;">
+            <p>OPEN MINI?</p>
+            <button class="popup-enter-btn" data-modal="openMiniModal" data-href="forum.html">ENTER</button>
+        </div>
+    </div>
+</div>
+
+<!-- supportModal -->
+<div id="supportModal" class="modal-overlay">
+    <div class="modal-content support-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">AI HELPER BOT</span>
+            <button class="modal-close-btn" data-modal="supportModal">✜</button>
+        </div>
+        <div class="telegram-embed-container">
+            <div class="telegram-wrapper">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                    data-telegram-discussion="morstrixxx/71"
+                    data-comments-limit="10"
+                    data-colorful="1"
+                    data-dark="1">
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- radioModal -->
+<div id="radioModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX RADIO</span>
+            <button class="modal-close-btn" data-modal="radioModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="spotify-wrapper">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- teamModalJournal -->
+<div id="teamModalJournal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+            <span class="modal-title-text">SELECT MEMBER</span>
+            <button class="modal-close-btn" data-modal="teamModalJournal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div class="team-selection">
+                <a href="ada.html" class="team-choice">
+                    <img src="assets/ada.png" alt="Ada">
+                    <span>DESIGNER</span>
+                </a>
+                <a href="ex.html" class="team-choice">
+                    <img src="assets/ex.png" alt="Ex">
+                    <span>DEVELOPER</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- pinterestModal -->
+<div id="pinterestModal" class="modal-overlay">
+    <div class="modal-content pinterest-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX / PINTEREST</span>
+            <button class="modal-close-btn" data-modal="pinterestModal">✜</button>
+        </div>
+        <div class="pin-embed-container">
+            <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+        </div>
+    </div>
+</div>
+
+<!-- artModal -->
+<div id="artModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">PAINT.EXE</span>
+            <button class="modal-close-btn" data-modal="artModal">✜</button>
+        </div>
+        <div class="paint-window">
+            <div class="paint-tools-panel" style="border-bottom: 1px solid #1a1a1a; background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;">
+                <div style="display: flex; gap: 8px;">
+                    <button class="retro-btn" id="pUndo" style="padding: 4px 10px; font-size: 8px;" disabled>&lt;</button>
+                    <button class="retro-btn" id="pRedo" style="padding: 4px 10px; font-size: 8px;" disabled>&gt;</button>
+                </div>
+                <button class="retro-btn" id="btnLayersOpen" style="padding: 4px 10px; font-size: 8px;">CHANNELS</button>
+            </div>
+            <div class="canvas-container" id="paintArea">
+                <canvas id="layer1"></canvas>
+                <canvas id="layer2"></canvas>
+            </div>
+            <div class="paint-tools-panel" style="background: #79434a; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; gap: 10px;">
+                <input type="color" id="pColor" value="#ffb7c7" style="width: 40px; height: 28px; border: 1px solid #1a1a1a; background: #000; cursor: pointer;">
+                <button class="retro-btn" id="pSave" style="padding: 5px 12px; font-size: 8px;">💾 SAVE</button>
+                <button class="retro-btn" id="pClear" style="padding: 5px 12px; font-size: 8px;">CLEAR</button>
+            </div>
+        </div>
+        <div id="layersPopup" class="layers-sub-modal">
+            <div style="background:#ffb7c7; color:#000; padding:8px; font-size:7px; display:flex; justify-content:space-between;">
+                <span>LAYERS</span>
+                <span onclick="document.getElementById('layersPopup').classList.remove('active')" style="cursor:pointer;">✜</span>
+            </div>
+            <div id="layerList">
+                <div class="layer-row active" data-id="2">LAYER 02 (TOP)</div>
+                <div class="layer-row" data-id="1">LAYER 01 (BACK)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипты -->
+<script src="js/paint.js"></script>
+<script src="js/journal.js"></script>
 
 </body>
 </html>
