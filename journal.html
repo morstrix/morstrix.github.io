@@ -22,7 +22,6 @@
 <div class="top-panel">
     <button class="panel-btn" id="radioBtn">
         <img src="assets/radio.png" alt="Radio" class="radio-icon">
-        RADIO
     </button>
     <a href="index.html" class="panel-close">
         <img src="assets/close.png" alt="Close">
@@ -30,23 +29,9 @@
 </div>
 
 <div class="container">
-    <!-- RSS (без полосок, на всю ширину) -->
+    <!-- RSS (без полосок) -->
     <div class="ticker-wrapper">
         <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
-    </div>
-
-    <!-- Карусель + твиттер -->
-    <div class="section carousel-section">
-        <div class="carousel" id="mainCarousel">
-            <img src="assets/mx1.jpeg" class="active">
-            <img src="assets/mx2.jpg">
-        </div>
-        <div class="hashtag-row">
-            <span class="hashtag">#layoutporn</span>
-        </div>
-        <div style="display: flex; justify-content: center;">
-            <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
-        </div>
     </div>
 
     <!-- Форум / Сапорт -->
@@ -71,11 +56,17 @@
         </div>
     </div>
 
-    <!-- MOOD -->
-    <div class="section mood-section">
-        <div class="icon-btn" id="moodBtn">
-            <img src="assets/mood.png" alt="MOOD">
-            <span class="icon-label">MOOD</span>
+    <!-- Карусель + твиттер -->
+    <div class="section carousel-section">
+        <div class="carousel" id="mainCarousel">
+            <img src="assets/mx1.jpeg" class="active">
+            <img src="assets/mx2.jpg">
+        </div>
+        <div class="hashtag-row">
+            <span class="hashtag">#layoutporn</span>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
         </div>
     </div>
 
@@ -102,7 +93,13 @@
             <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" id="paintBtn">
             <div class="paint-label">PAINT</div>
         </div>
-        <button id="resetArtBtn" class="retro-btn" style="margin-top: 10px; font-size: 7px;">RESET ART</button>
+    </div>
+
+    <!-- PINTEREST виджет (прямо на странице) -->
+    <div class="section pinterest-widget-section">
+        <div class="pinterest-widget-container">
+            <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+        </div>
     </div>
 
     <!-- TOP PLAYERS + TETRIS -->
@@ -119,15 +116,31 @@
         </div>
     </div>
 
-    <!-- TEAM + DONATE -->
-    <div class="section team-donate-wrapper">
-        <div class="team-btn-journal" id="teamBtnJournal">TEAM</div>
-        <div class="donate-spacer"></div>
-        <div class="donate-block-journal" id="donateJournal">
-            <div class="donate-line"></div>
-            <div class="donate-label">DONATE</div>
-            <div class="donate-sub">monobank</div>
+    <!-- DESIGNER / DEVELOPER (квадраты) -->
+    <div class="section team-cards-section">
+        <div class="team-cards-row">
+            <div class="team-card" data-member="ada">
+                <div class="team-img-wrapper">
+                    <img src="assets/ada.png" alt="Ada">
+                </div>
+                <span>DESIGNER</span>
+            </div>
+            <div class="team-card" data-member="ex">
+                <div class="team-img-wrapper">
+                    <img src="assets/ex.png" alt="Ex">
+                </div>
+                <span>DEVELOPER</span>
+            </div>
         </div>
+    </div>
+</div><!-- конец container -->
+
+<!-- ========== НИЖНЯЯ ПАНЕЛЬ DONATE ========== -->
+<div class="bottom-panel">
+    <div class="donate-line-top"></div>
+    <div class="bottom-panel-inner">
+        <span class="donate-label">DONATE</span>
+        <span class="donate-sub">monobank</span>
     </div>
 </div>
 
@@ -211,46 +224,7 @@
     </div>
 </div>
 
-<!-- teamModalJournal (квадратные обёртки) -->
-<div id="teamModalJournal" class="modal-overlay">
-    <div class="modal-content team-select-modal">
-        <div class="modal-header">
-            <span class="modal-title-text">SELECT MEMBER</span>
-            <button class="modal-close-btn" data-modal="teamModalJournal">✜</button>
-        </div>
-        <div class="modal-inner">
-            <div class="team-selection">
-                <div class="team-card" data-member="ada">
-                    <div class="team-img-wrapper">
-                        <img src="assets/ada.png" alt="Ada">
-                    </div>
-                    <span>DESIGNER</span>
-                </div>
-                <div class="team-card" data-member="ex">
-                    <div class="team-img-wrapper">
-                        <img src="assets/ex.png" alt="Ex">
-                    </div>
-                    <span>DEVELOPER</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- pinterestModal (MOOD) -->
-<div id="pinterestModal" class="modal-overlay">
-    <div class="modal-content mood-full-modal">
-        <div class="modal-header">
-            <span class="modal-title-text">MORSTRIX / PINTEREST</span>
-            <button class="modal-close-btn" data-modal="pinterestModal">✜</button>
-        </div>
-        <div class="modal-inner mood-inner">
-            <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="800" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
-        </div>
-    </div>
-</div>
-
-<!-- artModal (на всю ширину, исправлен) -->
+<!-- artModal (на всю ширину) -->
 <div id="artModal" class="modal-overlay">
     <div class="modal-content paint-full-modal">
         <div class="modal-header">
@@ -335,7 +309,7 @@
     </div>
 </div>
 
-<!-- adaModal (с LinkedIn) -->
+<!-- adaModal -->
 <div id="adaModal" class="modal-overlay inner-modal">
     <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
@@ -354,7 +328,7 @@
     </div>
 </div>
 
-<!-- exModal (с LinkedIn) -->
+<!-- exModal -->
 <div id="exModal" class="modal-overlay inner-modal">
     <div class="modal-content" style="max-width:500px;">
         <div class="modal-header">
