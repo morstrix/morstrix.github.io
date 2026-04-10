@@ -13,29 +13,29 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             font-family: 'Press Start 2P', monospace;
             color: #fff;
         }
         .index-container {
             display: flex;
-            gap: 100px;
+            gap: 80px;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px 20px;
-            flex: 1;
+            padding: 40px 20px;
         }
         .index-card {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
+            cursor: pointer;
         }
         .index-card img {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             image-rendering: pixelated;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .index-card span {
             font-size: 14px;
@@ -43,172 +43,232 @@
             text-transform: uppercase;
             letter-spacing: 4px;
         }
-        .bottom-team-donate {
-            width: 100%;
-            background: #050505;
-            border-top: 2px solid #79434a;
-            padding: 20px 20px 25px;
+        /* TEAM — без картинки */
+        .team-text-btn {
+            width: 140px;
+            height: 140px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 20px;
-        }
-        .team-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .team-card:hover { transform: translateY(-5px); }
-        .team-img-wrapper {
-            width: 120px;
-            aspect-ratio: 1/1;
-            background: #000;
-            border: 2px solid #b97272;
-            display: flex;
-            align-items: flex-end;
             justify-content: center;
-            margin-bottom: 12px;
-            box-shadow: 4px 4px 0 #3d2a2f;
+            margin-bottom: 16px;
+            font-size: 24px;
+            color: #a84d6b;
+            text-shadow: 2px 2px 0 #3d2a2f;
+            border: 2px dashed #79434a;
+            background: #0a0a0a;
         }
-        .team-img-wrapper img {
-            width: 90px;
-            height: auto;
-            image-rendering: pixelated;
-        }
-        .team-card span {
-            font-size: 9px;
-            color: #000;
-            text-shadow: 1px 1px 0 #aaa;
-            letter-spacing: 1px;
-        }
-        .donate-line {
-            width: 80%;
-            max-width: 500px;
-            height: 2px;
-            background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
-            margin: 5px 0;
-        }
-        .donate-label {
-            font-size: 13px;
-            color: #a27791;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .donate-sub {
-            font-size: 9px;
-            color: #a27791;
-            margin-top: 5px;
+        #teamBtn {
+            cursor: pointer;
         }
         @media (max-width: 700px) {
-            .index-container { gap: 50px; }
-            .index-card img { width: 120px; height: 120px; }
+            .index-container { gap: 40px; }
+            .index-card img, .team-text-btn { width: 100px; height: 100px; }
+            .team-text-btn { font-size: 18px; }
             .index-card span { font-size: 11px; }
         }
         @media (max-width: 450px) {
-            .index-container { gap: 30px; }
-            .index-card img { width: 90px; height: 90px; }
+            .index-container { gap: 25px; }
+            .index-card img, .team-text-btn { width: 80px; height: 80px; }
+            .team-text-btn { font-size: 14px; }
             .index-card span { font-size: 9px; letter-spacing: 2px; }
         }
+
+        /* Модалки */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(3px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: #a27791; border: 4px solid #b97272;
+            box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;
+            max-width: 500px; width: 95%; max-height: 85vh; overflow-y: auto;
+        }
+        .modal-header {
+            background: #79434a; padding: 12px; display: flex;
+            justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #000;
+        }
+        .modal-title-text {
+            font-size: 11px; color: #fff; text-shadow: 2px 2px 0 #000;
+            font-family: 'Press Start 2P', monospace;
+        }
+        .modal-close-btn {
+            background: #000; color: #fff; border: 2px solid #b97272;
+            width: 32px; height: 32px; font-size: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-inner {
+            padding: 20px; background: #a27791; text-align: center;
+        }
+
+        /* Team выбор */
+        .team-choice-container {
+            display: flex; gap: 40px; justify-content: center; padding: 10px 0;
+        }
+        .team-choice {
+            cursor: pointer; padding: 15px 25px; background: #000;
+            border: 2px solid #b97272; color: #a27791;
+            font-size: 14px; text-transform: uppercase;
+        }
+        .team-choice:hover { background: #1a1a1a; }
+
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex; justify-content: center; gap: 25px; margin: 15px 0;
+        }
+        .social-icons a {
+            font-size: 28px; text-decoration: none; color: #fff;
+            transition: transform 0.1s;
+        }
+        .social-icons a:hover { transform: scale(1.1); color: #a84d6b; }
+
+        /* Виджеты */
+        .behance-embed { margin: 15px 0; }
+        .instagram-widget { margin: 20px 0; }
     </style>
 </head>
 <body>
-    <div class="index-container">
-        <a href="journal.html" class="index-card">
-            <img src="assets/journal.png" alt="Journal">
-            <span>JOURNAL</span>
-        </a>
-        <a href="store.html" class="index-card">
-            <img src="assets/space.png" alt="Store">
-            <span>STORE</span>
-        </a>
-    </div>
 
-    <div class="bottom-team-donate">
-        <div class="team-card" id="teamBtn">
-            <div class="team-img-wrapper">
-                <img src="assets/a.png" alt="TEAM">
-            </div>
-            <span>TEAM</span>
+<div class="index-container">
+    <a href="journal.html" class="index-card">
+        <img src="assets/journal.png" alt="Journal">
+        <span>JOURNAL</span>
+    </a>
+    
+    <div class="index-card" id="teamBtn">
+        <div class="team-text-btn">TEAM</div>
+        <span>TEAM</span>
+    </div>
+    
+    <a href="store.html" class="index-card">
+        <img src="assets/space.png" alt="Store">
+        <span>STORE</span>
+    </a>
+</div>
+
+<!-- Модалка выбора TEAM -->
+<div id="teamModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ SELECT ✦</span>
+            <button class="modal-close-btn" data-modal="teamModal">✜</button>
         </div>
-        <div class="donate-line"></div>
-        <div class="donate-label">DONATE</div>
-        <div class="donate-sub">monobank</div>
-    </div>
-
-    <!-- Модалка TEAM -->
-    <div id="teamModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
-        <div style="max-width:450px; background:#a27791; border:4px solid #b97272;">
-            <div style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
-                <span style="font-size:11px; color:#fff;">SELECT</span>
-                <button id="closeTeamModal" style="background:#000; color:#fff; border:2px solid #b97272; width:32px; height:32px;">✜</button>
-            </div>
-            <div style="padding:20px; display:flex; gap:30px; justify-content:center;">
-                <div class="team-choice" data-member="ada" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ada.png" style="width:100px;"><br>
-                    <span style="font-size:9px; color:#000;">DESIGNER</span>
-                </div>
-                <div class="team-choice" data-member="ex" style="cursor:pointer; text-align:center;">
-                    <img src="assets/ex.png" style="width:100px;"><br>
-                    <span style="font-size:9px; color:#000;">DEVELOPER</span>
-                </div>
+        <div class="modal-inner">
+            <div class="team-choice-container">
+                <div class="team-choice" data-member="ada">ADA</div>
+                <div class="team-choice" data-member="ex">EX</div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- adaModal -->
-    <div id="adaModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div style="max-width:500px; background:#a27791;">
-            <div style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
-            <div style="padding:20px; text-align:center;">
-                <img src="assets/ada.png" style="width:100px;"><p>DESIGNER / ILLUSTRATOR</p>
-                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
-                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%"></iframe>
+<!-- Модалка ADA -->
+<div id="adaModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ ADA MORSOVA ✦</span>
+            <button class="modal-close-btn" data-modal="adaModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <!-- LinkedIn Widget -->
+            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova"></div>
+            
+            <!-- Behance Embed -->
+            <div class="behance-embed">
+                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" style="border:none;"></iframe>
+            </div>
+            
+            <!-- Instagram Widget -->
+            <div class="instagram-widget">
                 <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- exModal -->
-    <div id="exModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
-        <div style="max-width:500px; background:#a27791;">
-            <div style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
-            <div style="padding:20px; text-align:center;">
-                <img src="assets/ex.png" style="width:100px;"><p>DEVELOPER / ENGINEER</p>
-                <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
-                <div class="box-button small" data-href="https://github.com/grimexframe"><div class="button"><span>GitHub</span></div></div>
-                <div class="box-button small" data-href="https://www.threads.net/grimexframe"><div class="button"><span>Threads</span></div></div>
+<!-- Модалка EX -->
+<div id="exModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">✦ GRIM EX FRAME ✦</span>
+            <button class="modal-close-btn" data-modal="exModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <!-- LinkedIn Widget -->
+            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe"></div>
+            
+            <!-- GitHub иконка (эмодзи/символ) -->
+            <div class="social-icons">
+                <a href="https://github.com/grimexframe" target="_blank" title="GitHub">🐙</a>
+            </div>
+            
+            <!-- Instagram Widget -->
+            <div class="instagram-widget">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
+            </div>
+            
+            <!-- Threads + TikTok иконки -->
+            <div class="social-icons">
+                <a href="https://www.threads.net/@grimexframe" target="_blank" title="Threads">🧵</a>
+                <a href="https://www.tiktok.com/@grimexframe" target="_blank" title="TikTok">🎵</a>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-    <script type="module" src="https://w.behold.so/widget.js"></script>
-    <script>
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+<script type="module" src="https://w.behold.so/widget.js"></script>
+<script>
+    (function() {
         const teamModal = document.getElementById('teamModal');
         const adaModal = document.getElementById('adaModal');
         const exModal = document.getElementById('exModal');
-        function openModal(m) { m.style.display = 'flex'; }
-        function closeModal(m) { m.style.display = 'none'; }
-        document.getElementById('teamBtn').onclick = () => openModal(teamModal);
-        document.getElementById('closeTeamModal').onclick = () => closeModal(teamModal);
-        document.querySelectorAll('.team-choice').forEach(c => c.onclick = (e) => {
-            const member = e.currentTarget.dataset.member;
-            closeModal(teamModal);
-            if (member === 'ada') openModal(adaModal);
-            else if (member === 'ex') openModal(exModal);
+        
+        function openModal(id) {
+            document.getElementById(id)?.classList.add('active');
+        }
+        function closeModal(id) {
+            document.getElementById(id)?.classList.remove('active');
+        }
+        
+        // Открытие TEAM
+        document.getElementById('teamBtn').addEventListener('click', () => openModal('teamModal'));
+        
+        // Закрытие по кнопкам
+        document.querySelectorAll('.modal-close-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.dataset.modal;
+                if (modalId) closeModal(modalId);
+            });
         });
-        document.querySelectorAll('.close-inner').forEach(b => b.onclick = () => {
-            adaModal.style.display = 'none';
-            exModal.style.display = 'none';
+        
+        // Клик по выбору ADA / EX
+        document.querySelectorAll('.team-choice').forEach(el => {
+            el.addEventListener('click', () => {
+                const member = el.dataset.member;
+                closeModal('teamModal');
+                if (member === 'ada') openModal('adaModal');
+                else if (member === 'ex') openModal('exModal');
+            });
         });
-        window.onclick = (e) => {
-            if (e.target === teamModal) closeModal(teamModal);
-            if (e.target === adaModal) closeModal(adaModal);
-            if (e.target === exModal) closeModal(exModal);
-        };
-    </script>
+        
+        // Закрытие по клику на оверлей
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.classList.remove('active');
+            });
+        });
+        
+        // Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+            }
+        });
+    })();
+</script>
 </body>
 </html>
