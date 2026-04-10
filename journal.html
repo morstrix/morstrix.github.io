@@ -77,19 +77,24 @@
         <span class="mood-text" style="margin-top: 8px;">MOOD</span>
     </div>
 
-    <!-- Font styler -->
-    <div class="section styler-section">
-        <div class="styler-label">FONT STYLER</div>
-        <div class="styler-container">
-            <button class="styler-icon-btn" id="copyBtn">
-                <img src="assets/st1.png" id="stylerIcon1">
-            </button>
-            <input type="text" id="fontInput" class="styler-input" placeholder="INPUT TEXT..." autocomplete="off">
-            <button class="styler-icon-btn" id="transformBtn">
-                <img src="assets/st2.png" id="stylerIcon2">
-            </button>
+<!-- Font styler + Download MX -->
+<div class="section styler-section">
+    <div class="styler-download-row">
+        <!-- Кнопка стилизатора (открывает модалку) -->
+        <div class="box-button styler-trigger" id="stylerModalBtn">
+            <div class="button">
+                <span>FONT STYLER</span>
+            </div>
+        </div>
+        
+        <!-- Кнопка скачивания MX -->
+        <div class="box-button download-trigger" id="downloadModalBtn">
+            <div class="button">
+                <span>⬇️ MX</span>
+            </div>
         </div>
     </div>
+</div>
 
     <!-- ART + PAINT -->
     <div class="section art-section">
