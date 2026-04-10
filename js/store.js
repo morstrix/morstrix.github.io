@@ -13,16 +13,15 @@
         { id: 'caps', name: 'КЕПКИ', description: 'Бейсболки 5-panel', price: 500 }
     ];
 
-    // Заглушки изображений (по 2 фото на товар)
     const productImages = {
         socks:   ['assets/socks1.jpg', 'assets/socks2.jpg'],
         pants:   ['assets/pants1.jpg', 'assets/pants2.jpg'],
         hoodies: ['assets/hoodies1.jpg', 'assets/hoodies2.jpg'],
-        tees:    ['assets/tees1.jpg', 'assets/tees2.jpg'],
+        tees:    ['assets/tshirt.jpeg', 'assets/tees2.jpg'],
         shirts:  ['assets/shirts1.jpg', 'assets/shirts2.jpg'],
         sweats:  ['assets/sweats1.jpg', 'assets/sweats2.jpg'],
-        dokers:  ['assets/dokers1.jpg', 'assets/dokers2.jpg'],
-        caps:    ['assets/caps1.jpg', 'assets/caps2.jpg']
+        dokers:  ['assets/doker.jpg', 'assets/dokers2.jpg'],
+        caps:    ['assets/cap.jpg', 'assets/caps2.jpg']
     };
 
     // ========== КОРЗИНА ==========
@@ -93,12 +92,17 @@
     function renderProducts() {
         const grid = document.getElementById('categoriesGrid');
         if (!grid) return;
-        grid.innerHTML = products.map(p => `
-            <div class="cat-card" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-desc="${p.description}">
-                <div class="cat-image">товар відсутній</div>
-                <div class="cat-name">${p.name}</div>
-            </div>
-        `).join('');
+        grid.innerHTML = products.map(p => {
+            const previewImg = productImages[p.id]?.[0] || '';
+            return `
+                <div class="cat-card" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-desc="${p.description}">
+                    <div class="cat-image">
+                        ${previewImg ? `<img src="${previewImg}" style="width:100%; height:100%; object-fit:cover;">` : 'товар відсутній'}
+                    </div>
+                    <div class="cat-name">${p.name}</div>
+                </div>
+            `;
+        }).join('');
         
         document.querySelectorAll('.cat-card').forEach(card => {
             card.addEventListener('click', () => openProductModal(card.dataset));
@@ -124,7 +128,7 @@
         currentCarouselIndex = 0;
         updateCarouselPosition();
 
-        // Добавляем обработчики клика на слайды
+        // Обработчики клика на слайды (добавление в корзину, модалка НЕ закрывается)
         document.querySelectorAll('.product-carousel-slide').forEach(slide => {
             slide.addEventListener('click', () => {
                 if (currentProductData) {
@@ -133,7 +137,7 @@
                         name: currentProductData.name,
                         price: parseInt(currentProductData.price)
                     });
-                    closeModal('productModal');
+                    // Модалка остаётся открытой
                 }
             });
         });
