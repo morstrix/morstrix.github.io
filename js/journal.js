@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ticker = document.getElementById('rssTicker');
     if (ticker) {
         const messages = [
-            "RSS FEED: #FASHION #TECH"
+            "✦ MORSTRIX V2.0 СИСТЕМА ЗАПУЩЕНА ✦",
+            "✦ НОВЫЕ ПРИНТЫ В МАГАЗИНЕ ✦",
+            "✦ ПОДПИСЫВАЙТЕСЬ НА НАШ ТЕЛЕГРАМ ✦"
         ];
         ticker.innerText = messages.join(" --- ");
     }
@@ -103,40 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modal) modal.classList.remove('active');
     }
 
-    // ========== 6. АНИМАЦИЯ КНОПОК ПЕРЕД ПЕРЕХОДОМ ==========
-    function handleButtonClick(btn, href, modalId) {
-        btn.classList.add('clicked');
-        
-        if (href) {
-            setTimeout(() => {
-                if (href.startsWith('http')) {
-                    window.open(href, '_blank');
-                } else {
-                    window.location.href = href;
-                }
-            }, 120);
-        } else if (modalId) {
-            setTimeout(() => {
-                closeModal(modalId);
-                btn.classList.remove('clicked');
-            }, 120);
-        } else {
-            setTimeout(() => {
-                btn.classList.remove('clicked');
-            }, 120);
-        }
-    }
-
-    // ========== 7. НАВЕШИВАНИЕ ОБРАБОТЧИКОВ ==========
-    
-    // Закрытие по фону
+    // ========== 6. ЗАКРЫТИЕ ПО ФОНУ ==========
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) overlay.classList.remove('active');
         });
     });
 
-    // Закрытие по крестику
+    // ========== 7. ЗАКРЫТИЕ ПО КРЕСТИКУ ==========
     document.querySelectorAll('.modal-close-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const modalId = btn.getAttribute('data-modal');
@@ -144,22 +120,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ENTER кнопки с анимацией
-    document.querySelectorAll('.popup-enter-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    // ========== 8. КНОПКИ .box-button (UIVERSE) ==========
+    document.querySelectorAll('.box-button').forEach(box => {
+        box.addEventListener('click', function(e) {
             const href = this.getAttribute('data-href');
             const modalId = this.getAttribute('data-modal');
             
             if (href) {
-                e.preventDefault();
-                handleButtonClick(this, href, modalId);
-            } else {
-                handleButtonClick(this, null, modalId);
+                setTimeout(() => {
+                    if (href.startsWith('http')) {
+                        window.open(href, '_blank');
+                    } else {
+                        window.location.href = href;
+                    }
+                }, 100);
+            } else if (modalId) {
+                setTimeout(() => {
+                    closeModal(modalId);
+                }, 100);
             }
         });
     });
 
-    // Привязка кнопок открытия модалок
+    // ========== 9. ПРИВЯЗКА КНОПОК ОТКРЫТИЯ МОДАЛОК ==========
     const twitterBtn = document.getElementById('twitterBtn');
     if (twitterBtn) twitterBtn.onclick = () => openModal('disclaimerModal');
 
@@ -181,14 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const teamBtn = document.getElementById('teamBtnJournal');
     if (teamBtn) teamBtn.onclick = () => openModal('teamModalJournal');
 
-    // ESC
+    // ========== 10. ESC ==========
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
         }
     });
 
-    // Pinterest SDK
+    // ========== 11. PINTEREST SDK ==========
     if (document.getElementById('pinterestModal') && !window.pinSDKLoaded) {
         const pinScript = document.createElement('script');
         pinScript.src = '//assets.pinterest.com/js/pinit.js';
