@@ -163,3 +163,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));
     }});
 });
+
+// MX карусель
+let mxSlide = 0;
+const mxSlides = document.querySelectorAll('.mx-slide');
+const mxPrev = document.getElementById('mxPrev');
+const mxNext = document.getElementById('mxNext');
+const mxDesc = document.getElementById('mxDescription');
+const mxDescriptions = [
+    '✦ MX PRINT 01 ✦<br>Абстрактная композиция',
+    '✦ MX PRINT 02 ✦<br>Глитч-эффект',
+    '✦ MX PRINT 03 ✦<br>Пиксель-арт'
+];
+function updateMxSlide() {
+    mxSlides.forEach((s,i) => s.classList.toggle('active', i===mxSlide));
+    if(mxDesc) mxDesc.innerHTML = mxDescriptions[mxSlide];
+}
+if(mxPrev) mxPrev.onclick = ()=> { mxSlide = (mxSlide-1+mxSlides.length)%mxSlides.length; updateMxSlide(); };
+if(mxNext) mxNext.onclick = ()=> { mxSlide = (mxSlide+1)%mxSlides.length; updateMxSlide(); };
