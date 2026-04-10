@@ -688,3 +688,171 @@ body {
     .nav-btn-img { width: 80px; }
     .download-carousel-track { max-width: 160px; }
 }
+
+/* ========== МОДАЛКА ФОРУМА ========== */
+.forum-modal {
+    max-width: 900px;
+    width: 95vw;
+    min-width: 320px;
+}
+
+.forum-layout {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    min-height: 350px;
+    max-height: 60vh;
+}
+
+/* Левая панель с вкладками */
+.forum-tabs-panel {
+    width: 140px;
+    background: #0a0a0f;
+    border-right: 2px solid #79434a;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.forum-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #3d2a2f;
+    transition: all 0.15s;
+}
+
+.forum-tab:hover {
+    background: #1a1a2a;
+}
+
+.forum-tab.active {
+    background: #a84d6b;
+    border-left: 3px solid #ffb7c7;
+}
+
+.tab-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.tab-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Правая панель контента */
+.forum-content-panel {
+    flex: 1;
+    padding: 20px;
+    background: #a27791;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.forum-content-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #000;
+    text-shadow: 2px 2px 0 #aaa;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.forum-content-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    line-height: 1.8;
+    color: #000 !important;
+    text-shadow: 1px 1px 0 #ccc;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+/* Кнопка ENTER внизу */
+.forum-enter-wrapper {
+    padding: 15px 20px 20px;
+    background: #79434a;
+    border-top: 2px solid #000;
+    display: flex;
+    justify-content: center;
+}
+
+.forum-enter-wrapper .box-button {
+    margin: 0;
+}
+
+/* Адаптация */
+@media (max-width: 700px) {
+    .forum-tabs-panel {
+        width: 120px;
+    }
+    .forum-tab {
+        padding: 10px 8px;
+        gap: 6px;
+    }
+    .tab-icon {
+        font-size: 16px;
+    }
+    .tab-label {
+        font-size: 6px;
+    }
+    .forum-content-title {
+        font-size: 12px;
+    }
+    .forum-content-text {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 500px) {
+    .forum-layout {
+        flex-direction: column;
+        min-height: auto;
+        max-height: none;
+    }
+    .forum-tabs-panel {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 2px solid #79434a;
+        justify-content: center;
+        padding: 5px;
+    }
+    .forum-tab {
+        border-bottom: none;
+        border-right: 1px solid #3d2a2f;
+        padding: 8px 10px;
+    }
+    .forum-tab.active {
+        border-left: none;
+        border-bottom: 3px solid #ffb7c7;
+    }
+    .forum-content-panel {
+        min-height: 200px;
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .tab-label {
+        display: none;
+    }
+    .forum-tab {
+        padding: 10px;
+    }
+    .tab-icon {
+        font-size: 20px;
+        width: auto;
+    }
+}
