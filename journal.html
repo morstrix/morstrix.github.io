@@ -20,40 +20,45 @@
 
 <!-- ========== ВЕРХНЯЯ ПАНЕЛЬ ========== -->
 <div class="top-panel">
-    <button class="panel-btn" id="radioBtn">
-        <img src="assets/radio.png" alt="Radio" class="radio-icon">
-    </button>
-    <a href="index.html" class="panel-close">
-        <img src="assets/close.png" alt="Close">
-    </a>
+    <div class="top-panel-left">
+        <button class="panel-btn" id="radioBtn">
+            <img src="assets/radio.png" alt="Radio" class="radio-icon">
+        </button>
+    </div>
+    <div class="top-panel-center">
+        <!-- TOP PLAYERS + TETRIS внутри верхней панели -->
+        <div class="top-players-tetris">
+            <div class="top-players-mini">
+                <span class="top-label">TOP:</span>
+                <div class="top-players-list-mini"></div>
+            </div>
+            <a href="tetris.html" class="tetris-icon">
+                <img src="assets/tetris.png" alt="TETRIS">
+            </a>
+        </div>
+    </div>
+    <div class="top-panel-right">
+        <a href="index.html" class="panel-close">
+            <img src="assets/close.png" alt="Close">
+        </a>
+    </div>
 </div>
 
 <div class="container">
+    <!-- ART + PAINT -->
+    <div class="section art-section">
+        <div class="art-square-frame">
+            <img src="assets/art.jpg" alt="Preview" id="artPreview">
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" id="paintBtn">
+            <div class="paint-label">PAINT</div>
+        </div>
+    </div>
+
     <!-- RSS -->
     <div class="ticker-wrapper">
         <div class="ticker" id="rssTicker">✦ LOADING... ✦</div>
-    </div>
-
-    <!-- Форум / Сапорт -->
-    <div class="section nav-grid">
-        <div class="forum-wrapper">
-            <div class="forum-corner">
-                <div class="tv-screen">
-                    <span id="dynamicWord" class="tv-text">wellness</span>
-                </div>
-                <img src="assets/forum.png" class="nav-btn-img" id="forumBtn">
-            </div>
-            <div class="paint-label">FORUM</div>
-        </div>
-        <div class="support-wrapper">
-            <img src="assets/support.png" class="nav-btn-img" id="supportBtn">
-            <div class="paint-label">SUPPORT</div>
-            <div class="support-dots">
-                <span class="sdot"></span>
-                <span class="sdot"></span>
-                <span class="sdot"></span>
-            </div>
-        </div>
     </div>
 
     <!-- Карусель + твиттер -->
@@ -84,35 +89,33 @@
         </div>
     </div>
 
-    <!-- ART + PAINT -->
-    <div class="section art-section">
-        <div class="art-square-frame">
-            <img src="assets/art.jpg" alt="Preview" id="artPreview">
+    <!-- FORUM / SUPPORT + MOOD (Pinterest) в одном ряду -->
+    <div class="section forum-support-mood">
+        <div class="nav-grid">
+            <div class="forum-wrapper">
+                <div class="forum-corner">
+                    <div class="tv-screen">
+                        <span id="dynamicWord" class="tv-text">wellness</span>
+                    </div>
+                    <img src="assets/forum.png" class="nav-btn-img" id="forumBtn">
+                </div>
+                <div class="paint-label">FORUM</div>
+            </div>
+            <div class="support-wrapper">
+                <img src="assets/support.png" class="nav-btn-img" id="supportBtn">
+                <div class="paint-label">SUPPORT</div>
+                <div class="support-dots">
+                    <span class="sdot"></span>
+                    <span class="sdot"></span>
+                    <span class="sdot"></span>
+                </div>
+            </div>
         </div>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="assets/paint.png" class="nav-btn-img" style="width: 80px;" id="paintBtn">
-            <div class="paint-label">PAINT</div>
-        </div>
-    </div>
-
-    <!-- PINTEREST виджет -->
-    <div class="section pinterest-widget-section">
-        <div class="pinterest-widget-container">
-            <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="400" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
-        </div>
-    </div>
-
-    <!-- TOP PLAYERS + TETRIS -->
-    <div class="section dual-row" style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
-        <div style="text-align: left;">
-            <h4 style="font-size: 8px; color: #a84d6b; margin-bottom: 15px;">TOP PLAYERS:</h4>
-            <div class="top-players-list" style="font-size: 8px; color: #444; line-height: 2;"></div>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <a href="tetris.html">
-                <img src="assets/tetris.png" class="nav-btn-img" alt="Play Tetris" style="width: 65px;">
-            </a>
-            <div class="paint-label">TETRIS</div>
+        <div class="mood-block">
+            <div class="icon-btn" id="moodBtn">
+                <img src="assets/mood.png" alt="MOOD">
+                <span class="icon-label">MOOD</span>
+            </div>
         </div>
     </div>
 
@@ -304,6 +307,19 @@
                     <div class="button"><span>📦 DOWNLOAD ARCHIVE</span></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- pinterestModal (MOOD) -->
+<div id="pinterestModal" class="modal-overlay">
+    <div class="modal-content mood-full-modal">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX / PINTEREST</span>
+            <button class="modal-close-btn" data-modal="pinterestModal">✜</button>
+        </div>
+        <div class="modal-inner mood-inner">
+            <a data-pin-do="embedBoard" data-pin-board-width="100%" data-pin-scale-height="800" href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
         </div>
     </div>
 </div>
