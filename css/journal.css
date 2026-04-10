@@ -101,6 +101,7 @@ body {
     image-rendering: pixelated;
 }
 
+/* Скрываем старые элементы */
 .radio-btn,
 .close-site {
     display: none;
@@ -174,9 +175,6 @@ body {
     animation: scrollTicker 80s linear infinite;
     text-shadow: 2px 2px 0 #3d2a2f;
 }
-.ticker span {
-    margin-right: 50px;
-}
 @keyframes scrollTicker {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
@@ -228,30 +226,59 @@ body {
     object-fit: cover;
 }
 
-/* ========== STYLER + DOWNLOAD ROW ========== */
-.styler-download-row {
+/* ========== ИКОНКИ В РЯД ========== */
+.icon-row-section {
+    margin: 20px 0;
+}
+.icon-row {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 30px;
+    align-items: flex-end;
+    gap: 50px;
     flex-wrap: wrap;
 }
-
-.styler-trigger .button span,
-.download-trigger .button span {
-    font-size: 9px;
+.icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.1s steps(2);
+}
+.icon-btn:hover {
+    transform: scale(1.05);
+}
+.icon-btn:active {
+    transform: scale(0.95);
+}
+.icon-btn img {
+    width: 64px;
+    height: auto;
+    image-rendering: pixelated;
+    display: block;
+}
+.icon-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #a27791;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 #3d2a2f;
 }
 
-/* Старые стили стилизатора (для модалки) */
-.styler-label {
-    font-size: 11px;
+/* Стилизатор в модалке */
+.styler-preview {
+    background: #0a0a0f;
+    border: 2px solid #79434a;
+    padding: 15px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
     color: #a27791;
-    margin-bottom: 12px;
-    text-align: left;
-    max-width: 400px;
-    margin-inline: auto;
-    text-shadow: 2px 2px 0 #3d2a2f;
-    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    word-break: break-all;
+    box-shadow: 3px 3px 0 #3d2a2f;
 }
 .styler-container {
     display: flex;
@@ -260,7 +287,6 @@ body {
     border: 2px solid #79434a;
     padding: 5px 10px;
     width: 100%;
-    max-width: 400px;
     margin: 0 auto;
     box-shadow: 3px 3px 0 #3d2a2f;
 }
@@ -271,13 +297,8 @@ body {
     color: #a27791;
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    padding: 10px 5px;
+    padding: 12px 5px;
     outline: none;
-    transition: all 0.2s;
-}
-.styler-input:focus {
-    transform: scale(1.02);
-    color: #c48a6b;
 }
 .styler-icon-btn {
     background: transparent;
@@ -286,80 +307,9 @@ body {
     padding: 5px;
 }
 .styler-icon-btn img {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
-}
-
-/* ========== DOWNLOAD MODAL ========== */
-.download-carousel-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 20px;
-}
-
-.carousel-arrow {
-    width: 35px;
-    height: 35px;
-    background: #000;
-    border: 2px solid #b97272;
-    color: #a27791;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-family: monospace;
-    flex-shrink: 0;
-    user-select: none;
-    transition: all 0.1s;
-}
-
-.carousel-arrow:hover {
-    background: #1a1a1a;
-    color: #ffb7c7;
-}
-
-.carousel-arrow:active {
-    transform: scale(0.9);
-}
-
-.download-carousel-track {
-    flex: 1;
-    overflow: hidden;
-    border: 2px solid #000;
-    background: #000;
-    aspect-ratio: 1 / 1;
-    max-width: 250px;
-}
-
-.download-carousel-slides {
-    display: flex;
-    transition: transform 0.3s ease;
-    height: 100%;
-}
-
-.download-slide {
-    flex: 0 0 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-}
-
-.download-slide.active {
-    display: block;
-}
-
-.download-description {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    line-height: 1.8;
-    color: #000 !important;
-    text-shadow: 1px 1px 0 #aaa !important;
-    text-align: center;
-    margin: 20px 0;
 }
 
 /* TEAM Button */
@@ -400,7 +350,6 @@ body {
     height: 3px;
     background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
     margin: 0 auto 12px;
-    transition: width 0.3s ease;
     animation: stretchLine 3s infinite alternate;
     box-shadow: 0 0 6px rgba(168,77,107,0.6);
 }
@@ -461,32 +410,6 @@ body {
     font-family: 'Press Start 2P', monospace;
     font-size: 7px !important;
     text-shadow: 0 0 3px #ff8c42, 0 0 5px #ff5500;
-}
-
-/* MOOD кнопка */
-.pin-mood-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    width: fit-content;
-    margin: 0 auto;
-    cursor: pointer;
-}
-.pin-mood-btn img {
-    width: 56px;
-    transition: transform 0.1s steps(2);
-}
-.pin-mood-btn img:active {
-    transform: scale(0.95);
-}
-.mood-text {
-    font-size: 9px;
-    color: #a27791;
 }
 
 /* Support dots */
@@ -553,20 +476,16 @@ body {
     100% { transform: translateY(-50%) translateX(0px); }
 }
 
-/* ========== УНИКАЛЬНЫЕ СТИЛИ МОДАЛОК ЖУРНАЛА ========== */
-
+/* ========== МОДАЛКИ ========== */
 .pinterest-modal {
     max-width: 500px;
     width: 90%;
-    background: #0a0a0f;
-    padding: 0;
 }
 .pin-embed-container {
     padding: 15px;
     min-height: 350px;
     background: #a27791;
 }
-
 .support-modal {
     max-width: 450px;
     width: 95%;
@@ -586,10 +505,6 @@ body {
     display: flex;
     justify-content: center;
 }
-.telegram-wrapper iframe {
-    max-width: 100%;
-}
-
 .team-selection {
     display: flex;
     justify-content: center;
@@ -615,15 +530,13 @@ body {
     font-size: 8px;
     color: #fff;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 0 #3d2a2f;
 }
-.team-choice:hover { 
+.team-choice:hover {
     transform: translateY(-8px);
 }
 .team-choice:hover img {
     border-color: #a84d6b;
 }
-
 .paint-window {
     width: 100%;
     max-width: 400px;
@@ -665,9 +578,6 @@ body {
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
     cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 8px;
 }
 .retro-btn:active {
     transform: scale(0.95);
@@ -702,152 +612,79 @@ body {
     border-left: 3px solid #ffb7c7;
 }
 
-/* ========== АДАПТАЦИЯ ========== */
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 650px;
-    }
-    .top-panel {
-        padding: 0 40px;
-    }
-    .panel-btn {
-        font-size: 0.65rem;
-        padding: 7px 18px;
-    }
-    .panel-btn img {
-        width: 24px;
-        height: 18px;
-    }
-    .panel-close img {
-        width: 28px;
-        height: 28px;
-    }
-    .nav-btn-img {
-        width: 110px;
-    }
-    .carousel {
-        max-width: 450px;
-    }
+/* Download карусель */
+.download-carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+.carousel-arrow {
+    width: 35px;
+    height: 35px;
+    background: #000;
+    border: 2px solid #b97272;
+    color: #a27791;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.carousel-arrow:active {
+    transform: scale(0.9);
+}
+.download-carousel-track {
+    flex: 1;
+    overflow: hidden;
+    border: 2px solid #000;
+    background: #000;
+    aspect-ratio: 1/1;
+    max-width: 250px;
+}
+.download-carousel-slides {
+    display: flex;
+    height: 100%;
+}
+.download-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+.download-slide.active {
+    display: block;
+}
+.download-description {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    line-height: 1.8;
+    color: #000 !important;
+    text-shadow: 1px 1px 0 #aaa !important;
+    text-align: center;
+    margin: 20px 0;
 }
 
-@media (max-width: 900px) and (min-width: 701px) {
-    .container {
-        max-width: 600px;
-        gap: 70px;
-    }
-    .top-panel {
-        padding: 0 25px;
-    }
-    .panel-btn {
-        font-size: 0.6rem;
-        padding: 7px 16px;
-    }
-}
-
+/* Адаптация */
 @media (max-width: 700px) {
-    .top-panel {
-        height: 50px;
-        padding: 0 12px;
-    }
-    .panel-btn {
-        font-size: 0.5rem;
-        padding: 6px 12px;
-    }
-    .panel-btn img {
-        width: 20px;
-        height: 14px;
-    }
-    .panel-close img {
-        width: 24px;
-        height: 24px;
-    }
-    body {
-        padding-top: 70px;
-    }
-    .container {
-        margin-top: 10px;
-        gap: 60px;
-        max-width: 550px;
-    }
+    .top-panel { height: 50px; padding: 0 12px; }
+    .panel-btn { font-size: 0.5rem; padding: 6px 12px; }
+    .panel-btn img { width: 20px; height: 14px; }
+    body { padding-top: 70px; }
+    .container { gap: 60px; }
+    .icon-row { gap: 35px; }
+    .icon-btn img { width: 56px; }
+    .icon-label { font-size: 7px; }
     .nav-btn-img { width: 100px; }
-    .tv-screen { left: -55px; padding: 4px 6px; }
-    .tv-text { font-size: 6px !important; }
-    .styler-label { font-size: 10px; }
-    .team-btn-journal { font-size: 10px; padding: 10px 20px; }
-    .donate-block-journal .donate-label { font-size: 12px; }
-    .hashtag { font-size: 10px; }
-    .ticker { font-size: 9px; }
-    .support-modal { max-width: 440px; }
-    .carousel { max-width: 400px; }
-    .styler-download-row { gap: 20px; }
-    .download-carousel-track { max-width: 200px; }
+    .tv-screen { left: -55px; }
 }
-
-@media (max-width: 550px) {
-    .top-panel {
-        padding: 0 10px;
-    }
-    .panel-btn {
-        font-size: 0.45rem;
-        padding: 5px 10px;
-        gap: 6px;
-    }
-    .panel-btn img {
-        width: 18px;
-        height: 12px;
-    }
-    .nav-btn-img { width: 90px; }
-    .tv-screen { left: -45px; padding: 3px 5px; }
-    .tv-text { font-size: 5px !important; }
-    .team-btn-journal { font-size: 9px; padding: 10px 18px; }
-    .donate-block-journal .donate-label { font-size: 11px; }
-    .hashtag { font-size: 9px; }
-    .ticker { font-size: 8px; }
-    .team-choice img { width: 90px; height: 90px; }
-    .team-choice span { font-size: 7px; }
-    .support-modal { max-width: 400px; }
-    .container { gap: 50px; }
-    .carousel { max-width: 350px; }
-}
-
 @media (max-width: 450px) {
-    .top-panel {
-        height: 45px;
-    }
-    .panel-btn {
-        font-size: 0.4rem;
-        padding: 4px 8px;
-    }
-    .panel-close img {
-        width: 22px;
-        height: 22px;
-    }
-    body {
-        padding-top: 55px;
-    }
-    .team-btn-journal { font-size: 8px; padding: 8px 14px; }
-    .donate-block-journal .donate-label { font-size: 10px; }
-    .hashtag { font-size: 8px; }
-    .ticker { font-size: 7px; }
-    .support-modal { max-width: 360px; }
-    .telegram-embed-container { padding: 8px; }
+    .panel-btn { font-size: 0.4rem; padding: 4px 8px; }
+    body { padding-top: 55px; }
+    .icon-row { gap: 25px; }
+    .icon-btn img { width: 48px; }
+    .icon-label { font-size: 6px; }
     .nav-btn-img { width: 80px; }
-    .carousel { max-width: 300px; }
-    .x-btn-img { width: 35px; }
-    .styler-download-row { gap: 15px; }
-    .styler-trigger .button span,
-    .download-trigger .button span { font-size: 7px; }
     .download-carousel-track { max-width: 160px; }
-    .download-description { font-size: 7px; }
-}
-
-@media (max-width: 380px) {
-    .panel-btn {
-        font-size: 0.35rem;
-        padding: 3px 6px;
-    }
-    .nav-btn-img { width: 70px; }
-    .container { gap: 40px; }
-    .carousel { max-width: 280px; }
 }
