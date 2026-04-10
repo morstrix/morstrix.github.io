@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // RSS
     const ticker = document.getElementById('rssTicker');
     if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
 
-    // Карусель авто
     const carousel = document.getElementById('mainCarousel');
     let carouselInterval;
     if (carousel) {
@@ -18,12 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         carousel.addEventListener('click', () => clearInterval(carouselInterval));
     }
 
-    // Twitter -> дисклеймер
     function openModal(id){ document.getElementById(id)?.classList.add('active'); }
     function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
     document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
 
-    // Стилизатор
     const embeddedInput = document.getElementById('fontInputEmbedded');
     const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
     if(embeddedInput && embeddedPreview) {
@@ -37,14 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(()=> embeddedPreview.textContent = orig, 800);
         });
     }
+
+    let mxSlide = 0;
+    const mxSlides = document.querySelectorAll('.mx-slide');
+    const mxPrev = document.getElementById('mxPrev');
+    const mxNext = document.getElementById('mxNext');
+    const mxDesc = document.getElementById('mxDescription');
+    const mxDescriptions = ['✦ MX PRINT 01 ✦<br>Абстрактная композиция','✦ MX PRINT 02 ✦<br>Глитч-эффект','✦ MX PRINT 03 ✦<br>Пиксель-арт'];
+    function updateMxSlide() {
+        mxSlides.forEach((s,i) => s.classList.toggle('active', i===mxSlide));
+        if(mxDesc) mxDesc.innerHTML = mxDescriptions[mxSlide];
+    }
+    if(mxPrev) mxPrev.onclick = ()=> { mxSlide = (mxSlide-1+mxSlides.length)%mxSlides.length; updateMxSlide(); };
+    if(mxNext) mxNext.onclick = ()=> { mxSlide = (mxSlide+1)%mxSlides.length; updateMxSlide(); };
+
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
         const a = document.createElement('a'); a.href = 'assets/morstrix_archive.zip'; a.download = 'MORSTRIX_archive.zip'; a.click();
     });
 
-    // Paint
     document.getElementById('paintBtn')?.addEventListener('click', ()=> openModal('artModal'));
 
-    // Конвертер
     const pxInput = document.getElementById('pxInputEmbedded');
     const cmInput = document.getElementById('cmInputEmbedded');
     if(pxInput && cmInput) {
@@ -52,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cmInput.addEventListener('input', ()=> { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
     }
 
-    // Мерч
     const canvas = document.getElementById('printCanvasEmbedded');
     const upload = document.getElementById('imageUploadEmbedded');
     if(canvas && upload) {
@@ -70,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
     }
 
-    // Топ игроки
     async function loadTopPlayers(){
         const container = document.querySelector('.top-players-list'); if(!container) return;
         try{
@@ -92,15 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 for(let i=0; i<9-realCount; i++) emptyHtml += `<div>— — — — — — — —</div>`;
                 placeholderDiv.innerHTML = emptyHtml;
             }
-        }catch(e){
-            container.innerHTML='⚠️ ERROR';
-            const placeholderDiv = document.querySelector('.top-players-placeholder');
-            if(placeholderDiv) placeholderDiv.innerHTML = Array(9).fill('<div>— — — — — — — —</div>').join('');
-        }
+        }catch(e){ container.innerHTML='⚠️ ERROR'; }
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 
-    // Форум
     const contents = {
         wellness:['🌿 ВЕЛНЕС','Йога, медитации...'],
         interior:['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
@@ -124,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Индикатор страниц
     const pages = document.querySelectorAll('.journal-page');
     const dots = document.querySelectorAll('.dot');
     const observer = new IntersectionObserver((entries) => {
@@ -137,13 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
     pages.forEach(p => observer.observe(p));
 
-    // Модалки
     document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
         const id = b.dataset.modal; if(id) closeModal(id);
     }));
     document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
 
-    // ЗМІСТ
     document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
     document.querySelectorAll('.contents-item').forEach(item => {
         item.addEventListener('click', ()=> {
@@ -153,31 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Pinterest SDK
     if(!window.pinSDKLoaded){
         const s=document.createElement('script'); s.src='//assets.pinterest.com/js/pinit.js'; s.onload=()=>window.pinSDKLoaded=true; document.head.appendChild(s);
     }
 
-    // ESC
     document.addEventListener('keydown', e=>{ if(e.key==='Escape'){
         document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));
     }});
 });
-
-// MX карусель
-let mxSlide = 0;
-const mxSlides = document.querySelectorAll('.mx-slide');
-const mxPrev = document.getElementById('mxPrev');
-const mxNext = document.getElementById('mxNext');
-const mxDesc = document.getElementById('mxDescription');
-const mxDescriptions = [
-    '✦ MX PRINT 01 ✦<br>Абстрактная композиция',
-    '✦ MX PRINT 02 ✦<br>Глитч-эффект',
-    '✦ MX PRINT 03 ✦<br>Пиксель-арт'
-];
-function updateMxSlide() {
-    mxSlides.forEach((s,i) => s.classList.toggle('active', i===mxSlide));
-    if(mxDesc) mxDesc.innerHTML = mxDescriptions[mxSlide];
-}
-if(mxPrev) mxPrev.onclick = ()=> { mxSlide = (mxSlide-1+mxSlides.length)%mxSlides.length; updateMxSlide(); };
-if(mxNext) mxNext.onclick = ()=> { mxSlide = (mxSlide+1)%mxSlides.length; updateMxSlide(); };
