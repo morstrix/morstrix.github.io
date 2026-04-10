@@ -53,12 +53,6 @@
             align-items: center;
             gap: 20px;
         }
-        .team-cards-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
         .team-card {
             display: flex;
             flex-direction: column;
@@ -132,26 +126,18 @@
     </div>
 
     <div class="bottom-team-donate">
-        <div class="team-cards-row">
-            <div class="team-card" id="teamDesignerBtn">
-                <div class="team-img-wrapper">
-                    <img src="assets/ada.png" alt="Ada">
-                </div>
-                <span>DESIGNER</span>
+        <div class="team-card" id="teamBtn">
+            <div class="team-img-wrapper">
+                <img src="assets/team.png" alt="TEAM">
             </div>
-            <div class="team-card" id="teamDeveloperBtn">
-                <div class="team-img-wrapper">
-                    <img src="assets/ex.png" alt="Ex">
-                </div>
-                <span>DEVELOPER</span>
-            </div>
+            <span>TEAM</span>
         </div>
         <div class="donate-line"></div>
         <div class="donate-label">DONATE</div>
         <div class="donate-sub">monobank</div>
     </div>
 
-    <!-- Модалки -->
+    <!-- Модалка TEAM -->
     <div id="teamModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000;">
         <div style="max-width:450px; background:#a27791; border:4px solid #b97272;">
             <div style="background:#79434a; padding:12px; display:flex; justify-content:space-between;">
@@ -171,6 +157,7 @@
         </div>
     </div>
 
+    <!-- adaModal -->
     <div id="adaModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
         <div style="max-width:500px; background:#a27791;">
             <div style="background:#79434a; padding:12px;"><span>✦ ADA MORSOVA ✦</span><button class="close-inner">✜</button></div>
@@ -182,6 +169,8 @@
             </div>
         </div>
     </div>
+
+    <!-- exModal -->
     <div id="exModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1100;">
         <div style="max-width:500px; background:#a27791;">
             <div style="background:#79434a; padding:12px;"><span>✦ GRIM EX FRAME ✦</span><button class="close-inner">✜</button></div>
@@ -203,8 +192,7 @@
         const exModal = document.getElementById('exModal');
         function openModal(m) { m.style.display = 'flex'; }
         function closeModal(m) { m.style.display = 'none'; }
-        document.getElementById('teamDesignerBtn').onclick = () => openModal(teamModal);
-        document.getElementById('teamDeveloperBtn').onclick = () => openModal(teamModal);
+        document.getElementById('teamBtn').onclick = () => openModal(teamModal);
         document.getElementById('closeTeamModal').onclick = () => closeModal(teamModal);
         document.querySelectorAll('.team-choice').forEach(c => c.onclick = (e) => {
             const member = e.currentTarget.dataset.member;
