@@ -1,5 +1,6 @@
+// journal.js — логика журнала
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. RSS тикер (ускорен в CSS)
+    // 1. RSS тикер
     const ticker = document.getElementById('rssTicker');
     if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
 
@@ -100,23 +101,34 @@ document.addEventListener('DOMContentLoaded', () => {
         else if(modalId) setTimeout(()=>closeModal(modalId),100);
     }));
 
-    // Привязка кнопок
+    // Привязка кнопок (обновлённая)
     document.getElementById('twitterBtn')?.addEventListener('click',()=>openModal('disclaimerModal'));
     document.getElementById('forumBtn')?.addEventListener('click',()=>openModal('openMiniModal'));
     document.getElementById('supportBtn')?.addEventListener('click',()=>openModal('supportModal'));
     document.getElementById('radioBtn')?.addEventListener('click',()=>openModal('radioModal'));
-    document.getElementById('moodBtn')?.addEventListener('click',()=>openModal('pinterestModal'));
     document.getElementById('paintBtn')?.addEventListener('click',()=>openModal('artModal'));
-    document.getElementById('teamBtnJournal')?.addEventListener('click',()=>openModal('teamModalJournal'));
     document.getElementById('stylerModalBtn')?.addEventListener('click',()=>openModal('stylerModal'));
     document.getElementById('downloadModalBtn')?.addEventListener('click',()=>openModal('downloadModal'));
 
-    // Внутренние модалки TEAM
-    document.querySelectorAll('.team-card').forEach(c=> c.addEventListener('click', e=>{
-        e.stopPropagation(); const member=c.dataset.member;
-        if(member==='ada') openModal('adaModal'); else if(member==='ex') openModal('exModal');
-    }));
-    document.querySelectorAll('.inner-modal').forEach(m=> m.addEventListener('click', e=>{ if(e.target===m){ e.stopPropagation(); m.classList.remove('active'); } }));
+    // Обработчики для карточек Designer/Developer
+    document.querySelectorAll('.team-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const member = card.dataset.member;
+            if (member === 'ada') openModal('adaModal');
+            else if (member === 'ex') openModal('exModal');
+        });
+    });
+
+    // Обработчики внутренних модалок (закрытие по фону)
+    document.querySelectorAll('.inner-modal').forEach(m => {
+        m.addEventListener('click', (e) => {
+            if (e.target === m) {
+                e.stopPropagation();
+                m.classList.remove('active');
+            }
+        });
+    });
 
     // ESC
     document.addEventListener('keydown', e=>{ if(e.key==='Escape'){
