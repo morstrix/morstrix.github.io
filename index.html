@@ -171,13 +171,41 @@
     <link rel="stylesheet" href="css/crt.css">
 </head>
 <body>
-    <!-- CRT OVERLAY (полный комплект) -->
-    <div class="crt-noise"></div>
-    <div class="crt-scanlines"></div>
-    <div class="crt-flicker"></div>
-    <div class="crt-bloom"></div>
-    <div class="crt-blur"></div>
 
+<!-- ==================== SVG ФИЛЬТР ДЛЯ CRT (БОЧКА + ХРОМАТИКА) ==================== -->
+<svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+    <defs>
+        <filter id="crt-barrel" x="-10%" y="-10%" width="120%" height="120%">
+            <!-- Бочкообразное искажение через turbulence -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+            
+            <!-- Хроматические аберрации (сдвиг красного и синего каналов) -->
+            <feOffset in="displaced" dx="2" dy="0" result="red-shift" />
+            <feColorMatrix in="displaced" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red-only" />
+            <feOffset in="displaced" dx="-2" dy="0" result="blue-shift" />
+            <feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue-only" />
+            
+            <!-- Сборка -->
+            <feMerge>
+                <feMergeNode in="red-only" />
+                <feMergeNode in="displaced" />
+                <feMergeNode in="blue-only" />
+            </feMerge>
+        </filter>
+    </defs>
+</svg>
+
+<!-- ==================== CRT OVERLAY (ПОВЕРХ ВСЕГО) ==================== -->
+<div class="crt-noise"></div>
+<div class="crt-scanlines"></div>
+<div class="crt-flicker"></div>
+<div class="crt-bloom"></div>
+<div class="crt-blur"></div>
+<div class="crt-edge-glow"></div>
+<div class="crt-distortion"></div>
+
+<!-- ==================== ОСНОВНОЙ КОНТЕНТ ==================== -->
 <div class="top-row">
     <a href="journal.html" class="index-card">
         <img src="assets/journal.png" alt="Journal">
@@ -231,13 +259,10 @@
             <button class="modal-close-btn" data-modal="adaModal">✜</button>
         </div>
         <div class="modal-inner">
-            <!-- LinkedIn Widget ADA -->
             <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova" data-version="v1"></div>
-            
             <div class="behance-embed">
                 <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" style="border:none;"></iframe>
             </div>
-            
             <div class="instagram-widget">
                 <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
             </div>
@@ -253,17 +278,13 @@
             <button class="modal-close-btn" data-modal="exModal">✜</button>
         </div>
         <div class="modal-inner">
-            <!-- LinkedIn Widget EX -->
             <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe" data-version="v1"></div>
-            
             <div class="social-icons">
                 <a href="https://github.com/grimexframe" target="_blank" title="GitHub">🐙</a>
             </div>
-            
             <div class="instagram-widget">
                 <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
             </div>
-            
             <div class="social-icons">
                 <a href="https://www.threads.net/@grimexframe" target="_blank" title="Threads">🧵</a>
                 <a href="https://www.tiktok.com/@grimexframe" target="_blank" title="TikTok">🎵</a>
@@ -281,7 +302,7 @@
         </div>
         <div class="modal-inner">
             <p style="font-size:10px; color:#000; margin-bottom:20px;">monobank</p>
-            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000000; padding:15px; word-break:break-all;">
+            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">
                 5375 4141 0000 0000
             </p>
             <p id="copyHint" style="font-size:7px; color:#3d2a2f; margin-top:15px; cursor:pointer;">* тап для копіювання</p>
@@ -289,6 +310,7 @@
     </div>
 </div>
 
+<!-- ==================== СКРИПТЫ ==================== -->
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 <script type="module" src="https://w.behold.so/widget.js"></script>
 <script>
@@ -324,7 +346,6 @@
             });
         });
         
-        // Копирование номера карты
         const cardNumber = document.getElementById('cardNumber');
         const copyHint = document.getElementById('copyHint');
         if (cardNumber && copyHint) {

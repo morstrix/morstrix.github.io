@@ -120,3 +120,35 @@ body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
     2px 2px 0 #000,
     1px 1px 0 #000;
 }
+
+/* 7. БОЧКООБРАЗНАЯ ДИСТОРСИЯ + ХРОМАТИЧЕСКИЕ АБЕРРАЦИИ (SVG) */
+.crt-distortion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 20;
+  filter: url(#crt-barrel);
+  mix-blend-mode: normal;
+  opacity: 0.7;
+}
+
+/* 8. ДОПОЛНИТЕЛЬНЫЙ ГЛОУ ПО КРАЯМ (ВИНЬЕТКА НОВОГО ТИПА) */
+.crt-edge-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 7;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(180, 140, 200, 0.08) 90%,
+    rgba(100, 80, 150, 0.15) 100%
+  );
+  mix-blend-mode: screen;
+}
