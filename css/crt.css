@@ -1,5 +1,6 @@
 /* ============================================
-   CRT TEXTURE — только сканлайны + RGB-полосы
+   CRT OVERLAY — MORSTRIX EDITION
+   Шум + сканлайны + RGB-полосы + блум
    ============================================ */
 
 /* 1. ШУМ (зернистость) */
@@ -13,7 +14,7 @@
   z-index: 10;
   background-image: url('https://rekt.network/static/img/noise.png');
   background-size: auto;
-  opacity: 0.15;
+  opacity: 0.12;
   animation: crt-grain 8s steps(10) infinite;
 }
 
@@ -42,18 +43,18 @@
   background: 
     linear-gradient(
       rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.2) 50%
+      rgba(0, 0, 0, 0.18) 50%
     ),
     linear-gradient(
       90deg,
-      rgba(255, 0, 0, 0.04),
-      rgba(0, 255, 0, 0.02),
-      rgba(0, 0, 255, 0.04)
+      rgba(255, 0, 0, 0.03),
+      rgba(0, 255, 0, 0.015),
+      rgba(0, 0, 255, 0.03)
     );
   background-size: 100% 2px, 3px 100%;
 }
 
-/* 3. ЛЁГКОЕ МЕРЦАНИЕ (опционально) */
+/* 3. ЛЁГКОЕ МЕРЦАНИЕ */
 .crt-flicker {
   position: fixed;
   top: 0;
@@ -71,4 +72,25 @@
   50% { opacity: 1; }
 }
 
-/* Виньетка — полностью убрана */
+/* 4. БЛУМ (СВЕЧЕНИЕ + РАЗМЫТИЕ) */
+.crt-bloom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9;
+  backdrop-filter: blur(0.8px) brightness(1.05) contrast(1.1);
+  opacity: 0.4;
+  mix-blend-mode: screen;
+}
+
+/* 5. РАЗМЫТИЕ ТЕКСТА */
+body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
+.modal-title-text, .index-card span, .donate-label, .team-btn span,
+.panel-btn, .cat-name, .cart-bottom-btn, .popup-enter-btn {
+  text-shadow: 
+    0 0 2px rgba(255, 255, 255, 0.25),
+    0 0 4px rgba(200, 200, 200, 0.08);
+}
