@@ -1,6 +1,6 @@
 /* ============================================
    CRT OVERLAY — MORSTRIX EDITION v2.0
-   Плывущие сканлайны + RGB-полосы + шум + блум + 3D-текст
+   Плывущие сканлайны + RGB-полосы + шум + блум + 3D-текст + плавное свечение
    ============================================ */
 
 /* 1. ШУМ (зернистость) */
@@ -106,19 +106,40 @@
   opacity: 0.45;
 }
 
-/* 6. ОБЪЁМНОЕ СВЕЧЕНИЕ + ЧЁТКАЯ 3D-ТЕНЬ (ПИКСЕЛЬНЫЙ СТИЛЬ) */
+/* 6. ПЛАВНОЕ СВЕЧЕНИЕ БЕЗ ЧЁТКОЙ ЛИНИИ + 3D-ТЕНЬ */
 body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
 .modal-title-text, .index-card span, .donate-label, .team-btn span,
 .panel-btn, .cat-name, .cart-bottom-btn, .popup-enter-btn,
 .contents-item, .forum-tab, .mx-description, .hashtag, .paint-label {
   text-shadow: 
-    /* CRT-свечение */
-    0 0 6px rgba(255, 255, 255, 0.6),
-    0 0 12px rgba(200, 180, 255, 0.25),
-    /* ЧЁТКАЯ 3D-ТЕНЬ (как в модалках) */
-    4px 4px 0 #000,
+    /* Многослойное плавное свечение — без чёткой границы */
+    0 0 2px rgba(255, 255, 255, 0.15),
+    0 0 4px rgba(255, 255, 255, 0.12),
+    0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 16px rgba(200, 180, 255, 0.05),
+    0 0 32px rgba(200, 180, 255, 0.03),
+    /* Чёткая 3D-тень для глубины */
+    3px 3px 0 #000,
     2px 2px 0 #000,
     1px 1px 0 #000;
+}
+
+/* Мобильная версия — ещё мягче */
+@media (max-width: 768px) {
+  body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
+  .modal-title-text, .index-card span, .donate-label, .team-btn span,
+  .panel-btn, .cat-name, .cart-bottom-btn, .popup-enter-btn,
+  .contents-item, .forum-tab, .mx-description, .hashtag, .paint-label {
+    text-shadow: 
+      /* Ещё более размытое свечение */
+      0 0 3px rgba(255, 255, 255, 0.1),
+      0 0 6px rgba(255, 255, 255, 0.06),
+      0 0 12px rgba(200, 180, 255, 0.04),
+      0 0 24px rgba(200, 180, 255, 0.02),
+      /* 3D-тень */
+      3px 3px 0 #000,
+      1px 1px 0 #000;
+  }
 }
 
 /* 7. БОЧКООБРАЗНАЯ ДИСТОРСИЯ + ХРОМАТИЧЕСКИЕ АБЕРРАЦИИ (SVG) */
