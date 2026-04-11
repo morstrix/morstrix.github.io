@@ -1,6 +1,6 @@
 /* ============================================
-   CRT OVERLAY — MORSTRIX EDITION
-   Шум + плывущие сканлайны + RGB-полосы + блум
+   CRT OVERLAY — MORSTRIX EDITION v2.0
+   Плывущие сканлайны + RGB-полосы + шум + блум + 3D-текст
    ============================================ */
 
 /* 1. ШУМ (зернистость) */
@@ -31,7 +31,7 @@
   90% { transform: translate(-10%, 10%); }
 }
 
-/* 2. СКАНЛАЙНЫ + ВЕРТИКАЛЬНЫЕ RGB-ПОЛОСЫ (ОЧЕНЬ ПЛАВНЫЙ ДРЕЙФ) */
+/* 2. СКАНЛАЙНЫ + ВЕРТИКАЛЬНЫЕ RGB-ПОЛОСЫ (ПЛАВНЫЙ МЕДЛЕННЫЙ ДРЕЙФ) */
 .crt-scanlines {
   position: fixed;
   top: 0;
@@ -53,7 +53,7 @@
     );
   background-size: 100% 4px, 3px 100%;
   background-repeat: repeat, repeat;
-  animation: scanlines-drift 40s ease-in-out infinite;
+  animation: scanlines-drift 45s ease-in-out infinite;
 }
 
 @keyframes scanlines-drift {
@@ -79,7 +79,7 @@
   50% { opacity: 1; }
 }
 
-/* 4. БЛУМ (СВЕЧЕНИЕ + РАЗМЫТИЕ) */
+/* 4. БЛУМ (СВЕЧЕНИЕ + КОНТРАСТ) */
 .crt-bloom {
   position: fixed;
   top: 0;
@@ -93,11 +93,30 @@
   mix-blend-mode: screen;
 }
 
-/* 5. РАЗМЫТИЕ ТЕКСТА */
+/* 5. ЛЁГКОЕ РАЗМЫТИЕ ВСЕЙ КАРТИНКИ (КАК НА СТАРОМ ТЕЛЕКЕ) */
+.crt-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 8;
+  backdrop-filter: blur(0.6px);
+  opacity: 0.45;
+}
+
+/* 6. ОБЪЁМНОЕ СВЕЧЕНИЕ + ЧЁТКАЯ 3D-ТЕНЬ (ПИКСЕЛЬНЫЙ СТИЛЬ) */
 body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
 .modal-title-text, .index-card span, .donate-label, .team-btn span,
-.panel-btn, .cat-name, .cart-bottom-btn, .popup-enter-btn {
+.panel-btn, .cat-name, .cart-bottom-btn, .popup-enter-btn,
+.contents-item, .forum-tab, .mx-description, .hashtag, .paint-label {
   text-shadow: 
-    0 0 2px rgba(255, 255, 255, 0.25),
-    0 0 4px rgba(200, 200, 200, 0.08);
+    /* CRT-свечение */
+    0 0 6px rgba(255, 255, 255, 0.6),
+    0 0 12px rgba(200, 180, 255, 0.25),
+    /* ЧЁТКАЯ 3D-ТЕНЬ (как в модалках) */
+    4px 4px 0 #000,
+    2px 2px 0 #000,
+    1px 1px 0 #000;
 }
