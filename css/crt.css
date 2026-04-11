@@ -1,6 +1,6 @@
 /* ============================================
    CRT OVERLAY — MORSTRIX EDITION
-   Шум + сканлайны + RGB-полосы + блум
+   Шум + плывущие сканлайны + RGB-полосы + блум
    ============================================ */
 
 /* 1. ШУМ (зернистость) */
@@ -31,7 +31,7 @@
   90% { transform: translate(-10%, 10%); }
 }
 
-/* 2. СКАНЛАЙНЫ + ВЕРТИКАЛЬНЫЕ RGB-ПОЛОСЫ */
+/* 2. СКАНЛАЙНЫ + ВЕРТИКАЛЬНЫЕ RGB-ПОЛОСЫ (ОЧЕНЬ ПЛАВНЫЙ ДРЕЙФ) */
 .crt-scanlines {
   position: fixed;
   top: 0;
@@ -51,7 +51,14 @@
       rgba(0, 255, 0, 0.015),
       rgba(0, 0, 255, 0.03)
     );
-  background-size: 100% 2px, 3px 100%;
+  background-size: 100% 4px, 3px 100%;
+  background-repeat: repeat, repeat;
+  animation: scanlines-drift 40s ease-in-out infinite;
+}
+
+@keyframes scanlines-drift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 200%, 0 0; }
 }
 
 /* 3. ЛЁГКОЕ МЕРЦАНИЕ */
