@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #000;
+            background: #121212;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -168,8 +168,13 @@
         .behance-embed { margin: 15px 0; }
         .instagram-widget { margin: 20px 0; }
     </style>
+    <link rel="stylesheet" href="css/crt.css">
 </head>
 <body>
+<body>
+    <div class="crt-noise"></div>
+    <div class="crt-scanlines"></div>
+    <div class="crt-flicker"></div>   <!-- если не нужно — удали -->
 
 <div class="top-row">
     <a href="journal.html" class="index-card">
@@ -274,7 +279,7 @@
         </div>
         <div class="modal-inner">
             <p style="font-size:10px; color:#000; margin-bottom:20px;">monobank</p>
-            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">
+            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000000; padding:15px; word-break:break-all;">
                 5375 4141 0000 0000
             </p>
             <p id="copyHint" style="font-size:7px; color:#3d2a2f; margin-top:15px; cursor:pointer;">* тап для копіювання</p>
