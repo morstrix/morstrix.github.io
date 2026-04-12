@@ -41,29 +41,29 @@
         </div>
     </div>
 
- <!-- 2: Font Styler + MX Static Image -->
+<!-- 2: MX Static Image + Font Styler (порядок изменён) -->
 <div class="journal-page" data-page="2">
-    <div class="page-content">
-        <!-- STYLER -->
+    <div class="page-content" style="justify-content: flex-start; padding-top: 0;">
+        <!-- КАРТИНКА (впритык к верху, без рамки) -->
+        <div style="width: 100%; max-width: 300px; margin: 0 auto;">
+            <img src="assets/f1.jpg" alt="MX Print" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <!-- ОПИСАНИЕ -->
+        <div class="mx-description" style="margin: 10px 0 5px;">
+            FONT<br>(TO DO)
+        </div>
+
+        <!-- КНОПКА DOWNLOAD -->
+        <button class="universal-btn" id="downloadArchiveBtnEmbedded" style="margin-bottom: 15px;">
+            <span class="btn-inner"><span>DOWNLOAD</span></span>
+        </button>
+
+        <!-- СТИЛИЗАТОР (как был) -->
         <div class="styler-embedded">
             <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT...">
             <div class="styler-preview" id="stylerPreviewEmbedded"></div>
         </div>
-
-        <!-- СТАТИЧНАЯ КАРТИНКА -->
-        <div class="mx-static-image">
-            <img src="assets/f1.jpg" alt="MX Print" id="mxStaticImage">
-        </div>
-
-        <!-- ОПИСАНИЕ -->
-        <div class="mx-description" id="mxDescription">
-            ШРИФТ<br>кругленький 🙄
-        </div>
-
-        <!-- КНОПКА DOWNLOAD -->
-        <button class="universal-btn" id="downloadArchiveBtnEmbedded">
-            <span class="btn-inner"><span>DOWNLOAD</span></span>
-        </button>
     </div>
 </div>
 
