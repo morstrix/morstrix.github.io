@@ -150,12 +150,60 @@ body {
     cursor: pointer;
 }
 
-/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ ===== */
-.journal-page[data-page="2"] .page-content { justify-content: center; gap: 5px; }
-.styler-embedded, .mx-download-block { border:none; box-shadow:none; background:transparent; padding:5px 0; width:100%; }
-.styler-embedded h3 { font-size:10px; }
-.hint { font-size:6px !important; color:#888; }
-.styler-input { width:100%; background:#000; border:1px solid #a84d6b; color:#fff; padding:8px; font-family:inherit; }
+.journal-page[data-page="2"] .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px 15px;
+    height: 100%;
+}
+
+.mx-static-image {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    border: none;
+    background: #000;
+}
+
+.mx-static-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.mx-description {
+    font-size: 11px;
+    color: #ddd;
+    margin: 5px 0 5px;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 300px;
+}
+
+#downloadArchiveBtnEmbedded {
+    margin-bottom: 10px;
+}
+
+.styler-embedded {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.styler-input {
+    width: 100%;
+    background: #000;
+    border: 1px solid #a84d6b;
+    color: #fff;
+    padding: 8px;
+    font-family: inherit;
+}
+
 .styler-preview {
     background: #000;
     border: 2px solid #79434a;
@@ -164,51 +212,18 @@ body {
     font-size: 12px;
     text-align: center;
     cursor: pointer;
-    font-family: 'Arial', 'Helvetica', sans-serif;   /* ← добавь эту строку */
+    font-family: 'Arial', 'Helvetica', sans-serif;
     word-break: break-all;
 }
 
-/* ===== СТРАНИЦА 2 — СТИЛИЗАТОР + СТАТИЧНАЯ MX КАРТИНКА ===== */
-.journal-page[data-page="2"] .page-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    padding: 15px 15px 20px;
-    height: 100%;
-}
-
-/* Статичная картинка */
-.mx-static-image {
-    width: 280px;
-    height: 280px;
-    margin: 0 auto;
-    border: 2px solid #a84d6b;
-    background: #000;
-}
-
-.mx-static-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Описание */
-.mx-description {
-    font-size: 11px;
-    color: #ddd;
-    margin: 10px 0 5px;
-    text-align: center;
-    line-height: 1.5;
-    max-width: 300px;
-}
-
-/* Кнопка DOWNLOAD — центрирование */
+.mx-carousel,
+.mx-carousel-track,
+.mx-arrow,
+.mx-slide,
 .mx-download-block,
-#downloadArchiveBtnEmbedded {
-    margin-top: 5px;
+.styler-embedded h3,
+.hint {
+    display: none;
 }
 
 .journal-page[data-page="3"] .page-content { justify-content: center; gap: 15px; }
