@@ -39,21 +39,95 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
+
+/* ========================================= */
+/*     ГИБКИЙ КОНТЕЙНЕР ДЛЯ ВСЕХ СТРАНИЦ     */
+/* ========================================= */
+
 .journal-page {
-    flex: 0 0 100vw; scroll-snap-align: start;
-    overflow-y: auto; padding: 20px;
-    display: flex; justify-content: center; align-items: center;
+    flex: 0 0 100vw;
+    scroll-snap-align: start;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 20px;
+    box-sizing: border-box;
 }
+
 .page-content {
-    max-width: 700px; width: 100%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 15px;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== БАЗОВЫЕ НАСТРОЙКИ ДЛЯ ВСЕХ СТРАНИЦ ===== */
+.journal-page[data-page] .page-content {
+    justify-content: space-evenly;
+    gap: 12px;
+}
+
+/* Страница 1 — RSS + Карусель + Twitter */
+.journal-page[data-page="1"] .page-content {
+    justify-content: space-around;
+    gap: 8px;
+}
+
+/* Страница 2 — Font Styler + MX */
+.journal-page[data-page="2"] .page-content {
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Страница 3 — Art + Paint */
+.journal-page[data-page="3"] .page-content {
+    justify-content: center;
     gap: 20px;
 }
-/* Постраничные отступы */
-.journal-page[data-page="1"] .page-content { gap: 15px; }
-.journal-page[data-page="2"] .page-content { gap: 15px; }
-.journal-page[data-page="5"] .page-content { gap: 20px; justify-content: flex-start; padding-top: 20px; }
-.journal-page[data-page="10"] .page-content { padding: 10px 0; }
+
+/* Страница 4 — Pinterest */
+.journal-page[data-page="4"] .page-content {
+    justify-content: flex-start;
+    padding-top: 10px;
+}
+
+/* Страница 5 — Merch + Converter */
+.journal-page[data-page="5"] .page-content {
+    justify-content: flex-start;
+    padding-top: 15px;
+    gap: 20px;
+}
+
+/* Страница 6 — Spotify + Text Synth (объединённые) */
+.journal-page[data-page="6"] .page-content {
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Страница 7 — Top + Tetris (бывшая 8) */
+.journal-page[data-page="7"] .page-content {
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Страница 8 — Support (бывшая 9) */
+.journal-page[data-page="8"] .page-content {
+    justify-content: flex-start;
+    padding-top: 10px;
+}
+
+/* Страница 9 — Forum (бывшая 10) */
+.journal-page[data-page="9"] .page-content {
+    padding: 5px 0;
+    justify-content: center;
+    gap: 0;
+}
 
 .bottom-panel {
     position: fixed; bottom:0; left:0; right:0; height:40px;
@@ -70,15 +144,15 @@ body {
 .dot.active { opacity: 1; background: #ffb7c7; }
 
 /* Страница 1 */
-.ticker-wrapper { width:100%; overflow:hidden; white-space:nowrap; padding:6px 0; }
+.ticker-wrapper { width:100%; overflow:hidden; white-space:nowrap; padding:8px 0; flex-shrink:0; }
 .ticker { display:inline-block; font-size:10px; color:#a27791; animation: scrollTicker 40s linear infinite; }
 @keyframes scrollTicker { 0%{transform:translateX(0%);} 100%{transform:translateX(-50%);} }
-.carousel { max-width:400px; width:100%; border:2px solid #79434a; }
+.carousel { max-width:350px; width:100%; border:2px solid #79434a; flex-shrink:1; margin:5px 0; }
 .carousel img { width:100%; display:block; }
 .carousel img:not(.active) { display:none; }
-.hashtag-row { margin:5px 0; }
+.hashtag-row { margin:5px 0; flex-shrink:0; }
 .hashtag { font-size:12px; color:#888; }
-.x-btn-img { width:40px; cursor:pointer; }
+.x-btn-img { width:45px; cursor:pointer; flex-shrink:0; margin-top:5px; }
 
 /* Страница 2 */
 .styler-embedded, .mx-download-block {
@@ -123,28 +197,43 @@ body {
 .converter-container input { width:100px; background:#000; border:1px solid #a84d6b; color:#fff; padding:8px; text-align:center; }
 .converter-arrow { font-size:20px; margin:0 10px; }
 
-/* Страница 6 */
-.spotify-embed { border:none; background:transparent; box-shadow:none; height:300px; width:100%; max-width:500px; margin:0 auto; }
+/* Страница 6 — Spotify + Text Synth */
+.spotify-embed { 
+    border:none; background:transparent; box-shadow:none; 
+    height:250px; width:100%; max-width:500px; margin:0 auto; 
+}
 .spotify-embed iframe { height:100% !important; border-radius:0 !important; }
 
-/* Страница 7 */
-.placeholder-block { text-align:center; max-width:400px; margin:0 auto; }
-.synth-placeholder { margin-top:20px; padding:20px; background:#000; border:1px dashed #a84d6b; }
+.text-synth-embedded {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+.text-synth-embedded h4 {
+    font-size: 10px;
+    color: #a84d6b;
+    margin-bottom: 10px;
+}
+.synth-placeholder {
+    padding: 15px;
+    background: #000;
+    border: 1px dashed #a84d6b;
+    font-size: 8px;
+    color: #a27791;
+}
 
-/* Страница 8 */
+/* Страница 7 — Top + Tetris */
 .top-players-framed { max-width:400px; margin:0 auto; }
 .top-players-list, .top-players-placeholder { font-size:9px; color:#aaa; line-height:1.8; }
 .tetris-big { display:flex; flex-direction:column; align-items:center; text-decoration:none; }
 .tetris-big img { width:120px; image-rendering:pixelated; }
 .tetris-big span { font-size:12px; color:#fff; margin-top:10px; }
 
-/* Страница 9 */
+/* Страница 8 — Support */
 .support-embedded { border:none; background:transparent; box-shadow:none; padding:10px; height:100%; max-height:500px; }
 
-/* Страница 10 — Форум */
-.journal-page[data-page="10"] .page-content {
-    padding: 0;
-}
+/* Страница 9 — Форум */
 .forum-embedded {
     display: flex;
     gap: 0;
@@ -297,22 +386,82 @@ body {
 
 /* ===== МОБИЛЬНЫЕ (до 480px) ===== */
 @media (max-width: 480px) {
+    .journal-page {
+        padding: 10px 12px;
+    }
+    
+    .page-content {
+        gap: 10px;
+    }
+    
+    .journal-page[data-page="1"] .page-content {
+        gap: 6px;
+    }
+    
+    .journal-page[data-page="2"] .page-content {
+        gap: 12px;
+    }
+    
+    .journal-page[data-page="3"] .page-content {
+        gap: 15px;
+    }
+    
+    .journal-page[data-page="5"] .page-content {
+        padding-top: 10px;
+        gap: 15px;
+    }
+    
+    .journal-page[data-page="7"] .page-content {
+        gap: 15px;
+    }
+    
+    .ticker-wrapper {
+        padding: 5px 0;
+    }
+    
+    .ticker {
+        font-size: 9px;
+    }
+    
+    .carousel {
+        max-width: 280px;
+    }
+    
+    .hashtag {
+        font-size: 10px;
+    }
+    
+    .x-btn-img {
+        width: 40px;
+    }
+    
     #disclaimerModal .modal-content {
         max-width: 280px !important;
     }
-
+    
     #disclaimerModal .modal-title-text {
         font-size: 8px !important;
     }
-
+    
     #disclaimerModal .modal-inner {
         padding: 20px 14px !important;
         gap: 14px !important;
     }
-
+    
     #disclaimerModal .modal-inner p {
         font-size: 9px !important;
         line-height: 1.6 !important;
+    }
+}
+
+/* ===== ПЛАНШЕТЫ ===== */
+@media (min-width: 481px) and (max-width: 767px) {
+    .journal-page {
+        padding: 12px 18px;
+    }
+    
+    .page-content {
+        gap: 14px;
     }
 }
 
@@ -321,16 +470,16 @@ body {
     #disclaimerModal .modal-content {
         max-width: 300px !important;
     }
-
+    
     #disclaimerModal .modal-title-text {
         font-size: 10px !important;
     }
-
+    
     #disclaimerModal .modal-inner {
         padding: 16px 18px !important;
         gap: 10px !important;
     }
-
+    
     #disclaimerModal .modal-inner p {
         font-size: 11px !important;
     }
@@ -341,11 +490,11 @@ body {
     #disclaimerModal .modal-content {
         max-width: 320px !important;
     }
-
+    
     #disclaimerModal .modal-inner {
         padding: 20px 20px !important;
     }
-
+    
     #disclaimerModal .modal-inner p {
         font-size: 11px !important;
     }
@@ -366,7 +515,7 @@ body {
 .universal-btn .btn-inner {
     background: #fafafa !important;
     border: 2px solid #a0a0a0 !important;
-    padding: 4px 16px !important;
+    padding: 5px 16px !important;
     transform: translateY(-4px) !important;
     transition: 0.08s !important;
     display: inline-block !important;
@@ -378,17 +527,6 @@ body {
     letter-spacing: 1.5px !important;
     color: #000 !important;
     text-transform: uppercase !important;
-}
-
-/* На мобильных — кнопка чуть крупнее для удобства нажатия */
-@media (max-width: 480px) {
-    .universal-btn .btn-inner {
-        padding: 4px 16px !important;
-    }
-    .universal-btn .btn-inner span {
-        font-size: 10px !important;
-        letter-spacing: 2px !important;
-    }
 }
 
 .universal-btn:active {
@@ -404,4 +542,13 @@ body {
     .universal-btn:hover .btn-inner {
         background: #e0e0e0 !important;
     }
+}
+
+/* Адаптация панелей */
+@media (max-width:700px){
+    .top-panel{height:50px; padding:0 12px;}
+    .panel-btn{font-size:0.5rem;}
+    .panel-close img{width:28px; height:28px;}
+    .journal-horizontal{height:calc(100vh - 50px - 40px); margin-top:50px;}
+    .bottom-panel{height:40px;}
 }
