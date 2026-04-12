@@ -142,20 +142,6 @@ body, p, span, a, h1, h2, h3, h4, h5, h6, button, div, input, label,
   }
 }
 
-/* 7. БОЧКООБРАЗНАЯ ДИСТОРСИЯ + ХРОМАТИЧЕСКИЕ АБЕРРАЦИИ (SVG) */
-.crt-distortion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 20;
-  filter: url(#crt-barrel);
-  mix-blend-mode: normal;
-  opacity: 0.7;
-}
-
 /* 8. ПРЕДЕЛЬНО МЯГКАЯ ВИНЬЕТКА (РАЗМЫТИЕ ОТ КРАЁВ К ЦЕНТРУ) */
 .crt-edge-glow {
   position: fixed;
