@@ -87,25 +87,41 @@
 </div>
 
     <!-- 5: Merch + Converter -->
-    <div class="journal-page" data-page="5">
-        <div class="page-content">
-            <div class="merch-constructor">
-                <h4>CONSTRUCTOR</h4>
-                <div class="tshirt-preview"><img src="assets/tshirt.jpeg" class="tshirt-img"><canvas id="printCanvasEmbedded" class="print-canvas"></canvas></div>
-                <div class="upload-area"><input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif">
-                    <button class="universal-btn" id="resetPrintEmbedded">
-                        <span class="btn-inner"><span>CLEAR</span></span>
-                    </button>
-                </div>
+<div class="journal-page" data-page="5">
+    <div class="page-content">
+        <div class="merch-constructor">
+            <h4>CONSTRUCTOR</h4>
+            <div class="tshirt-preview">
+                <img src="assets/tshirt.jpeg" class="tshirt-img" alt="T-shirt">
+                <canvas id="printCanvasEmbedded" class="print-canvas"></canvas>
             </div>
-            <div class="converter-container">
-                <h4>CONVERTER</h4>
-                <input type="text" id="pxInputEmbedded" class="converter-input" placeholder="Pixels" inputmode="numeric">
+            <div class="upload-area">
+                <label for="imageUploadEmbedded" class="file-upload-label">
+                    <span class="file-upload-text">CHOOSE FILE</span>
+                </label>
+                <input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif" style="display: none;">
+                <button class="universal-btn" id="resetPrintEmbedded">
+                    <span class="btn-inner"><span>CLEAR</span></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="converter-container">
+            <h4>CONVERTER</h4>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 8px; color: #a27791; margin-bottom: 4px;">PIXELS</div>
+                    <input type="text" id="pxInputEmbedded" class="converter-input" placeholder="0" inputmode="numeric">
+                </div>
                 <span class="converter-arrow">⇄</span>
-                <input type="text" id="cmInputEmbedded" class="converter-input" placeholder="cm" inputmode="decimal">
+                <div style="text-align: center;">
+                    <div style="font-size: 8px; color: #a27791; margin-bottom: 4px;">CM</div>
+                    <input type="text" id="cmInputEmbedded" class="converter-input" placeholder="0.0" inputmode="decimal">
+                </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- 6: Spotify + Text Synth -->
     <div class="journal-page" data-page="6">
