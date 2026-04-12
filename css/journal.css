@@ -287,17 +287,22 @@ body {
 @media (max-width: 480px) {
     #disclaimerModal .modal-content {
         max-width: 280px !important;
-        min-height: 260px !important;
+        min-height: auto !important;           /* убираем жёсткую минималку */
     }
-    
+
     #disclaimerModal .modal-inner {
-        min-height: 160px !important;
-        padding: 20px 15px !important;
+        min-height: auto !important;           /* убираем */
+        padding: 15px 15px !important;         /* ← УМЕНЬШИТЬ (было 20-30px) */
     }
-    
+
     #disclaimerModal .modal-inner p {
-        font-size: 10px !important;
-        margin: 0 0 20px 0 !important;
+        font-size: 9px !important;             /* ← УМЕНЬШИТЬ */
+        margin: 0 0 10px 0 !important;         /* ← УМЕНЬШИТЬ (было 15-25px) */
+    }
+
+    #disclaimerModal .universal-btn {
+        margin-top: 5px !important;            /* ← УМЕНЬШИТЬ */
+        margin-bottom: 0 !important;
     }
 }
 
