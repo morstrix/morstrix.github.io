@@ -333,7 +333,7 @@ body {
 .converter-container input {
     width: 100px;
     background: #000;
-    border: 1px solid #a27791;
+    border: 1px solid #888888;
     color: #fff;
     padding: 8px;
     text-align: center;
@@ -526,7 +526,7 @@ body {
     display: inline-block;
     padding: 10px 18px;
     background: #000;
-    border: 2px dashed #a84d6b;   /* пунктир */
+    border: 2px dashed #888888;   /* пунктир */
     cursor: pointer;
     transition: transform 0.08s;
 }
