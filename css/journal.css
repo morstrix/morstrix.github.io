@@ -115,7 +115,11 @@ body {
 .tshirt-img { width:100%; }
 .print-canvas { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:80px; height:80px; }
 .upload-area { margin-top:10px; text-align:center; }
-.reset-btn { background:#010101; border:2px solid #79434a; color:#a27791; padding:6px 12px; font-size:8px; cursor:pointer; }
+.reset-btn {
+    background:#010101; border:2px solid #79434a; color:#a27791;
+    padding:6px 12px; font-size:8px; cursor:pointer;
+    font-family: 'Press Start 2P', monospace;
+}
 .converter-container input { width:100px; background:#000; border:1px solid #a84d6b; color:#fff; padding:8px; text-align:center; }
 .converter-arrow { font-size:20px; margin:0 10px; }
 
@@ -144,7 +148,7 @@ body {
 .forum-embedded {
     display: flex;
     gap: 0;
-    background: transparent;          /* убираем розовую заливку */
+    background: transparent;
     border: none;
     box-shadow: none;
     width: 100%;
@@ -153,17 +157,17 @@ body {
     margin: 0;
 }
 .forum-tabs-panel-embedded {
-    width: 60px;                      /* чуть уже */
+    width: 60px;
     background: #0a0a0f;
     border-right: 2px solid #79434a;
     display: flex;
     flex-direction: column;
     margin: 0;
-    padding: 5px 0;                   /* небольшой отступ сверху/снизу */
+    padding: 5px 0;
 }
 .forum-tabs-panel-embedded .forum-tab {
     padding: 10px 0;
-    font-size: 20px;                  /* иконки поменьше */
+    font-size: 20px;
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid #3d2a2f;
@@ -183,29 +187,20 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: #0a0a0f;               /* тёмный фон вместо розового */
+    background: #0a0a0f;
     color: #a27791;
 }
 .forum-content-embedded h3 {
     font-size: 14px;
-    color: #a84d6b;                   /* розовый заголовок */
+    color: #a84d6b;
     margin-bottom: 20px;
     text-transform: uppercase;
 }
 .forum-content-embedded p {
     font-size: 8px;
-    color: #c48a6b;                   /* светло-розовый текст */
+    color: #c48a6b;
     margin-bottom: 30px;
     line-height: 1.6;
-}
-.forum-content-embedded .box-button {
-    margin-top: 10px;
-}
-.forum-content-embedded .box-button .button {
-    padding: 8px 20px;
-}
-.forum-content-embedded .box-button .button span {
-    font-size: 9px;
 }
 
 /* Зміст */
@@ -221,7 +216,7 @@ body {
 .canvas-container { position:relative; width:100%; aspect-ratio:1/1; background:#000; }
 .canvas-container canvas { position:absolute; top:0; left:0; width:100%; height:100%; touch-action:none; }
 .paint-tools-panel { display:flex; justify-content:space-between; padding:10px; background:#050508; border-top:2px solid #1a1a1a; gap:8px; }
-.retro-btn { background:#010101; border:2px solid #79434a; color:#a27791; padding:6px 12px; font-size:8px; cursor:pointer; }
+.retro-btn { background:#010101; border:2px solid #79434a; color:#a27791; padding:6px 12px; font-size:8px; cursor:pointer; font-family: 'Press Start 2P', monospace; }
 .retro-btn:active { transform:scale(0.95); background:#79434a; color:#010101; }
 #pColor { width:40px; height:28px; border:1px solid #1a1a1a; background:#000; cursor:pointer; }
 .layers-sub-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:220px; background:#0a0a0f; border:2px solid #ffb7c7; z-index:11000; }
@@ -264,24 +259,6 @@ body {
 #disclaimerModal .box-button .button { padding:5px 12px; }
 #disclaimerModal .box-button .button span { font-size:8px; }
 
-/* Кнопки Uiverse */
-.box-button {
-    cursor: pointer; border:3px solid #000; background:#79434a;
-    padding-bottom:8px; transition:0.08s; display:inline-block;
-}
-.button {
-    background:#a27791; border:3px solid #b97272; padding:10px 24px;
-    transform:translateY(-6px); transition:0.08s;
-}
-.button span {
-    font-family:'Press Start 2P', monospace; font-size:11px;
-    letter-spacing:2px; color:#000; text-transform:uppercase;
-}
-.box-button:active { padding-bottom:2px; transform:translateY(6px); }
-.box-button:active .button { transform:translateY(0); }
-.box-button.small .button { padding:6px 16px; }
-.box-button.small .button span { font-size:9px; }
-
 /* Адаптация */
 @media (max-width:700px){
     .top-panel{height:50px; padding:0 12px;}
@@ -291,7 +268,7 @@ body {
     .bottom-panel{height:40px;}
 }
 
-/* УНИВЕРСАЛЬНАЯ UIVERSE-КНОПКА — один стиль для всех */
+/* ===== УНИВЕРСАЛЬНАЯ КНОПКА UIVERSE (замена .box-button) ===== */
 .universal-btn {
     cursor: pointer;
     border: 3px solid #000;
@@ -300,6 +277,7 @@ body {
     display: inline-block;
     transition: 0.08s;
     text-decoration: none;
+    user-select: none;
 }
 
 .universal-btn .btn-inner {
@@ -315,7 +293,7 @@ body {
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
     letter-spacing: 2px;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
 }
 
@@ -326,4 +304,10 @@ body {
 
 .universal-btn:active .btn-inner {
     transform: translateY(0);
+}
+
+@media (hover: hover) {
+    .universal-btn:hover .btn-inner {
+        background: #e0e0e0;
+    }
 }
