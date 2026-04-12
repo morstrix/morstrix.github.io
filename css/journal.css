@@ -67,49 +67,73 @@ body {
     padding: 5px 10px;
 }
 
-/* ===== СТРАНИЦА 1 — БЕЗ РАМКИ, КАРТИНКИ ВЫШЕ ===== */
+/* ===== СТРАНИЦА 1 — РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ ТРЁХ БЛОКОВ ===== */
 .journal-page[data-page="1"] .page-content {
-    justify-content: flex-start;
-    gap: 5px;
-    padding: 15px 0 10px 0;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;  /* равномерно с отступами */
+    align-items: center !important;
+    height: 100% !important;
+    padding: 15px 10px !important;
+    gap: 0 !important;
 }
-.ticker-wrapper { width:100%; overflow:hidden; white-space:nowrap; padding:8px 0; flex-shrink:0; }
-.ticker { display:inline-block; font-size:10px; color:#a27791; animation: scrollTicker 40s linear infinite; }
-@keyframes scrollTicker { 0%{transform:translateX(0%);} 100%{transform:translateX(-50%);} }
 
-/* Карусель — без рамки, без боковых отступов */
+/* 1. БЛОК RSS (тикер) */
+.ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px 0;
+    flex-shrink: 0;
+    margin: 0 !important;
+}
+
+/* 2. БЛОК КАРУСЕЛЬ + ХЕШТЕГИ */
+.carousel-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+}
+
 .carousel {
     width: 100%;
-    flex-shrink: 0;
-    margin: 5px 0;
     overflow: hidden;
     border: none !important;
+    margin: 0 !important;
 }
+
 .carousel img {
     width: 100%;
     height: auto;
-    max-height: 45vh;
+    max-height: 40vh;
     object-fit: contain;
     display: block;
     margin: 0 auto;
 }
+
 .carousel img:not(.active) { display: none; }
 
-/* Хештеги — под картинками, маленький отступ */
 .hashtag-row {
-    margin: 3px 0 8px 0;
+    margin: 8px 0 0 0 !important;
     flex-shrink: 0;
     text-align: center;
 }
-.hashtag { font-size: 12px; color: #888; }
 
-/* Кнопка Twitter — больше отступ */
+/* 3. БЛОК TWITTER */
+.twitter-section {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .x-btn-img {
     width: 48px;
     cursor: pointer;
-    flex-shrink: 0;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    margin: 0 !important;
 }
 
 /* ===== СТРАНИЦА 2 ===== */
