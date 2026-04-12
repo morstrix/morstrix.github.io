@@ -77,20 +77,90 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== FONT STYLER =====
     const embeddedInput = document.getElementById('fontInputEmbedded');
     const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
+
     if (embeddedInput && embeddedPreview) {
         function updateStylerPreview() {
             const rawText = embeddedInput.value.trim();
             embeddedPreview.textContent = rawText === '' ? convertTextToFont('tap to copy') : convertTextToFont(rawText);
         }
+
         updateStylerPreview();
         embeddedInput.addEventListener('input', updateStylerPreview);
+
         embeddedPreview.addEventListener('click', () => {
             navigator.clipboard.writeText(embeddedPreview.textContent).then(() => {
                 const original = embeddedPreview.textContent;
                 embeddedPreview.textContent = convertTextToFont('copied!');
                 setTimeout(() => embeddedPreview.textContent = original, 800);
-            });
+            }).catch(err => console.warn('Clipboard error:', err));
         });
+
+        // ===== АНИМАЦИЯ ПЕЧАТИ + СТИРАНИЕ + КУРСОР =====
+        const placeholderText = 'TYPE TEXT...';
+        let typingTimer = null;
+        let isTyping = true;
+        let charIndex = 0;
+
+        function animatePlaceholder() {
+            if (typingTimer) clearTimeout(typingTimer);
+            
+            if (isTyping) {
+                if (charIndex < placeholderText.length) {
+                    embeddedInput.placeholder = placeholderText.substring(0, charIndex + 1) + ' █';
+                    charIndex++;
+                    typingTimer = setTimeout(animatePlaceholder, 120);
+                } else {
+                    isTyping = false;
+                    typingTimer = setTimeout(animatePlaceholder, 1500);
+                }
+            } else {
+                if (charIndex > 0) {
+                    charIndex--;
+                    embeddedInput.placeholder = placeholderText.substring(0, charIndex) + ' █';
+                    typingTimer = setTimeout(animatePlaceholder, 80);
+                } else {
+                    isTyping = true;
+                    embeddedInput.placeholder = ' █';
+                    typingTimer = setTimeout(animatePlaceholder, 300);
+                }
+            }
+        }
+
+        function startAnimation() {
+            if (embeddedInput.value === '') {
+                isTyping = true;
+                charIndex = 0;
+                embeddedInput.placeholder = ' █';
+                if (typingTimer) clearTimeout(typingTimer);
+                typingTimer = setTimeout(animatePlaceholder, 300);
+            }
+        }
+
+        function stopAnimation() {
+            if (typingTimer) clearTimeout(typingTimer);
+            embeddedInput.placeholder = '';
+        }
+
+        embeddedInput.addEventListener('focus', stopAnimation);
+        embeddedInput.addEventListener('blur', () => {
+            if (embeddedInput.value === '') startAnimation();
+        });
+
+        const page2 = document.querySelector('.journal-page[data-page="2"]');
+        if (page2) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startAnimation();
+                    } else {
+                        stopAnimation();
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(page2);
+        } else {
+            startAnimation();
+        }
     }
 
     // ===== СКАЧИВАНИЕ АРХИВА =====
@@ -221,12 +291,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== PINTEREST =====
-    if(!window.pinSDKLoaded){
-        const s=document.createElement('script');
-        s.src='//assets.pinterest.com/js/pinit.js';
-        s.onload=()=>window.pinSDKLoaded=true;
-        document.head.appendChild(s);
+    // ===== PINTEREST: загрузка при активации 4-й страницы =====
+    const page4 = document.querySelector('.journal-page[data-page="4"]');
+    if (page4) {
+        const pinterestObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (window.PinUtils) {
+                        window.PinUtils.build();
+                    } else {
+                        const script = document.createElement('script');
+                        script.src = 'https://assets.pinterest.com/js/pinit.js';
+                        script.onload = () => window.PinUtils?.build();
+                        document.head.appendChild(script);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        pinterestObserver.observe(page4);
     }
 
     // ===== ESCAPE =====
