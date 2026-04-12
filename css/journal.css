@@ -41,7 +41,7 @@ body {
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
-/* ===== АБСОЛЮТНО НАДЁЖНЫЙ КОНТЕЙНЕР ===== */
+/* ===== ГАРАНТИРОВАННО РАБОТАЮЩИЙ КОНТЕЙНЕР ===== */
 .journal-page {
     flex: 0 0 100%;
     scroll-snap-align: start;
@@ -60,13 +60,13 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 12px 15px 12px;  /* отступ снизу для защиты Twitter */
+    padding: 10px 12px 15px 12px; /* нижний отступ для защиты Twitter */
     box-sizing: border-box;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;          /* тикер будет виден */
 }
 
-/* ===== СТРАНИЦА 1 ===== */
+/* ===== ПЕРВАЯ СТРАНИЦА ===== */
 .journal-page[data-page="1"] .page-content {
     padding: 12px 12px 15px 12px;
 }
@@ -77,6 +77,7 @@ body {
     padding: 5px 0;
     overflow: hidden;
     white-space: nowrap;
+    background: transparent;
 }
 .ticker {
     display: inline-block;
@@ -141,7 +142,7 @@ body {
     cursor: pointer;
 }
 
-/* ===== СТРАНИЦА 2 ===== */
+/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ ===== */
 .journal-page[data-page="2"] .page-content { justify-content: center; gap: 5px; }
 .styler-embedded, .mx-download-block { border:none; box-shadow:none; background:transparent; padding:5px 0; width:100%; }
 .styler-embedded h3 { font-size:10px; }
@@ -156,14 +157,13 @@ body {
 .mx-arrow { cursor:pointer; font-size:20px; color:#a27791; }
 .mx-description { font-size:7px; color:#aaa; margin:5px 0; }
 
-/* ===== СТРАНИЦА 3 ===== */
 .journal-page[data-page="3"] .page-content { justify-content: center; gap: 15px; }
 .art-square-frame { max-width:280px; border:2px solid #79434a; margin:0 auto; }
 .art-square-frame img { width:100%; display:block; }
 .paint-trigger { width:60px; cursor:pointer; }
 .paint-label { font-size:8px; color:#a27791; margin-top:5px; }
 
-/* ===== СТРАНИЦА 4 — PINTEREST ===== */
+/* Pinterest */
 .journal-page[data-page="4"] {
     background: #ffffff !important;
     padding: 0 !important;
@@ -193,7 +193,6 @@ body {
     background: #ffffff !important;
 }
 
-/* ===== СТРАНИЦА 5 ===== */
 .journal-page[data-page="5"] .page-content { justify-content: flex-start; padding-top: 10px; gap: 15px; }
 .merch-constructor, .converter-container { border:none; background:transparent; padding:5px 0; }
 .tshirt-preview { position:relative; width:180px; margin:0 auto; }
@@ -208,7 +207,6 @@ body {
 .converter-container input { width:90px; background:#000; border:1px solid #a84d6b; color:#fff; padding:6px; text-align:center; }
 .converter-arrow { font-size:18px; margin:0 8px; }
 
-/* ===== СТРАНИЦА 6 — SPOTIFY + SYNTH ===== */
 .journal-page[data-page="6"] .page-content { justify-content: center; gap: 10px; }
 .spotify-embed { border:none; background:transparent; height:55%; max-height:280px; width:100%; overflow:hidden; }
 .spotify-embed iframe { height:100% !important; border-radius:0 !important; }
@@ -216,7 +214,6 @@ body {
 .text-synth-embedded h4 { font-size:10px; color:#a84d6b; margin-bottom:8px; }
 .synth-placeholder { padding:12px; background:#000; border:1px dashed #a84d6b; font-size:8px; color:#a27791; }
 
-/* ===== СТРАНИЦА 7 — TOP + TETRIS ===== */
 .journal-page[data-page="7"] .page-content { justify-content: center; gap: 15px; }
 .top-players-framed { max-width:400px; margin:0 auto; }
 .top-players-list, .top-players-placeholder { font-size:9px; color:#aaa; line-height:1.6; }
@@ -224,11 +221,9 @@ body {
 .tetris-big img { width:110px; image-rendering:pixelated; }
 .tetris-big span { font-size:11px; color:#fff; margin-top:8px; }
 
-/* ===== СТРАНИЦА 8 — SUPPORT ===== */
 .journal-page[data-page="8"] .page-content { justify-content: center; }
 .support-embedded { border:none; background:transparent; padding:5px; height:100%; max-height:500px; overflow:hidden; }
 
-/* ===== СТРАНИЦА 9 — FORUM ===== */
 .journal-page[data-page="9"] .page-content { padding:0; justify-content: center; }
 .forum-embedded { display:flex; gap:0; background:transparent; border:none; width:100%; height:100%; }
 .forum-tabs-panel-embedded { width:55px; background:#0a0a0f; border-right:2px solid #79434a; display:flex; flex-direction:column; padding:5px 0; }
@@ -238,11 +233,11 @@ body {
 .forum-content-embedded h3 { font-size:13px; color:#a84d6b; margin-bottom:15px; }
 .forum-content-embedded p { font-size:8px; color:#c48a6b; margin-bottom:20px; }
 
-/* ===== ЗМІСТ ===== */
+/* Зміст */
 .contents-item { padding:12px; font-size:10px; border-bottom:1px solid #79434a; cursor:pointer; color:#000 !important; text-shadow:1px 1px 0 #aaa; }
 .contents-item:hover { background:#1a1a2a; }
 
-/* ===== PAINT МОДАЛКА ===== */
+/* Paint модалка */
 .paint-full-modal { width:95vw; max-width:1000px; }
 .paint-window { width:100%; }
 .canvas-container { position:relative; width:100%; aspect-ratio:1/1; background:#000; }
@@ -256,7 +251,7 @@ body {
 .layer-row { padding:10px; font-size:7px; border-bottom:1px solid #111; cursor:pointer; color:#444; text-align:left; }
 .layer-row.active { color:#ffb7c7; background:#0d0d14; border-left:3px solid #ffb7c7; }
 
-/* ===== ОБЩИЕ МОДАЛКИ ===== */
+/* Общие модалки */
 .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); backdrop-filter:blur(3px); display:none; justify-content:center; align-items:center; z-index:20000; }
 .modal-overlay.active { display:flex; }
 .modal-content { background:#a27791; border:4px solid #b97272; box-shadow:inset 0 0 0 2px #000, 0 0 0 2px #000; max-width:90vw; max-height:85vh; overflow-y:auto; }
@@ -265,14 +260,14 @@ body {
 .modal-close-btn { background:#000; color:#fff; border:2px solid #b97272; width:30px; height:30px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .modal-inner { padding:18px; background:#a27791; }
 
-/* ===== МОДАЛКА TWITTER ===== */
+/* Модалка Twitter */
 #disclaimerModal .modal-content { max-width:320px !important; width:90% !important; min-height:auto !important; height:auto !important; margin:0 auto !important; }
 #disclaimerModal .modal-title-text { font-size:9px !important; line-height:1.4 !important; }
 #disclaimerModal .modal-inner { display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; min-height:auto !important; height:auto !important; padding:18px 16px !important; box-sizing:border-box !important; gap:12px !important; }
 #disclaimerModal .modal-inner p { color:#aaa !important; text-shadow:1px 1px 0 #000 !important; font-size:10px !important; line-height:1.5 !important; margin:0 !important; text-align:center !important; word-break:break-word !important; }
 #disclaimerModal .universal-btn { margin:4px 0 0 0 !important; width:auto !important; max-width:100% !important; }
 
-/* ===== УНИВЕРСАЛЬНАЯ КНОПКА ===== */
+/* Универсальная кнопка */
 .universal-btn { cursor:pointer !important; border:2px solid #000 !important; background:#575253 !important; padding-bottom:4px !important; display:inline-block !important; transition:0.08s !important; text-decoration:none !important; user-select:none !important; }
 .universal-btn .btn-inner { background:#fafafa !important; border:2px solid #a0a0a0 !important; padding:5px 16px !important; transform:translateY(-4px) !important; transition:0.08s !important; display:inline-block !important; }
 .universal-btn .btn-inner span { font-family:'Press Start 2P', monospace !important; font-size:9px !important; letter-spacing:1.5px !important; color:#000 !important; text-transform:uppercase !important; }
@@ -280,7 +275,7 @@ body {
 .universal-btn:active .btn-inner { transform:translateY(0) !important; }
 @media (hover: hover) { .universal-btn:hover .btn-inner { background:#e0e0e0 !important; } }
 
-/* ===== АДАПТИВНОСТЬ ===== */
+/* Адаптивность */
 @media (max-width: 700px) {
     .top-panel { height:50px; padding:0 12px; }
     .panel-btn { font-size:0.5rem; }
@@ -304,6 +299,9 @@ body {
     }
     .x-btn-img {
         width: 40px;
+    }
+    .ticker {
+        font-size: 9px;
     }
     .mx-carousel-track { width:120px; height:120px; }
     .mx-slide { width:120px; height:120px; }
