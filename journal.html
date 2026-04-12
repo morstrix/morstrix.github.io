@@ -10,15 +10,15 @@
 </head>
 <body>
 
-    <!-- CRT OVERLAY -->
+<!-- ==================== CRT OVERLAY (БЕЗ SVG-ФИЛЬТРА) ==================== -->
 <div class="crt-noise"></div>
 <div class="crt-scanlines"></div>
 <div class="crt-flicker"></div>
 <div class="crt-bloom"></div>
 <div class="crt-blur"></div>
 <div class="crt-edge-glow"></div>
-    
-    <canvas id="neuro-bg"></canvas>
+
+<canvas id="neuro-bg"></canvas>
 
 <div class="top-panel">
     <div></div>
@@ -58,7 +58,10 @@
                     <span class="mx-arrow" id="mxNext">›</span>
                 </div>
                 <div class="mx-description" id="mxDescription">burn<br>шрифт</div>
-                <div class="box-button small" id="downloadArchiveBtnEmbedded"><div class="button"><span>DOWNLOAD</span></div></div>
+                <!-- ЗАМЕНЕНО на универсальную кнопку -->
+                <button class="universal-btn" id="downloadArchiveBtnEmbedded">
+                    <span class="btn-inner"><span>DOWNLOAD</span></span>
+                </button>
             </div>
         </div>
     </div>
@@ -84,7 +87,12 @@
             <div class="merch-constructor">
                 <h4>CONSTRUCTOR</h4>
                 <div class="tshirt-preview"><img src="assets/tshirt.jpeg" class="tshirt-img"><canvas id="printCanvasEmbedded" class="print-canvas"></canvas></div>
-                <div class="upload-area"><input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif"><button class="reset-btn" id="resetPrintEmbedded">CLEAR</button></div>
+                <div class="upload-area"><input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif">
+                    <!-- ЗАМЕНЕНО на универсальную кнопку -->
+                    <button class="universal-btn" id="resetPrintEmbedded">
+                        <span class="btn-inner"><span>CLEAR</span></span>
+                    </button>
+                </div>
             </div>
             <div class="converter-container">
                 <h4>CONVERTER</h4>
@@ -143,9 +151,11 @@
                 <div class="forum-content-embedded">
                     <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
                     <p id="forumTextEmbedded">Йога, медитации...</p>
-                    <div class="box-button small" onclick="window.open('https://t.me/morstrix')">
-    <div class="button"><span>FULL</span></div>
-</div>
+                    <!-- ЗАМЕНЕНО на универсальную кнопку -->
+                    <button class="universal-btn" onclick="window.open('https://t.me/morstrix')">
+                        <span class="btn-inner"><span>FULL</span></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -158,6 +168,7 @@
     </div>
 </div>
 
+<!-- Модалка ЗМІСТ -->
 <div id="contentsModal" class="modal-overlay">
     <div class="modal-content" style="max-width:400px;">
         <div class="modal-header"><span class="modal-title-text">✦ ЗМІСТ ✦</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
@@ -173,16 +184,21 @@
     </div>
 </div>
 
+<!-- Модалка Twitter (дисклеймер) -->
 <div id="disclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
         <div class="modal-inner" style="text-align:center;">
             <p>OPEN X?</p>
-            <div class="box-button small" data-href="https://x.com" data-modal="disclaimerModal"><div class="button"><span>ENTER</span></div></div>
+            <!-- ЗАМЕНЕНО на универсальную кнопку -->
+            <button class="universal-btn" data-href="https://x.com" data-modal="disclaimerModal">
+                <span class="btn-inner"><span>ENTER</span></span>
+            </button>
         </div>
     </div>
 </div>
 
+<!-- Модалка Paint -->
 <div id="artModal" class="modal-overlay">
     <div class="modal-content paint-full-modal">
         <div class="modal-header"><span class="modal-title-text">PAINT.EXE</span><button class="modal-close-btn" data-modal="artModal">✜</button></div>
