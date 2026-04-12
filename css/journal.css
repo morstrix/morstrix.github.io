@@ -252,64 +252,65 @@ body {
 
 /* Модалка Twitter */
 #disclaimerModal .modal-content {
-    max-width: 350px !important;
+    max-width: 320px !important;
     width: 90% !important;
-    min-height: 280px !important;
+    min-height: 240px !important;
 }
 
 #disclaimerModal .modal-title-text { 
-    font-size: 8px !important; 
+    font-size: 9px !important; 
 }
 
 #disclaimerModal .modal-inner {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    min-height: 200px !important;
-    padding: 25px 20px !important;
+    justify-content: center !important;
+    min-height: 180px !important;
+    padding: 20px 15px !important;
+    position: relative !important;
 }
 
 #disclaimerModal .modal-inner p {
     color: #aaa !important; 
     text-shadow: 1px 1px 0 #000 !important; 
-    font-size: 11px !important;
-    margin: 10px 0 20px 0 !important;
+    font-size: 10px !important;
+    margin: 0 0 15px 0 !important;
 }
 
 #disclaimerModal .universal-btn {
-    margin-top: 10px !important;
+    margin-top: auto !important;
     margin-bottom: 5px !important;
 }
 
-/* Для очень маленьких экранов — ещё больше модалка */
+/* Мобильные */
 @media (max-width: 480px) {
     #disclaimerModal .modal-content {
-        max-width: 300px !important;
-        min-height: 300px !important;
+        max-width: 280px !important;
+        min-height: 260px !important;
     }
     
     #disclaimerModal .modal-inner {
         min-height: 200px !important;
-        padding: 30px 15px !important;
+        padding: 20px 15px !important;
     }
     
     #disclaimerModal .modal-inner p {
-        font-size: 12px !important;
-        margin: 15px 0 25px 0 !important;
+        font-size: 10px !important;
+        margin: 0 0 20px 0 !important;
     }
 }
 
-/* Для широких экранов — возвращаем компактность */
+/* Десктоп */
 @media (min-width: 768px) {
     #disclaimerModal .modal-content {
-        max-width: 320px !important;
-        min-height: 250px !important;
+        max-width: 300px !important;
+        min-height: 220px !important;
     }
     
     #disclaimerModal .modal-inner {
-        min-height: 200px !important;
-        padding: 20px !important;
+        min-height: 170px !important;
+        padding: 15px !important;
     }
 }
 
