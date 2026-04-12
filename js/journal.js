@@ -93,20 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== MX КАРУСЕЛЬ (АВТО, БЕЗ СТРЕЛОК) =====
-    const mxSlides = document.querySelectorAll('.mx-slide');
-    let mxSlideIndex = 0;
-    let mxInterval;
-    if (mxSlides.length > 0) {
-        mxInterval = setInterval(() => {
-            mxSlides[mxSlideIndex].classList.remove('active');
-            mxSlideIndex = (mxSlideIndex + 1) % mxSlides.length;
-            mxSlides[mxSlideIndex].classList.add('active');
-        }, 3000);
-        // Остановка при клике на карусель (опционально)
-        document.querySelector('.mx-carousel')?.addEventListener('click', () => clearInterval(mxInterval));
-    }
-
     // ===== СКАЧИВАНИЕ АРХИВА =====
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
         const a = document.createElement('a');
