@@ -6,9 +6,18 @@
     <title>MORSTRIX | DIGITAL JOURNAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/journal.css">
+    <link rel="stylesheet" href="css/crt.css">
 </head>
 <body>
-    
+
+<!-- ==================== CRT OVERLAY ==================== -->
+<div class="crt-noise"></div>
+<div class="crt-scanlines"></div>
+<div class="crt-flicker"></div>
+<div class="crt-bloom"></div>
+<div class="crt-blur"></div>
+<div class="crt-edge-glow"></div>
+
 <canvas id="neuro-bg"></canvas>
 
 <div class="top-panel">
@@ -27,6 +36,7 @@
             <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
         </div>
     </div>
+
     <!-- 2: Font Styler + MX -->
     <div class="journal-page" data-page="2">
         <div class="page-content">
@@ -49,13 +59,13 @@
                     <span class="mx-arrow" id="mxNext">›</span>
                 </div>
                 <div class="mx-description" id="mxDescription">burn<br>шрифт</div>
-                <!-- ЗАМЕНЕНО на универсальную кнопку -->
                 <button class="universal-btn" id="downloadArchiveBtnEmbedded">
                     <span class="btn-inner"><span>DOWNLOAD</span></span>
                 </button>
             </div>
         </div>
     </div>
+
     <!-- 3: Art + Paint -->
     <div class="journal-page" data-page="3">
         <div class="page-content">
@@ -64,6 +74,7 @@
             <div class="paint-label">PAINT</div>
         </div>
     </div>
+
     <!-- 4: Pinterest -->
     <div class="journal-page" data-page="4">
         <div class="page-content">
@@ -72,6 +83,7 @@
             </div>
         </div>
     </div>
+
     <!-- 5: Merch + Converter -->
     <div class="journal-page" data-page="5">
         <div class="page-content">
@@ -79,7 +91,6 @@
                 <h4>CONSTRUCTOR</h4>
                 <div class="tshirt-preview"><img src="assets/tshirt.jpeg" class="tshirt-img"><canvas id="printCanvasEmbedded" class="print-canvas"></canvas></div>
                 <div class="upload-area"><input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif">
-                    <!-- ЗАМЕНЕНО на универсальную кнопку -->
                     <button class="universal-btn" id="resetPrintEmbedded">
                         <span class="btn-inner"><span>CLEAR</span></span>
                     </button>
@@ -93,26 +104,22 @@
             </div>
         </div>
     </div>
-    <!-- 6: Spotify -->
+
+    <!-- 6: Spotify + Text Synth -->
     <div class="journal-page" data-page="6">
         <div class="page-content">
             <div class="spotify-embed">
                 <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
-        </div>
-    </div>
-    <!-- 7: Text Synth -->
-    <div class="journal-page" data-page="7">
-        <div class="page-content">
-            <div class="placeholder-block">
-                <h3>TEXT SYNTH</h3>
-                <p>coming soon...</p>
-                <div class="synth-placeholder">[ modulation ]</div>
+            <div class="text-synth-embedded">
+                <h4>TEXT SYNTH</h4>
+                <div class="synth-placeholder">[ modulation ]<br>coming soon...</div>
             </div>
         </div>
     </div>
-    <!-- 8: Top + Tetris -->
-    <div class="journal-page" data-page="8">
+
+    <!-- 7: Top + Tetris -->
+    <div class="journal-page" data-page="7">
         <div class="page-content">
             <div class="top-players-framed">
                 <h4>TOP</h4>
@@ -122,27 +129,34 @@
             <a href="tetris.html" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span>PLAY TETRIS</span></a>
         </div>
     </div>
-    <!-- 9: Support -->
-    <div class="journal-page" data-page="9">
+
+    <!-- 8: Support -->
+    <div class="journal-page" data-page="8">
         <div class="page-content">
             <div class="support-embedded">
                 <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrixxx/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
             </div>
         </div>
     </div>
-    <!-- 10: Forum -->
-    <div class="journal-page" data-page="10">
+
+    <!-- 9: Forum -->
+    <div class="journal-page" data-page="9">
         <div class="page-content">
             <div class="forum-embedded">
                 <div class="forum-tabs-panel-embedded">
-                    <div class="forum-tab active" data-tab="wellness">🌿</div><div class="forum-tab" data-tab="interior">🛋️</div><div class="forum-tab" data-tab="radio">📻</div>
-                    <div class="forum-tab" data-tab="itai">🤖</div><div class="forum-tab" data-tab="english">🔝</div><div class="forum-tab" data-tab="design">🎨</div>
-                    <div class="forum-tab" data-tab="tattoo">💘</div><div class="forum-tab" data-tab="money">💸</div><div class="forum-tab" data-tab="barbering">✂️</div>
+                    <div class="forum-tab active" data-tab="wellness">🌿</div>
+                    <div class="forum-tab" data-tab="interior">🛋️</div>
+                    <div class="forum-tab" data-tab="radio">📻</div>
+                    <div class="forum-tab" data-tab="itai">🤖</div>
+                    <div class="forum-tab" data-tab="english">🔝</div>
+                    <div class="forum-tab" data-tab="design">🎨</div>
+                    <div class="forum-tab" data-tab="tattoo">💘</div>
+                    <div class="forum-tab" data-tab="money">💸</div>
+                    <div class="forum-tab" data-tab="barbering">✂️</div>
                 </div>
                 <div class="forum-content-embedded">
                     <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
                     <p id="forumTextEmbedded">Йога, медитации...</p>
-                    <!-- ЗАМЕНЕНО на универсальную кнопку -->
                     <button class="universal-btn" onclick="window.open('https://t.me/morstrix')">
                         <span class="btn-inner"><span>FULL</span></span>
                     </button>
@@ -154,8 +168,15 @@
 
 <div class="bottom-panel">
     <div class="page-indicator">
-        <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
     </div>
 </div>
 
@@ -165,23 +186,26 @@
         <div class="modal-header"><span class="modal-title-text">✦ ЗМІСТ ✦</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
         <div class="modal-inner">
             <div class="contents-list">
-                <div class="contents-item" data-page="1">1. RSS + TWITTER</div><div class="contents-item" data-page="2">2. FONT STYLER / MX</div>
-                <div class="contents-item" data-page="3">3. ART / PAINT</div><div class="contents-item" data-page="4">4. PINTEREST</div>
-                <div class="contents-item" data-page="5">5. MERCH + CONVERTER</div><div class="contents-item" data-page="6">6. SPOTIFY</div>
-                <div class="contents-item" data-page="7">7. TEXT SYNTH</div><div class="contents-item" data-page="8">8. TOP / TETRIS</div>
-                <div class="contents-item" data-page="9">9. SUPPORT</div><div class="contents-item" data-page="10">10. FORUM</div>
+                <div class="contents-item" data-page="1">1. RSS + TWITTER</div>
+                <div class="contents-item" data-page="2">2. FONT STYLER / MX</div>
+                <div class="contents-item" data-page="3">3. ART / PAINT</div>
+                <div class="contents-item" data-page="4">4. PINTEREST</div>
+                <div class="contents-item" data-page="5">5. MERCH + CONVERTER</div>
+                <div class="contents-item" data-page="6">6. SPOTIFY + SYNTH</div>
+                <div class="contents-item" data-page="7">7. TOP / TETRIS</div>
+                <div class="contents-item" data-page="8">8. SUPPORT</div>
+                <div class="contents-item" data-page="9">9. FORUM</div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Модалка Twitter (дисклеймер) -->
+<!-- Модалка Twitter -->
 <div id="disclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
         <div class="modal-inner" style="text-align:center;">
             <p>OPEN X?</p>
-            <!-- ЗАМЕНЕНО на универсальную кнопку -->
             <button class="universal-btn" data-href="https://x.com" data-modal="disclaimerModal">
                 <span class="btn-inner"><span>ENTER</span></span>
             </button>
