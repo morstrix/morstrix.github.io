@@ -258,7 +258,7 @@ body {
 }
 
 #disclaimerModal .modal-title-text { 
-    font-size: 10px !important; 
+    font-size: 8px !important; 
 }
 
 #disclaimerModal .modal-inner {
@@ -266,7 +266,7 @@ body {
     flex-direction: column !important;
     align-items: center !important;
     justify-content: space-between !important;
-    min-height: 220px !important;
+    min-height: 200px !important;
     padding: 25px 20px !important;
 }
 
@@ -290,7 +290,7 @@ body {
     }
     
     #disclaimerModal .modal-inner {
-        min-height: 240px !important;
+        min-height: 200px !important;
         padding: 30px 15px !important;
     }
     
@@ -328,7 +328,7 @@ body {
 .universal-btn .btn-inner {
     background: #fafafa !important;
     border: 2px solid #a0a0a0 !important;
-    padding: 5px 16px !important;
+    padding: 4px 16px !important;
     transform: translateY(-4px) !important;
     transition: 0.08s !important;
     display: inline-block !important;
@@ -345,7 +345,7 @@ body {
 /* На мобильных — кнопка чуть крупнее для удобства нажатия */
 @media (max-width: 480px) {
     .universal-btn .btn-inner {
-        padding: 6px 18px !important;
+        padding: 4px 16px !important;
     }
     .universal-btn .btn-inner span {
         font-size: 10px !important;
