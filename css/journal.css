@@ -251,72 +251,119 @@ body {
 .modal-inner { padding:20px; background:#a27791; }
 
 /* Модалка Twitter */
-#disclaimerModal .modal-title-text { font-size:9px !important; }
-#disclaimerModal .modal-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+#disclaimerModal .modal-content {
+    max-width: 350px !important;
+    width: 90% !important;
+    min-height: 280px !important;
 }
+
+#disclaimerModal .modal-title-text { 
+    font-size: 10px !important; 
+}
+
+#disclaimerModal .modal-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 220px !important;
+    padding: 25px 20px !important;
+}
+
 #disclaimerModal .modal-inner p {
     color: #aaa !important; 
     text-shadow: 1px 1px 0 #000 !important; 
-    font-size:9px;
-    margin-bottom: 0;
-}
-#disclaimerModal .universal-btn {
-    margin-top: 10px;
+    font-size: 11px !important;
+    margin: 10px 0 20px 0 !important;
 }
 
-/* Адаптация */
-@media (max-width:700px){
-    .top-panel{height:50px; padding:0 12px;}
-    .panel-btn{font-size:0.5rem;}
-    .panel-close img{width:28px; height:28px;}
-    .journal-horizontal{height:calc(100vh - 50px - 40px); margin-top:50px;}
-    .bottom-panel{height:40px;}
+#disclaimerModal .universal-btn {
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+/* Для очень маленьких экранов — ещё больше модалка */
+@media (max-width: 480px) {
+    #disclaimerModal .modal-content {
+        max-width: 300px !important;
+        min-height: 300px !important;
+    }
+    
+    #disclaimerModal .modal-inner {
+        min-height: 240px !important;
+        padding: 30px 15px !important;
+    }
+    
+    #disclaimerModal .modal-inner p {
+        font-size: 12px !important;
+        margin: 15px 0 25px 0 !important;
+    }
+}
+
+/* Для широких экранов — возвращаем компактность */
+@media (min-width: 768px) {
+    #disclaimerModal .modal-content {
+        max-width: 320px !important;
+        min-height: 250px !important;
+    }
+    
+    #disclaimerModal .modal-inner {
+        min-height: 200px !important;
+        padding: 20px !important;
+    }
 }
 
 /* ===== УНИВЕРСАЛЬНАЯ КНОПКА ===== */
 .universal-btn {
-    cursor: pointer;
-    border: 3px solid #000;
-    background: #575253;
-    padding-bottom: 8px;
-    display: inline-block;
-    transition: 0.08s;
-    text-decoration: none;
-    user-select: none;
+    cursor: pointer !important;
+    border: 2px solid #000 !important;
+    background: #575253 !important;
+    padding-bottom: 4px !important;
+    display: inline-block !important;
+    transition: 0.08s !important;
+    text-decoration: none !important;
+    user-select: none !important;
 }
 
 .universal-btn .btn-inner {
-    background: #fafafa;
-    border: 3px solid #a0a0a0;
-    padding: 4px 18px;
-    transform: translateY(-6px);
-    transition: 0.08s;
-    display: inline-block;
+    background: #fafafa !important;
+    border: 2px solid #a0a0a0 !important;
+    padding: 5px 16px !important;
+    transform: translateY(-4px) !important;
+    transition: 0.08s !important;
+    display: inline-block !important;
 }
 
 .universal-btn .btn-inner span {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #000;
-    text-transform: uppercase;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    letter-spacing: 1.5px !important;
+    color: #000 !important;
+    text-transform: uppercase !important;
+}
+
+/* На мобильных — кнопка чуть крупнее для удобства нажатия */
+@media (max-width: 480px) {
+    .universal-btn .btn-inner {
+        padding: 6px 18px !important;
+    }
+    .universal-btn .btn-inner span {
+        font-size: 10px !important;
+        letter-spacing: 2px !important;
+    }
 }
 
 .universal-btn:active {
-    padding-bottom: 2px;
-    transform: translateY(6px);
+    padding-bottom: 1px !important;
+    transform: translateY(4px) !important;
 }
 
 .universal-btn:active .btn-inner {
-    transform: translateY(0);
+    transform: translateY(0) !important;
 }
 
 @media (hover: hover) {
     .universal-btn:hover .btn-inner {
-        background: #e0e0e0;
+        background: #e0e0e0 !important;
     }
 }
