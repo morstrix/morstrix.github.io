@@ -168,58 +168,58 @@ body {
     word-break: break-all;
 }
 
-/* ===== СТРАНИЦА 2 — УВЕЛИЧЕННАЯ КАРУСЕЛЬ + ОТСТУПЫ ===== */
-.journal-page[data-page="2"] .page-content {
-    justify-content: center;
-    gap: 15px;                /* общий отступ между блоками */
-}
-
-/* ===== МАКСИМАЛЬНО УВЕЛИЧЕННАЯ КАРУСЕЛЬ ===== */
-.mx-carousel-track {
-    width: 300px !important;
-    height: 300px !important;
-    overflow: hidden;
-    border: 2px solid #a84d6b !important; /* ярче рамка */
-}
-
-.mx-slide {
-    flex: 0 0 100% !important;
-    width: 300px !important;
-    height: 300px !important;
-    object-fit: cover !important;
-    display: none;
-}
-.mx-slide.active {
-    display: block !important;
-}
-
+/* ===== MX КАРУСЕЛЬ (БЕЗ СТРЕЛОК, УВЕЛИЧЕННАЯ) ===== */
 .mx-carousel {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px !important;
-    margin: 20px auto !important;
-    max-width: 360px !important;
+    margin: 20px auto 0;
+    max-width: 300px;
+    width: 100%;
 }
 
-.mx-arrow {
-    font-size: 32px !important;
-    color: #a84d6b !important;
-    cursor: pointer;
-    user-select: none;
+.mx-carousel-track {
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+    border: 2px solid #a84d6b;
+    background: #000;
 }
 
+.mx-carousel-slides {
+    display: flex;
+    height: 100%;
+}
+
+.mx-slide {
+    flex: 0 0 100%;
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    display: none;
+}
+.mx-slide.active {
+    display: block;
+}
+
+/* Описание под каруселью */
 .mx-description {
-    font-size: 12px !important;
-    color: #eee !important;
-    margin: 20px 0 25px 0 !important;
+    font-size: 11px;
+    color: #ddd;
+    margin: 20px 0 15px;
     text-align: center;
-    line-height: 1.5 !important;
+    line-height: 1.5;
+    max-width: 300px;
 }
 
+/* Блок с кнопкой DOWNLOAD — по центру */
 .mx-download-block {
-    text-align: center;
-    margin-top: 15px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 10px;
 }
 
 .journal-page[data-page="3"] .page-content { justify-content: center; gap: 15px; }
