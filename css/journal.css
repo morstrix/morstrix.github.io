@@ -302,9 +302,9 @@ body {
 
 /* Модалка Twitter */
 #disclaimerModal .modal-content { max-width:320px !important; width:90% !important; min-height:auto !important; height:auto !important; margin:0 auto !important; }
-#disclaimerModal .modal-title-text { font-size:9px !important; line-height:1.4 !important; }
+#disclaimerModal .modal-title-text { font-size:10px !important; line-height:1.4 !important; }
 #disclaimerModal .modal-inner { display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; min-height:auto !important; height:auto !important; padding:18px 16px !important; box-sizing:border-box !important; gap:12px !important; }
-#disclaimerModal .modal-inner p { color:#aaa !important; text-shadow:1px 1px 0 #000 !important; font-size:10px !important; line-height:1.5 !important; margin:0 !important; text-align:center !important; word-break:break-word !important; }
+#disclaimerModal .modal-inner p { color:#000 !important; text-shadow:2px 2px 0 #aaa !important; font-size:10px !important; line-height:1.5 !important; margin:0 !important; text-align:center !important; word-break:break-word !important; }
 #disclaimerModal .universal-btn { margin:4px 0 0 0 !important; width:auto !important; max-width:100% !important; }
 
 /* Универсальная кнопка */
