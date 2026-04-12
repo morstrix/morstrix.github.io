@@ -156,7 +156,17 @@ body {
 .styler-embedded h3 { font-size:10px; }
 .hint { font-size:6px !important; color:#888; }
 .styler-input { width:100%; background:#000; border:1px solid #a84d6b; color:#fff; padding:8px; font-family:inherit; }
-.styler-preview { background:#000; border:2px solid #79434a; padding:12px; margin-top:10px; font-size:12px; text-align:center; cursor:pointer; }
+.styler-preview {
+    background: #000;
+    border: 2px solid #79434a;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Arial', 'Helvetica', sans-serif;   /* ← добавь эту строку */
+    word-break: break-all;
+}
 .mx-carousel { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
 .mx-carousel-track { width: 140px; height: 140px; overflow: hidden; border:1px solid #79434a; }
 .mx-carousel-slides { display: flex; }
