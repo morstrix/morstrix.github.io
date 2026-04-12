@@ -216,10 +216,8 @@ body {
 
 /* Стрелки чуть крупнее для удобства */
 .mx-arrow {
-    cursor: pointer;
-    font-size: 24px;
-    color: #a27791;
-    user-select: none;
+    font-size: 28px;
+    padding: 0 5px;
 }
 
 .journal-page[data-page="3"] .page-content { justify-content: center; gap: 15px; }
