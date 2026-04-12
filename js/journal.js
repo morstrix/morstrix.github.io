@@ -103,23 +103,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== MX КАРУСЕЛЬ =====
-    let mxSlide = 0;
+    // ===== MX КАРУСЕЛЬ (АВТОСМЕНА, БЕЗ СТРЕЛОК) =====
     const mxSlides = document.querySelectorAll('.mx-slide');
-    const mxPrev = document.getElementById('mxPrev');
-    const mxNext = document.getElementById('mxNext');
+    let mxSlideIndex = 0;
+    let mxInterval;
+
+    function startMxCarousel() {
+        if (mxSlides.length === 0) return;
+        mxInterval = setInterval(() => {
+            mxSlides[mxSlideIndex].classList.remove('active');
+            mxSlideIndex = (mxSlideIndex + 1) % mxSlides.length;
+            mxSlides[mxSlideIndex].classList.add('active');
+        }, 3000);
+    }
+
+    // Остановка карусели при клике на неё (опционально)
+    document.querySelector('.mx-carousel')?.addEventListener('click', () => {
+        clearInterval(mxInterval);
+    });
+
+    startMxCarousel();
+
+    // Описание одно, статичное, можно не менять через JS
+    // Если нужно менять описание при смене слайда – раскомментируй:
+    /*
     const mxDesc = document.getElementById('mxDescription');
-    const mxDescriptions = [
+    const descriptions = [
         '✦ MX PRINT 01 ✦<br>Абстрактная композиция',
         '✦ MX PRINT 02 ✦<br>Глитч-эффект',
         '✦ MX PRINT 03 ✦<br>Пиксель-арт'
     ];
-    function updateMxSlide() {
-        mxSlides.forEach((s,i) => s.classList.toggle('active', i===mxSlide));
-        if(mxDesc) mxDesc.innerHTML = mxDescriptions[mxSlide];
+    function updateMxDescription(index) {
+        if (mxDesc) mxDesc.innerHTML = descriptions[index];
     }
-    if(mxPrev) mxPrev.onclick = ()=> { mxSlide = (mxSlide-1+mxSlides.length)%mxSlides.length; updateMxSlide(); };
-    if(mxNext) mxNext.onclick = ()=> { mxSlide = (mxSlide+1)%mxSlides.length; updateMxSlide(); };
+    // И в setInterval добавить updateMxDescription(mxSlideIndex);
+    */
 
     // ===== СКАЧИВАНИЕ АРХИВА =====
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
