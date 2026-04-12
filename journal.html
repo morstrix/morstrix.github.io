@@ -17,31 +17,29 @@
     <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"></a>
 </div>
 
-<!-- 1: RSS + Карусель + Twitter -->
-<div class="journal-page" data-page="1">
-    <div class="page-content">
-        <!-- БЛОК 1: RSS -->
-        <div class="ticker-wrapper">
-            <div class="ticker" id="rssTicker">LOADING...</div>
-        </div>
-        
-        <!-- БЛОК 2: КАРУСЕЛЬ + ХЕШТЕГИ -->
-        <div class="carousel-section">
-            <div class="carousel" id="mainCarousel">
-                <img src="assets/mx1.jpg" class="active">
-                <img src="assets/mx2.jpg">
+<!-- ===== ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА ===== -->
+<div class="journal-horizontal" id="journalHorizontal">
+
+    <!-- 1: RSS + Карусель + Twitter -->
+    <div class="journal-page" data-page="1">
+        <div class="page-content">
+            <div class="ticker-wrapper">
+                <div class="ticker" id="rssTicker">LOADING...</div>
             </div>
-            <div class="hashtag-row">
-                <span class="hashtag">#layoutporn</span>
+            <div class="carousel-section">
+                <div class="carousel" id="mainCarousel">
+                    <img src="assets/mx1.jpg" class="active">
+                    <img src="assets/mx2.jpg">
+                </div>
+                <div class="hashtag-row">
+                    <span class="hashtag">#layoutporn</span>
+                </div>
             </div>
-        </div>
-        
-        <!-- БЛОК 3: TWITTER -->
-        <div class="twitter-section">
-            <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+            <div class="twitter-section">
+                <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+            </div>
         </div>
     </div>
-</div>
 
     <!-- 2: Font Styler + MX -->
     <div class="journal-page" data-page="2">
