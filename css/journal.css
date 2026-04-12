@@ -35,20 +35,21 @@ body {
     display: flex; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-behavior: smooth;
     height: calc(100vh - 60px - 40px);
-    width: 100vw; margin-top: 60px;
+    width: 100%;                    /* 100% вместо 100vw, чтобы избежать переполнения */
+    margin-top: 60px;
     -webkit-overflow-scrolling: touch;
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
 /* ===== ГИБКИЙ КОНТЕЙНЕР ===== */
 .journal-page {
-    flex: 0 0 100vw;
+    flex: 0 0 100%;
     scroll-snap-align: start;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0;                     /* ← убрали все внешние отступы */
+    padding: 0;                     /* никаких внешних отступов */
     box-sizing: border-box;
     height: 100%;
 }
@@ -64,13 +65,14 @@ body {
     height: 100%;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 10px 15px;             /* ← внутренние отступы не ломают ширину */
+    padding: 10px 15px;             /* внутренние отступы не ломают ширину */
 }
 
 /* ===== СТРАНИЦА 1 — РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ ТРЁХ БЛОКОВ ===== */
 .journal-page[data-page="1"] .page-content {
-    justify-content: space-around;
+    justify-content: space-around;   /* равные отступы сверху, между блоками и снизу */
     padding: 15px 10px;
+    gap: 0;
 }
 
 /* 1. БЛОК RSS (тикер) */
@@ -82,6 +84,16 @@ body {
     flex-shrink: 0;
     margin: 0 !important;
 }
+.ticker {
+    display: inline-block;
+    font-size: 10px;
+    color: #a27791;
+    animation: scrollTicker 40s linear infinite;
+}
+@keyframes scrollTicker {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
 
 /* 2. БЛОК КАРУСЕЛЬ + ХЕШТЕГИ */
 .carousel-section {
@@ -91,15 +103,14 @@ body {
     justify-content: center;
     flex-shrink: 0;
     width: 100%;
+    overflow: hidden;
 }
-
 .carousel {
     width: 100%;
     overflow: hidden;
     border: none !important;
     margin: 0 !important;
 }
-
 .carousel img {
     width: 100%;
     height: auto;
@@ -108,14 +119,13 @@ body {
     display: block;
     margin: 0 auto;
 }
-
 .carousel img:not(.active) { display: none; }
-
 .hashtag-row {
     margin: 8px 0 0 0 !important;
     flex-shrink: 0;
     text-align: center;
 }
+.hashtag { font-size: 12px; color: #888; }
 
 /* 3. БЛОК TWITTER */
 .twitter-section {
@@ -123,8 +133,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
-
 .x-btn-img {
     width: 48px;
     cursor: pointer;
@@ -153,7 +163,7 @@ body {
 .paint-trigger { width:60px; cursor:pointer; }
 .paint-label { font-size:8px; color:#a27791; margin-top:5px; }
 
-/* ===== СТРАНИЦА 4 — PINTEREST (ЗАНИМАЕТ ПОЧТИ ВСЁ) ===== */
+/* ===== СТРАНИЦА 4 — PINTEREST ===== */
 .journal-page[data-page="4"] {
     background: #ffffff !important;
     padding: 0 !important;
@@ -284,13 +294,20 @@ body {
 }
 
 @media (max-width: 480px) {
-    .journal-page { padding:5px 0; }
-    .page-content { gap:6px; padding:3px 5px; }
-    .journal-page[data-page="1"] .page-content { padding:12px 0 8px 0; }
+    .journal-page {
+        padding: 0;                     /* ← ВАЖНО: убираем отступы, чтобы ширина была ровно 100% */
+    }
+    .page-content {
+        gap: 6px;
+        padding: 5px 10px;              /* небольшие боковые отступы, не ломающие ширину */
+    }
+    .journal-page[data-page="1"] .page-content {
+        padding: 12px 10px;             /* сохраняем дыхание сверху/снизу */
+    }
     .ticker { font-size:9px; }
     .carousel img { max-height: 40vh; }
     .hashtag { font-size:10px; }
-    .x-btn-img { width:42px; margin-top:8px; }
+    .x-btn-img { width:42px; }
     .mx-carousel-track { width:120px; height:120px; }
     .mx-slide { width:120px; height:120px; }
     .tshirt-preview { width:160px; }
@@ -303,7 +320,7 @@ body {
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-    .journal-page { padding:8px 0; }
+    .journal-page { padding:0; }
     .page-content { gap:12px; }
 }
 
