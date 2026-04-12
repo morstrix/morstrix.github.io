@@ -4,21 +4,29 @@
     --deep-pink: #a27791;
     --bg-dark: #050508;
     --shadow-dark: #3d2a2f;
+    /* высота верхней и нижней панелей */
+    --top-panel-h: 60px;
+    --bottom-panel-h: 40px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { background: var(--bg-dark); overflow: hidden; }
 body {
     background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', monospace;
-    height: 100vh; overflow: hidden; position: relative;
+    height: 100vh;           /* fallback */
+    height: 100dvh;          /* динамический viewport */
+    overflow: hidden;
+    position: relative;
     touch-action: pan-y pinch-zoom;
 }
 #neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
 
 .top-panel {
-    position: fixed; top:0; left:0; right:0; height:60px;
-    background: #050505; border-bottom: none;
+    position: fixed; top:0; left:0; right:0;
+    height: var(--top-panel-h);
+    background: #050505;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; z-index:200;
+    padding: 0 20px;
+    z-index:200;
 }
 .top-panel::after {
     content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
@@ -34,14 +42,16 @@ body {
 .journal-horizontal {
     display: flex; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-behavior: smooth;
-    height: calc(100vh - 60px - 40px);
+    /* динамическая высота с учётом панелей */
+    height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
+    height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
     width: 100%;
-    margin-top: 60px;
+    margin-top: var(--top-panel-h);
     -webkit-overflow-scrolling: touch;
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
-/* ===== ГАРАНТИРОВАННО РАБОТАЮЩИЙ КОНТЕЙНЕР ===== */
+/* ===== БАЗОВЫЙ КОНТЕЙНЕР СТРАНИЦЫ ===== */
 .journal-page {
     flex: 0 0 100%;
     scroll-snap-align: start;
@@ -49,8 +59,6 @@ body {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    padding: 0;
-    margin: 0;
 }
 
 .page-content {
@@ -60,10 +68,9 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 12px 15px 12px; /* нижний отступ для защиты Twitter */
+    padding: 12px 12px 15px 12px;   /* нижний отступ — страховка */
     box-sizing: border-box;
     min-height: 0;
-    overflow: visible;          /* тикер будет виден */
 }
 
 /* ===== ПЕРВАЯ СТРАНИЦА ===== */
@@ -71,13 +78,13 @@ body {
     padding: 12px 12px 15px 12px;
 }
 
+/* RSS */
 .ticker-wrapper {
     flex-shrink: 0;
     width: 100%;
-    padding: 5px 0;
     overflow: hidden;
     white-space: nowrap;
-    background: transparent;
+    padding: 5px 0;
 }
 .ticker {
     display: inline-block;
@@ -90,8 +97,9 @@ body {
     100% { transform: translateX(-50%); }
 }
 
+/* Группа карусель + хештег */
 .carousel-section {
-    flex: 1 1 0;
+    flex: 1 1 0;               /* занимает всё свободное пространство */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,19 +138,20 @@ body {
     color: #888;
 }
 
+/* Twitter */
 .twitter-section {
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px 0 0 0;
+    padding-top: 5px;
 }
 .x-btn-img {
     width: 44px;
     cursor: pointer;
 }
 
-/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ ===== */
+/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ (БЕЗ ИЗМЕНЕНИЙ) ===== */
 .journal-page[data-page="2"] .page-content { justify-content: center; gap: 5px; }
 .styler-embedded, .mx-download-block { border:none; box-shadow:none; background:transparent; padding:5px 0; width:100%; }
 .styler-embedded h3 { font-size:10px; }
@@ -164,34 +173,10 @@ body {
 .paint-label { font-size:8px; color:#a27791; margin-top:5px; }
 
 /* Pinterest */
-.journal-page[data-page="4"] {
-    background: #ffffff !important;
-    padding: 0 !important;
-}
-.journal-page[data-page="4"] .page-content {
-    padding: 0 !important;
-    justify-content: center !important;
-    align-items: center !important;
-    background: #ffffff !important;
-}
-.pinterest-embed {
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-    background: #ffffff !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.pinterest-embed > span,
-.pinterest-embed a,
-.pinterest-embed iframe {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 100% !important;
-    display: block !important;
-    background: #ffffff !important;
-}
+.journal-page[data-page="4"] { background: #ffffff !important; }
+.journal-page[data-page="4"] .page-content { padding: 0 !important; justify-content: center !important; background: #ffffff !important; }
+.pinterest-embed { width: 100% !important; height: 100% !important; overflow: hidden !important; background: #ffffff !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+.pinterest-embed > span, .pinterest-embed a, .pinterest-embed iframe { width: 100% !important; height: 100% !important; min-height: 100% !important; display: block !important; background: #ffffff !important; }
 
 .journal-page[data-page="5"] .page-content { justify-content: flex-start; padding-top: 10px; gap: 15px; }
 .merch-constructor, .converter-container { border:none; background:transparent; padding:5px 0; }
@@ -199,11 +184,7 @@ body {
 .tshirt-img { width:100%; }
 .print-canvas { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:70px; height:70px; }
 .upload-area { margin-top:8px; text-align:center; }
-.reset-btn {
-    background:#010101; border:2px solid #79434a; color:#a27791;
-    padding:5px 10px; font-size:8px; cursor:pointer;
-    font-family: 'Press Start 2P', monospace;
-}
+.reset-btn { background:#010101; border:2px solid #79434a; color:#a27791; padding:5px 10px; font-size:8px; cursor:pointer; font-family: 'Press Start 2P', monospace; }
 .converter-container input { width:90px; background:#000; border:1px solid #a84d6b; color:#fff; padding:6px; text-align:center; }
 .converter-arrow { font-size:18px; margin:0 8px; }
 
@@ -277,32 +258,19 @@ body {
 
 /* Адаптивность */
 @media (max-width: 700px) {
-    .top-panel { height:50px; padding:0 12px; }
+    :root { --top-panel-h: 50px; }
+    .top-panel { padding:0 12px; }
     .panel-btn { font-size:0.5rem; }
     .panel-close img { width:28px; height:28px; }
-    .journal-horizontal { height:calc(100vh - 50px - 40px); margin-top:50px; }
     .bottom-panel { height:40px; }
 }
 
 @media (max-width: 480px) {
-    .page-content {
-        padding: 8px 10px 12px 10px;
-    }
-    .journal-page[data-page="1"] .page-content {
-        padding: 8px 10px 12px 10px;
-    }
-    .carousel-section {
-        gap: 3px;
-    }
-    .hashtag {
-        font-size: 10px;
-    }
-    .x-btn-img {
-        width: 40px;
-    }
-    .ticker {
-        font-size: 9px;
-    }
+    .page-content { padding: 8px 10px 12px 10px; }
+    .carousel-section { gap: 3px; }
+    .hashtag { font-size: 10px; }
+    .x-btn-img { width: 40px; }
+    .ticker { font-size: 9px; }
     .mx-carousel-track { width:120px; height:120px; }
     .mx-slide { width:120px; height:120px; }
     .tshirt-preview { width:160px; }
@@ -325,15 +293,10 @@ body {
     #disclaimerModal .modal-inner p { font-size:11px !important; }
 }
 
-@media (min-width: 1200px) {
-    #disclaimerModal .modal-content { max-width:320px !important; }
-    #disclaimerModal .modal-inner { padding:20px 20px !important; }
-    #disclaimerModal .modal-inner p { font-size:11px !important; }
-}
-
 .bottom-panel {
-    position: fixed; bottom:0; left:0; right:0; height:40px;
-    background: #050505; border-top: none;
+    position: fixed; bottom:0; left:0; right:0;
+    height: var(--bottom-panel-h);
+    background: #050505;
     display: flex; align-items: center; justify-content: center;
     z-index:200;
 }
