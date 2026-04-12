@@ -174,22 +174,21 @@ body {
     gap: 15px;                /* общий отступ между блоками */
 }
 
-/* Увеличиваем трек карусели */
 .mx-carousel-track {
-    width: 200px;             /* было 140px */
-    height: 200px;            /* было 140px */
+    width: 260px;
+    height: 260px;
     overflow: hidden;
     border: 1px solid #79434a;
 }
 
-/* Слайды под размер трека */
 .mx-slide {
     flex: 0 0 100%;
-    width: 200px;             /* синхронно с треком */
-    height: 200px;
+    width: 260px;
+    height: 260px;
     object-fit: cover;
     display: none;
 }
+
 .mx-slide.active { display: block; }
 
 /* Отступ между каруселью и описанием */
@@ -202,13 +201,11 @@ body {
     margin-top: 10px;          /* воздух сверху */
 }
 
-/* Описание крупнее и с отступами */
 .mx-description {
-    font-size: 10px;           /* было 7px */
-    color: #ccc;               /* чуть светлее */
-    margin: 12px 0 16px 0;     /* воздух вокруг */
+    font-size: 11px;
+    color: #ddd;
+    margin: 15px 0 20px 0;
     text-align: center;
-    line-height: 1.4;
 }
 
 /* Центрирование кнопки */
