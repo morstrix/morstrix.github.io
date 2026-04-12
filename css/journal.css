@@ -268,12 +268,12 @@ body {
     .bottom-panel{height:40px;}
 }
 
-/* ===== УНИВЕРСАЛЬНАЯ КНОПКА UIVERSE (замена .box-button) ===== */
+/* ===== УНИВЕРСАЛЬНАЯ КНОПКА (компактная) ===== */
 .universal-btn {
     cursor: pointer;
-    border: 3px solid #000;
+    border: 2px solid #000;
     background: #575253;
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     display: inline-block;
     transition: 0.08s;
     text-decoration: none;
@@ -282,24 +282,24 @@ body {
 
 .universal-btn .btn-inner {
     background: #fafafa;
-    border: 3px solid #a0a0a0;
-    padding: 4px 18px;
-    transform: translateY(-6px);
+    border: 2px solid #a0a0a0;
+    padding: 3px 12px;
+    transform: translateY(-4px);
     transition: 0.08s;
     display: inline-block;
 }
 
 .universal-btn .btn-inner span {
     font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
+    font-size: 9px;
+    letter-spacing: 1px;
     color: #000;
     text-transform: uppercase;
 }
 
 .universal-btn:active {
-    padding-bottom: 2px;
-    transform: translateY(6px);
+    padding-bottom: 1px;
+    transform: translateY(4px);
 }
 
 .universal-btn:active .btn-inner {
@@ -308,6 +308,6 @@ body {
 
 @media (hover: hover) {
     .universal-btn:hover .btn-inner {
-        background: #e0e0e0;
+        background: #d0d0d0;
     }
 }
