@@ -250,15 +250,21 @@ body {
 }
 .modal-inner { padding:20px; background:#a27791; }
 
-/* Модалка Twitter */
+/* ========================================= */
+/*            МОДАЛКА TWITTER                */
+/* ========================================= */
+
 #disclaimerModal .modal-content {
     max-width: 320px !important;
     width: 90% !important;
-    min-height: 240px !important;
+    min-height: auto !important;
+    height: auto !important;
+    margin: 0 auto !important;
 }
 
-#disclaimerModal .modal-title-text { 
-    font-size: 9px !important; 
+#disclaimerModal .modal-title-text {
+    font-size: 9px !important;
+    line-height: 1.4 !important;
 }
 
 #disclaimerModal .modal-inner {
@@ -266,61 +272,82 @@ body {
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: 180px !important;
-    padding: 20px 15px !important;
-    position: relative !important;
+    min-height: auto !important;
+    height: auto !important;
+    padding: 18px 16px !important;
+    box-sizing: border-box !important;
+    gap: 12px !important;
 }
 
 #disclaimerModal .modal-inner p {
-    color: #aaa !important; 
-    text-shadow: 1px 1px 0 #000 !important; 
+    color: #aaa !important;
+    text-shadow: 1px 1px 0 #000 !important;
     font-size: 10px !important;
-    margin: 0 0 15px 0 !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    text-align: center !important;
+    word-break: break-word !important;
 }
 
 #disclaimerModal .universal-btn {
-    margin-top: auto !important;
-    margin-bottom: 5px !important;
+    margin: 4px 0 0 0 !important;
+    width: auto !important;
+    max-width: 100% !important;
 }
 
-/* Мобильные */
+/* ===== МОБИЛЬНЫЕ (до 480px) ===== */
 @media (max-width: 480px) {
     #disclaimerModal .modal-content {
-        max-width: 300px !important;
-        width: 90% !important;
-        min-height: auto !important;
+        max-width: 280px !important;
+    }
+
+    #disclaimerModal .modal-title-text {
+        font-size: 8px !important;
     }
 
     #disclaimerModal .modal-inner {
-        min-height: auto !important;
-        padding: 10px 15px !important;    /* ← 15px слева/справа — нормально */
-        box-sizing: border-box !important;
+        padding: 20px 14px !important;
+        gap: 14px !important;
     }
 
     #disclaimerModal .modal-inner p {
         font-size: 9px !important;
-        margin: 0 0 8px 0 !important;
-        word-break: break-word !important;  /* чтобы текст не вылезал */
-    }
-
-    #disclaimerModal .universal-btn {
-        margin-top: 5px !important;
-        margin-bottom: 0 !important;
-        width: auto !important;             /* ← не растягивать кнопку */
-        max-width: 100% !important;
+        line-height: 1.6 !important;
     }
 }
 
-/* Десктоп */
+/* ===== ДЕСКТОП (от 768px) ===== */
 @media (min-width: 768px) {
     #disclaimerModal .modal-content {
         max-width: 300px !important;
-        min-height: 220px !important;
     }
-    
+
+    #disclaimerModal .modal-title-text {
+        font-size: 10px !important;
+    }
+
     #disclaimerModal .modal-inner {
-        min-height: 170px !important;
-        padding: 15px !important;
+        padding: 16px 18px !important;
+        gap: 10px !important;
+    }
+
+    #disclaimerModal .modal-inner p {
+        font-size: 11px !important;
+    }
+}
+
+/* ===== БОЛЬШИЕ ЭКРАНЫ (от 1200px) ===== */
+@media (min-width: 1200px) {
+    #disclaimerModal .modal-content {
+        max-width: 320px !important;
+    }
+
+    #disclaimerModal .modal-inner {
+        padding: 20px 20px !important;
+    }
+
+    #disclaimerModal .modal-inner p {
+        font-size: 11px !important;
     }
 }
 
