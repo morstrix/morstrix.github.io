@@ -41,27 +41,30 @@
         </div>
     </div>
 
-    <!-- 2: Font Styler + MX -->
-    <div class="journal-page" data-page="2">
-        <div class="page-content">
-           <div class="styler-embedded">
-    <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT...">
-    <div class="styler-preview" id="stylerPreviewEmbedded" style="min-height: 2.5em;"></div>
-</div>
-            <div class="mx-download-block">
-    <div class="mx-carousel">
-        <div class="mx-carousel-track">
-            <div class="mx-carousel-slides">
-                <img src="assets/f1.jpg" class="mx-slide active">
-                <img src="assets/f2.jpg" class="mx-slide">
-                <img src="assets/f3.jpg" class="mx-slide">
-            </div>
+ <!-- 2: Font Styler + MX Static Image -->
+<div class="journal-page" data-page="2">
+    <div class="page-content">
+        <!-- STYLER -->
+        <div class="styler-embedded">
+            <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT...">
+            <div class="styler-preview" id="stylerPreviewEmbedded"></div>
         </div>
+
+        <!-- СТАТИЧНАЯ КАРТИНКА -->
+        <div class="mx-static-image">
+            <img src="assets/f1.jpg" alt="MX Print" id="mxStaticImage">
+        </div>
+
+        <!-- ОПИСАНИЕ -->
+        <div class="mx-description" id="mxDescription">
+            ✦ MX PRINT ✦<br>абстракт / глитч / пиксель
+        </div>
+
+        <!-- КНОПКА DOWNLOAD -->
+        <button class="universal-btn" id="downloadArchiveBtnEmbedded">
+            <span class="btn-inner"><span>DOWNLOAD</span></span>
+        </button>
     </div>
-    <div class="mx-description" id="mxDescription">ШРИФТ</div>
-    <button class="universal-btn" id="downloadArchiveBtnEmbedded">
-        <span class="btn-inner"><span>DOWNLOAD</span></span>
-    </button>
 </div>
 
     <!-- 3: Art + Paint -->
