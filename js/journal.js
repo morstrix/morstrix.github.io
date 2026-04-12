@@ -48,7 +48,7 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ТИКЕР (RSS) =====
+    // ===== ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
     if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
 
@@ -74,70 +74,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== TWITTER =====
     document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
 
-    // ===== FONT STYLER (встроенный) =====
+    // ===== FONT STYLER =====
     const embeddedInput = document.getElementById('fontInputEmbedded');
     const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
-
     if (embeddedInput && embeddedPreview) {
         function updateStylerPreview() {
             const rawText = embeddedInput.value.trim();
-            if (rawText === '') {
-                embeddedPreview.textContent = convertTextToFont('tap to copy');
-            } else {
-                embeddedPreview.textContent = convertTextToFont(rawText);
-            }
+            embeddedPreview.textContent = rawText === '' ? convertTextToFont('tap to copy') : convertTextToFont(rawText);
         }
-
         updateStylerPreview();
         embeddedInput.addEventListener('input', updateStylerPreview);
-
         embeddedPreview.addEventListener('click', () => {
-            const textToCopy = embeddedPreview.textContent;
-            navigator.clipboard.writeText(textToCopy).then(() => {
+            navigator.clipboard.writeText(embeddedPreview.textContent).then(() => {
                 const original = embeddedPreview.textContent;
                 embeddedPreview.textContent = convertTextToFont('copied!');
-                setTimeout(() => {
-                    embeddedPreview.textContent = original;
-                }, 800);
-            }).catch(err => console.warn('Clipboard error:', err));
+                setTimeout(() => embeddedPreview.textContent = original, 800);
+            });
         });
     }
 
-    // ===== MX КАРУСЕЛЬ (АВТОСМЕНА, БЕЗ СТРЕЛОК) =====
+    // ===== MX КАРУСЕЛЬ (АВТО, БЕЗ СТРЕЛОК) =====
     const mxSlides = document.querySelectorAll('.mx-slide');
     let mxSlideIndex = 0;
     let mxInterval;
-
-    function startMxCarousel() {
-        if (mxSlides.length === 0) return;
+    if (mxSlides.length > 0) {
         mxInterval = setInterval(() => {
             mxSlides[mxSlideIndex].classList.remove('active');
             mxSlideIndex = (mxSlideIndex + 1) % mxSlides.length;
             mxSlides[mxSlideIndex].classList.add('active');
         }, 3000);
+        // Остановка при клике на карусель (опционально)
+        document.querySelector('.mx-carousel')?.addEventListener('click', () => clearInterval(mxInterval));
     }
-
-    // Остановка карусели при клике на неё (опционально)
-    document.querySelector('.mx-carousel')?.addEventListener('click', () => {
-        clearInterval(mxInterval);
-    });
-
-    startMxCarousel();
-
-    // Описание одно, статичное, можно не менять через JS
-    // Если нужно менять описание при смене слайда – раскомментируй:
-    /*
-    const mxDesc = document.getElementById('mxDescription');
-    const descriptions = [
-        '✦ MX PRINT 01 ✦<br>Абстрактная композиция',
-        '✦ MX PRINT 02 ✦<br>Глитч-эффект',
-        '✦ MX PRINT 03 ✦<br>Пиксель-арт'
-    ];
-    function updateMxDescription(index) {
-        if (mxDesc) mxDesc.innerHTML = descriptions[index];
-    }
-    // И в setInterval добавить updateMxDescription(mxSlideIndex);
-    */
 
     // ===== СКАЧИВАНИЕ АРХИВА =====
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
@@ -147,48 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
         a.click();
     });
 
-    // ===== PAINT (открытие модалки) =====
+    // ===== PAINT =====
     document.getElementById('paintBtn')?.addEventListener('click', ()=> openModal('artModal'));
 
     // ===== КОНВЕРТЕР PX ↔ CM =====
     const pxInput = document.getElementById('pxInputEmbedded');
     const cmInput = document.getElementById('cmInputEmbedded');
     if(pxInput && cmInput) {
-        pxInput.addEventListener('input', ()=> {
-            const px = parseFloat(pxInput.value);
-            cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2);
-        });
-        cmInput.addEventListener('input', ()=> {
-            const cm = parseFloat(cmInput.value);
-            pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8);
-        });
+        pxInput.addEventListener('input', ()=> { const px = parseFloat(pxInput.value); cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2); });
+        cmInput.addEventListener('input', ()=> { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
     }
 
-    // ===== КОНСТРУКТОР MERCH (печать на футболке) =====
+    // ===== КОНСТРУКТОР MERCH =====
     const canvas = document.getElementById('printCanvasEmbedded');
     const upload = document.getElementById('imageUploadEmbedded');
     if(canvas && upload) {
         const ctx = canvas.getContext('2d');
-        canvas.width = 120;
-        canvas.height = 120;
+        canvas.width = 120; canvas.height = 120;
         upload.addEventListener('change', e => {
             const file = e.target.files[0];
             if(!file) return;
             const reader = new FileReader();
             reader.onload = ev => {
                 const img = new Image();
-                img.onload = () => {
-                    ctx.clearRect(0,0,canvas.width,canvas.height);
-                    ctx.drawImage(img,0,0,canvas.width,canvas.height);
-                };
+                img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height); };
                 img.src = ev.target.result;
             };
             reader.readAsDataURL(file);
         });
-        document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            upload.value = '';
-        });
+        document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
     }
 
     // ===== ТОП ИГРОКОВ (Firestore) =====
@@ -212,28 +167,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const snap = await getDocs(q);
             let realCount = 0;
             if(!snap.empty){
-                let html='';
-                let rank=1;
-                snap.forEach(d=>{
-                    const data=d.data();
-                    html+=`<div style="display:flex;justify-content:space-between;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`;
-                    rank++;
-                    realCount++;
-                });
+                let html=''; let rank=1;
+                snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; realCount++; });
                 container.innerHTML=html;
-            } else {
-                container.innerHTML='';
-                realCount=0;
-            }
+            } else { container.innerHTML=''; realCount=0; }
             const placeholderDiv = document.querySelector('.top-players-placeholder');
             if(placeholderDiv){
                 let emptyHtml = '';
                 for(let i=0; i<9-realCount; i++) emptyHtml += `<div>— — — — — — — —</div>`;
                 placeholderDiv.innerHTML = emptyHtml;
             }
-        }catch(e){
-            container.innerHTML='⚠️ ERROR';
-        }
+        }catch(e){ container.innerHTML='⚠️ ERROR'; }
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 
@@ -261,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== ИНДИКАТОР ТЕКУЩЕЙ СТРАНИЦЫ (точки) =====
+    // ===== ИНДИКАТОР ТОЧЕК =====
     const pages = document.querySelectorAll('.journal-page');
     const dots = document.querySelectorAll('.dot');
     const observer = new IntersectionObserver((entries) => {
@@ -279,9 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = b.dataset.modal;
         if(id) closeModal(id);
     }));
-    document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{
-        if(e.target===o) o.classList.remove('active');
-    }));
+    document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
 
     // ===== МОДАЛКА "ЗМІСТ" =====
     document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
@@ -293,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== PINTEREST (ленивая загрузка SDK) =====
+    // ===== PINTEREST =====
     if(!window.pinSDKLoaded){
         const s=document.createElement('script');
         s.src='//assets.pinterest.com/js/pinit.js';
@@ -302,9 +244,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== ESCAPE =====
-    document.addEventListener('keydown', e=>{
-        if(e.key==='Escape'){
-            document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));
-        }
-    });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 });
