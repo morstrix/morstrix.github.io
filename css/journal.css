@@ -286,23 +286,28 @@ body {
 /* Мобильные */
 @media (max-width: 480px) {
     #disclaimerModal .modal-content {
-        max-width: 280px !important;
-        min-height: auto !important;           /* убираем жёсткую минималку */
+        max-width: 300px !important;
+        width: 90% !important;
+        min-height: auto !important;
     }
 
     #disclaimerModal .modal-inner {
-        min-height: auto !important;           /* убираем */
-        padding: 15px 15px !important;         /* ← УМЕНЬШИТЬ (было 20-30px) */
+        min-height: auto !important;
+        padding: 10px 15px !important;    /* ← 15px слева/справа — нормально */
+        box-sizing: border-box !important;
     }
 
     #disclaimerModal .modal-inner p {
-        font-size: 9px !important;             /* ← УМЕНЬШИТЬ */
-        margin: 0 0 10px 0 !important;         /* ← УМЕНЬШИТЬ (было 15-25px) */
+        font-size: 9px !important;
+        margin: 0 0 8px 0 !important;
+        word-break: break-word !important;  /* чтобы текст не вылезал */
     }
 
     #disclaimerModal .universal-btn {
-        margin-top: 5px !important;            /* ← УМЕНЬШИТЬ */
+        margin-top: 5px !important;
         margin-bottom: 0 !important;
+        width: auto !important;             /* ← не растягивать кнопку */
+        max-width: 100% !important;
     }
 }
 
