@@ -102,7 +102,7 @@ body {
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;   /* весь блок прижимаем к низу секции? НЕТ, надо иначе */
+    justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 0;
@@ -110,25 +110,40 @@ body {
     gap: 5px;
 }
 
-/* Карусель занимает максимум места, но не отталкивает хештег */
+/* Карусель — ограничиваем максимальную высоту */
 .carousel {
-    flex: 1 1 0;
+    flex: 1 1 auto;               /* растягивается, но не бесконтрольно */
     width: 100%;
+    max-height: 70vh;             /* жёсткое ограничение для мобильных */
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     border: none;
     min-height: 0;
-    margin-bottom: 0;            /* убираем любой лишний отступ */
 }
 
-/* Хештег — жёстко прижат к карусели */
+/* Изображения внутри карусели */
+.carousel img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;          /* гарантирует, что картинка впишется целиком */
+    display: block;
+    margin: 0 auto;
+}
+.carousel img:not(.active) { display: none; }
+
+/* Хештег */
 .hashtag-row {
     flex-shrink: 0;
     text-align: center;
-    padding: 3px 0 0 0;         /* отступ только сверху (если нужен), снизу — 0 */
-    margin: 0;
+    padding: 3px 0 0 0;
+}
+.hashtag {
+    font-size: 11px;
+    color: #888;
 }
 
 /* Twitter */
