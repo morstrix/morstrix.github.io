@@ -255,9 +255,6 @@ body {
 #disclaimerModal .modal-inner p {
     color: #aaa !important; text-shadow: 1px 1px 0 #000 !important; font-size:9px;
 }
-#disclaimerModal .box-button { margin-top:30px; }
-#disclaimerModal .box-button .button { padding:5px 12px; }
-#disclaimerModal .box-button .button span { font-size:8px; }
 
 /* Адаптация */
 @media (max-width:700px){
@@ -268,12 +265,12 @@ body {
     .bottom-panel{height:40px;}
 }
 
-/* ===== УНИВЕРСАЛЬНАЯ КНОПКА (компактная) ===== */
+/* ===== УНИВЕРСАЛЬНАЯ КНОПКА ===== */
 .universal-btn {
     cursor: pointer;
-    border: 2px solid #000;
+    border: 3px solid #000;
     background: #575253;
-    padding-bottom: 4px;
+    padding-bottom: 8px;
     display: inline-block;
     transition: 0.08s;
     text-decoration: none;
@@ -282,24 +279,24 @@ body {
 
 .universal-btn .btn-inner {
     background: #fafafa;
-    border: 2px solid #a0a0a0;
-    padding: 3px 12px;
-    transform: translateY(-4px);
+    border: 3px solid #a0a0a0;
+    padding: 4px 18px;
+    transform: translateY(-6px);
     transition: 0.08s;
     display: inline-block;
 }
 
 .universal-btn .btn-inner span {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 2px;
     color: #000;
     text-transform: uppercase;
 }
 
 .universal-btn:active {
-    padding-bottom: 1px;
-    transform: translateY(4px);
+    padding-bottom: 2px;
+    transform: translateY(6px);
 }
 
 .universal-btn:active .btn-inner {
@@ -308,6 +305,6 @@ body {
 
 @media (hover: hover) {
     .universal-btn:hover .btn-inner {
-        background: #d0d0d0;
+        background: #e0e0e0;
     }
 }
