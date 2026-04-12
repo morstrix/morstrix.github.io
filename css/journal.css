@@ -4,7 +4,6 @@
     --deep-pink: #a27791;
     --bg-dark: #050508;
     --shadow-dark: #3d2a2f;
-    /* высота верхней и нижней панелей */
     --top-panel-h: 60px;
     --bottom-panel-h: 40px;
 }
@@ -12,8 +11,7 @@
 html { background: var(--bg-dark); overflow: hidden; }
 body {
     background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', monospace;
-    height: 100vh;           /* fallback */
-    height: 100dvh;          /* динамический viewport */
+    height: 100vh; height: 100dvh;
     overflow: hidden;
     position: relative;
     touch-action: pan-y pinch-zoom;
@@ -42,7 +40,6 @@ body {
 .journal-horizontal {
     display: flex; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-behavior: smooth;
-    /* динамическая высота с учётом панелей */
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
     width: 100%;
@@ -51,7 +48,7 @@ body {
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
-/* ===== БАЗОВЫЙ КОНТЕЙНЕР СТРАНИЦЫ ===== */
+/* ===== БАЗОВЫЙ КОНТЕЙНЕР ===== */
 .journal-page {
     flex: 0 0 100%;
     scroll-snap-align: start;
@@ -60,7 +57,6 @@ body {
     height: 100%;
     overflow: hidden;
 }
-
 .page-content {
     flex: 1;
     display: flex;
@@ -68,7 +64,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 12px 12px 15px 12px;   /* нижний отступ — страховка */
+    padding: 12px 12px 15px 12px;
     box-sizing: border-box;
     min-height: 0;
 }
@@ -78,7 +74,7 @@ body {
     padding: 12px 12px 15px 12px;
 }
 
-/* RSS */
+/* 1️⃣ RSS */
 .ticker-wrapper {
     flex-shrink: 0;
     width: 100%;
@@ -97,7 +93,7 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* Группа карусель + хештег */
+/* 2️⃣ КАРУСЕЛЬ + ХЕШТЕГ */
 .carousel-section {
     flex: 1 1 0;
     display: flex;
@@ -107,46 +103,41 @@ body {
     width: 100%;
     min-height: 0;
     overflow: hidden;
-    gap: 5px;
+    gap: 0;
 }
-
-/* Карусель — ограничиваем максимальную высоту */
 .carousel {
-    flex: 1 1 auto;               /* растягивается, но не бесконтрольно */
+    flex: 0 0 auto;
     width: 100%;
-    max-height: 70vh;             /* жёсткое ограничение для мобильных */
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     border: none;
-    min-height: 0;
 }
-
-/* Изображения внутри карусели */
 .carousel img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 60vh;
     width: auto;
     height: auto;
-    object-fit: contain;          /* гарантирует, что картинка впишется целиком */
+    object-fit: contain;
     display: block;
     margin: 0 auto;
 }
 .carousel img:not(.active) { display: none; }
 
-/* Хештег */
 .hashtag-row {
     flex-shrink: 0;
     text-align: center;
-    padding: 3px 0 0 0;
+    padding: 5px 0 0 0;
+    margin: 0;
 }
 .hashtag {
     font-size: 11px;
     color: #888;
 }
 
-/* Twitter */
+/* 3️⃣ TWITTER */
 .twitter-section {
     flex-shrink: 0;
     display: flex;
@@ -159,7 +150,7 @@ body {
     cursor: pointer;
 }
 
-/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ (БЕЗ ИЗМЕНЕНИЙ) ===== */
+/* ===== ОСТАЛЬНЫЕ СТРАНИЦЫ ===== */
 .journal-page[data-page="2"] .page-content { justify-content: center; gap: 5px; }
 .styler-embedded, .mx-download-block { border:none; box-shadow:none; background:transparent; padding:5px 0; width:100%; }
 .styler-embedded h3 { font-size:10px; }
@@ -180,7 +171,6 @@ body {
 .paint-trigger { width:60px; cursor:pointer; }
 .paint-label { font-size:8px; color:#a27791; margin-top:5px; }
 
-/* Pinterest */
 .journal-page[data-page="4"] { background: #ffffff !important; }
 .journal-page[data-page="4"] .page-content { padding: 0 !important; justify-content: center !important; background: #ffffff !important; }
 .pinterest-embed { width: 100% !important; height: 100% !important; overflow: hidden !important; background: #ffffff !important; display: flex !important; align-items: center !important; justify-content: center !important; }
@@ -275,7 +265,7 @@ body {
 
 @media (max-width: 480px) {
     .page-content { padding: 8px 10px 12px 10px; }
-    .carousel-section { gap: 3px; }
+    .carousel img { max-height: 50vh; }
     .hashtag { font-size: 10px; }
     .x-btn-img { width: 40px; }
     .ticker { font-size: 9px; }
