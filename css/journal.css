@@ -283,7 +283,7 @@ body {
 .universal-btn .btn-inner {
     background: #fafafa;
     border: 3px solid #a0a0a0;
-    padding: 6px 20px;
+    padding: 4px 18px;
     transform: translateY(-6px);
     transition: 0.08s;
     display: inline-block;
