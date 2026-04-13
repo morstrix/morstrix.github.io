@@ -255,9 +255,9 @@ body {
 
 /* ===== СТРАНИЦА 5 — MERCH + CONVERTER (АДАПТИВНО) ===== */
 .journal-page[data-page="5"] .page-content {
-    justify-content: flex-start;
-    padding: 15px 10px 20px;
-    gap: 25px;
+    justify-content: space-evenly;
+    padding: 30px 10px 30px;
+    gap: 20px;
 }
 
 .merch-constructor,
