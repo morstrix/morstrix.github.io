@@ -314,3 +314,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== ESCAPE =====
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 });
+
+// Функция для озвучивания текста
+async function speakWithEdge(text, voice = 'ru-RU-SvetlanaNeural') {
+  try {
+    // Создаем объект TTS
+    const tts = new EdgeTTS({ voice });
+    
+    // Получаем аудиопоток
+    const audioStream = await tts.text(text);
+    
+    // Создаем объект Audio и воспроизводим
+    const audio = new Audio();
+    audio.src = URL.createObjectURL(audioStream);
+    await audio.play();
+    
+    console.log('Воспроизведение началось');
+  } catch (error) {
+    console.error('Ошибка синтеза речи:', error);
+  }
+}
+
+// Пример использования:
+speakWithEdge('Привет, мир! Это тестовое сообщение.');
