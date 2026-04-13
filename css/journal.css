@@ -251,18 +251,19 @@ body {
 .paint-trigger { width:60px; cursor:pointer; }
 .paint-label { font-size:12px; color:#a27791; margin-top:5px; }
 
-/* 4-я страница – Pinterest */
-.journal-page[data-page="4"] .page-content {
-    background-color: #ffffff;
+/* Pinterest — центрирование по вертикали */
+.journal-page[data-page="4"] .page-content.pinterest-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* фон наследуется от общего */
 }
 
 .pinterest-widget-wrapper {
-    max-width: 320px;
     width: 100%;
+    max-width: 320px;
     margin: 0 auto;
-    background: #fff;
-    border-radius: 4px;
-    overflow: hidden;
 }
 
 /* ===== СТРАНИЦА 5 — MERCH + CONVERTER (АДАПТИВНО) ===== */
