@@ -312,8 +312,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 
 .upload-area {
@@ -366,8 +366,8 @@ body {
         width: 170px;
     }
     .print-canvas {
-        width: 70px;
-        height: 70px;
+        width: 50px;
+        height: 50px;
     }
     .converter-container input {
         width: 80px;
@@ -383,12 +383,12 @@ body {
 .spotify-embed { border:none; background:transparent; height:55%; max-height:280px; width:100%; overflow:hidden; }
 .spotify-embed iframe { height:100% !important; border-radius:0 !important; }
 .text-synth-embedded { width:100%; max-width:400px; text-align:center; flex-shrink:0; }
-.text-synth-embedded h4 { font-size:10px; color:#a84d6b; margin-bottom:8px; }
-.synth-placeholder { padding:12px; background:#000; border:1px dashed #a84d6b; font-size:8px; color:#a27791; }
+.text-synth-embedded h4 { font-size:10px; color: #a27791; margin-bottom:8px; }
+.synth-placeholder { padding:12px; background:#000; border:1px dashed #888888; font-size:8px; color:#888888; }
 
 .journal-page[data-page="7"] .page-content { justify-content: center; gap: 15px; }
 .top-players-framed { max-width:400px; margin:0 auto; }
-.top-players-list, .top-players-placeholder { font-size:9px; color:#aaa; line-height:1.6; }
+.top-players-list, .top-players-placeholder { font-size:9px; color:#a27791; line-height:1.6; }
 .tetris-big { display:flex; flex-direction:column; align-items:center; text-decoration:none; }
 .tetris-big img { width:110px; image-rendering:pixelated; }
 .tetris-big span { font-size:11px; color:#fff; margin-top:8px; }
