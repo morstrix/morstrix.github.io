@@ -383,14 +383,95 @@ body {
 .journal-page[data-page="8"] .page-content { justify-content: center; }
 .support-embedded { border:none; background:transparent; padding:5px; height:100%; max-height:500px; overflow:hidden; }
 
-.journal-page[data-page="9"] .page-content { padding:0; justify-content: center; }
-.forum-embedded { display:flex; gap:0; background:transparent; border:none; width:100%; height:100%; }
-.forum-tabs-panel-embedded { width:55px; background:#0a0a0f; border-right:2px solid #79434a; display:flex; flex-direction:column; padding:5px 0; }
-.forum-tabs-panel-embedded .forum-tab { padding:10px 0; font-size:18px; text-align:center; cursor:pointer; border-bottom:1px solid #3d2a2f; color:#a27791; }
-.forum-tabs-panel-embedded .forum-tab.active { background:#a84d6b; border-left:3px solid #ffb7c7; color:#fff; }
-.forum-content-embedded { flex:1; padding:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:#0a0a0f; color:#a27791; }
-.forum-content-embedded h3 { font-size:13px; color:#a84d6b; margin-bottom:15px; }
-.forum-content-embedded p { font-size:8px; color:#c48a6b; margin-bottom:20px; }
+/* 9-я страница – превью форума */
+.journal-page[data-page="9"] .page-content {
+    padding: 25px 15px 25px;        /* отступы сверху и снизу */
+    justify-content: space-between;  /* распределение: текст-превью-кнопка */
+    gap: 10px;
+}
+
+.forum-preview-hint {
+    font-size: 7px;
+    color: #888888;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin: 0 0 5px 0;
+}
+
+/* Прозрачный форум */
+.forum-embedded {
+    display: flex;
+    gap: 0;
+    background: transparent;
+    border: none;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.forum-tabs-panel-embedded {
+    width: 55px;
+    background: transparent;
+    border-right: 2px solid #79434a;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+}
+
+.forum-tabs-panel-embedded .forum-tab {
+    padding: 10px 0;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid #3d2a2f;
+    color: #a27791;
+}
+
+.forum-tabs-panel-embedded .forum-tab.active {
+    background: #a84d6b;
+    border-left: 3px solid #ffb7c7;
+    color: #fff;
+}
+
+.forum-content-embedded {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    color: #a27791;
+}
+
+.forum-content-embedded h3 {
+    font-size: 13px;
+    color: #a84d6b;
+    margin-bottom: 15px;
+}
+
+.forum-content-embedded p {
+    font-size: 8px;
+    color: #c48a6b;
+    margin-bottom: 0;
+}
+
+#forumFullBtn {
+    margin-top: 10px;
+    align-self: center;
+}
+
+@media (max-width: 480px) {
+    .journal-page[data-page="9"] .page-content {
+        padding: 15px 10px 20px;
+    }
+    .forum-preview-hint {
+        font-size: 6px;
+    }
+}
 
 /* Зміст */
 .contents-item { padding:12px; font-size:10px; border-bottom:1px solid #79434a; cursor:pointer; color:#000 !important; text-shadow:1px 1px 0 #aaa; }
