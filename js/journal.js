@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const upload = document.getElementById('imageUploadEmbedded');
     if(canvas && upload) {
         const ctx = canvas.getContext('2d');
-        canvas.width = 120; canvas.height = 120;
+        canvas.width = 100; canvas.height = 100;
         upload.addEventListener('change', e => {
             const file = e.target.files[0];
             if(!file) return;
