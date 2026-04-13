@@ -439,12 +439,12 @@ body {
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid #3d2a2f;
-    color: #a27791;
+    color: none;
 }
 
 .forum-tabs-panel-embedded .forum-tab.active {
-    background: #a27791;
-    border-left: 3px solid #ffb7c7;
+    background: none;
+    border-left: 3px solid #a27791;
     color: #fff;
 }
 
