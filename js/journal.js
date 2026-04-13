@@ -315,25 +315,74 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 });
 
-// Функция для озвучивания текста
-async function speakWithEdge(text, voice = 'ru-RU-SvetlanaNeural') {
-  try {
-    // Создаем объект TTS
-    const tts = new EdgeTTS({ voice });
-    
-    // Получаем аудиопоток
-    const audioStream = await tts.text(text);
-    
-    // Создаем объект Audio и воспроизводим
-    const audio = new Audio();
-    audio.src = URL.createObjectURL(audioStream);
-    await audio.play();
-    
-    console.log('Воспроизведение началось');
-  } catch (error) {
-    console.error('Ошибка синтеза речи:', error);
-  }
+// ===== TEXT SYNTH (Edge-TTS) — полноценная интеграция =====
+const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
+const ttsTextInput = document.getElementById('ttsTextInput');
+const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
+const ttsStatus = document.getElementById('ttsStatus');
+
+// Функция обновления статуса
+function setTtsStatus(message) {
+    if (ttsStatus) ttsStatus.textContent = message;
 }
 
-// Пример использования:
-speakWithEdge('Привет, мир! Это тестовое сообщение.');
+// Основная функция синтеза
+async function speakWithEdge(text, voice = 'ru-RU-SvetlanaNeural') {
+    if (!text || text.trim() === '') {
+        setTtsStatus('Введите текст');
+        return;
+    }
+    
+    setTtsStatus('Синтез речи...');
+    
+    try {
+        // Проверка доступности библиотеки
+        if (typeof EdgeTTS === 'undefined') {
+            throw new Error('Библиотека EdgeTTS не загружена');
+        }
+        
+        const tts = new EdgeTTS({ voice });
+        const audioBlob = await tts.text(text);
+        
+        const audio = new Audio();
+        audio.src = URL.createObjectURL(audioBlob);
+        
+        // Обработчики событий аудио
+        audio.onplay = () => setTtsStatus('▶ Воспроизведение');
+        audio.onended = () => setTtsStatus('');
+        audio.onerror = () => setTtsStatus('Ошибка воспроизведения');
+        
+        await audio.play();
+        
+    } catch (error) {
+        console.error('TTS Error:', error);
+        
+        // Понятное сообщение для CORS
+        if (error.message.includes('CORS') || error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
+            setTtsStatus('Ошибка CORS. Нужен прокси-сервер.');
+        } else {
+            setTtsStatus('Ошибка: ' + error.message);
+        }
+    }
+}
+
+// Привязка к кнопке
+if (ttsSpeakBtn) {
+    ttsSpeakBtn.addEventListener('click', () => {
+        const text = ttsTextInput?.value || '';
+        const voice = ttsVoiceSelect?.value || 'ru-RU-SvetlanaNeural';
+        speakWithEdge(text, voice);
+    });
+}
+
+// Обработка Enter в поле ввода
+if (ttsTextInput) {
+    ttsTextInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            ttsSpeakBtn?.click();
+        }
+    });
+}
+
+// Убираем тестовый автозапуск (если остался)
+// speakWithEdge('Привет, мир! Это тестовое сообщение.');
