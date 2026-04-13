@@ -157,9 +157,13 @@
         </div>
     </div>
 
-    <!-- 9: Forum -->
+    <!-- 9: Forum Preview -->
     <div class="journal-page" data-page="9">
         <div class="page-content">
+            <!-- Пояснительный текст сверху -->
+            <p class="forum-preview-hint">mini preview of the community hub</p>
+            
+            <!-- Сам блок форума (фон прозрачный) -->
             <div class="forum-embedded">
                 <div class="forum-tabs-panel-embedded">
                     <div class="forum-tab active" data-tab="wellness">🌿</div>
@@ -175,14 +179,15 @@
                 <div class="forum-content-embedded">
                     <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
                     <p id="forumTextEmbedded">Йога, медитации...</p>
-                    <button class="universal-btn" onclick="window.open('https://t.me/morstrix')">
-                        <span class="btn-inner"><span>FULL</span></span>
-                    </button>
                 </div>
             </div>
+            
+            <!-- Кнопка FULL снизу -->
+            <button class="universal-btn" id="forumFullBtn" onclick="window.open('https://t.me/morstrix')">
+                <span class="btn-inner"><span>OPEN FULL FORUM</span></span>
+            </button>
         </div>
     </div>
-</div>
 
 <div class="bottom-panel">
     <div class="page-indicator">
