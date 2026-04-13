@@ -246,7 +246,7 @@ body {
 }
 
 .journal-page[data-page="3"] .page-content { justify-content: center; gap: 15px; }
-.art-square-frame { max-width:280px; border:2px solid #79434a; margin:0 auto; }
+.art-square-frame { max-width:280px; margin:0 auto; }
 .art-square-frame img { width:100%; display:block; }
 .paint-trigger { width:60px; cursor:pointer; }
 .paint-label { font-size:12px; color:#a27791; margin-top:5px; }
@@ -388,7 +388,7 @@ body {
 
 .journal-page[data-page="7"] .page-content { justify-content: center; gap: 15px; }
 .top-players-framed { max-width:400px; margin:0 auto; }
-.top-players-list, .top-players-placeholder { font-size:9px; color:#a27791; line-height:1.6; }
+.top-players-list, .top-players-placeholder { font-size:9px; color:#888888; line-height:1.6; }
 .tetris-big { display:flex; flex-direction:column; align-items:center; text-decoration:none; }
 .tetris-big img { width:110px; image-rendering:pixelated; }
 .tetris-big span { font-size:11px; color:#fff; margin-top:8px; }
@@ -427,7 +427,6 @@ body {
 .forum-tabs-panel-embedded {
     width: 55px;
     background: transparent;
-    border-right: 2px solid #79434a;
     display: flex;
     flex-direction: column;
     padding: 5px 0;
