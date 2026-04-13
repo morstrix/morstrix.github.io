@@ -443,7 +443,7 @@ body {
 }
 
 .forum-tabs-panel-embedded .forum-tab.active {
-    background: #a84d6b;
+    background: #a27791;
     border-left: 3px solid #ffb7c7;
     color: #fff;
 }
@@ -457,18 +457,18 @@ body {
     align-items: center;
     text-align: center;
     background: transparent;
-    color: #a27791;
+    color: #888888;
 }
 
 .forum-content-embedded h3 {
     font-size: 13px;
-    color: #a84d6b;
+    color: #a27791;
     margin-bottom: 15px;
 }
 
 .forum-content-embedded p {
     font-size: 8px;
-    color: #c48a6b;
+    color: #888888;
     margin-bottom: 0;
 }
 
