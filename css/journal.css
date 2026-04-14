@@ -51,15 +51,21 @@ body {
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 
 /* LENIS WRAPPER */
-.journal-horizontal {
-    display: flex;
-    overflow: hidden; /* Lenis управляет скроллом */
+.journal-wrapper {
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
     width: 100%;
     margin-top: var(--top-panel-h);
+    overflow: hidden;
     position: relative;
     z-index: 10;
+}
+
+.journal-horizontal {
+    display: flex;
+    height: 100%;
+    width: max-content;
+    will-change: transform;
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
