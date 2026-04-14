@@ -218,6 +218,8 @@ body {
     font-family: inherit;
     border: 2px solid transparent;
     border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+    text-align: center;
+    font-size: 10px;
 }
 
 .styler-preview {
