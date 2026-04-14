@@ -50,21 +50,22 @@ body {
 
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 
+/* LENIS WRAPPER */
 .journal-horizontal {
-    display: flex; overflow-x: auto; overflow-y: hidden;
-    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    display: flex;
+    overflow: hidden; /* Lenis управляет скроллом */
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
     width: 100%;
     margin-top: var(--top-panel-h);
-    -webkit-overflow-scrolling: touch;
+    position: relative;
+    z-index: 10;
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
 /* ===== БАЗОВЫЙ КОНТЕЙНЕР ===== */
 .journal-page {
     flex: 0 0 100%;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -258,7 +259,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: transparent; /* фон наследуется от общего */
+    background-color: transparent;
 }
 
 .pinterest-widget-wrapper {
@@ -267,7 +268,7 @@ body {
     margin: 0 auto;
 }
 
-/* ===== СТРАНИЦА 5 — MERCH + CONVERTER (АДАПТИВНО) ===== */
+/* ===== СТРАНИЦА 5 — MERCH + CONVERTER ===== */
 .journal-page[data-page="5"] .page-content {
     justify-content: space-evenly;
     padding: 30px 10px 30px;
@@ -361,23 +362,11 @@ body {
     color: #888888;
 }
 
-/* Адаптивность */
 @media (max-width: 400px) {
-    .tshirt-preview {
-        width: 170px;
-    }
-    .print-canvas {
-        width: 50px;
-        height: 50px;
-    }
-    .converter-container input {
-        width: 80px;
-        font-size: 9px;
-    }
-    .converter-arrow {
-        margin: 0 8px;
-        font-size: 18px;
-    }
+    .tshirt-preview { width: 170px; }
+    .print-canvas { width: 50px; height: 50px; }
+    .converter-container input { width: 80px; font-size: 9px; }
+    .converter-arrow { margin: 0 8px; font-size: 18px; }
 }
 
 .journal-page[data-page="6"] .page-content { justify-content: center; gap: 10px; }
@@ -402,8 +391,8 @@ body {
 }
 
 .top-players-framed {
-    max-width: 500px;
-    width: 90%;
+    max-width: 400px;
+    width: 80%;
     margin: 0 auto;
     border: 2px solid transparent;
     border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
@@ -432,22 +421,14 @@ body {
 .tetris-big span {
     font-size: 11px;
     color: #fff;
-    margin-top: 8px;
+    margin-top: 25px;
 }
 
-/* Адаптивность для страницы 7 */
 @media (max-width: 480px) {
-    .top-title {
-        font-size: 12px;
-    }
-    .top-players-framed {
-        max-width: 400px;
-        padding: 8px;
-    }
+    .top-title { font-size: 12px; }
+    .top-players-framed { max-width: 350px; padding: 8px; }
     .top-players-list,
-    .top-players-placeholder {
-        font-size: 9px;
-    }
+    .top-players-placeholder { font-size: 9px; }
 }
 
 .journal-page[data-page="8"] .page-content { justify-content: center; }
@@ -455,8 +436,8 @@ body {
 
 /* 9-я страница – превью форума */
 .journal-page[data-page="9"] .page-content {
-    padding: 25px 15px 25px;        /* отступы сверху и снизу */
-    justify-content: space-between;  /* распределение: текст-превью-кнопка */
+    padding: 25px 15px 25px;
+    justify-content: space-between;
     gap: 10px;
 }
 
@@ -470,7 +451,6 @@ body {
     margin: 0 0 5px 0;
 }
 
-/* Прозрачный форум */
 .forum-embedded {
     display: flex;
     gap: 0;
@@ -495,7 +475,6 @@ body {
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid #3d2a2f;
-    color: none;
 }
 
 .forum-tabs-panel-embedded .forum-tab.active {
@@ -534,12 +513,8 @@ body {
 }
 
 @media (max-width: 480px) {
-    .journal-page[data-page="9"] .page-content {
-        padding: 15px 10px 20px;
-    }
-    .forum-preview-hint {
-        font-size: 6px;
-    }
+    .journal-page[data-page="9"] .page-content { padding: 15px 10px 20px; }
+    .forum-preview-hint { font-size: 6px; }
 }
 
 /* Зміст */
@@ -577,7 +552,7 @@ body {
 #disclaimerModal .universal-btn { margin:4px 0 0 0 !important; width:auto !important; max-width:100% !important; }
 
 /* =========================================
-   УНИВЕРСАЛЬНАЯ КНОПКА (ЧИСТОВАЯ)
+   УНИВЕРСАЛЬНАЯ КНОПКА
    ========================================= */
 .universal-btn {
     cursor: pointer;
@@ -676,7 +651,7 @@ body {
     display: inline-block;
     padding: 10px 18px;
     background: #000;
-    border: 2px dashed #888888;   /* пунктир */
+    border: 2px dashed #888888;
     cursor: pointer;
     transition: transform 0.08s;
 }
