@@ -14,7 +14,7 @@ body {
     height: 100vh; height: 100dvh;
     overflow: hidden;
     position: relative;
-    touch-action: pan-y pinch-zoom;
+    touch-action: pan-x pan-y;   /* разрешаем горизонтальные и вертикальные жесты */
 }
 #neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
 
@@ -50,7 +50,7 @@ body {
 
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 
-/* LENIS WRAPPER */
+/* LENIS WRAPPER — правильная структура */
 .journal-wrapper {
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
@@ -59,6 +59,7 @@ body {
     overflow: hidden;
     position: relative;
     z-index: 10;
+    touch-action: pan-x;         /* приоритет горизонтальным свайпам */
 }
 
 .journal-horizontal {
@@ -66,18 +67,13 @@ body {
     height: 100%;
     width: max-content;
     will-change: transform;
-    /* Убираем любое упоминание overflow: hidden здесь */
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
 
-/* Критический фикс для Lenis: снимаем блокировку на время скролла */
-.journal-wrapper.lenis-scrolling {
-    overflow: visible !important;
-}
-
 /* ===== БАЗОВЫЙ КОНТЕЙНЕР ===== */
 .journal-page {
-    flex: 0 0 100%;
+    flex: 0 0 100vw;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -678,9 +674,4 @@ body {
     color: #888888;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-}
-
-/* Нейтрализация iframe на время скролла */
-.lenis-scrolling iframe {
-    pointer-events: none !important;
 }
