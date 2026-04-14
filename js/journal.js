@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== TEXT SYNTH (Edge-TTS через CORS-прокси) =====
-const TTS_PROXY_URL = 'https://corsproxy.io/?url=' + encodeURIComponent('https://edge-tts.deno.dev/tts');
+const TTS_PROXY_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://edge-tts.deno.dev/tts');
 
 const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
 const ttsTextInput = document.getElementById('ttsTextInput');
