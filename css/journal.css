@@ -66,8 +66,14 @@ body {
     height: 100%;
     width: max-content;
     will-change: transform;
+    /* Убираем любое упоминание overflow: hidden здесь */
 }
 .journal-horizontal::-webkit-scrollbar { display: none; }
+
+/* Критический фикс для Lenis: снимаем блокировку на время скролла */
+.journal-wrapper.lenis-scrolling {
+    overflow: visible !important;
+}
 
 /* ===== БАЗОВЫЙ КОНТЕЙНЕР ===== */
 .journal-page {
