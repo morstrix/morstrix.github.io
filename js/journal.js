@@ -233,6 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }catch(e){ container.innerHTML='⚠️ ERROR'; }
 }
 
+    if(document.querySelector('.top-players-list')) loadTopPlayers();
+    
     // ===== ФОРУМ (вкладки) =====
     const contents = {
         wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
