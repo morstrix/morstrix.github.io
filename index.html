@@ -28,8 +28,8 @@
             gap: 100px;
             justify-content: center;
             align-items: center;
-            flex: 0 0 auto;
-            padding: 20px 20px 10px;
+            flex: 1;
+            padding: 20px;
         }
         .index-card {
             display: flex;
@@ -39,13 +39,13 @@
             cursor: pointer;
         }
         .index-card img {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             image-rendering: pixelated;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         .index-card span {
-            font-size: 12px;
+            font-size: 14px;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -56,8 +56,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px 20px 20px;
-            gap: 20px;
+            padding: 5px 20px 15px;
+            gap: 10px;
             flex-shrink: 0;
         }
         
@@ -79,7 +79,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
         .donate-line {
             width: 80%;
@@ -88,7 +88,7 @@
             background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
         }
         .donate-label {
-            font-size: 14px;
+            font-size: 13px;
             color: #a27791;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -96,46 +96,40 @@
         }
         .donate-label:hover { color: #ffb7c7; }
         .donate-sub {
-            font-size: 9px;
+            font-size: 8px;
             color: #a27791;
         }
         
         @media (max-width: 700px) {
-            .top-row { 
-                gap: 40px; 
-                padding: 15px 15px 5px;
-            }
-            .index-card img { 
-                width: 90px; 
-                height: 90px; 
-            }
-            .index-card span { 
-                font-size: 10px; 
-            }
+            .top-row { gap: 50px; }
+            .index-card img { width: 100px; height: 100px; }
+            .index-card span { font-size: 11px; }
             .bottom-section {
-                padding: 5px 15px 15px;
-                gap: 15px;
+                padding: 5px 15px 10px;
+                gap: 8px;
             }
+            .donate-section { gap: 6px; }
+            .team-btn span { font-size: 14px; }
+            .donate-label { font-size: 11px; }
         }
         @media (max-width: 450px) {
-            .top-row { 
-                gap: 25px; 
-                padding: 10px 10px 5px;
+            .top-row { gap: 30px; }
+            .index-card img { width: 80px; height: 80px; }
+            .index-card span { font-size: 9px; letter-spacing: 2px; }
+            .bottom-section {
+                padding: 3px 10px 8px;
+                gap: 5px;
             }
-            .index-card img { 
-                width: 70px; 
-                height: 70px; 
+            .team-btn span { 
+                font-size: 12px; 
+                letter-spacing: 4px; 
             }
-            .index-card span { 
-                font-size: 8px; 
-                letter-spacing: 2px; 
+            .donate-label { 
+                font-size: 10px; 
+                letter-spacing: 3px; 
             }
-            .team-btn span {
-                font-size: 14px;
-            }
-            .donate-label {
-                font-size: 12px;
-            }
+            .donate-sub { font-size: 7px; }
+            .donate-line { height: 1px; }
         }
 
         /* Модалки */
