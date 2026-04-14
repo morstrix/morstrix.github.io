@@ -309,6 +309,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== ESCAPE =====
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
+    
+    // ===== АНИМАЦИЯ ПЕЧАТИ ДЛЯ TEXT SYNTH (страница 6) =====
+    const ttsInput = document.getElementById('ttsTextInput');
+    if (ttsInput) {
+        const placeholderText = 'TYPE TEXT';
+        let typingTimer = null;
+        let isTyping = true;
+        let charIndex = 0;
+
+        function animatePlaceholderTTS() {
+            if (typingTimer) clearTimeout(typingTimer);
+            
+            if (isTyping) {
+                if (charIndex < placeholderText.length) {
+                    ttsInput.placeholder = placeholderText.substring(0, charIndex + 1) + ' █';
+                    charIndex++;
+                    typingTimer = setTimeout(animatePlaceholderTTS, 120);
+                } else {
+                    isTyping = false;
+                    typingTimer = setTimeout(animatePlaceholderTTS, 1500);
+                }
+            } else {
+                if (charIndex > 0) {
+                    charIndex--;
+                    ttsInput.placeholder = placeholderText.substring(0, charIndex) + ' █';
+                    typingTimer = setTimeout(animatePlaceholderTTS, 80);
+                } else {
+                    isTyping = true;
+                    ttsInput.placeholder = ' █';
+                    typingTimer = setTimeout(animatePlaceholderTTS, 300);
+                }
+            }
+        }
+
+        function startAnimationTTS() {
+            if (ttsInput.value === '') {
+                isTyping = true;
+                charIndex = 0;
+                ttsInput.placeholder = ' █';
+                if (typingTimer) clearTimeout(typingTimer);
+                typingTimer = setTimeout(animatePlaceholderTTS, 300);
+            }
+        }
+
+        function stopAnimationTTS() {
+            if (typingTimer) clearTimeout(typingTimer);
+            ttsInput.placeholder = '';
+        }
+
+        ttsInput.addEventListener('focus', stopAnimationTTS);
+        ttsInput.addEventListener('blur', () => {
+            if (ttsInput.value === '') startAnimationTTS();
+        });
+
+        const page6 = document.querySelector('.journal-page[data-page="6"]');
+        if (page6) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startAnimationTTS();
+                    } else {
+                        stopAnimationTTS();
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(page6);
+        } else {
+            startAnimationTTS();
+        }
+    }
+    
 });
 
 // ===== TEXT SYNTH (встроенный SpeechSynthesis) =====
