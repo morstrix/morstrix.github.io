@@ -7,19 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html {
-            height: 100%;
-            overflow: hidden;
-        }
+        html { height: 100%; overflow: hidden; }
         body {
             background: #080b0c;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             font-family: 'Press Start 2P', monospace;
             color: #fff;
             overflow: hidden;
+            padding: 20px;
         }
         
         .top-row {
@@ -27,8 +27,8 @@
             gap: 100px;
             justify-content: center;
             align-items: center;
-            margin-top: 15vh;
-            margin-bottom: auto;
+            flex: 1;
+            padding-top: 10vh;
         }
         .index-card {
             display: flex;
@@ -38,13 +38,13 @@
             cursor: pointer;
         }
         .index-card img {
-            width: 120px;
-            height: 120px;
+            width: min(140px, 25vw);
+            height: min(140px, 25vw);
             image-rendering: pixelated;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         .index-card span {
-            font-size: 12px;
+            font-size: clamp(10px, 3vw, 14px);
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -55,10 +55,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 20px 40px;
-            gap: 25px;
+            padding-bottom: max(15px, env(safe-area-inset-bottom));
+            gap: clamp(15px, 4vh, 30px);
             flex-shrink: 0;
-            margin-top: auto;
         }
         
         .team-btn {
@@ -66,7 +65,7 @@
             text-align: center;
         }
         .team-btn span {
-            font-size: 14px;
+            font-size: clamp(12px, 3.5vw, 16px);
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 6px;
@@ -79,16 +78,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .donate-line {
-            width: 80%;
-            max-width: 500px;
+            width: min(80%, 500px);
             height: 2px;
             background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
         }
         .donate-label {
-            font-size: 12px;
+            font-size: clamp(10px, 3vw, 14px);
             color: #a27791;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -96,47 +94,19 @@
         }
         .donate-label:hover { color: #ffb7c7; }
         .donate-sub {
-            font-size: 8px;
+            font-size: clamp(7px, 2vw, 9px);
             color: #a27791;
         }
         
         @media (max-width: 700px) {
-            .top-row { 
-                gap: 50px; 
-                margin-top: 12vh;
-            }
-            .index-card img { width: 100px; height: 100px; }
-            .index-card span { font-size: 11px; }
-            .bottom-section {
-                padding: 0 15px 35px;
-                gap: 22px;
-            }
-            .team-btn span { font-size: 13px; }
-            .donate-label { font-size: 11px; }
-            .donate-section { gap: 8px; }
+            .top-row { gap: 50px; padding-top: 5vh; }
         }
         @media (max-width: 450px) {
-            .top-row { 
-                gap: 30px; 
-                margin-top: 10vh;
-            }
-            .index-card img { width: 80px; height: 80px; }
-            .index-card span { font-size: 9px; letter-spacing: 2px; }
-            .bottom-section {
-                padding: 0 10px 30px;
-                gap: 20px;
-            }
-            .team-btn span { 
-                font-size: 11px; 
-                letter-spacing: 4px; 
-            }
-            .donate-section { gap: 7px; }
-            .donate-label { 
-                font-size: 10px; 
-                letter-spacing: 3px; 
-            }
-            .donate-sub { font-size: 7px; }
-            .donate-line { height: 1px; }
+            .top-row { gap: 30px; padding-top: 0; }
+            .index-card span { letter-spacing: 2px; }
+            .team-btn span { letter-spacing: 4px; }
+            .donate-label { letter-spacing: 3px; }
+            .donate-section { gap: 5px; }
         }
 
         /* Модалки */
@@ -169,7 +139,6 @@
             padding: 20px; background: #a27791; text-align: center;
         }
 
-        /* Team выбор */
         .team-choice-container {
             display: flex; gap: 30px; justify-content: center; padding: 10px 0;
         }
@@ -186,7 +155,6 @@
             text-shadow: 1px 1px 0 #aaa;
         }
 
-        /* Иконки соцсетей */
         .social-icons {
             display: flex; justify-content: center; gap: 20px; margin: 15px 0;
         }
@@ -196,9 +164,7 @@
         }
         .social-icons a:hover { transform: scale(1.1); color: #fff; }
 
-        .linkedin-container {
-            margin: 15px 0; min-height: 200px;
-        }
+        .linkedin-container { margin: 15px 0; min-height: 200px; }
         .behance-embed { margin: 15px 0; }
         .instagram-widget { margin: 20px 0; }
     </style>
@@ -206,7 +172,6 @@
 </head>
 <body>
 
-<!-- ==================== CRT OVERLAY (ПОВЕРХ ВСЕГО) ==================== -->
 <div class="crt-noise"></div>
 <div class="crt-scanlines"></div>
 <div class="crt-flicker"></div>
@@ -214,7 +179,6 @@
 <div class="crt-blur"></div>
 <div class="crt-edge-glow"></div>
 
-<!-- ==================== ОСНОВНОЙ КОНТЕНТ ==================== -->
 <div class="top-row">
     <a href="journal.html" class="index-card">
         <img src="assets/journal.png" alt="Journal">
@@ -230,7 +194,6 @@
     <div class="team-btn" id="teamBtn">
         <span>TEAM</span>
     </div>
-    
     <div class="donate-section">
         <div class="donate-line"></div>
         <div class="donate-label" id="donateBtn">DONATE</div>
@@ -238,7 +201,7 @@
     </div>
 </div>
 
-<!-- Модалка TEAM -->
+<!-- Модалки без изменений -->
 <div id="teamModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -260,7 +223,6 @@
     </div>
 </div>
 
-<!-- Модалка ADA -->
 <div id="adaModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -279,7 +241,6 @@
     </div>
 </div>
 
-<!-- Модалка EX -->
 <div id="exModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -302,7 +263,6 @@
     </div>
 </div>
 
-<!-- DONATE модалка -->
 <div id="donateModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -311,15 +271,12 @@
         </div>
         <div class="modal-inner">
             <p style="font-size:10px; color:#000; margin-bottom:20px;">monobank</p>
-            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">
-                5375 4141 0000 0000
-            </p>
+            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">5375 4141 0000 0000</p>
             <p id="copyHint" style="font-size:7px; color:#3d2a2f; margin-top:15px; cursor:pointer;">* тап для копіювання</p>
         </div>
     </div>
 </div>
 
-<!-- ==================== СКРИПТЫ ==================== -->
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 <script type="module" src="https://w.behold.so/widget.js"></script>
 <script>
@@ -329,12 +286,8 @@
         const exModal = document.getElementById('exModal');
         const donateModal = document.getElementById('donateModal');
         
-        function openModal(id) {
-            document.getElementById(id)?.classList.add('active');
-        }
-        function closeModal(id) {
-            document.getElementById(id)?.classList.remove('active');
-        }
+        function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+        function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
         
         document.getElementById('teamBtn').addEventListener('click', () => openModal('teamModal'));
         document.getElementById('donateBtn').addEventListener('click', () => openModal('donateModal'));
