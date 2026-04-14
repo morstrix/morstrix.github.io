@@ -382,3 +382,21 @@ if (ttsTextInput) {
         }
     });
 }
+
+// ===== Кнопка отправки текста боту для голосового =====
+const ttsBotVoiceBtn = document.getElementById('ttsBotVoiceBtn');
+
+if (ttsBotVoiceBtn) {
+    ttsBotVoiceBtn.addEventListener('click', () => {
+        const text = ttsTextInput?.value.trim();
+        if (!text) {
+            setTtsStatus('Введите текст');
+            return;
+        }
+        // Кодируем текст для безопасной передачи в URL
+        const encoded = btoa(unescape(encodeURIComponent(text)));
+        const botUrl = `https://t.me/morstrixbot?start=tts_${encoded}`;
+        setTtsStatus('Открываем бота...');
+        window.open(botUrl, '_blank');
+    });
+}
