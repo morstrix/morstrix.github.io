@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // ===== АНИМАЦИЯ ПЕЧАТИ + СТИРАНИЕ + КУРСОР =====
-        const placeholderText = 'TYPE TEXT...';
+        const placeholderText = 'TYPE TEXT';
         let typingTimer = null;
         let isTyping = true;
         let charIndex = 0;
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
         const a = document.createElement('a');
         a.href = 'assets/morstrix_archive.zip';
-        a.download = 'MORSTRIX_archive.zip';
+        a.download = 'MORSTRIX_FONT.zip';
         a.click();
     });
 
