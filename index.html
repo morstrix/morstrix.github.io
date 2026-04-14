@@ -43,6 +43,14 @@
             image-rendering: pixelated;
             margin-bottom: 16px;
         }
+                .index-card video {
+            width: 140px;
+            height: 140px;
+            image-rendering: pixelated;
+            margin-bottom: 16px;
+            object-fit: cover;
+            pointer-events: none;
+        }
         .index-card span {
             font-size: clamp(10px, 3vw, 14px);
             color: #fff;
@@ -99,15 +107,20 @@
         }
         
         @media (max-width: 700px) {
-            .top-row { gap: 50px; padding-top: 5vh; }
-        }
-        @media (max-width: 450px) {
-            .top-row { gap: 30px; padding-top: 0; }
-            .index-card span { letter-spacing: 2px; }
-            .team-btn span { letter-spacing: 4px; }
-            .donate-label { letter-spacing: 3px; }
-            .donate-section { gap: 5px; }
-        }
+    .top-row { gap: 50px; padding-top: 5vh; }
+    .index-card img { width: 100px; height: 100px; }
+    .index-card video { width: 100px; height: 100px; }
+    .index-card span { font-size: 11px; }
+}
+@media (max-width: 450px) {
+    .top-row { gap: 30px; padding-top: 0; }
+    .index-card img { width: 80px; height: 80px; }
+    .index-card video { width: 80px; height: 80px; }
+    .index-card span { font-size: 9px; letter-spacing: 2px; }
+    .team-btn span { letter-spacing: 4px; }
+    .donate-label { letter-spacing: 3px; }
+    .donate-section { gap: 5px; }
+}
 
         /* Модалки */
         .modal-overlay {
