@@ -335,7 +335,7 @@ function showScoreModal(score) {
 
     const closeModal = () => {
         modalDiv.remove();
-        resetGame();        // перезапуск игры при любом закрытии модалки
+        resetGame();
     };
 
     closeBtn.onclick = closeModal;
@@ -347,17 +347,31 @@ function showScoreModal(score) {
         let name = input.value.trim();
         if (name === '') name = 'ANON';
         if (name.length > 12) name = name.slice(0,12);
+        
         try {
-            await addDoc(collection(db, "top_players"), {
-                name: name,
-                score: score,
-                date: new Date().toISOString()
-            });
-            console.log('Saved!', name, score);
+            // Проверяем, входит ли счёт в топ-10
+            const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            const db = getFirestore(app);
+            const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
+            const snap = await getDocs(q);
+            let minScoreInTop = 0;
+            let count = 0;
+            snap.forEach(doc => { minScoreInTop = doc.data().score; count++; });
+            
+            if (count < 10 || score > minScoreInTop) {
+                await addDoc(collection(db, "top_players"), {
+                    name: name,
+                    score: score,
+                    date: new Date().toISOString()
+                });
+                console.log('Saved!', name, score);
+            } else {
+                console.log('Score not in top 10, not saved');
+            }
         } catch(e) {
             console.error('Firestore error:', e);
         }
-        closeModal();   // закроет модалку и вызовет resetGame
+        closeModal();
     };
 
     input.onkeypress = (e) => {
