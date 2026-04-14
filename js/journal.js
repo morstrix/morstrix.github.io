@@ -17,14 +17,14 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
-    const journalContainer = document.getElementById('journalHorizontal');
+        // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
+    const wrapper = document.querySelector('.journal-wrapper');
+    const content = document.getElementById('journalHorizontal');
     let lenis = null;
-    if (journalContainer && typeof Lenis !== 'undefined') {
-        journalContainer.style.overflow = 'hidden';
+    if (wrapper && content && typeof Lenis !== 'undefined') {
         lenis = new Lenis({
-            wrapper: journalContainer,
-            content: journalContainer,
+            wrapper: wrapper,
+            content: content,
             orientation: 'horizontal',
             gestureOrientation: 'horizontal',
             smoothWheel: true,
@@ -238,15 +238,15 @@ document.addEventListener('DOMContentLoaded', () => {
         dots.forEach((d, i) => d.classList.toggle('active', i === index));
     }
 
-    if (lenis) {
+        if (lenis) {
         lenis.on('stop', () => {
-            const scrollLeft = journalContainer.scrollLeft;
-            const pageWidth = journalContainer.clientWidth;
+            const scrollLeft = content.scrollLeft;
+            const pageWidth = content.clientWidth;
             const activeIndex = Math.round(scrollLeft / pageWidth);
             updateActiveDot(activeIndex);
         });
         window.scrollToPage = (index) => {
-            const target = index * journalContainer.clientWidth;
+            const target = index * content.clientWidth;
             lenis.scrollTo(target, { immediate: false, duration: 1.2 });
         };
     } else {
