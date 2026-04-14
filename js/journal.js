@@ -17,22 +17,23 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-            // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
+    // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
     let lenis = null;
+
     if (wrapper && content && typeof Lenis !== 'undefined') {
         lenis = new Lenis({
             wrapper: wrapper,
             content: content,
             orientation: 'horizontal',
-            gestureOrientation: 'horizontal',
+            gestureOrientation: 'both',
             smoothWheel: true,
             smoothTouch: true,
-            syncTouch: true, // ← ОБЯЗАТЕЛЬНО для тачскринов!
+            syncTouch: true,
             touchMultiplier: 1.8,
             duration: 1.2,
-            // easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ← можно оставить, но если глючит — убери
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
 
         function raf(time) {
@@ -42,6 +43,40 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(raf);
 
         window.addEventListener('resize', () => lenis.resize());
+
+        // ===== СИНХРОНИЗАЦИЯ ТОЧЕК И НАВИГАЦИЯ =====
+        const dots = document.querySelectorAll('.dot');
+
+        function updateActiveDot(index) {
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+
+        lenis.on('scroll', ({ scroll }) => {
+            const pageWidth = wrapper.clientWidth;
+            const activeIndex = Math.round(scroll / pageWidth);
+            updateActiveDot(activeIndex);
+        });
+
+        window.scrollToPage = (index) => {
+            const target = index * wrapper.clientWidth;
+            lenis.scrollTo(target, { immediate: false, duration: 1.2 });
+        };
+
+        setTimeout(() => {
+            const pageWidth = wrapper.clientWidth;
+            const activeIndex = Math.round(lenis.scroll / pageWidth);
+            updateActiveDot(activeIndex);
+        }, 100);
+    } else {
+        // fallback — нативный скролл
+        const container = document.getElementById('journalHorizontal');
+        if (container) {
+            container.style.overflow = 'auto';
+            container.style.scrollSnapType = 'x mandatory';
+            window.scrollToPage = (index) => {
+                container.scrollTo({ left: index * container.clientWidth, behavior: 'smooth' });
+            };
+        }
     }
 
     // ===== ТИКЕР =====
@@ -231,38 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== ИНДИКАТОР ТОЧЕК + LENIS СИНХРОНИЗАЦИЯ =====
-    const pages = document.querySelectorAll('.journal-page');
-    const dots = document.querySelectorAll('.dot');
-    
-    function updateActiveDot(index) {
-        dots.forEach((d, i) => d.classList.toggle('active', i === index));
-    }
-
-           if (lenis) {
-        lenis.on('stop', () => {
-            const scrollLeft = content.scrollLeft;
-            const pageWidth = content.clientWidth;
-            const activeIndex = Math.round(scrollLeft / pageWidth);
-            updateActiveDot(activeIndex);
-        });
-        window.scrollToPage = (index) => {
-            const target = index * content.clientWidth;
-            lenis.scrollTo(target, { immediate: false, duration: 1.2 });
-        };
-    } else {
-        // fallback если Lenis не загрузился
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting){
-                    const idx = [...pages].indexOf(entry.target);
-                    updateActiveDot(idx);
-                }
-            });
-        }, { threshold: 0.5 });
-        pages.forEach(p => observer.observe(p));
-    }
-
     // ===== ЗАКРЫТИЕ МОДАЛОК =====
     document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
         const id = b.dataset.modal;
@@ -270,11 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
     document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
 
-    // ===== МОДАЛКА "ЗМІСТ" (с поддержкой Lenis) =====
+    // ===== МОДАЛКА "ЗМІСТ" (с поддержкой Lenis/нативного скролла) =====
     document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
     document.querySelectorAll('.contents-item').forEach(item => {
         item.addEventListener('click', ()=> {
             const page = item.dataset.page;
+            const pages = document.querySelectorAll('.journal-page');
             const targetPage = document.querySelector(`.journal-page[data-page="${page}"]`);
             if (targetPage && window.scrollToPage) {
                 const index = [...pages].indexOf(targetPage);
