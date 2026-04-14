@@ -315,63 +315,71 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 });
 
-// ===== TEXT SYNTH (Edge-TTS через CORS-прокси) =====
-const TTS_PROXY_URL = 'https://cors-anywhere.herokuapp.com/' + 'https://edge-tts.deno.dev/tts';
-
+// ===== TEXT SYNTH (встроенный SpeechSynthesis) =====
 const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
 const ttsTextInput = document.getElementById('ttsTextInput');
 const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
 const ttsStatus = document.getElementById('ttsStatus');
 
+let voices = [];
+
 function setTtsStatus(message) {
     if (ttsStatus) ttsStatus.textContent = message;
 }
 
-async function speakWithEdge(text, voice = 'uk-UA-PolinaNeural') {
+// Загружаем список голосов и заполняем <select>
+function loadVoices() {
+    voices = speechSynthesis.getVoices();
+    if (ttsVoiceSelect) {
+        ttsVoiceSelect.innerHTML = '';
+        voices.forEach(voice => {
+            const option = document.createElement('option');
+            option.value = voice.name;
+            option.textContent = `${voice.lang} - ${voice.name}`;
+            ttsVoiceSelect.appendChild(option);
+        });
+        // Попытаемся выбрать украинский или русский по умолчанию
+        const ukrVoice = voices.find(v => v.lang.startsWith('uk'));
+        const rusVoice = voices.find(v => v.lang.startsWith('ru'));
+        if (ukrVoice) ttsVoiceSelect.value = ukrVoice.name;
+        else if (rusVoice) ttsVoiceSelect.value = rusVoice.name;
+    }
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+}
+
+function speakWithSpeechSynthesis(text) {
     if (!text || text.trim() === '') {
         setTtsStatus('Введите текст');
         return;
     }
     
-    setTtsStatus('Синтез речи...');
+    // Останавливаем текущее воспроизведение, если есть
+    speechSynthesis.cancel();
     
-    try {
-        const response = await fetch(TTS_PROXY_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                text: text, 
-                voice: voice,
-                rate: 0,
-                pitch: 0
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка ${response.status}`);
-        }
-
-        const audioBlob = await response.blob();
-        const audio = new Audio();
-        audio.src = URL.createObjectURL(audioBlob);
-        
-        audio.onplay = () => setTtsStatus('▶ Воспроизведение');
-        audio.onended = () => setTtsStatus('');
-        audio.onerror = () => setTtsStatus('Ошибка воспроизведения');
-        
-        await audio.play();
-        
-    } catch (error) {
-        console.error('TTS Error:', error);
-        setTtsStatus('Ошибка: ' + error.message);
+    const utterance = new SpeechSynthesisUtterance(text);
+    const selectedVoiceName = ttsVoiceSelect?.value;
+    if (selectedVoiceName) {
+        const voice = voices.find(v => v.name === selectedVoiceName);
+        if (voice) utterance.voice = voice;
     }
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    
+    utterance.onstart = () => setTtsStatus('▶ Воспроизведение');
+    utterance.onend = () => setTtsStatus('');
+    utterance.onerror = (e) => setTtsStatus('Ошибка: ' + e.error);
+    
+    speechSynthesis.speak(utterance);
 }
 
 if (ttsSpeakBtn) {
     ttsSpeakBtn.addEventListener('click', () => {
         const text = ttsTextInput?.value || '';
-        const voice = ttsVoiceSelect?.value || 'uk-UA-PolinaNeural';
-        speakWithEdge(text, voice);
+        speakWithSpeechSynthesis(text);
     });
 }
 
