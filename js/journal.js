@@ -17,7 +17,7 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-        // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
+            // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
     let lenis = null;
@@ -29,9 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
             gestureOrientation: 'horizontal',
             smoothWheel: true,
             smoothTouch: true,
+            syncTouch: true, // ← ОБЯЗАТЕЛЬНО для тачскринов!
             touchMultiplier: 1.8,
             duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            // easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ← можно оставить, но если глючит — убери
         });
 
         function raf(time) {
@@ -238,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dots.forEach((d, i) => d.classList.toggle('active', i === index));
     }
 
-        if (lenis) {
+           if (lenis) {
         lenis.on('stop', () => {
             const scrollLeft = content.scrollLeft;
             const pageWidth = content.clientWidth;
