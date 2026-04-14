@@ -367,7 +367,6 @@ async function speakWithEdge(text, voice = 'uk-UA-PolinaNeural') {
     }
 }
 
-// Привязка к кнопке SPEAK
 if (ttsSpeakBtn) {
     ttsSpeakBtn.addEventListener('click', () => {
         const text = ttsTextInput?.value || '';
@@ -376,7 +375,6 @@ if (ttsSpeakBtn) {
     });
 }
 
-// Воспроизведение по Enter в поле ввода
 if (ttsTextInput) {
     ttsTextInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
