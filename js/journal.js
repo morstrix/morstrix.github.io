@@ -17,7 +17,7 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ПЛАВНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) =====
+    // ===== ИНИЦИАЛИЗАЦИЯ LENIS =====
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
     let lenis = null;
@@ -27,13 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper: wrapper,
             content: content,
             orientation: 'horizontal',
-            gestureOrientation: 'both',
+            gestureOrientation: 'horizontal',
             smoothWheel: true,
             smoothTouch: true,
             syncTouch: true,
-            touchMultiplier: 1.8,
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            lerp: 0.08,
         });
 
         function raf(time) {
@@ -44,57 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', () => lenis.resize());
 
-// ===== ЗАЩИТА ОТ КОНФЛИКТОВ С IFRAME И INPUT =====
-if (lenis) {
-    const stopLenis = () => lenis.stop();
-    const startLenis = () => lenis.start();
+        // ===== ЗАЩИТА IFRAME ЧЕРЕЗ POINTER-EVENTS (БЕЗ STOP/START) =====
+        let scrollTimer;
+        lenis.on('scroll', () => {
+            document.querySelectorAll('iframe').forEach(el => {
+                el.style.pointerEvents = 'none';
+            });
+            const tg = document.getElementById('telegramWrapper');
+            if (tg) tg.classList.add('scrolling');
 
-    // --- 1. Все iframe (Pinterest, Spotify, Telegram) ---
-    const iframes = document.querySelectorAll('iframe');
-    iframes.forEach(iframe => {
-        iframe.addEventListener('mouseenter', stopLenis);
-        iframe.addEventListener('mouseleave', startLenis);
-        iframe.addEventListener('pointerdown', stopLenis);
-        iframe.addEventListener('pointerup', startLenis);
-        iframe.addEventListener('pointercancel', startLenis);
-    });
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                document.querySelectorAll('iframe').forEach(el => {
+                    el.style.pointerEvents = '';
+                });
+                if (tg) tg.classList.remove('scrolling');
+            }, 120);
+        });
 
-    // Восстановление Lenis при клике вне iframe (один раз для всего документа)
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('iframe')) {
-            startLenis();
-        }
-    });
-
-    // --- 2. Поле ввода конвертера (px и cm) ---
-    const converterInputs = document.querySelectorAll('#pxInputEmbedded, #cmInputEmbedded');
-    converterInputs.forEach(input => {
-        input.addEventListener('focus', stopLenis);
-        input.addEventListener('blur', startLenis);
-    });
-
-    // --- 3. Селект голосов (Text Synth) ---
-    const voiceSelect = document.getElementById('ttsVoiceSelect');
-    if (voiceSelect) {
-        voiceSelect.addEventListener('focus', stopLenis);
-        voiceSelect.addEventListener('blur', startLenis);
-        voiceSelect.addEventListener('mousedown', (e) => e.stopPropagation());
-    }
-
-    // --- 4. Поле ввода текста для синтеза ---
-    const ttsInputField = document.getElementById('ttsTextInput');
-    if (ttsInputField) {
-        ttsInputField.addEventListener('focus', stopLenis);
-        ttsInputField.addEventListener('blur', startLenis);
-    }
-}
-        // ===== СИНХРОНИЗАЦИЯ ТОЧЕК И НАВИГАЦИЯ =====
+        // ===== СИНХРОНИЗАЦИЯ ТОЧЕК =====
         const dots = document.querySelectorAll('.dot');
-
         function updateActiveDot(index) {
             dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
         }
-
         lenis.on('scroll', ({ scroll }) => {
             const pageWidth = wrapper.clientWidth;
             const activeIndex = Math.round(scroll / pageWidth);
@@ -103,7 +73,7 @@ if (lenis) {
 
         window.scrollToPage = (index) => {
             const target = index * wrapper.clientWidth;
-            lenis.scrollTo(target, { immediate: false, duration: 1.2 });
+            lenis.scrollTo(target, { immediate: false, lerp: 0.08 });
         };
 
         setTimeout(() => {
@@ -317,7 +287,7 @@ if (lenis) {
     }));
     document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
 
-    // ===== МОДАЛКА "ЗМІСТ" (с поддержкой Lenis/нативного скролла) =====
+    // ===== МОДАЛКА "ЗМІСТ" =====
     document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
     document.querySelectorAll('.contents-item').forEach(item => {
         item.addEventListener('click', ()=> {
