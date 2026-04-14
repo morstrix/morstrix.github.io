@@ -679,3 +679,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
+
+/* Нейтрализация iframe на время скролла */
+.lenis-scrolling iframe {
+    pointer-events: none !important;
+}
