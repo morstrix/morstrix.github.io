@@ -44,6 +44,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', () => lenis.resize());
 
+// ===== ЗАЩИТА ОТ КОНФЛИКТОВ С IFRAME И INPUT =====
+if (lenis) {
+    const stopLenis = () => lenis.stop();
+    const startLenis = () => lenis.start();
+
+    // --- 1. Все iframe (Pinterest, Spotify, Telegram) ---
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+        iframe.addEventListener('mouseenter', stopLenis);
+        iframe.addEventListener('mouseleave', startLenis);
+        iframe.addEventListener('pointerdown', stopLenis);
+        iframe.addEventListener('pointerup', startLenis);
+        iframe.addEventListener('pointercancel', startLenis);
+    });
+
+    // Восстановление Lenis при клике вне iframe (один раз для всего документа)
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('iframe')) {
+            startLenis();
+        }
+    });
+
+    // --- 2. Поле ввода конвертера (px и cm) ---
+    const converterInputs = document.querySelectorAll('#pxInputEmbedded, #cmInputEmbedded');
+    converterInputs.forEach(input => {
+        input.addEventListener('focus', stopLenis);
+        input.addEventListener('blur', startLenis);
+    });
+
+    // --- 3. Селект голосов (Text Synth) ---
+    const voiceSelect = document.getElementById('ttsVoiceSelect');
+    if (voiceSelect) {
+        voiceSelect.addEventListener('focus', stopLenis);
+        voiceSelect.addEventListener('blur', startLenis);
+        voiceSelect.addEventListener('mousedown', (e) => e.stopPropagation());
+    }
+
+    // --- 4. Поле ввода текста для синтеза ---
+    const ttsInputField = document.getElementById('ttsTextInput');
+    if (ttsInputField) {
+        ttsInputField.addEventListener('focus', stopLenis);
+        ttsInputField.addEventListener('blur', startLenis);
+    }
+}
         // ===== СИНХРОНИЗАЦИЯ ТОЧЕК И НАВИГАЦИЯ =====
         const dots = document.querySelectorAll('.dot');
 
