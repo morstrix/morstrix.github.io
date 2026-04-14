@@ -202,40 +202,36 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
     }
 
-    // ===== ТОП ИГРОКОВ (Firestore) =====
-    async function loadTopPlayers(){
-        const container = document.querySelector('.top-players-list');
-        if(!container) return;
-        try{
-            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
-            const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
-            const firebaseConfig = {
-                apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-                authDomain:"helper-e10b2.firebaseapp.com",
-                projectId:"helper-e10b2",
-                storageBucket:"helper-e10b2.firebasestorage.app",
-                messagingSenderId:"131536876451",
-                appId:"1:131536876451:web:eeaef494c83dfc4849e016"
-            };
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-            const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
-            const snap = await getDocs(q);
-            let realCount = 0;
-            if(!snap.empty){
-                let html=''; let rank=1;
-                snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; realCount++; });
-                container.innerHTML=html;
-            } else { container.innerHTML=''; realCount=0; }
-            const placeholderDiv = document.querySelector('.top-players-placeholder');
-            if(placeholderDiv){
-                let emptyHtml = '';
-                for(let i=0; i<9-realCount; i++) emptyHtml += `<div>— — — — — — — —</div>`;
-                placeholderDiv.innerHTML = emptyHtml;
-            }
-        }catch(e){ container.innerHTML='⚠️ ERROR'; }
-    }
-    if(document.querySelector('.top-players-list')) loadTopPlayers();
+   async function loadTopPlayers(){
+    const container = document.querySelector('.top-players-list');
+    if(!container) return;
+    try{
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+        const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+        const firebaseConfig = {
+            apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+            authDomain:"helper-e10b2.firebaseapp.com",
+            projectId:"helper-e10b2",
+            storageBucket:"helper-e10b2.firebasestorage.app",
+            messagingSenderId:"131536876451",
+            appId:"1:131536876451:web:eeaef494c83dfc4849e016"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
+        const snap = await getDocs(q);
+        if(!snap.empty){
+            let html=''; let rank=1;
+            snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
+            container.innerHTML=html;
+        } else {
+            container.innerHTML = '<div style="text-align:center;padding:10px;">— пусто —</div>';
+        }
+        // Убираем заполнитель чёрточками
+        const placeholderDiv = document.querySelector('.top-players-placeholder');
+        if(placeholderDiv) placeholderDiv.innerHTML = '';
+    }catch(e){ container.innerHTML='⚠️ ERROR'; }
+}
 
     // ===== ФОРУМ (вкладки) =====
     const contents = {
