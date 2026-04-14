@@ -7,15 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
         body {
             background: #080b0c;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             font-family: 'Press Start 2P', monospace;
             color: #fff;
+            overflow: hidden;
         }
         
         .top-row {
@@ -23,8 +28,8 @@
             gap: 100px;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px 20px;
-            flex: 1;
+            flex: 0 0 auto;
+            padding: 20px 20px 10px;
         }
         .index-card {
             display: flex;
@@ -34,13 +39,13 @@
             cursor: pointer;
         }
         .index-card img {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             image-rendering: pixelated;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         .index-card span {
-            font-size: 14px;
+            font-size: 12px;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -51,8 +56,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 20px 30px;
-            gap: 30px;
+            padding: 10px 20px 20px;
+            gap: 20px;
+            flex-shrink: 0;
         }
         
         .team-btn {
@@ -95,14 +101,41 @@
         }
         
         @media (max-width: 700px) {
-            .top-row { gap: 50px; }
-            .index-card img { width: 100px; height: 100px; }
-            .index-card span { font-size: 11px; }
+            .top-row { 
+                gap: 40px; 
+                padding: 15px 15px 5px;
+            }
+            .index-card img { 
+                width: 90px; 
+                height: 90px; 
+            }
+            .index-card span { 
+                font-size: 10px; 
+            }
+            .bottom-section {
+                padding: 5px 15px 15px;
+                gap: 15px;
+            }
         }
         @media (max-width: 450px) {
-            .top-row { gap: 30px; }
-            .index-card img { width: 80px; height: 80px; }
-            .index-card span { font-size: 9px; letter-spacing: 2px; }
+            .top-row { 
+                gap: 25px; 
+                padding: 10px 10px 5px;
+            }
+            .index-card img { 
+                width: 70px; 
+                height: 70px; 
+            }
+            .index-card span { 
+                font-size: 8px; 
+                letter-spacing: 2px; 
+            }
+            .team-btn span {
+                font-size: 14px;
+            }
+            .donate-label {
+                font-size: 12px;
+            }
         }
 
         /* Модалки */
@@ -179,7 +212,6 @@
 <div class="crt-bloom"></div>
 <div class="crt-blur"></div>
 <div class="crt-edge-glow"></div>
-<div class="crt-distortion"></div>
 
 <!-- ==================== ОСНОВНОЙ КОНТЕНТ ==================== -->
 <div class="top-row">
