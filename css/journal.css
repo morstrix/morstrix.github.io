@@ -14,7 +14,7 @@ body {
     height: 100vh; height: 100dvh;
     overflow: hidden;
     position: relative;
-    touch-action: pan-x pan-y;   /* разрешаем горизонтальные и вертикальные жесты */
+    touch-action: manipulation;   /* убираем двойные тапы, не блокируем жесты */
 }
 #neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
 
@@ -47,10 +47,9 @@ body {
     text-transform: uppercase;
     padding: 8px 0;
 }
-
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 
-/* LENIS WRAPPER — правильная структура */
+/* LENIS WRAPPER */
 .journal-wrapper {
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
@@ -59,9 +58,8 @@ body {
     overflow: hidden;
     position: relative;
     z-index: 10;
-    touch-action: pan-x;         /* приоритет горизонтальным свайпам */
+    touch-action: none;          /* Lenis полностью управляет жестами */
 }
-
 .journal-horizontal {
     display: flex;
     height: 100%;
@@ -191,7 +189,6 @@ body {
     border: none;
     background: #000;
 }
-
 .mx-static-image img {
     width: 100%;
     height: auto;
@@ -199,7 +196,6 @@ body {
     aspect-ratio: 1 / 1;
     object-fit: cover;
 }
-
 .mx-description {
     font-size: 11px;
     color: #a27791;
@@ -208,17 +204,14 @@ body {
     line-height: 1.5;
     max-width: 300px;
 }
-
 #downloadArchiveBtnEmbedded {
     margin-bottom: 10px;
 }
-
 .styler-embedded {
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
 }
-
 .styler-input {
     width: 100%;
     background: #000;
@@ -230,7 +223,6 @@ body {
     text-align: center;
     font-size: 10px;
 }
-
 .styler-preview {
     background: #000;
     padding: 12px;
@@ -269,7 +261,6 @@ body {
     align-items: center;
     background-color: transparent;
 }
-
 .pinterest-widget-wrapper {
     width: 100%;
     max-width: 330px;
@@ -282,7 +273,6 @@ body {
     padding: 30px 10px 30px;
     gap: 20px;
 }
-
 .merch-constructor,
 .converter-container {
     border: none;
@@ -295,7 +285,6 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
 .merch-constructor h4,
 .converter-container h4 {
     font-size: 12px;
@@ -305,18 +294,15 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-
 .tshirt-preview {
     position: relative;
     width: 200px;
     margin: 0 auto 15px;
 }
-
 .tshirt-img {
     width: 100%;
     display: block;
 }
-
 .print-canvas {
     position: absolute;
     top: 50%;
@@ -325,7 +311,6 @@ body {
     width: 50px;
     height: 50px;
 }
-
 .upload-area {
     margin-top: 10px;
     text-align: center;
@@ -334,14 +319,12 @@ body {
     align-items: center;
     gap: 10px;
 }
-
 .upload-area input[type="file"] {
     color: #a27791;
     font-family: 'Press Start 2P', monospace;
     font-size: 7px;
     width: 100%;
 }
-
 .reset-btn {
     background: #010101;
     border: 2px solid #79434a;
@@ -352,7 +335,6 @@ body {
     font-family: 'Press Start 2P', monospace;
     text-transform: uppercase;
 }
-
 .converter-container input {
     width: 100px;
     background: #000;
@@ -363,7 +345,6 @@ body {
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
 }
-
 .converter-arrow {
     font-size: 20px;
     margin: 0 12px;
@@ -388,7 +369,6 @@ body {
     justify-content: center;
     gap: 15px;
 }
-
 .top-title {
     font-size: 14px;
     color: #a27791;
@@ -397,7 +377,6 @@ body {
     text-transform: uppercase;
     letter-spacing: 4px;
 }
-
 .top-players-framed {
     max-width: 400px;
     width: 80%;
@@ -407,7 +386,6 @@ body {
     padding: 12px;
     background: #000;
 }
-
 .top-players-list,
 .top-players-placeholder {
     font-size: 10px;
@@ -415,7 +393,6 @@ body {
     line-height: 1.8;
     word-break: break-word;
 }
-
 .tetris-big {
     display: flex;
     flex-direction: column;
@@ -448,7 +425,6 @@ body {
     justify-content: space-between;
     gap: 10px;
 }
-
 .forum-preview-hint {
     font-size: 7px;
     color: #888888;
@@ -458,7 +434,6 @@ body {
     opacity: 0.7;
     margin: 0 0 5px 0;
 }
-
 .forum-embedded {
     display: flex;
     gap: 0;
@@ -468,7 +443,6 @@ body {
     flex: 1 1 auto;
     min-height: 0;
 }
-
 .forum-tabs-panel-embedded {
     width: 55px;
     background: transparent;
@@ -476,7 +450,6 @@ body {
     flex-direction: column;
     padding: 5px 0;
 }
-
 .forum-tabs-panel-embedded .forum-tab {
     padding: 10px 0;
     font-size: 18px;
@@ -484,13 +457,11 @@ body {
     cursor: pointer;
     border-bottom: 1px solid #3d2a2f;
 }
-
 .forum-tabs-panel-embedded .forum-tab.active {
     background: none;
     border-left: 3px solid #a27791;
     color: #fff;
 }
-
 .forum-content-embedded {
     flex: 1;
     padding: 15px;
@@ -502,19 +473,16 @@ body {
     background: transparent;
     color: #888888;
 }
-
 .forum-content-embedded h3 {
     font-size: 13px;
     color: #a27791;
     margin-bottom: 15px;
 }
-
 .forum-content-embedded p {
     font-size: 8px;
     color: #888888;
     margin-bottom: 0;
 }
-
 #forumFullBtn {
     margin-top: 10px;
     align-self: center;
@@ -573,7 +541,6 @@ body {
     user-select: none;
     box-shadow: none;
 }
-
 .universal-btn .btn-inner {
     display: block;
     background: #fff;
@@ -582,7 +549,6 @@ body {
     transform: translateY(-4px);
     transition: transform 0.08s ease, background 0.08s ease;
 }
-
 .universal-btn .btn-inner span {
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
@@ -592,15 +558,12 @@ body {
     display: block;
     line-height: 1.2;
 }
-
 .universal-btn:active {
     padding-bottom: 4px;
 }
-
 .universal-btn:active .btn-inner {
     transform: translateY(0);
 }
-
 @media (hover: hover) {
     .universal-btn:hover .btn-inner {
         background: #e8e8e8;
@@ -615,7 +578,6 @@ body {
     .panel-close img { width:28px; height:28px; }
     .bottom-panel { height:40px; }
 }
-
 @media (max-width: 480px) {
     .page-content { padding: 8px 10px 12px 10px; }
     .carousel img { max-height: 50vh; }
@@ -632,11 +594,9 @@ body {
     #disclaimerModal .modal-inner { padding:16px 14px !important; gap:14px !important; }
     #disclaimerModal .modal-inner p { font-size:9px !important; }
 }
-
 @media (min-width: 481px) and (max-width: 767px) {
     .page-content { padding: 10px 15px 15px 15px; }
 }
-
 @media (min-width: 768px) {
     #disclaimerModal .modal-content { max-width:300px !important; }
     #disclaimerModal .modal-title-text { font-size:10px !important; }
@@ -663,11 +623,9 @@ body {
     cursor: pointer;
     transition: transform 0.08s;
 }
-
 .file-upload-label:active {
     transform: scale(0.97);
 }
-
 .file-upload-text {
     font-family: 'Press Start 2P', monospace;
     font-size: 8px;
@@ -676,20 +634,29 @@ body {
     letter-spacing: 1.5px;
 }
 
-/* Разрешаем вертикальный скролл внутри iframe и селектов */
+/* Интерактивные элементы — не мешаем Lenis */
 iframe,
 select,
 input,
 textarea {
-    touch-action: pan-y !important;
+    touch-action: auto !important;
 }
-
-/* Для горизонтального конвертера оставляем возможность тапа, но не свайпа */
 .converter-container input {
     touch-action: pan-y !important;
 }
-
-/* Селект голосов должен скроллиться вертикально */
 #ttsVoiceSelect {
     touch-action: pan-y !important;
+}
+
+/* Telegram wrapper */
+.tg-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.tg-wrapper iframe {
+    pointer-events: auto;
+}
+.tg-wrapper.scrolling iframe {
+    pointer-events: none !important;
 }
