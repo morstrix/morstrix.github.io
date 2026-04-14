@@ -675,3 +675,21 @@ body {
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
+
+/* Разрешаем вертикальный скролл внутри iframe и селектов */
+iframe,
+select,
+input,
+textarea {
+    touch-action: pan-y !important;
+}
+
+/* Для горизонтального конвертера оставляем возможность тапа, но не свайпа */
+.converter-container input {
+    touch-action: pan-y !important;
+}
+
+/* Селект голосов должен скроллиться вертикально */
+#ttsVoiceSelect {
+    touch-action: pan-y !important;
+}
