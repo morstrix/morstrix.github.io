@@ -17,7 +17,7 @@
     <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"></a>
 </div>
 
-<!-- ===== ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА ===== -->
+<!-- ===== ГОРИЗОНТАЛЬНАЯ ПРОКРУТКА (LENIS WRAPPER) ===== -->
 <div class="journal-horizontal" id="journalHorizontal">
 
     <!-- 1: RSS + Карусель + Twitter -->
@@ -41,31 +41,24 @@
         </div>
     </div>
 
-<!-- 2: MX Static Image + Font Styler (порядок изменён) -->
-<div class="journal-page" data-page="2">
-    <div class="page-content" style="justify-content: flex-start; padding-top: 0;">
-        <!-- КАРТИНКА (впритык к верху, без рамки) -->
-        <div style="width: 100%; max-width: 300px; margin: 0 auto;">
-            <img src="assets/f1.jpg" alt="MX Print" style="width: 100%; height: auto; display: block;">
-        </div>
-
-        <!-- ОПИСАНИЕ -->
-        <div class="mx-description" style="margin: 10px 0 5px;">
-            FONT<br>(TO DO)
-        </div>
-
-        <!-- КНОПКА DOWNLOAD -->
-        <button class="universal-btn" id="downloadArchiveBtnEmbedded" style="margin-bottom: 15px;">
-            <span class="btn-inner"><span>DOWNLOAD</span></span>
-        </button>
-
-        <!-- СТИЛИЗАТОР (как был) -->
-        <div class="styler-embedded">
-            <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
-            <div class="styler-preview" id="stylerPreviewEmbedded"></div>
+    <!-- 2: MX Static Image + Font Styler -->
+    <div class="journal-page" data-page="2">
+        <div class="page-content" style="justify-content: flex-start; padding-top: 0;">
+            <div style="width: 100%; max-width: 300px; margin: 0 auto;">
+                <img src="assets/f1.jpg" alt="MX Print" style="width: 100%; height: auto; display: block;">
+            </div>
+            <div class="mx-description" style="margin: 10px 0 5px;">
+                FONT<br>(to do)
+            </div>
+            <button class="universal-btn" id="downloadArchiveBtnEmbedded" style="margin-bottom: 15px;">
+                <span class="btn-inner"><span>DOWNLOAD</span></span>
+            </button>
+            <div class="styler-embedded">
+                <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
+                <div class="styler-preview" id="stylerPreviewEmbedded"></div>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- 3: Art + Paint -->
     <div class="journal-page" data-page="3">
@@ -76,81 +69,81 @@
         </div>
     </div>
 
- <!-- 4: Pinterest -->
-<div class="journal-page" data-page="4">
-    <div class="page-content pinterest-centered">
-        <div class="pinterest-widget-wrapper">
-            <a data-pin-do="embedBoard"
-               data-pin-board-width="300"
-               data-pin-scale-height="330"
-               href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+    <!-- 4: Pinterest -->
+    <div class="journal-page" data-page="4">
+        <div class="page-content pinterest-centered">
+            <div class="pinterest-widget-wrapper">
+                <a data-pin-do="embedBoard"
+                   data-pin-board-width="300"
+                   data-pin-scale-height="330"
+                   href="https://www.pinterest.com/morstrix/re-f-erences/"></a>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- 5: Merch + Converter -->
-<div class="journal-page" data-page="5">
-    <div class="page-content">
-        <div class="merch-constructor">
-            <h4>CONSTRUCTOR</h4>
-            <div class="tshirt-preview">
-                <img src="assets/tshirt.jpeg" class="tshirt-img" alt="T-shirt">
-                <canvas id="printCanvasEmbedded" class="print-canvas"></canvas>
+    <div class="journal-page" data-page="5">
+        <div class="page-content">
+            <div class="merch-constructor">
+                <h4>CONSTRUCTOR</h4>
+                <div class="tshirt-preview">
+                    <img src="assets/tshirt.jpeg" class="tshirt-img" alt="T-shirt">
+                    <canvas id="printCanvasEmbedded" class="print-canvas"></canvas>
+                </div>
+                <div class="upload-area">
+                    <label for="imageUploadEmbedded" class="file-upload-label">
+                        <span class="file-upload-text">choose file</span>
+                    </label>
+                    <input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif" style="display: none;">
+                    <button class="universal-btn" id="resetPrintEmbedded">
+                        <span class="btn-inner"><span>CLEAR</span></span>
+                    </button>
+                </div>
             </div>
-            <div class="upload-area">
-                <label for="imageUploadEmbedded" class="file-upload-label">
-                    <span class="file-upload-text">CHOOSE FILE</span>
-                </label>
-                <input type="file" id="imageUploadEmbedded" accept="image/png, image/jpeg, image/gif" style="display: none;">
-                <button class="universal-btn" id="resetPrintEmbedded">
-                    <span class="btn-inner"><span>CLEAR</span></span>
+
+            <div class="converter-container">
+                <h4>CONVERTER</h4>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 8px; color: #888888; margin-bottom: 4px;">pixels</div>
+                        <input type="text" id="pxInputEmbedded" class="converter-input" placeholder="0" inputmode="numeric">
+                    </div>
+                    <span class="converter-arrow">⇄</span>
+                    <div style="text-align: center;">
+                        <div style="font-size: 8px; color: #888888; margin-bottom: 4px;">cm</div>
+                        <input type="text" id="cmInputEmbedded" class="converter-input" placeholder="0.0" inputmode="decimal">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6: Spotify + Text Synth -->
+    <div class="journal-page" data-page="6">
+        <div class="page-content">
+            <div class="spotify-embed">
+                <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+            <div class="text-synth-embedded">
+                <h4>TEXT SYNTH</h4>
+                <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT" style="margin-bottom: 10px; text-align: center; font-size: 10px;">
+                <select id="ttsVoiceSelect" class="styler-input" style="margin-bottom: 10px;"></select>
+                <button class="universal-btn" id="ttsSpeakBtn">
+                    <span class="btn-inner"><span>SPEAK</span></span>
                 </button>
-            </div>
-        </div>
-
-        <div class="converter-container">
-            <h4>CONVERTER</h4>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <div style="text-align: center;">
-                    <div style="font-size: 8px; color: #888888; margin-bottom: 4px;">PIXELS</div>
-                    <input type="text" id="pxInputEmbedded" class="converter-input" placeholder="0" inputmode="numeric">
-                </div>
-                <span class="converter-arrow">⇄</span>
-                <div style="text-align: center;">
-                    <div style="font-size: 8px; color: #888888; margin-bottom: 4px;">CM</div>
-                    <input type="text" id="cmInputEmbedded" class="converter-input" placeholder="0.0" inputmode="decimal">
-                </div>
+                <div id="ttsStatus" style="font-size: 7px; color: #888; margin-top: 8px; min-height: 14px;"></div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- 6: Spotify + Text Synth -->
-<div class="journal-page" data-page="6">
-    <div class="page-content">
-        <div class="spotify-embed">
-            <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-        <div class="text-synth-embedded">
-    <h4>TEXT SYNTH</h4>
-    <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT" style="margin-bottom: 10px; text-align: center; font-size: 10px;">
-    <select id="ttsVoiceSelect" class="styler-input" style="margin-bottom: 10px;"></select>
-    <button class="universal-btn" id="ttsSpeakBtn">
-        <span class="btn-inner"><span>SPEAK</span></span>
-    </button>
-    <div id="ttsStatus" style="font-size: 7px; color: #888; margin-top: 8px; min-height: 14px;"></div>
-</div>
-    </div>
-</div>
 
     <!-- 7: Top + Tetris -->
     <div class="journal-page" data-page="7">
         <div class="page-content">
             <h4 class="top-title">TOP</h4>
-<div class="top-players-framed">
-    <div class="top-players-list"></div>
-    <div class="top-players-placeholder"></div>
-</div>
+            <div class="top-players-framed">
+                <div class="top-players-list"></div>
+                <div class="top-players-placeholder"></div>
+            </div>
             <a href="tetris.html" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span>PLAY TETRIS</span></a>
         </div>
     </div>
@@ -167,10 +160,7 @@
     <!-- 9: Forum Preview -->
     <div class="journal-page" data-page="9">
         <div class="page-content">
-            <!-- Пояснительный текст сверху -->
             <p class="forum-preview-hint">archive mini preview</p>
-            
-            <!-- Сам блок форума (фон прозрачный) -->
             <div class="forum-embedded">
                 <div class="forum-tabs-panel-embedded">
                     <div class="forum-tab active" data-tab="wellness">🌿</div>
@@ -188,13 +178,12 @@
                     <p id="forumTextEmbedded">Йога, медитации...</p>
                 </div>
             </div>
-            
-            <!-- Кнопка FULL снизу -->
             <button class="universal-btn" id="forumFullBtn" onclick="window.open('https://t.me/morstrix')">
                 <span class="btn-inner"><span>OPEN FULL</span></span>
             </button>
         </div>
     </div>
+</div>
 
 <div class="bottom-panel">
     <div class="page-indicator">
@@ -246,7 +235,7 @@
 <!-- Модалка Paint -->
 <div id="artModal" class="modal-overlay">
     <div class="modal-content paint-full-modal">
-        <div class="modal-header"><span class="modal-title-text">PAINT.EXE</span><button class="modal-close-btn" data-modal="artModal">✜</button></div>
+        <div class="modal-header"><span class="modal-title-text">PAINT</span><button class="modal-close-btn" data-modal="artModal">✜</button></div>
         <div class="paint-window">
             <div class="paint-tools-panel">
                 <div style="display:flex; gap:8px;"><button class="retro-btn" id="pUndo" disabled>&lt;</button><button class="retro-btn" id="pRedo" disabled>&gt;</button></div>
@@ -268,6 +257,8 @@
     </div>
 </div>
 
+<!-- Lenis library -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="js/paint.js"></script>
 <script src="js/journal.js"></script>
 </body>
