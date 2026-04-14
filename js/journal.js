@@ -315,8 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 });
 
-// ===== TEXT SYNTH через публичный Edge-TTS прокси =====
-const TTS_PROXY_URL = 'https://edge-tts.deno.dev/tts';
+// ===== TEXT SYNTH (Edge-TTS через CORS-прокси) =====
+const TTS_PROXY_URL = 'https://corsproxy.io/?url=' + encodeURIComponent('https://edge-tts.deno.dev/tts');
 
 const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
 const ttsTextInput = document.getElementById('ttsTextInput');
@@ -367,6 +367,7 @@ async function speakWithEdge(text, voice = 'uk-UA-PolinaNeural') {
     }
 }
 
+// Привязка к кнопке SPEAK
 if (ttsSpeakBtn) {
     ttsSpeakBtn.addEventListener('click', () => {
         const text = ttsTextInput?.value || '';
@@ -375,26 +376,11 @@ if (ttsSpeakBtn) {
     });
 }
 
+// Воспроизведение по Enter в поле ввода
 if (ttsTextInput) {
     ttsTextInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             ttsSpeakBtn?.click();
         }
-    });
-}
-
-const ttsBotVoiceBtn = document.getElementById('ttsBotVoiceBtn');
-
-if (ttsBotVoiceBtn) {
-    ttsBotVoiceBtn.addEventListener('click', () => {
-        const text = ttsTextInput?.value.trim();
-        if (!text) {
-            setTtsStatus('Введите текст');
-            return;
-        }
-        const encoded = btoa(unescape(encodeURIComponent(text)));
-        const botUrl = `https://t.me/morstrixbot?start=tts_${encoded}`;
-        setTtsStatus('Открываем бота...');
-        window.open(botUrl, '_blank');
     });
 }
