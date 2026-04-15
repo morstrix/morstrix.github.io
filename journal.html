@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Morstrix Journal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Tiny5&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="journal.css">
 
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
@@ -13,149 +16,109 @@
 
 <body>
 
-<canvas id="neuro-bg"></canvas>
+<canvas id="bg"></canvas>
 
-<!-- TOP PANEL -->
-<div class="top-panel">
-    <button class="panel-btn" id="contentsBtn">CONTENTS</button>
-    <button class="panel-btn">MORSTRIX</button>
-    <button class="panel-btn" id="supportBtn">SUPPORT</button>
+<!-- TOP -->
+<div class="top-panel glass">
+    <div class="logo">MORSTRIX</div>
+    <div class="nav">
+        <button onclick="scrollToPage(0)">HOME</button>
+        <button onclick="scrollToPage(2)">FONTS</button>
+        <button onclick="scrollToPage(5)">FORUM</button>
+    </div>
 </div>
 
 <!-- MAIN -->
-<div class="journal-wrapper">
-<div class="journal-horizontal" id="journalHorizontal">
+<div class="wrapper">
+<div class="horizontal" id="horizontal">
 
 <!-- PAGE 1 -->
-<section class="journal-page">
-<div class="page-content page1-layout">
+<section class="page">
+<div class="content">
 
-<div class="ticker-wrapper">
-<div class="ticker" id="rssTicker"></div>
-</div>
+<div class="headline accent1">CYBER JOURNAL</div>
 
-<div class="art-archive-row">
-<div class="art-block">
-<img id="currentArtPreview" src="assets/default.png">
+<div class="card glow">
+    <img src="assets/1.jpg">
 </div>
 
-<div class="archive-block" id="archiveBtn">
-ARCHIVE
-</div>
-</div>
-
-<div class="paint-btn-wrapper">
-<div class="universal-btn" id="paintJournalBtn">
-<div class="btn-inner"><span>PAINT</span></div>
-</div>
-</div>
-
-<div class="pinterest-panel" id="pinterestPanel">PINTEREST</div>
-
-<div class="pinterest-menu" id="pinterestMenu">
-<div class="pinterest-category" data-cat="art">ART</div>
-<div class="pinterest-category" data-cat="design">DESIGN</div>
-<div class="pinterest-category" data-cat="fashion">FASHION</div>
-</div>
+<div class="btn primary">ENTER</div>
 
 </div>
 </section>
 
 <!-- PAGE 2 -->
-<section class="journal-page">
-<div class="page-content">
+<section class="page">
+<div class="content">
 
-<div class="carousel" id="mainCarousel">
+<div class="headline accent2">GALLERY</div>
+
+<div class="carousel" id="carousel">
 <img src="assets/1.jpg" class="active">
 <img src="assets/2.jpg">
 <img src="assets/3.jpg">
-</div>
-
-<div class="hashtag-row">
-<div class="hashtag">#morstrix #cyber</div>
-</div>
-
-<div class="twitter-section">
-<img src="assets/x.png" class="x-btn-img" id="twitterBtn">
 </div>
 
 </div>
 </section>
 
 <!-- PAGE 3 -->
-<section class="journal-page">
-<div class="page-content fonts-layout">
+<section class="page">
+<div class="content">
 
-<input id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
+<div class="headline accent3">FONT LAB</div>
 
-<div id="stylerPreviewEmbedded" class="styler-preview"></div>
+<input id="input" placeholder="TYPE TEXT">
+
+<div id="preview"></div>
 
 </div>
 </section>
 
 <!-- PAGE 4 -->
-<section class="journal-page">
-<div class="page-content sound-layout">
+<section class="page">
+<div class="content">
 
-<div class="spotify-icon" id="spotifyIcon">SPOTIFY</div>
+<div class="headline accent1">SOUND</div>
 
-<input id="ttsTextInput" placeholder="TYPE TEXT">
-<button id="ttsSpeakBtn">PLAY</button>
-<div id="ttsStatus"></div>
+<button class="btn neon" id="play">PLAY</button>
 
 </div>
 </section>
 
 <!-- PAGE 5 -->
-<section class="journal-page">
-<div class="page-content top-tetris-layout">
+<section class="page">
+<div class="content">
 
-<div class="top-title">TOP PLAYERS</div>
-<div class="top-players-list"></div>
+<div class="headline accent2">TOP</div>
+
+<div class="list">
+<div>01 — USER_X</div>
+<div>02 — CYBER_02</div>
+</div>
 
 </div>
 </section>
 
 <!-- PAGE 6 -->
-<section class="journal-page">
-<div class="page-content forum-support-layout">
+<section class="page">
+<div class="content">
 
-<div class="forum-embedded">
+<div class="headline accent3">FORUM</div>
 
-<div class="forum-tabs-panel-embedded">
-<div class="forum-tab active" data-tab="design">🎨</div>
-<div class="forum-tab" data-tab="itai">🤖</div>
-<div class="forum-tab" data-tab="money">💰</div>
+<div class="tabs">
+<div class="tab active">DESIGN</div>
+<div class="tab">AI</div>
+<div class="tab">MONEY</div>
 </div>
 
-<div class="forum-content-embedded">
-<h3 id="forumTitleEmbedded">DESIGN</h3>
-<p id="forumTextEmbedded">Графический дизайн...</p>
-</div>
-
-</div>
-
-<div class="forum-actions">
-<div class="universal-btn" id="supportBtn">
-<div class="btn-inner"><span>SUPPORT</span></div>
-</div>
+<div class="card glass">
+DISCUSSION AREA
 </div>
 
 </div>
 </section>
 
-</div>
-</div>
-
-<!-- BOTTOM -->
-<div class="bottom-panel">
-<div class="page-indicator">
-<div class="dot active"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
 </div>
 </div>
 
