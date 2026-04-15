@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX JOURNAL</title>
     
     <!-- Шрифты -->
@@ -10,12 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=Jersey+10+Charted&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Твой CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
 
-    <!-- Навигация -->
+    <!-- Верхняя панель -->
     <div class="top-nav">
         <div></div>
         <div class="nav-center" onclick="openContentsModal()">ЗМІСТ</div>
@@ -25,7 +25,7 @@
     </div>
     <div class="divider-line"></div>
 
-    <!-- Основной контейнер скролла -->
+    <!-- Основной контейнер Lenis -->
     <div class="journal-wrapper" id="journalWrapper">
         <div class="journal-horizontal" id="journalHorizontal">
             
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
+    <!-- Нижняя панель -->
     <div class="bottom-nav">
         <div class="page-dot active" data-page="1" onclick="scrollToPage(1)"></div>
         <div class="page-dot" data-page="2" onclick="scrollToPage(2)"></div>
@@ -143,18 +143,18 @@
         <div class="page-dot" data-page="6" onclick="scrollToPage(6)"></div>
     </div>
 
-    <!-- МОДАЛКИ -->
+    <!-- Модалки -->
     <div class="modal-overlay" id="contentsModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">ЗМІСТ</h3>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <div onclick="scrollToPage(1)" style="color: #b97272; cursor: pointer; padding: 5px;">1. ART</div>
-                <div onclick="scrollToPage(2)" style="color: #b97272; cursor: pointer; padding: 5px;">2. TWITTER</div>
-                <div onclick="scrollToPage(3)" style="color: #b97272; cursor: pointer; padding: 5px;">3. FONTS</div>
-                <div onclick="scrollToPage(4)" style="color: #b97272; cursor: pointer; padding: 5px;">4. SOUND</div>
-                <div onclick="scrollToPage(5)" style="color: #b97272; cursor: pointer; padding: 5px;">5. TOP</div>
-                <div onclick="scrollToPage(6)" style="color: #b97272; cursor: pointer; padding: 5px;">6. FORUM</div>
+            <h3>ЗМІСТ</h3>
+            <div class="menu-list">
+                <div onclick="scrollToPage(1)">1. ART</div>
+                <div onclick="scrollToPage(2)">2. TWITTER</div>
+                <div onclick="scrollToPage(3)">3. FONTS</div>
+                <div onclick="scrollToPage(4)">4. SOUND</div>
+                <div onclick="scrollToPage(5)">5. TOP</div>
+                <div onclick="scrollToPage(6)">6. FORUM</div>
             </div>
         </div>
     </div>
@@ -162,15 +162,15 @@
     <div class="modal-overlay" id="archiveModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">АРХІВ</h3>
-            <img src="assets/art.jpg" alt="Archive" style="width: 100%; max-width: 300px; border: 2px solid #a84d6b; image-rendering: pixelated;">
+            <h3>АРХІВ</h3>
+            <img src="assets/art.jpg" alt="Archive" class="archive-preview">
         </div>
     </div>
 
     <div class="modal-overlay" id="paintModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">PAINT OPTIONS</h3>
+            <h3>PAINT OPTIONS</h3>
             <div class="paint-options">
                 <button class="paint-option" onclick="window.location.href='paint.html'">АНОНІМНО</button>
                 <button class="paint-option" onclick="window.location.href='paint.html'">РЕЄСТРАЦІЯ</button>
@@ -187,11 +187,11 @@
     </div>
 
     <div class="modal-overlay" id="pinterestModal">
-        <div class="modal-content">
+        <div class="modal-content pinterest-modal">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">REFERENCES</h3>
+            <h3>REFERENCES</h3>
             <div class="pinterest-widget-container">
-                <a data-pin-do="embedBoard" data-pin-board-width="800" data-pin-scale-height="400" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
+                <a data-pin-do="embedBoard" data-pin-board-width="400" data-pin-scale-height="400" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
             </div>
         </div>
     </div>
@@ -199,7 +199,7 @@
     <div class="modal-overlay" id="spotifyModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -210,11 +210,9 @@
         </div>
     </div>
 
-    <!-- БИБЛИОТЕКИ -->
-    <!-- ИСПРАВЛЕНО: Убран пробел в версии и используется стабильная версия 1.1.9 -->
-    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
-    
-    <!-- Твой скрипт -->
+    <!-- Lenis -->
+    <script src="https://unpkg.com/lenis@1.1.27/dist/lenis.min.js"></script>
+    <!-- Главный скрипт -->
     <script type="module" src="js/journal.js"></script>
 </body>
 </html>
