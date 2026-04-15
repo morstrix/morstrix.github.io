@@ -1,204 +1,263 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MORSTRIX | DIGITAL JOURNAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/journal.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MORSTRIX JOURNAL</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=Jersey+10+Charted&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="neuro-bg"></canvas>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="nav-left"></div>
+        <div class="nav-center" id="contentsBtn">ЗМІСТ</div>
+        <div class="nav-right" onclick="window.location.href='index.html'">
+            <img src="assets/x.png" alt="Close" onerror="this.style.display='none'">
+            <span style="color:white; font-size:20px;" id="closeIconFallback">×</span>
+        </div>
+    </div>
 
-<div class="top-panel">
-    <div></div>
-    <button class="panel-btn" id="contentsBtn"><span>ЗМІСТ</span></button>
-    <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"></a>
-</div>
+    <!-- Divider Line -->
+    <div class="divider-line"></div>
 
-<div class="journal-wrapper">
-  <div class="journal-horizontal" id="journalHorizontal">
-
-<!-- ================= СТРАНИЦА 1 (ПРАВКИ) ================= -->
-<div class="journal-page" data-page="1">
-    <div class="page-content page1-layout">
-        <!-- RSS - теперь статичный текст, без анимации -->
-        <div class="ticker-wrapper">
-    <div class="ticker" id="rssTicker"></div>   <!-- убрал -static -->
-</div>
-
-        <div class="art-section">
-            <div class="art-row">
-                <div class="art-block art-block-large">
-                    <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
+    <!-- Journal Content Wrapper -->
+    <div class="journal-wrapper" id="journalWrapper">
+        <div class="journal-horizontal" id="journalHorizontal">
+            
+            <!-- PAGE 1: ART -->
+            <section class="journal-page" data-page="1">
+                <div class="rss-ticker">
+                    <div class="ticker-content">
+                        APT MNTPMNT PPL CULT APARTAMENTO 032C PURPLE SSENSE VICE HYPEBEAST DAZE GALLERY MAGAZINE ARTFORUM PIN-UP ARCHITECTURAL DIGEST INTERIOR DESIGN ELLE DECOR VERANA COTTAGES AND CASTLES THE WORLD OF INTERIOR GRAZIA VOGUE Harper's Bazaar NUMERO MONOCLE PAPER JOURNAL ACTUEL STYLUS FRAME MAGAZINE DAMAN MAGAZINE IDEA SPURIOUS CORPUS PAPERMAG LUPUS IN FABULA LOBBY MAGAZINE APEIRON ZEIT-FORUM ARCH+ ANYTHING KALEIDOSCOPE 032C BUTT MAGAZINE DUMMY MAGAZINE FANTOM KALEIDOSCOPE MARIE CLAIRE MAISON & OBJET METROPOLIS PIN-UP MAGAZINE TOLIXO URBAN NATURE VISION NAUTILUS YACHTS INTERNATIONAL ZOOX
+                    </div>
                 </div>
-                <!-- Архив теперь просто картинка x.png -->
-                <div class="archive-block" id="archiveBtn">
-                    <img src="assets/x.png" alt="Архив" class="archive-img">
+                
+                <div class="art-section">
+                    <div class="art-row">
+                        <div class="art-block">
+                            <img id="currentArtPreview" src="assets/art.jpg" alt="Current Art" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMTAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkFSVCBQTEFDRUhPTERFUjwvdGV4dD48L3N2Zz4='">
+                        </div>
+                        <div class="archive-block" id="archiveBtn">
+                            <img src="assets/x.png" alt="Archive" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    
+                    <div class="paint-row" id="paintBtn">
+                        <img src="assets/paint.png" alt="Paint" onerror="this.style.display='none'">
+                        <span style="color:#a84d6b; font-family:'Tiny5'; font-size:12px; display:block; text-align:center; margin-top:5px;">PAINT</span>
+                    </div>
                 </div>
-            </div>
-            <div class="paint-row">
-                <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
-            </div>
-        </div>
-
-       <!-- Pinterest - только иконка справа -->
-<div class="pinterest-icon-wrapper">
-    <div class="pinterest-icon" id="pinterestPanel">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0"/>
-        </svg>
-    </div>
-    <!-- Меню категорий остаётся без изменений -->
-    <div class="pinterest-menu" id="pinterestMenu">
-        <div class="pinterest-category" data-cat="diliger">DILIGER</div>
-        <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
-        <div class="pinterest-category" data-cat="barbering">BARBERING</div>
-    </div>
-</div>
-    <!-- PAGE 2: Twitter -->
-    <div class="journal-page" data-page="2">
-        <div class="page-content">
-            <div class="carousel-section">
-                <div class="carousel" id="mainCarousel">
-                    <img src="assets/mx1.jpg" class="active">
-                    <img src="assets/mx2.jpg">
+                
+                <div class="pinterest-icon-wrapper">
+                    <svg class="pinterest-icon" id="pinterestBtn" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.24 17.5c-2.76 0-5-2.24-5-5s2.24-5 5-5c1.4 0 2.68.58 3.6 1.5l-1.4 1.4c-.48-.48-1.2-.76-2.2-.76-1.66 0-3 1.34-3 3s1.34 3 3 3c1.18 0 2.12-.68 2.58-1.68h-2.58V11h5c.18.86.2 1.74.04 2.6-.3 1.66-1.74 3.04-3.44 3.4z"/>
+                    </svg>
                 </div>
-                <div class="hashtag-row"><span class="hashtag">#layoutporn</span></div>
-            </div>
-            <div class="twitter-section">
-                <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <!-- PAGE 3: Шрифты -->
-    <div class="journal-page" data-page="3">
-        <div class="page-content fonts-layout">
-            <div class="mx-narrow-image"><img src="assets/f1.jpg" alt="MX Print"></div>
-            <div class="mx-description">FONT<br>(to do)</div>
-            <button class="universal-btn" id="downloadArchiveBtnEmbedded">
-                <span class="btn-inner"><span>DOWNLOAD</span></span>
-            </button>
-            <div class="styler-embedded">
-                <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
-                <div class="styler-preview" id="stylerPreviewEmbedded"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PAGE 4: Саунд -->
-    <div class="journal-page" data-page="4">
-        <div class="page-content sound-layout">
-            <div class="text-synth-embedded">
-                <h4>TEXT SYNTH</h4>
-                <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT">
-                <select id="ttsVoiceSelect" class="styler-input"></select>
-                <button class="universal-btn" id="ttsSpeakBtn"><span class="btn-inner"><span>SPEAK</span></span></button>
-                <div id="ttsStatus"></div>
-            </div>
-            <div class="spotify-icon" id="spotifyIcon"><span>🎵 SPOTIFY</span></div>
-        </div>
-    </div>
-
-    <!-- PAGE 5: Топ + Тетрис -->
-    <div class="journal-page" data-page="5">
-        <div class="page-content top-tetris-layout">
-            <h4 class="top-title">TOP</h4>
-            <div class="top-players-framed"><div class="top-players-list"></div></div>
-            <a href="tetris.html" target="_blank" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span>PLAY TETRIS</span></a>
-        </div>
-    </div>
-
-    <!-- PAGE 6: Форум + Саппорт -->
-    <div class="journal-page" data-page="6">
-        <div class="page-content forum-support-layout">
-            <div class="forum-embedded">
-                <div class="forum-tabs-panel-embedded">
-                    <div class="forum-tab active" data-tab="wellness">🌿</div>
-                    <div class="forum-tab" data-tab="interior">🛋️</div>
-                    <div class="forum-tab" data-tab="radio">📻</div>
-                    <div class="forum-tab" data-tab="itai">🤖</div>
-                    <div class="forum-tab" data-tab="english">🔝</div>
-                    <div class="forum-tab" data-tab="design">🎨</div>
-                    <div class="forum-tab" data-tab="tattoo">💘</div>
-                    <div class="forum-tab" data-tab="money">💸</div>
-                    <div class="forum-tab" data-tab="barbering">✂️</div>
+            <!-- PAGE 2: TWITTER -->
+            <section class="journal-page" data-page="2">
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <img src="assets/mx1.jpg" alt="Design 1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyMjIiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk1YMTwvdGV4dD48L3N2Zz4='">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="assets/mx2.jpg" alt="Design 2" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMzMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk1YMjwvdGV4dD48L3N2Zz4='">
+                    </div>
                 </div>
-                <div class="forum-content-embedded">
-                    <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
-                    <p id="forumTextEmbedded">Йога, медитации...</p>
+                
+                <div class="twitter-hash">#layoutporn</div>
+                
+                <div class="twitter-btn" id="twitterBtn">
+                    <img src="assets/twit.png" alt="Twitter" onerror="this.innerHTML='❌'">
                 </div>
+            </section>
+
+            <!-- PAGE 3: FONTS -->
+            <section class="journal-page" data-page="3">
+                <img src="assets/f1.jpg" alt="Font Preview" class="font-image" onerror="this.style.background='#222'">
+                
+                <div class="font-title">FONT (to do)</div>
+                
+                <button class="download-btn" id="downloadBtn">DOWNLOAD</button>
+                
+                <input type="text" class="styler-input" id="stylerInput" placeholder="TYPE TEXT">
+                
+                <div class="styler-preview" id="stylerPreview">Preview will appear here</div>
+            </section>
+
+            <!-- PAGE 4: SOUND -->
+            <section class="journal-page" data-page="4">
+                <div class="sound-container">
+                    <div class="text-synth">
+                        <input type="text" id="ttsInput" placeholder="Enter text to speak">
+                        <select id="voiceSelect"></select>
+                        <button id="speakBtn">SPEAK</button>
+                        <div id="ttsStatus"></div>
+                    </div>
+                    
+                    <div class="spotify-link" id="spotifyBtn">
+                        🎵 SPOTIFY
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE 5: TOP + TETRIS -->
+            <section class="journal-page" data-page="5">
+                <div class="top-title">TOP</div>
+                
+                <div class="top-players-list" id="topPlayersList">
+                    <div style="color:#666; text-align:center;">Loading...</div>
+                </div>
+                
+                <div class="tetris-btn" id="tetrisBtn">
+                    <img src="assets/tetris.png" alt="Tetris" onerror="this.style.display='none'">
+                    <div class="tetris-text">PLAY TETRIS</div>
+                </div>
+            </section>
+
+            <!-- PAGE 6: FORUM + SUPPORT -->
+            <section class="journal-page" data-page="6">
+                <div class="forum-container">
+                    <div class="forum-tabs">
+                        <button class="tab-btn active" data-tab="wellness">WELLNESS</button>
+                        <button class="tab-btn" data-tab="interior">INTERIOR</button>
+                        <button class="tab-btn" data-tab="radio">RADIO</button>
+                        <button class="tab-btn" data-tab="itai">ITALIAN</button>
+                        <button class="tab-btn" data-tab="english">ENGLISH</button>
+                        <button class="tab-btn" data-tab="design">DESIGN</button>
+                        <button class="tab-btn" data-tab="tattoo">TATTOO</button>
+                        <button class="tab-btn" data-tab="money">MONEY</button>
+                        <button class="tab-btn" data-tab="barbering">BARBER</button>
+                    </div>
+                    
+                    <div class="forum-content">
+                        <div class="forum-header" id="forumHeader">WELLNESS</div>
+                        <div class="forum-text" id="forumText">Wellness content and discussions...</div>
+                        
+                        <div class="forum-actions">
+                            <button class="forum-btn" id="fullForumBtn">FULL</button>
+                            <button class="forum-btn" id="supportBtn">SUPPORT</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="page-dot active" data-page="1"></div>
+        <div class="page-dot" data-page="2"></div>
+        <div class="page-dot" data-page="3"></div>
+        <div class="page-dot" data-page="4"></div>
+        <div class="page-dot" data-page="5"></div>
+        <div class="page-dot" data-page="6"></div>
+    </div>
+
+    <!-- MODALS -->
+    
+    <!-- Contents Modal -->
+    <div class="modal-overlay" id="contentsModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="contentsModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
             </div>
-            <div class="forum-actions">
-                <button class="universal-btn" id="forumFullBtn"><span class="btn-inner"><span>FULL</span></span></button>
-                <button class="universal-btn" id="supportBtn"><span class="btn-inner"><span>SUPPORT</span></span></button>
+            <h3 class="modal-title">ЗМІСТ</h3>
+            <div class="menu-list">
+                <div data-target="1">1. ART</div>
+                <div data-target="2">2. TWITTER</div>
+                <div data-target="3">3. FONTS</div>
+                <div data-target="4">4. SOUND</div>
+                <div data-target="5">5. TOP</div>
+                <div data-target="6">6. FORUM</div>
             </div>
         </div>
     </div>
-  </div>
-</div>
 
-<div class="bottom-panel">
-    <div class="page-indicator" id="pageIndicator"></div>
-</div>
+    <!-- Archive Modal -->
+    <div class="modal-overlay" id="archiveModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="archiveModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <h3 class="modal-title">АРХІВ</h3>
+            <img id="archiveImg" src="assets/art.jpg" alt="Archive" style="width:100%; max-width:300px; border:2px solid #a84d6b; image-rendering:pixelated;">
+        </div>
+    </div>
 
-<!-- МОДАЛКИ -->
-<div id="contentsModal" class="modal-overlay">
-    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">ЗМІСТ</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
-    <div class="modal-inner"><div class="contents-list">
-        <div class="contents-item" data-page="1">1. HOME / ART</div><div class="contents-item" data-page="2">2. TWITTER</div>
-        <div class="contents-item" data-page="3">3. FONTS</div><div class="contents-item" data-page="4">4. SOUND</div>
-        <div class="contents-item" data-page="5">5. TOP / TETRIS</div><div class="contents-item" data-page="6">6. FORUM / SUPPORT</div>
-    </div></div></div>
-</div>
+    <!-- Paint Modal -->
+    <div class="modal-overlay" id="paintModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="paintModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <h3 class="modal-title">PAINT OPTIONS</h3>
+            <div class="paint-options">
+                <button class="paint-option" onclick="window.location.href='paint.html'">АНОНІМНО</button>
+                <button class="paint-option" onclick="window.location.href='paint.html'">РЕЄСТРАЦІЯ</button>
+            </div>
+        </div>
+    </div>
 
-<div id="disclaimerModal" class="modal-overlay">
-    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
-    <div class="modal-inner"><p>OPEN X?</p><button class="universal-btn" id="openXBtn" data-href="https://x.com"><span class="btn-inner"><span>ENTER</span></span></button></div></div>
-</div>
+    <!-- Twitter Disclaimer Modal -->
+    <div class="modal-overlay" id="twitterModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="twitterModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <div class="disclaimer-text">OPEN X?</div>
+            <button class="enter-btn" id="confirmTwitterBtn">ENTER</button>
+        </div>
+    </div>
 
-<div id="paintEntryModal" class="modal-overlay">
-    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">PAINT ENTRY</span><button class="modal-close-btn" data-modal="paintEntryModal">✜</button></div>
-    <div class="modal-inner" style="display:flex; gap:20px; justify-content:center;">
-        <button class="universal-btn" id="paintAnonBtn"><span class="btn-inner"><span>АНОНИМНО</span></span></button>
-        <button class="universal-btn" id="paintRegBtn"><span class="btn-inner"><span>РЕГИСТРАЦИЯ</span></span></button>
-    </div></div>
-</div>
+    <!-- Pinterest Modal (Single Widget) -->
+    <div class="modal-overlay" id="pinterestModal">
+        <div class="modal-content" style="max-width: 600px; width: 90%;">
+            <div class="modal-close" data-close="pinterestModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <h3 class="modal-title">REFERENCES</h3>
+            <div id="pinterestWidgetContainer" style="min-height: 400px; display:flex; align-items:center; justify-content:center;">
+                Loading Board...
+            </div>
+        </div>
+    </div>
 
-<div id="stubModal" class="modal-overlay">
-    <div class="modal-content"><div class="modal-header"><span class="modal-title-text" id="stubModalTitle">SOON</span><button class="modal-close-btn" data-modal="stubModal">✜</button></div>
-    <div class="modal-inner"><p id="stubModalText"></p></div></div>
-</div>
+    <!-- Spotify Modal -->
+    <div class="modal-overlay" id="spotifyModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="spotifyModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
 
-<div id="spotifyModal" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">SPOTIFY</span><button class="modal-close-btn" data-modal="spotifyModal">✜</button></div>
-    <div class="modal-inner"><iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="380" frameborder="0"></iframe></div></div>
-</div>
+    <!-- Support Modal -->
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal-content">
+            <div class="modal-close" data-close="supportModal">
+                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            </div>
+            <div id="telegramWidget"></div>
+        </div>
+    </div>
 
-<div id="supportModal" class="modal-overlay">
-    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">SUPPORT</span><button class="modal-close-btn" data-modal="supportModal">✜</button></div>
-    <div class="modal-inner tg-wrapper" id="telegramWrapper">
-        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrix/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
-    </div></div>
-</div>
-
-<!-- Pinterest модалки -->
-<div id="pinterestModalDiliger" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: DILIGER</span><button class="modal-close-btn" data-modal="pinterestModalDiliger">✜</button></div>
-    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/diliger/"></a></div></div>
-</div>
-<div id="pinterestModalTattoo" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: TATTOO</span><button class="modal-close-btn" data-modal="pinterestModalTattoo">✜</button></div>
-    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/tattoo/"></a></div></div>
-</div>
-<div id="pinterestModalBarbering" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: BARBERING</span><button class="modal-close-btn" data-modal="pinterestModalBarbering">✜</button></div>
-    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/barbering/"></a></div></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="js/journal.js"></script>
+    <!-- Scripts -->
+    <!-- Lenis for smooth scroll -->
+    <script src="https://unpkg.com/lenis@1.0.46/dist/lenis.min.js"></script>
+    
+    <!-- Main Logic -->
+    <script src="script.js" type="module"></script>
 </body>
 </html>
