@@ -17,18 +17,12 @@ const app = initializeApp(firebaseConfig);
 getAnalytics(app);
 const db = getFirestore(app);
 
-// --- DOM ELEMENTS ---
-const wrapper = document.getElementById('journalWrapper');
-const horizontal = document.getElementById('journalHorizontal');
-
-// --- LENIS SETUP (HARDCODED HORIZONTAL) ---
-// Важно: target указывает на наш контейнер, а не на window
+// --- LENIS SETUP ---
+// Lenis теперь доступен глобально благодаря скрипту в HTML
 const lenis = new Lenis({
-    wrapper: wrapper, // Скроллим только этот элемент
-    content: horizontal,
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'horizontal',
+    direction: 'horizontal', // Горизонтальный скролл
     gestureDirection: 'horizontal',
     smooth: true,
     mouseMultiplier: 1,
@@ -43,48 +37,21 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// --- БЛОКИРОВКА ВЕРТИКАЛЬНОГО СКРОЛЛА (ДЛЯ ТЕЛЕФОНОВ) ---
-// Предотвращаем стандартный скролл браузера вверх-вниз
-window.addEventListener('touchmove', (e) => {
-    // Если модалка открыта - разрешаем скроллить внутри неё
-    if (document.querySelector('.modal-overlay.active')) return;
-    
-    // Иначе блокируем всё, кроме горизонтального жеста внутри нашего враппера
-    // Lenis сам разберется с направлением, но мы страхуем
-}, { passive: false });
-
+// Блокировка вертикального скролла колесиком
 window.addEventListener('wheel', (e) => {
-    if (document.querySelector('.modal-overlay.active')) return;
-    // Если скролл больше вертикальный чем горизонтальный - блокируем
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
     }
 }, { passive: false });
 
-
 // --- NAVIGATION LOGIC ---
 let currentPage = 1;
 const totalPages = 6;
 
-// Функция перехода к странице (работает и из модалки ЗМІСТ)
+// Глобальная функция для модалки ЗМІСТ
 window.scrollToPage = function(pageNum) {
-    // Закрываем модалку ЗМІСТ если она открыта
-    const contentsModal = document.getElementById('contentsModal');
-    if (contentsModal && contentsModal.classList.contains('active')) {
-        contentsModal.classList.remove('active');
-    }
-
-    // Вычисляем позицию: (номер страницы - 1) * ширина экрана
-    const width = window.innerWidth;
-    const targetPosition = (pageNum - 1) * width;
-
-    // Скроллим через Lenis
-    lenis.scrollTo(targetPosition, {
-        offset: 0,
-        immediate: false, // Плавная прокрутка
-        duration: 1.2
-    });
-
+    const targetPosition = (pageNum - 1) * window.innerWidth;
+    lenis.scrollTo(targetPosition);
     updateActivePage(pageNum);
 }
 
@@ -95,12 +62,9 @@ function updateActivePage(pageNum) {
     if (activeDot) activeDot.classList.add('active');
 }
 
-// Синхронизация точек при ручном скролле
+// Синхронизация точек при скролле
 lenis.on('scroll', ({ scroll }) => {
-    const width = window.innerWidth;
-    // Округляем до ближайшей страницы
-    const newPage = Math.round(scroll / width) + 1;
-    
+    const newPage = Math.round(scroll / window.innerWidth) + 1;
     if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
         updateActivePage(newPage);
     }
@@ -108,7 +72,7 @@ lenis.on('scroll', ({ scroll }) => {
 
 // --- PAGE FUNCTIONS ---
 
-// Page 1: Art & Pinterest
+// Page 1
 function loadCurrentArt() {
     const savedArt = localStorage.getItem('morstrix_current_art');
     if (savedArt) {
@@ -129,9 +93,7 @@ window.openPaintModal = () => {
 
 window.togglePinterestMenu = () => {
     const menu = document.getElementById('pinterestMenu');
-    if (menu) {
-        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
+    if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
 
 window.openPinterestModal = () => {
@@ -149,7 +111,7 @@ window.openPinterestModal = () => {
     }
 }
 
-// Page 2: Carousel & Twitter
+// Page 2
 function initCarousel() {
     let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
@@ -166,7 +128,7 @@ window.openTwitterModal = () => {
     if(modal) modal.classList.add('active');
 }
 
-// Page 3: Fonts
+// Page 3
 const FONT_MAP = {
     'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ', 'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ',
     'n': 'ɴ', 'o': 'ᴏ', 'p': 'ᴘ', 'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ', 'u': 'ᴜ', 'v': 'ᴠ', 'w': 'ᴡ', 'x': 'x', 'y': 'ʏ', 'z': 'ᴢ'
@@ -198,7 +160,7 @@ window.downloadArchive = () => {
     document.body.removeChild(link);
 }
 
-// Page 4: Sound
+// Page 4
 let voices = [];
 function populateVoiceList() {
     voices = speechSynthesis.getVoices();
@@ -235,7 +197,7 @@ window.openSpotifyModal = () => {
     if(modal) modal.classList.add('active');
 }
 
-// Page 5: Top Players
+// Page 5
 async function loadTopPlayers() {
     const container = document.getElementById('topPlayersList');
     if (!container) return;
@@ -271,7 +233,7 @@ async function loadTopPlayers() {
     }
 }
 
-// Page 6: Forum
+// Page 6
 const forumContents = {
     wellness: { header: 'WELLNESS', text: 'Wellness content and discussions...' },
     interior: { header: 'INTERIOR', text: 'Interior design trends...' },
@@ -312,9 +274,7 @@ window.openSupportModal = () => {
 
 // Global Modal Functions
 window.closeAllModals = () => {
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        if(modal) modal.classList.remove('active');
-    });
+    document.querySelectorAll('.modal-overlay').forEach(modal => modal.classList.remove('active'));
     const pMenu = document.getElementById('pinterestMenu');
     if (pMenu) pMenu.style.display = 'none';
 }
@@ -336,12 +296,6 @@ document.querySelectorAll('.modal-overlay').forEach(modal => {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Принудительно задаем ширину, чтобы Lenis понял размеры
-    if(horizontal) {
-        // Убеждаемся, что flex-контейнер растянут
-        horizontal.style.width = 'max-content';
-    }
-
     loadCurrentArt();
     initCarousel();
     populateVoiceList();
@@ -361,11 +315,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     switchForumTab('wellness');
-    
-    // Пересчет размеров при повороте экрана
-    window.addEventListener('resize', () => {
-        lenis.resize();
-        // Возвращаем на текущую страницу после ресайза
-        scrollToPage(currentPage);
-    });
 });
