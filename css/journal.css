@@ -4,25 +4,23 @@
     box-sizing: border-box;
 }
 
-/* Глобальные настройки */
 body, html {
-    background-color: #050508; /* Исправлен белый фон */
-    color: #ffffff;
+    background-color: #050508;
+    color: #fff;
     font-family: 'Tiny5', monospace;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Блокируем нативный скролл страницы */
+    overflow: hidden;
     overscroll-behavior: none;
-    touch-action: none; /* Важно для мобильных: запрещаем жесты браузера */
 }
 
-/* Контейнер скролла */
+/* === LENIS WRAPPER === */
 .journal-wrapper {
     width: 100%;
     height: 100vh;
     position: relative;
-    overflow: hidden; /* Скролл управляется только через JS */
-    touch-action: none;
+    overflow: hidden;
+    touch-action: pan-y;        /* разрешаем вертикальные жесты внутри страниц */
 }
 
 .journal-horizontal {
@@ -42,16 +40,18 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Навигация */
+/* === TOP NAV === */
 .top-nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: #050508;
+    background: #050508;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,13 +90,14 @@ body, html {
     z-index: 999;
 }
 
+/* === BOTTOM NAV === */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 40px;
-    background-color: #050508;
+    background: #050508;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,23 +110,22 @@ body, html {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #666;
+    background: #666;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
 }
 
 .page-dot.active {
-    background-color: #ffb7c7;
+    background: #ffb7c7;
     transform: scale(1.2);
     box-shadow: 0 0 10px #ffb7c7;
 }
 
-/* Page 1 - ART */
+/* === PAGE 1: ART === */
 .rss-ticker {
     width: 100%;
     height: 45px;
-    background: linear-gradient(to right, #050508, #050508), 
-                repeating-linear-gradient(90deg, #a84d6b 0, #a84d6b 1px, transparent 1px, transparent 2px);
+    background: linear-gradient(to right, #050508, #050508), repeating-linear-gradient(90deg, #a84d6b 0, #a84d6b 1px, transparent 1px, transparent 2px);
     position: absolute;
     top: 62px;
     overflow: hidden;
@@ -171,11 +171,11 @@ body, html {
     max-width: 280px;
     aspect-ratio: 1/1;
     border: 2px solid #a84d6b;
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #000;
 }
 
 .art-block img {
@@ -210,7 +210,7 @@ body, html {
     height: 48px;
     cursor: pointer;
     color: #a27791;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
 .pinterest-icon:hover { color: #c0a0b0; }
@@ -231,7 +231,7 @@ body, html {
 .pinterest-menu button {
     background: none;
     border: 1px solid #a84d6b;
-    color: #ffffff;
+    color: #fff;
     padding: 5px 10px;
     cursor: pointer;
     font-family: 'Tiny5', monospace;
@@ -239,7 +239,7 @@ body, html {
     white-space: nowrap;
 }
 
-/* Page 2 - TWITTER */
+/* === PAGE 2: TWITTER === */
 .carousel-container {
     width: 100%;
     max-width: 400px;
@@ -277,7 +277,7 @@ body, html {
 }
 .twitter-btn img { width: 100%; height: 100%; filter: invert(1); }
 
-/* Page 3 - FONTS */
+/* === PAGE 3: FONTS === */
 .font-image {
     width: 100%;
     max-width: 500px;
@@ -333,7 +333,7 @@ body, html {
     min-width: 200px;
 }
 
-/* Page 4 - SOUND */
+/* === PAGE 4: SOUND === */
 .sound-container {
     display: flex;
     flex-direction: column;
@@ -373,11 +373,11 @@ body, html {
     padding: 15px 30px;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     margin-top: 10px;
 }
 
-/* Page 5 - TOP */
+/* === PAGE 5: TOP === */
 .top-title {
     font-family: 'Jersey 10 Charted', sans-serif;
     color: #a27791;
@@ -414,7 +414,7 @@ body, html {
 .tetris-btn img { width: 110px; height: 110px; }
 .tetris-text { font-family: 'Jersey 10 Charted', sans-serif; color: #a27272; font-size: 18px; }
 
-/* Page 6 - FORUM */
+/* === PAGE 6: FORUM === */
 .forum-container {
     display: flex;
     width: 90%;
@@ -485,7 +485,7 @@ body, html {
     cursor: pointer;
 }
 
-/* Modal Styles */
+/* === MODALS === */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -498,7 +498,7 @@ body, html {
     justify-content: center;
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s;
     pointer-events: none;
 }
 
@@ -517,7 +517,7 @@ body, html {
     overflow-y: auto;
     position: relative;
     transform: scale(0.9);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
 }
 
 .modal-overlay.active .modal-content {
@@ -538,6 +538,24 @@ body, html {
     width: 100%;
     height: 100%;
     filter: invert(1);
+}
+
+.menu-list div {
+    color: #b97272;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #222;
+    transition: color 0.2s;
+}
+
+.menu-list div:hover { color: #ffb7c7; }
+
+.archive-preview {
+    width: 100%;
+    max-width: 300px;
+    border: 2px solid #a84d6b;
+    image-rendering: pixelated;
 }
 
 .paint-options {
@@ -583,10 +601,10 @@ body, html {
     min-height: 400px;
     display: flex;
     justify-content: center;
-    background: #fff; /* Pinterest требует светлый фон для виджета */
+    background: #fff;
 }
 
-/* Responsive */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
     .top-nav { height: 50px; padding: 0 12px; }
     .nav-center { font-size: 14px; }
