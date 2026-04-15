@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// --- FIREBASE CONFIG ---
+// --- FIREBASE ---
 const firebaseConfig = {
     apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
     authDomain: "helper-e10b2.firebaseapp.com",
@@ -12,23 +11,18 @@ const firebaseConfig = {
     appId: "1:131536876451:web:eeaef494c83dfc4849e016",
     measurementId: "G-KPM4SEVG8R"
 };
-
 const app = initializeApp(firebaseConfig);
-getAnalytics(app);
 const db = getFirestore(app);
 
-// --- LENIS SETUP ---
-// Lenis теперь доступен глобально благодаря скрипту в HTML
+// --- LENIS — ПЛАВНЫЙ ЛЮКС ---
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'horizontal', // Горизонтальный скролл
-    gestureDirection: 'horizontal',
-    smooth: true,
-    mouseMultiplier: 1,
+    orientation: 'horizontal',
+    gestureOrientation: 'horizontal',
+    smoothWheel: true,
     smoothTouch: true,
-    touchMultiplier: 2,
-    infinite: false,
+    touchMultiplier: 1.5,
 });
 
 function raf(time) {
@@ -37,23 +31,9 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// Блокировка вертикального скролла колесиком
-window.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-    }
-}, { passive: false });
-
-// --- NAVIGATION LOGIC ---
+// Синхронизация точек
 let currentPage = 1;
 const totalPages = 6;
-
-// Глобальная функция для модалки ЗМІСТ
-window.scrollToPage = function(pageNum) {
-    const targetPosition = (pageNum - 1) * window.innerWidth;
-    lenis.scrollTo(targetPosition);
-    updateActivePage(pageNum);
-}
 
 function updateActivePage(pageNum) {
     currentPage = pageNum;
@@ -62,140 +42,117 @@ function updateActivePage(pageNum) {
     if (activeDot) activeDot.classList.add('active');
 }
 
-// Синхронизация точек при скролле
 lenis.on('scroll', ({ scroll }) => {
-    const newPage = Math.round(scroll / window.innerWidth) + 1;
+    const pageWidth = window.innerWidth;
+    const newPage = Math.round(scroll / pageWidth) + 1;
     if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
         updateActivePage(newPage);
     }
 });
 
-// --- PAGE FUNCTIONS ---
+window.scrollToPage = (pageNum) => {
+    const target = (pageNum - 1) * window.innerWidth;
+    lenis.scrollTo(target, { immediate: false });
+    updateActivePage(pageNum);
+};
 
+// Блокировка вертикального колеса (чтобы не конфликтовало)
+window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+// --- ФУНКЦИИ СТРАНИЦ ---
 // Page 1
 function loadCurrentArt() {
-    const savedArt = localStorage.getItem('morstrix_current_art');
-    if (savedArt) {
+    const saved = localStorage.getItem('morstrix_current_art');
+    if (saved) {
         const img = document.getElementById('currentArtPreview');
-        if (img) img.src = savedArt;
+        if (img) img.src = saved;
     }
 }
-
-window.openArchiveModal = () => {
-    const modal = document.getElementById('archiveModal');
-    if(modal) modal.classList.add('active');
-}
-
-window.openPaintModal = () => {
-    const modal = document.getElementById('paintModal');
-    if(modal) modal.classList.add('active');
-}
-
+window.openArchiveModal = () => document.getElementById('archiveModal').classList.add('active');
+window.openPaintModal = () => document.getElementById('paintModal').classList.add('active');
 window.togglePinterestMenu = () => {
     const menu = document.getElementById('pinterestMenu');
-    if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-}
-
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+};
 window.openPinterestModal = () => {
-    const modal = document.getElementById('pinterestModal');
-    if (modal) {
-        modal.classList.add('active');
-        window.togglePinterestMenu();
-        if (!document.querySelector('#pinterest-js')) {
-            const script = document.createElement('script');
-            script.id = 'pinterest-js';
-            script.src = '//assets.pinterest.com/js/pinit.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
+    document.getElementById('pinterestModal').classList.add('active');
+    window.togglePinterestMenu();
+    if (!document.querySelector('#pinterest-js')) {
+        const script = document.createElement('script');
+        script.id = 'pinterest-js';
+        script.src = '//assets.pinterest.com/js/pinit.js';
+        script.async = true;
+        document.body.appendChild(script);
     }
-}
+};
 
 // Page 2
 function initCarousel() {
-    let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
-    if (slides.length === 0) return;
+    if (!slides.length) return;
+    let idx = 0;
     setInterval(() => {
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
+        slides[idx].classList.remove('active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('active');
     }, 3000);
 }
-
-window.openTwitterModal = () => {
-    const modal = document.getElementById('twitterModal');
-    if(modal) modal.classList.add('active');
-}
+window.openTwitterModal = () => document.getElementById('twitterModal').classList.add('active');
 
 // Page 3
 const FONT_MAP = {
-    'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ', 'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ',
-    'n': 'ɴ', 'o': 'ᴏ', 'p': 'ᴘ', 'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ', 'u': 'ᴜ', 'v': 'ᴠ', 'w': 'ᴡ', 'x': 'x', 'y': 'ʏ', 'z': 'ᴢ'
+    'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ',
+    'n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'
 };
-
 function updateStylerPreview() {
     const input = document.getElementById('stylerInput');
     const preview = document.getElementById('stylerPreview');
     if (!input || !preview) return;
     let text = input.value.toLowerCase();
     let result = '';
-    for (let char of text) result += FONT_MAP[char] || char;
+    for (let ch of text) result += FONT_MAP[ch] || ch;
     preview.textContent = result || 'Preview will appear here';
 }
-
 window.copyToClipboard = () => {
     const preview = document.getElementById('stylerPreview');
-    if (preview && preview.textContent) {
-        navigator.clipboard.writeText(preview.textContent).then(() => alert('Copied!'));
+    if (preview?.textContent) {
+        navigator.clipboard?.writeText(preview.textContent).then(() => alert('Copied!'));
     }
-}
-
+};
 window.downloadArchive = () => {
-    const link = document.createElement('a');
-    link.href = 'assets/morstrix_archive.zip';
-    link.download = 'morstrix_archive.zip';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+    const a = document.createElement('a');
+    a.href = 'assets/morstrix_archive.zip';
+    a.download = 'morstrix_archive.zip';
+    a.click();
+};
 
 // Page 4
 let voices = [];
 function populateVoiceList() {
     voices = speechSynthesis.getVoices();
-    const voiceSelect = document.getElementById('voiceSelect');
-    if (!voiceSelect) return;
-    voiceSelect.innerHTML = '';
-    voices.forEach((voice, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = `${voice.name} (${voice.lang})`;
-        voiceSelect.appendChild(option);
-    });
+    const select = document.getElementById('voiceSelect');
+    if (!select) return;
+    select.innerHTML = voices.map((v, i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
 }
-if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
-
+speechSynthesis.onvoiceschanged = populateVoiceList;
 window.speakText = () => {
-    const textInput = document.getElementById('ttsInput');
-    const voiceSelect = document.getElementById('voiceSelect');
-    const statusDiv = document.getElementById('ttsStatus');
-    if (!textInput || !voiceSelect || !statusDiv) return;
-    
-    const text = textInput.value;
-    if (text.trim()) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        if (voices[voiceSelect.value]) utterance.voice = voices[voiceSelect.value];
-        speechSynthesis.speak(utterance);
-        statusDiv.textContent = 'Speaking...';
-        utterance.onend = () => statusDiv.textContent = 'Finished.';
+    const text = document.getElementById('ttsInput')?.value.trim();
+    if (!text) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    const idx = document.getElementById('voiceSelect')?.value;
+    if (voices[idx]) utterance.voice = voices[idx];
+    speechSynthesis.speak(utterance);
+    const status = document.getElementById('ttsStatus');
+    if (status) {
+        status.textContent = 'Speaking...';
+        utterance.onend = () => status.textContent = '';
     }
-}
-
-window.openSpotifyModal = () => {
-    const modal = document.getElementById('spotifyModal');
-    if(modal) modal.classList.add('active');
-}
+};
+window.openSpotifyModal = () => document.getElementById('spotifyModal').classList.add('active');
 
 // Page 5
 async function loadTopPlayers() {
@@ -203,116 +160,73 @@ async function loadTopPlayers() {
     if (!container) return;
     try {
         const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) throw new Error("No data");
-        
+        const snap = await getDocs(q);
         container.innerHTML = '';
         let rank = 1;
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            const item = document.createElement('div');
-            item.className = 'player-item';
-            item.innerHTML = `<span>${rank}. ${data.name || 'UNKNOWN'}</span> <span>${data.score || 0}</span>`;
-            container.appendChild(item);
-            rank++;
+        snap.forEach(doc => {
+            const d = doc.data();
+            container.innerHTML += `<div class="player-item"><span>${rank++}. ${d.name || 'ANON'}</span><span>${d.score}</span></div>`;
         });
-    } catch (error) {
-        console.log("Firebase error, using mock data");
-        const mockData = [
-            { name: 'PLAYER1', score: 999 }, { name: 'PLAYER2', score: 888 },
-            { name: 'PLAYER3', score: 777 }, { name: 'PLAYER4', score: 666 },
-            { name: 'PLAYER5', score: 555 }
-        ];
-        container.innerHTML = '';
-        mockData.forEach((player, index) => {
-            const item = document.createElement('div');
-            item.className = 'player-item';
-            item.innerHTML = `<span>${index + 1}. ${player.name}</span> <span>${player.score}</span>`;
-            container.appendChild(item);
-        });
+    } catch {
+        container.innerHTML = '<div class="player-item">No data</div>';
     }
 }
 
 // Page 6
 const forumContents = {
-    wellness: { header: 'WELLNESS', text: 'Wellness content and discussions...' },
-    interior: { header: 'INTERIOR', text: 'Interior design trends...' },
-    radio: { header: 'RADIO', text: 'Radio station updates...' },
-    itai: { header: 'ITALIAN', text: 'Italian culture...' },
-    english: { header: 'ENGLISH', text: 'English community...' },
-    design: { header: 'DESIGN', text: 'Design theory...' },
-    tattoo: { header: 'TATTOO', text: 'Tattoo art...' },
-    money: { header: 'MONEY', text: 'Financial literacy...' },
-    barbering: { header: 'BARBER', text: 'Barbering techniques...' }
+    wellness: { h: 'WELLNESS', t: 'Wellness content...' },
+    interior: { h: 'INTERIOR', t: 'Interior design trends...' },
+    radio: { h: 'RADIO', t: 'Radio station updates...' },
+    itai: { h: 'ITALIAN', t: 'Italian culture...' },
+    english: { h: 'ENGLISH', t: 'English community...' },
+    design: { h: 'DESIGN', t: 'Design theory...' },
+    tattoo: { h: 'TATTOO', t: 'Tattoo art...' },
+    money: { h: 'MONEY', t: 'Financial literacy...' },
+    barbering: { h: 'BARBER', t: 'Barbering techniques...' }
 };
-
 function switchForumTab(tab) {
-    const content = forumContents[tab] || forumContents.wellness;
-    const headerEl = document.getElementById('forumHeader');
-    const textEl = document.getElementById('forumText');
-    if (headerEl) headerEl.textContent = content.header;
-    if (textEl) textEl.textContent = content.text;
+    const c = forumContents[tab] || forumContents.wellness;
+    document.getElementById('forumHeader').textContent = c.h;
+    document.getElementById('forumText').textContent = c.t;
 }
-
 window.openTelegramForum = () => window.open('https://t.me/morstrix', '_blank');
-
 window.openSupportModal = () => {
     const modal = document.getElementById('supportModal');
     const container = document.getElementById('telegram-comments');
-    if (modal && container) {
-        modal.classList.add('active');
-        container.innerHTML = '';
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = "https://telegram.org/js/telegram-widget.js?22";
-        script.setAttribute('data-telegram-comments', 'morstrix/71');
-        script.setAttribute('data-width', '100%');
-        script.setAttribute('data-height', '700px');
-        container.appendChild(script);
-    }
-}
+    modal.classList.add('active');
+    container.innerHTML = '';
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.setAttribute('data-telegram-comments', 'morstrix/71');
+    script.setAttribute('data-width', '100%');
+    script.setAttribute('data-height', '700px');
+    container.appendChild(script);
+};
 
-// Global Modal Functions
+// Модалки
 window.closeAllModals = () => {
-    document.querySelectorAll('.modal-overlay').forEach(modal => modal.classList.remove('active'));
-    const pMenu = document.getElementById('pinterestMenu');
-    if (pMenu) pMenu.style.display = 'none';
-}
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+    const menu = document.getElementById('pinterestMenu');
+    if (menu) menu.style.display = 'none';
+};
+window.openContentsModal = () => document.getElementById('contentsModal').classList.add('active');
 
-window.openContentsModal = () => {
-    const modal = document.getElementById('contentsModal');
-    if(modal) modal.classList.add('active');
-}
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') window.closeAllModals();
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllModals(); });
+document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) closeAllModals(); });
 });
 
-document.querySelectorAll('.modal-overlay').forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) window.closeAllModals();
-    });
-});
-
-// Init
+// Инициализация после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
     loadCurrentArt();
     initCarousel();
     populateVoiceList();
     loadTopPlayers();
-    
     const stylerInput = document.getElementById('stylerInput');
     if (stylerInput) stylerInput.addEventListener('input', updateStylerPreview);
-    
-    const ttsInput = document.getElementById('ttsInput');
-    if (ttsInput) ttsInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') window.speakText(); });
-    
     document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tab = btn.getAttribute('data-tab');
-            if (tab) switchForumTab(tab);
-        });
+        btn.addEventListener('click', () => switchForumTab(btn.dataset.tab));
     });
-    
     switchForumTab('wellness');
 });
