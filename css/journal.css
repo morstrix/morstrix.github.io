@@ -133,54 +133,70 @@ body {
     cursor: pointer;
 }
 
-/* Pinterest */
-.pinterest-panel-wrapper {
+/* Обёртка для позиционирования иконки справа */
+.pinterest-icon-wrapper {
     position: relative;
+    display: flex;
+    justify-content: flex-end;   /* иконка у правого края */
+    align-items: flex-end;
     width: 100%;
     margin-top: auto;
+    padding: 0 15px 10px 0;      /* отступы от краёв */
 }
-.pinterest-panel {
-    width: 100%;
-    height: 55px;
-    background: #0a0a0a;
-    border-top: 2px solid #a84d6b;
-    border-bottom: 2px solid #a84d6b;
+
+/* Сама иконка Pinterest */
+.pinterest-icon {
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #a27791;
-    font-size: 14px;
-    letter-spacing: 4px;
     cursor: pointer;
+    color: #a27791;              /* цвет по умолчанию */
+    transition: color 0.2s, transform 0.1s;
+    background: transparent;
+    border: none;
 }
+
+.pinterest-icon:hover {
+    color: #b97272;
+    transform: scale(1.05);
+}
+
+/* Меню категорий (выезжает вверх от иконки) */
 .pinterest-menu {
     position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
+    bottom: 60px;                /* чтобы не наезжало на иконку */
+    right: 15px;
     background: #111;
     display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    transform: translateY(100%);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 10px;
+    transform: translateY(20px);
     opacity: 0;
     visibility: hidden;
     transition: 0.3s;
     border: 2px solid #b97272;
-    border-bottom: none;
+    z-index: 30;
 }
+
 .pinterest-menu.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
+
 .pinterest-category {
     color: #fff;
     font-size: 11px;
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: #222;
     border: 1px solid #a84d6b;
     cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
 }
 
 /* Мобильная адаптация */
