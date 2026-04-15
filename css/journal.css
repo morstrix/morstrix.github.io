@@ -47,12 +47,12 @@ body {
     align-items:center; width:100%; padding:12px; min-height:0;
 }
 
-/* ================= СТИЛИ ТОЛЬКО ДЛЯ ПЕРВОЙ СТРАНИЦЫ ================= */
+/* ================= PAGE 1 (ФИНАЛЬНАЯ ПРАВКА) ================= */
 .page1-layout {
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 10px;
+    gap: 0;
 }
 
 .ticker-wrapper {
@@ -63,27 +63,22 @@ body {
     padding: 5px 0;
 }
 
-.ticker {
-    display: inline-block;
-    font-size: 12px;
-    color: #a27791;
-    text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f;
-    animation: scrollTicker 40s linear infinite;
-}
-
-@keyframes scrollTicker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+/* Основной блок, который занимает всё свободное место и центрирует содержимое */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* вертикальное центрирование артблока+архива+paint */
+    width: 100%;
 }
 
 /* Ряд с артблоком и архивом */
 .art-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;       /* архив по центру вертикали относительно артблока */
     justify-content: flex-start;
-    gap: 15px;
-    flex: 1;
-    min-height: 0;
+    gap: 20px;
+    width: 100%;
 }
 
 .art-block {
@@ -95,7 +90,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-left: 0;
 }
 
 .art-block img {
@@ -112,7 +106,7 @@ body {
     justify-content: center;
     background: #0a0a0a;
     cursor: pointer;
-    color: #a27791;
+    color: var(--deep-pink);
     font-size: 14px;
     text-transform: uppercase;
     text-align: center;
@@ -121,12 +115,13 @@ body {
     min-width: 120px;
 }
 
-/* Кнопка Paint */
+/* Кнопка Paint под артблоком */
 .paint-btn-row {
     display: flex;
     justify-content: flex-start;
     width: 45%;
     max-width: 300px;
+    margin-top: 20px;          /* отступ от артблока */
 }
 
 .paint-trigger-img {
@@ -136,24 +131,24 @@ body {
     cursor: pointer;
 }
 
-/* Pinterest */
+/* Pinterest — прибит к низу */
 .pinterest-panel-wrapper {
     width: 100%;
-    margin-top: auto;
     position: relative;
+    margin-top: 0;
 }
 
 .pinterest-panel {
     width: 100%;
     height: 55px;
     background: #0a0a0a;
-    border-top: 2px solid #a84d6b;
-    border-bottom: 2px solid #a84d6b;
+    border-top: 2px solid var(--accent-pink);
+    border-bottom: 2px solid var(--accent-pink);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #a27791;
+    color: var(--deep-pink);
     font-size: 14px;
     letter-spacing: 4px;
     position: relative;
@@ -173,7 +168,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    border: 2px solid #b97272;
+    border: 2px solid var(--muted-pink);
     border-bottom: none;
     z-index: 15;
 }
@@ -190,15 +185,20 @@ body {
     cursor: pointer;
     padding: 10px 20px;
     background: #222;
-    border: 1px solid #a84d6b;
+    border: 1px solid var(--accent-pink);
     text-transform: uppercase;
 }
 
-/* Адаптация для мобильных */
+/* Мобильная адаптация */
 @media (max-width: 768px) {
+    .main-content {
+        justify-content: flex-start;  /* на мобильном не центрируем, пусть идёт сверху */
+        padding-top: 10px;
+    }
     .art-row {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
     .art-block {
         width: 80%;
@@ -206,12 +206,14 @@ body {
     }
     .archive-block {
         width: 80%;
+        padding: 15px;
         min-width: auto;
     }
     .paint-btn-row {
         width: 80%;
         max-width: 250px;
         justify-content: center;
+        margin-top: 15px;
     }
 }
 
