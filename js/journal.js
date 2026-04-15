@@ -1,16 +1,16 @@
-// --- FIREBASE CONFIGURATION ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
-import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
+// Firebase Configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-  authDomain: "helper-e10b2.firebaseapp.com",
-  projectId: "helper-e10b2",
-  storageBucket: "helper-e10b2.firebasestorage.app",
-  messagingSenderId: "131536876451",
-  appId: "1:131536876451:web:eeaef494c83dfc4849e016",
-  measurementId: "G-KPM4SEVG8R"
+    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+    authDomain: "helper-e10b2.firebaseapp.com",
+    projectId: "helper-e10b2",
+    storageBucket: "helper-e10b2.firebasestorage.app",
+    messagingSenderId: "131536876451",
+    appId: "1:131536876451:web:eeaef494c83dfc4849e016",
+    measurementId: "G-KPM4SEVG8R"
 };
 
 // Initialize Firebase
@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-// --- LENIS SMOOTH SCROLL ---
+// Initialize Lenis
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -28,6 +28,7 @@ const lenis = new Lenis({
     mouseMultiplier: 1,
     smoothTouch: false,
     touchMultiplier: 2,
+    infinite: false,
 });
 
 function raf(time) {
@@ -36,25 +37,24 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// --- NAVIGATION LOGIC ---
 let currentPage = 1;
 const totalPages = 6;
-const dots = document.querySelectorAll('.page-dot');
 
-function updateActivePage(pageNum) {
-    currentPage = pageNum;
-    dots.forEach(dot => dot.classList.remove('active'));
-    const activeDot = document.querySelector(`.page-dot[data-page="${pageNum}"]`);
-    if (activeDot) activeDot.classList.add('active');
-}
-
-function scrollToPage(pageNum) {
+// Scroll to page function
+window.scrollToPage = function(pageNum) {
     const targetPosition = (pageNum - 1) * window.innerWidth;
     lenis.scrollTo(targetPosition, { offset: 0, immediate: false });
     updateActivePage(pageNum);
 }
 
-// Sync scroll with dots
+function updateActivePage(pageNum) {
+    currentPage = pageNum;
+    document.querySelectorAll('.page-dot').forEach(dot => dot.classList.remove('active'));
+    const activeDot = document.querySelector(`.page-dot[data-page="${pageNum}"]`);
+    if (activeDot) activeDot.classList.add('active');
+}
+
+// Sync dots with scroll
 lenis.on('scroll', ({ scroll }) => {
     const newPage = Math.round(scroll / window.innerWidth) + 1;
     if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
@@ -62,71 +62,55 @@ lenis.on('scroll', ({ scroll }) => {
     }
 });
 
-// Dot click listeners
-dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-        const page = parseInt(dot.getAttribute('data-page'));
-        scrollToPage(page);
-    });
-});
+// --- Page 1 Functions ---
 
-// --- PAGE 1: ART & PINTEREST ---
-// Load art from localStorage
-const artPreview = document.getElementById('currentArtPreview');
-const savedArt = localStorage.getItem('morstrix_current_art');
-if (savedArt) artPreview.src = savedArt;
-if(document.getElementById('archiveImg')) document.getElementById('archiveImg').src = savedArt || 'assets/art.jpg';
+function loadCurrentArt() {
+    const savedArt = localStorage.getItem('morstrix_current_art');
+    if (savedArt) {
+        const img = document.getElementById('currentArtPreview');
+        if (img) img.src = savedArt;
+    }
+}
 
-// Pinterest Single Widget Logic
-const pinterestBtn = document.getElementById('pinterestBtn');
-const pinterestModal = document.getElementById('pinterestModal');
-const pinterestContainer = document.getElementById('pinterestWidgetContainer');
-let pinterestLoaded = false;
+window.openArchiveModal = function() {
+    document.getElementById('archiveModal').classList.add('active');
+}
 
-pinterestBtn.addEventListener('click', () => {
-    pinterestModal.classList.add('active');
-    if (!pinterestLoaded) {
-        pinterestContainer.innerHTML = '<div style="color:#666">Loading Pinterest...</div>';
-        
-        // Create the anchor tag required by Pinterest
-        const pinLink = document.createElement('a');
-        pinLink.setAttribute('data-pin-do', 'embed-board');
-        pinLink.setAttribute('data-pin-width', 'large');
-        pinLink.href = 'https://ru.pinterest.com/morstrix/re-f-erences/';
-        pinLink.style.display = 'block';
-        pinLink.style.width = '100%';
-        
-        pinterestContainer.innerHTML = '';
-        pinterestContainer.appendChild(pinLink);
+window.openPaintModal = function() {
+    document.getElementById('paintModal').classList.add('active');
+}
+
+window.togglePinterestMenu = function() {
+    const menu = document.getElementById('pinterestMenu');
+    if (menu) {
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+}
+
+window.openPinterestModal = function() {
+    const modal = document.getElementById('pinterestModal');
+    if (modal) {
+        modal.classList.add('active');
+        window.togglePinterestMenu();
 
         // Load Pinterest script dynamically
-        if (!document.getElementById('pinterest-js')) {
+        if (!document.querySelector('#pinterest-js')) {
             const script = document.createElement('script');
             script.id = 'pinterest-js';
-            script.async = true;
             script.src = '//assets.pinterest.com/js/pinit.js';
+            script.async = true;
             document.body.appendChild(script);
-            
-            // Fallback timeout in case script is slow
-            setTimeout(() => {
-                if(pinterestContainer.children.length === 1 && !pinterestContainer.querySelector('iframe')) {
-                     pinterestContainer.innerHTML += '<div style="margin-top:20px; font-size:12px; color:#555;">If board doesn\'t load, <a href="https://ru.pinterest.com/morstrix/re-f-erences/" target="_blank" style="color:#a84d6b">click here</a></div>';
-                }
-            }, 3000);
-        } else {
-            // If script already exists, tell it to re-parse
-            if(window.PinUtils) window.PinUtils.init();
         }
-        pinterestLoaded = true;
     }
-});
+}
 
-// --- PAGE 2: CAROUSEL ---
+// --- Page 2 Functions ---
+
 function initCarousel() {
     let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     if (slides.length === 0) return;
-    
+
     setInterval(() => {
         slides[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % slides.length;
@@ -134,46 +118,61 @@ function initCarousel() {
     }, 3000);
 }
 
-// --- PAGE 3: FONTS ---
+window.openTwitterModal = function() {
+    document.getElementById('twitterModal').classList.add('active');
+}
+
+// --- Page 3 Functions ---
+
 const FONT_MAP = {
     'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ', 'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ',
     'n': 'ɴ', 'o': 'ᴏ', 'p': 'ᴘ', 'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ', 'u': 'ᴜ', 'v': 'ᴠ', 'w': 'ᴡ', 'x': 'x', 'y': 'ʏ', 'z': 'ᴢ'
 };
 
-const stylerInput = document.getElementById('stylerInput');
-const stylerPreview = document.getElementById('stylerPreview');
+function updateStylerPreview() {
+    const input = document.getElementById('stylerInput');
+    const preview = document.getElementById('stylerPreview');
+    if (!input || !preview) return;
 
-if(stylerInput) {
-    stylerInput.addEventListener('input', (e) => {
-        let text = e.target.value.toLowerCase();
-        let result = '';
-        for (let char of text) {
-            result += FONT_MAP[char] || char;
-        }
-        stylerPreview.textContent = result || 'Preview will appear here';
-    });
+    let text = input.value.toLowerCase();
+    let result = '';
 
-    stylerPreview.addEventListener('click', () => {
-        if(stylerPreview.textContent !== 'Preview will appear here') {
-            navigator.clipboard.writeText(stylerPreview.textContent);
-            const originalText = stylerPreview.textContent;
-            stylerPreview.textContent = 'COPIED!';
-            setTimeout(() => stylerPreview.textContent = originalText, 1000);
-        }
-    });
+    for (let char of text) {
+        result += FONT_MAP[char] || char;
+    }
+
+    preview.textContent = result || 'Preview will appear here';
 }
 
-// --- PAGE 4: SOUND ---
-const voiceSelect = document.getElementById('voiceSelect');
-const ttsInput = document.getElementById('ttsInput');
-const speakBtn = document.getElementById('speakBtn');
-const ttsStatus = document.getElementById('ttsStatus');
+window.copyToClipboard = function() {
+    const preview = document.getElementById('stylerPreview');
+    if (preview && preview.textContent) {
+        navigator.clipboard.writeText(preview.textContent).then(() => {
+            alert('Copied to clipboard!');
+        });
+    }
+}
+
+window.downloadArchive = function() {
+    const link = document.createElement('a');
+    link.href = 'assets/morstrix_archive.zip';
+    link.download = 'morstrix_archive.zip';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// --- Page 4 Functions ---
 
 let voices = [];
 
-function populateVoices() {
+function populateVoiceList() {
     voices = speechSynthesis.getVoices();
+    const voiceSelect = document.getElementById('voiceSelect');
+    if (!voiceSelect) return;
+
     voiceSelect.innerHTML = '';
+
     voices.forEach((voice, index) => {
         const option = document.createElement('option');
         option.value = index;
@@ -182,194 +181,185 @@ function populateVoices() {
     });
 }
 
-populateVoices();
 if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = populateVoices;
+    speechSynthesis.onvoiceschanged = populateVoiceList;
 }
 
-if(speakBtn) {
-    speakBtn.addEventListener('click', () => {
-        const text = ttsInput.value;
-        if (!text) return;
+window.speakText = function() {
+    const textInput = document.getElementById('ttsInput');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const statusDiv = document.getElementById('ttsStatus');
 
+    if (!textInput || !voiceSelect || !statusDiv) return;
+
+    const text = textInput.value;
+    const voiceIndex = voiceSelect.value;
+
+    if (text.trim()) {
         const utterance = new SpeechSynthesisUtterance(text);
-        const selectedVoice = voices[voiceSelect.value];
-        if (selectedVoice) utterance.voice = selectedVoice;
+        if (voices[voiceIndex]) {
+            utterance.voice = voices[voiceIndex];
+        }
 
         speechSynthesis.speak(utterance);
-        ttsStatus.textContent = 'Speaking...';
-        
-        utterance.onend = () => { ttsStatus.textContent = ''; };
-        utterance.onerror = () => { ttsStatus.textContent = 'Error'; };
-    });
+        statusDiv.textContent = 'Speaking...';
+
+        utterance.onend = () => {
+            statusDiv.textContent = 'Finished.';
+        };
+
+        utterance.onerror = () => {
+            statusDiv.textContent = 'Error.';
+        };
+    }
 }
 
-// --- PAGE 5: FIREBASE TOP PLAYERS ---
+window.openSpotifyModal = function() {
+    document.getElementById('spotifyModal').classList.add('active');
+}
+
+// --- Page 5 Functions ---
+
 async function loadTopPlayers() {
-    const listContainer = document.getElementById('topPlayersList');
-    if (!listContainer) return;
+    const container = document.getElementById('topPlayersList');
+    if (!container) return;
 
     try {
         const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
-        
-        listContainer.innerHTML = '';
+
         if (querySnapshot.empty) {
-            listContainer.innerHTML = '<div style="color:#666; text-align:center;">No players yet</div>';
-            return;
+            throw new Error("No data");
         }
 
+        container.innerHTML = '';
         let rank = 1;
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const item = document.createElement('div');
             item.className = 'player-item';
-            item.innerHTML = `<span>${rank}. ${data.name || 'ANON'}</span> <span>${data.score}</span>`;
-            listContainer.appendChild(item);
+            item.textContent = `${rank}. ${data.name || 'UNKNOWN'} ${data.score || 0}`;
+            container.appendChild(item);
             rank++;
         });
     } catch (error) {
-        console.error("Error loading top players:", error);
-        listContainer.innerHTML = '<div style="color:#a84d6b; text-align:center;">Error loading DB<br>(Check Console)</div>';
-        // Fallback mock data for visual check if DB fails
-        /* 
-        listContainer.innerHTML = '';
-        [999, 888, 777].forEach((s, i) => {
+        console.log("Firebase load failed or empty, using mock data", error);
+        const mockData = [
+            { name: 'PLAYER1', score: 999 },
+            { name: 'PLAYER2', score: 888 },
+            { name: 'PLAYER3', score: 777 },
+            { name: 'PLAYER4', score: 666 },
+            { name: 'PLAYER5', score: 555 },
+            { name: 'PLAYER6', score: 444 },
+            { name: 'PLAYER7', score: 333 },
+            { name: 'PLAYER8', score: 222 },
+            { name: 'PLAYER9', score: 111 },
+            { name: 'PLAYER10', score: 100 }
+        ];
+
+        container.innerHTML = '';
+        mockData.forEach((player, index) => {
             const item = document.createElement('div');
             item.className = 'player-item';
-            item.innerHTML = `<span>${i+1}. DEMO_USER</span> <span>${s}</span>`;
-            listContainer.appendChild(item);
-        }); 
-        */
+            item.textContent = `${index + 1}. ${player.name} ${player.score}`;
+            container.appendChild(item);
+        });
     }
 }
 
-// --- PAGE 6: FORUM TABS ---
+// --- Page 6 Functions ---
+
 const forumContents = {
-    wellness: { header: 'WELLNESS', text: 'Holistic health, mental balance, and physical vitality discussions.' },
-    interior: { header: 'INTERIOR', text: 'Minimalist spaces, brutalist architecture, and home aesthetics.' },
-    radio: { header: 'RADIO', text: 'Underground frequencies, lo-fi beats, and broadcast logs.' },
-    itai: { header: 'ITALIAN', text: 'Milan design weeks, espresso culture, and Mediterranean vibes.' },
-    english: { header: 'ENGLISH', text: 'Global community hub. Language exchange and cultural fusion.' },
-    design: { header: 'DESIGN', text: 'UI/UX critiques, graphic trends, and digital artifact creation.' },
-    tattoo: { header: 'TATTOO', text: 'Ink inspiration, artist spotlights, and aftercare protocols.' },
-    money: { header: 'MONEY', text: 'Crypto insights, investment strategies, and financial freedom.' },
-    barbering: { header: 'BARBER', text: 'Classic cuts, grooming rituals, and beard maintenance.' }
+    wellness: { header: 'WELLNESS', text: 'Wellness content and discussions about health, fitness, and lifestyle...' },
+    interior: { header: 'INTERIOR', text: 'Interior design trends, home decor ideas, and spatial aesthetics...' },
+    radio: { header: 'RADIO', text: 'Radio station updates, music recommendations, and audio culture...' },
+    itai: { header: 'ITALIAN', text: 'Italian culture, design, fashion, and lifestyle insights...' },
+    english: { header: 'ENGLISH', text: 'English-speaking community discussions and cultural exchanges...' },
+    design: { header: 'DESIGN', text: 'Design theory, practice, and industry news from around the world...' },
+    tattoo: { header: 'TATTOO', text: 'Tattoo art, artists, techniques, and cultural significance...' },
+    money: { header: 'MONEY', text: 'Financial literacy, investment strategies, and economic discussions...' },
+    barbering: { header: 'BARBER', text: 'Barbering techniques, grooming tips, and men\'s style culture...' }
 };
 
-const tabBtns = document.querySelectorAll('.tab-btn');
-const forumHeader = document.getElementById('forumHeader');
-const forumText = document.getElementById('forumText');
+function switchForumTab(tab) {
+    const content = forumContents[tab] || forumContents.wellness;
+    const headerEl = document.getElementById('forumHeader');
+    const textEl = document.getElementById('forumText');
 
-tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active class from all
-        tabBtns.forEach(b => b.classList.remove('active'));
-        // Add to clicked
-        btn.classList.add('active');
-        
-        const tab = btn.getAttribute('data-tab');
-        const content = forumContents[tab];
-        if (content) {
-            forumHeader.textContent = content.header;
-            forumText.textContent = content.text;
-        }
-    });
-});
-
-// --- MODAL SYSTEM ---
-function openModal(id) {
-    document.getElementById(id).classList.add('active');
+    if (headerEl) headerEl.textContent = content.header;
+    if (textEl) textEl.textContent = content.text;
 }
 
-function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
+window.openTelegramForum = function() {
+    window.open('https://t.me/morstrix', '_blank');
 }
 
-function closeAllModals() {
-    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-}
+window.openSupportModal = function() {
+    const modal = document.getElementById('supportModal');
+    const container = document.getElementById('telegram-comments');
 
-// Event Listeners for Buttons
-document.getElementById('contentsBtn').addEventListener('click', () => openModal('contentsModal'));
-document.getElementById('archiveBtn').addEventListener('click', () => openModal('archiveModal'));
-document.getElementById('paintBtn').addEventListener('click', () => openModal('paintModal'));
-document.getElementById('twitterBtn').addEventListener('click', () => openModal('twitterModal'));
-document.getElementById('spotifyBtn').addEventListener('click', () => openModal('spotifyModal'));
-document.getElementById('supportBtn').addEventListener('click', () => {
-    openModal('supportModal');
-    // Load Telegram widget only when opened to save resources
-    const container = document.getElementById('telegramWidget');
-    if (container.innerHTML === '') {
+    if (modal && container) {
+        modal.classList.add('active');
+        container.innerHTML = '';
         const script = document.createElement('script');
         script.async = true;
         script.src = "https://telegram.org/js/telegram-widget.js?22";
         script.setAttribute('data-telegram-comments', 'morstrix/71');
         script.setAttribute('data-width', '100%');
-        script.setAttribute('data-height', '400px');
+        script.setAttribute('data-height', '700px');
         container.appendChild(script);
+    }
+}
+
+// --- Global Modal Functions ---
+
+window.closeAllModals = function() {
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.classList.remove('active');
+    });
+    const pMenu = document.getElementById('pinterestMenu');
+    if (pMenu) pMenu.style.display = 'none';
+}
+
+window.openContentsModal = function() {
+    document.getElementById('contentsModal').classList.add('active');
+}
+
+// Event Listeners
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closeAllModals();
     }
 });
 
-document.getElementById('confirmTwitterBtn').addEventListener('click', () => {
-    window.open('https://x.com', '_blank');
-    closeAllModals();
-});
-
-document.getElementById('downloadBtn').addEventListener('click', () => {
-    // Simulate download
-    alert('Starting download: morstrix_archive.zip');
-});
-
-document.getElementById('tetrisBtn').addEventListener('click', () => {
-    window.open('tetris.html', '_blank');
-});
-
-document.getElementById('fullForumBtn').addEventListener('click', () => {
-    window.open('https://t.me/morstrix', '_blank');
-});
-
-// Close buttons inside modals
-document.querySelectorAll('[data-close]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const modalId = btn.getAttribute('data-close');
-        closeModal(modalId);
-        e.stopPropagation();
-    });
-});
-
-// Close on outside click
 document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-            closeAllModals();
+            window.closeAllModals();
         }
     });
 });
 
-// Close on Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeAllModals();
-});
-
-// Menu navigation
-document.querySelectorAll('.menu-list div').forEach(item => {
-    item.addEventListener('click', () => {
-        const target = item.getAttribute('data-target');
-        closeAllModals();
-        scrollToPage(parseInt(target));
-    });
-});
-
-// --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+    loadCurrentArt();
     initCarousel();
+    populateVoiceList();
     loadTopPlayers();
-    
-    // Hide fallback icon if real image loads
-    const closeImg = document.querySelector('.nav-right img');
-    if(closeImg) {
-        closeImg.onload = () => { document.getElementById('closeIconFallback').style.display = 'none'; };
-        closeImg.onerror = () => { document.getElementById('closeIconFallback').style.display = 'block'; };
-    }
+
+    const stylerInput = document.getElementById('stylerInput');
+    if (stylerInput) stylerInput.addEventListener('input', updateStylerPreview);
+
+    const ttsInput = document.getElementById('ttsInput');
+    if (ttsInput) ttsInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') window.speakText();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tab = btn.getAttribute('data-tab');
+            if (tab) switchForumTab(tab);
+        });
+    });
+
+    switchForumTab('wellness');
 });
