@@ -10,125 +10,126 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=Jersey+10+Charted&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- Подключение CSS из папки css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <!-- Top Navigation -->
     <div class="top-nav">
-        <div class="nav-left"></div>
-        <div class="nav-center" id="contentsBtn">ЗМІСТ</div>
+        <div></div>
+        <div class="nav-center" onclick="openContentsModal()">ЗМІСТ</div>
         <div class="nav-right" onclick="window.location.href='index.html'">
-            <img src="assets/x.png" alt="Close" onerror="this.style.display='none'">
-            <span style="color:white; font-size:20px;" id="closeIconFallback">×</span>
+            <img src="assets/x.png" alt="Close">
         </div>
     </div>
 
     <!-- Divider Line -->
     <div class="divider-line"></div>
 
-    <!-- Journal Content Wrapper -->
+    <!-- Journal Content -->
     <div class="journal-wrapper" id="journalWrapper">
         <div class="journal-horizontal" id="journalHorizontal">
             
-            <!-- PAGE 1: ART -->
-            <section class="journal-page" data-page="1">
+            <!-- Page 1: ART -->
+            <div class="journal-page" data-page="1">
                 <div class="rss-ticker">
                     <div class="ticker-content">
-                        APT MNTPMNT PPL CULT APARTAMENTO 032C PURPLE SSENSE VICE HYPEBEAST DAZE GALLERY MAGAZINE ARTFORUM PIN-UP ARCHITECTURAL DIGEST INTERIOR DESIGN ELLE DECOR VERANA COTTAGES AND CASTLES THE WORLD OF INTERIOR GRAZIA VOGUE Harper's Bazaar NUMERO MONOCLE PAPER JOURNAL ACTUEL STYLUS FRAME MAGAZINE DAMAN MAGAZINE IDEA SPURIOUS CORPUS PAPERMAG LUPUS IN FABULA LOBBY MAGAZINE APEIRON ZEIT-FORUM ARCH+ ANYTHING KALEIDOSCOPE 032C BUTT MAGAZINE DUMMY MAGAZINE FANTOM KALEIDOSCOPE MARIE CLAIRE MAISON & OBJET METROPOLIS PIN-UP MAGAZINE TOLIXO URBAN NATURE VISION NAUTILUS YACHTS INTERNATIONAL ZOOX
+                        APT MNTPMNT PPL CULT APARTAMENTO 032C PURPLE SSENSE VICE HYPEBEAST DAZE GALLERY MAGAZINE ARTFORUM PIN-UP ARCHITECTURAL DIGEST INTERIOR DESIGN ELLE DECOR VERANDA COTTAGES AND CASTLES THE WORLD OF INTERIOR GRAZIA VOGUE Harper's Bazaar NUMERO MONOCLE PAPER JOURNAL ACTUEL STYLUS FRAME MAGAZINE DAMAN MAGAZINE IDEA SPURIOUS CORPUS PAPERMAG LUPUS IN FABULA LOBBY MAGAZINE APEIRON ZEIT-FORUM ARCH+ ANYTHING KALEIDOSCOPE 032C BUTT MAGAZINE DUMMY MAGAZINE FANTOM KALEIDOSCOPE MARIE CLAIRE MAISON & OBJET METROPOLIS PIN-UP MAGAZINE TOLIXO URBAN NATURE VISION NAUTILUS YACHTS INTERNATIONAL ZOOX
                     </div>
                 </div>
                 
                 <div class="art-section">
                     <div class="art-row">
                         <div class="art-block">
-                            <img id="currentArtPreview" src="assets/art.jpg" alt="Current Art" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMTAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkFSVCBQTEFDRUhPTERFUjwvdGV4dD48L3N2Zz4='">
+                            <img id="currentArtPreview" src="assets/art.jpg" alt="Current Art">
                         </div>
-                        <div class="archive-block" id="archiveBtn">
-                            <img src="assets/x.png" alt="Archive" onerror="this.style.display='none'">
+                        <div class="archive-block" onclick="openArchiveModal()">
+                            <img src="assets/x.png" alt="Archive">
                         </div>
                     </div>
                     
-                    <div class="paint-row" id="paintBtn">
-                        <img src="assets/paint.png" alt="Paint" onerror="this.style.display='none'">
-                        <span style="color:#a84d6b; font-family:'Tiny5'; font-size:12px; display:block; text-align:center; margin-top:5px;">PAINT</span>
+                    <div class="paint-row" onclick="openPaintModal()">
+                        <img src="assets/paint.png" alt="Paint">
                     </div>
                 </div>
                 
                 <div class="pinterest-icon-wrapper">
-                    <svg class="pinterest-icon" id="pinterestBtn" viewBox="0 0 24 24" fill="currentColor">
+                    <svg class="pinterest-icon" onclick="togglePinterestMenu()" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.24 17.5c-2.76 0-5-2.24-5-5s2.24-5 5-5c1.4 0 2.68.58 3.6 1.5l-1.4 1.4c-.48-.48-1.2-.76-2.2-.76-1.66 0-3 1.34-3 3s1.34 3 3 3c1.18 0 2.12-.68 2.58-1.68h-2.58V11h5c.18.86.2 1.74.04 2.6-.3 1.66-1.74 3.04-3.44 3.4z"/>
                     </svg>
+                    
+                    <div class="pinterest-menu" id="pinterestMenu">
+                        <button onclick="openPinterestModal()">REFERENCES</button>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- PAGE 2: TWITTER -->
-            <section class="journal-page" data-page="2">
+            <!-- Page 2: TWITTER -->
+            <div class="journal-page" data-page="2">
                 <div class="carousel-container">
                     <div class="carousel-slide active">
-                        <img src="assets/mx1.jpg" alt="Design 1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyMjIiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk1YMTwvdGV4dD48L3N2Zz4='">
+                        <img src="assets/mx1.jpg" alt="Design 1">
                     </div>
                     <div class="carousel-slide">
-                        <img src="assets/mx2.jpg" alt="Design 2" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMzMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk1YMjwvdGV4dD48L3N2Zz4='">
+                        <img src="assets/mx2.jpg" alt="Design 2">
                     </div>
                 </div>
                 
                 <div class="twitter-hash">#layoutporn</div>
                 
-                <div class="twitter-btn" id="twitterBtn">
-                    <img src="assets/twit.png" alt="Twitter" onerror="this.innerHTML='❌'">
+                <div class="twitter-btn" onclick="openTwitterModal()">
+                    <img src="assets/twit.png" alt="Twitter">
                 </div>
-            </section>
+            </div>
 
-            <!-- PAGE 3: FONTS -->
-            <section class="journal-page" data-page="3">
-                <img src="assets/f1.jpg" alt="Font Preview" class="font-image" onerror="this.style.background='#222'">
+            <!-- Page 3: FONTS -->
+            <div class="journal-page" data-page="3">
+                <img src="assets/f1.jpg" alt="Font Preview" class="font-image">
                 
                 <div class="font-title">FONT (to do)</div>
                 
-                <button class="download-btn" id="downloadBtn">DOWNLOAD</button>
+                <button class="download-btn" onclick="downloadArchive()">DOWNLOAD</button>
                 
                 <input type="text" class="styler-input" id="stylerInput" placeholder="TYPE TEXT">
                 
-                <div class="styler-preview" id="stylerPreview">Preview will appear here</div>
-            </section>
+                <div class="styler-preview" id="stylerPreview" onclick="copyToClipboard()">Preview will appear here</div>
+            </div>
 
-            <!-- PAGE 4: SOUND -->
-            <section class="journal-page" data-page="4">
+            <!-- Page 4: SOUND -->
+            <div class="journal-page" data-page="4">
                 <div class="sound-container">
                     <div class="text-synth">
                         <input type="text" id="ttsInput" placeholder="Enter text to speak">
                         <select id="voiceSelect"></select>
-                        <button id="speakBtn">SPEAK</button>
+                        <button onclick="speakText()">SPEAK</button>
                         <div id="ttsStatus"></div>
                     </div>
                     
-                    <div class="spotify-link" id="spotifyBtn">
+                    <div class="spotify-link" onclick="openSpotifyModal()">
                         🎵 SPOTIFY
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- PAGE 5: TOP + TETRIS -->
-            <section class="journal-page" data-page="5">
+            <!-- Page 5: TOP -->
+            <div class="journal-page" data-page="5">
                 <div class="top-title">TOP</div>
                 
                 <div class="top-players-list" id="topPlayersList">
-                    <div style="color:#666; text-align:center;">Loading...</div>
+                    <!-- Will be populated by JavaScript -->
                 </div>
                 
-                <div class="tetris-btn" id="tetrisBtn">
-                    <img src="assets/tetris.png" alt="Tetris" onerror="this.style.display='none'">
+                <div class="tetris-btn" onclick="window.open('tetris.html', '_blank')">
+                    <img src="assets/tetris.png" alt="Tetris">
                     <div class="tetris-text">PLAY TETRIS</div>
                 </div>
-            </section>
+            </div>
 
-            <!-- PAGE 6: FORUM + SUPPORT -->
-            <section class="journal-page" data-page="6">
+            <!-- Page 6: FORUM -->
+            <div class="journal-page" data-page="6">
                 <div class="forum-container">
                     <div class="forum-tabs">
-                        <button class="tab-btn active" data-tab="wellness">WELLNESS</button>
+                        <button class="tab-btn" data-tab="wellness">WELLNESS</button>
                         <button class="tab-btn" data-tab="interior">INTERIOR</button>
                         <button class="tab-btn" data-tab="radio">RADIO</button>
                         <button class="tab-btn" data-tab="itai">ITALIAN</button>
@@ -144,64 +145,60 @@
                         <div class="forum-text" id="forumText">Wellness content and discussions...</div>
                         
                         <div class="forum-actions">
-                            <button class="forum-btn" id="fullForumBtn">FULL</button>
-                            <button class="forum-btn" id="supportBtn">SUPPORT</button>
+                            <button class="forum-btn" onclick="openTelegramForum()">FULL</button>
+                            <button class="forum-btn" onclick="openSupportModal()">SUPPORT</button>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="page-dot active" data-page="1"></div>
-        <div class="page-dot" data-page="2"></div>
-        <div class="page-dot" data-page="3"></div>
-        <div class="page-dot" data-page="4"></div>
-        <div class="page-dot" data-page="5"></div>
-        <div class="page-dot" data-page="6"></div>
+        <div class="page-dot active" data-page="1" onclick="scrollToPage(1)"></div>
+        <div class="page-dot" data-page="2" onclick="scrollToPage(2)"></div>
+        <div class="page-dot" data-page="3" onclick="scrollToPage(3)"></div>
+        <div class="page-dot" data-page="4" onclick="scrollToPage(4)"></div>
+        <div class="page-dot" data-page="5" onclick="scrollToPage(5)"></div>
+        <div class="page-dot" data-page="6" onclick="scrollToPage(6)"></div>
     </div>
 
-    <!-- MODALS -->
-    
-    <!-- Contents Modal -->
+    <!-- Modals -->
     <div class="modal-overlay" id="contentsModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="contentsModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <h3 class="modal-title">ЗМІСТ</h3>
-            <div class="menu-list">
-                <div data-target="1">1. ART</div>
-                <div data-target="2">2. TWITTER</div>
-                <div data-target="3">3. FONTS</div>
-                <div data-target="4">4. SOUND</div>
-                <div data-target="5">5. TOP</div>
-                <div data-target="6">6. FORUM</div>
+            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">ЗМІСТ</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div onclick="scrollToPage(1)" style="color: #b97272; cursor: pointer; padding: 5px;">1. ART</div>
+                <div onclick="scrollToPage(2)" style="color: #b97272; cursor: pointer; padding: 5px;">2. TWITTER</div>
+                <div onclick="scrollToPage(3)" style="color: #b97272; cursor: pointer; padding: 5px;">3. FONTS</div>
+                <div onclick="scrollToPage(4)" style="color: #b97272; cursor: pointer; padding: 5px;">4. SOUND</div>
+                <div onclick="scrollToPage(5)" style="color: #b97272; cursor: pointer; padding: 5px;">5. TOP</div>
+                <div onclick="scrollToPage(6)" style="color: #b97272; cursor: pointer; padding: 5px;">6. FORUM</div>
             </div>
         </div>
     </div>
 
-    <!-- Archive Modal -->
     <div class="modal-overlay" id="archiveModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="archiveModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <h3 class="modal-title">АРХІВ</h3>
-            <img id="archiveImg" src="assets/art.jpg" alt="Archive" style="width:100%; max-width:300px; border:2px solid #a84d6b; image-rendering:pixelated;">
+            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">АРХІВ</h3>
+            <img src="assets/art.jpg" alt="Archive Preview" style="width: 100%; max-width: 300px; border: 2px solid #a84d6b; image-rendering: pixelated;">
         </div>
     </div>
 
-    <!-- Paint Modal -->
     <div class="modal-overlay" id="paintModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="paintModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <h3 class="modal-title">PAINT OPTIONS</h3>
+            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">PAINT OPTIONS</h3>
             <div class="paint-options">
                 <button class="paint-option" onclick="window.location.href='paint.html'">АНОНІМНО</button>
                 <button class="paint-option" onclick="window.location.href='paint.html'">РЕЄСТРАЦІЯ</button>
@@ -209,55 +206,50 @@
         </div>
     </div>
 
-    <!-- Twitter Disclaimer Modal -->
     <div class="modal-overlay" id="twitterModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="twitterModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
             <div class="disclaimer-text">OPEN X?</div>
-            <button class="enter-btn" id="confirmTwitterBtn">ENTER</button>
+            <button class="enter-btn" onclick="window.open('https://x.com', '_blank')">ENTER</button>
         </div>
     </div>
 
-    <!-- Pinterest Modal (Single Widget) -->
     <div class="modal-overlay" id="pinterestModal">
-        <div class="modal-content" style="max-width: 600px; width: 90%;">
-            <div class="modal-close" data-close="pinterestModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <h3 class="modal-title">REFERENCES</h3>
-            <div id="pinterestWidgetContainer" style="min-height: 400px; display:flex; align-items:center; justify-content:center;">
-                Loading Board...
+            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">REFERENCES</h3>
+            <div class="pinterest-widget-container">
+                <a data-pin-do="embedBoard" data-pin-board-width="800" data-pin-scale-height="400" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
             </div>
         </div>
     </div>
 
-    <!-- Spotify Modal -->
     <div class="modal-overlay" id="spotifyModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="spotifyModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </div>
 
-    <!-- Support Modal -->
     <div class="modal-overlay" id="supportModal">
         <div class="modal-content">
-            <div class="modal-close" data-close="supportModal">
-                <img src="assets/x.png" alt="Close" onerror="this.parentElement.innerHTML='×'">
+            <div class="modal-close" onclick="closeAllModals()">
+                <img src="assets/x.png" alt="Close">
             </div>
-            <div id="telegramWidget"></div>
+            <div id="telegram-comments"></div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <!-- Lenis for smooth scroll -->
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Lenis Library (CDN) -->
+    <script src="https://unpkg.com/lenis@1.0.46/dist/lenis.min.js"></script>
     
-    <!-- Main Logic -->
-    <script src="js/script.js" type="module"></script>
+    <!-- Подключение JS из папки js -->
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
