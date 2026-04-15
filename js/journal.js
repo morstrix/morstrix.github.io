@@ -14,29 +14,57 @@ const FONT_MAP = {
     'Y':'ʏ','y':'ʏ','Z':'ᴢ','z':'ᴢ'
 };
 
-function convertTextToFont(t){
-    return [...t].map(c => FONT_MAP[c] || FONT_MAP[c.toUpperCase()] || c).join('');
+function convertTextToFont(text) {
+    return text.split('').map(c => FONT_MAP[c] || FONT_MAP[c.toUpperCase()] || c).join('');
 }
 
-// ===================== STATE =====================
+// ===================== ГЛОБАЛЬНОЕ СОСТОЯНИЕ =====================
 const state = {
-    archive: JSON.parse(localStorage.getItem('morstrix_archive') || '[]'),
-    pinterest: {
-        active: false,
-        category: 'all'
-    }
+    lenis: null,
+    pageCount: 6,
+    rssHeadlines: [
+        "✦ Apartamento: The Imperfect Home ✦",
+        "✦ Fantastic Man: On Silence ✦",
+        "✦ 032c: Berlin Issue ✦",
+        "✦ Purple: Les Nuits ✦",
+        "✦ MacGuffin: The Rope ✦",
+        "✦ The Gentlewoman: No. 26 ✦",
+        "✦ Buffalo Zine: The Fame Issue ✦",
+        "✦ Re-Edition: The Touch ✦",
+        "✦ Mastermind: The System ✦",
+        "✦ Office Magazine: Cyber ✦"
+    ]
 };
 
+// ===================== ИНИЦИАЛИЗАЦИЯ =====================
+document.addEventListener('DOMContentLoaded', () => {
+    initLenis();
+    initRssTicker();
+    initArtPreviewSync();
+    initPaintEntry();
+    initPinterestPanel();
+    initCarousel();
+    initFontStyler();
+    initDownloadArchive();
+    initTts();
+    initSpotify();
+    initTopPlayers();
+    initForumTabs();
+    initSupportModal();
+    initModals();
+    initContentsNavigation();
+    initTwitterDisclaimer();
+    initKeyboardEscape();
+});
+
 // ===================== LENIS =====================
-function initLenis(){
+function initLenis() {
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
+    if (!wrapper || !content || typeof Lenis === 'undefined') return;
 
-    if (!wrapper || !content || typeof Lenis === 'undefined') return null;
-
-    const lenis = new Lenis({
-        wrapper,
-        content,
+    state.lenis = new Lenis({
+        wrapper, content,
         orientation: 'horizontal',
         gestureOrientation: 'horizontal',
         smoothWheel: true,
@@ -44,254 +72,316 @@ function initLenis(){
         lerp: 0.08
     });
 
-    function raf(t){
-        lenis.raf(t);
-        requestAnimationFrame(raf);
-    }
+    function raf(time) { state.lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    window.scrollToPage = (i) => {
-        lenis.scrollTo(i * wrapper.clientWidth);
-    };
+    window.scrollToPage = (index) => state.lenis.scrollTo(index * wrapper.clientWidth);
 
-    return lenis;
+    // Индикаторы страниц (точки)
+    const indicator = document.getElementById('pageIndicator');
+    indicator.innerHTML = Array(state.pageCount).fill(0).map(() => '<span class="dot"></span>').join('');
+    const dots = indicator.querySelectorAll('.dot');
+
+    state.lenis.on('scroll', ({ scroll }) => {
+        const activeIndex = Math.round(scroll / wrapper.clientWidth);
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+        // Защита iframe при скролле
+        document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
+        clearTimeout(state.iframeTimer);
+        state.iframeTimer = setTimeout(() => {
+            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
+        }, 150);
+    });
+
+    setTimeout(() => {
+        const activeIndex = Math.round(state.lenis.scroll / wrapper.clientWidth);
+        dots[activeIndex]?.classList.add('active');
+    }, 100);
 }
 
-// ===================== MODALS =====================
-function openModal(id){
-    document.getElementById(id)?.classList.add('active');
-}
-function closeModal(id){
-    document.getElementById(id)?.classList.remove('active');
-}
-
-// ===================== ARCHIVE (REAL) =====================
-function renderArchive(){
-    const container = document.createElement('div');
-    container.style.cssText = `
-        display:grid;
-        grid-template-columns:repeat(2,1fr);
-        gap:10px;
-        padding:10px;
-    `;
-
-    if(state.archive.length === 0){
-        container.innerHTML = `<div style="color:#fff;font-size:10px;">EMPTY ARCHIVE</div>`;
-        return container;
+// ===================== RSS ТИКЕР =====================
+function initRssTicker() {
+    const ticker = document.getElementById('rssTicker');
+    if (ticker) {
+        const repeated = [...state.rssHeadlines, ...state.rssHeadlines].join('  —  ');
+        ticker.textContent = repeated;
     }
-
-    state.archive.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.width = '100%';
-        img.style.border = '2px solid #a84d6b';
-        container.appendChild(img);
-    });
-
-    return container;
 }
 
-function openArchive(){
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay active';
-
-    const content = document.createElement('div');
-    content.className = 'modal-content';
-    content.style.maxWidth = '500px';
-
-    const header = document.createElement('div');
-    header.className = 'modal-header';
-    header.innerHTML = `<span class="modal-title-text">ARCHIVE</span>`;
-
-    const close = document.createElement('button');
-    close.className = 'modal-close-btn';
-    close.textContent = '✜';
-    close.onclick = () => modal.remove();
-
-    header.appendChild(close);
-
-    const inner = document.createElement('div');
-    inner.className = 'modal-inner';
-    inner.appendChild(renderArchive());
-
-    content.appendChild(header);
-    content.appendChild(inner);
-    modal.appendChild(content);
-
-    document.body.appendChild(modal);
-}
-
-// ===================== PINTEREST (REAL FILTER) =====================
-function openPinterest(cat){
-    const images = [
-        'assets/mx1.jpg',
-        'assets/mx2.jpg',
-        'assets/f1.jpg'
-    ];
-
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay active';
-
-    const content = document.createElement('div');
-    content.className = 'modal-content';
-
-    const header = document.createElement('div');
-    header.className = 'modal-header';
-    header.innerHTML = `<span class="modal-title-text">PINTEREST: ${cat}</span>`;
-
-    const close = document.createElement('button');
-    close.className = 'modal-close-btn';
-    close.textContent = '✜';
-    close.onclick = () => modal.remove();
-
-    header.appendChild(close);
-
-    const inner = document.createElement('div');
-    inner.className = 'modal-inner';
-
-    const grid = document.createElement('div');
-    grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(2,1fr)';
-    grid.style.gap = '10px';
-
-    images.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.width = '100%';
-        img.style.border = '2px solid #b97272';
-        grid.appendChild(img);
-    });
-
-    inner.appendChild(grid);
-    content.appendChild(header);
-    content.appendChild(inner);
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-}
-
-// ===================== TTS =====================
-let voices = [];
-
-function loadVoices(){
-    voices = speechSynthesis.getVoices();
-    const sel = document.getElementById('ttsVoiceSelect');
-    if(!sel) return;
-
-    sel.innerHTML = '';
-    voices.forEach(v=>{
-        const o = document.createElement('option');
-        o.value = v.name;
-        o.textContent = v.name;
-        sel.appendChild(o);
+// ===================== АРТ-ПРЕВЬЮ (синхронизация с Paint) =====================
+function initArtPreviewSync() {
+    const img = document.getElementById('currentArtPreview');
+    const updateFromStorage = () => {
+        const saved = localStorage.getItem('morstrix_current_art');
+        if (saved && img) img.src = saved;
+    };
+    updateFromStorage();
+    window.addEventListener('focus', updateFromStorage);
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) updateFromStorage();
     });
 }
 
-function speak(text){
-    if(!text.trim()) return;
-
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-
-    const sel = document.getElementById('ttsVoiceSelect');
-    const v = voices.find(x => x.name === sel?.value);
-    if(v) u.voice = v;
-
-    speechSynthesis.speak(u);
+// ===================== КНОПКА PAINT (модалка выбора) =====================
+function initPaintEntry() {
+    const btn = document.getElementById('paintJournalBtn');
+    if (!btn) return;
+    btn.addEventListener('click', () => openModal('paintEntryModal'));
+    document.getElementById('paintAnonBtn')?.addEventListener('click', () => window.open('paint.html', '_blank'));
+    document.getElementById('paintRegBtn')?.addEventListener('click', () => window.open('paint.html', '_blank')); // заглушка
 }
 
-// ===================== CAROUSEL =====================
-function initCarousel(){
-    const c = document.getElementById('mainCarousel');
-    if(!c) return;
+// ===================== PINTEREST (выезжающее меню + заглушки) =====================
+function initPinterestPanel() {
+    const panel = document.getElementById('pinterestPanel');
+    const menu = document.getElementById('pinterestMenu');
+    if (!panel || !menu) return;
+    panel.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('active');
+    });
+    document.querySelectorAll('.pinterest-category').forEach(cat => {
+        cat.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const catName = cat.dataset.cat;
+            showStubModal(`PINTEREST: ${catName.toUpperCase()}`, `Доска «${catName}» появится позже`);
+            menu.classList.remove('active');
+        });
+    });
+    // Закрытие меню при клике вне
+    document.addEventListener('click', (e) => {
+        if (!panel.contains(e.target) && !menu.contains(e.target)) menu.classList.remove('active');
+    });
+}
 
-    const imgs = [...c.querySelectorAll('img')];
-    let i = 0;
+// ===================== АРХИВ (заглушка) =====================
+document.getElementById('archiveBtn')?.addEventListener('click', () => {
+    showStubModal('АРХИВ', 'Скоро здесь будут рисунки участников');
+});
 
-    setInterval(()=>{
-        imgs[i].classList.remove('active');
-        i = (i + 1) % imgs.length;
-        imgs[i].classList.add('active');
+// ===================== КАРУСЕЛЬ (страница 2) =====================
+function initCarousel() {
+    const carousel = document.getElementById('mainCarousel');
+    if (!carousel) return;
+    const imgs = carousel.querySelectorAll('img');
+    let index = 0;
+    setInterval(() => {
+        imgs[index].classList.remove('active');
+        index = (index + 1) % imgs.length;
+        imgs[index].classList.add('active');
     }, 3000);
 }
 
-// ===================== TOP PLAYERS =====================
-async function loadTop(){
-    const el = document.querySelector('.top-players-list');
-    if(!el) return;
+// ===================== FONT STYLER (страница 3) =====================
+function initFontStyler() {
+    const input = document.getElementById('fontInputEmbedded');
+    const preview = document.getElementById('stylerPreviewEmbedded');
+    if (!input || !preview) return;
 
-    try{
+    const updatePreview = () => {
+        const raw = input.value.trim();
+        preview.textContent = raw ? convertTextToFont(raw) : convertTextToFont('tap to copy');
+    };
+    updatePreview();
+    input.addEventListener('input', updatePreview);
+    preview.addEventListener('click', () => {
+        navigator.clipboard.writeText(preview.textContent).then(() => {
+            const original = preview.textContent;
+            preview.textContent = convertTextToFont('copied!');
+            setTimeout(() => preview.textContent = original, 800);
+        });
+    });
+
+    // Анимация placeholder
+    animatePlaceholder(input, 'TYPE TEXT');
+}
+
+function animatePlaceholder(input, text) {
+    let timer, isTyping = true, charIndex = 0;
+    const step = () => {
+        if (timer) clearTimeout(timer);
+        if (isTyping) {
+            if (charIndex < text.length) {
+                input.placeholder = text.substring(0, charIndex + 1) + ' █';
+                charIndex++;
+                timer = setTimeout(step, 120);
+            } else {
+                isTyping = false;
+                timer = setTimeout(step, 1500);
+            }
+        } else {
+            if (charIndex > 0) {
+                charIndex--;
+                input.placeholder = text.substring(0, charIndex) + ' █';
+                timer = setTimeout(step, 80);
+            } else {
+                isTyping = true;
+                input.placeholder = ' █';
+                timer = setTimeout(step, 300);
+            }
+        }
+    };
+    const start = () => { if (input.value === '') { isTyping = true; charIndex = 0; step(); } };
+    const stop = () => { clearTimeout(timer); input.placeholder = ''; };
+    input.addEventListener('focus', stop);
+    input.addEventListener('blur', () => { if (input.value === '') start(); });
+    const page = document.querySelector('[data-page="3"]');
+    const observer = new IntersectionObserver((e) => e.forEach(ent => ent.isIntersecting ? start() : stop()), { threshold: 0.1 });
+    if (page) observer.observe(page); else start();
+}
+
+// ===================== СКАЧИВАНИЕ АРХИВА =====================
+function initDownloadArchive() {
+    document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', () => {
+        const a = document.createElement('a');
+        a.href = 'assets/morstrix_archive.zip';
+        a.download = 'MORSTRIX_FONT.zip';
+        a.click();
+    });
+}
+
+// ===================== TEXT SYNTH (TTS) =====================
+let voices = [];
+function initTts() {
+    const input = document.getElementById('ttsTextInput');
+    const select = document.getElementById('ttsVoiceSelect');
+    const speakBtn = document.getElementById('ttsSpeakBtn');
+    const status = document.getElementById('ttsStatus');
+    if (!input || !select || !speakBtn) return;
+
+    function loadVoices() {
+        voices = speechSynthesis.getVoices();
+        select.innerHTML = voices.map(v => `<option value="${v.name}">${v.lang} - ${v.name}</option>`).join('');
+        const ukr = voices.find(v => v.lang.startsWith('uk')) || voices.find(v => v.lang.startsWith('ru'));
+        if (ukr) select.value = ukr.name;
+    }
+    speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+
+    speakBtn.addEventListener('click', () => {
+        const text = input.value.trim();
+        if (!text) { status.textContent = 'Введите текст'; return; }
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        const voice = voices.find(v => v.name === select.value);
+        if (voice) u.voice = voice;
+        u.onstart = () => status.textContent = '▶ Воспроизведение';
+        u.onend = () => status.textContent = '';
+        u.onerror = (e) => status.textContent = 'Ошибка: ' + e.error;
+        speechSynthesis.speak(u);
+    });
+
+    animatePlaceholder(input, 'TYPE TEXT');
+}
+
+// ===================== SPOTIFY =====================
+function initSpotify() {
+    document.getElementById('spotifyIcon')?.addEventListener('click', () => openModal('spotifyModal'));
+}
+
+// ===================== ТОП ИГРОКОВ (Firebase) =====================
+async function initTopPlayers() {
+    const container = document.querySelector('.top-players-list');
+    if (!container) return;
+    try {
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
-        const { getFirestore, collection, query, orderBy, limit, getDocs } =
-        await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
-
+        const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
         const app = initializeApp({
-            apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-            authDomain:"helper-e10b2.firebaseapp.com",
-            projectId:"helper-e10b2"
+            apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+            authDomain: "helper-e10b2.firebaseapp.com",
+            projectId: "helper-e10b2"
         });
-
         const db = getFirestore(app);
-        const q = query(collection(db,'top_players'),orderBy('score','desc'),limit(10));
+        const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
         const snap = await getDocs(q);
-
-        el.innerHTML = '';
-        let i = 1;
-
-        snap.forEach(d=>{
-            const x = d.data();
-            el.innerHTML += `<div style="display:flex;justify-content:space-between;">
-            <span>${i++}. ${x.name}</span><span>${x.score}</span></div>`;
+        let html = '', rank = 1;
+        snap.forEach(d => {
+            const data = d.data();
+            html += `<div style="display:flex;justify-content:space-between;"><span>${rank++}. ${data.name || 'ANON'}</span><span>${data.score}</span></div>`;
         });
-
-    }catch(e){
-        el.innerHTML = 'NO DATA';
+        container.innerHTML = html || '<div style="text-align:center;">— пусто —</div>';
+    } catch (e) {
+        container.innerHTML = '⚠️ ERROR';
     }
 }
 
-// ===================== INIT =====================
-document.addEventListener('DOMContentLoaded', ()=>{
-
-    initLenis();
-    initCarousel();
-    loadVoices();
-    loadTop();
-
-    // archive button
-    document.getElementById('archiveBtn')?.addEventListener('click', openArchive);
-
-    // pinterest
-    document.getElementById('pinterestPanel')?.addEventListener('click', ()=>openPinterest('all'));
-
-    // tts
-    document.getElementById('ttsSpeakBtn')?.addEventListener('click', ()=>{
-        const t = document.getElementById('ttsTextInput')?.value || '';
-        speak(t);
-    });
-
-    // font styler
-    const input = document.getElementById('fontInputEmbedded');
-    const preview = document.getElementById('stylerPreviewEmbedded');
-
-    if(input && preview){
-        input.addEventListener('input', ()=>{
-            preview.textContent = convertTextToFont(input.value);
+// ===================== ФОРУМ (вкладки) =====================
+function initForumTabs() {
+    const contents = {
+        wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
+        interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
+        radio:    ['📻 РАДИО','Музыка, подкасты...'],
+        itai:     ['🤖 IT / AI','Нейросети...'],
+        english:  ['📖 ENGLISH','Изучение английского...'],
+        design:   ['🎨 DESIGN','Графический дизайн...'],
+        tattoo:   ['💉 TATTOO','Тату-культура...'],
+        money:    ['💰 MONEY','Финансы...'],
+        barbering:['✂️ BARBER','Барберинг...']
+    };
+    document.querySelectorAll('.forum-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.forum-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const id = tab.dataset.tab;
+            if (contents[id]) {
+                document.getElementById('forumTitleEmbedded').textContent = contents[id][0];
+                document.getElementById('forumTextEmbedded').textContent = contents[id][1];
+            }
         });
-    }
+    });
+    document.getElementById('forumFullBtn')?.addEventListener('click', () => window.open('https://t.me/morstrix', '_blank'));
+}
 
-    // contents navigation
-    document.querySelectorAll('.contents-item').forEach(el=>{
-        el.addEventListener('click', ()=>{
-            const page = +el.dataset.page;
-            window.scrollToPage?.(page-1);
+// ===================== SUPPORT (Telegram виджет) =====================
+function initSupportModal() {
+    document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal'));
+}
+
+// ===================== МОДАЛКИ (общие функции) =====================
+function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+function showStubModal(title, text) {
+    document.getElementById('stubModalTitle').textContent = title;
+    document.getElementById('stubModalText').textContent = text;
+    openModal('stubModal');
+}
+
+function initModals() {
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', () => closeModal(btn.dataset.modal));
+    });
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
+    });
+}
+
+// ===================== НАВИГАЦИЯ "ЗМІСТ" =====================
+function initContentsNavigation() {
+    document.getElementById('contentsBtn').addEventListener('click', () => openModal('contentsModal'));
+    document.querySelectorAll('.contents-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const page = item.dataset.page;
+            const pages = document.querySelectorAll('.journal-page');
+            const target = document.querySelector(`.journal-page[data-page="${page}"]`);
+            const index = [...pages].indexOf(target);
+            if (index >= 0) window.scrollToPage(index);
             closeModal('contentsModal');
         });
     });
+}
 
-    // modal close
-    document.addEventListener('click',(e)=>{
-        if(e.target.classList.contains('modal-overlay')){
-            e.target.remove();
-        }
+// ===================== TWITTER DISCLAIMER =====================
+function initTwitterDisclaimer() {
+    document.getElementById('twitterBtn')?.addEventListener('click', () => openModal('disclaimerModal'));
+    document.getElementById('openXBtn')?.addEventListener('click', function() {
+        window.open(this.dataset.href, '_blank');
+        closeModal('disclaimerModal');
     });
+}
 
-});
+// ===================== ESCAPE =====================
+function initKeyboardEscape() {
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+    });
+}
