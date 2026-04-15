@@ -47,13 +47,14 @@ body {
     align-items:center; width:100%; padding:12px; min-height:0;
 }
 
-/* ================= СТРАНИЦА 1 (ЧИСТОВАЯ) ================= */
+/* ================= СТРАНИЦА 1 (ПРАВКИ) ================= */
 .page1-layout {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
+/* Статичный тикер (без анимации) */
 .ticker-wrapper {
     flex-shrink: 0;
     width: 100%;
@@ -61,27 +62,34 @@ body {
     white-space: nowrap;
     padding: 15px 0;
 }
+.ticker-static {
+    display: block;
+    font-size: 12px;
+    color: #a27791;
+    text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f;
+    text-align: center;
+    letter-spacing: 2px;
+}
 
-/* Основной контейнер арт+архив+paint */
 .art-section {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 15px;          /* отступ от левого края */
+    padding-left: 15px;
 }
 
-/* Ряд: артблок слева, архив справа */
 .art-row {
     display: flex;
-    align-items: center;         /* архив по центру вертикали */
+    align-items: center;
     gap: 15px;
     width: 100%;
 }
 
-.art-block {
-    width: 55%;                 /* ~половина */
-    max-width: 280px;
+/* Увеличенный артблок */
+.art-block-large {
+    width: 70% !important;      /* стало больше */
+    max-width: 350px !important;
     aspect-ratio: 1/1;
     background: #000;
     display: flex;
@@ -90,32 +98,33 @@ body {
     flex-shrink: 0;
 }
 
-.art-block img {
+.art-block-large img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     image-rendering: pixelated;
 }
 
+/* Архив как картинка */
 .archive-block {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0a0a0a;
-    padding: 20px 10px;
-    color: #a27791;
-    font-size: 14px;
-    text-transform: uppercase;
     cursor: pointer;
     border: none;
+    background: transparent;
+}
+.archive-img {
+    width: 50px;               /* размер иконки */
+    height: 50px;
+    image-rendering: pixelated;
 }
 
-/* Paint под артблоком */
 .paint-row {
     margin-top: 20px;
-    width: 55%;
-    max-width: 280px;
+    width: 70%;
+    max-width: 350px;
 }
 
 .paint-trigger-img {
@@ -125,13 +134,12 @@ body {
     cursor: pointer;
 }
 
-/* Pinterest (внизу) */
+/* Pinterest без изменений */
 .pinterest-panel-wrapper {
     position: relative;
     width: 100%;
     margin-top: auto;
 }
-
 .pinterest-panel {
     width: 100%;
     height: 55px;
@@ -146,7 +154,6 @@ body {
     letter-spacing: 4px;
     cursor: pointer;
 }
-
 .pinterest-menu {
     position: absolute;
     bottom: 100%;
@@ -163,13 +170,11 @@ body {
     border: 2px solid #b97272;
     border-bottom: none;
 }
-
 .pinterest-menu.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
-
 .pinterest-category {
     color: #fff;
     font-size: 11px;
@@ -179,7 +184,7 @@ body {
     cursor: pointer;
 }
 
-/* Мобильная версия */
+/* Мобильная адаптация */
 @media (max-width: 768px) {
     .art-section {
         padding-left: 12px;
@@ -187,18 +192,18 @@ body {
     .art-row {
         gap: 10px;
     }
-    .art-block {
-        width: 60%;
-        max-width: 220px;
+    .art-block-large {
+        width: 80% !important;
+        max-width: 280px !important;
     }
     .paint-row {
-        width: 60%;
-        max-width: 220px;
+        width: 80%;
+        max-width: 280px;
         margin-top: 15px;
     }
-    .archive-block {
-        font-size: 12px;
-        padding: 15px 5px;
+    .archive-img {
+        width: 45px;
+        height: 45px;
     }
 }
 
