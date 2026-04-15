@@ -20,27 +20,27 @@
 <div class="journal-wrapper">
   <div class="journal-horizontal" id="journalHorizontal">
 
-<!-- ================= СТРАНИЦА 1 (ФИНАЛЬНАЯ СТРУКТУРА) ================= -->
+<!-- ================= СТРАНИЦА 1 (ИТОГОВАЯ ВЁРСТКА) ================= -->
 <div class="journal-page" data-page="1">
     <div class="page-content page1-layout">
-        <!-- RSS тикер -->
+        <!-- RSS тикер с увеличенными отступами -->
         <div class="ticker-wrapper">
             <div class="ticker" id="rssTicker"></div>
         </div>
         
-        <!-- Основной контент: артблок + архив + кнопка Paint (центрируется по вертикали) -->
+        <!-- Основной контент: артблок + архив + Paint (вертикально центрируется) -->
         <div class="main-content">
             <div class="art-row">
-                <!-- Артблок (слева) -->
+                <!-- Артблок (слева, с отступом) -->
                 <div class="art-block">
                     <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
                 </div>
-                <!-- Архив (справа, по центру вертикали) -->
+                <!-- Архив (справа, по центру вертикали относительно артблока) -->
                 <div class="archive-block" id="archiveBtn">
                     <span>АРХИВ</span>
                 </div>
             </div>
-            <!-- Кнопка Paint под артблоком -->
+            <!-- Кнопка Paint под артблоком, с отступом сверху -->
             <div class="paint-btn-row">
                 <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
             </div>
@@ -59,7 +59,6 @@
         </div>
     </div>
 </div>
-
     <!-- PAGE 2: Twitter -->
     <div class="journal-page" data-page="2">
         <div class="page-content">
