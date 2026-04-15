@@ -1,232 +1,365 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
-// --- FIREBASE ---
-const firebaseConfig = {
-    apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-    authDomain: "helper-e10b2.firebaseapp.com",
-    projectId: "helper-e10b2",
-    storageBucket: "helper-e10b2.firebasestorage.app",
-    messagingSenderId: "131536876451",
-    appId: "1:131536876451:web:eeaef494c83dfc4849e016",
-    measurementId: "G-KPM4SEVG8R"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// --- LENIS — ПЛАВНЫЙ ЛЮКС ---
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    orientation: 'horizontal',
-    gestureOrientation: 'horizontal',
-    smoothWheel: true,
-    smoothTouch: true,
-    touchMultiplier: 1.5,
-});
-
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-// Синхронизация точек
-let currentPage = 1;
-const totalPages = 6;
-
-function updateActivePage(pageNum) {
-    currentPage = pageNum;
-    document.querySelectorAll('.page-dot').forEach(dot => dot.classList.remove('active'));
-    const activeDot = document.querySelector(`.page-dot[data-page="${pageNum}"]`);
-    if (activeDot) activeDot.classList.add('active');
-}
-
-lenis.on('scroll', ({ scroll }) => {
-    const pageWidth = window.innerWidth;
-    const newPage = Math.round(scroll / pageWidth) + 1;
-    if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
-        updateActivePage(newPage);
-    }
-});
-
-window.scrollToPage = (pageNum) => {
-    const target = (pageNum - 1) * window.innerWidth;
-    lenis.scrollTo(target, { immediate: false });
-    updateActivePage(pageNum);
-};
-
-// Блокировка вертикального колеса (чтобы не конфликтовало)
-window.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-    }
-}, { passive: false });
-
-// --- ФУНКЦИИ СТРАНИЦ ---
-// Page 1
-function loadCurrentArt() {
-    const saved = localStorage.getItem('morstrix_current_art');
-    if (saved) {
-        const img = document.getElementById('currentArtPreview');
-        if (img) img.src = saved;
-    }
-}
-window.openArchiveModal = () => document.getElementById('archiveModal').classList.add('active');
-window.openPaintModal = () => document.getElementById('paintModal').classList.add('active');
-window.togglePinterestMenu = () => {
-    const menu = document.getElementById('pinterestMenu');
-    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-};
-window.openPinterestModal = () => {
-    document.getElementById('pinterestModal').classList.add('active');
-    window.togglePinterestMenu();
-    if (!document.querySelector('#pinterest-js')) {
-        const script = document.createElement('script');
-        script.id = 'pinterest-js';
-        script.src = '//assets.pinterest.com/js/pinit.js';
-        script.async = true;
-        document.body.appendChild(script);
-    }
-};
-
-// Page 2
-function initCarousel() {
-    const slides = document.querySelectorAll('.carousel-slide');
-    if (!slides.length) return;
-    let idx = 0;
-    setInterval(() => {
-        slides[idx].classList.remove('active');
-        idx = (idx + 1) % slides.length;
-        slides[idx].classList.add('active');
-    }, 3000);
-}
-window.openTwitterModal = () => document.getElementById('twitterModal').classList.add('active');
-
-// Page 3
+// ===== FONT STYLER (SMALL CAPS MAPPING) =====
 const FONT_MAP = {
-    'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ',
-    'n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'
-};
-function updateStylerPreview() {
-    const input = document.getElementById('stylerInput');
-    const preview = document.getElementById('stylerPreview');
-    if (!input || !preview) return;
-    let text = input.value.toLowerCase();
-    let result = '';
-    for (let ch of text) result += FONT_MAP[ch] || ch;
-    preview.textContent = result || 'Preview will appear here';
-}
-window.copyToClipboard = () => {
-    const preview = document.getElementById('stylerPreview');
-    if (preview?.textContent) {
-        navigator.clipboard?.writeText(preview.textContent).then(() => alert('Copied!'));
-    }
-};
-window.downloadArchive = () => {
-    const a = document.createElement('a');
-    a.href = 'assets/morstrix_archive.zip';
-    a.download = 'morstrix_archive.zip';
-    a.click();
+    'А': 'ᴀ', 'а': 'ᴀ', 'В': 'в', 'в': 'ʙ', 'Е': 'ᴇ', 'е': 'ᴇ', 'К': 'ᴋ', 'к': 'ᴋ',
+    'М': 'ᴍ', 'м': 'ᴍ', 'О': 'ᴏ', 'о': 'ᴏ', 'Р': 'ᴘ', 'р': 'ᴘ', 'С': 'ᴄ', 'с': 'ᴄ',
+    'Т': 'т', 'т': 'ᴛ', 'Н': 'н', 'н': 'н', 'І': 'і', 'і': 'і', 'У': 'у', 'у': 'у',
+    'Л': 'ʌ', 'л': 'ʌ', 'A': 'ᴀ', 'a': 'ᴀ', 'B': 'ʙ', 'b': 'ʙ', 'C': 'ᴄ', 'c': 'ᴄ',
+    'D': 'ᴅ', 'd': 'ᴅ', 'E': 'ᴇ', 'e': 'ᴇ', 'F': 'ꜰ', 'f': 'ꜰ', 'G': 'ɢ', 'g': 'ɢ',
+    'H': 'ʜ', 'h': 'ʜ', 'I': 'ɪ', 'i': 'ɪ', 'J': 'ᴊ', 'j': 'ᴊ', 'K': 'ᴋ', 'k': 'ᴋ',
+    'L': 'ʟ', 'l': 'ʟ', 'M': 'ᴍ', 'm': 'ᴍ', 'N': 'ɴ', 'n': 'ɴ', 'O': 'ᴏ', 'o': 'ᴏ',
+    'P': 'ᴘ', 'p': 'ᴘ', 'Q': 'ǫ', 'q': 'ǫ', 'R': 'ʀ', 'r': 'ʀ', 'S': 'ꜱ', 's': 'ꜱ',
+    'T': 'ᴛ', 't': 'ᴛ', 'U': 'ᴜ', 'u': 'ᴜ', 'V': 'ᴠ', 'v': 'ᴠ', 'W': 'ᴡ', 'w': 'ᴡ',
+    'X': 'x', 'x': 'x', 'Y': 'ʏ', 'y': 'ʏ', 'Z': 'ᴢ', 'z': 'ᴢ',
 };
 
-// Page 4
-let voices = [];
-function populateVoiceList() {
-    voices = speechSynthesis.getVoices();
-    const select = document.getElementById('voiceSelect');
-    if (!select) return;
-    select.innerHTML = voices.map((v, i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
-}
-speechSynthesis.onvoiceschanged = populateVoiceList;
-window.speakText = () => {
-    const text = document.getElementById('ttsInput')?.value.trim();
-    if (!text) return;
-    const utterance = new SpeechSynthesisUtterance(text);
-    const idx = document.getElementById('voiceSelect')?.value;
-    if (voices[idx]) utterance.voice = voices[idx];
-    speechSynthesis.speak(utterance);
-    const status = document.getElementById('ttsStatus');
-    if (status) {
-        status.textContent = 'Speaking...';
-        utterance.onend = () => status.textContent = '';
-    }
-};
-window.openSpotifyModal = () => document.getElementById('spotifyModal').classList.add('active');
-
-// Page 5
-async function loadTopPlayers() {
-    const container = document.getElementById('topPlayersList');
-    if (!container) return;
-    try {
-        const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
-        const snap = await getDocs(q);
-        container.innerHTML = '';
-        let rank = 1;
-        snap.forEach(doc => {
-            const d = doc.data();
-            container.innerHTML += `<div class="player-item"><span>${rank++}. ${d.name || 'ANON'}</span><span>${d.score}</span></div>`;
-        });
-    } catch {
-        container.innerHTML = '<div class="player-item">No data</div>';
-    }
+function convertTextToFont(text) {
+    return text.split('').map(char => FONT_MAP[char] || FONT_MAP[char.toUpperCase()] || char).join('');
 }
 
-// Page 6
-const forumContents = {
-    wellness: { h: 'WELLNESS', t: 'Wellness content...' },
-    interior: { h: 'INTERIOR', t: 'Interior design trends...' },
-    radio: { h: 'RADIO', t: 'Radio station updates...' },
-    itai: { h: 'ITALIAN', t: 'Italian culture...' },
-    english: { h: 'ENGLISH', t: 'English community...' },
-    design: { h: 'DESIGN', t: 'Design theory...' },
-    tattoo: { h: 'TATTOO', t: 'Tattoo art...' },
-    money: { h: 'MONEY', t: 'Financial literacy...' },
-    barbering: { h: 'BARBER', t: 'Barbering techniques...' }
-};
-function switchForumTab(tab) {
-    const c = forumContents[tab] || forumContents.wellness;
-    document.getElementById('forumHeader').textContent = c.h;
-    document.getElementById('forumText').textContent = c.t;
-}
-window.openTelegramForum = () => window.open('https://t.me/morstrix', '_blank');
-window.openSupportModal = () => {
-    const modal = document.getElementById('supportModal');
-    const container = document.getElementById('telegram-comments');
-    modal.classList.add('active');
-    container.innerHTML = '';
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = "https://telegram.org/js/telegram-widget.js?22";
-    script.setAttribute('data-telegram-comments', 'morstrix/71');
-    script.setAttribute('data-width', '100%');
-    script.setAttribute('data-height', '700px');
-    container.appendChild(script);
-};
-
-// Модалки
-window.closeAllModals = () => {
-    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-    const menu = document.getElementById('pinterestMenu');
-    if (menu) menu.style.display = 'none';
-};
-window.openContentsModal = () => document.getElementById('contentsModal').classList.add('active');
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllModals(); });
-document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m) closeAllModals(); });
-});
-
-// Инициализация после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
-    loadCurrentArt();
-    initCarousel();
-    populateVoiceList();
-    loadTopPlayers();
-    const stylerInput = document.getElementById('stylerInput');
-    if (stylerInput) stylerInput.addEventListener('input', updateStylerPreview);
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchForumTab(btn.dataset.tab));
+    // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ТОЧНО КАК В РАБОЧЕЙ ВЕРСИИ) =====
+    const wrapper = document.querySelector('.journal-wrapper');
+    const content = document.getElementById('journalHorizontal');
+    let lenis = null;
+
+    if (wrapper && content && typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            wrapper: wrapper,
+            content: content,
+            orientation: 'horizontal',
+            gestureOrientation: 'horizontal',
+            smoothWheel: true,
+            smoothTouch: true,
+            syncTouch: true,
+            lerp: 0.08,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        window.addEventListener('resize', () => lenis.resize());
+
+        // Защита iframe при скролле
+        let scrollTimer;
+        lenis.on('scroll', () => {
+            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
+            }, 120);
+        });
+
+        // Синхронизация точек (6 штук)
+        const dots = document.querySelectorAll('.dot');
+        function updateActiveDot(index) {
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+        lenis.on('scroll', ({ scroll }) => {
+            const pageWidth = wrapper.clientWidth;
+            const activeIndex = Math.round(scroll / pageWidth);
+            updateActiveDot(activeIndex);
+        });
+
+        window.scrollToPage = (index) => {
+            const target = index * wrapper.clientWidth;
+            lenis.scrollTo(target, { immediate: false, lerp: 0.08 });
+        };
+
+        setTimeout(() => {
+            const pageWidth = wrapper.clientWidth;
+            const activeIndex = Math.round(lenis.scroll / pageWidth);
+            updateActiveDot(activeIndex);
+        }, 100);
+    }
+
+    // Создаём 6 точек
+    const indicator = document.getElementById('pageIndicator');
+    indicator.innerHTML = Array(6).fill(0).map(() => '<span class="dot"></span>').join('');
+    const dots = document.querySelectorAll('.dot');
+    if (dots.length) dots[0].classList.add('active');
+
+    // ===== RSS ТИКЕР =====
+    const ticker = document.getElementById('rssTicker');
+    if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
+
+    // ===== КАРУСЕЛЬ =====
+    const carousel = document.getElementById('mainCarousel');
+    let carouselInterval;
+    if (carousel) {
+        const imgs = carousel.querySelectorAll('img');
+        carouselInterval = setInterval(() => {
+            const active = carousel.querySelector('.active');
+            let next = active.nextElementSibling;
+            if (!next) next = imgs[0];
+            active.classList.remove('active');
+            next.classList.add('active');
+        }, 3000);
+        carousel.addEventListener('click', () => clearInterval(carouselInterval));
+    }
+
+    // ===== УТИЛИТЫ МОДАЛОК =====
+    function openModal(id){ document.getElementById(id)?.classList.add('active'); }
+    function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
+
+    // ===== TWITTER =====
+    document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
+
+    // ===== FONT STYLER =====
+    const embeddedInput = document.getElementById('fontInputEmbedded');
+    const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
+    if (embeddedInput && embeddedPreview) {
+        function updateStylerPreview() {
+            const rawText = embeddedInput.value.trim();
+            embeddedPreview.textContent = rawText === '' ? convertTextToFont('tap to copy') : convertTextToFont(rawText);
+        }
+        updateStylerPreview();
+        embeddedInput.addEventListener('input', updateStylerPreview);
+        embeddedPreview.addEventListener('click', () => {
+            navigator.clipboard.writeText(embeddedPreview.textContent).then(() => {
+                const original = embeddedPreview.textContent;
+                embeddedPreview.textContent = convertTextToFont('copied!');
+                setTimeout(() => embeddedPreview.textContent = original, 800);
+            }).catch(err => console.warn('Clipboard error:', err));
+        });
+
+        // Анимация placeholder
+        const placeholderText = 'TYPE TEXT';
+        let typingTimer = null, isTyping = true, charIndex = 0;
+        function animatePlaceholder() {
+            if (typingTimer) clearTimeout(typingTimer);
+            if (isTyping) {
+                if (charIndex < placeholderText.length) {
+                    embeddedInput.placeholder = placeholderText.substring(0, charIndex + 1) + ' █';
+                    charIndex++;
+                    typingTimer = setTimeout(animatePlaceholder, 120);
+                } else {
+                    isTyping = false;
+                    typingTimer = setTimeout(animatePlaceholder, 1500);
+                }
+            } else {
+                if (charIndex > 0) {
+                    charIndex--;
+                    embeddedInput.placeholder = placeholderText.substring(0, charIndex) + ' █';
+                    typingTimer = setTimeout(animatePlaceholder, 80);
+                } else {
+                    isTyping = true;
+                    embeddedInput.placeholder = ' █';
+                    typingTimer = setTimeout(animatePlaceholder, 300);
+                }
+            }
+        }
+        function startAnimation() {
+            if (embeddedInput.value === '') {
+                isTyping = true; charIndex = 0;
+                embeddedInput.placeholder = ' █';
+                if (typingTimer) clearTimeout(typingTimer);
+                typingTimer = setTimeout(animatePlaceholder, 300);
+            }
+        }
+        function stopAnimation() {
+            if (typingTimer) clearTimeout(typingTimer);
+            embeddedInput.placeholder = '';
+        }
+        embeddedInput.addEventListener('focus', stopAnimation);
+        embeddedInput.addEventListener('blur', () => { if (embeddedInput.value === '') startAnimation(); });
+        const page3 = document.querySelector('.journal-page[data-page="3"]');
+        if (page3) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => entry.isIntersecting ? startAnimation() : stopAnimation());
+            }, { threshold: 0.1 });
+            observer.observe(page3);
+        } else startAnimation();
+    }
+
+    // ===== СКАЧИВАНИЕ АРХИВА =====
+    document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
+        const a = document.createElement('a');
+        a.href = 'assets/morstrix_archive.zip';
+        a.download = 'MORSTRIX_FONT.zip';
+        a.click();
     });
-    switchForumTab('wellness');
+
+    // ===== PAINT =====
+    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> openModal('paintEntryModal'));
+    document.getElementById('paintAnonBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
+    document.getElementById('paintRegBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
+
+    // ===== PINTEREST =====
+    const pinterestPanel = document.getElementById('pinterestPanel');
+    const pinterestMenu = document.getElementById('pinterestMenu');
+    if (pinterestPanel && pinterestMenu) {
+        pinterestPanel.addEventListener('click', (e) => {
+            e.stopPropagation();
+            pinterestMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.pinterest-category').forEach(cat => {
+            cat.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const catName = cat.dataset.cat;
+                if (catName === 'diliger') openModal('pinterestModalDiliger');
+                else if (catName === 'tattoo') openModal('pinterestModalTattoo');
+                else if (catName === 'barbering') openModal('pinterestModalBarbering');
+                pinterestMenu.classList.remove('active');
+                if (!window.PinUtils) {
+                    const script = document.createElement('script');
+                    script.src = 'https://assets.pinterest.com/js/pinit.js';
+                    script.onload = () => window.PinUtils?.build();
+                    document.head.appendChild(script);
+                } else window.PinUtils?.build();
+            });
+        });
+        document.addEventListener('click', (e) => {
+            if (!pinterestPanel.contains(e.target) && !pinterestMenu.contains(e.target)) {
+                pinterestMenu.classList.remove('active');
+            }
+        });
+    }
+
+    // ===== АРХИВ (заглушка) =====
+    document.getElementById('archiveBtn')?.addEventListener('click', ()=> {
+        openModal('stubModal');
+        document.getElementById('stubModalTitle').textContent = 'АРХИВ';
+        document.getElementById('stubModalText').textContent = 'Скоро здесь будут рисунки участников';
+    });
+
+    // ===== SPOTIFY =====
+    document.getElementById('spotifyIcon')?.addEventListener('click', ()=> openModal('spotifyModal'));
+
+    // ===== TEXT SYNTH (TTS) =====
+    const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
+    const ttsTextInput = document.getElementById('ttsTextInput');
+    const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
+    const ttsStatus = document.getElementById('ttsStatus');
+    let voices = [];
+    function loadVoices() {
+        voices = speechSynthesis.getVoices();
+        if (ttsVoiceSelect) {
+            ttsVoiceSelect.innerHTML = '';
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.lang} - ${voice.name}`;
+                ttsVoiceSelect.appendChild(option);
+            });
+            const ukrVoice = voices.find(v => v.lang.startsWith('uk'));
+            const rusVoice = voices.find(v => v.lang.startsWith('ru'));
+            if (ukrVoice) ttsVoiceSelect.value = ukrVoice.name;
+            else if (rusVoice) ttsVoiceSelect.value = rusVoice.name;
+        }
+    }
+    if (typeof speechSynthesis !== 'undefined') {
+        speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+    }
+    function speakWithSpeechSynthesis(text) {
+        if (!text.trim()) { ttsStatus.textContent = 'Введите текст'; return; }
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const selectedVoiceName = ttsVoiceSelect?.value;
+        if (selectedVoiceName) {
+            const voice = voices.find(v => v.name === selectedVoiceName);
+            if (voice) utterance.voice = voice;
+        }
+        utterance.rate = 1.0; utterance.pitch = 1.0;
+        utterance.onstart = () => ttsStatus.textContent = '▶ Воспроизведение';
+        utterance.onend = () => ttsStatus.textContent = '';
+        utterance.onerror = (e) => ttsStatus.textContent = 'Ошибка: ' + e.error;
+        speechSynthesis.speak(utterance);
+    }
+    if (ttsSpeakBtn) ttsSpeakBtn.addEventListener('click', ()=> speakWithSpeechSynthesis(ttsTextInput.value));
+    if (ttsTextInput) ttsTextInput.addEventListener('keypress', (e)=> { if (e.key === 'Enter') ttsSpeakBtn?.click(); });
+
+    // ===== ТОП ИГРОКОВ (FIREBASE) =====
+    async function loadTopPlayers(){
+        const container = document.querySelector('.top-players-list');
+        if(!container) return;
+        try{
+            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+            const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            const firebaseConfig = {
+                apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+                authDomain:"helper-e10b2.firebaseapp.com",
+                projectId:"helper-e10b2",
+                storageBucket:"helper-e10b2.firebasestorage.app",
+                messagingSenderId:"131536876451",
+                appId:"1:131536876451:web:eeaef494c83dfc4849e016"
+            };
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
+            const snap = await getDocs(q);
+            if(!snap.empty){
+                let html=''; let rank=1;
+                snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
+                container.innerHTML=html;
+            } else {
+                container.innerHTML = '<div style="text-align:center;padding:10px;">— пусто —</div>';
+            }
+        }catch(e){ container.innerHTML='⚠️ ERROR'; }
+    }
+    if(document.querySelector('.top-players-list')) loadTopPlayers();
+
+    // ===== ФОРУМ ВКЛАДКИ =====
+    const contents = {
+        wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
+        interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
+        radio:    ['📻 РАДИО','Музыка, подкасты...'],
+        itai:     ['🤖 IT / AI','Нейросети...'],
+        english:  ['📖 ENGLISH','Изучение английского...'],
+        design:   ['🎨 DESIGN','Графический дизайн...'],
+        tattoo:   ['💉 TATTOO','Тату-культура...'],
+        money:    ['💰 MONEY','Финансы...'],
+        barbering:['✂️ BARBER','Барберинг...']
+    };
+    document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(tab => {
+        tab.addEventListener('click', ()=> {
+            document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(t=> t.classList.remove('active'));
+            tab.classList.add('active');
+            const id = tab.dataset.tab;
+            if(contents[id]) {
+                document.getElementById('forumTitleEmbedded').textContent = contents[id][0];
+                document.getElementById('forumTextEmbedded').textContent = contents[id][1];
+            }
+        });
+    });
+
+    // ===== SUPPORT =====
+    document.getElementById('supportBtn')?.addEventListener('click', ()=> openModal('supportModal'));
+    document.getElementById('forumFullBtn')?.addEventListener('click', ()=> window.open('https://t.me/morstrix', '_blank'));
+
+    // ===== ЗАКРЫТИЕ МОДАЛОК =====
+    document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
+        const id = b.dataset.modal;
+        if(id) closeModal(id);
+    }));
+    document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
+
+    // ===== МОДАЛКА "ЗМІСТ" =====
+    document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
+    document.querySelectorAll('.contents-item').forEach(item => {
+        item.addEventListener('click', ()=> {
+            const page = item.dataset.page;
+            const pages = document.querySelectorAll('.journal-page');
+            const targetPage = document.querySelector(`.journal-page[data-page="${page}"]`);
+            if (targetPage && window.scrollToPage) {
+                const index = [...pages].indexOf(targetPage);
+                window.scrollToPage(index);
+            } else {
+                targetPage?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            }
+            closeModal('contentsModal');
+        });
+    });
+
+    // ===== ESCAPE =====
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
+
+    // ===== TWITTER DISCLAIMER =====
+    document.querySelector('[data-href]')?.addEventListener('click', function() {
+        window.open(this.dataset.href, '_blank');
+        closeModal('disclaimerModal');
+    });
 });
