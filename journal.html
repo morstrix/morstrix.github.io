@@ -20,40 +20,35 @@
 
 <!-- TOP -->
 <div class="top-panel glass">
-    <div class="logo">MORSTRIX</div>
-    <div class="nav">
-        <button onclick="scrollToPage(0)">HOME</button>
-        <button onclick="scrollToPage(2)">FONTS</button>
-        <button onclick="scrollToPage(5)">FORUM</button>
-    </div>
+    <button class="nav-btn" id="contentsBtn">CONTENTS</button>
+    <div class="logo accent1">MORSTRIX</div>
+    <button class="nav-btn" id="supportBtn">SUPPORT</button>
 </div>
 
 <!-- MAIN -->
-<div class="wrapper">
-<div class="horizontal" id="horizontal">
+<div class="journal-wrapper">
+<div class="journal-horizontal" id="journalHorizontal">
 
 <!-- PAGE 1 -->
-<section class="page">
-<div class="content">
+<section class="journal-page">
+<div class="page-content">
 
-<div class="headline accent1">CYBER JOURNAL</div>
+<div class="ticker" id="rssTicker"></div>
 
 <div class="card glow">
-    <img src="assets/1.jpg">
+<img id="currentArtPreview" src="assets/default.png">
 </div>
 
-<div class="btn primary">ENTER</div>
+<div class="btn primary" id="paintJournalBtn">PAINT</div>
 
 </div>
 </section>
 
 <!-- PAGE 2 -->
-<section class="page">
-<div class="content">
+<section class="journal-page">
+<div class="page-content">
 
-<div class="headline accent2">GALLERY</div>
-
-<div class="carousel" id="carousel">
+<div class="carousel" id="mainCarousel">
 <img src="assets/1.jpg" class="active">
 <img src="assets/2.jpg">
 <img src="assets/3.jpg">
@@ -62,59 +57,49 @@
 </div>
 </section>
 
-<!-- PAGE 3 -->
-<section class="page">
-<div class="content">
+<!-- PAGE 3 (СТАЙЛЕР ВОЗВРАЩЁН) -->
+<section class="journal-page">
+<div class="page-content">
 
-<div class="headline accent3">FONT LAB</div>
-
-<input id="input" placeholder="TYPE TEXT">
-
-<div id="preview"></div>
+<input id="fontInputEmbedded" placeholder="TYPE TEXT">
+<div id="stylerPreviewEmbedded"></div>
 
 </div>
 </section>
 
-<!-- PAGE 4 -->
-<section class="page">
-<div class="content">
+<!-- PAGE 4 (TTS ВОЗВРАЩЁН) -->
+<section class="journal-page">
+<div class="page-content">
 
-<div class="headline accent1">SOUND</div>
-
-<button class="btn neon" id="play">PLAY</button>
+<input id="ttsTextInput" placeholder="TYPE TEXT">
+<button id="ttsSpeakBtn" class="btn neon">PLAY</button>
+<div id="ttsStatus"></div>
 
 </div>
 </section>
 
-<!-- PAGE 5 -->
-<section class="page">
-<div class="content">
+<!-- PAGE 5 (FIREBASE) -->
+<section class="journal-page">
+<div class="page-content">
 
-<div class="headline accent2">TOP</div>
-
-<div class="list">
-<div>01 — USER_X</div>
-<div>02 — CYBER_02</div>
-</div>
+<div class="title accent2">TOP PLAYERS</div>
+<div class="top-players-list"></div>
 
 </div>
 </section>
 
 <!-- PAGE 6 -->
-<section class="page">
-<div class="content">
-
-<div class="headline accent3">FORUM</div>
+<section class="journal-page">
+<div class="page-content">
 
 <div class="tabs">
-<div class="tab active">DESIGN</div>
-<div class="tab">AI</div>
-<div class="tab">MONEY</div>
+<div class="tab active" data-tab="design">🎨</div>
+<div class="tab" data-tab="itai">🤖</div>
+<div class="tab" data-tab="money">💰</div>
 </div>
 
-<div class="card glass">
-DISCUSSION AREA
-</div>
+<h3 id="forumTitleEmbedded">DESIGN</h3>
+<p id="forumTextEmbedded">Графический дизайн...</p>
 
 </div>
 </section>
