@@ -86,8 +86,8 @@ body {
 }
 
 .art-block {
-    width: 55%;                 /* средний размер */
-    max-width: 280px;
+    width: 65%;                 /* средний размер */
+    max-width: 300px;
     aspect-ratio: 1/1;
     background: #000;
     display: flex;
