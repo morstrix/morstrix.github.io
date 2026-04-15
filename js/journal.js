@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initRssTicker();
     initArtPreviewSync();
     initPaintEntry();
-    initPinterestPanel();
     initArchiveStub();
+    initPinterestPanel();
     initCarousel();
     initFontStyler();
     initDownloadArchive();
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeyboardEscape();
 });
 
-// ===================== LENIS (ИСПРАВЛЕН) =====================
+// ===================== LENIS =====================
 function initLenis() {
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
@@ -124,7 +124,25 @@ function initPaintEntry() {
     document.getElementById('paintRegBtn')?.addEventListener('click', () => window.open('paint.html', '_blank'));
 }
 
-// ===================== PINTEREST (ИСПРАВЛЕН) =====================
+function initArchiveStub() {
+    document.getElementById('archiveBtn')?.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay active';
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width:400px;">
+                <div class="modal-header"><span class="modal-title-text">АРХИВ</span><button class="modal-close-btn">✜</button></div>
+                <div class="modal-inner" style="text-align:center;">
+                    <img src="assets/art.jpg" style="width:100%; border:2px solid #a84d6b;">
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        const closeBtn = modal.querySelector('.modal-close-btn');
+        closeBtn.addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    });
+}
+
 function initPinterestPanel() {
     const panel = document.getElementById('pinterestPanel');
     const menu = document.getElementById('pinterestMenu');
@@ -160,10 +178,6 @@ function initPinterestPanel() {
             menu.classList.remove('active');
         }
     });
-}
-
-function initArchiveStub() {
-    document.getElementById('archiveBtn')?.addEventListener('click', () => showStubModal('АРХИВ', 'Скоро здесь будут рисунки участников'));
 }
 
 function initCarousel() {
@@ -233,7 +247,10 @@ function animatePlaceholder(input, text) {
 
 function initDownloadArchive() {
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', () => {
-        const a = document.createElement('a'); a.href = 'assets/morstrix_archive.zip'; a.download = 'MORSTRIX_FONT.zip'; a.click();
+        const a = document.createElement('a'); 
+        a.href = 'assets/morstrix_archive.zip'; 
+        a.download = 'MORSTRIX_FONT.zip'; 
+        a.click();
     });
 }
 
@@ -261,12 +278,15 @@ function initTts() {
         if (voice) u.voice = voice;
         u.onstart = () => status.textContent = '▶ Воспроизведение';
         u.onend = () => status.textContent = '';
+        u.onerror = () => status.textContent = 'Ошибка';
         speechSynthesis.speak(u);
     });
     animatePlaceholder(input, 'TYPE TEXT');
 }
 
-function initSpotify() { document.getElementById('spotifyIcon')?.addEventListener('click', () => openModal('spotifyModal')); }
+function initSpotify() { 
+    document.getElementById('spotifyIcon')?.addEventListener('click', () => openModal('spotifyModal')); 
+}
 
 async function initTopPlayers() {
     const container = document.querySelector('.top-players-list');
@@ -274,14 +294,23 @@ async function initTopPlayers() {
     try {
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
         const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
-        const app = initializeApp({ apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU", authDomain: "helper-e10b2.firebaseapp.com", projectId: "helper-e10b2" });
+        const app = initializeApp({ 
+            apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU", 
+            authDomain: "helper-e10b2.firebaseapp.com", 
+            projectId: "helper-e10b2" 
+        });
         const db = getFirestore(app);
         const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
         const snap = await getDocs(q);
         let html = '', rank = 1;
-        snap.forEach(d => { const data = d.data(); html += `<div style="display:flex;justify-content:space-between;"><span>${rank++}. ${data.name || 'ANON'}</span><span>${data.score}</span></div>`; });
+        snap.forEach(d => { 
+            const data = d.data(); 
+            html += `<div style="display:flex;justify-content:space-between;"><span>${rank++}. ${data.name || 'ANON'}</span><span>${data.score}</span></div>`; 
+        });
         container.innerHTML = html || '<div>— пусто —</div>';
-    } catch (e) { container.innerHTML = '⚠️ ERROR'; }
+    } catch (e) { 
+        container.innerHTML = '⚠️ ERROR'; 
+    }
 }
 
 function initForumTabs() {
@@ -305,9 +334,11 @@ function initForumTabs() {
     document.getElementById('forumFullBtn')?.addEventListener('click', () => window.open('https://t.me/morstrix', '_blank'));
 }
 
-function initSupportModal() { document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal')); }
+function initSupportModal() { 
+    document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal')); 
+}
 
-// ===================== МОДАЛКИ (ИСПРАВЛЕНО ЗАКРЫТИЕ) =====================
+// ===================== МОДАЛКИ =====================
 function openModal(id) { 
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active'); 
@@ -323,7 +354,6 @@ function showStubModal(title, text) {
 }
 
 function initModals() {
-    // Закрытие по кнопке
     document.querySelectorAll('.modal-close-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -331,12 +361,9 @@ function initModals() {
             if (modalId) closeModal(modalId);
         });
     });
-    // Закрытие по клику на оверлей
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.classList.remove('active');
-            }
+            if (e.target === overlay) overlay.classList.remove('active');
         });
     });
 }
