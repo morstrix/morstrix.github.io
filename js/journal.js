@@ -17,46 +17,74 @@ const app = initializeApp(firebaseConfig);
 getAnalytics(app);
 const db = getFirestore(app);
 
-// --- LENIS SETUP (ИСПРАВЛЕНО ДЛЯ МОБИЛЬНЫХ) ---
+// --- DOM ELEMENTS ---
+const wrapper = document.getElementById('journalWrapper');
+const horizontal = document.getElementById('journalHorizontal');
+
+// --- LENIS SETUP (HARDCODED HORIZONTAL) ---
+// Важно: target указывает на наш контейнер, а не на window
 const lenis = new Lenis({
+    wrapper: wrapper, // Скроллим только этот элемент
+    content: horizontal,
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'horizontal',
     gestureDirection: 'horizontal',
     smooth: true,
     mouseMultiplier: 1,
-    smoothTouch: true, // Включаем плавность для тача
+    smoothTouch: true,
     touchMultiplier: 2,
     infinite: false,
 });
 
-// Ручная интеграция с DOM элементом
 function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
 
-// Блокировка вертикального скролла на уровне окна
+// --- БЛОКИРОВКА ВЕРТИКАЛЬНОГО СКРОЛЛА (ДЛЯ ТЕЛЕФОНОВ) ---
+// Предотвращаем стандартный скролл браузера вверх-вниз
+window.addEventListener('touchmove', (e) => {
+    // Если модалка открыта - разрешаем скроллить внутри неё
+    if (document.querySelector('.modal-overlay.active')) return;
+    
+    // Иначе блокируем всё, кроме горизонтального жеста внутри нашего враппера
+    // Lenis сам разберется с направлением, но мы страхуем
+}, { passive: false });
+
 window.addEventListener('wheel', (e) => {
+    if (document.querySelector('.modal-overlay.active')) return;
+    // Если скролл больше вертикальный чем горизонтальный - блокируем
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
     }
 }, { passive: false });
 
-window.addEventListener('touchmove', (e) => {
-    // Если скролл вертикальный и мы не в модалке - блокируем
-    // Lenis сам разберется с горизонтальным
-}, { passive: false });
 
 // --- NAVIGATION LOGIC ---
 let currentPage = 1;
 const totalPages = 6;
-const wrapper = document.getElementById('journalWrapper');
 
+// Функция перехода к странице (работает и из модалки ЗМІСТ)
 window.scrollToPage = function(pageNum) {
-    const targetPosition = (pageNum - 1) * window.innerWidth;
-    lenis.scrollTo(targetPosition, { immediate: false });
+    // Закрываем модалку ЗМІСТ если она открыта
+    const contentsModal = document.getElementById('contentsModal');
+    if (contentsModal && contentsModal.classList.contains('active')) {
+        contentsModal.classList.remove('active');
+    }
+
+    // Вычисляем позицию: (номер страницы - 1) * ширина экрана
+    const width = window.innerWidth;
+    const targetPosition = (pageNum - 1) * width;
+
+    // Скроллим через Lenis
+    lenis.scrollTo(targetPosition, {
+        offset: 0,
+        immediate: false, // Плавная прокрутка
+        duration: 1.2
+    });
+
     updateActivePage(pageNum);
 }
 
@@ -67,9 +95,12 @@ function updateActivePage(pageNum) {
     if (activeDot) activeDot.classList.add('active');
 }
 
-// Синхронизация точек при скролле
+// Синхронизация точек при ручном скролле
 lenis.on('scroll', ({ scroll }) => {
-    const newPage = Math.round(scroll / window.innerWidth) + 1;
+    const width = window.innerWidth;
+    // Округляем до ближайшей страницы
+    const newPage = Math.round(scroll / width) + 1;
+    
     if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
         updateActivePage(newPage);
     }
@@ -86,12 +117,21 @@ function loadCurrentArt() {
     }
 }
 
-window.openArchiveModal = () => document.getElementById('archiveModal').classList.add('active');
-window.openPaintModal = () => document.getElementById('paintModal').classList.add('active');
+window.openArchiveModal = () => {
+    const modal = document.getElementById('archiveModal');
+    if(modal) modal.classList.add('active');
+}
+
+window.openPaintModal = () => {
+    const modal = document.getElementById('paintModal');
+    if(modal) modal.classList.add('active');
+}
 
 window.togglePinterestMenu = () => {
     const menu = document.getElementById('pinterestMenu');
-    if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    if (menu) {
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
 }
 
 window.openPinterestModal = () => {
@@ -99,7 +139,6 @@ window.openPinterestModal = () => {
     if (modal) {
         modal.classList.add('active');
         window.togglePinterestMenu();
-        // Load Pinterest script only once
         if (!document.querySelector('#pinterest-js')) {
             const script = document.createElement('script');
             script.id = 'pinterest-js';
@@ -122,7 +161,10 @@ function initCarousel() {
     }, 3000);
 }
 
-window.openTwitterModal = () => document.getElementById('twitterModal').classList.add('active');
+window.openTwitterModal = () => {
+    const modal = document.getElementById('twitterModal');
+    if(modal) modal.classList.add('active');
+}
 
 // Page 3: Fonts
 const FONT_MAP = {
@@ -188,7 +230,10 @@ window.speakText = () => {
     }
 }
 
-window.openSpotifyModal = () => document.getElementById('spotifyModal').classList.add('active');
+window.openSpotifyModal = () => {
+    const modal = document.getElementById('spotifyModal');
+    if(modal) modal.classList.add('active');
+}
 
 // Page 5: Top Players
 async function loadTopPlayers() {
@@ -267,12 +312,17 @@ window.openSupportModal = () => {
 
 // Global Modal Functions
 window.closeAllModals = () => {
-    document.querySelectorAll('.modal-overlay').forEach(modal => modal.classList.remove('active'));
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        if(modal) modal.classList.remove('active');
+    });
     const pMenu = document.getElementById('pinterestMenu');
     if (pMenu) pMenu.style.display = 'none';
 }
 
-window.openContentsModal = () => document.getElementById('contentsModal').classList.add('active');
+window.openContentsModal = () => {
+    const modal = document.getElementById('contentsModal');
+    if(modal) modal.classList.add('active');
+}
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') window.closeAllModals();
@@ -286,6 +336,12 @@ document.querySelectorAll('.modal-overlay').forEach(modal => {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
+    // Принудительно задаем ширину, чтобы Lenis понял размеры
+    if(horizontal) {
+        // Убеждаемся, что flex-контейнер растянут
+        horizontal.style.width = 'max-content';
+    }
+
     loadCurrentArt();
     initCarousel();
     populateVoiceList();
@@ -305,4 +361,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     switchForumTab('wellness');
+    
+    // Пересчет размеров при повороте экрана
+    window.addEventListener('resize', () => {
+        lenis.resize();
+        // Возвращаем на текущую страницу после ресайза
+        scrollToPage(currentPage);
+    });
 });
