@@ -47,7 +47,7 @@ body {
     align-items:center; width:100%; padding:12px; min-height:0;
 }
 
-/* ================= PAGE 1 (ФИНАЛЬНАЯ ПРАВКА) ================= */
+/* ================= PAGE 1 ================= */
 .page1-layout {
     display: flex;
     flex-direction: column;
@@ -62,23 +62,32 @@ body {
     white-space: nowrap;
     padding: 5px 0;
 }
+.ticker {
+    display: inline-block;
+    font-size: 12px;
+    color: #a27791;
+    text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f;
+    animation: scrollTicker 40s linear infinite;
+}
+@keyframes scrollTicker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* Основной блок, который занимает всё свободное место и центрирует содержимое */
+/* Основной блок, центрирующий контент */
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;  /* вертикальное центрирование артблока+архива+paint */
+    justify-content: center;
     width: 100%;
 }
 
 /* Ряд с артблоком и архивом */
 .art-row {
     display: flex;
-    align-items: center;       /* архив по центру вертикали относительно артблока */
+    align-items: center;
     justify-content: flex-start;
     gap: 20px;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .art-block {
@@ -91,7 +100,6 @@ body {
     justify-content: center;
     flex-shrink: 0;
 }
-
 .art-block img {
     width: 100%;
     height: 100%;
@@ -115,15 +123,14 @@ body {
     min-width: 120px;
 }
 
-/* Кнопка Paint под артблоком */
+/* Кнопка Paint */
 .paint-btn-row {
     display: flex;
     justify-content: flex-start;
     width: 45%;
     max-width: 300px;
-    margin-top: 20px;          /* отступ от артблока */
+    margin-top: 20px;
 }
-
 .paint-trigger-img {
     width: 60px;
     height: 60px;
@@ -131,13 +138,12 @@ body {
     cursor: pointer;
 }
 
-/* Pinterest — прибит к низу */
+/* Pinterest */
 .pinterest-panel-wrapper {
     width: 100%;
     position: relative;
     margin-top: 0;
 }
-
 .pinterest-panel {
     width: 100%;
     height: 55px;
@@ -154,7 +160,6 @@ body {
     position: relative;
     z-index: 20;
 }
-
 .pinterest-menu {
     position: absolute;
     bottom: 100%;
@@ -172,13 +177,11 @@ body {
     border-bottom: none;
     z-index: 15;
 }
-
 .pinterest-menu.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
-
 .pinterest-category {
     color: #fff;
     font-size: 11px;
@@ -187,34 +190,6 @@ body {
     background: #222;
     border: 1px solid var(--accent-pink);
     text-transform: uppercase;
-}
-
-/* Мобильная адаптация */
-@media (max-width: 768px) {
-    .main-content {
-        justify-content: flex-start;  /* на мобильном не центрируем, пусть идёт сверху */
-        padding-top: 10px;
-    }
-    .art-row {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-    .art-block {
-        width: 80%;
-        max-width: 250px;
-    }
-    .archive-block {
-        width: 80%;
-        padding: 15px;
-        min-width: auto;
-    }
-    .paint-btn-row {
-        width: 80%;
-        max-width: 250px;
-        justify-content: center;
-        margin-top: 15px;
-    }
 }
 
 /* ================= ОСТАЛЬНЫЕ СТРАНИЦЫ ================= */
@@ -318,3 +293,33 @@ body {
 .page-indicator { display:flex; gap:15px; }
 .dot { width:8px; height:8px; border-radius:50%; background:var(--accent-pink); opacity:0.4; }
 .dot.active { opacity:1; background:#ffb7c7; }
+
+/* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
+@media (max-width: 768px) {
+    .main-content {
+        justify-content: flex-start;
+        padding-top: 10px;
+    }
+    .art-row {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .art-block {
+        width: 45%;
+        max-width: 200px;
+    }
+    .archive-block {
+        width: auto;
+        flex: 1;
+        padding: 12px;
+        min-width: 100px;
+    }
+    .paint-btn-row {
+        width: 45%;
+        max-width: 200px;
+        justify-content: flex-start;
+        margin-top: 15px;
+    }
+}
