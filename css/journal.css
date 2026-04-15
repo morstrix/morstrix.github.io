@@ -4,40 +4,40 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Tiny5', monospace;
-    background-color: #050508;
-    color: #ffffff;
+/* Блокировка стандартного скролла страницы */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    height: 100vh;
-    position: relative;
+    overscroll-behavior: none;
+    /* Важно для мобильных, чтобы браузер не перехватывал свайпы */
+    touch-action: none; 
 }
 
+/* Контейнер скролла */
 .journal-wrapper {
-    height: calc(100vh - 100px);
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    touch-action: none;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
     position: relative;
-    top: 60px;
+    /* Разрешаем тач-события только здесь для Lenis */
+    touch-action: pan-y; 
 }
 
 .journal-horizontal {
-    display: inline-flex;
-    height: 100%;
+    display: flex;
+    flex-direction: row;
     width: max-content;
+    height: 100%;
+    will-change: transform; /* Оптимизация для Lenis */
 }
 
 .journal-page {
     width: 100vw;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    vertical-align: top;
-    white-space: normal;
+    flex-shrink: 0;
     position: relative;
 }
 
@@ -515,14 +515,16 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(5, 5, 8, 0.9);
-    display: none;
+    display: none; /* Скрыто по умолчанию */
     align-items: center;
     justify-content: center;
-    z-index: 2000;
+    z-index: 9999; /* Гарантированно выше всего (навигация 1000) */
+    pointer-events: none; /* Клики проходят сквозь скрытую модалку */
 }
 
 .modal-overlay.active {
     display: flex;
+    pointer-events: auto; /* Включаем клики внутри активной модалки */
 }
 
 .modal-content {
