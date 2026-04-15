@@ -14,84 +14,51 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+getAnalytics(app);
 const db = getFirestore(app);
 
-// --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
-let lenis;
-let currentPage = 1;
-const totalPages = 6;
-let isScrolling = false;
-
-// --- ИНИЦИАЛИЗАЦИЯ ПОСЛЕ ЗАГРУЗКИ DOM ---
-document.addEventListener('DOMContentLoaded', () => {
-    initLenis();
-    setupEventListeners();
-    loadCurrentArt();
-    initCarousel();
-    populateVoiceList();
-    loadTopPlayers();
-    switchForumTab('wellness');
+// --- LENIS SETUP (ИСПРАВЛЕНО ДЛЯ МОБИЛЬНЫХ) ---
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    direction: 'horizontal',
+    gestureDirection: 'horizontal',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: true, // Включаем плавность для тача
+    touchMultiplier: 2,
+    infinite: false,
 });
 
-// --- LENIS SETUP ---
-function initLenis() {
-    if (typeof Lenis === 'undefined') {
-        console.error('Lenis library not loaded! Check the script tag in HTML.');
-        return;
-    }
-
-    const wrapper = document.getElementById('journalWrapper');
-    if (!wrapper) return;
-
-    lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'horizontal', // Горизонтальный скролл
-        gestureDirection: 'horizontal', // Реагирует на свайпы влево-вправо
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: true, // Включаем плавность для тачскринов
-        touchMultiplier: 2,
-        infinite: false,
-        target: wrapper, // Скроллим именно этот контейнер
-    });
-
-    // Синхронизация анимации
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
+// Ручная интеграция с DOM элементом
+function raf(time) {
+    lenis.raf(time);
     requestAnimationFrame(raf);
-
-    // Обновление активной точки при скролле
-    lenis.on('scroll', ({ scroll }) => {
-        const width = window.innerWidth;
-        const newPage = Math.round(scroll / width) + 1;
-        
-        if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
-            updateActivePage(newPage);
-        }
-    });
 }
+requestAnimationFrame(raf);
 
-// --- НАВИГАЦИЯ ---
+// Блокировка вертикального скролла на уровне окна
+window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+window.addEventListener('touchmove', (e) => {
+    // Если скролл вертикальный и мы не в модалке - блокируем
+    // Lenis сам разберется с горизонтальным
+}, { passive: false });
+
+// --- NAVIGATION LOGIC ---
+let currentPage = 1;
+const totalPages = 6;
+const wrapper = document.getElementById('journalWrapper');
+
 window.scrollToPage = function(pageNum) {
-    if (!lenis) return;
-    
-    const width = window.innerWidth;
-    const targetPosition = (pageNum - 1) * width;
-    
-    lenis.scrollTo(targetPosition, {
-        offset: 0,
-        immediate: false,
-        duration: 1.5, // Чуть быстрее для кликов по меню
-        easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
-    });
-    
+    const targetPosition = (pageNum - 1) * window.innerWidth;
+    lenis.scrollTo(targetPosition, { immediate: false });
     updateActivePage(pageNum);
-    closeAllModals(); // Закрываем модалку при выборе пункта
-};
+}
 
 function updateActivePage(pageNum) {
     currentPage = pageNum;
@@ -100,89 +67,39 @@ function updateActivePage(pageNum) {
     if (activeDot) activeDot.classList.add('active');
 }
 
-// --- ОБРАБОТЧИКИ СОБЫТИЙ ---
-function setupEventListeners() {
-    // Клавиша Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeAllModals();
-    });
+// Синхронизация точек при скролле
+lenis.on('scroll', ({ scroll }) => {
+    const newPage = Math.round(scroll / window.innerWidth) + 1;
+    if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
+        updateActivePage(newPage);
+    }
+});
 
-    // Клик вне модалки
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeAllModals();
-        });
-    });
+// --- PAGE FUNCTIONS ---
 
-    // Табы форума
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tab = btn.getAttribute('data-tab');
-            if (tab) switchForumTab(tab);
-        });
-    });
-
-    // Инпуты
-    const stylerInput = document.getElementById('stylerInput');
-    if (stylerInput) stylerInput.addEventListener('input', updateStylerPreview);
-
-    const ttsInput = document.getElementById('ttsInput');
-    if (ttsInput) ttsInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') speakText();
-    });
-    
-    // Пересчет ширины при ресайзе окна (чтобы скролл не сбивался)
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            if(lenis) {
-                const currentScroll = lenis.scroll;
-                const width = window.innerWidth;
-                const newPage = Math.round(currentScroll / width);
-                // Небольшая коррекция позиции, если нужно, но Lenis обычно справляется сам
-            }
-        }, 200);
-    });
+// Page 1: Art & Pinterest
+function loadCurrentArt() {
+    const savedArt = localStorage.getItem('morstrix_current_art');
+    if (savedArt) {
+        const img = document.getElementById('currentArtPreview');
+        if (img) img.src = savedArt;
+    }
 }
 
-// --- ФУНКЦИИ МОДАЛОК ---
-window.openContentsModal = function() {
-    const modal = document.getElementById('contentsModal');
-    if (modal) {
-        modal.classList.add('active');
-    } else {
-        console.error('Modal #contentsModal not found');
-    }
-};
+window.openArchiveModal = () => document.getElementById('archiveModal').classList.add('active');
+window.openPaintModal = () => document.getElementById('paintModal').classList.add('active');
 
-window.closeAllModals = function() {
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.classList.remove('active');
-    });
-    const pMenu = document.getElementById('pinterestMenu');
-    if (pMenu) pMenu.style.display = 'none';
-};
-
-window.openArchiveModal = () => document.getElementById('archiveModal')?.classList.add('active');
-window.openPaintModal = () => document.getElementById('paintModal')?.classList.add('active');
-window.openTwitterModal = () => document.getElementById('twitterModal')?.classList.add('active');
-window.openSpotifyModal = () => document.getElementById('spotifyModal')?.classList.add('active');
-
-window.togglePinterestMenu = function() {
+window.togglePinterestMenu = () => {
     const menu = document.getElementById('pinterestMenu');
-    if (menu) {
-        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
-};
+    if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
 
-window.openPinterestModal = function() {
+window.openPinterestModal = () => {
     const modal = document.getElementById('pinterestModal');
     if (modal) {
         modal.classList.add('active');
         window.togglePinterestMenu();
-        
-        // Динамическая загрузка Pinterest
+        // Load Pinterest script only once
         if (!document.querySelector('#pinterest-js')) {
             const script = document.createElement('script');
             script.id = 'pinterest-js';
@@ -191,45 +108,21 @@ window.openPinterestModal = function() {
             document.body.appendChild(script);
         }
     }
-};
-
-window.openSupportModal = function() {
-    const modal = document.getElementById('supportModal');
-    const container = document.getElementById('telegram-comments');
-    if (modal && container) {
-        modal.classList.add('active');
-        if (container.innerHTML.trim() === '') {
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = "https://telegram.org/js/telegram-widget.js?22";
-            script.setAttribute('data-telegram-comments', 'morstrix/71');
-            script.setAttribute('data-width', '100%');
-            script.setAttribute('data-height', '700px');
-            container.appendChild(script);
-        }
-    }
-};
-
-// --- ЛОГИКА СТРАНИЦ ---
-
-// Page 1: Art
-function loadCurrentArt() {
-    const savedArt = localStorage.getItem('morstrix_current_art');
-    const img = document.getElementById('currentArtPreview');
-    if (savedArt && img) img.src = savedArt;
 }
 
-// Page 2: Carousel
+// Page 2: Carousel & Twitter
 function initCarousel() {
+    let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     if (slides.length === 0) return;
-    let currentIndex = 0;
     setInterval(() => {
         slides[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % slides.length;
         slides[currentIndex].classList.add('active');
     }, 3000);
 }
+
+window.openTwitterModal = () => document.getElementById('twitterModal').classList.add('active');
 
 // Page 3: Fonts
 const FONT_MAP = {
@@ -247,21 +140,21 @@ function updateStylerPreview() {
     preview.textContent = result || 'Preview will appear here';
 }
 
-window.copyToClipboard = function() {
+window.copyToClipboard = () => {
     const preview = document.getElementById('stylerPreview');
     if (preview && preview.textContent) {
         navigator.clipboard.writeText(preview.textContent).then(() => alert('Copied!'));
     }
-};
+}
 
-window.downloadArchive = function() {
+window.downloadArchive = () => {
     const link = document.createElement('a');
     link.href = 'assets/morstrix_archive.zip';
     link.download = 'morstrix_archive.zip';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-};
+}
 
 // Page 4: Sound
 let voices = [];
@@ -277,62 +170,57 @@ function populateVoiceList() {
         voiceSelect.appendChild(option);
     });
 }
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = populateVoiceList;
-}
+if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
 
-window.speakText = function() {
+window.speakText = () => {
     const textInput = document.getElementById('ttsInput');
     const voiceSelect = document.getElementById('voiceSelect');
     const statusDiv = document.getElementById('ttsStatus');
     if (!textInput || !voiceSelect || !statusDiv) return;
-
+    
     const text = textInput.value;
     if (text.trim()) {
         const utterance = new SpeechSynthesisUtterance(text);
         if (voices[voiceSelect.value]) utterance.voice = voices[voiceSelect.value];
-        statusDiv.textContent = 'Speaking...';
         speechSynthesis.speak(utterance);
+        statusDiv.textContent = 'Speaking...';
         utterance.onend = () => statusDiv.textContent = 'Finished.';
-        utterance.onerror = () => statusDiv.textContent = 'Error.';
     }
-};
+}
+
+window.openSpotifyModal = () => document.getElementById('spotifyModal').classList.add('active');
 
 // Page 5: Top Players
 async function loadTopPlayers() {
     const container = document.getElementById('topPlayersList');
     if (!container) return;
-
     try {
         const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-            container.innerHTML = '';
-            let rank = 1;
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const item = document.createElement('div');
-                item.className = 'player-item';
-                item.textContent = `${rank}. ${data.name || 'UNKNOWN'} ${data.score || 0}`;
-                container.appendChild(item);
-                rank++;
-            });
-            return;
-        }
-        throw new Error("Empty");
+        if (querySnapshot.empty) throw new Error("No data");
+        
+        container.innerHTML = '';
+        let rank = 1;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const item = document.createElement('div');
+            item.className = 'player-item';
+            item.innerHTML = `<span>${rank}. ${data.name || 'UNKNOWN'}</span> <span>${data.score || 0}</span>`;
+            container.appendChild(item);
+            rank++;
+        });
     } catch (error) {
-        // Fallback mock data
+        console.log("Firebase error, using mock data");
         const mockData = [
             { name: 'PLAYER1', score: 999 }, { name: 'PLAYER2', score: 888 },
             { name: 'PLAYER3', score: 777 }, { name: 'PLAYER4', score: 666 },
             { name: 'PLAYER5', score: 555 }
         ];
         container.innerHTML = '';
-        mockData.forEach((player, i) => {
+        mockData.forEach((player, index) => {
             const item = document.createElement('div');
             item.className = 'player-item';
-            item.textContent = `${i + 1}. ${player.name} ${player.score}`;
+            item.innerHTML = `<span>${index + 1}. ${player.name}</span> <span>${player.score}</span>`;
             container.appendChild(item);
         });
     }
@@ -343,10 +231,10 @@ const forumContents = {
     wellness: { header: 'WELLNESS', text: 'Wellness content and discussions...' },
     interior: { header: 'INTERIOR', text: 'Interior design trends...' },
     radio: { header: 'RADIO', text: 'Radio station updates...' },
-    itai: { header: 'ITALIAN', text: 'Italian culture insights...' },
-    english: { header: 'ENGLISH', text: 'English community discussions...' },
-    design: { header: 'DESIGN', text: 'Design theory and news...' },
-    tattoo: { header: 'TATTOO', text: 'Tattoo art and culture...' },
+    itai: { header: 'ITALIAN', text: 'Italian culture...' },
+    english: { header: 'ENGLISH', text: 'English community...' },
+    design: { header: 'DESIGN', text: 'Design theory...' },
+    tattoo: { header: 'TATTOO', text: 'Tattoo art...' },
     money: { header: 'MONEY', text: 'Financial literacy...' },
     barbering: { header: 'BARBER', text: 'Barbering techniques...' }
 };
@@ -360,3 +248,61 @@ function switchForumTab(tab) {
 }
 
 window.openTelegramForum = () => window.open('https://t.me/morstrix', '_blank');
+
+window.openSupportModal = () => {
+    const modal = document.getElementById('supportModal');
+    const container = document.getElementById('telegram-comments');
+    if (modal && container) {
+        modal.classList.add('active');
+        container.innerHTML = '';
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = "https://telegram.org/js/telegram-widget.js?22";
+        script.setAttribute('data-telegram-comments', 'morstrix/71');
+        script.setAttribute('data-width', '100%');
+        script.setAttribute('data-height', '700px');
+        container.appendChild(script);
+    }
+}
+
+// Global Modal Functions
+window.closeAllModals = () => {
+    document.querySelectorAll('.modal-overlay').forEach(modal => modal.classList.remove('active'));
+    const pMenu = document.getElementById('pinterestMenu');
+    if (pMenu) pMenu.style.display = 'none';
+}
+
+window.openContentsModal = () => document.getElementById('contentsModal').classList.add('active');
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') window.closeAllModals();
+});
+
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) window.closeAllModals();
+    });
+});
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    loadCurrentArt();
+    initCarousel();
+    populateVoiceList();
+    loadTopPlayers();
+    
+    const stylerInput = document.getElementById('stylerInput');
+    if (stylerInput) stylerInput.addEventListener('input', updateStylerPreview);
+    
+    const ttsInput = document.getElementById('ttsInput');
+    if (ttsInput) ttsInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') window.speakText(); });
+    
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tab = btn.getAttribute('data-tab');
+            if (tab) switchForumTab(tab);
+        });
+    });
+    
+    switchForumTab('wellness');
+});
