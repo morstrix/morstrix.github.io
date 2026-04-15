@@ -54,6 +54,35 @@ body {
     text-transform: uppercase;
 }
 
+.panel-icons {
+    display: flex;
+    gap: 15px;
+    margin-right: auto;
+    margin-left: 20px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: 2px solid #a84d6b;
+    color: #a84d6b;
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+.icon-btn:hover {
+    background: #a84d6b;
+    color: #000;
+}
+.icon-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
 .panel-close img {
     width: 30px;
     height: 30px;
@@ -69,7 +98,6 @@ body {
     z-index: 10;
 }
 
-/* Сетка товаров — 2 колонки */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -91,11 +119,7 @@ body {
     align-items: center;
     justify-content: center;
 }
-
-.cat-card:active {
-    transform: scale(0.97);
-}
-
+.cat-card:active { transform: scale(0.97); }
 .cat-image {
     width: 100%;
     height: 70%;
@@ -110,14 +134,9 @@ body {
     text-transform: uppercase;
     margin-bottom: 10px;
 }
+.cat-name { font-size: 0.65rem; color: #fff; letter-spacing: 1px; }
 
-.cat-name {
-    font-size: 0.65rem;
-    color: #fff;
-    letter-spacing: 1px;
-}
-
-/* ========== КОРЗИНА (снизу) ========== */
+/* ========== КОРЗИНА ========== */
 .cart-bottom {
     position: fixed;
     bottom: 0;
@@ -131,7 +150,6 @@ body {
     align-items: center;
     z-index: 100;
 }
-
 .cart-bottom-btn {
     background: #a27791;
     border: 1px solid #b97272;
@@ -144,25 +162,9 @@ body {
     align-items: center;
     gap: 10px;
 }
-
-.cart-bottom-btn:active {
-    transform: scale(0.95);
-    background: #b97272;
-    color: #010101;
-}
-
-.cart-bottom-count {
-    background: #b97272;
-    color: #010101;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-}
-
-.cart-bottom-total {
-    color: #a1a1a1;
-    font-size: 0.7rem;
-}
+.cart-bottom-btn:active { transform: scale(0.95); background: #b97272; color: #010101; }
+.cart-bottom-count { background: #b97272; color: #010101; padding: 2px 8px; border-radius: 20px; font-size: 0.7rem; }
+.cart-bottom-total { color: #a1a1a1; font-size: 0.7rem; }
 
 /* ========== МОДАЛКИ ========== */
 .modal-overlay {
@@ -178,10 +180,7 @@ body {
     align-items: center;
     z-index: 1000;
 }
-.modal-overlay.active {
-    display: flex;
-}
-
+.modal-overlay.active { display: flex; }
 .modal-content {
     background: #a27791;
     border: 4px solid #b97272;
@@ -190,7 +189,6 @@ body {
     max-height: 85vh;
     overflow-y: auto;
 }
-
 .modal-header {
     background: #79434a;
     padding: 12px;
@@ -217,134 +215,59 @@ body {
     align-items: center;
     justify-content: center;
 }
-.modal-inner {
-    padding: 20px;
-    background: #a27791;
-}
+.modal-inner { padding: 20px; background: #a27791; }
 
-.product-modal {
-    max-width: 500px;
-    width: 95%;
-}
-
-.product-carousel-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 20px;
-}
-
+.product-modal { max-width: 500px; width: 95%; }
+.product-carousel-container { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 20px; }
 .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid #a84d6b;
-    color: #fff;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-family: monospace;
-    flex-shrink: 0;
-    user-select: none;
+    width: 40px; height: 40px; background: rgba(0,0,0,0.7); border: 1px solid #a84d6b;
+    color: #fff; font-size: 2rem; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-family: monospace; flex-shrink: 0;
 }
-.carousel-arrow:active {
-    background: #a84d6b;
-    color: #000;
-}
-
 .product-carousel-track {
-    flex: 1;
-    overflow: hidden;
-    border: 2px solid #fff;
-    background: #000;
-    aspect-ratio: 1 / 1;
+    flex: 1; overflow: hidden; border: 2px solid #fff; background: #000; aspect-ratio: 1/1;
 }
-.product-carousel-slides {
-    display: flex;
-    transition: transform 0.3s ease;
-    height: 100%;
-}
+.product-carousel-slides { display: flex; transition: transform 0.3s ease; height: 100%; }
 .product-carousel-slide {
-    flex: 0 0 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0a0a0a;
-    color: #6b2e3e;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    object-fit: cover;
+    flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: #0a0a0a; color: #6b2e3e; font-size: 0.6rem; text-align: center; padding: 10px;
+    cursor: pointer; object-fit: cover;
 }
-
-.product-description {
-    font-size: 0.6rem;
-    line-height: 1.6;
-    color: #a1a1a1;
-    margin: 20px 0;
-    text-align: center;
-    min-height: 60px;
-}
-
-.cart-total {
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 2px solid #fff;
-    text-align: right;
-    font-size: 0.8rem;
-    color: #fff;
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: #b97272;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.8rem;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #2a2a2a;
-    font-size: 0.7rem;
-}
-
+.product-description { font-size: 0.6rem; line-height: 1.6; color: #a1a1a1; margin: 20px 0; text-align: center; min-height: 60px; }
+.cart-total { margin-top: 20px; padding-top: 10px; border-top: 2px solid #fff; text-align: right; font-size: 0.8rem; color: #fff; }
+.remove-item { background: none; border: none; color: #b97272; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
+.cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #2a2a2a; font-size: 0.7rem; }
 .popup-enter-btn {
-    background: #000;
-    border: 2px solid #b97272;
-    color: #a84d6b;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 11px;
-    padding: 10px 24px;
-    cursor: pointer;
-    margin-top: 15px;
-    width: 100%;
-    text-transform: uppercase;
-}
-.popup-enter-btn:active {
-    background: #a84d6b;
-    color: #000;
+    background: #000; border: 2px solid #b97272; color: #a84d6b; font-family: 'Press Start 2P', monospace;
+    font-size: 11px; padding: 10px 24px; cursor: pointer; margin-top: 15px; width: 100%; text-transform: uppercase;
 }
 
-/* Адаптация */
+/* Конструктор и конвертер (взято из журнала) */
+.merch-constructor { text-align: center; }
+.tshirt-preview { position: relative; width: 200px; margin: 0 auto 15px; }
+.tshirt-img { width: 100%; display: block; }
+.print-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; }
+.upload-area { margin-top: 10px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.file-upload-label {
+    display: inline-block; padding: 10px 18px; background: #000; border: 2px dashed #888; cursor: pointer;
+}
+.file-upload-text { font-family: 'Press Start 2P', monospace; font-size: 8px; color: #888; text-transform: uppercase; }
+.universal-btn {
+    cursor: pointer; border: 2px solid #000; background: #565656; padding: 0 0 4px 0; display: inline-block;
+}
+.universal-btn .btn-inner {
+    display: block; background: #fff; border: 2px solid #a0a0a0; padding: 6px 18px; transform: translateY(-4px);
+}
+.universal-btn .btn-inner span { font-family: 'Press Start 2P', monospace; font-size: 9px; color: #000; text-transform: uppercase; }
+.universal-btn:active .btn-inner { transform: translateY(0); }
+.converter-container { text-align: center; }
+.converter-input { width: 100px; background: #000; border: 1px solid #888; color: #fff; padding: 8px; text-align: center; font-family: 'Press Start 2P', monospace; font-size: 10px; }
+.converter-arrow { font-size: 20px; margin: 0 12px; color: #888; }
+
 @media (max-width: 680px) {
     .top-panel { height: 50px; padding: 0 10px; }
     body { padding-top: 60px; }
-    .categories-grid { gap: 15px; }
-    .cat-name { font-size: 0.55rem; }
     .panel-title { font-size: 0.9rem; }
-}
-@media (max-width: 480px) {
-    .cat-card { padding: 10px; }
-    .cat-image { font-size: 0.4rem; }
-    .panel-title { font-size: 0.8rem; }
+    .panel-icons { margin-left: 10px; gap: 10px; }
+    .icon-btn { width: 36px; height: 36px; }
 }
