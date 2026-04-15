@@ -1,283 +1,289 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>MORSTRIX | DIGITAL JOURNAL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MORSTRIX | DIGITAL JOURNAL</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/journal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/journal.css">
 </head>
 
 <body>
 
 <canvas id="neuro-bg"></canvas>
 
-<!-- TOP PANEL -->
 <div class="top-panel">
-  <div></div>
-
-  <button class="panel-btn" id="contentsBtn">
-    ЗМІСТ
-  </button>
-
-  <a href="index.html" class="panel-close">
-    <img src="assets/close.png" alt="close">
-  </a>
+    <div></div>
+    <button class="panel-btn" id="contentsBtn"><span>ЗМІСТ</span></button>
+    <a href="index.html" class="panel-close">
+        <img src="assets/close.png" alt="Close">
+    </a>
 </div>
 
-<!-- WRAPPER -->
 <div class="journal-wrapper">
-  <div class="journal-horizontal" id="journalHorizontal">
+    <div class="journal-horizontal" id="journalHorizontal">
 
-    <!-- PAGE 1 -->
-    <section class="journal-page" data-page="1">
-      <div class="page-content page1-layout">
+        <!-- PAGE 1 -->
+        <div class="journal-page" data-page="1">
+            <div class="page-content page1-layout">
 
-        <div class="ticker-wrapper">
-          <div class="ticker" id="rssTicker">LOADING...</div>
+                <div class="ticker-wrapper">
+                    <div class="ticker" id="rssTicker"></div>
+                </div>
+
+                <div class="art-archive-row">
+                    <div class="art-block">
+                        <img id="currentArtPreview" src="assets/default_art.png" alt="Art">
+                    </div>
+
+                    <div class="archive-block" id="archiveBtn">
+                        <span>АРХИВ</span>
+                    </div>
+                </div>
+
+                <div class="paint-btn-wrapper">
+                    <button class="universal-btn" id="paintJournalBtn">
+                        <span class="btn-inner"><span>PAINT</span></span>
+                    </button>
+                </div>
+
+                <div class="pinterest-panel" id="pinterestPanel">
+                    <span>PINTEREST</span>
+                </div>
+
+                <div class="pinterest-menu" id="pinterestMenu">
+                    <div class="pinterest-category" data-cat="diliger">DILIGER</div>
+                    <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
+                    <div class="pinterest-category" data-cat="barbering">BARBERING</div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="art-archive-row">
+        <!-- PAGE 2 -->
+        <div class="journal-page" data-page="2">
+            <div class="page-content">
 
-          <div class="art-block">
-            <img id="currentArtPreview" src="assets/default_art.png" alt="art">
-          </div>
+                <div class="carousel-section">
+                    <div class="carousel" id="mainCarousel">
+                        <img src="assets/mx1.jpg" class="active">
+                        <img src="assets/mx2.jpg">
+                    </div>
 
-          <div class="archive-block" id="archiveBtn">
-            АРХИВ
-          </div>
+                    <div class="hashtag-row">
+                        <span class="hashtag">#layoutporn</span>
+                    </div>
+                </div>
 
+                <div class="twitter-section">
+                    <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+                </div>
+
+            </div>
         </div>
 
-        <div class="paint-btn-wrapper">
-          <button class="universal-btn" id="paintJournalBtn">
-            <span class="btn-inner"><span>PAINT</span></span>
-          </button>
+        <!-- PAGE 3 -->
+        <div class="journal-page" data-page="3">
+            <div class="page-content fonts-layout">
+
+                <div class="mx-narrow-image">
+                    <img src="assets/f1.jpg" alt="MX Print">
+                </div>
+
+                <div class="mx-description">FONT</div>
+
+                <button class="universal-btn" id="downloadArchiveBtnEmbedded">
+                    <span class="btn-inner"><span>DOWNLOAD</span></span>
+                </button>
+
+                <div class="styler-embedded">
+                    <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
+                    <div class="styler-preview" id="stylerPreviewEmbedded"></div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="pinterest-panel" id="pinterestPanel">
-          PINTEREST
+        <!-- PAGE 4 -->
+        <div class="journal-page" data-page="4">
+            <div class="page-content sound-layout">
+
+                <div class="text-synth-embedded">
+                    <h4>TEXT SYNTH</h4>
+
+                    <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT">
+                    <select id="ttsVoiceSelect" class="styler-input"></select>
+
+                    <button class="universal-btn" id="ttsSpeakBtn">
+                        <span class="btn-inner"><span>SPEAK</span></span>
+                    </button>
+
+                    <div id="ttsStatus"></div>
+                </div>
+
+                <div class="spotify-icon" id="spotifyIcon">
+                    <span>🎵 SPOTIFY</span>
+                </div>
+
+            </div>
         </div>
 
-        <div class="pinterest-menu" id="pinterestMenu">
-          <div class="pinterest-category" data-cat="diliger">DILIGER</div>
-          <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
-          <div class="pinterest-category" data-cat="barbering">BARBERING</div>
+        <!-- PAGE 5 -->
+        <div class="journal-page" data-page="5">
+            <div class="page-content top-tetris-layout">
+
+                <h4 class="top-title">TOP</h4>
+
+                <div class="top-players-framed">
+                    <div class="top-players-list"></div>
+                </div>
+
+                <a href="tetris.html" target="_blank" class="tetris-big">
+                    <img src="assets/tetris.png" alt="TETRIS">
+                    <span>PLAY TETRIS</span>
+                </a>
+
+            </div>
         </div>
 
-      </div>
-    </section>
+        <!-- PAGE 6 -->
+        <div class="journal-page" data-page="6">
+            <div class="page-content forum-support-layout">
 
-    <!-- PAGE 2 -->
-    <section class="journal-page" data-page="2">
+                <div class="forum-embedded">
 
-      <div class="page-content">
+                    <div class="forum-tabs-panel-embedded">
+                        <div class="forum-tab active" data-tab="wellness">🌿</div>
+                        <div class="forum-tab" data-tab="interior">🛋️</div>
+                        <div class="forum-tab" data-tab="radio">📻</div>
+                        <div class="forum-tab" data-tab="itai">🤖</div>
+                        <div class="forum-tab" data-tab="english">🔝</div>
+                        <div class="forum-tab" data-tab="design">🎨</div>
+                        <div class="forum-tab" data-tab="tattoo">💘</div>
+                        <div class="forum-tab" data-tab="money">💸</div>
+                        <div class="forum-tab" data-tab="barbering">✂️</div>
+                    </div>
 
-        <div class="carousel-section">
-          <div class="carousel" id="mainCarousel">
-            <img src="assets/mx1.jpg" class="active">
-            <img src="assets/mx2.jpg">
-          </div>
+                    <div class="forum-content-embedded">
+                        <h3 id="forumTitleEmbedded">🌿 WELLNESS</h3>
+                        <p id="forumTextEmbedded"></p>
+                    </div>
 
-          <div class="hashtag-row">
-            <span class="hashtag">#layoutporn</span>
-          </div>
+                </div>
+
+                <div class="forum-actions">
+                    <button class="universal-btn" id="forumFullBtn">
+                        <span class="btn-inner"><span>FULL</span></span>
+                    </button>
+
+                    <button class="universal-btn" id="supportBtn">
+                        <span class="btn-inner"><span>SUPPORT</span></span>
+                    </button>
+                </div>
+
+            </div>
         </div>
 
-        <div class="twitter-section">
-          <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PAGE 3 -->
-    <section class="journal-page" data-page="3">
-      <div class="page-content fonts-layout">
-
-        <div class="mx-narrow-image">
-          <img src="assets/f1.jpg" alt="">
-        </div>
-
-        <div class="mx-description">FONT</div>
-
-        <button class="universal-btn" id="downloadArchiveBtnEmbedded">
-          <span class="btn-inner"><span>DOWNLOAD</span></span>
-        </button>
-
-        <div class="styler-embedded">
-          <input id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
-          <div id="stylerPreviewEmbedded" class="styler-preview"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PAGE 4 -->
-    <section class="journal-page" data-page="4">
-      <div class="page-content sound-layout">
-
-        <div class="text-synth-embedded">
-
-          <h4>TEXT SYNTH</h4>
-
-          <input id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT">
-
-          <select id="ttsVoiceSelect" class="styler-input"></select>
-
-          <button class="universal-btn" id="ttsSpeakBtn">
-            <span class="btn-inner"><span>SPEAK</span></span>
-          </button>
-
-          <div id="ttsStatus"></div>
-
-        </div>
-
-        <div class="spotify-icon" id="spotifyIcon">
-          SPOTIFY
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PAGE 5 -->
-    <section class="journal-page" data-page="5">
-
-      <div class="page-content top-tetris-layout">
-
-        <div class="top-title">TOP</div>
-
-        <div class="top-players-framed">
-          <div class="top-players-list"></div>
-        </div>
-
-        <a href="tetris.html" target="_blank" class="tetris-big">
-          <img src="assets/tetris.png">
-          <span>PLAY</span>
-        </a>
-
-      </div>
-
-    </section>
-
-    <!-- PAGE 6 -->
-    <section class="journal-page" data-page="6">
-
-      <div class="page-content forum-support-layout">
-
-        <div class="forum-embedded">
-
-          <div class="forum-tabs-panel-embedded">
-            <div class="forum-tab active" data-tab="wellness">🌿</div>
-            <div class="forum-tab" data-tab="interior">🛋️</div>
-            <div class="forum-tab" data-tab="radio">📻</div>
-            <div class="forum-tab" data-tab="itai">🤖</div>
-            <div class="forum-tab" data-tab="english">🔝</div>
-            <div class="forum-tab" data-tab="design">🎨</div>
-            <div class="forum-tab" data-tab="tattoo">💘</div>
-            <div class="forum-tab" data-tab="money">💸</div>
-            <div class="forum-tab" data-tab="barbering">✂️</div>
-          </div>
-
-          <div class="forum-content-embedded">
-            <h3 id="forumTitleEmbedded">TOPIC</h3>
-            <p id="forumTextEmbedded">CONTENT</p>
-          </div>
-
-        </div>
-
-        <div class="forum-actions">
-          <button class="universal-btn" id="forumFullBtn">FULL</button>
-          <button class="universal-btn" id="supportBtn">SUPPORT</button>
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
+    </div>
 </div>
 
-<!-- BOTTOM PANEL -->
 <div class="bottom-panel">
-  <div class="page-indicator">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
+    <div class="page-indicator">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
 </div>
 
-<!-- CONTENTS MODAL -->
+<!-- MODALS -->
 <div id="contentsModal" class="modal-overlay">
-  <div class="modal-content">
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header">
+            <span class="modal-title-text">ЗМІСТ</span>
+            <button class="modal-close-btn" data-modal="contentsModal">✜</button>
+        </div>
 
-    <div class="modal-header">
-      <span class="modal-title-text">ЗМІСТ</span>
-      <button class="modal-close-btn" data-modal="contentsModal">✜</button>
+        <div class="modal-inner">
+            <div class="contents-list">
+                <div class="contents-item" data-page="1">HOME / ART</div>
+                <div class="contents-item" data-page="2">TWITTER</div>
+                <div class="contents-item" data-page="3">FONTS</div>
+                <div class="contents-item" data-page="4">SOUND</div>
+                <div class="contents-item" data-page="5">TOP / TETRIS</div>
+                <div class="contents-item" data-page="6">FORUM</div>
+            </div>
+        </div>
     </div>
-
-    <div class="modal-inner">
-      <div class="contents-list">
-
-        <div class="contents-item" data-page="1">HOME</div>
-        <div class="contents-item" data-page="2">TWITTER</div>
-        <div class="contents-item" data-page="3">FONTS</div>
-        <div class="contents-item" data-page="4">SOUND</div>
-        <div class="contents-item" data-page="5">TOP</div>
-        <div class="contents-item" data-page="6">FORUM</div>
-
-      </div>
-    </div>
-
-  </div>
 </div>
 
-<!-- ARCHIVE MODAL (ВАЖНО: пустой контейнер под JS) -->
-<div id="stubModal" class="modal-overlay">
-  <div class="modal-content">
+<div id="disclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MARKETING</span>
+            <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
+        </div>
 
-    <div class="modal-header">
-      <span class="modal-title-text">ARCHIVE</span>
-      <button class="modal-close-btn" data-modal="stubModal">✜</button>
+        <div class="modal-inner" style="text-align:center;">
+            <p>OPEN X?</p>
+            <button class="universal-btn" data-href="https://x.com" data-modal="disclaimerModal">
+                <span class="btn-inner"><span>ENTER</span></span>
+            </button>
+        </div>
     </div>
-
-    <div class="modal-inner">
-      <div id="archiveList"></div>
-    </div>
-
-  </div>
 </div>
 
-<!-- SPOTIFY -->
+<div id="paintEntryModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">PAINT ENTRY</span>
+            <button class="modal-close-btn" data-modal="paintEntryModal">✜</button>
+        </div>
+
+        <div class="modal-inner" style="display:flex; gap:20px; justify-content:center;">
+            <button class="universal-btn" id="paintAnonBtn">
+                <span class="btn-inner"><span>ANON</span></span>
+            </button>
+
+            <button class="universal-btn" id="paintRegBtn">
+                <span class="btn-inner"><span>REG</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <div id="spotifyModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="modal-title-text">SPOTIFY</span>
-      <button class="modal-close-btn" data-modal="spotifyModal">✜</button>
-    </div>
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header">
+            <span class="modal-title-text">SPOTIFY</span>
+            <button class="modal-close-btn" data-modal="spotifyModal">✜</button>
+        </div>
 
-    <div class="modal-inner">
-      <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl"
-        width="100%" height="380"></iframe>
+        <div class="modal-inner">
+            <iframe
+                src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl"
+                width="100%"
+                height="380"
+                frameborder="0">
+            </iframe>
+        </div>
     </div>
-
-  </div>
 </div>
 
-<!-- SUPPORT -->
 <div id="supportModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="modal-title-text">SUPPORT</span>
-      <button class="modal-close-btn" data-modal="supportModal">✜</button>
-    </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">SUPPORT</span>
+            <button class="modal-close-btn" data-modal="supportModal">✜</button>
+        </div>
 
-    <div class="modal-inner" id="telegramWrapper"></div>
-  </div>
+        <div class="modal-inner">
+            <div id="telegramWrapper"></div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
