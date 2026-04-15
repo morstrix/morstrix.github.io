@@ -2,42 +2,39 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MORSTRIX JOURNAL</title>
     
-    <!-- Google Fonts -->
+    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=Jersey+10+Charted&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Подключение CSS из папки css -->
+    <!-- Твой CSS -->
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
-    <!-- Top Navigation -->
+    <!-- Навигация -->
     <div class="top-nav">
         <div></div>
         <div class="nav-center" onclick="openContentsModal()">ЗМІСТ</div>
         <div class="nav-right" onclick="window.location.href='index.html'">
-            <img src="assets/close.png" alt="Close">
+            <img src="assets/x.png" alt="Close">
         </div>
     </div>
-
-    <!-- Divider Line -->
     <div class="divider-line"></div>
 
-    <!-- Journal Content -->
+    <!-- Основной контейнер скролла -->
     <div class="journal-wrapper" id="journalWrapper">
         <div class="journal-horizontal" id="journalHorizontal">
             
-            <!-- Page 1: ART -->
+            <!-- Страница 1: ART -->
             <div class="journal-page" data-page="1">
                 <div class="rss-ticker">
                     <div class="ticker-content">
                         APT MNTPMNT PPL CULT APARTAMENTO 032C PURPLE SSENSE VICE HYPEBEAST DAZE GALLERY MAGAZINE ARTFORUM PIN-UP ARCHITECTURAL DIGEST INTERIOR DESIGN ELLE DECOR VERANDA COTTAGES AND CASTLES THE WORLD OF INTERIOR GRAZIA VOGUE Harper's Bazaar NUMERO MONOCLE PAPER JOURNAL ACTUEL STYLUS FRAME MAGAZINE DAMAN MAGAZINE IDEA SPURIOUS CORPUS PAPERMAG LUPUS IN FABULA LOBBY MAGAZINE APEIRON ZEIT-FORUM ARCH+ ANYTHING KALEIDOSCOPE 032C BUTT MAGAZINE DUMMY MAGAZINE FANTOM KALEIDOSCOPE MARIE CLAIRE MAISON & OBJET METROPOLIS PIN-UP MAGAZINE TOLIXO URBAN NATURE VISION NAUTILUS YACHTS INTERNATIONAL ZOOX
                     </div>
                 </div>
-                
                 <div class="art-section">
                     <div class="art-row">
                         <div class="art-block">
@@ -47,55 +44,42 @@
                             <img src="assets/x.png" alt="Archive">
                         </div>
                     </div>
-                    
                     <div class="paint-row" onclick="openPaintModal()">
                         <img src="assets/paint.png" alt="Paint">
                     </div>
                 </div>
-                
                 <div class="pinterest-icon-wrapper">
                     <svg class="pinterest-icon" onclick="togglePinterestMenu()" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.24 17.5c-2.76 0-5-2.24-5-5s2.24-5 5-5c1.4 0 2.68.58 3.6 1.5l-1.4 1.4c-.48-.48-1.2-.76-2.2-.76-1.66 0-3 1.34-3 3s1.34 3 3 3c1.18 0 2.12-.68 2.58-1.68h-2.58V11h5c.18.86.2 1.74.04 2.6-.3 1.66-1.74 3.04-3.44 3.4z"/>
                     </svg>
-                    
                     <div class="pinterest-menu" id="pinterestMenu">
                         <button onclick="openPinterestModal()">REFERENCES</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page 2: TWITTER -->
+            <!-- Страница 2: TWITTER -->
             <div class="journal-page" data-page="2">
                 <div class="carousel-container">
-                    <div class="carousel-slide active">
-                        <img src="assets/mx1.jpg" alt="Design 1">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="assets/mx2.jpg" alt="Design 2">
-                    </div>
+                    <div class="carousel-slide active"><img src="assets/mx1.jpg" alt="Design 1"></div>
+                    <div class="carousel-slide"><img src="assets/mx2.jpg" alt="Design 2"></div>
                 </div>
-                
                 <div class="twitter-hash">#layoutporn</div>
-                
                 <div class="twitter-btn" onclick="openTwitterModal()">
                     <img src="assets/twit.png" alt="Twitter">
                 </div>
             </div>
 
-            <!-- Page 3: FONTS -->
+            <!-- Страница 3: FONTS -->
             <div class="journal-page" data-page="3">
                 <img src="assets/f1.jpg" alt="Font Preview" class="font-image">
-                
                 <div class="font-title">FONT (to do)</div>
-                
                 <button class="download-btn" onclick="downloadArchive()">DOWNLOAD</button>
-                
                 <input type="text" class="styler-input" id="stylerInput" placeholder="TYPE TEXT">
-                
                 <div class="styler-preview" id="stylerPreview" onclick="copyToClipboard()">Preview will appear here</div>
             </div>
 
-            <!-- Page 4: SOUND -->
+            <!-- Страница 4: SOUND -->
             <div class="journal-page" data-page="4">
                 <div class="sound-container">
                     <div class="text-synth">
@@ -104,28 +88,21 @@
                         <button onclick="speakText()">SPEAK</button>
                         <div id="ttsStatus"></div>
                     </div>
-                    
-                    <div class="spotify-link" onclick="openSpotifyModal()">
-                        SPOTIFY
-                    </div>
+                    <div class="spotify-link" onclick="openSpotifyModal()">🎵 SPOTIFY</div>
                 </div>
             </div>
 
-            <!-- Page 5: TOP -->
+            <!-- Страница 5: TOP -->
             <div class="journal-page" data-page="5">
                 <div class="top-title">TOP</div>
-                
-                <div class="top-players-list" id="topPlayersList">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-                
+                <div class="top-players-list" id="topPlayersList"></div>
                 <div class="tetris-btn" onclick="window.open('tetris.html', '_blank')">
                     <img src="assets/tetris.png" alt="Tetris">
                     <div class="tetris-text">PLAY TETRIS</div>
                 </div>
             </div>
 
-            <!-- Page 6: FORUM -->
+            <!-- Страница 6: FORUM -->
             <div class="journal-page" data-page="6">
                 <div class="forum-container">
                     <div class="forum-tabs">
@@ -139,11 +116,9 @@
                         <button class="tab-btn" data-tab="money">MONEY</button>
                         <button class="tab-btn" data-tab="barbering">BARBER</button>
                     </div>
-                    
                     <div class="forum-content">
                         <div class="forum-header" id="forumHeader">WELLNESS</div>
                         <div class="forum-text" id="forumText">Wellness content and discussions...</div>
-                        
                         <div class="forum-actions">
                             <button class="forum-btn" onclick="openTelegramForum()">FULL</button>
                             <button class="forum-btn" onclick="openSupportModal()">SUPPORT</button>
@@ -155,7 +130,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Нижняя навигация -->
     <div class="bottom-nav">
         <div class="page-dot active" data-page="1" onclick="scrollToPage(1)"></div>
         <div class="page-dot" data-page="2" onclick="scrollToPage(2)"></div>
@@ -165,12 +140,10 @@
         <div class="page-dot" data-page="6" onclick="scrollToPage(6)"></div>
     </div>
 
-    <!-- Modals -->
+    <!-- Модалки -->
     <div class="modal-overlay" id="contentsModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">ЗМІСТ</h3>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div onclick="scrollToPage(1)" style="color: #b97272; cursor: pointer; padding: 5px;">1. ART</div>
@@ -185,19 +158,15 @@
 
     <div class="modal-overlay" id="archiveModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">АРХІВ</h3>
-            <img src="assets/art.jpg" alt="Archive Preview" style="width: 100%; max-width: 300px; border: 2px solid #a84d6b; image-rendering: pixelated;">
+            <img src="assets/art.jpg" alt="Archive" style="width: 100%; max-width: 300px; border: 2px solid #a84d6b; image-rendering: pixelated;">
         </div>
     </div>
 
     <div class="modal-overlay" id="paintModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">PAINT OPTIONS</h3>
             <div class="paint-options">
                 <button class="paint-option" onclick="window.location.href='paint.html'">АНОНІМНО</button>
@@ -208,9 +177,7 @@
 
     <div class="modal-overlay" id="twitterModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <div class="disclaimer-text">OPEN X?</div>
             <button class="enter-btn" onclick="window.open('https://x.com', '_blank')">ENTER</button>
         </div>
@@ -218,9 +185,7 @@
 
     <div class="modal-overlay" id="pinterestModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">REFERENCES</h3>
             <div class="pinterest-widget-container">
                 <a data-pin-do="embedBoard" data-pin-board-width="800" data-pin-scale-height="400" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
@@ -230,26 +195,21 @@
 
     <div class="modal-overlay" id="spotifyModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </div>
 
     <div class="modal-overlay" id="supportModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeAllModals()">
-                <img src="assets/close.png" alt="Close">
-            </div>
+            <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
             <div id="telegram-comments"></div>
         </div>
     </div>
 
-    <!-- Lenis Library (CDN) -->
+    <!-- Lenis Library -->
     <script src="https://unpkg.com/lenis@1.1.27/dist/lenis.min.js"></script>
-    
-    <!-- Подключение JS из папки js -->
+    <!-- Твой JS -->
     <script type="module" src="js/journal.js"></script>
 </body>
 </html>
