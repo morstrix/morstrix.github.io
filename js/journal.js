@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initRssTicker();
     initArtPreviewSync();
     initPaintEntry();
-    initPinterestPanel(); // НОВАЯ ЛОГИКА
+    initPinterestPanel();
+    initArchiveStub();
     initCarousel();
     initFontStyler();
     initDownloadArchive();
@@ -50,35 +51,55 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeyboardEscape();
 });
 
-// ===================== LENIS =====================
+// ===================== LENIS (ИСПРАВЛЕН) =====================
 function initLenis() {
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
-    if (!wrapper || !content || typeof Lenis === 'undefined') return;
+    if (!wrapper || !content) return;
 
-    state.lenis = new Lenis({
-        wrapper, content, orientation: 'horizontal',
-        gestureOrientation: 'horizontal', smoothWheel: true, smoothTouch: true, lerp: 0.08
-    });
+    if (typeof Lenis !== 'undefined') {
+        state.lenis = new Lenis({
+            wrapper, content,
+            orientation: 'horizontal',
+            gestureOrientation: 'horizontal',
+            smoothWheel: true,
+            smoothTouch: true,
+            lerp: 0.08
+        });
 
-    function raf(time) { state.lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    window.scrollToPage = (index) => state.lenis.scrollTo(index * wrapper.clientWidth);
+        function raf(time) { 
+            state.lenis.raf(time); 
+            requestAnimationFrame(raf); 
+        }
+        requestAnimationFrame(raf);
 
-    const indicator = document.getElementById('pageIndicator');
-    indicator.innerHTML = Array(state.pageCount).fill(0).map(() => '<span class="dot"></span>').join('');
-    const dots = indicator.querySelectorAll('.dot');
+        window.scrollToPage = (index) => state.lenis.scrollTo(index * wrapper.clientWidth, { immediate: false });
 
-    state.lenis.on('scroll', ({ scroll }) => {
-        const activeIndex = Math.round(scroll / wrapper.clientWidth);
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
-        document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
-        clearTimeout(state.iframeTimer);
-        state.iframeTimer = setTimeout(() => {
-            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
-        }, 150);
-    });
-    setTimeout(() => dots[Math.round(state.lenis.scroll / wrapper.clientWidth)]?.classList.add('active'), 100);
+        const indicator = document.getElementById('pageIndicator');
+        indicator.innerHTML = Array(state.pageCount).fill(0).map(() => '<span class="dot"></span>').join('');
+        const dots = indicator.querySelectorAll('.dot');
+
+        state.lenis.on('scroll', ({ scroll }) => {
+            const activeIndex = Math.round(scroll / wrapper.clientWidth);
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+            // Защита iframe при скролле
+            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
+            clearTimeout(state.iframeTimer);
+            state.iframeTimer = setTimeout(() => {
+                document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
+            }, 150);
+        });
+
+        setTimeout(() => {
+            const activeIndex = Math.round(state.lenis.scroll / wrapper.clientWidth);
+            dots[activeIndex]?.classList.add('active');
+        }, 100);
+    } else {
+        // Fallback
+        content.style.overflow = 'auto';
+        content.style.scrollSnapType = 'x mandatory';
+        window.scrollToPage = (index) => content.scrollTo({ left: index * content.clientWidth, behavior: 'smooth' });
+    }
 }
 
 function initRssTicker() {
@@ -88,7 +109,10 @@ function initRssTicker() {
 
 function initArtPreviewSync() {
     const img = document.getElementById('currentArtPreview');
-    const update = () => { const saved = localStorage.getItem('morstrix_current_art'); if (saved && img) img.src = saved; };
+    const update = () => { 
+        const saved = localStorage.getItem('morstrix_current_art'); 
+        if (saved && img) img.src = saved; 
+    };
     update();
     window.addEventListener('focus', update);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) update(); });
@@ -100,7 +124,7 @@ function initPaintEntry() {
     document.getElementById('paintRegBtn')?.addEventListener('click', () => window.open('paint.html', '_blank'));
 }
 
-// НОВАЯ ЛОГИКА PINTEREST
+// ===================== PINTEREST (ИСПРАВЛЕН) =====================
 function initPinterestPanel() {
     const panel = document.getElementById('pinterestPanel');
     const menu = document.getElementById('pinterestMenu');
@@ -115,13 +139,11 @@ function initPinterestPanel() {
         cat.addEventListener('click', (e) => {
             e.stopPropagation();
             const catName = cat.dataset.cat;
-            // Открываем соответствующую модалку с виджетом
             if (catName === 'diliger') openModal('pinterestModalDiliger');
             else if (catName === 'tattoo') openModal('pinterestModalTattoo');
             else if (catName === 'barbering') openModal('pinterestModalBarbering');
             menu.classList.remove('active');
             
-            // Загружаем скрипт Pinterest если нужно
             if (!window.PinUtils) {
                 const script = document.createElement('script');
                 script.src = 'https://assets.pinterest.com/js/pinit.js';
@@ -134,11 +156,15 @@ function initPinterestPanel() {
     });
 
     document.addEventListener('click', (e) => {
-        if (!panel.contains(e.target) && !menu.contains(e.target)) menu.classList.remove('active');
+        if (!panel.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
     });
 }
 
-document.getElementById('archiveBtn')?.addEventListener('click', () => showStubModal('АРХИВ', 'Скоро здесь будут рисунки участников'));
+function initArchiveStub() {
+    document.getElementById('archiveBtn')?.addEventListener('click', () => showStubModal('АРХИВ', 'Скоро здесь будут рисунки участников'));
+}
 
 function initCarousel() {
     const carousel = document.getElementById('mainCarousel');
@@ -169,7 +195,41 @@ function initFontStyler() {
     animatePlaceholder(input, 'TYPE TEXT');
 }
 
-function animatePlaceholder(input, text) { /* ... как в предыдущей версии ... */ }
+function animatePlaceholder(input, text) {
+    let timer, isTyping = true, charIndex = 0;
+    const step = () => {
+        if (timer) clearTimeout(timer);
+        if (isTyping) {
+            if (charIndex < text.length) {
+                input.placeholder = text.substring(0, charIndex + 1) + ' █';
+                charIndex++;
+                timer = setTimeout(step, 120);
+            } else {
+                isTyping = false;
+                timer = setTimeout(step, 1500);
+            }
+        } else {
+            if (charIndex > 0) {
+                charIndex--;
+                input.placeholder = text.substring(0, charIndex) + ' █';
+                timer = setTimeout(step, 80);
+            } else {
+                isTyping = true;
+                input.placeholder = ' █';
+                timer = setTimeout(step, 300);
+            }
+        }
+    };
+    const start = () => { if (input.value === '') { isTyping = true; charIndex = 0; step(); } };
+    const stop = () => { clearTimeout(timer); input.placeholder = ''; };
+    input.addEventListener('focus', stop);
+    input.addEventListener('blur', () => { if (input.value === '') start(); });
+    const page = document.querySelector('[data-page="3"]');
+    if (page) {
+        const observer = new IntersectionObserver((e) => e.forEach(ent => ent.isIntersecting ? start() : stop()), { threshold: 0.1 });
+        observer.observe(page);
+    } else start();
+}
 
 function initDownloadArchive() {
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', () => {
@@ -208,10 +268,29 @@ function initTts() {
 
 function initSpotify() { document.getElementById('spotifyIcon')?.addEventListener('click', () => openModal('spotifyModal')); }
 
-async function initTopPlayers() { /* ... Firebase ... */ }
+async function initTopPlayers() {
+    const container = document.querySelector('.top-players-list');
+    if (!container) return;
+    try {
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+        const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+        const app = initializeApp({ apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU", authDomain: "helper-e10b2.firebaseapp.com", projectId: "helper-e10b2" });
+        const db = getFirestore(app);
+        const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
+        const snap = await getDocs(q);
+        let html = '', rank = 1;
+        snap.forEach(d => { const data = d.data(); html += `<div style="display:flex;justify-content:space-between;"><span>${rank++}. ${data.name || 'ANON'}</span><span>${data.score}</span></div>`; });
+        container.innerHTML = html || '<div>— пусто —</div>';
+    } catch (e) { container.innerHTML = '⚠️ ERROR'; }
+}
 
 function initForumTabs() {
-    const contents = { wellness: ['🌿 ВЕЛНЕС','Йога...'], /* ... */ };
+    const contents = {
+        wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'], interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
+        radio: ['📻 РАДИО','Музыка, подкасты...'], itai: ['🤖 IT / AI','Нейросети...'],
+        english: ['📖 ENGLISH','Изучение английского...'], design: ['🎨 DESIGN','Графический дизайн...'],
+        tattoo: ['💉 TATTOO','Тату-культура...'], money: ['💰 MONEY','Финансы...'], barbering: ['✂️ BARBER','Барберинг...']
+    };
     document.querySelectorAll('.forum-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.forum-tab').forEach(t => t.classList.remove('active'));
@@ -228,17 +307,40 @@ function initForumTabs() {
 
 function initSupportModal() { document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal')); }
 
-function openModal(id) { document.getElementById(id)?.classList.add('active'); }
-function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+// ===================== МОДАЛКИ (ИСПРАВЛЕНО ЗАКРЫТИЕ) =====================
+function openModal(id) { 
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.add('active'); 
+}
+function closeModal(id) { 
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('active'); 
+}
 function showStubModal(title, text) {
     document.getElementById('stubModalTitle').textContent = title;
     document.getElementById('stubModalText').textContent = text;
     openModal('stubModal');
 }
+
 function initModals() {
-    document.querySelectorAll('.modal-close-btn').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.modal)));
-    document.querySelectorAll('.modal-overlay').forEach(ov => ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('active'); }));
+    // Закрытие по кнопке
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modalId = btn.dataset.modal;
+            if (modalId) closeModal(modalId);
+        });
+    });
+    // Закрытие по клику на оверлей
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
 }
+
 function initContentsNavigation() {
     document.getElementById('contentsBtn').addEventListener('click', () => openModal('contentsModal'));
     document.querySelectorAll('.contents-item').forEach(item => {
@@ -246,13 +348,24 @@ function initContentsNavigation() {
             const page = item.dataset.page;
             const target = document.querySelector(`.journal-page[data-page="${page}"]`);
             const index = [...document.querySelectorAll('.journal-page')].indexOf(target);
-            if (index >= 0) window.scrollToPage(index);
+            if (index >= 0 && window.scrollToPage) window.scrollToPage(index);
             closeModal('contentsModal');
         });
     });
 }
+
 function initTwitterDisclaimer() {
     document.getElementById('twitterBtn')?.addEventListener('click', () => openModal('disclaimerModal'));
-    document.getElementById('openXBtn')?.addEventListener('click', function() { window.open(this.dataset.href, '_blank'); closeModal('disclaimerModal'); });
+    document.getElementById('openXBtn')?.addEventListener('click', function() { 
+        window.open(this.dataset.href, '_blank'); 
+        closeModal('disclaimerModal'); 
+    });
 }
-function initKeyboardEscape() { document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); }); }
+
+function initKeyboardEscape() { 
+    document.addEventListener('keydown', e => { 
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); 
+        }
+    }); 
+}
