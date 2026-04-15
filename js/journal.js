@@ -61,42 +61,55 @@ document.addEventListener('DOMContentLoaded', () => {
 function initLenis() {
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
-    if (!wrapper || !content || typeof Lenis === 'undefined') return;
+    if (!wrapper || !content) return;
 
-    state.lenis = new Lenis({
-        wrapper, content,
-        orientation: 'horizontal',
-        gestureOrientation: 'horizontal',
-        smoothWheel: true,
-        smoothTouch: true,
-        lerp: 0.08
-    });
+    // Ждем загрузки Lenis
+    function tryInit() {
+        if (typeof Lenis === 'undefined') {
+            setTimeout(tryInit, 100);
+            return;
+        }
 
-    function raf(time) { state.lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+        state.lenis = new Lenis({
+            wrapper, content,
+            orientation: 'horizontal',
+            gestureOrientation: 'horizontal',
+            smoothWheel: true,
+            smoothTouch: true,
+            lerp: 0.08,
+            touchMultiplier: 1
+        });
 
-    window.scrollToPage = (index) => state.lenis.scrollTo(index * wrapper.clientWidth);
+        function raf(time) { state.lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
 
-    // Индикаторы страниц (точки)
-    const indicator = document.getElementById('pageIndicator');
-    indicator.innerHTML = Array(state.pageCount).fill(0).map(() => '<span class="dot"></span>').join('');
-    const dots = indicator.querySelectorAll('.dot');
+        window.scrollToPage = (index) => state.lenis.scrollTo(index * wrapper.clientWidth);
 
-    state.lenis.on('scroll', ({ scroll }) => {
-        const activeIndex = Math.round(scroll / wrapper.clientWidth);
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
-        // Защита iframe при скролле
-        document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
-        clearTimeout(state.iframeTimer);
-        state.iframeTimer = setTimeout(() => {
-            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
-        }, 150);
-    });
+        // Индикаторы страниц (точки)
+        const indicator = document.getElementById('pageIndicator');
+        if (indicator) {
+            indicator.innerHTML = Array(state.pageCount).fill(0).map(() => '<span class="dot"></span>').join('');
+            const dots = indicator.querySelectorAll('.dot');
 
-    setTimeout(() => {
-        const activeIndex = Math.round(state.lenis.scroll / wrapper.clientWidth);
-        dots[activeIndex]?.classList.add('active');
-    }, 100);
+            state.lenis.on('scroll', ({ scroll }) => {
+                const activeIndex = Math.round(scroll / wrapper.clientWidth);
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+                // Защита iframe при скролле
+                document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
+                clearTimeout(state.iframeTimer);
+                state.iframeTimer = setTimeout(() => {
+                    document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
+                }, 150);
+            });
+
+            setTimeout(() => {
+                const activeIndex = Math.round(state.lenis.scroll / wrapper.clientWidth);
+                dots[activeIndex]?.classList.add('active');
+            }, 100);
+        }
+    }
+
+    tryInit();
 }
 
 // ===================== RSS ТИКЕР =====================
