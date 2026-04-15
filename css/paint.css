@@ -1,0 +1,92 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.paint-container {
+    max-width: 700px;
+    width: 100%;
+}
+.paint-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+.paint-header h1 {
+    font-size: 24px;
+    color: #a84d6b;
+    text-shadow: 2px 2px 0 #000;
+}
+.close-link img {
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+}
+#paintCanvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    border: 4px solid #b97272;
+    background: #fff;
+    cursor: crosshair;
+    touch-action: none;
+    image-rendering: crisp-edges;
+}
+.paint-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.universal-btn {
+    cursor: pointer;
+    border: 2px solid #000;
+    background: #565656;
+    padding: 0 0 4px 0;
+    display: inline-block;
+    transition: all 0.08s ease;
+    text-decoration: none;
+    user-select: none;
+}
+.universal-btn .btn-inner {
+    display: block;
+    background: #fff;
+    border: 2px solid #a0a0a0;
+    padding: 8px 20px;
+    transform: translateY(-4px);
+    transition: transform 0.08s ease;
+}
+.universal-btn .btn-inner span {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #000;
+    text-transform: uppercase;
+}
+.universal-btn:active .btn-inner { transform: translateY(0); }
+#colorPicker {
+    width: 60px;
+    height: 50px;
+    border: 2px solid #b97272;
+    background: #000;
+    cursor: pointer;
+}
+.save-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #a84d6b;
+    min-height: 24px;
+}
+@media (max-width: 480px) {
+    .paint-controls { gap: 10px; }
+    .universal-btn .btn-inner { padding: 6px 12px; }
+    .universal-btn .btn-inner span { font-size: 10px; }
+}
