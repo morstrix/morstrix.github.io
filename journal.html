@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
+
     <!-- Навигация -->
     <div class="top-nav">
         <div></div>
@@ -28,13 +29,14 @@
     <div class="journal-wrapper" id="journalWrapper">
         <div class="journal-horizontal" id="journalHorizontal">
             
-            <!-- Страница 1: ART -->
+            <!-- СТРАНИЦА 1: ART -->
             <div class="journal-page" data-page="1">
                 <div class="rss-ticker">
                     <div class="ticker-content">
                         APT MNTPMNT PPL CULT APARTAMENTO 032C PURPLE SSENSE VICE HYPEBEAST DAZE GALLERY MAGAZINE ARTFORUM PIN-UP ARCHITECTURAL DIGEST INTERIOR DESIGN ELLE DECOR VERANDA COTTAGES AND CASTLES THE WORLD OF INTERIOR GRAZIA VOGUE Harper's Bazaar NUMERO MONOCLE PAPER JOURNAL ACTUEL STYLUS FRAME MAGAZINE DAMAN MAGAZINE IDEA SPURIOUS CORPUS PAPERMAG LUPUS IN FABULA LOBBY MAGAZINE APEIRON ZEIT-FORUM ARCH+ ANYTHING KALEIDOSCOPE 032C BUTT MAGAZINE DUMMY MAGAZINE FANTOM KALEIDOSCOPE MARIE CLAIRE MAISON & OBJET METROPOLIS PIN-UP MAGAZINE TOLIXO URBAN NATURE VISION NAUTILUS YACHTS INTERNATIONAL ZOOX
                     </div>
                 </div>
+                
                 <div class="art-section">
                     <div class="art-row">
                         <div class="art-block">
@@ -48,6 +50,7 @@
                         <img src="assets/paint.png" alt="Paint">
                     </div>
                 </div>
+                
                 <div class="pinterest-icon-wrapper">
                     <svg class="pinterest-icon" onclick="togglePinterestMenu()" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.24 17.5c-2.76 0-5-2.24-5-5s2.24-5 5-5c1.4 0 2.68.58 3.6 1.5l-1.4 1.4c-.48-.48-1.2-.76-2.2-.76-1.66 0-3 1.34-3 3s1.34 3 3 3c1.18 0 2.12-.68 2.58-1.68h-2.58V11h5c.18.86.2 1.74.04 2.6-.3 1.66-1.74 3.04-3.44 3.4z"/>
@@ -58,7 +61,7 @@
                 </div>
             </div>
 
-            <!-- Страница 2: TWITTER -->
+            <!-- СТРАНИЦА 2: TWITTER -->
             <div class="journal-page" data-page="2">
                 <div class="carousel-container">
                     <div class="carousel-slide active"><img src="assets/mx1.jpg" alt="Design 1"></div>
@@ -70,7 +73,7 @@
                 </div>
             </div>
 
-            <!-- Страница 3: FONTS -->
+            <!-- СТРАНИЦА 3: FONTS -->
             <div class="journal-page" data-page="3">
                 <img src="assets/f1.jpg" alt="Font Preview" class="font-image">
                 <div class="font-title">FONT (to do)</div>
@@ -79,7 +82,7 @@
                 <div class="styler-preview" id="stylerPreview" onclick="copyToClipboard()">Preview will appear here</div>
             </div>
 
-            <!-- Страница 4: SOUND -->
+            <!-- СТРАНИЦА 4: SOUND -->
             <div class="journal-page" data-page="4">
                 <div class="sound-container">
                     <div class="text-synth">
@@ -92,7 +95,7 @@
                 </div>
             </div>
 
-            <!-- Страница 5: TOP -->
+            <!-- СТРАНИЦА 5: TOP -->
             <div class="journal-page" data-page="5">
                 <div class="top-title">TOP</div>
                 <div class="top-players-list" id="topPlayersList"></div>
@@ -102,7 +105,7 @@
                 </div>
             </div>
 
-            <!-- Страница 6: FORUM -->
+            <!-- СТРАНИЦА 6: FORUM -->
             <div class="journal-page" data-page="6">
                 <div class="forum-container">
                     <div class="forum-tabs">
@@ -140,11 +143,11 @@
         <div class="page-dot" data-page="6" onclick="scrollToPage(6)"></div>
     </div>
 
-    <!-- Модалки -->
+    <!-- МОДАЛКИ -->
     <div class="modal-overlay" id="contentsModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">ЗМІСТ</h3>
+            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">ЗМІСТ</h3>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div onclick="scrollToPage(1)" style="color: #b97272; cursor: pointer; padding: 5px;">1. ART</div>
                 <div onclick="scrollToPage(2)" style="color: #b97272; cursor: pointer; padding: 5px;">2. TWITTER</div>
@@ -159,7 +162,7 @@
     <div class="modal-overlay" id="archiveModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">АРХІВ</h3>
+            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">АРХІВ</h3>
             <img src="assets/art.jpg" alt="Archive" style="width: 100%; max-width: 300px; border: 2px solid #a84d6b; image-rendering: pixelated;">
         </div>
     </div>
@@ -167,7 +170,7 @@
     <div class="modal-overlay" id="paintModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">PAINT OPTIONS</h3>
+            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">PAINT OPTIONS</h3>
             <div class="paint-options">
                 <button class="paint-option" onclick="window.location.href='paint.html'">АНОНІМНО</button>
                 <button class="paint-option" onclick="window.location.href='paint.html'">РЕЄСТРАЦІЯ</button>
@@ -186,7 +189,7 @@
     <div class="modal-overlay" id="pinterestModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeAllModals()"><img src="assets/x.png" alt="Close"></div>
-            <h3 style="font-family: 'Jersey 10 Charted', sans-serif; color: #a27791; margin-bottom: 20px;">REFERENCES</h3>
+            <h3 style="font-family: 'Jersey 10 Charted'; color: #a27791; margin-bottom: 20px;">REFERENCES</h3>
             <div class="pinterest-widget-container">
                 <a data-pin-do="embedBoard" data-pin-board-width="800" data-pin-scale-height="400" data-pin-scale-width="80" href="https://ru.pinterest.com/morstrix/re-f-erences/"></a>
             </div>
@@ -207,9 +210,10 @@
         </div>
     </div>
 
-    <!-- Lenis Library -->
+    <!-- БИБЛИОТЕКИ -->
+    <!-- 1. Сначала Lenis -->
     <script src="https://unpkg.com/lenis@1.1.27/dist/lenis.min.js"></script>
-    <!-- Твой JS -->
+    <!-- 2. Потом твой скрипт -->
     <script type="module" src="js/journal.js"></script>
 </body>
 </html>
