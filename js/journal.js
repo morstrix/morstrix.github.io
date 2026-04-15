@@ -104,10 +104,7 @@ function initLenis() {
 
 function initRssTicker() {
     const ticker = document.getElementById('rssTicker');
-    if (ticker) {
-        // Статичный текст — можно взять первый заголовок или объединить несколько
-        ticker.textContent = state.rssHeadlines.slice(0, 3).join('  •  ');
-    }
+    if (ticker) ticker.textContent = [...state.rssHeadlines, ...state.rssHeadlines].join('  —  ');
 }
 
 function initArtPreviewSync() {
