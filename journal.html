@@ -20,7 +20,7 @@
 <div class="journal-wrapper">
   <div class="journal-horizontal" id="journalHorizontal">
 
-    <!-- PAGE 1: Главная -->
+    <!-- PAGE 1 -->
     <div class="journal-page" data-page="1">
         <div class="page-content page1-layout">
             <div class="ticker-wrapper">
@@ -39,9 +39,12 @@
                     <span class="btn-inner"><span>PAINT</span></span>
                 </button>
             </div>
+            
+            <!-- НОВАЯ ПАНЕЛЬ PINTEREST -->
             <div class="pinterest-panel" id="pinterestPanel">
                 <span>PINTEREST</span>
             </div>
+            <!-- ВЫЕЗЖАЮЩЕЕ МЕНЮ С 3 КНОПКАМИ -->
             <div class="pinterest-menu" id="pinterestMenu">
                 <div class="pinterest-category" data-cat="diliger">DILIGER</div>
                 <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
@@ -58,9 +61,7 @@
                     <img src="assets/mx1.jpg" class="active">
                     <img src="assets/mx2.jpg">
                 </div>
-                <div class="hashtag-row">
-                    <span class="hashtag">#layoutporn</span>
-                </div>
+                <div class="hashtag-row"><span class="hashtag">#layoutporn</span></div>
             </div>
             <div class="twitter-section">
                 <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
@@ -71,9 +72,7 @@
     <!-- PAGE 3: Шрифты -->
     <div class="journal-page" data-page="3">
         <div class="page-content fonts-layout">
-            <div class="mx-narrow-image">
-                <img src="assets/f1.jpg" alt="MX Print">
-            </div>
+            <div class="mx-narrow-image"><img src="assets/f1.jpg" alt="MX Print"></div>
             <div class="mx-description">FONT<br>(to do)</div>
             <button class="universal-btn" id="downloadArchiveBtnEmbedded">
                 <span class="btn-inner"><span>DOWNLOAD</span></span>
@@ -92,14 +91,10 @@
                 <h4>TEXT SYNTH</h4>
                 <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT">
                 <select id="ttsVoiceSelect" class="styler-input"></select>
-                <button class="universal-btn" id="ttsSpeakBtn">
-                    <span class="btn-inner"><span>SPEAK</span></span>
-                </button>
+                <button class="universal-btn" id="ttsSpeakBtn"><span class="btn-inner"><span>SPEAK</span></span></button>
                 <div id="ttsStatus"></div>
             </div>
-            <div class="spotify-icon" id="spotifyIcon">
-                <span>🎵 SPOTIFY</span>
-            </div>
+            <div class="spotify-icon" id="spotifyIcon"><span>🎵 SPOTIFY</span></div>
         </div>
     </div>
 
@@ -107,13 +102,8 @@
     <div class="journal-page" data-page="5">
         <div class="page-content top-tetris-layout">
             <h4 class="top-title">TOP</h4>
-            <div class="top-players-framed">
-                <div class="top-players-list"></div>
-            </div>
-            <a href="tetris.html" target="_blank" class="tetris-big">
-                <img src="assets/tetris.png" alt="TETRIS">
-                <span>PLAY TETRIS</span>
-            </a>
+            <div class="top-players-framed"><div class="top-players-list"></div></div>
+            <a href="tetris.html" target="_blank" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span>PLAY TETRIS</span></a>
         </div>
     </div>
 
@@ -138,12 +128,8 @@
                 </div>
             </div>
             <div class="forum-actions">
-                <button class="universal-btn" id="forumFullBtn">
-                    <span class="btn-inner"><span>FULL</span></span>
-                </button>
-                <button class="universal-btn" id="supportBtn">
-                    <span class="btn-inner"><span>SUPPORT</span></span>
-                </button>
+                <button class="universal-btn" id="forumFullBtn"><span class="btn-inner"><span>FULL</span></span></button>
+                <button class="universal-btn" id="supportBtn"><span class="btn-inner"><span>SUPPORT</span></span></button>
             </div>
         </div>
     </div>
@@ -154,68 +140,56 @@
     <div class="page-indicator" id="pageIndicator"></div>
 </div>
 
-<!-- Модалки -->
+<!-- ================= МОДАЛКИ ================= -->
 <div id="contentsModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><span class="modal-title-text">ЗМІСТ</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
-        <div class="modal-inner">
-            <div class="contents-list">
-                <div class="contents-item" data-page="1">1. HOME / ART</div>
-                <div class="contents-item" data-page="2">2. TWITTER</div>
-                <div class="contents-item" data-page="3">3. FONTS</div>
-                <div class="contents-item" data-page="4">4. SOUND</div>
-                <div class="contents-item" data-page="5">5. TOP / TETRIS</div>
-                <div class="contents-item" data-page="6">6. FORUM / SUPPORT</div>
-            </div>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">ЗМІСТ</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
+    <div class="modal-inner"><div class="contents-list">
+        <div class="contents-item" data-page="1">1. HOME / ART</div><div class="contents-item" data-page="2">2. TWITTER</div>
+        <div class="contents-item" data-page="3">3. FONTS</div><div class="contents-item" data-page="4">4. SOUND</div>
+        <div class="contents-item" data-page="5">5. TOP / TETRIS</div><div class="contents-item" data-page="6">6. FORUM / SUPPORT</div>
+    </div></div></div>
 </div>
 
 <div id="disclaimerModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
-        <div class="modal-inner" style="text-align:center;">
-            <p>OPEN X?</p>
-            <button class="universal-btn" data-href="https://x.com" id="openXBtn">
-                <span class="btn-inner"><span>ENTER</span></span>
-            </button>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
+    <div class="modal-inner"><p>OPEN X?</p><button class="universal-btn" id="openXBtn"><span class="btn-inner"><span>ENTER</span></span></button></div></div>
 </div>
 
 <div id="paintEntryModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><span class="modal-title-text">PAINT ENTRY</span><button class="modal-close-btn" data-modal="paintEntryModal">✜</button></div>
-        <div class="modal-inner" style="display: flex; gap: 20px; justify-content: center;">
-            <button class="universal-btn" id="paintAnonBtn"><span class="btn-inner"><span>АНОНИМНО</span></span></button>
-            <button class="universal-btn" id="paintRegBtn"><span class="btn-inner"><span>РЕГИСТРАЦИЯ</span></span></button>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">PAINT ENTRY</span><button class="modal-close-btn" data-modal="paintEntryModal">✜</button></div>
+    <div class="modal-inner" style="display:flex; gap:20px; justify-content:center;">
+        <button class="universal-btn" id="paintAnonBtn"><span class="btn-inner"><span>АНОНИМНО</span></span></button>
+        <button class="universal-btn" id="paintRegBtn"><span class="btn-inner"><span>РЕГИСТРАЦИЯ</span></span></button>
+    </div></div>
 </div>
 
 <div id="stubModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><span class="modal-title-text" id="stubModalTitle">SOON</span><button class="modal-close-btn" data-modal="stubModal">✜</button></div>
-        <div class="modal-inner"><p id="stubModalText"></p></div>
-    </div>
+    <div class="modal-content"><div class="modal-header"><span class="modal-title-text" id="stubModalTitle">SOON</span><button class="modal-close-btn" data-modal="stubModal">✜</button></div>
+    <div class="modal-inner"><p id="stubModalText"></p></div></div>
 </div>
 
 <div id="spotifyModal" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;">
-        <div class="modal-header"><span class="modal-title-text">SPOTIFY</span><button class="modal-close-btn" data-modal="spotifyModal">✜</button></div>
-        <div class="modal-inner" style="padding:10px;">
-            <iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="380" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-    </div>
+    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">SPOTIFY</span><button class="modal-close-btn" data-modal="spotifyModal">✜</button></div>
+    <div class="modal-inner"><iframe src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0" width="100%" height="380" frameborder="0"></iframe></div></div>
 </div>
 
 <div id="supportModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><span class="modal-title-text">SUPPORT</span><button class="modal-close-btn" data-modal="supportModal">✜</button></div>
-        <div class="modal-inner tg-wrapper" id="telegramWrapper">
-            <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrix/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header"><span class="modal-title-text">SUPPORT</span><button class="modal-close-btn" data-modal="supportModal">✜</button></div>
+    <div class="modal-inner tg-wrapper"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrix/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script></div></div>
+</div>
+
+<!-- Модалки для Pinterest виджетов -->
+<div id="pinterestModalDiliger" class="modal-overlay">
+    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: DILIGER</span><button class="modal-close-btn" data-modal="pinterestModalDiliger">✜</button></div>
+    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/diliger/"></a></div></div>
+</div>
+<div id="pinterestModalTattoo" class="modal-overlay">
+    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: TATTOO</span><button class="modal-close-btn" data-modal="pinterestModalTattoo">✜</button></div>
+    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/tattoo/"></a></div></div>
+</div>
+<div id="pinterestModalBarbering" class="modal-overlay">
+    <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: BARBERING</span><button class="modal-close-btn" data-modal="pinterestModalBarbering">✜</button></div>
+    <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/barbering/"></a></div></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
