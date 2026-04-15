@@ -47,150 +47,45 @@ body {
     align-items:center; width:100%; padding:12px; min-height:0;
 }
 
-/* ================= PAGE 1 ================= */
-.page1-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 0;
-}
-
-.ticker-wrapper {
-    flex-shrink: 0;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 5px 0;
-}
-.ticker {
-    display: inline-block;
-    font-size: 12px;
-    color: #a27791;
-    text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f;
-    animation: scrollTicker 40s linear infinite;
-}
-@keyframes scrollTicker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-
-/* Основной блок, центрирующий контент */
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-
-/* Ряд с артблоком и архивом */
-.art-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-.art-block {
-    width: 65%;
-    max-width: 400px;
-    aspect-ratio: 1/1;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.art-block img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    image-rendering: pixelated;
-}
-
-.archive-block {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0a0a0a;
-    cursor: pointer;
-    color: var(--deep-pink);
-    font-size: 14px;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 20px;
-    border: none;
-    min-width: 120px;
-}
-
-/* Кнопка Paint */
-.paint-btn-row {
-    display: flex;
-    justify-content: flex-start;
-    width: 45%;
-    max-width: 300px;
-    margin-top: 20px;
-}
-.paint-trigger-img {
-    width: 60px;
-    height: 60px;
-    image-rendering: pixelated;
-    cursor: pointer;
-}
-
-/* Pinterest */
-.pinterest-panel-wrapper {
-    width: 100%;
-    position: relative;
-    margin-top: 0;
-}
-.pinterest-panel {
-    width: 100%;
-    height: 55px;
-    background: #0a0a0a;
-    border-top: 2px solid var(--accent-pink);
-    border-bottom: 2px solid var(--accent-pink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--deep-pink);
-    font-size: 14px;
-    letter-spacing: 4px;
-    position: relative;
-    z-index: 20;
-}
-.pinterest-menu {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    border: 2px solid var(--muted-pink);
-    border-bottom: none;
-    z-index: 15;
-}
-.pinterest-menu.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-.pinterest-category {
-    color: #fff;
-    font-size: 11px;
-    cursor: pointer;
-    padding: 10px 20px;
-    background: #222;
-    border: 1px solid var(--accent-pink);
-    text-transform: uppercase;
-}
+<!-- ================= СТРАНИЦА 1 (ИТОГОВАЯ ВЁРСТКА) ================= -->
+<div class="journal-page" data-page="1">
+    <div class="page-content page1-layout">
+        <!-- RSS тикер с увеличенными отступами -->
+        <div class="ticker-wrapper">
+            <div class="ticker" id="rssTicker"></div>
+        </div>
+        
+        <!-- Основной контент: артблок + архив + Paint (вертикально центрируется) -->
+        <div class="main-content">
+            <div class="art-row">
+                <!-- Артблок (слева, с отступом) -->
+                <div class="art-block">
+                    <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
+                </div>
+                <!-- Архив (справа, по центру вертикали относительно артблока) -->
+                <div class="archive-block" id="archiveBtn">
+                    <span>АРХИВ</span>
+                </div>
+            </div>
+            <!-- Кнопка Paint под артблоком, с отступом сверху -->
+            <div class="paint-btn-row">
+                <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
+            </div>
+        </div>
+        
+        <!-- Панель Pinterest (прибита к низу) -->
+        <div class="pinterest-panel-wrapper">
+            <div class="pinterest-panel" id="pinterestPanel">
+                <span>PINTEREST</span>
+            </div>
+            <div class="pinterest-menu" id="pinterestMenu">
+                <div class="pinterest-category" data-cat="diliger">DILIGER</div>
+                <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
+                <div class="pinterest-category" data-cat="barbering">BARBERING</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 /* ================= ОСТАЛЬНЫЕ СТРАНИЦЫ ================= */
 .carousel-section { flex:1; display:flex; flex-direction:column; justify-content:center; }
