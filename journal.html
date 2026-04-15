@@ -40,15 +40,17 @@
                 </button>
             </div>
             
-            <!-- НОВАЯ ПАНЕЛЬ PINTEREST -->
-            <div class="pinterest-panel" id="pinterestPanel">
-                <span>PINTEREST</span>
-            </div>
-            <!-- ВЫЕЗЖАЮЩЕЕ МЕНЮ С 3 КНОПКАМИ -->
-            <div class="pinterest-menu" id="pinterestMenu">
-                <div class="pinterest-category" data-cat="diliger">DILIGER</div>
-                <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
-                <div class="pinterest-category" data-cat="barbering">BARBERING</div>
+            <!-- ПАНЕЛЬ PINTEREST -->
+            <div class="pinterest-panel-wrapper">
+                <div class="pinterest-panel" id="pinterestPanel">
+                    <span>PINTEREST</span>
+                </div>
+                <!-- МЕНЮ (СКРЫТО ИЗНАЧАЛЬНО) -->
+                <div class="pinterest-menu" id="pinterestMenu">
+                    <div class="pinterest-category" data-cat="diliger">DILIGER</div>
+                    <div class="pinterest-category" data-cat="tattoo">TATTOO</div>
+                    <div class="pinterest-category" data-cat="barbering">BARBERING</div>
+                </div>
             </div>
         </div>
     </div>
@@ -140,7 +142,7 @@
     <div class="page-indicator" id="pageIndicator"></div>
 </div>
 
-<!-- ================= МОДАЛКИ ================= -->
+<!-- МОДАЛКИ -->
 <div id="contentsModal" class="modal-overlay">
     <div class="modal-content"><div class="modal-header"><span class="modal-title-text">ЗМІСТ</span><button class="modal-close-btn" data-modal="contentsModal">✜</button></div>
     <div class="modal-inner"><div class="contents-list">
@@ -152,7 +154,7 @@
 
 <div id="disclaimerModal" class="modal-overlay">
     <div class="modal-content"><div class="modal-header"><span class="modal-title-text">MARKETING CREATIVE</span><button class="modal-close-btn" data-modal="disclaimerModal">✜</button></div>
-    <div class="modal-inner"><p>OPEN X?</p><button class="universal-btn" id="openXBtn"><span class="btn-inner"><span>ENTER</span></span></button></div></div>
+    <div class="modal-inner"><p>OPEN X?</p><button class="universal-btn" id="openXBtn" data-href="https://x.com"><span class="btn-inner"><span>ENTER</span></span></button></div></div>
 </div>
 
 <div id="paintEntryModal" class="modal-overlay">
@@ -175,10 +177,12 @@
 
 <div id="supportModal" class="modal-overlay">
     <div class="modal-content"><div class="modal-header"><span class="modal-title-text">SUPPORT</span><button class="modal-close-btn" data-modal="supportModal">✜</button></div>
-    <div class="modal-inner tg-wrapper"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrix/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script></div></div>
+    <div class="modal-inner tg-wrapper" id="telegramWrapper">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="morstrix/71" data-comments-limit="10" data-colorful="1" data-dark="1"></script>
+    </div></div>
 </div>
 
-<!-- Модалки для Pinterest виджетов -->
+<!-- Pinterest модалки -->
 <div id="pinterestModalDiliger" class="modal-overlay">
     <div class="modal-content" style="max-width:400px;"><div class="modal-header"><span class="modal-title-text">PINTEREST: DILIGER</span><button class="modal-close-btn" data-modal="pinterestModalDiliger">✜</button></div>
     <div class="modal-inner"><a data-pin-do="embedBoard" data-pin-board-width="300" data-pin-scale-height="330" href="https://www.pinterest.com/morstrix/diliger/"></a></div></div>
