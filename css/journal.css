@@ -91,8 +91,8 @@ body {
 }
 
 .art-block {
-    width: 45%;
-    max-width: 300px;
+    width: 65%;
+    max-width: 400px;
     aspect-ratio: 1/1;
     background: #000;
     display: flex;
