@@ -1,83 +1,114 @@
-// LENIS
+// ===== LENIS =====
 const lenis = new Lenis({
 wrapper: document.querySelector('.journal-wrapper'),
 content: document.getElementById('journalHorizontal'),
-orientation: 'horizontal'
+orientation:'horizontal'
 });
 
-function raf(time){
-lenis.raf(time);
+function raf(t){
+lenis.raf(t);
 requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
 
-// ===== FONT MAP ВЕРНУЛ =====
+// ===== FONT SYSTEM =====
 const FONT_MAP = {
-A:'ᴀ',a:'ᴀ',B:'ʙ',b:'ʙ',C:'ᴄ',c:'ᴄ',D:'ᴅ',d:'ᴅ'
+А:'ᴀ',а:'ᴀ',B:'ʙ',b:'ʙ',C:'ᴄ',c:'ᴄ',
+D:'ᴅ',d:'ᴅ',E:'ᴇ',e:'ᴇ',F:'ꜰ',f:'ꜰ',
 };
 
 function convertTextToFont(text){
 return text.split('').map(c=>FONT_MAP[c]||c).join('');
 }
 
-// STYLER
-const input = document.getElementById('fontInputEmbedded');
-const preview = document.getElementById('stylerPreviewEmbedded');
+const fontInput = document.getElementById('fontInputEmbedded');
+const fontPreview = document.getElementById('stylerPreviewEmbedded');
 
-input.addEventListener('input',()=>{
-preview.textContent = convertTextToFont(input.value);
+fontInput.addEventListener('input',()=>{
+fontPreview.textContent = convertTextToFont(fontInput.value);
 });
 
-// ===== TTS ВЕРНУЛ =====
+// ===== TTS FULL RESTORE =====
 const ttsBtn = document.getElementById('ttsSpeakBtn');
 const ttsInput = document.getElementById('ttsTextInput');
 const ttsStatus = document.getElementById('ttsStatus');
 
+let voices = [];
+
+function loadVoices(){
+voices = speechSynthesis.getVoices();
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+
 ttsBtn.onclick = ()=>{
 const text = ttsInput.value;
+if(!text) return;
+
 const utter = new SpeechSynthesisUtterance(text);
+
+utter.onstart=()=>ttsStatus.textContent='PLAYING';
+utter.onend=()=>ttsStatus.textContent='';
+
 speechSynthesis.speak(utter);
-ttsStatus.textContent = "PLAYING...";
 };
 
 // ===== CAROUSEL =====
 setInterval(()=>{
 const active = document.querySelector('.carousel .active');
-let next = active.nextElementSibling;
-if(!next) next = document.querySelector('.carousel img');
+let next = active.nextElementSibling || document.querySelector('.carousel img');
 active.classList.remove('active');
 next.classList.add('active');
 },3000);
 
-// ===== TICKER =====
-const ticker = document.getElementById('rssTicker');
-ticker.textContent = "CYBER NEWS — DESIGN — AI — FUTURE — ".repeat(10);
+// ===== RSS =====
+document.getElementById('rssTicker').textContent =
+"CYBER • DESIGN • ART • AI • FUTURE • ".repeat(10);
 
-// ===== FIREBASE (ТВОЯ ЛОГИКА) =====
-(async ()=>{
-const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
-const { getFirestore, collection, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+// ===== PINTEREST =====
+const pin = document.getElementById('pinterestPanel');
+const menu = document.getElementById('pinterestMenu');
 
-const app = initializeApp({
-apiKey:"AIzaSy...",
+pin.onclick=()=>menu.classList.toggle('active');
+
+// ===== ARCHIVE =====
+document.getElementById('archiveBtn').onclick=()=>{
+alert('ARCHIVE');
+};
+
+// ===== TOP PLAYERS (RESTORE LOGIC SAFE) =====
+(async()=>{
+const {initializeApp}=await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+const {getFirestore,collection,getDocs}=await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+
+const app=initializeApp({
+apiKey:"XXX",
 projectId:"helper-e10b2"
 });
 
-const db = getFirestore(app);
-const snap = await getDocs(collection(db,"top_players"));
+const db=getFirestore(app);
+const snap=await getDocs(collection(db,"top_players"));
 
-const list = document.querySelector('.top-players-list');
+const list=document.querySelector('.top-players-list');
 
-snap.forEach(doc=>{
-const d = doc.data();
-list.innerHTML += `<div>${d.name} — ${d.score}</div>`;
+snap.forEach(d=>{
+const x=d.data();
+list.innerHTML+=`<div>${x.name} — ${x.score}</div>`;
 });
 })();
 
-// TABS
-document.querySelectorAll('.tab').forEach(tab=>{
-tab.onclick = ()=>{
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+// ===== FORUM =====
+document.querySelectorAll('.forum-tab').forEach(tab=>{
+tab.onclick=()=>{
+document.querySelectorAll('.forum-tab').forEach(t=>t.classList.remove('active'));
 tab.classList.add('active');
 };
+});
+
+// ===== DOTS (LENIS SYNC SIMPLE RESTORE) =====
+lenis.on('scroll', ({scroll})=>{
+const page = Math.round(scroll / window.innerWidth);
+document.querySelectorAll('.dot').forEach((d,i)=>{
+d.classList.toggle('active', i===page);
+});
 });
