@@ -42,25 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', () => lenis.resize());
 
-        // ===== ЗАЩИТА IFRAME ЧЕРЕЗ POINTER-EVENTS (БЕЗ STOP/START) =====
+        // Защита iframe при скролле
         let scrollTimer;
         lenis.on('scroll', () => {
-            document.querySelectorAll('iframe').forEach(el => {
-                el.style.pointerEvents = 'none';
-            });
-            const tg = document.getElementById('telegramWrapper');
-            if (tg) tg.classList.add('scrolling');
-
+            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(() => {
-                document.querySelectorAll('iframe').forEach(el => {
-                    el.style.pointerEvents = '';
-                });
-                if (tg) tg.classList.remove('scrolling');
+                document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
             }, 120);
         });
 
-        // ===== СИНХРОНИЗАЦИЯ ТОЧЕК =====
+        // Синхронизация точек (6 точек)
         const dots = document.querySelectorAll('.dot');
         function updateActiveDot(index) {
             dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
@@ -82,22 +74,95 @@ document.addEventListener('DOMContentLoaded', () => {
             updateActiveDot(activeIndex);
         }, 100);
     } else {
-        // fallback — нативный скролл
-        const container = document.getElementById('journalHorizontal');
-        if (container) {
-            container.style.overflow = 'auto';
-            container.style.scrollSnapType = 'x mandatory';
+        // fallback нативный скролл
+        if (content) {
+            content.style.overflow = 'auto';
+            content.style.scrollSnapType = 'x mandatory';
             window.scrollToPage = (index) => {
-                container.scrollTo({ left: index * container.clientWidth, behavior: 'smooth' });
+                content.scrollTo({ left: index * content.clientWidth, behavior: 'smooth' });
             };
         }
     }
 
-    // ===== ТИКЕР =====
+    // ===== RSS ТИКЕР (НОВЫЙ) =====
+    const rssHeadlines = [
+        "✦ Apartamento: The Imperfect Home ✦",
+        "✦ Fantastic Man: On Silence ✦",
+        "✦ 032c: Berlin Issue ✦",
+        "✦ Purple: Les Nuits ✦",
+        "✦ MacGuffin: The Rope ✦",
+        "✦ The Gentlewoman: No. 26 ✦",
+        "✦ Buffalo Zine: The Fame Issue ✦",
+        "✦ Re-Edition: The Touch ✦",
+        "✦ Mastermind: The System ✦",
+        "✦ Office Magazine: Cyber ✦"
+    ];
     const ticker = document.getElementById('rssTicker');
-    if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
+    if (ticker) {
+        // Бесконечная строка: дублируем массив
+        ticker.innerText = rssHeadlines.join('  —  ') + '  —  ' + rssHeadlines.join('  —  ');
+    }
 
-    // ===== КАРУСЕЛЬ НА ПЕРВОЙ СТРАНИЦЕ =====
+    // ===== АРТ-ПРЕВЬЮ ИЗ LOCALSTORAGE =====
+    const artPreview = document.getElementById('currentArtPreview');
+    function updateArtFromStorage() {
+        const saved = localStorage.getItem('morstrix_current_art');
+        if (saved && artPreview) artPreview.src = saved;
+    }
+    updateArtFromStorage();
+    window.addEventListener('focus', updateArtFromStorage);
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) updateArtFromStorage();
+    });
+
+    // ===== АРХИВ (ЗАГЛУШКА) =====
+    document.getElementById('archiveBtn')?.addEventListener('click', () => {
+        showStubModal('АРХИВ', 'Скоро здесь будут рисунки участников');
+    });
+
+    // ===== PAINT КНОПКА: МОДАЛКА ВЫБОРА =====
+    document.getElementById('paintJournalBtn')?.addEventListener('click', () => {
+        openModal('paintEntryModal');
+    });
+    document.getElementById('paintAnonBtn')?.addEventListener('click', () => {
+        window.open('paint.html', '_blank');
+    });
+    document.getElementById('paintRegBtn')?.addEventListener('click', () => {
+        window.open('paint.html', '_blank'); // заглушка
+    });
+
+    // ===== PINTEREST ПАНЕЛЬ =====
+    const pinterestPanel = document.getElementById('pinterestPanel');
+    const pinterestMenu = document.getElementById('pinterestMenu');
+    if (pinterestPanel && pinterestMenu) {
+        pinterestPanel.addEventListener('click', () => {
+            pinterestMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.pinterest-category').forEach(cat => {
+            cat.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const catName = cat.dataset.cat;
+                showStubModal(`PINTEREST: ${catName.toUpperCase()}`, `Доска «${catName}» появится позже`);
+                pinterestMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // ===== ФУНКЦИЯ ЗАГЛУШКИ =====
+    function showStubModal(title, text) {
+        document.getElementById('stubModalTitle').textContent = title;
+        document.getElementById('stubModalText').textContent = text;
+        openModal('stubModal');
+    }
+
+    // ===== УТИЛИТЫ МОДАЛОК =====
+    function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+    function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+
+    // ===== TWITTER =====
+    document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
+
+    // ===== КАРУСЕЛЬ =====
     const carousel = document.getElementById('mainCarousel');
     let carouselInterval;
     if (carousel) {
@@ -112,14 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         carousel.addEventListener('click', () => clearInterval(carouselInterval));
     }
 
-    // ===== УТИЛИТЫ МОДАЛОК =====
-    function openModal(id){ document.getElementById(id)?.classList.add('active'); }
-    function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
-
-    // ===== TWITTER =====
-    document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
-
-    // ===== FONT STYLER =====
+    // ===== FONT STYLER (СТРАНИЦА 3) =====
     const embeddedInput = document.getElementById('fontInputEmbedded');
     const embeddedPreview = document.getElementById('stylerPreviewEmbedded');
     if (embeddedInput && embeddedPreview) {
@@ -137,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(err => console.warn('Clipboard error:', err));
         });
 
+        // Анимация placeholder
         const placeholderText = 'TYPE TEXT';
         let typingTimer = null, isTyping = true, charIndex = 0;
         function animatePlaceholder() {
@@ -176,16 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         embeddedInput.addEventListener('focus', stopAnimation);
         embeddedInput.addEventListener('blur', () => { if (embeddedInput.value === '') startAnimation(); });
-        const page2 = document.querySelector('.journal-page[data-page="2"]');
-        if (page2) {
+        const page3 = document.querySelector('.journal-page[data-page="3"]');
+        if (page3) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => entry.isIntersecting ? startAnimation() : stopAnimation());
             }, { threshold: 0.1 });
-            observer.observe(page2);
+            observer.observe(page3);
         } else startAnimation();
     }
 
-    // ===== СКАЧИВАНИЕ АРХИВА =====
+    // Скачивание архива
     document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
         const a = document.createElement('a');
         a.href = 'assets/morstrix_archive.zip';
@@ -193,38 +252,100 @@ document.addEventListener('DOMContentLoaded', () => {
         a.click();
     });
 
-    // ===== PAINT =====
-    document.getElementById('paintBtn')?.addEventListener('click', ()=> openModal('artModal'));
+    // ===== SPOTIFY ИКОНКА =====
+    document.getElementById('spotifyIcon')?.addEventListener('click', () => openModal('spotifyModal'));
 
-    // ===== КОНВЕРТЕР PX ↔ CM =====
-    const pxInput = document.getElementById('pxInputEmbedded');
-    const cmInput = document.getElementById('cmInputEmbedded');
-    if(pxInput && cmInput) {
-        pxInput.addEventListener('input', ()=> { const px = parseFloat(pxInput.value); cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2); });
-        cmInput.addEventListener('input', ()=> { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
+    // ===== TEXT SYNTH (TTS) =====
+    const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
+    const ttsTextInput = document.getElementById('ttsTextInput');
+    const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
+    const ttsStatus = document.getElementById('ttsStatus');
+    let voices = [];
+
+    function setTtsStatus(msg) { if (ttsStatus) ttsStatus.textContent = msg; }
+    function loadVoices() {
+        voices = speechSynthesis.getVoices();
+        if (ttsVoiceSelect) {
+            ttsVoiceSelect.innerHTML = '';
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.lang} - ${voice.name}`;
+                ttsVoiceSelect.appendChild(option);
+            });
+            const ukrVoice = voices.find(v => v.lang.startsWith('uk'));
+            const rusVoice = voices.find(v => v.lang.startsWith('ru'));
+            if (ukrVoice) ttsVoiceSelect.value = ukrVoice.name;
+            else if (rusVoice) ttsVoiceSelect.value = rusVoice.name;
+        }
+    }
+    if (typeof speechSynthesis !== 'undefined') {
+        speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+    }
+    function speakWithSpeechSynthesis(text) {
+        if (!text.trim()) { setTtsStatus('Введите текст'); return; }
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const selectedVoiceName = ttsVoiceSelect?.value;
+        if (selectedVoiceName) {
+            const voice = voices.find(v => v.name === selectedVoiceName);
+            if (voice) utterance.voice = voice;
+        }
+        utterance.rate = 1.0; utterance.pitch = 1.0;
+        utterance.onstart = () => setTtsStatus('▶ Воспроизведение');
+        utterance.onend = () => setTtsStatus('');
+        utterance.onerror = (e) => setTtsStatus('Ошибка: ' + e.error);
+        speechSynthesis.speak(utterance);
+    }
+    if (ttsSpeakBtn) {
+        ttsSpeakBtn.addEventListener('click', () => speakWithSpeechSynthesis(ttsTextInput?.value || ''));
+    }
+    if (ttsTextInput) {
+        ttsTextInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') ttsSpeakBtn?.click(); });
+        // Анимация placeholder (аналогично)
+        const placeholderText = 'TYPE TEXT';
+        let typingTimer2 = null, isTyping2 = true, charIndex2 = 0;
+        function animatePlaceholderTTS() {
+            if (typingTimer2) clearTimeout(typingTimer2);
+            if (isTyping2) {
+                if (charIndex2 < placeholderText.length) {
+                    ttsTextInput.placeholder = placeholderText.substring(0, charIndex2 + 1) + ' █';
+                    charIndex2++;
+                    typingTimer2 = setTimeout(animatePlaceholderTTS, 120);
+                } else {
+                    isTyping2 = false;
+                    typingTimer2 = setTimeout(animatePlaceholderTTS, 1500);
+                }
+            } else {
+                if (charIndex2 > 0) {
+                    charIndex2--;
+                    ttsTextInput.placeholder = placeholderText.substring(0, charIndex2) + ' █';
+                    typingTimer2 = setTimeout(animatePlaceholderTTS, 80);
+                } else {
+                    isTyping2 = true;
+                    ttsTextInput.placeholder = ' █';
+                    typingTimer2 = setTimeout(animatePlaceholderTTS, 300);
+                }
+            }
+        }
+        function startAnimationTTS() {
+            if (ttsTextInput.value === '') {
+                isTyping2 = true; charIndex2 = 0;
+                ttsTextInput.placeholder = ' █';
+                if (typingTimer2) clearTimeout(typingTimer2);
+                typingTimer2 = setTimeout(animatePlaceholderTTS, 300);
+            }
+        }
+        function stopAnimationTTS() {
+            if (typingTimer2) clearTimeout(typingTimer2);
+            ttsTextInput.placeholder = '';
+        }
+        ttsTextInput.addEventListener('focus', stopAnimationTTS);
+        ttsTextInput.addEventListener('blur', () => { if (ttsTextInput.value === '') startAnimationTTS(); });
     }
 
-    // ===== КОНСТРУКТОР MERCH =====
-    const canvas = document.getElementById('printCanvasEmbedded');
-    const upload = document.getElementById('imageUploadEmbedded');
-    if(canvas && upload) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = 80; canvas.height = 80;
-        upload.addEventListener('change', e => {
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = ev => {
-                const img = new Image();
-                img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height); };
-                img.src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-        document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
-    }
-
-    // ===== ТОП ИГРОКОВ =====
+    // ===== ТОП ИГРОКОВ (FIREBASE) =====
     async function loadTopPlayers(){
         const container = document.querySelector('.top-players-list');
         if(!container) return;
@@ -256,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 
-    // ===== ФОРУМ (вкладки) =====
+    // ===== ФОРУМ ВКЛАДКИ =====
     const contents = {
         wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
         interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
@@ -279,6 +400,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ===== SUPPORT КНОПКА =====
+    document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal'));
 
     // ===== ЗАКРЫТИЕ МОДАЛОК =====
     document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
@@ -304,127 +428,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== PINTEREST =====
-    const page4 = document.querySelector('.journal-page[data-page="4"]');
-    if (page4) {
-        const pinterestObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (window.PinUtils) {
-                        window.PinUtils.build();
-                    } else {
-                        const script = document.createElement('script');
-                        script.src = 'https://assets.pinterest.com/js/pinit.js';
-                        script.onload = () => window.PinUtils?.build();
-                        document.head.appendChild(script);
-                    }
-                }
-            });
-        }, { threshold: 0.1 });
-        pinterestObserver.observe(page4);
-    }
-
     // ===== ESCAPE =====
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 
-    // ===== АНИМАЦИЯ ПЕЧАТИ ДЛЯ TEXT SYNTH =====
-    const ttsInput = document.getElementById('ttsTextInput');
-    if (ttsInput) {
-        const placeholderText = 'TYPE TEXT';
-        let typingTimer = null, isTyping = true, charIndex = 0;
-        function animatePlaceholderTTS() {
-            if (typingTimer) clearTimeout(typingTimer);
-            if (isTyping) {
-                if (charIndex < placeholderText.length) {
-                    ttsInput.placeholder = placeholderText.substring(0, charIndex + 1) + ' █';
-                    charIndex++;
-                    typingTimer = setTimeout(animatePlaceholderTTS, 120);
-                } else {
-                    isTyping = false;
-                    typingTimer = setTimeout(animatePlaceholderTTS, 1500);
-                }
-            } else {
-                if (charIndex > 0) {
-                    charIndex--;
-                    ttsInput.placeholder = placeholderText.substring(0, charIndex) + ' █';
-                    typingTimer = setTimeout(animatePlaceholderTTS, 80);
-                } else {
-                    isTyping = true;
-                    ttsInput.placeholder = ' █';
-                    typingTimer = setTimeout(animatePlaceholderTTS, 300);
-                }
-            }
-        }
-        function startAnimationTTS() {
-            if (ttsInput.value === '') {
-                isTyping = true; charIndex = 0;
-                ttsInput.placeholder = ' █';
-                if (typingTimer) clearTimeout(typingTimer);
-                typingTimer = setTimeout(animatePlaceholderTTS, 300);
-            }
-        }
-        function stopAnimationTTS() {
-            if (typingTimer) clearTimeout(typingTimer);
-            ttsInput.placeholder = '';
-        }
-        ttsInput.addEventListener('focus', stopAnimationTTS);
-        ttsInput.addEventListener('blur', () => { if (ttsInput.value === '') startAnimationTTS(); });
-        const page6 = document.querySelector('.journal-page[data-page="6"]');
-        if (page6) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => entry.isIntersecting ? startAnimationTTS() : stopAnimationTTS());
-            }, { threshold: 0.1 });
-            observer.observe(page6);
-        } else startAnimationTTS();
-    }
+    // ===== ОБРАБОТЧИК ДЛЯ ВНЕШНИХ ССЫЛОК (X) =====
+    document.querySelector('[data-href]')?.addEventListener('click', function() {
+        window.open(this.dataset.href, '_blank');
+        closeModal('disclaimerModal');
+    });
 });
-
-// ===== TEXT SYNTH (SpeechSynthesis) =====
-const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
-const ttsTextInput = document.getElementById('ttsTextInput');
-const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
-const ttsStatus = document.getElementById('ttsStatus');
-let voices = [];
-
-function setTtsStatus(msg) { if (ttsStatus) ttsStatus.textContent = msg; }
-function loadVoices() {
-    voices = speechSynthesis.getVoices();
-    if (ttsVoiceSelect) {
-        ttsVoiceSelect.innerHTML = '';
-        voices.forEach(voice => {
-            const option = document.createElement('option');
-            option.value = voice.name;
-            option.textContent = `${voice.lang} - ${voice.name}`;
-            ttsVoiceSelect.appendChild(option);
-        });
-        const ukrVoice = voices.find(v => v.lang.startsWith('uk'));
-        const rusVoice = voices.find(v => v.lang.startsWith('ru'));
-        if (ukrVoice) ttsVoiceSelect.value = ukrVoice.name;
-        else if (rusVoice) ttsVoiceSelect.value = rusVoice.name;
-    }
-}
-if (typeof speechSynthesis !== 'undefined') {
-    speechSynthesis.onvoiceschanged = loadVoices;
-    loadVoices();
-}
-function speakWithSpeechSynthesis(text) {
-    if (!text.trim()) { setTtsStatus('Введите текст'); return; }
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const selectedVoiceName = ttsVoiceSelect?.value;
-    if (selectedVoiceName) {
-        const voice = voices.find(v => v.name === selectedVoiceName);
-        if (voice) utterance.voice = voice;
-    }
-    utterance.rate = 1.0; utterance.pitch = 1.0;
-    utterance.onstart = () => setTtsStatus('▶ Воспроизведение');
-    utterance.onend = () => setTtsStatus('');
-    utterance.onerror = (e) => setTtsStatus('Ошибка: ' + e.error);
-    speechSynthesis.speak(utterance);
-}
-if (ttsSpeakBtn) {
-    ttsSpeakBtn.addEventListener('click', () => speakWithSpeechSynthesis(ttsTextInput?.value || ''));
-}
-if (ttsTextInput) {
-    ttsTextInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') ttsSpeakBtn?.click(); });
-}
