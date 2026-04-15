@@ -128,7 +128,6 @@
         currentCarouselIndex = 0;
         updateCarouselPosition();
 
-        // Обработчики клика на слайды (добавление в корзину, модалка НЕ закрывается)
         document.querySelectorAll('.product-carousel-slide').forEach(slide => {
             slide.addEventListener('click', () => {
                 if (currentProductData) {
@@ -137,7 +136,6 @@
                         name: currentProductData.name,
                         price: parseInt(currentProductData.price)
                     });
-                    // Модалка остаётся открытой
                 }
             });
         });
@@ -153,13 +151,38 @@
     }
 
     // ========== УТИЛИТЫ МОДАЛОК ==========
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.add('active');
+    function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+    function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+
+    // ========== КОНСТРУКТОР (попап) ==========
+    function initConstructorPopup() {
+        const canvas = document.getElementById('printCanvasEmbedded');
+        const upload = document.getElementById('imageUploadEmbedded');
+        if (!canvas || !upload) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = 80; canvas.height = 80;
+        upload.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const img = new Image();
+                img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height); };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+        document.getElementById('resetPrintEmbedded').addEventListener('click', ()=> { ctx.clearRect(0,0,canvas.width,canvas.height); upload.value = ''; });
     }
-    function closeModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) modal.classList.remove('active');
+
+    // ========== КОНВЕРТЕР (попап) ==========
+    function initConverterPopup() {
+        const pxInput = document.getElementById('pxInputEmbedded');
+        const cmInput = document.getElementById('cmInputEmbedded');
+        if(pxInput && cmInput) {
+            pxInput.addEventListener('input', ()=> { const px = parseFloat(pxInput.value); cmInput.value = isNaN(px) ? '' : (px / 37.8).toFixed(2); });
+            cmInput.addEventListener('input', ()=> { const cm = parseFloat(cmInput.value); pxInput.value = isNaN(cm) ? '' : Math.round(cm * 37.8); });
+        }
     }
 
     // ========== ИНИЦИАЛИЗАЦИЯ ==========
@@ -198,6 +221,16 @@
         });
 
         document.getElementById('checkoutBtn').addEventListener('click', checkout);
+
+        // Новые иконки
+        document.getElementById('constructorIcon').addEventListener('click', () => {
+            openModal('constructorModal');
+            initConstructorPopup(); // повторно не страшно
+        });
+        document.getElementById('converterIcon').addEventListener('click', () => {
+            openModal('converterModal');
+            initConverterPopup();
+        });
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
