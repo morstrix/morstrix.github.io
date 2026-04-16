@@ -113,10 +113,11 @@ body {
 .art-archive-row {
     display: flex;
     flex: 1;
-    gap: 10px;               /* уменьшено с 15px */
+    gap: 10px;
     align-items: center;
     min-height: 0;
-    margin: 5px 0;           /* небольшой отступ от тикера и кнопки */
+    margin: 5px 0;
+    position: relative;   /* <-- новое */
 }
 
 .art-block {
@@ -152,9 +153,14 @@ body {
 }
 
 .paint-btn-wrapper {
-    width: 50%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
     display: flex;
     justify-content: flex-start;
+    z-index: 5;
 }
 .paint-trigger-img {
     width: 60px;
@@ -544,7 +550,6 @@ body {
     background: #ffb7c7;
 }
 
-/* ================= АДАПТИВНОСТЬ ================= */
 @media (max-width: 768px) {
     .top-panel { height: 50px; padding: 0 12px; }
     .panel-btn { font-size: 0.7rem; }
@@ -554,23 +559,43 @@ body {
     .dot { width: 6px; height: 6px; }
 
     .art-archive-row {
-    flex-direction: row;          /* возвращаем горизонталь */
-    gap: 10px;
-    margin: 8px 0;
-    padding: 0 10px;              /* отступы от краёв экрана */
-}
-.art-block {
-    width: 60%;
-    aspect-ratio: 1/1;
-}
-.archive-block {
-    width: 20%;
-    height: auto;
-    padding: 10px 5px;            /* уменьшен внутренний отступ */
-    font-size: 12px;             /* можно уменьшить шрифт */
-    align-self: center;
-}
-    .paint-btn-wrapper { width: 100%; justify-content: center; }
+        flex-direction: row;
+        gap: 10px;
+        margin: 8px 0;
+        padding: 0 10px;
+    }
+    .art-block {
+        width: 60%;
+        aspect-ratio: 1/1;
+    }
+    .archive-block {
+        width: 20%;
+        height: auto;
+        padding: 10px 5px;
+        font-size: 12px;
+        align-self: center;
+    }
+    .paint-btn-wrapper {
+        left: 5px;
+    }
+    .paint-trigger-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Новые стили для Pinterest */
+    .pinterest-panel {
+        justify-content: flex-end;
+        padding-right: 15px;
+    }
+    .mood-img {
+        width: 28px;
+        height: 28px;
+    }
+    .pinterest-widget-container {
+        width: 250px;
+        height: 250px;
+    }
 
     .mx-narrow-image { height: 120px; }
     .ticker { font-size: 9px; }
