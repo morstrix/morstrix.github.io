@@ -187,37 +187,44 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('paintAnonBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
     document.getElementById('paintRegBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
 
-    // ===== PINTEREST =====
+       // ===== PINTEREST (ОБНОВЛЕННАЯ ЛОГИКА) =====
     const pinterestPanel = document.getElementById('pinterestPanel');
     const pinterestMenu = document.getElementById('pinterestMenu');
+    let pinterestScriptLoaded = false;
+
+    function loadPinterestWidget() {
+        if (!pinterestScriptLoaded) {
+            const script = document.createElement('script');
+            script.src = 'https://assets.pinterest.com/js/pinit.js';
+            script.onload = () => {
+                if (window.PinUtils) {
+                    window.PinUtils.build();
+                }
+            };
+            document.head.appendChild(script);
+            pinterestScriptLoaded = true;
+        } else {
+            if (window.PinUtils) {
+                window.PinUtils.build();
+            }
+        }
+    }
+
     if (pinterestPanel && pinterestMenu) {
         pinterestPanel.addEventListener('click', (e) => {
             e.stopPropagation();
             pinterestMenu.classList.toggle('active');
+            if (pinterestMenu.classList.contains('active')) {
+                loadPinterestWidget();
+            }
         });
-        document.querySelectorAll('.pinterest-category').forEach(cat => {
-            cat.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const catName = cat.dataset.cat;
-                if (catName === 'diliger') openModal('pinterestModalDiliger');
-                else if (catName === 'tattoo') openModal('pinterestModalTattoo');
-                else if (catName === 'barbering') openModal('pinterestModalBarbering');
-                pinterestMenu.classList.remove('active');
-                if (!window.PinUtils) {
-                    const script = document.createElement('script');
-                    script.src = 'https://assets.pinterest.com/js/pinit.js';
-                    script.onload = () => window.PinUtils?.build();
-                    document.head.appendChild(script);
-                } else window.PinUtils?.build();
-            });
-        });
+
         document.addEventListener('click', (e) => {
             if (!pinterestPanel.contains(e.target) && !pinterestMenu.contains(e.target)) {
                 pinterestMenu.classList.remove('active');
             }
         });
     }
-
     // ===== АРХИВ (заглушка) =====
     document.getElementById('archiveBtn')?.addEventListener('click', ()=> {
         openModal('stubModal');
