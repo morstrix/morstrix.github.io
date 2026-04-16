@@ -110,7 +110,7 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* Десктоп: арт‑блок и архив — компактные квадраты */
+/* Десктоп: арт‑блок ~60%, архив ~20% → соотношение около 3:1 */
 .art-archive-row {
     display: flex;
     justify-content: center;
@@ -120,8 +120,7 @@ body {
     flex-shrink: 1;
 }
 .art-block {
-    height: min(40vh, 300px);
-    width: auto;
+    flex: 0 0 55%;
     aspect-ratio: 1/1;
     background: #000;
     display: flex;
@@ -135,8 +134,7 @@ body {
     image-rendering: pixelated;
 }
 .archive-block {
-    height: min(40vh, 300px);
-    width: auto;
+    flex: 0 0 20%;
     aspect-ratio: 1/1;
     border: 2px dashed var(--accent-pink);
     background: #0a0a0a;
@@ -151,12 +149,11 @@ body {
 
 /* Строка для Paint (десктоп) */
 .paint-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    justify-content: center;
     margin-top: 10px;
 }
 .paint-cell {
-    grid-column: 1 / 2;
     display: flex;
     justify-content: center;
 }
@@ -170,13 +167,11 @@ body {
 /* Нижняя строка с mood (десктоп) */
 .bottom-row {
     display: flex;
-    width: 100%;
+    justify-content: center;
     margin-top: 15px;
 }
 .bottom-cell {
-    flex: 1;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 .mood-trigger {
@@ -529,6 +524,7 @@ body {
     background: #ffb7c7;
 }
 
+/* ================= АДАПТИВНОСТЬ (МОБИЛЬНЫЕ) ================= */
 @media (max-width: 768px) {
     .top-panel { height: 50px; padding: 0 12px; }
     .panel-btn { font-size: 0.7rem; }
@@ -537,15 +533,16 @@ body {
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    /* Арт-блок и архив через flex — строго 2:1 */
+    /* Мобильные: арт‑блок 60%, архив 20% */
     .art-archive-row {
         display: flex;
-        gap: 8px;
+        justify-content: center;
+        gap: 10px;
         margin: 8px 0;
         padding: 0 8px;
     }
     .art-block {
-        flex: 2;                 /* занимает 2 части */
+        flex: 0 0 60%;
         aspect-ratio: 1/1;
         background: #000;
         display: flex;
@@ -559,7 +556,7 @@ body {
         image-rendering: pixelated;
     }
     .archive-block {
-        flex: 1;                 /* занимает 1 часть */
+        flex: 0 0 20%;
         aspect-ratio: 1/1;
         border: 2px dashed var(--accent-pink);
         background: #0a0a0a;
@@ -577,7 +574,7 @@ body {
         display: flex;
         justify-content: flex-start;
         margin-top: 8px;
-        padding-left: 12px;
+        padding-left: 15px;
     }
     .paint-cell {
         display: contents;
@@ -587,15 +584,16 @@ body {
         height: 48px;
     }
 
-    /* Mood — по центру */
+    /* Mood — справа */
     .bottom-row {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         margin-top: 10px;
+        padding-right: 15px;
     }
     .bottom-cell {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
     }
     .mood-img-large {
         width: 48px;
