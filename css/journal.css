@@ -110,14 +110,14 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* Grid для арт-блока и архива (десктоп) */
+/* Десктоп: арт‑блок и архив в одной строке, ограничены по высоте */
 .art-archive-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
     align-items: center;
     margin: 5px 0;
-    max-height: 320px;          /* ограничение для больших экранов */
+    max-height: 320px;          /* ← не даёт блокам стать слишком высокими */
     flex-shrink: 1;
 }
 .art-block {
@@ -542,8 +542,10 @@ body {
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    /* Арт-блок и архив */
+    /* Арт-блок и архив — строго горизонтально */
     .art-archive-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 8px;
         margin: 8px 0;
         padding: 0 8px;
@@ -553,7 +555,7 @@ body {
         font-size: 10px;
     }
 
-    /* Строка с Paint — флекс для точного управления */
+    /* Paint — слева */
     .paint-row {
         display: flex;
         justify-content: flex-start;
@@ -568,7 +570,7 @@ body {
         height: 48px;
     }
 
-    /* Нижняя строка с Mood — по центру */
+    /* Mood — по центру */
     .bottom-row {
         display: flex;
         justify-content: center;
