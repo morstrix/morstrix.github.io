@@ -111,7 +111,6 @@ body {
 }
 
 /* Grid для арт-блока и архива */
-/* Grid для арт-блока и архива */
 .art-archive-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -549,7 +548,7 @@ body {
     }
     .paint-cell {
         justify-content: flex-start;
-        padding-left: 12px;  /* чуть левее, но не впритык */
+        padding-left: 0px;  /* чуть левее, но не впритык */
     }
     .paint-trigger-img {
         width: 48px;
