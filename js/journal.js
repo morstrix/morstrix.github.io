@@ -17,7 +17,7 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ИНИЦИАЛИЗАЦИЯ LENIS (ТОЧНО КАК В РАБОЧЕЙ ВЕРСИИ) =====
+    // ===== ИНИЦИАЛИЗАЦИЯ LENIS =====
     const wrapper = document.querySelector('.journal-wrapper');
     const content = document.getElementById('journalHorizontal');
     let lenis = null;
@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper: wrapper,
             content: content,
             orientation: 'horizontal',
-            gestureOrientation: 'horizontal',
+            gestureOrientation: 'both',
             smoothWheel: true,
             smoothTouch: true,
             syncTouch: true,
+            touchMultiplier: 2,
             lerp: 0.08,
         });
 
@@ -42,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', () => lenis.resize());
 
-        // Защита iframe при скролле
         let scrollTimer;
         lenis.on('scroll', () => {
             document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 120);
         });
 
-        // Синхронизация точек (6 штук)
         const dots = document.querySelectorAll('.dot');
         function updateActiveDot(index) {
             dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(err => console.warn('Clipboard error:', err));
         });
 
-        // Анимация placeholder
         const placeholderText = 'TYPE TEXT';
         let typingTimer = null, isTyping = true, charIndex = 0;
         function animatePlaceholder() {
@@ -182,46 +180,43 @@ document.addEventListener('DOMContentLoaded', () => {
         a.click();
     });
 
-    // ===== PAINT =====
-    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> openModal('paintEntryModal'));
-    document.getElementById('paintAnonBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
-    document.getElementById('paintRegBtn')?.addEventListener('click', ()=> window.open('paint.html', '_blank'));
+    // ===== PAINT (НОВАЯ ЛОГИКА) =====
+    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> openModal('paintChoiceModal'));
 
-       // ===== PINTEREST (ОБНОВЛЕННАЯ ЛОГИКА) =====
-    const pinterestPanel = document.getElementById('pinterestPanel');
-    const pinterestMenu = document.getElementById('pinterestMenu');
-    let pinterestScriptLoaded = false;
+    document.getElementById('paintAnonChoiceBtn')?.addEventListener('click', ()=> {
+        closeModal('paintChoiceModal');
+        window.open('paint.html', '_blank');
+    });
 
-    function loadPinterestWidget() {
-        if (!pinterestScriptLoaded) {
-            const script = document.createElement('script');
-            script.src = 'https://assets.pinterest.com/js/pinit.js';
-            script.onload = () => {
-                if (window.PinUtils) {
-                    window.PinUtils.build();
-                }
-            };
-            document.head.appendChild(script);
-            pinterestScriptLoaded = true;
+    document.getElementById('paintRegChoiceBtn')?.addEventListener('click', ()=> {
+        closeModal('paintChoiceModal');
+        openModal('nicknameModal');
+    });
+
+    document.getElementById('nicknameEnterBtn')?.addEventListener('click', ()=> {
+        const nickname = document.getElementById('nicknameInput').value.trim();
+        if (nickname) {
+            localStorage.setItem('paintNickname', nickname);
+            window.open('paint.html?nick=' + encodeURIComponent(nickname), '_blank');
+            closeModal('nicknameModal');
         } else {
-            if (window.PinUtils) {
-                window.PinUtils.build();
-            }
+            alert('Введите никнейм');
         }
-    }
+    });
 
-    if (pinterestPanel && pinterestMenu) {
-        pinterestPanel.addEventListener('click', (e) => {
-            e.stopPropagation();
-            pinterestMenu.classList.toggle('active');
-            if (pinterestMenu.classList.contains('active')) {
-                loadPinterestWidget();
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!pinterestPanel.contains(e.target) && !pinterestMenu.contains(e.target)) {
-                pinterestMenu.classList.remove('active');
+    // ===== MOOD (PINTEREST) =====
+    const moodTrigger = document.getElementById('moodTrigger');
+    if (moodTrigger) {
+        moodTrigger.addEventListener('click', ()=> {
+            openModal('moodModal');
+            if (!window.pinterestScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = 'https://assets.pinterest.com/js/pinit.js';
+                script.onload = () => { if (window.PinUtils) window.PinUtils.build(); };
+                document.head.appendChild(script);
+                window.pinterestScriptLoaded = true;
+            } else {
+                if (window.PinUtils) window.PinUtils.build();
             }
         });
     }
@@ -229,8 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== АРХИВ (заглушка) =====
     document.getElementById('archiveBtn')?.addEventListener('click', ()=> {
         openModal('stubModal');
-        document.getElementById('stubModalTitle').textContent = 'АРХИВ';
-        document.getElementById('stubModalText').textContent = 'Скоро здесь будут рисунки участников';
+        const titleEl = document.getElementById('stubModalTitle');
+        const textEl = document.getElementById('stubModalText');
+        if (titleEl) titleEl.textContent = 'АРХИВ';
+        if (textEl) textEl.textContent = 'Скоро здесь будут рисунки участников';
     });
 
     // ===== SPOTIFY =====
