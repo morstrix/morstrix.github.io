@@ -117,6 +117,8 @@ body {
     gap: 15px;
     align-items: center;
     margin: 5px 0;
+max-height: 40vh;          /* ← ограничиваем высоту относительно высоты экрана */
+    flex-shrink: 1;            /* разрешаем сжиматься */
 }
 .art-block {
     grid-column: 1 / 3;
