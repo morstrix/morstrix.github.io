@@ -529,7 +529,6 @@ body {
     background: #ffb7c7;
 }
 
-/* ================= АДАПТИВНОСТЬ (МОБИЛЬНЫЕ) ================= */
 @media (max-width: 768px) {
     .top-panel { height: 50px; padding: 0 12px; }
     .panel-btn { font-size: 0.7rem; }
@@ -540,8 +539,8 @@ body {
 
     /* Арт-блок и архив: строго 2 к 1 */
     .art-archive-row {
-        display: grid;
-        grid-template-columns: 2fr 1fr !important;  /* ← принудительно 2:1 */
+        display: grid !important;
+        grid-template-columns: 2fr 1fr !important;
         gap: 8px;
         margin: 8px 0;
         padding: 0 8px;
@@ -549,7 +548,7 @@ body {
     }
     .art-block {
         grid-column: 1 / 2 !important;
-        width: 100%;
+        width: 100% !important;
         aspect-ratio: 1/1;
         background: #000;
         display: flex;
@@ -564,7 +563,7 @@ body {
     }
     .archive-block {
         grid-column: 2 / 3 !important;
-        width: 100%;
+        width: 100% !important;
         aspect-ratio: 1/1;
         border: 2px dashed var(--accent-pink);
         background: #0a0a0a;
