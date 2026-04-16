@@ -225,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // ===== АРХИВ (заглушка) =====
     document.getElementById('archiveBtn')?.addEventListener('click', ()=> {
         openModal('stubModal');
