@@ -17,48 +17,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const layerBackground = document.getElementById('layerBackground');
     const closeBtn = document.getElementById('paintCloseBtn');
 
-    // История для undo/redo
+    // Два слоя (offscreen canvas)
+    const layerBg = document.createElement('canvas');
+    const layerTop = document.createElement('canvas');
+    layerBg.width = layerTop.width = canvas.width;
+    layerBg.height = layerTop.height = canvas.height;
+    const ctxBg = layerBg.getContext('2d');
+    const ctxTop = layerTop.getContext('2d');
+
+    // Активный слой: 'top' или 'bg'
+    let activeLayer = 'top';
+
+    // Инициализация фона (чёрный) и верхнего слоя (прозрачный)
+    ctxBg.fillStyle = '#000000';
+    ctxBg.fillRect(0, 0, canvas.width, canvas.height);
+    ctxTop.clearRect(0, 0, canvas.width, canvas.height);
+
+    // История для undo/redo (сохраняем состояние обоих слоёв)
     let history = [];
     let historyIndex = -1;
     const MAX_HISTORY = 30;
 
-    // Инициализация холста (чёрный фон)
-    function initCanvas() {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.lineWidth = parseInt(brushSizeInput.value);
-        ctx.strokeStyle = colorPicker.value;
-        saveState();
-    }
-    initCanvas();
-
-    // Сохранение состояния в историю
     function saveState() {
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const state = {
+            bg: ctxBg.getImageData(0, 0, canvas.width, canvas.height),
+            top: ctxTop.getImageData(0, 0, canvas.width, canvas.height)
+        };
         history = history.slice(0, historyIndex + 1);
-        history.push(imageData);
+        history.push(state);
         if (history.length > MAX_HISTORY) history.shift();
         historyIndex = history.length - 1;
+    }
+
+    function restoreState(state) {
+        ctxBg.putImageData(state.bg, 0, 0);
+        ctxTop.putImageData(state.top, 0, 0);
+        compositeLayers();
     }
 
     function undo() {
         if (historyIndex > 0) {
             historyIndex--;
-            ctx.putImageData(history[historyIndex], 0, 0);
+            restoreState(history[historyIndex]);
         }
     }
 
     function redo() {
         if (historyIndex < history.length - 1) {
             historyIndex++;
-            ctx.putImageData(history[historyIndex], 0, 0);
+            restoreState(history[historyIndex]);
         }
     }
 
+    // Композитинг слоёв на видимый canvas
+    function compositeLayers() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(layerBg, 0, 0);
+        ctx.drawImage(layerTop, 0, 0);
+    }
+
+    // Получить активный контекст
+    function getActiveContext() {
+        return activeLayer === 'top' ? ctxTop : ctxBg;
+    }
+
+    // Инициализация
+    function init() {
+        ctxBg.fillStyle = '#000000';
+        ctxBg.fillRect(0, 0, canvas.width, canvas.height);
+        ctxTop.clearRect(0, 0, canvas.width, canvas.height);
+        compositeLayers();
+        saveState();
+    }
+    init();
+
     // Рисование
     let drawing = false;
+    let lastX, lastY;
 
     function getPos(e) {
         const rect = canvas.getBoundingClientRect();
@@ -73,27 +108,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function start(e) {
         e.preventDefault();
         drawing = true;
-        ctx.beginPath();
         const p = getPos(e);
-        ctx.moveTo(p.x, p.y);
-        ctx.strokeStyle = colorPicker.value;
+        lastX = p.x;
+        lastY = p.y;
+        const actCtx = getActiveContext();
+        actCtx.beginPath();
+        actCtx.moveTo(p.x, p.y);
+        actCtx.strokeStyle = colorPicker.value;
+        actCtx.lineWidth = parseInt(brushSizeInput.value);
+        actCtx.lineCap = 'round';
+        actCtx.lineJoin = 'round';
     }
 
     function move(e) {
         e.preventDefault();
         if (!drawing) return;
         const p = getPos(e);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
+        const actCtx = getActiveContext();
+        actCtx.lineTo(p.x, p.y);
+        actCtx.stroke();
+        actCtx.beginPath();
+        actCtx.moveTo(p.x, p.y);
+        compositeLayers();
     }
 
     function stop(e) {
         e.preventDefault();
         if (drawing) {
             drawing = false;
-            ctx.beginPath();
             saveState();
         }
     }
@@ -107,23 +149,23 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('touchend', stop);
     canvas.addEventListener('touchcancel', stop);
 
-    // Обновление цвета и размера кисти
-    colorPicker.addEventListener('input', () => {
-        colorValue.textContent = colorPicker.value;
-        ctx.strokeStyle = colorPicker.value;
-    });
-    brushSizeInput.addEventListener('input', () => {
-        brushSizeValue.textContent = brushSizeInput.value;
-        ctx.lineWidth = parseInt(brushSizeInput.value);
-    });
+    // Обновление цвета и размера
+    colorPicker.addEventListener('input', () => colorValue.textContent = colorPicker.value);
+    brushSizeInput.addEventListener('input', () => brushSizeValue.textContent = brushSizeInput.value);
 
-    // Кнопки
+    // Clear (очищает активный слой)
     clearBtn.addEventListener('click', () => {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const actCtx = getActiveContext();
+        actCtx.clearRect(0, 0, canvas.width, canvas.height);
+        if (activeLayer === 'bg') {
+            ctxBg.fillStyle = '#000000';
+            ctxBg.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        compositeLayers();
         saveState();
     });
 
+    // Load (загружает изображение на активный слой)
     loadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => {
         const file = e.target.files[0];
@@ -132,10 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = ev => {
             const img = new Image();
             img.onload = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const actCtx = getActiveContext();
+                actCtx.clearRect(0, 0, canvas.width, canvas.height);
+                actCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                compositeLayers();
                 saveState();
             };
             img.src = ev.target.result;
@@ -144,21 +186,22 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.value = '';
     });
 
+    // Save
     saveBtn.addEventListener('click', () => {
         const dataURL = canvas.toDataURL('image/png');
         localStorage.setItem('morstrix_current_art', dataURL);
         alert('✓ Изображение сохранено!');
     });
 
+    // Undo/Redo
     undoBtn.addEventListener('click', undo);
     redoBtn.addEventListener('click', redo);
 
-    // Слои (мини-модалка)
+    // Слои (модалка)
     layersBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         layersModal.classList.toggle('active');
     });
-
     document.addEventListener('click', (e) => {
         if (!layersModal.contains(e.target) && e.target !== layersBtn) {
             layersModal.classList.remove('active');
@@ -166,30 +209,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     layerTop.addEventListener('click', () => {
-        // Логика слоя Top (рисуем поверх)
+        activeLayer = 'top';
         layersModal.classList.remove('active');
-        // Здесь можно добавить переключение слоёв, если нужно
-        alert('Слой TOP активен');
+        // Визуальная индикация (можно добавить, но не обязательно)
     });
-
     layerBackground.addEventListener('click', () => {
+        activeLayer = 'bg';
         layersModal.classList.remove('active');
-        alert('Слой BACKGROUND активен');
     });
 
-    // Закрытие Paint и возврат в журнал
+    // Закрытие
     closeBtn.addEventListener('click', () => {
         window.location.href = 'journal.html';
     });
 
-    // Горячие клавиши Ctrl+Z / Ctrl+Y
+    // Горячие клавиши
     document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'z') {
-            e.preventDefault();
-            undo();
-        } else if (e.ctrlKey && e.key === 'y') {
-            e.preventDefault();
-            redo();
-        }
+        if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+        else if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
     });
+
+    // Первое сохранение состояния
+    saveState();
 });
