@@ -20,7 +20,7 @@
 <div class="journal-wrapper">
   <div class="journal-horizontal" id="journalHorizontal">
 
-    <!-- СТРАНИЦА 1: ART (НОВЫЙ ДИЗАЙН) -->
+        <!-- СТРАНИЦА 1: ART (НОВЫЙ ДИЗАЙН) -->
     <div class="journal-page" data-page="1">
         <div class="page-content page1-layout">
             <div class="ticker-wrapper">
@@ -34,17 +34,20 @@
                     <span>АРХИВ</span>
                 </div>
             </div>
-            <div class="bottom-row">
-                <div class="bottom-cell left">
+            <!-- НОВАЯ СТРОКА ДЛЯ PAINT (выше) -->
+            <div class="paint-row">
+                <div class="paint-cell">
                     <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
                 </div>
+            </div>
+            <!-- НИЖНЯЯ СТРОКА ТОЛЬКО С MOOD -->
+            <div class="bottom-row">
                 <div class="bottom-cell center">
                     <div class="mood-trigger" id="moodTrigger">
                         <img src="assets/a.png" alt="mood" class="mood-img-large">
                         <span class="mood-label">mood</span>
                     </div>
                 </div>
-                <div class="bottom-cell right"></div>
             </div>
         </div>
     </div>
