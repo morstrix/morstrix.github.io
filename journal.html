@@ -20,7 +20,7 @@
 <div class="journal-wrapper">
   <div class="journal-horizontal" id="journalHorizontal">
 
-       <!-- СТРАНИЦА 1: ART (НОВЫЙ ДИЗАЙН) -->
+    <!-- СТРАНИЦА 1: ART (НОВЫЙ ДИЗАЙН) -->
     <div class="journal-page" data-page="1">
         <div class="page-content page1-layout">
             <div class="ticker-wrapper">
@@ -35,25 +35,16 @@
                 </div>
             </div>
             <div class="paint-centered">
-    <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
-</div>
-            <div class="pinterest-panel-wrapper">
-                <div class="pinterest-panel" id="pinterestPanel">
-                    <img src="assets/a.png" alt="mood" class="mood-img">
-                    <span>mood</span>
-                </div>
-                <div class="pinterest-menu" id="pinterestMenu">
-                    <div class="pinterest-widget-container">
-                        <a data-pin-do="embedBoard" 
-                           href="https://www.pinterest.com/morstrix/re-f-erences/" 
-                           data-pin-scale-width="300" 
-                           data-pin-scale-height="300"
-                           data-pin-board-width="300"></a>
-                    </div>
+                <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
+            </div>
+            <div class="mood-trigger-wrapper">
+                <div class="mood-trigger" id="moodTrigger">
+                    <img src="assets/a.png" alt="mood" class="mood-img-large">
+                    <span class="mood-label">mood</span>
                 </div>
             </div>
-        </div><!-- конец page-content -->
-    </div><!-- конец journal-page -->
+        </div>
+    </div>
 
     <!-- СТРАНИЦА 2: TWITTER -->
     <div class="journal-page" data-page="2">
@@ -139,21 +130,27 @@
 </div>
 
 <div class="bottom-panel">
-    <div class="page-indicator" id="pageIndicator">
-        <!-- Точки создадутся в JS -->
+    <div class="page-indicator" id="pageIndicator"></div>
+</div>
+
+<!-- Модалка "Зміст" -->
+<div id="contentsModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ЗМІСТ</span>
+            <button class="modal-close-btn" data-modal="contentsModal">✕</button>
+        </div>
+        <div class="modal-inner">
+            <div class="contents-item" data-page="1">1. ART</div>
+            <div class="contents-item" data-page="2">2. TWITTER</div>
+            <div class="contents-item" data-page="3">3. FONTS</div>
+            <div class="contents-item" data-page="4">4. SOUND</div>
+            <div class="contents-item" data-page="5">5. TOP + TETRIS</div>
+            <div class="contents-item" data-page="6">6. FORUM</div>
+        </div>
     </div>
 </div>
 
-<!-- Модалки (оставлены без изменений) -->
-<div id="contentsModal" class="modal-overlay">...</div>
-<div id="disclaimerModal" class="modal-overlay">...</div>
-<div id="paintEntryModal" class="modal-overlay">...</div>
-<div id="stubModal" class="modal-overlay">...</div>
-<div id="spotifyModal" class="modal-overlay">...</div>
-<div id="supportModal" class="modal-overlay">...</div>
-<div id="pinterestModalDiliger" class="modal-overlay">...</div>
-<div id="pinterestModalTattoo" class="modal-overlay">...</div>
-<div id="pinterestModalBarbering" class="modal-overlay">...</div>
 <!-- Модалка выбора Paint -->
 <div id="paintChoiceModal" class="modal-overlay">
     <div class="modal-content">
@@ -187,6 +184,29 @@
         </div>
     </div>
 </div>
+
+<!-- Модалка Mood (Pinterest) -->
+<div id="moodModal" class="modal-overlay">
+    <div class="modal-content" style="background: #111;">
+        <div class="modal-header">
+            <span class="modal-title-text">MOOD</span>
+            <button class="modal-close-btn" data-modal="moodModal">✕</button>
+        </div>
+        <div class="modal-inner" style="display: flex; justify-content: center;">
+            <a data-pin-do="embedBoard" 
+               href="https://www.pinterest.com/morstrix/re-f-erences/" 
+               data-pin-scale-width="400" 
+               data-pin-scale-height="400"
+               data-pin-board-width="400"></a>
+        </div>
+    </div>
+</div>
+
+<!-- Остальные модалки (заглушки, если нужны) -->
+<div id="disclaimerModal" class="modal-overlay">...</div>
+<div id="stubModal" class="modal-overlay">...</div>
+<div id="spotifyModal" class="modal-overlay">...</div>
+<div id="supportModal" class="modal-overlay">...</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="js/journal.js"></script>
