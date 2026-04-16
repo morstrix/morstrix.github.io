@@ -154,6 +154,39 @@
 <div id="pinterestModalDiliger" class="modal-overlay">...</div>
 <div id="pinterestModalTattoo" class="modal-overlay">...</div>
 <div id="pinterestModalBarbering" class="modal-overlay">...</div>
+<!-- Модалка выбора Paint -->
+<div id="paintChoiceModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВЫБЕРИ РЕЖИМ</span>
+            <button class="modal-close-btn" data-modal="paintChoiceModal">✕</button>
+        </div>
+        <div class="modal-inner" style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="universal-btn" id="paintAnonChoiceBtn">
+                <span class="btn-inner"><span>АНОН</span></span>
+            </button>
+            <button class="universal-btn" id="paintRegChoiceBtn">
+                <span class="btn-inner"><span>РЕГИСТРАЦИЯ</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка ввода никнейма -->
+<div id="nicknameModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВВЕДИ НИКНЕЙМ</span>
+            <button class="modal-close-btn" data-modal="nicknameModal">✕</button>
+        </div>
+        <div class="modal-inner">
+            <input type="text" id="nicknameInput" class="styler-input" placeholder="никнейм" maxlength="15">
+            <button class="universal-btn" id="nicknameEnterBtn" style="margin-top: 15px;">
+                <span class="btn-inner"><span>ENTER</span></span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="js/journal.js"></script>
