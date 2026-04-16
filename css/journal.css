@@ -555,7 +555,7 @@ max-height: 40vh;          /* ← ограничиваем высоту отно
         display: flex;
         justify-content: flex-start;   /* меняй на center / flex-end при необходимости */
         margin-top: 8px;
-        padding-left: 8px;             /* ← двигай Paint: 0 — влево, больше — правее */
+        padding-left: 0px;             /* ← двигай Paint: 0 — влево, больше — правее */
     }
     .paint-cell {
         display: contents;             /* чтобы не мешал */
@@ -570,7 +570,7 @@ max-height: 40vh;          /* ← ограничиваем высоту отно
         display: flex;
         justify-content: flex-end;     /* меняй на flex-start (влево) / center (центр) / flex-end (право) */
         margin-top: 10px;
-        padding-right: 8px;            /* ← отступ справа для Mood */
+        padding-right: 5px;            /* ← отступ справа для Mood */
     }
     .bottom-cell {
         flex: 0;
