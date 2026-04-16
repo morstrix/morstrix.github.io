@@ -10,7 +10,8 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html { background: var(--bg-dark); overflow: hidden; }
 body {
-    background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', monospace;
+    background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-display: swap;
     height: 100vh; height: 100dvh;
     overflow: hidden;
     position: relative;
@@ -44,7 +45,7 @@ body {
 }
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 
-/* === LENIS WRAPPER (РАБОЧАЯ КОНФИГУРАЦИЯ) === */
+/* === LENIS WRAPPER === */
 .journal-wrapper {
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
     height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
@@ -83,14 +84,13 @@ body {
     min-height: 0;
 }
 
-/* ================= СТРАНИЦА 1 (НОВЫЙ ДИЗАЙН) ================= */
+/* ================= СТРАНИЦА 1 ================= */
 .page1-layout {
     display: flex;
     flex-direction: column;
     height: 100%;
     gap: 10px;
 }
-
 .ticker-wrapper {
     flex-shrink: 0;
     width: 100%;
@@ -117,11 +117,10 @@ body {
     align-items: center;
     min-height: 0;
     margin: 5px 0;
-    position: relative;   /* <-- новое */
 }
 
 .art-block {
-    width: 55%;              /* было 50% */
+    width: 55%;
     aspect-ratio: 1/1;
     border: 2px solid var(--accent-pink);
     background: #000;
@@ -129,7 +128,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .art-block img {
     width: 100%;
     height: 100%;
@@ -138,8 +136,8 @@ body {
 }
 
 .archive-block {
-    width: 35%;              /* вместо flex: 1 */
-    height: auto;            /* вместо height: 100% */
+    width: 35%;
+    aspect-ratio: 1/1;
     border: 2px dashed var(--accent-pink);
     background: #0a0a0a;
     display: flex;
@@ -149,7 +147,6 @@ body {
     color: var(--deep-pink);
     font-size: 14px;
     text-transform: uppercase;
-    align-self: stretch;     /* чтобы растянулся по высоте строки как раньше */
 }
 
 .paint-centered {
@@ -164,84 +161,29 @@ body {
     cursor: pointer;
 }
 
-/* ================= PINTEREST (НОВЫЙ ДИЗАЙН) ================= */
-.pinterest-panel-wrapper {
-    width: 100%;
-    margin-top: auto;
-    position: relative;
-}
-
-.pinterest-panel {
+/* ===== MOOD (PINTEREST) ===== */
+.mood-trigger-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;    /* выравнивание вправо */
-    padding-right: 20px;
-    gap: 8px;
-    cursor: pointer;
-    color: var(--deep-pink);
-    font-size: 14px;
-    letter-spacing: 4px;
-    z-index: 20;
-    background: transparent;      /* убрали фон */
-    border: none;                 /* убрали границы */
-    height: auto;                 /* убрали фиксированную высоту */
-    width: auto;                  /* ширина по содержимому */
+    justify-content: center;
+    margin-top: 15px;
 }
-
-.mood-img {
-    width: 32px;
-    height: 32px;
+.mood-trigger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.mood-img-large {
+    width: 60px;
+    height: 60px;
     image-rendering: pixelated;
 }
-
-.pinterest-menu {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
-    background: #111;
-    display: flex;
-    justify-content: center;      /* центрируем виджет */
-    align-items: center;
-    padding: 15px 0;
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s;
-    border: 2px solid var(--muted-pink);
-    border-bottom: none;
-}
-
-.pinterest-menu.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-.pinterest-widget-container {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-}
-
-/* Удаляем старые стили категорий */
-.pinterest-category {
-    display: none;
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 768px) {
-    .pinterest-panel {
-        padding-right: 15px;
-    }
-    .mood-img {
-        width: 28px;
-        height: 28px;
-    }
-    .pinterest-widget-container {
-        width: 250px;
-        height: 250px;
-    }
+.mood-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: var(--deep-pink);
+    margin-top: 5px;
+    text-transform: lowercase;
 }
 
 /* ================= СТРАНИЦА 2: TWITTER ================= */
@@ -575,6 +517,7 @@ body {
     background: #ffb7c7;
 }
 
+/* ================= АДАПТИВНОСТЬ ================= */
 @media (max-width: 768px) {
     .top-panel { height: 50px; padding: 0 12px; }
     .panel-btn { font-size: 0.7rem; }
@@ -595,33 +538,17 @@ body {
     }
     .archive-block {
         width: 20%;
-        height: auto;
-        padding: 10px 5px;
+        aspect-ratio: 1/1;
         font-size: 12px;
-        align-self: center;
-    }
-    .paint-btn-wrapper {
-        left: 5px;
     }
     .paint-trigger-img {
         width: 50px;
         height: 50px;
     }
-
-    /* Новые стили для Pinterest */
-    .pinterest-panel {
-        justify-content: flex-end;
-        padding-right: 15px;
+    .mood-img-large {
+        width: 50px;
+        height: 50px;
     }
-    .mood-img {
-        width: 28px;
-        height: 28px;
-    }
-    .pinterest-widget-container {
-        width: 250px;
-        height: 250px;
-    }
-
     .mx-narrow-image { height: 120px; }
     .ticker { font-size: 9px; }
     .hashtag { font-size: 10px; }
