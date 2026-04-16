@@ -150,7 +150,25 @@ body {
     text-transform: uppercase;
 }
 
-/* Нижняя строка с paint и mood */
+/* Строка для Paint (под арт-блоком) */
+.paint-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 10px;
+}
+.paint-cell {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+}
+.paint-trigger-img {
+    width: 60px;
+    height: 60px;
+    image-rendering: pixelated;
+    cursor: pointer;
+}
+
+/* Нижняя строка с mood */
 .bottom-row {
     display: flex;
     width: 100%;
@@ -160,23 +178,7 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-}
-.bottom-cell.left {
-    justify-content: flex-start;
-    padding-left: 15px;
-}
-.bottom-cell.center {
     justify-content: center;
-}
-.bottom-cell.right {
-    justify-content: flex-end;
-    padding-right: 15px;
-}
-.paint-trigger-img {
-    width: 60px;
-    height: 60px;
-    image-rendering: pixelated;
-    cursor: pointer;
 }
 .mood-trigger {
     display: flex;
@@ -545,12 +547,6 @@ body {
     .archive-block {
         font-size: 10px;
     }
-    .bottom-cell.left {
-        padding-left: 5px;
-    }
-    .bottom-cell.right {
-        padding-right: 5px;
-    }
     .paint-trigger-img {
         width: 50px;
         height: 50px;
@@ -558,6 +554,12 @@ body {
     .mood-img-large {
         width: 50px;
         height: 50px;
+    }
+    .paint-row {
+        margin-top: 8px;
+    }
+    .bottom-row {
+        margin-top: 10px;
     }
 
     .mx-narrow-image { height: 120px; }
