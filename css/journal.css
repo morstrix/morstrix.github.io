@@ -111,10 +111,11 @@ body {
 }
 
 /* Grid для арт-блока и архива */
+/* Grid для арт-блока и архива */
 .art-archive-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
     margin: 5px 0;
 }
@@ -122,7 +123,7 @@ body {
     grid-column: 1 / 3;
     width: 100%;
     aspect-ratio: 1/1;
-    border: 2px solid var(--accent-pink);
+    /* border убран */
     background: #000;
     display: flex;
     align-items: center;
@@ -149,7 +150,6 @@ body {
     font-size: 14px;
     text-transform: uppercase;
 }
-
 /* Строка для Paint (под арт-блоком) */
 .paint-row {
     display: grid;
@@ -539,21 +539,25 @@ body {
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    .art-archive-row {
-        gap: 5px;
+        .art-archive-row {
+        gap: 8px;
         margin: 8px 0;
-        padding: 0 5px;
+        padding: 0 8px;
     }
     .archive-block {
         font-size: 10px;
     }
+    .paint-cell {
+        justify-content: flex-start;
+        padding-left: 12px;  /* чуть левее, но не впритык */
+    }
     .paint-trigger-img {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
     }
     .mood-img-large {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
     }
     .paint-row {
         margin-top: 8px;
