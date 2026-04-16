@@ -540,7 +540,8 @@ max-height: 40vh;          /* ← ограничиваем высоту отно
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-        .art-archive-row {
+    /* Арт-блок и архив */
+    .art-archive-row {
         gap: 8px;
         margin: 8px 0;
         padding: 0 8px;
@@ -548,25 +549,38 @@ max-height: 40vh;          /* ← ограничиваем высоту отно
     .archive-block {
         font-size: 10px;
     }
+
+    /* Строка с Paint — теперь флекс для точного управления */
+    .paint-row {
+        display: flex;
+        justify-content: flex-start;   /* меняй на center / flex-end при необходимости */
+        margin-top: 8px;
+        padding-left: 8px;             /* ← двигай Paint: 0 — влево, больше — правее */
+    }
     .paint-cell {
-        justify-content: flex-start;
-        padding-left: 0px;  /* чуть левее, но не впритык */
+        display: contents;             /* чтобы не мешал */
     }
     .paint-trigger-img {
         width: 48px;
         height: 48px;
     }
+
+    /* Нижняя строка с Mood — флекс, можно двигать */
+    .bottom-row {
+        display: flex;
+        justify-content: flex-end;     /* меняй на flex-start (влево) / center (центр) / flex-end (право) */
+        margin-top: 10px;
+        padding-right: 8px;            /* ← отступ справа для Mood */
+    }
+    .bottom-cell {
+        flex: 0;
+    }
     .mood-img-large {
         width: 48px;
         height: 48px;
     }
-    .paint-row {
-        margin-top: 8px;
-    }
-    .bottom-row {
-        margin-top: 10px;
-    }
 
+    /* Остальные элементы */
     .mx-narrow-image { height: 120px; }
     .ticker { font-size: 9px; }
     .hashtag { font-size: 10px; }
