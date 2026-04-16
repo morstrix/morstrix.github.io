@@ -537,18 +537,15 @@ body {
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    /* Арт-блок и архив: строго 2 к 1 */
+    /* Арт-блок и архив через flex — строго 2:1 */
     .art-archive-row {
-        display: grid !important;
-        grid-template-columns: 2fr 1fr !important;
+        display: flex;
         gap: 8px;
         margin: 8px 0;
         padding: 0 8px;
-        max-height: none;
     }
     .art-block {
-        grid-column: 1 / 2 !important;
-        width: 100% !important;
+        flex: 2;                 /* занимает 2 части */
         aspect-ratio: 1/1;
         background: #000;
         display: flex;
@@ -562,8 +559,7 @@ body {
         image-rendering: pixelated;
     }
     .archive-block {
-        grid-column: 2 / 3 !important;
-        width: 100% !important;
+        flex: 1;                 /* занимает 1 часть */
         aspect-ratio: 1/1;
         border: 2px dashed var(--accent-pink);
         background: #0a0a0a;
@@ -596,10 +592,8 @@ body {
         display: flex;
         justify-content: center;
         margin-top: 10px;
-        padding-right: 0;
     }
     .bottom-cell {
-        flex: 1;
         display: flex;
         justify-content: center;
     }
