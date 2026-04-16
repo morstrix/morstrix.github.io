@@ -538,17 +538,17 @@ body {
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    /* Арт-блок и архив — соотношение 2:1 */
+    /* Арт-блок и архив: строго 2 к 1 */
     .art-archive-row {
         display: grid;
-        grid-template-columns: 2fr 1fr;   /* ← явно 2 к 1 */
+        grid-template-columns: 2fr 1fr !important;  /* ← принудительно 2:1 */
         gap: 8px;
         margin: 8px 0;
         padding: 0 8px;
         max-height: none;
     }
     .art-block {
-        grid-column: 1 / 2;               /* первая колонка (2fr) */
+        grid-column: 1 / 2 !important;
         width: 100%;
         aspect-ratio: 1/1;
         background: #000;
@@ -563,7 +563,7 @@ body {
         image-rendering: pixelated;
     }
     .archive-block {
-        grid-column: 2 / 3;               /* вторая колонка (1fr) */
+        grid-column: 2 / 3 !important;
         width: 100%;
         aspect-ratio: 1/1;
         border: 2px dashed var(--accent-pink);
@@ -609,7 +609,6 @@ body {
         height: 48px;
     }
 
-    /* Остальные элементы */
     .mx-narrow-image { height: 120px; }
     .ticker { font-size: 9px; }
     .hashtag { font-size: 10px; }
