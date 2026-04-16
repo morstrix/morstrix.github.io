@@ -152,15 +152,10 @@ body {
     align-self: stretch;     /* чтобы растянулся по высоте строки как раньше */
 }
 
-.paint-btn-wrapper {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
+.paint-centered {
     display: flex;
-    justify-content: flex-start;
-    z-index: 5;
+    justify-content: center;
+    margin: 8px 0 0 0;
 }
 .paint-trigger-img {
     width: 60px;
