@@ -169,26 +169,36 @@ body {
     cursor: pointer;
 }
 
+/* ================= PINTEREST (НОВЫЙ ДИЗАЙН) ================= */
 .pinterest-panel-wrapper {
     width: 100%;
     margin-top: auto;
     position: relative;
 }
+
 .pinterest-panel {
-    width: 100%;
-    height: 55px;
-    background: #0a0a0a;
-    border-top: 2px solid var(--accent-pink);
-    border-bottom: 2px solid var(--accent-pink);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;    /* выравнивание вправо */
+    padding-right: 20px;
+    gap: 8px;
     cursor: pointer;
     color: var(--deep-pink);
     font-size: 14px;
     letter-spacing: 4px;
     z-index: 20;
+    background: transparent;      /* убрали фон */
+    border: none;                 /* убрали границы */
+    height: auto;                 /* убрали фиксированную высоту */
+    width: auto;                  /* ширина по содержимому */
 }
+
+.mood-img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+}
+
 .pinterest-menu {
     position: absolute;
     bottom: 100%;
@@ -196,8 +206,9 @@ body {
     right: 0;
     background: #111;
     display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
+    justify-content: center;      /* центрируем виджет */
+    align-items: center;
+    padding: 15px 0;
     transform: translateY(100%);
     opacity: 0;
     visibility: hidden;
@@ -205,18 +216,37 @@ body {
     border: 2px solid var(--muted-pink);
     border-bottom: none;
 }
+
 .pinterest-menu.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
+
+.pinterest-widget-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+/* Удаляем старые стили категорий */
 .pinterest-category {
-    color: #fff;
-    font-size: 11px;
-    padding: 10px 20px;
-    background: #222;
-    border: 1px solid var(--accent-pink);
-    cursor: pointer;
+    display: none;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .pinterest-panel {
+        padding-right: 15px;
+    }
+    .mood-img {
+        width: 28px;
+        height: 28px;
+    }
+    .pinterest-widget-container {
+        width: 250px;
+        height: 250px;
+    }
 }
 
 /* ================= СТРАНИЦА 2: TWITTER ================= */
