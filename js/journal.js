@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('paintAnonChoiceBtn')?.addEventListener('click', ()=> {
         closeModal('paintChoiceModal');
-        window.open('paint.html', '_blank');
+        window.location.href = 'paint.html';
     });
 
     document.getElementById('paintRegChoiceBtn')?.addEventListener('click', ()=> {
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nickname = document.getElementById('nicknameInput').value.trim();
         if (nickname) {
             localStorage.setItem('paintNickname', nickname);
-            window.open('paint.html?nick=' + encodeURIComponent(nickname), '_blank');
+            window.location.href = 'paint.html?nick=' + encodeURIComponent(nickname);
             closeModal('nicknameModal');
         } else {
             alert('Введите никнейм');
