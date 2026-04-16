@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctxBg = layerBg.getContext('2d');
     const ctxTop = layerTop.getContext('2d');
 
-    // Активный слой: 'top' или 'bg'
     let activeLayer = 'top';
 
     // Инициализация фона (чёрный) и верхнего слоя (прозрачный)
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctxBg.fillRect(0, 0, canvas.width, canvas.height);
     ctxTop.clearRect(0, 0, canvas.width, canvas.height);
 
-    // История для undo/redo (сохраняем состояние обоих слоёв)
+    // История
     let history = [];
     let historyIndex = -1;
     const MAX_HISTORY = 30;
@@ -69,19 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Композитинг слоёв на видимый canvas
     function compositeLayers() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(layerBg, 0, 0);
         ctx.drawImage(layerTop, 0, 0);
     }
 
-    // Получить активный контекст
     function getActiveContext() {
         return activeLayer === 'top' ? ctxTop : ctxBg;
     }
 
-    // Инициализация
     function init() {
         ctxBg.fillStyle = '#000000';
         ctxBg.fillRect(0, 0, canvas.width, canvas.height);
@@ -91,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     init();
 
-    // Рисование
     let drawing = false;
     let lastX, lastY;
 
@@ -149,11 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('touchend', stop);
     canvas.addEventListener('touchcancel', stop);
 
-    // Обновление цвета и размера
     colorPicker.addEventListener('input', () => colorValue.textContent = colorPicker.value);
     brushSizeInput.addEventListener('input', () => brushSizeValue.textContent = brushSizeInput.value);
 
-    // Clear (очищает активный слой)
     clearBtn.addEventListener('click', () => {
         const actCtx = getActiveContext();
         actCtx.clearRect(0, 0, canvas.width, canvas.height);
@@ -165,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState();
     });
 
-    // Load (загружает изображение на активный слой)
     loadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => {
         const file = e.target.files[0];
@@ -186,18 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.value = '';
     });
 
-    // Save
     saveBtn.addEventListener('click', () => {
         const dataURL = canvas.toDataURL('image/png');
         localStorage.setItem('morstrix_current_art', dataURL);
         alert('✓ Изображение сохранено!');
     });
 
-    // Undo/Redo
     undoBtn.addEventListener('click', undo);
     redoBtn.addEventListener('click', redo);
 
-    // Слои (модалка)
     layersBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         layersModal.classList.toggle('active');
@@ -211,24 +200,20 @@ document.addEventListener('DOMContentLoaded', () => {
     layerTop.addEventListener('click', () => {
         activeLayer = 'top';
         layersModal.classList.remove('active');
-        // Визуальная индикация (можно добавить, но не обязательно)
     });
     layerBackground.addEventListener('click', () => {
         activeLayer = 'bg';
         layersModal.classList.remove('active');
     });
 
-    // Закрытие
     closeBtn.addEventListener('click', () => {
         window.location.href = 'journal.html';
     });
 
-    // Горячие клавиши
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
         else if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
     });
 
-    // Первое сохранение состояния
     saveState();
 });
