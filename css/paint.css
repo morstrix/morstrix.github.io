@@ -1,36 +1,232 @@
-* { margin:0; padding:0; box-sizing:border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --accent-pink: #a84d6b;
+    --muted-pink: #b97272;
+    --deep-pink: #a27791;
+    --bg-dark: #050508;
+    --shadow-dark: #3d2a2f;
+    --top-panel-h: 50px;
+}
+
 body {
-    background: #000; color: #fff; font-family: 'Press Start 2P', monospace;
-    display: flex; justify-content: center; align-items: center; min-height: 100vh;
-    padding: 20px;
+    background: #050508;
+    color: #f0f0f0;
+    font-family: 'Press Start 2P', monospace;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    touch-action: manipulation;
 }
-.paint-container { max-width: 700px; width: 100%; }
-.paint-header { display: flex; align-items: center; margin-bottom: 20px; gap: 20px; }
-.paint-header h1 { font-size: 24px; color: #a84d6b; text-shadow: 2px 2px 0 #000; }
-.close-link img { width: 40px; height: 40px; image-rendering: pixelated; }
+
+/* === ВЕРХНЯЯ ПАНЕЛЬ === */
+.paint-top-panel {
+    height: var(--top-panel-h);
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 2px solid var(--accent-pink);
+    flex-shrink: 0;
+}
+.paint-title {
+    font-size: 16px;
+    color: var(--accent-pink);
+    text-shadow: 2px 2px 0 #000;
+    letter-spacing: 2px;
+}
+.paint-close-btn {
+    background: transparent;
+    border: 2px solid var(--muted-pink);
+    color: #fff;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.1s;
+}
+.paint-close-btn:hover {
+    background: var(--accent-pink);
+}
+
+/* === ОСНОВНОЙ КОНТЕЙНЕР === */
+.paint-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* === ПАНЕЛЬ НАД ХОЛСТОМ === */
+.canvas-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    gap: 10px;
+}
+.tool-btn {
+    background: #1a1a1a;
+    border: 2px solid var(--accent-pink);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0 #000;
+    transition: 0.05s;
+}
+.tool-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 #000;
+}
+
+/* === ХОЛСТ === */
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 0;
+}
 #paintCanvas {
-    width: 100%; height: auto; aspect-ratio: 1/1; border: 4px solid #b97272;
-    background: #fff; cursor: crosshair; touch-action: none; image-rendering: crisp-edges;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1/1;
+    border: 4px solid var(--muted-pink);
+    background: #000;           /* чёрный фон по умолчанию */
+    cursor: crosshair;
+    touch-action: none;
+    image-rendering: crisp-edges;
+    box-shadow: 0 0 0 2px #000;
 }
-.paint-controls {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px;
+
+/* === ПАНЕЛЬ ИНСТРУМЕНТОВ === */
+.tools-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    background: #0a0a0a;
+    padding: 15px;
+    border: 2px solid var(--accent-pink);
+    flex-shrink: 0;
 }
-.universal-btn {
-    cursor: pointer; border: 2px solid #000; background: #565656; padding: 0 0 4px 0;
-    display: inline-block; text-decoration: none; user-select: none;
+.color-row, .brush-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-.universal-btn .btn-inner {
-    display: block; background: #fff; border: 2px solid #a0a0a0; padding: 8px 20px;
-    transform: translateY(-4px); transition: transform 0.08s;
+.color-row label, .brush-row label {
+    font-size: 11px;
+    color: var(--deep-pink);
 }
-.universal-btn .btn-inner span {
-    font-family: inherit; font-size: 12px; color: #000; text-transform: uppercase;
+#colorPicker {
+    width: 50px;
+    height: 40px;
+    border: 2px solid var(--muted-pink);
+    background: transparent;
+    cursor: pointer;
 }
-.universal-btn:active .btn-inner { transform: translateY(0); }
-#colorPicker { width: 60px; height: 50px; border: 2px solid #b97272; background: #000; cursor: pointer; }
-.save-message { text-align: center; margin-top: 15px; font-size: 12px; color: #a84d6b; min-height: 24px; }
-@media (max-width: 480px) {
-    .paint-controls { gap: 10px; }
-    .universal-btn .btn-inner { padding: 6px 12px; }
-    .universal-btn .btn-inner span { font-size: 10px; }
+.color-value {
+    font-size: 10px;
+    color: #aaa;
+}
+#brushSize {
+    width: 120px;
+}
+#brushSizeValue {
+    font-size: 10px;
+    min-width: 24px;
+}
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;   /* прижимаем вправо */
+}
+.paint-action-btn {
+    background: #1a1a1a;
+    border: 2px solid var(--muted-pink);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0 #000;
+    transition: 0.05s;
+}
+.paint-action-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 #000;
+}
+.extra-space {
+    flex: 1;
+    min-width: 50px;
+}
+
+/* === МИНИ-МОДАЛКА СЛОЁВ === */
+.mini-modal {
+    position: absolute;
+    top: calc(var(--top-panel-h) + 60px);
+    right: 20px;
+    background: #1a1a1a;
+    border: 2px solid var(--accent-pink);
+    padding: 10px;
+    display: none;
+    z-index: 1000;
+}
+.mini-modal.active {
+    display: block;
+}
+.mini-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.layer-option {
+    background: #000;
+    border: 2px solid var(--muted-pink);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.layer-option:hover {
+    background: var(--accent-pink);
+}
+
+/* === АДАПТИВНОСТЬ === */
+@media (max-width: 600px) {
+    .paint-title { font-size: 14px; }
+    .tools-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .action-buttons {
+        margin-left: 0;
+        justify-content: center;
+    }
+    .tool-btn { font-size: 12px; padding: 6px 10px; }
 }
