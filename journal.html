@@ -31,7 +31,8 @@
                     <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
                 </div>
                 <div class="archive-block text-primary" id="archiveBtn">
-                    <img src="assets/archive.png" alt="Archive" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+                    <img src="assets/archive.png" alt="Archive" class="archive-img">
+                    <span class="archive-label">FEED</span>
                 </div>
             </div>
             <div class="page1-controls-row">
@@ -95,7 +96,7 @@
                 <button class="universal-btn" id="ttsSpeakBtn"><span class="btn-inner"><span>SPEAK</span></span></button>
                 <div id="ttsStatus"></div>
             </div>
-            <div class="spotify-icon" id="spotifyIcon"><img src="assets/radio.png" alt="Spotify" style="width: 24px; height: 24px; filter: brightness(0) invert(1); vertical-align: middle;"></div>
+            <div class="spotify-icon" id="spotifyIcon"><img src="assets/radio.png" alt="Spotify" class="radio-img"></div>
         </div>
     </div>
 
@@ -130,7 +131,7 @@
             </div>
             <div class="forum-actions">
                 <button class="universal-btn" id="forumFullBtn"><span class="btn-inner"><span>FULL</span></span></button>
-                <button class="universal-btn" id="supportBtn"><span class="btn-inner"><img src="assets/radio.png" alt="Support" style="width: 20px; height: 20px; filter: brightness(0) invert(1); vertical-align: middle;"></span></button>
+                <button class="universal-btn" id="supportBtn"><span class="btn-inner"><span>SUPPORT</span></span></button>
             </div>
         </div>
     </div>
@@ -148,7 +149,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ЗМІСТ</span>
-            <button class="modal-close-btn" data-modal="contentsModal">✕</button>
+            <button class="modal-close-btn" data-modal="contentsModal">✜</button>
         </div>
         <div class="modal-inner">
             <div class="contents-item text-secondary" data-page="1">1. ART</div>
@@ -166,7 +167,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ВЫБЕРИ РЕЖИМ</span>
-            <button class="modal-close-btn" data-modal="paintChoiceModal">✕</button>
+            <button class="modal-close-btn" data-modal="paintChoiceModal">✜</button>
         </div>
         <div class="modal-inner" style="display: flex; flex-direction: column; gap: 15px;">
             <button class="universal-btn" id="paintAnonChoiceBtn">
@@ -184,7 +185,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ВВЕДИ НИКНЕЙМ</span>
-            <button class="modal-close-btn" data-modal="nicknameModal">✕</button>
+            <button class="modal-close-btn" data-modal="nicknameModal">✜</button>
         </div>
         <div class="modal-inner">
             <input type="text" id="nicknameInput" class="styler-input" placeholder="никнейм" maxlength="15">
@@ -200,7 +201,7 @@
     <div class="modal-content" style="background: #111;">
         <div class="modal-header">
             <span class="modal-title-text">MOOD</span>
-            <button class="modal-close-btn" data-modal="moodModal">✕</button>
+            <button class="modal-close-btn" data-modal="moodModal">✜</button>
         </div>
         <div class="modal-inner" style="display: flex; justify-content: center;">
             <a data-pin-do="embedBoard" 
@@ -217,7 +218,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ВНИМАНИЕ</span>
-            <button class="modal-close-btn" data-modal="disclaimerModal">✕</button>
+            <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
         </div>
         <div class="modal-inner">
             <p class="text-secondary" style="margin-bottom: 20px;">Вы переходите на внешний ресурс Twitter/X. Продолжить?</p>
@@ -233,7 +234,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ВНИМАНИЕ</span>
-            <button class="modal-close-btn" data-modal="forumDisclaimerModal">✕</button>
+            <button class="modal-close-btn" data-modal="forumDisclaimerModal">✜</button>
         </div>
         <div class="modal-inner">
             <p class="text-secondary" style="margin-bottom: 20px;">Вы переходите в Telegram-группу форума. Продолжить?</p>
@@ -249,7 +250,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text" id="stubModalTitle">ЗАГОЛОВОК</span>
-            <button class="modal-close-btn" data-modal="stubModal">✕</button>
+            <button class="modal-close-btn" data-modal="stubModal">✜</button>
         </div>
         <div class="modal-inner">
             <p id="stubModalText" class="text-secondary">Содержимое появится позже</p>
@@ -262,7 +263,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">SPOTIFY</span>
-            <button class="modal-close-btn" data-modal="spotifyModal">✕</button>
+            <button class="modal-close-btn" data-modal="spotifyModal">✜</button>
         </div>
         <div class="modal-inner">
             <iframe
@@ -284,10 +285,10 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">ПОДДЕРЖКА</span>
-            <button class="modal-close-btn" data-modal="supportModal">✕</button>
+            <button class="modal-close-btn" data-modal="supportModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-post="morstrix/71" data-width="100%"></script>
+        <div class="modal-inner support-modal-inner">
+            <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-discussion="morstrix/71" data-comments-limit="20" data-width="100%"></script>
         </div>
     </div>
 </div>
