@@ -34,6 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsModal = document.getElementById('settingsModal');
     const settingsModalClose = document.getElementById('settingsModalClose');
+    
+    // Folder modal
+    const folderBtn = document.getElementById('folderBtn');
+    const fileModal = document.getElementById('fileModal');
+    const fileModalClose = document.getElementById('fileModalClose');
+    const modalLoadBtn = document.getElementById('modalLoadBtn');
+    const modalSaveBtn = document.getElementById('modalSaveBtn');
+    
+    // Tools modal
+    const toolsBtn = document.getElementById('toolsBtn');
+    const toolsModal = document.getElementById('toolsModal');
+    const toolsModalClose = document.getElementById('toolsModalClose');
+    const modalBrushBtn = document.getElementById('modalBrushBtn');
+    const modalEraserBtn = document.getElementById('modalEraserBtn');
+    const modalTextBtn = document.getElementById('modalTextBtn');
+    const modalCurveBtn = document.getElementById('modalCurveBtn');
 
     // Multi-layer system
     let layers = [];
@@ -402,11 +418,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
         
         if (tool === 'brush') {
-            brushBtn.classList.add('active');
+            modalBrushBtn.classList.add('active');
         } else if (tool === 'eraser') {
-            eraserBtn.classList.add('active');
+            modalEraserBtn.classList.add('active');
         } else if (tool === 'text') {
-            textBtn.classList.add('active');
+            modalTextBtn.classList.add('active');
+        } else if (tool === 'curve') {
+            modalCurveBtn.classList.add('active');
         }
     }
 
@@ -431,17 +449,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const actCtx = getActiveContext();
         if (actCtx) {
             actCtx.clearRect(0, 0, canvas.width, canvas.height);
-            const activeLayer = getActiveLayer();
-            if (activeLayer && activeLayer.name.includes('Background')) {
-                actCtx.fillStyle = '#000000';
-                actCtx.fillRect(0, 0, canvas.width, canvas.height);
-            }
             compositeLayers();
             saveState();
         }
     });
 
-    loadBtn.addEventListener('click', () => fileInput.click());
+    document.getElementById('loadImageBtn')?.addEventListener('click', () => {
+        const dataURL = localStorage.getItem('morstrix_current_art');
+        if (!dataURL) {
+            alert('No saved image found');
+            return;
+        }
+        const img = new Image();
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+            saveState();
+        };
+        img.src = dataURL;
+    });
     fileInput.addEventListener('change', e => {
         const file = e.target.files[0];
         if (!file) return;
@@ -461,11 +486,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.value = '';
     });
 
-    saveBtn.addEventListener('click', () => {
-        const dataURL = canvas.toDataURL('image/png');
-        localStorage.setItem('morstrix_current_art', dataURL);
-        alert('✓ Image saved!');
-    });
 
     undoBtn.addEventListener('click', undo);
     redoBtn.addEventListener('click', redo);
@@ -480,10 +500,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Tool event listeners
-    brushBtn.addEventListener('click', () => setTool('brush'));
-    eraserBtn.addEventListener('click', () => setTool('eraser'));
-    textBtn.addEventListener('click', () => setTool('text'));
     
     // Layer event listeners
     addLayerBtn.addEventListener('click', addLayer);
@@ -508,6 +524,60 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmTextBtn.addEventListener('click', addText);
     canvasTextInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') addText();
+    });
+    
+    // Folder modal event listeners
+    folderBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileModal.classList.toggle('active');
+    });
+    fileModalClose.addEventListener('click', () => fileModal.classList.remove('active'));
+    modalLoadBtn.addEventListener('click', () => {
+        fileInput.click();
+        fileModal.classList.remove('active');
+    });
+    modalSaveBtn.addEventListener('click', () => {
+        const dataURL = canvas.toDataURL('image/png');
+        localStorage.setItem('morstrix_current_art', dataURL);
+        alert('✓ Image saved!');
+        fileModal.classList.remove('active');
+    });
+    
+    // Close file modal when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!fileModal.contains(e.target) && e.target !== folderBtn) {
+            fileModal.classList.remove('active');
+        }
+    });
+    
+    // Tools modal event listeners
+    toolsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toolsModal.classList.toggle('active');
+    });
+    toolsModalClose.addEventListener('click', () => toolsModal.classList.remove('active'));
+    modalBrushBtn.addEventListener('click', () => {
+        setTool('brush');
+        toolsModal.classList.remove('active');
+    });
+    modalEraserBtn.addEventListener('click', () => {
+        setTool('eraser');
+        toolsModal.classList.remove('active');
+    });
+    modalTextBtn.addEventListener('click', () => {
+        setTool('text');
+        toolsModal.classList.remove('active');
+    });
+    modalCurveBtn.addEventListener('click', () => {
+        setTool('curve');
+        toolsModal.classList.remove('active');
+    });
+    
+    // Close tools modal when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!toolsModal.contains(e.target) && e.target !== toolsBtn) {
+            toolsModal.classList.remove('active');
+        }
     });
     
     fontSizeInput.addEventListener('input', () => {

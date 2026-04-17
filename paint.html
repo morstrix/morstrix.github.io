@@ -18,26 +18,12 @@
 <!-- Основной контейнер -->
 <div class="paint-main">
     
-    <!-- Canvas Toolbar: tools, undo/redo, layers, settings -->
+    <!-- Canvas Toolbar: folder | undo/clear/redo | layers -->
     <div class="canvas-toolbar">
         <div class="toolbar-left">
-            <button class="tool-btn active" id="brushBtn" title="Brush" style="flex-direction: column;">
-                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
-                    <path d="M3 17 L7 13 L5 11 L13 3 L15 5 L7 13 L9 15 L5 19 Z"/>
-                </svg>
-                <span style="font-size: 8px;">BRUSH</span>
-            </button>
-            <button class="tool-btn" id="eraserBtn" title="Eraser" style="flex-direction: column;">
-                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
-                    <path d="M2 12 L8 6 L14 12 L8 18 Z M14 12 L16 10 L18 12 L16 14 Z"/>
-                </svg>
-                <span style="font-size: 8px;">ERASER</span>
-            </button>
-            <button class="tool-btn" id="textBtn" title="Text" style="flex-direction: column;">
-                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
-                    <text x="4" y="15" font-size="14" font-weight="bold">T</text>
-                </svg>
-                <span style="font-size: 8px;">TEXT</span>
+            <button class="tool-btn" id="folderBtn" title="File" style="flex-direction: column; border: none; background: none; box-shadow: none; padding: 4px;">
+                <img src="assets/folder.png" alt="File" style="width: 20px; height: 20px; margin-bottom: 2px;">
+                <span style="font-size: 8px;">FILE</span>
             </button>
         </div>
         <div class="toolbar-center">
@@ -46,6 +32,10 @@
                     <path d="M8 2 L2 8 L8 14 L8 10 L14 10 L14 6 L8 6 Z"/>
                 </svg>
                 <span style="font-size: 8px;">UNDO</span>
+            </button>
+            <button class="tool-btn" id="clearBtn" title="Clear" style="flex-direction: column; border: none; background: none; box-shadow: none; padding: 4px;">
+                <img src="assets/clear.png" alt="Clear" style="width: 20px; height: 20px; margin-bottom: 2px;">
+                <span style="font-size: 8px;">CLEAR</span>
             </button>
             <button class="tool-btn" id="redoBtn" title="Redo" style="flex-direction: column;">
                 <svg width="14" height="14" viewBox="0 0 16 16" style="fill: currentColor; margin-bottom: 2px;">
@@ -63,13 +53,6 @@
                 </svg>
                 <span style="font-size: 8px;">LAYERS</span>
             </button>
-            <button class="tool-btn" id="settingsBtn" title="Settings" style="flex-direction: column;">
-                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
-                    <circle cx="10" cy="10" r="3"/>
-                    <path d="M10 2 L10 5 M10 15 L10 18 M2 10 L5 10 M15 10 L18 10 M4.5 4.5 L6.5 6.5 M13.5 13.5 L15.5 15.5 M4.5 15.5 L6.5 13.5 M13.5 6.5 L15.5 4.5" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                <span style="font-size: 8px;">SETTINGS</span>
-            </button>
         </div>
     </div>
 
@@ -78,29 +61,30 @@
         <canvas id="paintCanvas" width="600" height="600"></canvas>
     </div>
 
-    <!-- Tools Panel -->
+    <!-- Tools Panel: settings | tools -->
     <div class="tools-panel">
         <div class="color-row" style="flex-direction: column; align-items: center;">
             <input type="color" id="colorPicker" value="#444444" style="margin-bottom: 4px;">
             <span style="font-size: 10px;">COLOR</span>
             <span class="color-value" id="colorValue" style="font-size: 8px; color: #aaa;">#444444</span>
         </div>
-        <div class="action-buttons">
-            <button class="paint-action-btn icon-btn" id="clearBtn" title="Clear" style="flex-direction: column;">
-                <img src="assets/clear.png" alt="Clear" class="btn-icon" style="margin-bottom: 4px;">
-                <span style="font-size: 10px;">CLEAR</span>
-            </button>
-            <button class="paint-action-btn icon-btn" id="loadBtn" title="Load" style="flex-direction: column;">
-                <img src="assets/upload.png" alt="Load" class="btn-icon" style="margin-bottom: 4px; width: 35px; height: 35px;">
-                <span style="font-size: 10px;">LOAD</span>
-            </button>
-            <button class="paint-action-btn icon-btn" id="saveBtn" title="Save" style="flex-direction: column;">
-                <img src="assets/folder.png" alt="Save" class="btn-icon" style="margin-bottom: 4px;">
-                <span style="font-size: 10px;">SAVE</span>
+        <div class="toolbar-left" style="margin-left: auto;">
+            <button class="tool-btn" id="settingsBtn" title="Settings" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <circle cx="10" cy="10" r="3"/>
+                    <path d="M10 2 L10 5 M10 15 L10 18 M2 10 L5 10 M15 10 L18 10 M4.5 4.5 L6.5 6.5 M13.5 13.5 L15.5 15.5 M4.5 15.5 L6.5 13.5 M13.5 6.5 L15.5 4.5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span style="font-size: 8px;">SETTINGS</span>
             </button>
         </div>
-        <!-- Extra space for future elements -->
-        <div class="extra-space"></div>
+        <div class="toolbar-right">
+            <button class="tool-btn" id="toolsBtn" title="Tools" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2px;">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+                <span style="font-size: 8px;">TOOLS</span>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -158,6 +142,70 @@
             <span id="fontSizeValue">20</span>
         </div>
         <button class="paint-action-btn" id="confirmTextBtn">ADD TEXT</button>
+    </div>
+</div>
+
+<!-- File Modal (Upload/Save) -->
+<div id="fileModal" class="mini-modal">
+    <div class="mini-modal-content">
+        <div class="layers-header">
+            <span>FILE</span>
+            <button class="modal-close-btn" id="fileModalClose">✕</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <button class="layer-option" id="modalLoadBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                UPLOAD
+            </button>
+            <button class="layer-option" id="modalSaveBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                </svg>
+                SAVE
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Tools Modal (Brush/Eraser/Text/Curves) -->
+<div id="toolsModal" class="mini-modal">
+    <div class="mini-modal-content">
+        <div class="layers-header">
+            <span>TOOLS</span>
+            <button class="modal-close-btn" id="toolsModalClose">✕</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <button class="layer-option" id="modalBrushBtn">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; vertical-align: middle; margin-right: 8px;">
+                    <path d="M3 17 L7 13 L5 11 L13 3 L15 5 L7 13 L9 15 L5 19 Z"/>
+                </svg>
+                BRUSH
+            </button>
+            <button class="layer-option" id="modalEraserBtn">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; vertical-align: middle; margin-right: 8px;">
+                    <path d="M2 12 L8 6 L14 12 L8 18 Z M14 12 L16 10 L18 12 L16 14 Z"/>
+                </svg>
+                ERASER
+            </button>
+            <button class="layer-option" id="modalTextBtn">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; vertical-align: middle; margin-right: 8px;">
+                    <text x="4" y="15" font-size="14" font-weight="bold">T</text>
+                </svg>
+                TEXT
+            </button>
+            <button class="layer-option" id="modalCurveBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M3 12c0-3 3-9 9-9s9 6 9 9-3 9-9 9-9-6-9-9"/>
+                </svg>
+                CURVES
+            </button>
+        </div>
     </div>
 </div>
 
