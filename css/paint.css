@@ -1,3 +1,7 @@
+/* ============================================
+   PAINT - NES Classic Theme
+============================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,18 +9,10 @@
 }
 
 :root {
-    --accent-pink: #a84d6b;
-    --muted-pink: #b97272;
-    --deep-pink: #a27791;
-    --bg-dark: #050508;
-    --shadow-dark: #3d2a2f;
     --top-panel-h: 50px;
 }
 
 body {
-    background: #050508;
-    color: #f0f0f0;
-    font-family: 'Press Start 2P', monospace;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
@@ -25,42 +21,46 @@ body {
     touch-action: manipulation;
 }
 
-/* === ВЕРХНЯЯ ПАНЕЛЬ === */
+/* === TOP PANEL === */
 .paint-top-panel {
     height: var(--top-panel-h);
-    background: #050505;
+    background: var(--bg-surface);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    border-bottom: 2px solid var(--accent-pink);
+    border-bottom: 2px solid var(--border-color);
     flex-shrink: 0;
 }
 .paint-title {
+    font-family: var(--font-heading);
     font-size: 16px;
-    color: var(--accent-pink);
-    text-shadow: 2px 2px 0 #000;
+    color: var(--text-heading);
     letter-spacing: 2px;
 }
 .paint-close-btn {
     background: transparent;
-    border: 2px solid var(--muted-pink);
-    color: #fff;
-    font-size: 24px;
+    border: 2px solid var(--border-color);
+    color: var(--text-heading);
+    font-size: 20px;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-family: inherit;
-    transition: 0.1s;
+    font-family: var(--font-heading);
+    transition: all 0.15s ease;
+    box-shadow: none;
+    padding: 0;
 }
 .paint-close-btn:hover {
-    background: var(--accent-pink);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: none;
 }
 
-/* === ОСНОВНОЙ КОНТЕЙНЕР === */
+/* === MAIN CONTAINER === */
 .paint-main {
     flex: 1;
     display: flex;
@@ -71,7 +71,7 @@ body {
     min-height: 0;
 }
 
-/* === ПАНЕЛЬ НАД ХОЛСТОМ === */
+/* === CANVAS TOOLBAR === */
 .canvas-toolbar {
     display: flex;
     justify-content: space-between;
@@ -84,23 +84,27 @@ body {
     gap: 10px;
 }
 .tool-btn {
-    background: #1a1a1a;
-    border: 2px solid var(--accent-pink);
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 14px;
-    padding: 8px 12px;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    color: var(--text-heading);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    padding: 8px 14px;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 2px 2px 0 #000;
-    transition: 0.05s;
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    transition: all 0.1s ease;
+}
+.tool-btn:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 .tool-btn:active {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 #000;
+    box-shadow: 1px 1px 0 var(--shadow-color);
 }
 
-/* === ХОЛСТ === */
+/* === CANVAS === */
 .canvas-wrapper {
     display: flex;
     justify-content: center;
@@ -112,23 +116,23 @@ body {
     max-width: 100%;
     max-height: 100%;
     aspect-ratio: 1/1;
-    border: 4px solid var(--muted-pink);
-    background: #000;
+    border: 3px solid var(--border-color);
+    background: var(--bg-surface);
     cursor: crosshair;
     touch-action: none;
     image-rendering: crisp-edges;
-    box-shadow: 0 0 0 2px #000;
+    box-shadow: 4px 4px 0 var(--shadow-color);
 }
 
-/* === ПАНЕЛЬ ИНСТРУМЕНТОВ === */
+/* === TOOLS PANEL === */
 .tools-panel {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 15px;
-    background: #0a0a0a;
+    background: var(--bg-secondary);
     padding: 15px;
-    border: 2px solid var(--accent-pink);
+    border: 2px solid var(--border-color);
     flex-shrink: 0;
 }
 .color-row, .brush-row {
@@ -137,25 +141,30 @@ body {
     gap: 10px;
 }
 .color-row label, .brush-row label {
-    font-size: 11px;
-    color: var(--deep-pink);
+    font-family: var(--font-body);
+    font-size: 9px;
+    color: var(--text-muted);
 }
 #colorPicker {
     width: 50px;
     height: 40px;
-    border: 2px solid var(--muted-pink);
+    border: 2px solid var(--border-color);
     background: transparent;
     cursor: pointer;
 }
 .color-value {
-    font-size: 10px;
-    color: #aaa;
+    font-family: var(--font-body);
+    font-size: 9px;
+    color: var(--text-body);
 }
 #brushSize {
     width: 120px;
+    accent-color: var(--accent-primary);
 }
 #brushSizeValue {
-    font-size: 10px;
+    font-family: var(--font-body);
+    font-size: 9px;
+    color: var(--text-body);
     min-width: 24px;
 }
 .action-buttons {
@@ -164,36 +173,41 @@ body {
     margin-left: auto;
 }
 .paint-action-btn {
-    background: #1a1a1a;
-    border: 2px solid var(--muted-pink);
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    color: var(--text-heading);
+    font-family: var(--font-heading);
     font-size: 10px;
-    padding: 8px 12px;
+    padding: 10px 14px;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 2px 2px 0 #000;
-    transition: 0.05s;
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    transition: all 0.1s ease;
+}
+.paint-action-btn:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 .paint-action-btn:active {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 #000;
+    box-shadow: 1px 1px 0 var(--shadow-color);
 }
 .extra-space {
     flex: 1;
     min-width: 50px;
 }
 
-/* === МИНИ-МОДАЛКА СЛОЁВ === */
+/* === LAYERS MINI-MODAL === */
 .mini-modal {
     position: absolute;
     top: calc(var(--top-panel-h) + 60px);
     right: 20px;
-    background: #1a1a1a;
-    border: 2px solid var(--accent-pink);
-    padding: 10px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    padding: 12px;
     display: none;
     z-index: 1000;
+    box-shadow: 4px 4px 0 var(--shadow-color);
 }
 .mini-modal.active {
     display: block;
@@ -204,22 +218,28 @@ body {
     gap: 8px;
 }
 .layer-option {
-    background: #000;
-    border: 2px solid var(--muted-pink);
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    padding: 10px 20px;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    color: var(--text-heading);
+    font-family: var(--font-heading);
+    font-size: 11px;
+    padding: 12px 24px;
     cursor: pointer;
     text-transform: uppercase;
+    transition: all 0.15s ease;
+    box-shadow: none;
 }
 .layer-option:hover {
-    background: var(--accent-pink);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: none;
 }
 
-/* === АДАПТИВНОСТЬ === */
+/* === MOBILE RESPONSIVE === */
 @media (max-width: 600px) {
-    .paint-title { font-size: 14px; }
+    .paint-title { 
+        font-size: 14px; 
+    }
     .tools-panel {
         flex-direction: column;
         align-items: stretch;
@@ -228,5 +248,11 @@ body {
         margin-left: 0;
         justify-content: center;
     }
-    .tool-btn { font-size: 12px; padding: 6px 10px; }
+    .tool-btn { 
+        font-size: 11px; 
+        padding: 6px 10px; 
+    }
+    .color-row, .brush-row {
+        justify-content: center;
+    }
 }

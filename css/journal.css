@@ -1,49 +1,77 @@
+/* ============================================
+   JOURNAL - NES Classic Theme
+   ============================================ */
+
 :root {
-    --accent-pink: #a84d6b;
-    --muted-pink: #b97272;
-    --deep-pink: #a27791;
-    --bg-dark: #050508;
-    --shadow-dark: #3d2a2f;
     --top-panel-h: 60px;
     --bottom-panel-h: 40px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { background: var(--bg-dark); overflow: hidden; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-primary); overflow: hidden; }
 body {
-    background: transparent; color: #f0f0f0; font-family: 'Press Start 2P', 'Courier New', monospace;
-    font-display: swap;
-    height: 100vh; height: 100dvh;
+    background: transparent; 
+    height: 100vh; 
+    height: 100dvh;
     overflow: hidden;
     position: relative;
     touch-action: manipulation;
 }
-#neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
+#neuro-bg { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    z-index: 1; 
+    pointer-events: none; 
+}
 
 /* === TOP PANEL === */
 .top-panel {
-    position: fixed; top:0; left:0; right:0;
+    position: fixed; 
+    top: 0; left: 0; right: 0;
     height: var(--top-panel-h);
-    background: #050505;
-    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-surface);
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
     padding: 0 20px;
-    z-index:200;
+    z-index: 200;
 }
 .top-panel::after {
-    content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
-    background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+    content: ''; 
+    position: absolute; 
+    bottom: -3px; left: 0; 
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, 
+        var(--bg-surface), 
+        var(--accent-primary), 
+        var(--accent-secondary), 
+        var(--accent-primary), 
+        var(--bg-surface)
+    );
 }
 .panel-btn {
     background: transparent;
     border: none;
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.9rem !important;
-    text-shadow: 0 0 20px rgba(255,255,255,0.25);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--text-heading);
     cursor: pointer;
     text-transform: uppercase;
     padding: 8px 0;
+    box-shadow: none;
+    transition: color 0.2s ease;
 }
-.panel-close img { width:32px; height:32px; image-rendering:pixelated; }
+.panel-btn:hover {
+    color: var(--accent-primary);
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+.panel-close img { 
+    width: 32px; height: 32px; 
+    image-rendering: pixelated; 
+}
 
 /* === LENIS WRAPPER === */
 .journal-wrapper {
@@ -84,7 +112,7 @@ body {
     min-height: 0;
 }
 
-/* ================= СТРАНИЦА 1 ================= */
+/* ================= PAGE 1: ART ================= */
 .page1-layout {
     display: flex;
     flex-direction: column;
@@ -100,9 +128,9 @@ body {
 }
 .ticker {
     display: inline-block;
-    font-size: 12px;
-    color: #a27791;
-    text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f !important;
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-muted);
     animation: scrollTicker 40s linear infinite;
 }
 @keyframes scrollTicker {
@@ -110,7 +138,6 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* Десктоп: арт‑блок ~60%, архив ~20% → соотношение около 3:1 */
 .art-archive-row {
     display: flex;
     justify-content: center;
@@ -122,10 +149,12 @@ body {
 .art-block {
     flex: 0 0 55%;
     aspect-ratio: 1/1;
-    background: #000;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 4px 4px 0 var(--shadow-color);
 }
 .art-block img {
     width: 100%;
@@ -136,18 +165,23 @@ body {
 .archive-block {
     flex: 0 0 20%;
     aspect-ratio: 1/1;
-    border: 2px dashed var(--accent-pink);
-    background: #0a0a0a;
+    border: 2px dashed var(--accent-primary);
+    background: var(--bg-surface);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--deep-pink);
-    font-size: 14px;
+    font-family: var(--font-heading);
+    color: var(--text-heading);
+    font-size: 12px;
     text-transform: uppercase;
+    transition: all 0.15s ease;
+}
+.archive-block:hover {
+    border-color: var(--text-heading);
+    background: var(--bg-elevated);
 }
 
-/* Строка для Paint (десктоп) */
 .paint-row {
     display: flex;
     justify-content: center;
@@ -162,9 +196,13 @@ body {
     height: 60px;
     image-rendering: pixelated;
     cursor: pointer;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.15s ease;
+}
+.paint-trigger-img:hover {
+    border-color: var(--accent-primary);
 }
 
-/* Нижняя строка с mood (десктоп) */
 .bottom-row {
     display: flex;
     justify-content: center;
@@ -179,6 +217,10 @@ body {
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    transition: transform 0.15s ease;
+}
+.mood-trigger:hover {
+    transform: translateY(-2px);
 }
 .mood-img-large {
     width: 60px;
@@ -186,14 +228,14 @@ body {
     image-rendering: pixelated;
 }
 .mood-label {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    color: var(--deep-pink);
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-muted);
     margin-top: 5px;
     text-transform: lowercase;
 }
 
-/* ================= СТРАНИЦА 2: TWITTER ================= */
+/* ================= PAGE 2: TWITTER ================= */
 .carousel-section {
     flex: 1 1 0;
     display: flex;
@@ -219,31 +261,36 @@ body {
     object-fit: contain;
     display: block;
     margin: 0 auto;
+    border: 2px solid var(--border-color);
 }
 .carousel img:not(.active) { display: none; }
 .hashtag-row {
     flex-shrink: 0;
     text-align: center;
-    padding: 5px 0 0 0;
+    padding: 8px 0 0 0;
 }
 .hashtag {
-    font-size: 12px;
-    color: #888;
-    text-shadow: 1px 1px 0 #4b3d3d, 2px 2px 0 #3d2a2f !important;
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-muted);
 }
 .twitter-section {
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 5px;
+    padding-top: 8px;
 }
 .x-btn-img {
     width: 44px;
     cursor: pointer;
+    transition: transform 0.15s ease;
+}
+.x-btn-img:hover {
+    transform: scale(1.1);
 }
 
-/* ================= СТРАНИЦА 3: FONTS ================= */
+/* ================= PAGE 3: FONTS ================= */
 .fonts-layout {
     justify-content: flex-start;
     padding-top: 10px;
@@ -253,7 +300,8 @@ body {
     width: 100%;
     height: 150px;
     overflow: hidden;
-    border: 2px solid var(--accent-pink);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0 var(--shadow-color);
 }
 .mx-narrow-image img {
     width: 100%;
@@ -261,8 +309,9 @@ body {
     object-fit: cover;
 }
 .mx-description {
-    font-size: 11px;
-    color: #a27791;
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-muted);
     margin: 5px 0;
     text-align: center;
 }
@@ -273,50 +322,79 @@ body {
 }
 .styler-input {
     width: 100%;
-    background: #000;
-    color: #fff;
-    padding: 8px;
-    font-family: inherit;
-    border: 2px solid transparent;
-    border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+    background: var(--bg-surface);
+    color: var(--text-body);
+    padding: 10px;
+    font-family: var(--font-body);
+    border: 2px solid var(--border-color);
     text-align: center;
     font-size: 10px;
+    transition: border-color 0.2s ease;
+}
+.styler-input:focus {
+    border-color: var(--accent-primary);
+    outline: none;
 }
 .styler-preview {
-    background: #000;
+    background: var(--bg-surface);
     padding: 12px;
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     cursor: pointer;
     font-family: 'Arial', 'Helvetica', sans-serif;
     word-break: break-all;
-    border: 2px solid transparent;
-    border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
-    color: #888888;
+    border: 2px solid var(--border-color);
+    color: var(--text-body);
 }
 
-/* ================= СТРАНИЦА 4: SOUND ================= */
+/* ================= PAGE 4: SOUND ================= */
 .sound-layout {
     justify-content: center;
     gap: 30px;
 }
+.text-synth-embedded {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+}
+.text-synth-embedded h4 {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--text-heading);
+}
+#ttsStatus {
+    font-family: var(--font-body);
+    font-size: 9px;
+    color: var(--text-muted);
+}
 .spotify-icon {
-    color: #1DB954;
+    font-family: var(--font-heading);
+    color: var(--accent-action);
     cursor: pointer;
     padding: 15px 30px;
-    border: 2px dashed #1DB954;
-    font-size: 20px;
+    border: 2px dashed var(--accent-action);
+    font-size: 14px;
+    background: var(--bg-surface);
+    transition: all 0.15s ease;
+}
+.spotify-icon:hover {
+    background: var(--bg-elevated);
+    border-color: var(--text-heading);
 }
 
-/* ================= СТРАНИЦА 5: TOP + TETRIS ================= */
+/* ================= PAGE 5: TOP + TETRIS ================= */
 .top-tetris-layout {
     justify-content: center;
     gap: 15px;
 }
 .top-title {
-    font-size: 14px;
-    color: #a27791;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--text-heading);
     margin-bottom: 8px;
     text-align: center;
 }
@@ -324,14 +402,15 @@ body {
     max-width: 400px;
     width: 80%;
     margin: 0 auto;
-    border: 2px solid transparent;
-    border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+    border: 2px solid var(--border-color);
     padding: 12px;
-    background: #000;
+    background: var(--bg-surface);
+    box-shadow: 4px 4px 0 var(--shadow-color);
 }
 .top-players-list {
+    font-family: var(--font-body);
     font-size: 10px;
-    color: #888888;
+    color: var(--text-body);
     line-height: 1.8;
 }
 .tetris-big {
@@ -339,18 +418,24 @@ body {
     flex-direction: column;
     align-items: center;
     text-decoration: none;
+    transition: transform 0.15s ease;
+}
+.tetris-big:hover {
+    transform: translateY(-4px);
 }
 .tetris-big img {
     width: 110px;
     image-rendering: pixelated;
+    border: 2px solid var(--border-color);
 }
 .tetris-big span {
-    font-size: 11px;
-    color: #fff;
-    margin-top: 25px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    color: var(--text-heading);
+    margin-top: 15px;
 }
 
-/* ================= СТРАНИЦА 6: FORUM + SUPPORT ================= */
+/* ================= PAGE 6: FORUM + SUPPORT ================= */
 .forum-support-layout {
     padding: 20px 15px;
     justify-content: space-between;
@@ -359,24 +444,31 @@ body {
     display: flex;
     width: 100%;
     flex: 1;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
 }
 .forum-tabs-panel-embedded {
     width: 55px;
-    background: transparent;
+    background: var(--bg-surface);
     display: flex;
     flex-direction: column;
     padding: 5px 0;
+    border-right: 2px solid var(--border-color);
 }
 .forum-tab {
     padding: 10px 0;
     font-size: 18px;
     text-align: center;
     cursor: pointer;
-    border-bottom: 1px solid #3d2a2f;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.15s ease;
+}
+.forum-tab:hover {
+    background: var(--bg-elevated);
 }
 .forum-tab.active {
-    border-left: 3px solid #a27791;
-    color: #fff;
+    border-left: 3px solid var(--accent-primary);
+    background: var(--bg-elevated);
 }
 .forum-content-embedded {
     flex: 1;
@@ -386,15 +478,17 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #888888;
 }
 .forum-content-embedded h3 {
-    font-size: 13px;
-    color: #a27791;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--text-heading);
     margin-bottom: 15px;
 }
 .forum-content-embedded p {
-    font-size: 8px;
+    font-family: var(--font-body);
+    font-size: 9px;
+    color: var(--text-body);
 }
 .forum-actions {
     display: flex;
@@ -403,11 +497,11 @@ body {
     margin-top: 20px;
 }
 
-/* ================= УНИВЕРСАЛЬНАЯ КНОПКА ================= */
+/* ================= UNIVERSAL BUTTON ================= */
 .universal-btn {
     cursor: pointer;
-    border: 2px solid #000;
-    background: #565656;
+    border: 2px solid var(--bg-surface);
+    background: var(--bg-elevated);
     padding: 0 0 4px 0;
     display: inline-block;
     text-decoration: none;
@@ -415,29 +509,35 @@ body {
 }
 .universal-btn .btn-inner {
     display: block;
-    background: #fff;
-    border: 2px solid #a0a0a0;
-    padding: 6px 18px;
+    background: var(--text-heading);
+    border: 2px solid var(--border-color);
+    padding: 8px 20px;
     transform: translateY(-4px);
     transition: transform 0.08s;
 }
 .universal-btn .btn-inner span {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    color: #000;
+    font-family: var(--font-heading);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--bg-primary);
     text-transform: uppercase;
 }
-.universal-btn:active .btn-inner { transform: translateY(0); }
+.universal-btn:hover .btn-inner {
+    background: var(--accent-primary);
+}
+.universal-btn:hover .btn-inner span {
+    color: var(--text-heading);
+}
+.universal-btn:active .btn-inner { 
+    transform: translateY(0); 
+}
 
-/* ================= МОДАЛКИ ================= */
+/* ================= MODALS ================= */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 10, 20, 0.95);
     backdrop-filter: blur(3px);
     display: none;
     justify-content: center;
@@ -446,62 +546,79 @@ body {
 }
 .modal-overlay.active { display: flex; }
 .modal-content {
-    background: #a27791;
-    border: 4px solid #b97272;
-    box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;
+    background: var(--bg-secondary);
+    border: 3px solid var(--border-color);
+    box-shadow: 
+        inset 0 0 0 1px var(--bg-elevated),
+        6px 6px 0 var(--shadow-color);
     max-width: 500px;
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
 }
 .modal-header {
-    background: #79434a;
-    padding: 12px;
+    background: var(--bg-surface);
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid var(--border-color);
 }
 .modal-title-text {
-    font-size: 11px;
-    color: #fff;
-    text-shadow: 2px 2px 0 #000;
-    font-family: 'Press Start 2P', monospace;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--text-heading);
 }
 .modal-close-btn {
-    background: #000;
-    color: #fff;
-    border: 2px solid #b97272;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
+    background: var(--bg-elevated);
+    color: var(--text-heading);
+    border: 2px solid var(--border-color);
+    width: 32px; height: 32px;
+    font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-heading);
+    transition: all 0.15s ease;
+    box-shadow: none;
+    padding: 0;
+}
+.modal-close-btn:hover {
+    background: var(--accent-primary);
+    border-color: var(--border-active);
+    transform: none;
 }
 .modal-inner {
-    padding: 20px;
-    background: #a27791;
+    padding: 24px;
+    background: var(--bg-secondary);
+}
+.modal-inner p {
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-body);
+    line-height: 1.6;
 }
 .contents-item {
-    padding: 12px;
+    padding: 14px;
+    font-family: var(--font-body);
     font-size: 10px;
-    border-bottom: 1px solid #79434a;
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
-    color: #000 !important;
-    text-shadow: 1px 1px 0 #aaa;
+    color: var(--text-body);
+    transition: all 0.15s ease;
 }
-.contents-item:hover { background: #1a1a2a; }
+.contents-item:hover { 
+    background: var(--bg-elevated);
+    color: var(--text-heading);
+}
 
 /* ================= BOTTOM PANEL ================= */
 .bottom-panel {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: var(--bottom-panel-h);
-    background: #050505;
+    background: var(--bg-surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -516,24 +633,24 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #a84d6b;
+    background: var(--accent-primary);
     opacity: 0.4;
+    transition: all 0.2s ease;
 }
 .dot.active {
     opacity: 1;
-    background: #ffb7c7;
+    background: var(--text-heading);
 }
 
-/* ================= АДАПТИВНОСТЬ (МОБИЛЬНЫЕ) ================= */
+/* ================= MOBILE RESPONSIVE ================= */
 @media (max-width: 768px) {
     .top-panel { height: 50px; padding: 0 12px; }
-    .panel-btn { font-size: 0.7rem; }
+    .panel-btn { font-size: 12px; }
     .panel-close img { width: 28px; height: 28px; }
     .bottom-panel { height: 35px; }
     .page-indicator { gap: 12px; }
     .dot { width: 6px; height: 6px; }
 
-    /* Мобильные: арт‑блок 60%, архив 20% */
     .art-archive-row {
         display: flex;
         justify-content: center;
@@ -543,33 +660,12 @@ body {
     }
     .art-block {
         flex: 0 0 60%;
-        aspect-ratio: 1/1;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .art-block img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        image-rendering: pixelated;
     }
     .archive-block {
         flex: 0 0 20%;
-        aspect-ratio: 1/1;
-        border: 2px dashed var(--accent-pink);
-        background: #0a0a0a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--deep-pink);
-        font-size: 10px;
-        text-transform: uppercase;
+        font-size: 9px;
     }
 
-    /* Paint — слева */
     .paint-row {
         display: flex;
         justify-content: flex-start;
@@ -584,7 +680,6 @@ body {
         height: 48px;
     }
 
-    /* Mood — справа */
     .bottom-row {
         display: flex;
         justify-content: flex-end;
@@ -601,7 +696,7 @@ body {
     }
 
     .mx-narrow-image { height: 120px; }
-    .ticker { font-size: 9px; }
-    .hashtag { font-size: 10px; }
+    .ticker { font-size: 8px; }
+    .hashtag { font-size: 9px; }
     .x-btn-img { width: 40px; }
 }
