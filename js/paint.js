@@ -587,36 +587,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Effects modal event listeners
-    effectsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        effectsModal.classList.toggle('active');
-    });
-    effectsModalClose.addEventListener('click', () => effectsModal.classList.remove('active'));
+    // Effects modal with live preview
+    let effectsOriginalData = null;
+    let effectsLayer = null;
     
-    // Close effects modal when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!effectsModal.contains(e.target) && e.target !== effectsBtn) {
-            effectsModal.classList.remove('active');
-        }
-    });
-    
-    // Apply threshold effect
-    applyThresholdBtn.addEventListener('click', () => {
-        const actCtx = getActiveContext();
+    function saveOriginalForEffects() {
         const layer = getActiveLayer();
-        if (!actCtx || !layer) {
-            alert('No active layer!');
-            return;
-        }
+        if (!layer) return;
+        const actCtx = getActiveContext();
+        if (!actCtx) return;
         
-        const threshold = parseInt(thresholdInput.value);
+        effectsLayer = layer;
         const layerCanvas = layer.canvas;
+        effectsOriginalData = actCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
+    }
+    
+    function restoreOriginalFromEffects() {
+        if (!effectsLayer || !effectsOriginalData) return;
+        const actCtx = getActiveContext();
+        if (!actCtx) return;
+        
+        actCtx.putImageData(effectsOriginalData, 0, 0);
+        compositeLayers();
+    }
+    
+    function applyThreshold(threshold) {
+        if (!effectsLayer || !effectsOriginalData) return;
+        const actCtx = getActiveContext();
+        if (!actCtx) return;
+        
+        const layerCanvas = effectsLayer.canvas;
         const imageData = actCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
         const data = imageData.data;
+        const origData = effectsOriginalData.data;
         
         for (let i = 0; i < data.length; i += 4) {
-            const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            const gray = (origData[i] + origData[i + 1] + origData[i + 2]) / 3;
             const value = gray > threshold ? 255 : 0;
             data[i] = value;
             data[i + 1] = value;
@@ -625,35 +631,79 @@ document.addEventListener('DOMContentLoaded', () => {
         
         actCtx.putImageData(imageData, 0, 0);
         compositeLayers();
-        saveState();
-        effectsModal.classList.remove('active');
-        alert('Threshold applied!');
-    });
+    }
     
-    // Apply noise effect
-    applyNoiseBtn.addEventListener('click', () => {
+    function applyNoise(noiseAmount) {
+        if (!effectsLayer || !effectsOriginalData) return;
         const actCtx = getActiveContext();
-        const layer = getActiveLayer();
-        if (!actCtx || !layer) {
-            alert('No active layer!');
-            return;
-        }
+        if (!actCtx) return;
         
-        const noiseAmount = parseInt(noiseInput.value);
-        const layerCanvas = layer.canvas;
+        const layerCanvas = effectsLayer.canvas;
         const imageData = actCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
         const data = imageData.data;
+        const origData = effectsOriginalData.data;
         
         for (let i = 0; i < data.length; i += 4) {
             const noise = (Math.random() - 0.5) * noiseAmount * 2.55;
-            data[i] = Math.min(255, Math.max(0, data[i] + noise));
-            data[i + 1] = Math.min(255, Math.max(0, data[i + 1] + noise));
-            data[i + 2] = Math.min(255, Math.max(0, data[i + 2] + noise));
+            data[i] = Math.min(255, Math.max(0, origData[i] + noise));
+            data[i + 1] = Math.min(255, Math.max(0, origData[i + 1] + noise));
+            data[i + 2] = Math.min(255, Math.max(0, origData[i + 2] + noise));
         }
         
         actCtx.putImageData(imageData, 0, 0);
         compositeLayers();
+    }
+    
+    effectsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        saveOriginalForEffects();
+        effectsModal.classList.toggle('active');
+    });
+    effectsModalClose.addEventListener('click', () => {
+        restoreOriginalFromEffects();
+        effectsModal.classList.remove('active');
+    });
+    
+    // Close effects modal when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!effectsModal.contains(e.target) && e.target !== effectsBtn) {
+            restoreOriginalFromEffects();
+            effectsModal.classList.remove('active');
+        }
+    });
+    
+    // Live threshold preview
+    thresholdInput.addEventListener('input', () => {
+        applyThreshold(parseInt(thresholdInput.value));
+    });
+    
+    // Live noise preview
+    noiseInput.addEventListener('input', () => {
+        applyNoise(parseInt(noiseInput.value));
+    });
+    
+    // Apply threshold effect (save state)
+    applyThresholdBtn.addEventListener('click', () => {
+        if (!effectsLayer) {
+            alert('No active layer!');
+            return;
+        }
         saveState();
+        effectsOriginalData = null;
+        effectsLayer = null;
+        effectsModal.classList.remove('active');
+        alert('Threshold applied!');
+    });
+    
+    // Apply noise effect (save state)
+    applyNoiseBtn.addEventListener('click', () => {
+        if (!effectsLayer) {
+            alert('No active layer!');
+            return;
+        }
+        saveState();
+        effectsOriginalData = null;
+        effectsLayer = null;
         effectsModal.classList.remove('active');
         alert('Noise applied!');
     });
