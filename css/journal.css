@@ -464,6 +464,36 @@ body {
     text-transform: uppercase;
 }
 
+/* ================= СТРАНИЦА 4: PINTEREST ================= */
+.pinterest-layout {
+    justify-content: center;
+    gap: 20px;
+}
+.pinterest-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.pinterest-nav-btn {
+    background: #79434a;
+    color: #fff;
+    border: 2px solid #000;
+    padding: 10px 15px;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000;
+    font-family: var(--font-primary);
+}
+.pinterest-nav-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+}
+.pinterest-widget-container {
+    max-width: 400px;
+    width: 100%;
+}
+
 /* ================= СТРАНИЦА 5: TOP + TETRIS ================= */
 .top-tetris-layout {
     justify-content: center;
@@ -773,7 +803,7 @@ body {
         display: flex;
         justify-content: flex-start;
         margin-top: 8px;
-        padding-left: 15px;
+        padding-left: 30px;
     }
     .paint-cell {
         display: flex;
@@ -839,5 +869,15 @@ body {
     }
     .support-modal-inner iframe {
         min-height: 65vh;
+    }
+    .pinterest-nav {
+        gap: 10px;
+    }
+    .pinterest-nav-btn {
+        padding: 8px 12px;
+        font-size: 20px;
+    }
+    .pinterest-widget-container {
+        max-width: 280px;
     }
 }

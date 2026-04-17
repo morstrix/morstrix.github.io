@@ -63,8 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         window.scrollToPage = (index) => {
-            const target = index * wrapper.clientWidth;
-            lenis.scrollTo(target, { immediate: false, lerp: 0.08 });
+            const pages = document.querySelectorAll('.journal-page');
+            const targetPage = pages[index];
+            // Check if target page has data-no-lenis attribute
+            if (targetPage && targetPage.dataset.noLenis === 'true') {
+                // Scroll directly without Lenis for Pinterest page
+                targetPage.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            } else if (lenis) {
+                const target = index * wrapper.clientWidth;
+                lenis.scrollTo(target, { immediate: false, lerp: 0.08 });
+            }
         };
 
         setTimeout(() => {
@@ -74,9 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 
-    // Создаём 6 точек
+    // ===== PINTEREST NAVIGATION BUTTONS =====
+    const pinterestPrevBtn = document.getElementById('pinterestPrevBtn');
+    const pinterestNextBtn = document.getElementById('pinterestNextBtn');
+    if (pinterestPrevBtn) {
+        pinterestPrevBtn.addEventListener('click', () => {
+            window.scrollToPage(2); // Navigate to Fonts (page 3, index 2)
+        });
+    }
+    if (pinterestNextBtn) {
+        pinterestNextBtn.addEventListener('click', () => {
+            window.scrollToPage(4); // Navigate to Sound (page 5, index 4)
+        });
+    }
+
+    // Создаём 7 точек
     const indicator = document.getElementById('pageIndicator');
-    indicator.innerHTML = Array(6).fill(0).map(() => '<span class="dot"></span>').join('');
+    indicator.innerHTML = Array(7).fill(0).map(() => '<span class="dot"></span>').join('');
     const dots = document.querySelectorAll('.dot');
     if (dots.length) dots[0].classList.add('active');
 

@@ -13,7 +13,7 @@
 
 <div class="top-panel">
     <div></div>
-    <button class="panel-btn text-primary" id="contentsBtn"><span>NAVIGATION</span></button>
+    <button class="panel-btn text-primary" id="contentsBtn" style="font-size: 30px;"><span>NAVIGATION</span></button>
     <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"><span class="panel-close-label text-primary">back</span></a>
 </div>
 
@@ -40,14 +40,6 @@
                     <div class="paint-cell">
                         <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
                         <span class="control-label text-primary">paint</span>
-                    </div>
-                </div>
-                <div class="bottom-row">
-                    <div class="bottom-cell center">
-                        <div class="mood-trigger" id="moodTrigger">
-                            <img src="assets/a.png" alt="mood" class="mood-img-large">
-                            <span class="mood-label text-primary">Pinterest</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -86,8 +78,26 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 4: SOUND -->
-    <div class="journal-page" data-page="4">
+    <!-- СТРАНИЦА 4: PINTEREST (with nav buttons, no Lenis) -->
+    <div class="journal-page pinterest-page" data-page="4" data-no-lenis="true">
+        <div class="page-content pinterest-layout">
+            <h4 class="top-title text-primary">MOOD</h4>
+            <div class="pinterest-nav">
+                <button class="pinterest-nav-btn" id="pinterestPrevBtn">◀</button>
+                <div class="pinterest-widget-container">
+                    <a data-pin-do="embedBoard" 
+                       href="https://www.pinterest.com/morstrix/re-f-erences/" 
+                       data-pin-scale-width="400" 
+                       data-pin-scale-height="400"
+                       data-pin-board-width="400"></a>
+                </div>
+                <button class="pinterest-nav-btn" id="pinterestNextBtn">▶</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 5: SOUND -->
+    <div class="journal-page" data-page="5">
         <div class="page-content sound-layout">
             <div class="text-synth-embedded">
                 <h4>TEXT SYNTH</h4>
@@ -103,8 +113,8 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 5: TOP + TETRIS -->
-    <div class="journal-page" data-page="5">
+    <!-- СТРАНИЦА 6: TOP + TETRIS -->
+    <div class="journal-page" data-page="6">
         <div class="page-content top-tetris-layout">
             <h4 class="top-title text-primary">TOP</h4>
             <div class="top-players-framed"><div class="top-players-list"></div></div>
@@ -112,8 +122,8 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 6: FORUM + SUPPORT -->
-    <div class="journal-page" data-page="6">
+    <!-- СТРАНИЦА 7: FORUM + SUPPORT -->
+    <div class="journal-page" data-page="7">
         <div class="page-content forum-support-layout">
             <div class="forum-embedded">
                 <div class="forum-tabs-panel-embedded">
@@ -158,9 +168,10 @@
             <div class="contents-item text-secondary" data-page="1">1. ART</div>
             <div class="contents-item text-secondary" data-page="2">2. TWITTER</div>
             <div class="contents-item text-secondary" data-page="3">3. FONTS</div>
-            <div class="contents-item text-secondary" data-page="4">4. SOUND</div>
-            <div class="contents-item text-secondary" data-page="5">5. TOP + TETRIS</div>
-            <div class="contents-item text-secondary" data-page="6">6. FORUM</div>
+            <div class="contents-item text-secondary" data-page="4">4. MOOD</div>
+            <div class="contents-item text-secondary" data-page="5">5. SOUND</div>
+            <div class="contents-item text-secondary" data-page="6">6. TOP + TETRIS</div>
+            <div class="contents-item text-secondary" data-page="7">7. FORUM</div>
         </div>
     </div>
 </div>
@@ -195,23 +206,6 @@
             <button class="universal-btn" id="nicknameEnterBtn" style="margin-top: 15px;">
                 <span class="btn-inner"><span>ENTER</span></span>
             </button>
-        </div>
-    </div>
-</div>
-
-<!-- Модалка Mood (Pinterest) -->
-<div id="moodModal" class="modal-overlay">
-    <div class="modal-content" style="background: #111;">
-        <div class="modal-header">
-            <span class="modal-title-text">MOOD</span>
-            <button class="modal-close-btn" data-modal="moodModal">✜</button>
-        </div>
-        <div class="modal-inner" style="display: flex; justify-content: center;">
-            <a data-pin-do="embedBoard" 
-               href="https://www.pinterest.com/morstrix/re-f-erences/" 
-               data-pin-scale-width="400" 
-               data-pin-scale-height="400"
-               data-pin-board-width="400"></a>
         </div>
     </div>
 </div>
@@ -287,7 +281,7 @@
 <div id="supportModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ПОДДЕРЖКА</span>
+            <span class="modal-title-text">SUPPORT</span>
             <button class="modal-close-btn" data-modal="supportModal">✜</button>
         </div>
         <div class="modal-inner support-modal-inner">
