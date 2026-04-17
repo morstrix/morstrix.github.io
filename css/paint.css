@@ -494,6 +494,19 @@ body {
     }
     .tools-panel .toolbar-left {
         margin-left: 0;
+        flex: 0 0 auto;
+    }
+    .tools-panel .toolbar-right {
+        flex: 0 0 auto;
+    }
+    .tools-panel .tool-btn {
+        min-width: 28px;
+        min-height: 28px;
+        padding: 2px 4px;
+    }
+    .tools-panel #colorPicker {
+        width: 35px;
+        height: 28px;
     }
     .paint-title { font-size: 12px; }
     .paint-top-panel { padding: 0 10px; }

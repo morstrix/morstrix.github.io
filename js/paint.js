@@ -604,10 +604,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply threshold effect
     applyThresholdBtn.addEventListener('click', () => {
         const actCtx = getActiveContext();
-        if (!actCtx) return;
+        const layer = getActiveLayer();
+        if (!actCtx || !layer) {
+            alert('No active layer!');
+            return;
+        }
         
         const threshold = parseInt(thresholdInput.value);
-        const imageData = actCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const layerCanvas = layer.canvas;
+        const imageData = actCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
         const data = imageData.data;
         
         for (let i = 0; i < data.length; i += 4) {
@@ -622,15 +627,21 @@ document.addEventListener('DOMContentLoaded', () => {
         compositeLayers();
         saveState();
         effectsModal.classList.remove('active');
+        alert('Threshold applied!');
     });
     
     // Apply noise effect
     applyNoiseBtn.addEventListener('click', () => {
         const actCtx = getActiveContext();
-        if (!actCtx) return;
+        const layer = getActiveLayer();
+        if (!actCtx || !layer) {
+            alert('No active layer!');
+            return;
+        }
         
         const noiseAmount = parseInt(noiseInput.value);
-        const imageData = actCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const layerCanvas = layer.canvas;
+        const imageData = actCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
         const data = imageData.data;
         
         for (let i = 0; i < data.length; i += 4) {
@@ -644,6 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
         compositeLayers();
         saveState();
         effectsModal.classList.remove('active');
+        alert('Noise applied!');
     });
     
     fontSizeInput.addEventListener('input', () => {
