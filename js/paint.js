@@ -49,7 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalBrushBtn = document.getElementById('modalBrushBtn');
     const modalEraserBtn = document.getElementById('modalEraserBtn');
     const modalTextBtn = document.getElementById('modalTextBtn');
-    const modalCurveBtn = document.getElementById('modalCurveBtn');
+    // Effects modal
+    const effectsBtn = document.getElementById('effectsBtn');
+    const effectsModal = document.getElementById('effectsModal');
+    const effectsModalClose = document.getElementById('effectsModalClose');
+    const thresholdInput = document.getElementById('thresholdInput');
+    const noiseInput = document.getElementById('noiseInput');
+    const applyThresholdBtn = document.getElementById('applyThresholdBtn');
+    const applyNoiseBtn = document.getElementById('applyNoiseBtn');
 
     // Multi-layer system
     let layers = [];
@@ -58,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Tool state
     let currentTool = 'brush'; // brush, eraser, text
+    
+    // Temp canvas for effects
+    let tempCanvas = null;
+    let tempCtx = null;
     
     // Initialize layers
     function createLayer(name, isBackground = false) {
@@ -277,20 +288,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function start(e) {
         e.preventDefault();
+        let p = getPos(e);
+        let actCtx;
+        
         if (currentTool === 'text') {
-            const p = getPos(e);
             showTextModal(p.x, p.y);
             return;
         }
         
         drawing = true;
         points = [];
-        const p = getPos(e);
         points.push(p);
         lastX = p.x;
         lastY = p.y;
         
-        const actCtx = getActiveContext();
+        actCtx = getActiveContext();
         if (actCtx) {
             actCtx.beginPath();
             actCtx.moveTo(p.x, p.y);
@@ -314,16 +326,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function move(e) {
         e.preventDefault();
+        let p = getPos(e);
+        let actCtx;
+        
         if (!drawing) return;
-        const p = getPos(e);
         
         if (points.length === 0 || getDistance(points[points.length - 1], p) > minDistance) {
             points.push(p);
             
-            const actCtx = getActiveContext();
+            actCtx = getActiveContext();
             if (!actCtx) return;
             
-            // Set composite operation based on tool
             if (currentTool === 'eraser') {
                 actCtx.globalCompositeOperation = 'destination-out';
             } else {
@@ -368,12 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stop(e) {
         e.preventDefault();
+        
         if (drawing) {
             drawing = false;
             points = [];
             
-            // Reset composite operation
-            const actCtx = getActiveContext();
+            let actCtx = getActiveContext();
             if (actCtx) {
                 actCtx.globalCompositeOperation = 'source-over';
             }
@@ -423,8 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modalEraserBtn.classList.add('active');
         } else if (tool === 'text') {
             modalTextBtn.classList.add('active');
-        } else if (tool === 'curve') {
-            modalCurveBtn.classList.add('active');
         }
     }
 
@@ -568,16 +579,71 @@ document.addEventListener('DOMContentLoaded', () => {
         setTool('text');
         toolsModal.classList.remove('active');
     });
-    modalCurveBtn.addEventListener('click', () => {
-        setTool('curve');
-        toolsModal.classList.remove('active');
-    });
     
     // Close tools modal when clicking outside
     document.addEventListener('click', (e) => {
         if (!toolsModal.contains(e.target) && e.target !== toolsBtn) {
             toolsModal.classList.remove('active');
         }
+    });
+    
+    // Effects modal event listeners
+    effectsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        effectsModal.classList.toggle('active');
+    });
+    effectsModalClose.addEventListener('click', () => effectsModal.classList.remove('active'));
+    
+    // Close effects modal when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!effectsModal.contains(e.target) && e.target !== effectsBtn) {
+            effectsModal.classList.remove('active');
+        }
+    });
+    
+    // Apply threshold effect
+    applyThresholdBtn.addEventListener('click', () => {
+        const actCtx = getActiveContext();
+        if (!actCtx) return;
+        
+        const threshold = parseInt(thresholdInput.value);
+        const imageData = actCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+            const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            const value = gray > threshold ? 255 : 0;
+            data[i] = value;
+            data[i + 1] = value;
+            data[i + 2] = value;
+        }
+        
+        actCtx.putImageData(imageData, 0, 0);
+        compositeLayers();
+        saveState();
+        effectsModal.classList.remove('active');
+    });
+    
+    // Apply noise effect
+    applyNoiseBtn.addEventListener('click', () => {
+        const actCtx = getActiveContext();
+        if (!actCtx) return;
+        
+        const noiseAmount = parseInt(noiseInput.value);
+        const imageData = actCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+            const noise = (Math.random() - 0.5) * noiseAmount * 2.55;
+            data[i] = Math.min(255, Math.max(0, data[i] + noise));
+            data[i + 1] = Math.min(255, Math.max(0, data[i + 1] + noise));
+            data[i + 2] = Math.min(255, Math.max(0, data[i + 2] + noise));
+        }
+        
+        actCtx.putImageData(imageData, 0, 0);
+        compositeLayers();
+        saveState();
+        effectsModal.classList.remove('active');
     });
     
     fontSizeInput.addEventListener('input', () => {

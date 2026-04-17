@@ -68,6 +68,13 @@
             <span style="font-size: 10px;">COLOR</span>
             <span class="color-value" id="colorValue" style="font-size: 8px; color: #aaa;">#444444</span>
         </div>
+        <button class="tool-btn" id="effectsBtn" title="Effects" style="flex-direction: column;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 2px;">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+            <span style="font-size: 8px;">FX</span>
+        </button>
         <div class="toolbar-left" style="margin-left: auto;">
             <button class="tool-btn" id="settingsBtn" title="Settings" style="flex-direction: column;">
                 <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
@@ -173,7 +180,29 @@
     </div>
 </div>
 
-<!-- Tools Modal (Brush/Eraser/Text/Curves) -->
+<!-- Effects Modal (Threshold/Noise) -->
+<div id="effectsModal" class="mini-modal">
+    <div class="mini-modal-content">
+        <div class="layers-header">
+            <span>EFFECTS</span>
+            <button class="modal-close-btn" id="effectsModalClose">✕</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;">
+            <div>
+                <label style="font-size: 10px; color: #aaa; display: block; margin-bottom: 5px;">THRESHOLD</label>
+                <input type="range" id="thresholdInput" min="0" max="255" value="128" style="width: 100%;">
+                <button class="layer-option" id="applyThresholdBtn" style="margin-top: 5px; font-size: 10px;">APPLY</button>
+            </div>
+            <div>
+                <label style="font-size: 10px; color: #aaa; display: block; margin-bottom: 5px;">NOISE</label>
+                <input type="range" id="noiseInput" min="0" max="100" value="0" style="width: 100%;">
+                <button class="layer-option" id="applyNoiseBtn" style="margin-top: 5px; font-size: 10px;">APPLY</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tools Modal (Brush/Eraser/Text) -->
 <div id="toolsModal" class="mini-modal">
     <div class="mini-modal-content">
         <div class="layers-header">
@@ -198,12 +227,6 @@
                     <text x="4" y="15" font-size="14" font-weight="bold">T</text>
                 </svg>
                 TEXT
-            </button>
-            <button class="layer-option" id="modalCurveBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
-                    <path d="M3 12c0-3 3-9 9-9s9 6 9 9-3 9-9 9-9-6-9-9"/>
-                </svg>
-                CURVES
             </button>
         </div>
     </div>
