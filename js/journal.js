@@ -52,29 +52,74 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 120);
         });
 
+        let currentPage = 0;
+        const totalPages = 7;
+        
+        // Создаём точки
+        const indicator = document.getElementById('pageIndicator');
+        indicator.innerHTML = Array(7).fill(0).map(() => '<span class="dot"></span>').join('');
         const dots = document.querySelectorAll('.dot');
+        
         function updateActiveDot(index) {
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                const distance = Math.abs(i - index);
+                dot.style.transitionDelay = `${distance * 0.05}s`;
+            });
+            currentPage = index;
         }
+        
+        // Click on dots to navigate
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                window.scrollToPage(index);
+            });
+        });
+        
         lenis.on('scroll', ({ scroll }) => {
             const pageWidth = wrapper.clientWidth;
-            const activeIndex = Math.round(scroll / pageWidth);
+            const progress = scroll / pageWidth;
+            const activeIndex = Math.round(progress);
+            
+            dots.forEach((dot, i) => {
+                const distance = Math.abs(progress - i);
+                const intensity = Math.max(0, 1 - distance);
+                dot.style.opacity = 0.3 + (intensity * 0.7);
+                dot.style.transform = `scale(${1 + intensity * 0.5})`;
+            });
+            
             updateActiveDot(activeIndex);
         });
 
         window.scrollToPage = (index) => {
             const pages = document.querySelectorAll('.journal-page');
             const targetPage = pages[index];
-            // Check if target page has data-no-lenis attribute
-            if (targetPage && targetPage.dataset.noLenis === 'true') {
-                // Scroll directly without Lenis for Pinterest page
-                targetPage.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-            } else if (lenis) {
-                const target = index * wrapper.clientWidth;
-                lenis.scrollTo(target, { immediate: false, lerp: 0.08 });
+            
+            if (Math.abs(index - currentPage) === 1) {
+                if (targetPage && targetPage.dataset.noLenis === 'true') {
+                    targetPage.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                } else if (lenis) {
+                    const target = index * wrapper.clientWidth;
+                    lenis.scrollTo(target, { 
+                        duration: 1.2,
+                        easing: (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t 
+                    });
+                }
+            } else {
+                if (targetPage && targetPage.dataset.noLenis === 'true') {
+                    targetPage.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+                } else if (lenis) {
+                    const target = index * wrapper.clientWidth;
+                    lenis.scrollTo(target, { 
+                        duration: 0.8,
+                        easing: (t) => 1 - Math.pow(1 - t, 3)
+                    });
+                }
             }
         };
 
+        if (dots.length) dots[0].classList.add('active');
+        
         setTimeout(() => {
             const pageWidth = wrapper.clientWidth;
             const activeIndex = Math.round(lenis.scroll / pageWidth);
@@ -95,12 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollToPage(4); // Navigate to Sound (page 5, index 4)
         });
     }
-
-    // Создаём 7 точек
-    const indicator = document.getElementById('pageIndicator');
-    indicator.innerHTML = Array(7).fill(0).map(() => '<span class="dot"></span>').join('');
-    const dots = document.querySelectorAll('.dot');
-    if (dots.length) dots[0].classList.add('active');
 
     // ===== RSS ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
