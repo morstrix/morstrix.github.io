@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSizeInput = document.getElementById('fontSize');
     const fontSizeValue = document.getElementById('fontSizeValue');
     const confirmTextBtn = document.getElementById('confirmTextBtn');
-    const textRow = document.getElementById('textRow');
     const addLayerBtn = document.getElementById('addLayerBtn');
     const layersList = document.getElementById('layersList');
     const settingsBtn = document.getElementById('settingsBtn');
@@ -404,13 +403,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (tool === 'brush') {
             brushBtn.classList.add('active');
-            textRow.style.display = 'none';
         } else if (tool === 'eraser') {
             eraserBtn.classList.add('active');
-            textRow.style.display = 'none';
         } else if (tool === 'text') {
             textBtn.classList.add('active');
-            textRow.style.display = 'flex';
         }
     }
 

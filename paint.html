@@ -21,25 +21,55 @@
     <!-- Canvas Toolbar: tools, undo/redo, layers, settings -->
     <div class="canvas-toolbar">
         <div class="toolbar-left">
-            <button class="tool-btn active" id="brushBtn" title="Brush">BRUSH</button>
-            <button class="tool-btn" id="eraserBtn" title="Eraser">ERASER</button>
-            <button class="tool-btn" id="textBtn" title="Text">TEXT</button>
+            <button class="tool-btn active" id="brushBtn" title="Brush" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <path d="M3 17 L7 13 L5 11 L13 3 L15 5 L7 13 L9 15 L5 19 Z"/>
+                </svg>
+                <span style="font-size: 8px;">BRUSH</span>
+            </button>
+            <button class="tool-btn" id="eraserBtn" title="Eraser" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <path d="M2 12 L8 6 L14 12 L8 18 Z M14 12 L16 10 L18 12 L16 14 Z"/>
+                </svg>
+                <span style="font-size: 8px;">ERASER</span>
+            </button>
+            <button class="tool-btn" id="textBtn" title="Text" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <text x="4" y="15" font-size="14" font-weight="bold">T</text>
+                </svg>
+                <span style="font-size: 8px;">TEXT</span>
+            </button>
         </div>
         <div class="toolbar-center">
-            <button class="tool-btn" id="undoBtn" title="Undo">
-                <svg width="16" height="16" viewBox="0 0 16 16" style="fill: currentColor;">
+            <button class="tool-btn" id="undoBtn" title="Undo" style="flex-direction: column;">
+                <svg width="14" height="14" viewBox="0 0 16 16" style="fill: currentColor; margin-bottom: 2px;">
                     <path d="M8 2 L2 8 L8 14 L8 10 L14 10 L14 6 L8 6 Z"/>
                 </svg>
+                <span style="font-size: 8px;">UNDO</span>
             </button>
-            <button class="tool-btn" id="redoBtn" title="Redo">
-                <svg width="16" height="16" viewBox="0 0 16 16" style="fill: currentColor;">
+            <button class="tool-btn" id="redoBtn" title="Redo" style="flex-direction: column;">
+                <svg width="14" height="14" viewBox="0 0 16 16" style="fill: currentColor; margin-bottom: 2px;">
                     <path d="M8 14 L14 8 L8 2 L8 6 L2 6 L2 10 L8 10 Z"/>
                 </svg>
+                <span style="font-size: 8px;">REDO</span>
             </button>
         </div>
         <div class="toolbar-right">
-            <button class="tool-btn" id="layersBtn" title="Layers">LAYERS</button>
-            <button class="tool-btn" id="settingsBtn" title="Settings">⚙</button>
+            <button class="tool-btn" id="layersBtn" title="Layers" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <rect x="2" y="3" width="16" height="3" rx="1"/>
+                    <rect x="2" y="8" width="16" height="3" rx="1"/>
+                    <rect x="2" y="13" width="16" height="3" rx="1"/>
+                </svg>
+                <span style="font-size: 8px;">LAYERS</span>
+            </button>
+            <button class="tool-btn" id="settingsBtn" title="Settings" style="flex-direction: column;">
+                <svg width="16" height="16" viewBox="0 0 20 20" style="fill: currentColor; margin-bottom: 2px;">
+                    <circle cx="10" cy="10" r="3"/>
+                    <path d="M10 2 L10 5 M10 15 L10 18 M2 10 L5 10 M15 10 L18 10 M4.5 4.5 L6.5 6.5 M13.5 13.5 L15.5 15.5 M4.5 15.5 L6.5 13.5 M13.5 6.5 L15.5 4.5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span style="font-size: 8px;">SETTINGS</span>
+            </button>
         </div>
     </div>
 
@@ -54,11 +84,6 @@
             <input type="color" id="colorPicker" value="#444444" style="margin-bottom: 4px;">
             <span style="font-size: 10px;">COLOR</span>
             <span class="color-value" id="colorValue" style="font-size: 8px; color: #aaa;">#444444</span>
-        </div>
-        <div class="text-row" id="textRow" style="display: none;">
-            <label for="textInput">TEXT:</label>
-            <input type="text" id="textInput" class="text-input" placeholder="Enter text...">
-            <button class="paint-action-btn" id="addTextBtn">ADD</button>
         </div>
         <div class="action-buttons">
             <button class="paint-action-btn icon-btn" id="clearBtn" title="Clear" style="flex-direction: column;">
