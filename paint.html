@@ -4,28 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | PAINT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/paint.css">
 </head>
 <body>
 
-<!-- Верхняя панель -->
+<!-- Top Panel -->
 <div class="paint-top-panel">
-    <span class="paint-title">ПЕИНТ</span>
-    <button class="paint-close-btn" id="paintCloseBtn" title="Вернуться в журнал">✕</button>
+    <span class="paint-title">PAINT</span>
+    <button class="paint-close-btn" id="paintCloseBtn" title="Back to Journal">✕</button>
 </div>
 
 <!-- Основной контейнер -->
 <div class="paint-main">
     
-    <!-- Панель над холстом: undo/redo и слои -->
+    <!-- Canvas Toolbar: tools, undo/redo, layers, settings -->
     <div class="canvas-toolbar">
         <div class="toolbar-left">
-            <button class="tool-btn" id="undoBtn" title="Отменить">↩</button>
-            <button class="tool-btn" id="redoBtn" title="Повторить">↪</button>
+            <button class="tool-btn active" id="brushBtn" title="Brush">BRUSH</button>
+            <button class="tool-btn" id="eraserBtn" title="Eraser">ERASER</button>
+            <button class="tool-btn" id="textBtn" title="Text">TEXT</button>
+        </div>
+        <div class="toolbar-center">
+            <button class="tool-btn" id="undoBtn" title="Undo">
+                <svg width="16" height="16" viewBox="0 0 16 16" style="fill: currentColor;">
+                    <path d="M8 2 L2 8 L8 14 L8 10 L14 10 L14 6 L8 6 Z"/>
+                </svg>
+            </button>
+            <button class="tool-btn" id="redoBtn" title="Redo">
+                <svg width="16" height="16" viewBox="0 0 16 16" style="fill: currentColor;">
+                    <path d="M8 14 L14 8 L8 2 L8 6 L2 6 L2 10 L8 10 Z"/>
+                </svg>
+            </button>
         </div>
         <div class="toolbar-right">
-            <button class="tool-btn" id="layersBtn" title="Слои">СЛОИ</button>
+            <button class="tool-btn" id="layersBtn" title="Layers">LAYERS</button>
+            <button class="tool-btn" id="settingsBtn" title="Settings">⚙</button>
         </div>
     </div>
 
@@ -34,33 +48,91 @@
         <canvas id="paintCanvas" width="600" height="600"></canvas>
     </div>
 
-    <!-- Панель инструментов -->
+    <!-- Tools Panel -->
     <div class="tools-panel">
-        <div class="color-row">
-            <label for="colorPicker">ЦВЕТ:</label>
-            <input type="color" id="colorPicker" value="#444444">
-            <span class="color-value" id="colorValue">#444444</span>
+        <div class="color-row" style="flex-direction: column; align-items: center;">
+            <input type="color" id="colorPicker" value="#444444" style="margin-bottom: 4px;">
+            <span style="font-size: 10px;">COLOR</span>
+            <span class="color-value" id="colorValue" style="font-size: 8px; color: #aaa;">#444444</span>
         </div>
-        <div class="brush-row">
-            <label for="brushSize">КИСТЬ:</label>
-            <input type="range" id="brushSize" min="1" max="30" value="5">
-            <span id="brushSizeValue">5</span>
+        <div class="text-row" id="textRow" style="display: none;">
+            <label for="textInput">TEXT:</label>
+            <input type="text" id="textInput" class="text-input" placeholder="Enter text...">
+            <button class="paint-action-btn" id="addTextBtn">ADD</button>
         </div>
         <div class="action-buttons">
-            <button class="paint-action-btn" id="clearBtn">CLEAR</button>
-            <button class="paint-action-btn" id="loadBtn">LOAD</button>
-            <button class="paint-action-btn" id="saveBtn">SAVE</button>
+            <button class="paint-action-btn icon-btn" id="clearBtn" title="Clear" style="flex-direction: column;">
+                <img src="assets/clear.png" alt="Clear" class="btn-icon" style="margin-bottom: 4px;">
+                <span style="font-size: 10px;">CLEAR</span>
+            </button>
+            <button class="paint-action-btn icon-btn" id="loadBtn" title="Load" style="flex-direction: column;">
+                <img src="assets/upload.png" alt="Load" class="btn-icon" style="margin-bottom: 4px;">
+                <span style="font-size: 10px;">UPLOAD</span>
+            </button>
+            <button class="paint-action-btn icon-btn" id="saveBtn" title="Save" style="flex-direction: column;">
+                <img src="assets/folder.png" alt="Save" class="btn-icon" style="margin-bottom: 4px;">
+                <span style="font-size: 10px;">SAVE</span>
+            </button>
         </div>
-        <!-- Свободное место для будущих элементов -->
+        <!-- Extra space for future elements -->
         <div class="extra-space"></div>
     </div>
 </div>
 
-<!-- Мини-модалка слоёв (Top / Background) -->
+<!-- Layers Modal -->
 <div id="layersModal" class="mini-modal">
     <div class="mini-modal-content">
-        <button class="layer-option" id="layerTop">TOP</button>
-        <button class="layer-option" id="layerBackground">BACK</button>
+        <div class="layers-header">
+            <span>LAYERS</span>
+            <button class="layer-btn" id="addLayerBtn">+</button>
+        </div>
+        <div class="layers-list" id="layersList">
+            <!-- Layers will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+<!-- Settings Modal -->
+<div id="settingsModal" class="mini-modal">
+    <div class="mini-modal-content">
+        <div class="settings-header">
+            <span>SETTINGS</span>
+            <button class="modal-close-btn" id="settingsModalClose">✕</button>
+        </div>
+        <div class="settings-content">
+            <div class="setting-row">
+                <label for="brushSize">BRUSH:</label>
+                <input type="range" id="brushSize" min="1" max="30" value="5">
+                <span id="brushSizeValue">5</span>
+            </div>
+            <div class="setting-row">
+                <label for="eraserSize">ERASER:</label>
+                <input type="range" id="eraserSize" min="1" max="50" value="10">
+                <span id="eraserSizeValue">10</span>
+            </div>
+            <div class="setting-row">
+                <label for="smoothing">SMOOTH:</label>
+                <input type="range" id="smoothing" min="0" max="10" value="4">
+                <span id="smoothingValue">4</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Text Input Modal -->
+<div id="textModal" class="mini-modal">
+    <div class="mini-modal-content">
+        <div class="text-modal-header">
+            <span>ADD TEXT</span>
+            <button class="modal-close-btn" id="textModalClose">✕</button>
+        </div>
+        <input type="text" id="canvasTextInput" class="canvas-text-input" placeholder="Enter text...">
+        <div class="text-controls">
+            <label for="fontSize">SIZE:</label>
+            <input type="range" id="fontSize" min="10" max="100" value="20">
+            <span id="fontSizeValue">20</span>
+        </div>
+        <button class="paint-action-btn" id="confirmTextBtn">ADD TEXT</button>
     </div>
 </div>
 

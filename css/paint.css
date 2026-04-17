@@ -16,7 +16,7 @@
 body {
     background: #050508;
     color: #f0f0f0;
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Tiny5', monospace;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
@@ -71,29 +71,54 @@ body {
     min-height: 0;
 }
 
-/* === ПАНЕЛЬ НАД ХОЛСТОМ === */
+/* === CANVAS TOOLBAR === */
 .canvas-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 .toolbar-left,
+.toolbar-center,
 .toolbar-right {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+}
+.toolbar-center {
+    gap: 5px;
+}
+.tool-btn.active {
+    background: var(--accent-pink);
+    color: #000;
 }
 .tool-btn {
     background: #1a1a1a;
     border: 2px solid var(--accent-pink);
     color: #fff;
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Tiny5', monospace;
     font-size: 14px;
     padding: 8px 12px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 2px 2px 0 #000;
     transition: 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 36px;
+}
+.icon-btn {
+    padding: 6px;
+    border: none;
+}
+.btn-icon {
+    width: 50px;
+    height: 50px;
+    display: block;
+    object-fit: contain;
 }
 .tool-btn:active {
     transform: translate(1px, 1px);
@@ -131,12 +156,13 @@ body {
     border: 2px solid var(--accent-pink);
     flex-shrink: 0;
 }
-.color-row, .brush-row {
+.color-row, .text-row {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
-.color-row label, .brush-row label {
+.color-row label {
     font-size: 11px;
     color: var(--deep-pink);
 }
@@ -151,8 +177,18 @@ body {
     font-size: 10px;
     color: #aaa;
 }
-#brushSize {
-    width: 120px;
+#fontSize {
+    width: 100px;
+}
+.text-input, .canvas-text-input {
+    background: #000;
+    border: 2px solid var(--muted-pink);
+    color: #fff;
+    padding: 8px;
+    font-family: 'Tiny5', monospace;
+    font-size: 10px;
+    min-width: 150px;
+    flex: 1;
 }
 #brushSizeValue {
     font-size: 10px;
@@ -164,16 +200,24 @@ body {
     margin-left: auto;
 }
 .paint-action-btn {
-    background: #1a1a1a;
-    border: 2px solid var(--muted-pink);
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    padding: 8px 12px;
+    background: none;
+    border: none;
     cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 2px 2px 0 #000;
-    transition: 0.05s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 16px;
+    font-family: 'Tiny5', monospace;
+    color: #fff;
+}
+.paint-action-btn.icon-btn {
+    padding: 4px;
+    border: none;
+    background: none;
+    box-shadow: none;
+    flex-direction: column;
 }
 .paint-action-btn:active {
     transform: translate(1px, 1px);
@@ -184,7 +228,7 @@ body {
     min-width: 50px;
 }
 
-/* === МИНИ-МОДАЛКА СЛОЁВ === */
+/* === MINI MODALS === */
 .mini-modal {
     position: absolute;
     top: calc(var(--top-panel-h) + 60px);
@@ -194,6 +238,108 @@ body {
     padding: 10px;
     display: none;
     z-index: 1000;
+    max-width: 250px;
+}
+.layers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: var(--accent-pink);
+    font-size: 12px;
+}
+.layer-btn {
+    background: var(--accent-pink);
+    border: none;
+    color: #000;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Tiny5', monospace;
+}
+.layers-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+.layer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    margin: 4px 0;
+    background: #000;
+    border: 1px solid var(--muted-pink);
+    cursor: pointer;
+    font-size: 10px;
+}
+.layer-item.active {
+    border-color: var(--accent-pink);
+    background: var(--accent-pink);
+    color: #000;
+}
+.layer-item:hover {
+    border-color: var(--accent-pink);
+}
+.layer-delete {
+    background: #8B3A3A;
+    border: none;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 8px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+.text-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--accent-pink);
+    font-size: 12px;
+}
+.text-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.text-controls label {
+    font-size: 10px;
+    color: var(--deep-pink);
+}
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--accent-pink);
+    font-size: 12px;
+}
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.setting-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.setting-row label {
+    font-size: 10px;
+    color: var(--deep-pink);
+    min-width: 60px;
+}
+.setting-row input[type="range"] {
+    flex: 1;
+    margin: 0 10px;
+}
+.setting-row span {
+    font-size: 10px;
+    color: #aaa;
+    min-width: 24px;
+    text-align: right;
 }
 .mini-modal.active {
     display: block;
@@ -207,7 +353,7 @@ body {
     background: #000;
     border: 2px solid var(--muted-pink);
     color: #fff;
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Tiny5', monospace;
     font-size: 12px;
     padding: 10px 20px;
     cursor: pointer;
@@ -217,16 +363,96 @@ body {
     background: var(--accent-pink);
 }
 
-/* === АДАПТИВНОСТЬ === */
-@media (max-width: 600px) {
+/* === MOBILE RESPONSIVENESS === */
+@media (max-width: 768px) {
     .paint-title { font-size: 14px; }
+    .canvas-toolbar {
+        gap: 5px;
+    }
+    .toolbar-left, .toolbar-center, .toolbar-right {
+        gap: 4px;
+    }
+    .tool-btn { 
+        font-size: 9px; 
+        padding: 6px 8px;
+        min-width: 40px;
+        min-height: 32px;
+    }
+    .btn-icon {
+        width: 16px;
+        height: 16px;
+    }
     .tools-panel {
+        padding: 10px;
+        gap: 12px;
+    }
+    .color-row, .text-row {
         flex-direction: column;
         align-items: stretch;
+        gap: 8px;
+    }
+    .text-input, .canvas-text-input {
+        min-width: auto;
+    }
+    #fontSize {
+        width: 100%;
+    }
+    .setting-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .setting-row label {
+        min-width: auto;
+    }
+    .setting-row input[type="range"] {
+        margin: 0;
+    }
+    .setting-row span {
+        text-align: center;
+        min-width: auto;
     }
     .action-buttons {
-        margin-left: 0;
+        flex-wrap: wrap;
+        gap: 8px;
         justify-content: center;
     }
-    .tool-btn { font-size: 12px; padding: 6px 10px; }
+    .paint-action-btn {
+        flex: 1;
+        min-width: 60px;
+        min-height: 36px;
+    }
+    .paint-action-btn.icon-btn {
+        min-width: 44px;
+    }
+    .mini-modal {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .canvas-toolbar {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .toolbar-left, .toolbar-center, .toolbar-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .tool-btn {
+        font-size: 8px;
+        padding: 4px 6px;
+        min-width: 35px;
+        min-height: 28px;
+    }
+    .btn-icon {
+        width: 14px;
+        height: 14px;
+    }
+    .paint-title { font-size: 12px; }
+    .paint-top-panel { padding: 0 10px; }
+    .paint-main { padding: 10px; }
 }
