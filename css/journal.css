@@ -127,7 +127,7 @@ body {
 }
 .ticker {
     display: inline-block;
-    font-size: 11px;
+    font-size: 16px;
     color: var(--text-secondary);
     font-family: var(--font-secondary);
     text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f !important;
@@ -324,7 +324,7 @@ body {
     padding: 5px 0 0 0;
 }
 .hashtag {
-    font-size: 11px;
+    font-size: 15px;
     color: var(--text-secondary);
     font-family: var(--font-secondary);
     text-shadow: 1px 1px 0 #4b3d3d, 2px 2px 0 #3d2a2f !important;
@@ -360,7 +360,7 @@ body {
     object-fit: contain;
 }
 .mx-description {
-    font-size: 11px;
+    font-size: 14px;
     color: var(--text-secondary);
     margin: 5px 0;
     text-align: center;
@@ -374,12 +374,11 @@ body {
     width: 100%;
     background: #000;
     color: #fff;
-    padding: 8px;
+    padding: 10px 15px;
     font-family: var(--font-secondary);
-    border: 2px solid transparent;
-    border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+    border: 2px solid #79434a;
     text-align: center;
-    font-size: 10px;
+    font-size: 16px;
 }
 .styler-preview {
     background: #000;
@@ -422,7 +421,7 @@ body {
     width: 100%;
     max-width: 820px;
     min-height: 46px;
-    font-size: 16px;
+    font-size: 18px;
 }
 #ttsSpeakBtn {
     margin-top: 2px;
@@ -439,6 +438,7 @@ body {
     padding: 10px;
     font-size: 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -454,6 +454,13 @@ body {
     object-fit: contain;
     image-rendering: pixelated;
     vertical-align: middle;
+}
+.spotify-label {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-top: 8px;
+    text-transform: uppercase;
 }
 
 /* ================= СТРАНИЦА 5: TOP + TETRIS ================= */
@@ -736,7 +743,7 @@ body {
         image-rendering: pixelated;
     }
     .archive-block {
-        flex: 0 0 25%;
+        flex: 0 0 18%;
         aspect-ratio: 1/1;
         background: #0a0a0a;
         display: flex;
@@ -744,11 +751,11 @@ body {
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        gap: 6px;
+        gap: 4px;
     }
     .archive-img {
-        width: 60px;
-        height: 60px;
+        width: 35px;
+        height: 35px;
     }
     .archive-label {
         color: var(--text-primary);
@@ -801,7 +808,7 @@ body {
         width: 100%;
         aspect-ratio: 1016 / 379;
     }
-    .ticker { font-size: 9px; }
+    .ticker { font-size: 14px; }
     .ticker { animation-duration: 180s; }
     .hashtag { font-size: 10px; }
     .x-btn-img { width: 40px; }
@@ -818,9 +825,18 @@ body {
         min-height: 42px;
         font-size: 14px;
     }
+    .modal-content {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
     .support-modal-inner {
-        min-height: 400px;
-        max-height: 60vh;
+        min-height: 70vh;
+        max-height: 80vh;
         padding: 5px;
+    }
+    .support-modal-inner iframe {
+        min-height: 65vh;
     }
 }
