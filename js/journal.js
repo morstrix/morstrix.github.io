@@ -82,7 +82,181 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== RSS ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
-    if (ticker) ticker.innerText = ["✦ MORSTRIX V2.0 ✦","✦ NEW PRINTS ✦","✦ TELEGRAM ✦"].join(" --- ");
+    const fallbackTickerItems = [
+        { title: "✦ MORSTRIX V2.0 ✦", url: "https://t.me/morstrix" },
+        { title: "✦ NEW PRINTS ✦", url: "https://t.me/morstrix" },
+        { title: "✦ TELEGRAM ✦", url: "https://t.me/morstrix" }
+    ];
+    const TICKER_CACHE_KEY = 'journalTickerCacheV2';
+    const tickerWrapper = document.querySelector('.ticker-wrapper');
+
+    function escapeHtml(text) {
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function setTickerText(items) {
+        if (!ticker) return;
+        const normalizeItem = (item) => {
+            if (typeof item === 'string') return { title: item, url: '' };
+            if (item && typeof item === 'object' && typeof item.title === 'string') {
+                return { title: item.title, url: typeof item.url === 'string' ? item.url : '' };
+            }
+            return null;
+        };
+        const normalized = (Array.isArray(items) ? items : [])
+            .map(normalizeItem)
+            .filter(Boolean);
+        const safeItems = normalized.length ? normalized : fallbackTickerItems;
+
+        const toAnchor = (item) => {
+            const title = escapeHtml(item?.title || '');
+            const url = typeof item?.url === 'string' && item.url.startsWith('http') ? item.url : '';
+            if (!title) return '';
+            if (!url) return `<span class="ticker-item">${title}</span>`;
+            return `<a class="ticker-link ticker-item" href="${encodeURI(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`;
+        };
+
+        const line = safeItems.map(toAnchor).filter(Boolean).join('<span class="ticker-sep">  •  </span>');
+        if (!line) {
+            ticker.textContent = "✦ MORSTRIX V2.0 ✦";
+            return;
+        }
+        // Duplicate once for smoother endless marquee.
+        ticker.innerHTML = `${line}<span class="ticker-sep">  •  </span>${line}`;
+    }
+
+    async function fetchJson(url, timeoutMs = 7000) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        } catch (e) {
+            return null;
+        } finally {
+            clearTimeout(timeoutId);
+        }
+    }
+
+    async function fetchDevToTitles(tag, sourceName, limit = 2) {
+        const data = await fetchJson(`https://dev.to/api/articles?per_page=${limit}&tag=${encodeURIComponent(tag)}`);
+        if (!Array.isArray(data)) return [];
+        return data
+            .map(item => ({
+                title: (item?.title || '').replace(/\s+/g, ' ').trim(),
+                url: item?.url || item?.canonical_url || ''
+            }))
+            .filter(item => item.title)
+            .slice(0, limit)
+            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+    }
+
+    async function fetchHnTitles(query, sourceName, limit = 2) {
+        const data = await fetchJson(`https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=${limit}&query=${encodeURIComponent(query)}`);
+        const hits = Array.isArray(data?.hits) ? data.hits : [];
+        return hits
+            .map(item => ({
+                title: (item?.title || '').replace(/\s+/g, ' ').trim(),
+                url: item?.url || `https://news.ycombinator.com/item?id=${item?.objectID || ''}`
+            }))
+            .filter(item => item.title)
+            .slice(0, limit)
+            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+    }
+
+    async function fetchRssViaRss2Json(feedUrl, sourceName, limit = 2) {
+        const encoded = encodeURIComponent(feedUrl);
+        const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encoded}`);
+        const items = Array.isArray(data?.items) ? data.items : [];
+        return items
+            .map(item => ({
+                title: (item?.title || '').replace(/\s+/g, ' ').trim(),
+                url: item?.link || ''
+            }))
+            .filter(item => item.title)
+            .slice(0, limit)
+            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+    }
+
+    async function loadRssTicker() {
+        if (!ticker) return;
+
+        const cached = localStorage.getItem(TICKER_CACHE_KEY);
+        if (cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                const cachedItems = Array.isArray(parsed.items) ? parsed.items : [];
+                const cacheFresh = Date.now() - parsed.ts < 30 * 60 * 1000;
+                const hasAtLeastOneLink = cachedItems.some(item => item && typeof item === 'object' && typeof item.url === 'string' && item.url.startsWith('http'));
+
+                // Ignore legacy cache that contains only plain strings (no URLs).
+                if (cachedItems.length && cacheFresh && hasAtLeastOneLink) {
+                    setTickerText(parsed.items);
+                    return;
+                }
+            } catch (e) {
+                // Ignore broken cache.
+            }
+        }
+
+        setTickerText(fallbackTickerItems);
+
+        const results = await Promise.all([
+            fetchDevToTitles('design', 'DEVTO DESIGN'),
+            fetchDevToTitles('webdev', 'DEVTO WEBDEV'),
+            fetchDevToTitles('art', 'DEVTO ART'),
+            fetchHnTitles('design', 'HN DESIGN'),
+            fetchHnTitles('fashion', 'HN FASHION'),
+            // Keep one fashion/art RSS path for vibe sources.
+            fetchRssViaRss2Json('https://hypebeast.com/feed', 'HYPEBEAST')
+        ]);
+
+        const items = results.flat().slice(0, 12);
+        if (!items.length) {
+            // Stable local fallback (works offline / when APIs fail).
+            const localData = await fetchJson('assets/news-fallback.json', 3000);
+            const localItems = Array.isArray(localData?.items) ? localData.items : [];
+            if (localItems.length) {
+                setTickerText(localItems);
+                localStorage.setItem(TICKER_CACHE_KEY, JSON.stringify({ items: localItems, ts: Date.now() }));
+            }
+            return;
+        }
+
+        setTickerText(items);
+        localStorage.setItem(TICKER_CACHE_KEY, JSON.stringify({ items, ts: Date.now() }));
+    }
+
+    loadRssTicker();
+
+    // Desktop: pause handled via CSS :hover.
+    // Mobile: press and hold to pause, release to continue.
+    if (tickerWrapper) {
+        const pauseTicker = () => tickerWrapper.classList.add('is-paused');
+        const resumeTicker = () => tickerWrapper.classList.remove('is-paused');
+
+        tickerWrapper.addEventListener('touchstart', pauseTicker, { passive: true });
+        tickerWrapper.addEventListener('touchend', resumeTicker, { passive: true });
+        tickerWrapper.addEventListener('touchcancel', resumeTicker, { passive: true });
+    }
+
+    if (ticker) {
+        // Ensure link opening works even while marquee is moving and Lenis handles gestures.
+        ticker.addEventListener('click', (event) => {
+            const link = event.target.closest('a.ticker-link');
+            if (!link) return;
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(link.href, '_blank', 'noopener,noreferrer');
+        });
+    }
 
     // ===== КАРУСЕЛЬ =====
     const carousel = document.getElementById('mainCarousel');
@@ -298,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const snap = await getDocs(q);
             if(!snap.empty){
                 let html=''; let rank=1;
-                snap.forEach(d=>{ const data=d.data(); html+=`<div style="display:flex;justify-content:space-between;padding:4px 0;"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
+                snap.forEach(d=>{ const data=d.data(); html+=`<div class="top-row"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
                 container.innerHTML=html;
             } else {
                 container.innerHTML = '<div style="text-align:center;padding:10px;">— пусто —</div>';
@@ -333,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== SUPPORT =====
     document.getElementById('supportBtn')?.addEventListener('click', ()=> openModal('supportModal'));
-    document.getElementById('forumFullBtn')?.addEventListener('click', ()=> window.open('https://t.me/morstrix', '_blank'));
+    document.getElementById('forumFullBtn')?.addEventListener('click', ()=> openModal('forumDisclaimerModal'));
 
     // ===== ЗАКРЫТИЕ МОДАЛОК =====
     document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
@@ -362,9 +536,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== ESCAPE =====
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
 
-    // ===== TWITTER DISCLAIMER =====
-    document.querySelector('[data-href]')?.addEventListener('click', function() {
-        window.open(this.dataset.href, '_blank');
-        closeModal('disclaimerModal');
+    // ===== DISCLAIMER BUTTONS =====
+    document.querySelectorAll('[data-href]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            window.open(this.dataset.href, '_blank');
+            const modalToClose = this.dataset.modalClose;
+            if (modalToClose) closeModal(modalToClose);
+            else closeModal('disclaimerModal');
+        });
     });
 });

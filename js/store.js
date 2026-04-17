@@ -3,14 +3,14 @@
 
     // ==================== ДАНІ ====================
     const products = [
-        { id: 'socks', name: 'НОСКИ', description: 'Комфортні базові носки', price: 400 },
-        { id: 'pants', name: 'ШТАНЫ', description: 'Базові штани вільного крою', price: 800 },
-        { id: 'hoodies', name: 'БАТНИКИ', description: 'Преміум батники з начосом', price: 1200 },
-        { id: 'tees', name: 'ФУТБОЛКИ', description: 'Щільний 100% бавовна', price: 600 },
-        { id: 'shirts', name: 'РУБАШКИ', description: 'Оверсайз рубашки', price: 1500 },
-        { id: 'sweats', name: 'ТОЛСТОВКИ', description: 'Толстовки з капюшоном', price: 1400 },
-        { id: 'dokers', name: 'ДОКЕРЫ', description: 'Докери прямого крою', price: 900 },
-        { id: 'caps', name: 'КЕПКИ', description: 'Бейсболки 5-panel', price: 500 }
+        { id: 'socks', name: 'НОСКИ', description: 'Базовые носки для повседневных образов.', price: 400 },
+        { id: 'pants', name: 'ШТАНЫ', description: 'Свободный крой и плотная ткань.', price: 800 },
+        { id: 'hoodies', name: 'БАТНИКИ', description: 'Теплые батники для межсезонья.', price: 1200 },
+        { id: 'tees', name: 'ФУТБОЛКИ', description: 'Плотный хлопок и чистый силуэт.', price: 600 },
+        { id: 'shirts', name: 'РУБАШКИ', description: 'Рубашки оверсайз для слоистых луков.', price: 1500 },
+        { id: 'sweats', name: 'ТОЛСТОВКИ', description: 'Капюшон и мягкий футер внутри.', price: 1400 },
+        { id: 'dokers', name: 'ДОКЕРЫ', description: 'Прямой крой для рабочего вайба.', price: 900 },
+        { id: 'caps', name: 'КЕПКИ', description: 'Бейсболки с регулируемой посадкой.', price: 500 }
     ];
 
     const productImages = {
@@ -121,9 +121,22 @@
         const slidesContainer = document.getElementById('productCarouselSlides');
         const images = productImages[product.id] || [];
         if (images.length === 0) {
-            slidesContainer.innerHTML = `<div class="product-carousel-slide">товар відсутній</div>`;
+            slidesContainer.innerHTML = `<div class="product-carousel-slide"><div class="sold-out-placeholder">sold out</div></div>`;
         } else {
-            slidesContainer.innerHTML = images.map(src => `<img src="${src}" class="product-carousel-slide" style="object-fit:cover;">`).join('');
+            slidesContainer.innerHTML = images.map(src => `
+                <div class="product-carousel-slide">
+                    <img src="${src}" class="product-slide-image" style="width:100%;height:100%;object-fit:cover;" alt="${product.name}">
+                    <div class="sold-out-placeholder product-slide-fallback" style="display:none;">sold out</div>
+                </div>
+            `).join('');
+
+            slidesContainer.querySelectorAll('.product-slide-image').forEach(img => {
+                img.addEventListener('error', () => {
+                    img.style.display = 'none';
+                    const fallback = img.parentElement.querySelector('.product-slide-fallback');
+                    if (fallback) fallback.style.display = 'flex';
+                });
+            });
         }
         currentCarouselIndex = 0;
         updateCarouselPosition();

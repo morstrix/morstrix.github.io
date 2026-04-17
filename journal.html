@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | DIGITAL JOURNAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=Jersey+10&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/journal.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
 
 <div class="top-panel">
     <div></div>
-    <button class="panel-btn" id="contentsBtn"><span>ЗМІСТ</span></button>
-    <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"></a>
+    <button class="panel-btn text-primary" id="contentsBtn"><span>ЗМІСТ</span></button>
+    <a href="index.html" class="panel-close"><img src="assets/close.png" alt="Close"><span class="panel-close-label text-primary">back</span></a>
 </div>
 
 <div class="journal-wrapper">
@@ -28,22 +28,25 @@
             </div>
             <div class="art-archive-row">
                 <div class="art-block">
-                    <img id="currentArtPreview" src="assets/paint.jpg" alt="Art">
+                    <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
                 </div>
-                <div class="archive-block" id="archiveBtn">
+                <div class="archive-block text-primary" id="archiveBtn">
                     <span>АРХИВ</span>
                 </div>
             </div>
-            <div class="paint-row">
-                <div class="paint-cell">
-                    <img src="assets/paint.jpg" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
+            <div class="page1-controls-row">
+                <div class="paint-row">
+                    <div class="paint-cell">
+                        <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
+                        <span class="control-label text-primary">paint</span>
+                    </div>
                 </div>
-            </div>
-            <div class="bottom-row">
-                <div class="bottom-cell center">
-                    <div class="mood-trigger" id="moodTrigger">
-                        <img src="assets/a.png" alt="mood" class="mood-img-large">
-                        <span class="mood-label">mood</span>
+                <div class="bottom-row">
+                    <div class="bottom-cell center">
+                        <div class="mood-trigger" id="moodTrigger">
+                            <img src="assets/a.png" alt="mood" class="mood-img-large">
+                            <span class="mood-label text-primary">mood</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,10 +61,11 @@
                     <img src="assets/mx1.jpg" class="active">
                     <img src="assets/mx2.jpg">
                 </div>
-                <div class="hashtag-row"><span class="hashtag">#layoutporn</span></div>
+                <div class="hashtag-row"><span class="hashtag text-secondary">#layoutporn</span></div>
             </div>
             <div class="twitter-section">
                 <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+                <span class="twitter-label text-primary">twitter</span>
             </div>
         </div>
     </div>
@@ -70,7 +74,7 @@
     <div class="journal-page" data-page="3">
         <div class="page-content fonts-layout">
             <div class="mx-narrow-image"><img src="assets/f1.jpg" alt="MX Print"></div>
-            <div class="mx-description">FONT<br>(to do)</div>
+            <div class="mx-description"><span class="text-primary">FONT</span><br><span class="text-secondary">(to do)</span></div>
             <button class="universal-btn" id="downloadArchiveBtnEmbedded">
                 <span class="btn-inner"><span>DOWNLOAD</span></span>
             </button>
@@ -98,9 +102,9 @@
     <!-- СТРАНИЦА 5: TOP + TETRIS -->
     <div class="journal-page" data-page="5">
         <div class="page-content top-tetris-layout">
-            <h4 class="top-title">TOP</h4>
+            <h4 class="top-title text-primary">TOP</h4>
             <div class="top-players-framed"><div class="top-players-list"></div></div>
-            <a href="tetris.html" target="_blank" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span>PLAY TETRIS</span></a>
+            <a href="tetris.html" target="_blank" class="tetris-big"><img src="assets/tetris.png" alt="TETRIS"><span class="text-primary">PLAY TETRIS</span></a>
         </div>
     </div>
 
@@ -109,19 +113,19 @@
         <div class="page-content forum-support-layout">
             <div class="forum-embedded">
                 <div class="forum-tabs-panel-embedded">
-                    <div class="forum-tab active" data-tab="wellness">🌿</div>
-                    <div class="forum-tab" data-tab="interior">🛋️</div>
-                    <div class="forum-tab" data-tab="radio">📻</div>
-                    <div class="forum-tab" data-tab="itai">🤖</div>
-                    <div class="forum-tab" data-tab="english">🔝</div>
-                    <div class="forum-tab" data-tab="design">🎨</div>
-                    <div class="forum-tab" data-tab="tattoo">💘</div>
-                    <div class="forum-tab" data-tab="money">💸</div>
-                    <div class="forum-tab" data-tab="barbering">✂️</div>
+                    <div class="forum-tab active text-primary" data-tab="wellness">WELL</div>
+                    <div class="forum-tab text-primary" data-tab="interior">HOME</div>
+                    <div class="forum-tab text-primary" data-tab="radio">RADIO</div>
+                    <div class="forum-tab text-primary" data-tab="itai">ITAI</div>
+                    <div class="forum-tab text-primary" data-tab="english">EN</div>
+                    <div class="forum-tab text-primary" data-tab="design">DSGN</div>
+                    <div class="forum-tab text-primary" data-tab="tattoo">TAT</div>
+                    <div class="forum-tab text-primary" data-tab="money">MNY</div>
+                    <div class="forum-tab text-primary" data-tab="barbering">BARB</div>
                 </div>
                 <div class="forum-content-embedded">
-                    <h3 id="forumTitleEmbedded">🌿 ВЕЛНЕС</h3>
-                    <p id="forumTextEmbedded">Йога, медитации...</p>
+                    <h3 id="forumTitleEmbedded" class="text-primary">🌿 ВЕЛНЕС</h3>
+                    <p id="forumTextEmbedded" class="text-secondary">Йога, медитации...</p>
                 </div>
             </div>
             <div class="forum-actions">
@@ -147,12 +151,12 @@
             <button class="modal-close-btn" data-modal="contentsModal">✕</button>
         </div>
         <div class="modal-inner">
-            <div class="contents-item" data-page="1">1. ART</div>
-            <div class="contents-item" data-page="2">2. TWITTER</div>
-            <div class="contents-item" data-page="3">3. FONTS</div>
-            <div class="contents-item" data-page="4">4. SOUND</div>
-            <div class="contents-item" data-page="5">5. TOP + TETRIS</div>
-            <div class="contents-item" data-page="6">6. FORUM</div>
+            <div class="contents-item text-secondary" data-page="1">1. ART</div>
+            <div class="contents-item text-secondary" data-page="2">2. TWITTER</div>
+            <div class="contents-item text-secondary" data-page="3">3. FONTS</div>
+            <div class="contents-item text-secondary" data-page="4">4. SOUND</div>
+            <div class="contents-item text-secondary" data-page="5">5. TOP + TETRIS</div>
+            <div class="contents-item text-secondary" data-page="6">6. FORUM</div>
         </div>
     </div>
 </div>
@@ -216,8 +220,24 @@
             <button class="modal-close-btn" data-modal="disclaimerModal">✕</button>
         </div>
         <div class="modal-inner">
-            <p style="font-size: 12px; line-height: 1.5; margin-bottom: 20px;">Вы переходите на внешний ресурс Twitter/X. Продолжить?</p>
+            <p class="text-secondary" style="margin-bottom: 20px;">Вы переходите на внешний ресурс Twitter/X. Продолжить?</p>
             <button class="universal-btn" data-href="https://x.com">
+                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка FULL (disclaimer) -->
+<div id="forumDisclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <button class="modal-close-btn" data-modal="forumDisclaimerModal">✕</button>
+        </div>
+        <div class="modal-inner">
+            <p class="text-secondary" style="margin-bottom: 20px;">Вы переходите в Telegram-группу форума. Продолжить?</p>
+            <button class="universal-btn" data-href="https://t.me/+n5Qg8d2h9qliMmRi" data-modal-close="forumDisclaimerModal">
                 <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
             </button>
         </div>
@@ -232,7 +252,7 @@
             <button class="modal-close-btn" data-modal="stubModal">✕</button>
         </div>
         <div class="modal-inner">
-            <p id="stubModalText" style="font-size: 12px;">Содержимое появится позже</p>
+            <p id="stubModalText" class="text-secondary">Содержимое появится позже</p>
         </div>
     </div>
 </div>
@@ -245,10 +265,16 @@
             <button class="modal-close-btn" data-modal="spotifyModal">✕</button>
         </div>
         <div class="modal-inner">
-            <p style="font-size: 12px; margin-bottom: 20px;">Открыть плейлист в Spotify?</p>
-            <button class="universal-btn" id="spotifyConfirmBtn">
-                <span class="btn-inner"><span>ОТКРЫТЬ</span></span>
-            </button>
+            <iframe
+                data-testid="embed-iframe"
+                style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
         </div>
     </div>
 </div>
@@ -261,7 +287,7 @@
             <button class="modal-close-btn" data-modal="supportModal">✕</button>
         </div>
         <div class="modal-inner">
-            <p style="font-size: 12px; line-height: 1.5;">По всем вопросам пишите в Telegram: <strong>@morstrix_support</strong></p>
+            <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-post="morstrix/71" data-width="100%"></script>
         </div>
     </div>
 </div>

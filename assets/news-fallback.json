@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "title": "✦ DEZEEN: Architecture and design magazine ✦",
+      "url": "https://www.dezeen.com/"
+    },
+    {
+      "title": "✦ HYPEBEAST: Fashion, art and culture ✦",
+      "url": "https://hypebeast.com/"
+    },
+    {
+      "title": "✦ ITS NICE THAT: Creative industry stories ✦",
+      "url": "https://www.itsnicethat.com/"
+    },
+    {
+      "title": "✦ CREATIVE BLOQ: Design and digital art ✦",
+      "url": "https://www.creativebloq.com/"
+    },
+    {
+      "title": "✦ SMASHING: Web design and UX ✦",
+      "url": "https://www.smashingmagazine.com/"
+    },
+    {
+      "title": "✦ CSS-TRICKS: Frontend and web craft ✦",
+      "url": "https://css-tricks.com/"
+    }
+  ]
+}
