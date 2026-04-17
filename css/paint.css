@@ -123,6 +123,13 @@ body {
     display: block;
     object-fit: contain;
 }
+.action-icon {
+    width: 50px;
+    height: 50px;
+    display: block;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
 .tool-btn:active {
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 0 #000;
@@ -154,9 +161,9 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     background: #0a0a0a;
-    padding: 15px;
+    padding: 20px;
     border: 2px solid transparent;
     border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
     flex-shrink: 0;
@@ -396,8 +403,8 @@ body {
         height: 16px;
     }
     .tools-panel {
-        padding: 10px;
-        gap: 12px;
+        padding: 15px;
+        gap: 15px;
     }
     .color-row, .text-row {
         flex-direction: column;
@@ -448,8 +455,8 @@ body {
 @media (max-width: 480px) {
     .canvas-toolbar {
         flex-direction: row;
-        gap: 4px;
-        padding: 8px 4px;
+        gap: 8px;
+        padding: 12px 4px;
     }
     .toolbar-left, .toolbar-center, .toolbar-right {
         gap: 4px;
@@ -483,8 +490,8 @@ body {
         flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 4px;
-        gap: 4px;
+        padding: 12px 4px;
+        gap: 8px;
     }
     .tools-panel .color-row {
         flex-direction: column;
@@ -507,6 +514,11 @@ body {
     .tools-panel #colorPicker {
         width: 35px;
         height: 28px;
+    }
+    .action-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 3px;
     }
     .paint-title { font-size: 12px; }
     .paint-top-panel { padding: 0 10px; }
