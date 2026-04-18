@@ -165,13 +165,13 @@
             <button class="modal-close-btn" data-modal="contentsModal">✜</button>
         </div>
         <div class="modal-inner">
-            <div class="contents-item text-secondary" data-page="1">1. ART</div>
-            <div class="contents-item text-secondary" data-page="2">2. TWITTER</div>
-            <div class="contents-item text-secondary" data-page="3">3. FONTS</div>
-            <div class="contents-item text-secondary" data-page="4">4. MOOD</div>
-            <div class="contents-item text-secondary" data-page="5">5. SOUND</div>
-            <div class="contents-item text-secondary" data-page="6">6. TOP + TETRIS</div>
-            <div class="contents-item text-secondary" data-page="7">7. FORUM</div>
+            <div class="contents-item text-secondary" data-page="1"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>1. ART</div>
+            <div class="contents-item text-secondary" data-page="2"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>2. TWITTER</div>
+            <div class="contents-item text-secondary" data-page="3"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>3. FONTS</div>
+            <div class="contents-item text-secondary" data-page="4"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>4. MOOD</div>
+            <div class="contents-item text-secondary" data-page="5"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>5. SOUND</div>
+            <div class="contents-item text-secondary" data-page="6"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>6. TOP + TETRIS</div>
+            <div class="contents-item text-secondary" data-page="7"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>7. FORUM</div>
         </div>
     </div>
 </div>
@@ -180,15 +180,15 @@
 <div id="paintChoiceModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ВЫБЕРИ РЕЖИМ</span>
+            <span class="modal-title-text">SELECT MODE</span>
             <button class="modal-close-btn" data-modal="paintChoiceModal">✜</button>
         </div>
-        <div class="modal-inner" style="display: flex; flex-direction: column; gap: 15px;">
+        <div class="modal-inner" style="display: flex; flex-direction: row; gap: 15px; justify-content: center;">
             <button class="universal-btn" id="paintAnonChoiceBtn">
-                <span class="btn-inner"><span>АНОН</span></span>
+                <span class="btn-inner"><span>GUEST</span></span>
             </button>
             <button class="universal-btn" id="paintRegChoiceBtn">
-                <span class="btn-inner"><span>РЕГИСТРАЦИЯ</span></span>
+                <span class="btn-inner"><span>REGISTER</span></span>
             </button>
         </div>
     </div>
@@ -198,11 +198,11 @@
 <div id="nicknameModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ВВЕДИ НИКНЕЙМ</span>
+            <span class="modal-title-text">AUTHORIZE</span>
             <button class="modal-close-btn" data-modal="nicknameModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <input type="text" id="nicknameInput" class="styler-input" placeholder="никнейм" maxlength="15">
+        <div class="modal-inner" style="display: flex; flex-direction: column; align-items: center;">
+            <input type="text" id="nicknameInput" class="styler-input" placeholder="" maxlength="15">
             <button class="universal-btn" id="nicknameEnterBtn" style="margin-top: 15px;">
                 <span class="btn-inner"><span>ENTER</span></span>
             </button>
