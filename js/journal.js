@@ -241,13 +241,29 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => lenis.resize());
 
         let scrollTimer;
+        let snapTimer;
+        function snapToNearestPage() {
+            const pageWidth = wrapper.clientWidth;
+            const nearestPage = Math.round(lenis.scroll / pageWidth);
+            if (nearestPage !== currentPage) {
+                window.scrollToPage(nearestPage);
+            }
+        }
+
         lenis.on('scroll', () => {
             document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(() => {
                 document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
             }, 120);
+
+            clearTimeout(snapTimer);
+            snapTimer = setTimeout(snapToNearestPage, 140);
         });
+
+        if (lenis.on) {
+            lenis.on('scrollEnd', snapToNearestPage);
+        }
 
         let currentPage = 0;
         const totalPages = 7;
@@ -379,13 +395,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return `<a class="ticker-link ticker-item" href="${encodeURI(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`;
         };
 
-        const line = safeItems.map(toAnchor).filter(Boolean).join('<span class="ticker-sep">  •  </span>');
+        const line = safeItems.map(toAnchor).filter(Boolean).join('<span class="ticker-sep"> ☻ </span>');
         if (!line) {
             ticker.textContent = "✦ MORSTRIX V2.0 ✦";
             return;
         }
         // Duplicate once for smoother endless marquee.
-        ticker.innerHTML = `${line}<span class="ticker-sep">  •  </span>${line}`;
+        ticker.innerHTML = `${line}<span class="ticker-sep"> ☻ </span>${line}`;
     }
 
     async function fetchJson(url, timeoutMs = 7000) {

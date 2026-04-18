@@ -64,10 +64,11 @@ body {
 }
 .panel-close img { width:32px; height:32px; image-rendering:pixelated; }
 .panel-close-label {
-    font-size: 11px;
+    font-size: 8px;
     margin-top: 3px;
     letter-spacing: 1px;
     text-transform: lowercase;
+    font-family: var(--font-secondary);
 }
 
 /* === LENIS WRAPPER === */
@@ -167,7 +168,6 @@ body {
     width: clamp(320px, 46vw, 560px);
     max-height: calc(100dvh - 280px);
     aspect-ratio: 1/1;
-    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
