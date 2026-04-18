@@ -245,7 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function snapToNearestPage() {
             const pageWidth = wrapper.clientWidth;
             const nearestPage = Math.round(lenis.scroll / pageWidth);
-            if (nearestPage !== currentPage) {
+            const targetScroll = nearestPage * pageWidth;
+            if (Math.abs(lenis.scroll - targetScroll) > 2) {
                 window.scrollToPage(nearestPage);
             }
         }
@@ -258,12 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 120);
 
             clearTimeout(snapTimer);
-            snapTimer = setTimeout(snapToNearestPage, 140);
+            snapTimer = setTimeout(snapToNearestPage, 80);
         });
-
-        if (lenis.on) {
-            lenis.on('scrollEnd', snapToNearestPage);
-        }
 
         let currentPage = 0;
         const totalPages = 7;
@@ -314,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (lenis) {
                     const target = index * wrapper.clientWidth;
                     lenis.scrollTo(target, { 
-                        duration: 1.2,
+                        duration: 0.9,
                         easing: (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t 
                     });
                 }
@@ -324,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (lenis) {
                     const target = index * wrapper.clientWidth;
                     lenis.scrollTo(target, { 
-                        duration: 0.8,
+                        duration: 0.6,
                         easing: (t) => 1 - Math.pow(1 - t, 3)
                     });
                 }
