@@ -71,6 +71,26 @@ body {
     font-family: var(--font-secondary);
 }
 
+/* === PINTEREST NO-LENIS PAGE === */
+.journal-page[data-no-lenis="true"] .pinterest-widget-container {
+    pointer-events: auto;
+    touch-action: pan-y;
+    overflow-y: auto;
+    max-height: calc(100dvh - 200px);
+}
+
+/* Все дочерние элементы Pinterest (включая iframe который Pinterest вставляет) */
+.pinterest-widget-container *,
+.pinterest-widget-container iframe {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+}
+
+/* Когда wrapper в режиме Pinterest — разрешаем вертикаль */
+.journal-wrapper.pinterest-mode {
+    touch-action: pan-y;
+}
+
 /* === LENIS WRAPPER === */
 .journal-wrapper {
     height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
@@ -80,7 +100,7 @@ body {
     overflow: hidden;
     position: relative;
     z-index: 10;
-    touch-action: none;
+    touch-action: pan-y; /* ← было none, теперь pan-y: вертикаль нативная, горизонталь Lenis */
 }
 .journal-horizontal {
     display: flex;

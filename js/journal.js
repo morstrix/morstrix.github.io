@@ -214,142 +214,112 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ИНИЦИАЛИЗАЦИЯ LENIS =====
-    const wrapper = document.querySelector('.journal-wrapper');
-    const content = document.getElementById('journalHorizontal');
-    let lenis = null;
+ // ===== ИНИЦИАЛИЗАЦИЯ LENIS + МАГНИТ =====
+const wrapper = document.querySelector('.journal-wrapper');
+const content = document.getElementById('journalHorizontal');
+window.lenis = null;
 
-    if (wrapper && content && typeof Lenis !== 'undefined') {
-        lenis = new Lenis({
-            wrapper: wrapper,
-            content: content,
-            orientation: 'horizontal',
-            gestureOrientation: 'both',
-            smoothWheel: true,
-            smoothTouch: true,
-            syncTouch: true,
-            touchMultiplier: 2,
-            lerp: 0.08,
-        });
+if (wrapper && content && typeof Lenis !== 'undefined') {
+  window.lenis = new Lenis({
+    wrapper,
+    content,
+    orientation: 'horizontal',
+    gestureOrientation: 'horizontal',
+    smoothWheel: true,
+    smoothTouch: true,
+    syncTouch: true,
+    touchMultiplier: 3,
+    lerp: 0.18,
+  });
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+  function raf(time) { window.lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  window.addEventListener('resize', () => window.lenis.resize());
 
-        window.addEventListener('resize', () => lenis.resize());
+  window.currentPage = 0;
+  const totalPages = 7;
 
-        let scrollTimer;
-        let snapTimer;
-        function snapToNearestPage() {
-            const pageWidth = wrapper.clientWidth;
-            const nearestPage = Math.round(lenis.scroll / pageWidth);
-            const targetScroll = nearestPage * pageWidth;
-            if (Math.abs(lenis.scroll - targetScroll) > 2) {
-                window.scrollToPage(nearestPage);
-            }
-        }
+  // --- Точки ---
+  const indicator = document.getElementById('pageIndicator');
+  indicator.innerHTML = Array(totalPages).fill(0).map(() => '<span class="dot"></span>').join('');
+  const dots = document.querySelectorAll('.dot');
 
-        lenis.on('scroll', () => {
-            document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => {
-                document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
-            }, 120);
+  function updateActiveDot(index) {
+    index = Math.max(0, Math.min(totalPages - 1, index));
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+      dot.style.transitionDelay = `${Math.abs(i - index) * 0.05}s`;
+    });
+    // currentPage НЕ меняем здесь — только визуал
+  }
 
-            clearTimeout(snapTimer);
-            snapTimer = setTimeout(snapToNearestPage, 80);
-        });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => window.scrollToPage(i)));
 
-        let currentPage = 0;
-        const totalPages = 7;
-        
-        // Создаём точки
-        const indicator = document.getElementById('pageIndicator');
-        indicator.innerHTML = Array(7).fill(0).map(() => '<span class="dot"></span>').join('');
-        const dots = document.querySelectorAll('.dot');
-        
-        function updateActiveDot(index) {
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-                const distance = Math.abs(i - index);
-                dot.style.transitionDelay = `${distance * 0.05}s`;
-            });
-            currentPage = index;
-        }
-        
-        // Click on dots to navigate
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                window.scrollToPage(index);
-            });
-        });
-        
-        lenis.on('scroll', ({ scroll }) => {
-            const pageWidth = wrapper.clientWidth;
-            const progress = scroll / pageWidth;
-            const activeIndex = Math.round(progress);
-            
-            dots.forEach((dot, i) => {
-                const distance = Math.abs(progress - i);
-                const intensity = Math.max(0, 1 - distance);
-                dot.style.opacity = 0.3 + (intensity * 0.7);
-                dot.style.transform = `scale(${1 + intensity * 0.5})`;
-            });
-            
-            updateActiveDot(activeIndex);
-        });
+  let peakVelocity = 0;
+  let snapTimer, scrollTimer;
+  let isSnapping = false;
 
-        window.scrollToPage = (index) => {
-            const pages = document.querySelectorAll('.journal-page');
-            const targetPage = pages[index];
-            
-            if (Math.abs(index - currentPage) === 1) {
-                if (targetPage && targetPage.dataset.noLenis === 'true') {
-                    targetPage.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-                } else if (lenis) {
-                    const target = index * wrapper.clientWidth;
-                    lenis.scrollTo(target, { 
-                        duration: 0.9,
-                        easing: (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t 
-                    });
-                }
-            } else {
-                if (targetPage && targetPage.dataset.noLenis === 'true') {
-                    targetPage.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
-                } else if (lenis) {
-                    const target = index * wrapper.clientWidth;
-                    lenis.scrollTo(target, { 
-                        duration: 0.6,
-                        easing: (t) => 1 - Math.pow(1 - t, 3)
-                    });
-                }
-            }
-        };
+  window.lenis.on('scroll', ({ scroll, velocity }) => {
+    if (isSnapping) return;
 
-        if (dots.length) dots[0].classList.add('active');
-        
-        setTimeout(() => {
-            const pageWidth = wrapper.clientWidth;
-            const activeIndex = Math.round(lenis.scroll / pageWidth);
-            updateActiveDot(activeIndex);
-        }, 100);
+    if (Math.abs(velocity) > Math.abs(peakVelocity)) {
+      peakVelocity = velocity;
     }
 
-    // ===== PINTEREST NAVIGATION BUTTONS =====
-    const pinterestPrevBtn = document.getElementById('pinterestPrevBtn');
-    const pinterestNextBtn = document.getElementById('pinterestNextBtn');
-    if (pinterestPrevBtn) {
-        pinterestPrevBtn.addEventListener('click', () => {
-            window.scrollToPage(2); // Navigate to Fonts (page 3, index 2)
-        });
-    }
-    if (pinterestNextBtn) {
-        pinterestNextBtn.addEventListener('click', () => {
-            window.scrollToPage(4); // Navigate to Sound (page 5, index 4)
-        });
-    }
+    document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
+    }, 150);
+
+    const pw = wrapper.clientWidth;
+    updateActiveDot(Math.round(scroll / pw));
+
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(() => {
+      let target;
+
+      if (Math.abs(peakVelocity) > 0.3) {
+        target = peakVelocity > 0 ? window.currentPage + 1 : window.currentPage - 1;
+      } else {
+        const nearest = Math.round(window.lenis.scroll / pw);
+        target = Math.max(window.currentPage - 1, Math.min(window.currentPage + 1, nearest));
+      }
+
+      peakVelocity = 0;
+      target = Math.max(0, Math.min(totalPages - 1, target));
+      window.scrollToPage(target);
+    }, 50);
+  });
+
+  window.scrollToPage = (index) => {
+    index = Math.max(0, Math.min(totalPages - 1, index));
+    peakVelocity = 0;
+    isSnapping = true;
+
+    if (window.lenis.isStopped) window.lenis.start();
+
+    window.lenis.scrollTo(index * wrapper.clientWidth, {
+      duration: 0.45,
+      easing: t => 1 - Math.pow(1 - t, 4),
+      onComplete: () => { isSnapping = false; },
+    });
+
+    window.currentPage = index;
+    updateActiveDot(index);
+  };
+
+  if (dots.length) dots[0].classList.add('active');
+  setTimeout(() => updateActiveDot(Math.round(window.lenis.scroll / wrapper.clientWidth)), 100);
+}
+
+// Стрелки Pinterest
+document.getElementById('pinterestPrevBtn')?.addEventListener('click', () => {
+  window.scrollToPage?.(window.currentPage - 1);
+});
+document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
+  window.scrollToPage?.(window.currentPage + 1);
+});
 
     // ===== RSS ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
