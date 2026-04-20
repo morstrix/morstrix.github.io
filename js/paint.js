@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyThresholdBtn = document.getElementById('applyThresholdBtn');
     const applyNoiseBtn = document.getElementById('applyNoiseBtn');
 
+    const API_PROXY_BASE = 'https://api-proxy-morstrix.morstrix.workers.dev';
     let savePendingAfterAuth = false;
     let isPublishingArt = false;
     let firebaseDbPromise = null;
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function saveCurrentArtToFirestore(base64Image, user) {
+    async function saveCurrentArtToFirestore(imageUrl, user) {
         const db = await getFirestoreDb();
         const { doc, getDoc, setDoc, collection, addDoc } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
         const currentDocRef = doc(db, 'global_canvas', 'current');
@@ -112,9 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentSnap.exists()) {
             const prev = currentSnap.data();
-            if (prev?.imageBase64) {
+            const prevImage = prev?.imageUrl || prev?.imageBase64 || '';
+            if (prevImage) {
                 await addDoc(historyColRef, {
-                    imageBase64: prev.imageBase64,
+                    imageUrl: prevImage,
                     authorName: prev.authorName || 'ANON',
                     authorId: Number(prev.authorId || 0),
                     timestamp: prev.timestamp || new Date()
@@ -123,19 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         await setDoc(currentDocRef, {
-            imageBase64: base64Image,
+            imageUrl: imageUrl,
             authorName: user.first_name || 'ANON',
             authorId: Number(user.id || 0),
             timestamp: new Date()
-        });
-    }
-
-    function blobToDataURL(blob) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
         });
     }
 
@@ -149,24 +142,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData();
             formData.append('photo', blob, fileName);
             formData.append('user_name', user.first_name || 'ANON');
+            formData.append('user_id', String(user.id || '0'));
 
-            const sendResponse = await fetch('/api/send-art', {
+            const sendResponse = await fetch(`${API_PROXY_BASE}/api/send-art`, {
                 method: 'POST',
                 body: formData
             });
-
             if (!sendResponse.ok) {
                 throw new Error(`Art send failed: ${sendResponse.status}`);
             }
 
-            const base64 = await blobToDataURL(blob);
-            await saveCurrentArtToFirestore(base64, user);
+            const payload = await sendResponse.json();
+            const imageUrl = payload?.url;
+            if (!imageUrl) {
+                throw new Error('Upload response has no URL');
+            }
 
-            localStorage.setItem('morstrix_current_art', base64);
-            alert('✓ Art published to MORSTRIX FEED!');
+            await saveCurrentArtToFirestore(imageUrl, user);
+            localStorage.setItem('morstrix_current_art', imageUrl);
+            alert('✓ Art saved to MORSTRIX FEED!');
         } catch (error) {
             console.error(error);
-            alert('Failed to publish art. Please try again.');
+            alert('Failed to save art. Please try again.');
         } finally {
             isPublishingArt = false;
             fileModal.classList.remove('active');
@@ -189,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('telegram_user', JSON.stringify(user));
 
         try {
-            await fetch('/api/notify-auth', {
+            await fetch(`${API_PROXY_BASE}/api/notify-auth`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ first_name: user.first_name, id: user.id })

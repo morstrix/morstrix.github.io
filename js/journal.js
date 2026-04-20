@@ -799,8 +799,9 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             const currentSnap = await getDoc(doc(db, 'global_canvas', 'current'));
             if (currentSnap.exists()) {
                 const data = currentSnap.data();
-                if (data?.imageBase64) {
-                    preview.src = data.imageBase64;
+                const image = data?.imageUrl || data?.imageBase64 || '';
+                if (image) {
+                    preview.src = image;
                 }
             }
         } catch (e) {
@@ -814,10 +815,10 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         return date.toLocaleString();
     }
 
-    function openFeedPreview(imageBase64) {
+    function openFeedPreview(imageSrc) {
         const imageEl = document.getElementById('feedPreviewImage');
         if (!imageEl) return;
-        imageEl.src = imageBase64;
+        imageEl.src = imageSrc;
         openModal('feedPreviewModal');
     }
 
@@ -840,15 +841,16 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             container.innerHTML = '';
             snap.forEach((entry) => {
                 const data = entry.data();
-                if (!data?.imageBase64) return;
+                const image = data?.imageUrl || data?.imageBase64 || '';
+                if (!image) return;
 
                 const item = document.createElement('div');
                 item.className = 'feed-item';
                 item.innerHTML = `
-                    <img class="feed-thumb" src="${data.imageBase64}" alt="Feed item">
+                    <img class="feed-thumb" src="${image}" alt="Feed item">
                     <div class="feed-meta">${(data.authorName || 'ANON')}<br>${formatFeedTime(data.timestamp)}</div>
                 `;
-                item.addEventListener('click', () => openFeedPreview(data.imageBase64));
+                item.addEventListener('click', () => openFeedPreview(image));
                 container.appendChild(item);
             });
         } catch (e) {
