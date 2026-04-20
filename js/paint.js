@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('photo', blob, fileName);
             formData.append('user_name', user.first_name || 'ANON');
 
-            const sendResponse = await fetch('/api/send-art', {
+            const sendResponse = await fetch('https://api-proxy-for-morstrix.morstrix.workers.dev/api/send-art', {
                 method: 'POST',
                 body: formData
             });
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('telegram_user', JSON.stringify(user));
 
         try {
-            await fetch('/api/notify-auth', {
+            await fetch('https://api-proxy-for-morstrix.morstrix.workers.dev/api/notify-auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ first_name: user.first_name, id: user.id })
