@@ -940,7 +940,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 
-    // ===== ФОРУМ ВКЛАДКИ =====
+    // ===== ФОРУМ ВКЛАДКИ ====
     const contents = {
         wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
         interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
