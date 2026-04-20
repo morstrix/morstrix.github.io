@@ -12,9 +12,9 @@
     --text-secondary: #8d8d8d;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { 
-    background: var(--bg-dark); 
-    /* Убрали overflow: hidden, чтобы разрешить скролл */
+html {
+    background: var(--bg-dark);
+    scroll-behavior: smooth; /* Нативная инерция вместо Lenis */
 }
 body {
     background: transparent; 
