@@ -357,7 +357,7 @@ if (wrapper && content && typeof Lenis !== 'undefined') {
   
   // Инициализируем window.scrollToPage для совместимости
   window.scrollToPage = (index) => {
-    const totalPages = 7;
+    const totalPages = 8;
     index = Math.max(0, Math.min(totalPages - 1, index));
     const ph = wrapper?.clientHeight || window.innerHeight;
     window.currentPage = index;
@@ -582,6 +582,8 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
 
     // ===== TWITTER =====
     document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
+    // ===== BEHANCE =====
+    document.getElementById('behanceBtn')?.addEventListener('click', ()=> openModal('behanceDisclaimerModal'));
 
     // ===== FONT STYLER =====
     const embeddedInput = document.getElementById('fontInputEmbedded');
@@ -774,9 +776,6 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         if (titleEl) titleEl.textContent = 'АРХИВ';
         if (textEl) textEl.textContent = 'Скоро здесь будут рисунки участников';
     });
-
-    // ===== SPOTIFY =====
-    document.getElementById('spotifyIcon')?.addEventListener('click', ()=> openModal('spotifyModal'));
 
     // ===== TEXT SYNTH (TTS) =====
     const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');

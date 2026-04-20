@@ -20,25 +20,9 @@
 <div class="journal-wrapper">
   <div class="journal-vertical" id="journalVertical">
 
-    <!-- СТРАНИЦА 1: ART -->
+    <!-- 1 RSS + артблок + paint + лента -->
     <div class="journal-page" data-page="1">
         <div class="page-content page1-layout">
-            <!-- LinkedIn + GitHub Карточки -->
-            <div class="social-cards-wrapper">
-                <a href="https://www.linkedin.com/company/morstrix/" target="_blank" class="social-link">
-                    <div class="social-card linkedin-card">
-                        <span class="social-icon">🔗</span>
-                        <span class="social-name">LINKEDIN</span>
-                    </div>
-                </a>
-                <a href="https://github.com/grimexframe" target="_blank" class="social-link">
-                    <div class="social-card github-card">
-                        <span class="social-icon">💻</span>
-                        <span class="social-name">GITHUB</span>
-                    </div>
-                </a>
-            </div>
-            
             <div class="ticker-wrapper">
                 <div class="ticker" id="rssTicker">✦ APARTAMENTO ✦ 032C ✦ PURPLE ✦ SSENSE ✦</div>
             </div>
@@ -62,7 +46,7 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 2: TWITTER -->
+    <!-- 2 Карусель + twitter -->
     <div class="journal-page" data-page="2">
         <div class="page-content">
             <div class="carousel-section">
@@ -79,11 +63,13 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 3: FONTS -->
+    <!-- 3 Behance + Fonts + Styler -->
     <div class="journal-page" data-page="3">
-        <div class="page-content fonts-layout">
-            <div class="mx-narrow-image"><img src="assets/f1.jpg" alt="MX Print"></div>
-            <div class="mx-description"><span class="text-primary">FONT</span><br><span class="text-secondary">(to do)</span></div>
+        <div class="page-content behance-styler-layout">
+            <button id="behanceBtn" class="universal-btn">
+                <span class="btn-inner"><span>PORTFOLIO (BEHANCE)</span></span>
+            </button>
+            <img src="assets/f1.jpg" alt="Preview" style="max-width: 80%; height: auto; image-rendering: pixelated; margin: 10px 0;">
             <button class="universal-btn" id="downloadArchiveBtnEmbedded">
                 <span class="btn-inner"><span>DOWNLOAD</span></span>
             </button>
@@ -94,26 +80,11 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 3: BEHANCE -->
-    <div class="journal-page" data-page="3">
-        <div class="page-content behance-layout">
-            <a href="https://www.behance.net/gallery/246943027/_" target="_blank" class="behance-card-link">
-                <div class="behance-card">
-                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d3c37246943027.647c51fb0a07d.jpeg" alt="Behance Project" class="behance-card-img">
-                    <div class="behance-card-overlay">
-                        <span class="behance-card-text">PORTFOLIO</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- СТРАНИЦА 4: PINTEREST (with nav buttons, no Lenis) -->
+    <!-- 4 Pinterest -->
     <div class="journal-page pinterest-page" data-page="4" data-no-lenis="true">
         <div class="page-content pinterest-layout">
             <h4 class="top-title text-primary">MOOD</h4>
             <div class="pinterest-nav">
-                <button class="pinterest-nav-btn" id="pinterestPrevBtn">◀</button>
                 <div class="pinterest-widget-container">
                     <a data-pin-do="embedBoard" 
                        href="https://www.pinterest.com/morstrix/re-f-erences/" 
@@ -121,12 +92,11 @@
                        data-pin-scale-height="400"
                        data-pin-board-width="400"></a>
                 </div>
-                <button class="pinterest-nav-btn" id="pinterestNextBtn">▶</button>
             </div>
         </div>
     </div>
 
-    <!-- СТРАНИЦА 5: SOUND -->
+    <!-- 5 TTS + Spotify -->
     <div class="journal-page" data-page="5">
         <div class="page-content sound-layout">
             <div class="text-synth-embedded">
@@ -136,14 +106,20 @@
                 <button class="universal-btn" id="ttsSpeakBtn"><span class="btn-inner"><span>SPEAK</span></span></button>
                 <div id="ttsStatus"></div>
             </div>
-            <div class="spotify-icon" id="spotifyIcon">
-                <img src="assets/radio.png" alt="Spotify" class="radio-img">
-                <span class="spotify-label">Spotify</span>
+            <div class="spotify-widget-embedded">
+                <iframe
+                    data-testid="embed-iframe"
+                    style="border-radius:12px; width: 100%; height: 152px;"
+                    src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- СТРАНИЦА 6: TOP + TETRIS -->
+    <!-- 6 Top + Tetris -->
     <div class="journal-page" data-page="6">
         <div class="page-content top-tetris-layout">
             <h4 class="top-title text-primary">TOP</h4>
@@ -152,7 +128,7 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 7: FORUM + SUPPORT -->
+    <!-- 7 Forum + Support -->
     <div class="journal-page" data-page="7">
         <div class="page-content forum-support-layout">
             <div class="forum-embedded">
@@ -178,16 +154,35 @@
             </div>
         </div>
     </div>
+
+    <!-- 8 LinkedIn + GitHub -->
+    <div class="journal-page" data-page="8">
+        <div class="page-content" style="justify-content: center;">
+            <div class="social-cards-wrapper">
+                <a href="https://www.linkedin.com/company/morstrix/" target="_blank" class="social-link">
+                    <div class="social-card">
+                        <span class="social-icon">🔗</span>
+                        <span class="social-name">LINKEDIN</span>
+                    </div>
+                </a>
+                <a href="https://github.com/grimexframe" target="_blank" class="social-link">
+                    <div class="social-card">
+                        <span class="social-icon">💻</span>
+                        <span class="social-name">GITHUB</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
   </div>
 </div>
 
-<div class="bottom-panel">
+<div class="bottom-panel" style="display: none;">
     <div class="page-indicator" id="pageIndicator"></div>
 </div>
 
 <!-- ================= МОДАЛКИ ================= -->
-
-<!-- Модалка "Зміст" -->
 <div id="contentsModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -195,14 +190,14 @@
             <button class="modal-close-btn" data-modal="contentsModal">✜</button>
         </div>
         <div class="modal-inner">
-            <div class="contents-item text-secondary" data-page="1"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>1. ART</div>
-            <div class="contents-item text-secondary" data-page="2"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>2. TWITTER</div>
-            <div class="contents-item text-secondary" data-page="3"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>3. BEHANCE</div>
-            <div class="contents-item text-secondary" data-page="4"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>4. FONTS</div>
-            <div class="contents-item text-secondary" data-page="5"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>5. MOOD</div>
-            <div class="contents-item text-secondary" data-page="6"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>6. SOUND</div>
-            <div class="contents-item text-secondary" data-page="7"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>7. TOP + TETRIS</div>
-            <div class="contents-item text-secondary" data-page="8"><pixel-canvas data-gap="4" data-speed="40" data-colors="#ffb7c7, #a84d6b, #ff9eb5"></pixel-canvas>8. FORUM</div>
+            <div class="contents-item text-secondary" data-page="1">1. ART</div>
+            <div class="contents-item text-secondary" data-page="2">2. TWITTER</div>
+            <div class="contents-item text-secondary" data-page="3">3. BEHANCE</div>
+            <div class="contents-item text-secondary" data-page="4">4. MOOD</div>
+            <div class="contents-item text-secondary" data-page="5">5. SOUND</div>
+            <div class="contents-item text-secondary" data-page="6">6. TOP</div>
+            <div class="contents-item text-secondary" data-page="7">7. FORUM</div>
+            <div class="contents-item text-secondary" data-page="8">8. SOCIAL</div>
         </div>
     </div>
 </div>
@@ -236,6 +231,22 @@
             <input type="text" id="nicknameInput" class="styler-input" placeholder="" maxlength="15">
             <button class="universal-btn" id="nicknameEnterBtn" style="margin-top: 15px;">
                 <span class="btn-inner"><span>ENTER</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка Behance (disclaimer) -->
+<div id="behanceDisclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <button class="modal-close-btn" data-modal="behanceDisclaimerModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <p class="text-secondary" style="margin-bottom: 20px;">Вы переходите на Behance. Продолжить?</p>
+            <button class="universal-btn" data-href="https://www.behance.net/gallery/246943027/_" data-modal-close="behanceDisclaimerModal">
+                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
             </button>
         </div>
     </div>
@@ -282,28 +293,6 @@
         </div>
         <div class="modal-inner">
             <p id="stubModalText" class="text-secondary">Содержимое появится позже</p>
-        </div>
-    </div>
-</div>
-
-<!-- Модалка Spotify -->
-<div id="spotifyModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title-text">SPOTIFY</span>
-            <button class="modal-close-btn" data-modal="spotifyModal">✜</button>
-        </div>
-        <div class="modal-inner">
-            <iframe
-                data-testid="embed-iframe"
-                style="border-radius:12px"
-                src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0"
-                width="100%"
-                height="352"
-                frameborder="0"
-                allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"></iframe>
         </div>
     </div>
 </div>
