@@ -12,14 +12,18 @@
     --text-secondary: #8d8d8d;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { background: var(--bg-dark); overflow: hidden; }
+html { 
+    background: var(--bg-dark); 
+    /* Убрали overflow: hidden, чтобы разрешить скролл */
+}
 body {
-    background: transparent; color: var(--text-secondary); font-family: var(--font-secondary);
+    background: transparent; 
+    color: var(--text-secondary); 
+    font-family: var(--font-secondary);
     font-display: swap;
-    height: 100vh; height: 100dvh;
-    overflow: hidden;
+    min-height: 100dvh; /* Изменили height на min-height */
     position: relative;
-    touch-action: manipulation;
+    /* Удалили overflow: hidden и touch-action */
 }
 .text-primary {
     font-family: var(--font-primary);
@@ -30,8 +34,15 @@ body {
     font-family: var(--font-secondary);
     color: var(--text-secondary);
 }
-#neuro-bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none; }
-
+#neuro-bg { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: -1; 
+    pointer-events: none; /* ДОБАВЛЕНО: чтобы фон не «крал» касания пальцем */
+}
 /* === TOP PANEL === */
 .top-panel {
     position: fixed; top:0; left:0; right:0;
@@ -1032,4 +1043,20 @@ body {
     .pinterest-widget-container {
         max-width: 280px;
     }
+}
+
+/* Магия прилипания */
+.journal-wrapper {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory; /* Жесткое прилипание по вертикали */
+    scroll-behavior: smooth;
+}
+
+.journal-page {
+    scroll-snap-align: start; /* Секция всегда прыгает в начало */
+    scroll-snap-stop: always;  /* Не дает пролететь 3 страницы одним свайпом */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }

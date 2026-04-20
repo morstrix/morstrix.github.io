@@ -917,3 +917,34 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     });
 
 });
+
+// Интеграция Lenis для премиального скролла
+(function() {
+    const script = document.createElement('script');
+    script.src = "https://unpkg.com/lenis@1.1.18/dist/lenis.min.js";
+    script.onload = () => {
+        const lenis = new Lenis({
+            duration: 1.4,
+            lerp: 0.07,
+            smoothWheel: true,
+            smoothTouch: true, // Плавность на мобилках включена
+            touchMultiplier: 1.5
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Перехват кликов меню для плавной прокрутки
+        document.querySelectorAll('.contents-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                const target = document.querySelector(`.journal-page[data-page="${page}"]`);
+                if (target) lenis.scrollTo(target);
+            });
+        });
+    };
+    document.head.appendChild(script);
+})();
