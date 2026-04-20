@@ -227,9 +227,6 @@ body::after {
 </div>
 
 <div class="bottom-section">
-    <div class="team-btn" id="teamBtn">
-        <span>команда</span>
-    </div>
     <div class="donate-section">
         <div class="donate-line"></div>
         <div class="donate-label" id="donateBtn">DONATE</div>
@@ -237,27 +234,7 @@ body::after {
     </div>
 </div>
 
-<!-- Модалки -->
-<div id="teamModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title-text">✦ SELECT ✦</span>
-            <button class="modal-close-btn" data-modal="teamModal">✜</button>
-        </div>
-        <div class="modal-inner">
-            <div class="team-choice-container">
-                <div class="team-choice" data-member="ada">
-                    <img src="assets/des.jpg" alt="DESIGNER">
-                    <span>DESIGNER</span>
-                </div>
-                <div class="team-choice" data-member="ex">
-                    <img src="assets/dev.jpg" alt="DEVELOPER">
-                    <span>DEVELOPER</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div id="adaModal" class="modal-overlay">
     <div class="modal-content">
@@ -325,22 +302,12 @@ body::after {
         function openModal(id) { document.getElementById(id)?.classList.add('active'); }
         function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
         
-        document.getElementById('teamBtn').addEventListener('click', () => openModal('teamModal'));
         document.getElementById('donateBtn').addEventListener('click', () => openModal('donateModal'));
         
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const modalId = btn.dataset.modal;
                 if (modalId) closeModal(modalId);
-            });
-        });
-        
-        document.querySelectorAll('.team-choice').forEach(el => {
-            el.addEventListener('click', () => {
-                const member = el.dataset.member;
-                closeModal('teamModal');
-                if (member === 'ada') openModal('adaModal');
-                else if (member === 'ex') openModal('exModal');
             });
         });
         

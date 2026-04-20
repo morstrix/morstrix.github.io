@@ -86,6 +86,11 @@ body {
     pointer-events: auto !important;
 }
 
+/* === OPTIMIZATION: Disable iframe during scroll === */
+.journal-wrapper.is-scrolling iframe {
+    pointer-events: none !important;
+}
+
 /* Когда wrapper в режиме Pinterest — разрешаем вертикаль */
 .journal-wrapper.pinterest-mode {
     touch-action: pan-y;
@@ -93,14 +98,14 @@ body {
 
 /* === LENIS WRAPPER === */
 .journal-wrapper {
-    height: calc(100vh - var(--top-panel-h) - var(--bottom-panel-h));
-    height: calc(100dvh - var(--top-panel-h) - var(--bottom-panel-h));
+    height: calc(100vh - var(--top-panel-h));
+    height: calc(100dvh - var(--top-panel-h));
     width: 100%;
     margin-top: var(--top-panel-h);
     overflow: hidden;
     position: relative;
     z-index: 10;
-    touch-action: pan-y; /* ← было none, теперь pan-y: вертикаль нативная, горизонталь Lenis */
+    touch-action: none; /* ← Lenis имеет полный контроль над скроллом */
 }
 .journal-horizontal {
     display: flex;
@@ -136,6 +141,57 @@ body {
     flex-direction: column;
     height: 100%;
     gap: 8px;
+}
+
+/* ================= SOCIAL CARDS (LINKEDIN + GITHUB) ================= */
+.social-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 250px;
+    flex-shrink: 0;
+}
+.social-link {
+    text-decoration: none;
+    width: 100%;
+}
+.social-card {
+    aspect-ratio: 1/1;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.social-card:hover {
+    background: #a0a0a0;
+    transform: translateY(-2px);
+}
+.social-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+.social-name {
+    color: #000;
+    font-family: 'Tiny5', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ================= СТРАНИЦА 2: CAROUSEL + TWITTER ================= */
+.journal-page[data-page="2"] .page-content {
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 12px 12px 12px;
 }
 .ticker-wrapper {
     flex-shrink: 0;
@@ -314,14 +370,15 @@ body {
 
 /* ================= СТРАНИЦА 2: TWITTER ================= */
 .carousel-section {
-    flex: 1 1 0;
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 0;
-    gap: 0;
+    gap: 3px;
+    padding: 0;
 }
 .carousel {
     flex: 0 0 auto;
@@ -334,7 +391,7 @@ body {
 }
 .carousel img {
     max-width: 100%;
-    max-height: 60vh;
+    max-height: 35vh;
     object-fit: contain;
     display: block;
     margin: 0 auto;
@@ -343,10 +400,11 @@ body {
 .hashtag-row {
     flex-shrink: 0;
     text-align: center;
-    padding: 5px 0 0 0;
+    padding: 2px 0 0 0;
+    margin: 0;
 }
 .hashtag {
-    font-size: 20px;
+    font-size: 16px;
     color: var(--text-secondary);
     font-family: var(--font-secondary);
     text-shadow: 1px 1px 0 #4b3d3d, 2px 2px 0 #3d2a2f !important;
@@ -354,16 +412,82 @@ body {
 .twitter-section {
     flex-shrink: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 5px;
+    padding-top: 8px;
+    gap: 3px;
 }
 .x-btn-img {
     width: 44px;
     cursor: pointer;
 }
+.twitter-label {
+    font-size: 14px;
+}
 
-/* ================= СТРАНИЦА 3: FONTS ================= */
+/* ================= СТРАНИЦА 3: BEHANCE ================= */
+.behance-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    gap: 0;
+}
+.behance-card-link {
+    text-decoration: none;
+}
+.behance-card {
+    aspect-ratio: 1/1;
+    width: clamp(200px, 50vw, 400px);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.behance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf, 0 4px 0 rgba(0,0,0,0.3);
+}
+.behance-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.behance-card:hover .behance-card-img {
+    transform: scale(1.08);
+}
+.behance-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.behance-card:hover .behance-card-overlay {
+    opacity: 1;
+}
+.behance-card-text {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ================= СТРАНИЦА 4: FONTS ================= */
 .fonts-layout {
     justify-content: flex-start;
     padding-top: 10px;
@@ -759,15 +883,16 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: var(--bottom-panel-h);
+    height: 0;
     background: #050505;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 200;
+    overflow: hidden;
 }
 .page-indicator {
-    display: flex;
+    display: none;
     justify-content: center;
     gap: 0;
     align-items: center;

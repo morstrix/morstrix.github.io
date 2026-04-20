@@ -216,39 +216,67 @@ function convertTextToFont(text) {
 document.addEventListener('DOMContentLoaded', () => {
  // ===== ИНИЦИАЛИЗАЦИЯ LENIS + МАГНИТ =====
 const wrapper = document.querySelector('.journal-wrapper');
-const content = document.getElementById('journalHorizontal');
+const content = document.getElementById('journalVertical');
 window.lenis = null;
 
 if (wrapper && content && typeof Lenis !== 'undefined') {
   window.lenis = new Lenis({
     wrapper,
     content,
-    orientation: 'horizontal',
-    gestureOrientation: 'horizontal',
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
     smoothWheel: true,
     smoothTouch: true,
     syncTouch: true,
     touchMultiplier: 3,
     lerp: 0.18,
+    prevent: (node) => node.classList.contains('no-lenis'),
   });
 
   function raf(time) { window.lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
-  window.addEventListener('resize', () => window.lenis.resize());
+  
+  // Обработка резайза + ориентации экрана
+  const resizeObserver = new ResizeObserver(() => {
+    window.lenis?.resize();
+    const ph = wrapper.clientHeight;
+    const currentScroll = window.lenis?.scroll || 0;
+    const nearestPage = Math.round(currentScroll / ph);
+    updateActiveDot(nearestPage);
+  });
+  resizeObserver.observe(wrapper);
+  
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      window.lenis?.resize();
+      const ph = wrapper.clientHeight;
+      const currentScroll = window.lenis?.scroll || 0;
+      const nearestPage = Math.round(currentScroll / ph);
+      updateActiveDot(nearestPage);
+    }, 100);
+  });
 
   window.currentPage = 0;
-  const totalPages = 7;
+  const totalPages = 8;
 
   // --- Точки ---
   const indicator = document.getElementById('pageIndicator');
   indicator.innerHTML = Array(totalPages).fill(0).map(() => '<span class="dot"></span>').join('');
   const dots = document.querySelectorAll('.dot');
 
+  let lastDotUpdate = -1;
   function updateActiveDot(index) {
+    // Optimize: only update if index actually changed
+    if (index === lastDotUpdate) return;
+    lastDotUpdate = index;
+    
     index = Math.max(0, Math.min(totalPages - 1, index));
     dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-      dot.style.transitionDelay = `${Math.abs(i - index) * 0.05}s`;
+      const shouldBeActive = i === index;
+      if (dot.classList.contains('active') !== shouldBeActive) {
+        dot.classList.toggle('active', shouldBeActive);
+        dot.style.transitionDelay = `${Math.abs(i - index) * 0.05}s`;
+      }
     });
     // currentPage НЕ меняем здесь — только визуал
   }
@@ -262,18 +290,23 @@ if (wrapper && content && typeof Lenis !== 'undefined') {
   window.lenis.on('scroll', ({ scroll, velocity }) => {
     if (isSnapping) return;
 
+    // Добавляем класс для отключения iframe во время быстрого скролла
+    const shouldDisableIframes = Math.abs(velocity) > 0.1;
+    if (shouldDisableIframes) {
+      wrapper.classList.add('is-scrolling');
+    }
+    
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      wrapper.classList.remove('is-scrolling');
+    }, 150);
+
     if (Math.abs(velocity) > Math.abs(peakVelocity)) {
       peakVelocity = velocity;
     }
 
-    document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = 'none');
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      document.querySelectorAll('iframe').forEach(el => el.style.pointerEvents = '');
-    }, 150);
-
-    const pw = wrapper.clientWidth;
-    updateActiveDot(Math.round(scroll / pw));
+    const ph = wrapper.clientHeight;
+    updateActiveDot(Math.round(scroll / ph));
 
     clearTimeout(snapTimer);
     snapTimer = setTimeout(() => {
@@ -282,7 +315,7 @@ if (wrapper && content && typeof Lenis !== 'undefined') {
       if (Math.abs(peakVelocity) > 0.3) {
         target = peakVelocity > 0 ? window.currentPage + 1 : window.currentPage - 1;
       } else {
-        const nearest = Math.round(window.lenis.scroll / pw);
+        const nearest = Math.round(window.lenis.scroll / ph);
         target = Math.max(window.currentPage - 1, Math.min(window.currentPage + 1, nearest));
       }
 
@@ -293,24 +326,53 @@ if (wrapper && content && typeof Lenis !== 'undefined') {
   });
 
   window.scrollToPage = (index) => {
+    if (!window.lenis) return;
+    
     index = Math.max(0, Math.min(totalPages - 1, index));
     peakVelocity = 0;
     isSnapping = true;
 
-    if (window.lenis.isStopped) window.lenis.start();
+    try {
+      if (window.lenis.isStopped) window.lenis.start();
 
-    window.lenis.scrollTo(index * wrapper.clientWidth, {
-      duration: 0.45,
-      easing: t => 1 - Math.pow(1 - t, 4),
-      onComplete: () => { isSnapping = false; },
-    });
+      window.lenis.scrollTo(index * wrapper.clientHeight, {
+        duration: 0.45,
+        easing: t => 1 - Math.pow(1 - t, 4),
+        onComplete: () => { isSnapping = false; },
+      });
 
-    window.currentPage = index;
-    updateActiveDot(index);
+      window.currentPage = index;
+      updateActiveDot(index);
+    } catch (e) {
+      console.error('Lenis scrollTo error:', e);
+      isSnapping = false;
+    }
   };
 
   if (dots.length) dots[0].classList.add('active');
-  setTimeout(() => updateActiveDot(Math.round(window.lenis.scroll / wrapper.clientWidth)), 100);
+  setTimeout(() => updateActiveDot(Math.round(window.lenis.scroll / wrapper.clientHeight)), 100);
+} else {
+  // FALLBACK: Lenis не загружена или недоступна
+  console.warn('Lenis not available, using native scroll');
+  
+  // Инициализируем window.scrollToPage для совместимости
+  window.scrollToPage = (index) => {
+    const totalPages = 7;
+    index = Math.max(0, Math.min(totalPages - 1, index));
+    const ph = wrapper?.clientHeight || window.innerHeight;
+    window.currentPage = index;
+    
+    // Используем нативный scroll
+    if (wrapper) {
+      wrapper.scrollTop = index * ph;
+    } else {
+      window.scrollTo({ top: index * ph, behavior: 'smooth' });
+    }
+  };
+  
+  // Базовая поддержка кнопок навигации
+  const dots = document.querySelectorAll('.dot');
+  if (dots.length) dots[0].classList.add('active');
 }
 
 // Стрелки Pinterest
@@ -684,7 +746,18 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             if (!window.pinterestScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = 'https://assets.pinterest.com/js/pinit.js';
-                script.onload = () => { if (window.PinUtils) window.PinUtils.build(); };
+                script.onload = () => { 
+                    if (window.PinUtils) {
+                        window.PinUtils.build();
+                        // Resize Lenis after Pinterest loads
+                        window.lenis?.resize();
+                    }
+                };
+                script.onerror = () => {
+                    console.warn('Pinterest script failed to load');
+                    window.pinterestScriptLoaded = false;
+                };
+                script.timeout = 5000;
                 document.head.appendChild(script);
                 window.pinterestScriptLoaded = true;
             } else {
@@ -843,4 +916,5 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             else closeModal('disclaimerModal');
         });
     });
+
 });
