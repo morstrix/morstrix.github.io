@@ -288,11 +288,23 @@
 <div id="stubModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text" id="stubModalTitle">ЗАГОЛОВОК</span>
+            <span class="modal-title-text" id="stubModalTitle">FEED</span>
             <button class="modal-close-btn" data-modal="stubModal">✜</button>
         </div>
         <div class="modal-inner">
-            <p id="stubModalText" class="text-secondary">Содержимое появится позже</p>
+            <div id="feedContainer" class="feed-container"></div>
+        </div>
+    </div>
+</div>
+
+<div id="feedPreviewModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ART PREVIEW</span>
+            <button class="modal-close-btn" data-modal="feedPreviewModal">✜</button>
+        </div>
+        <div class="modal-inner feed-preview-inner">
+            <img id="feedPreviewImage" src="" alt="Feed art preview">
         </div>
     </div>
 </div>

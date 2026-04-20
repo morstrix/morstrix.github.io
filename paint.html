@@ -168,7 +168,7 @@
                 </svg>
                 UPLOAD
             </button>
-            <button class="layer-option" id="modalSaveBtn">
+            <button class="layer-option" id="saveArtBtn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                     <polyline points="17 21 17 13 7 13 7 21"/>
@@ -234,6 +234,22 @@
 
 <!-- Скрытый input для загрузки изображений -->
 <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+
+<!-- Telegram Auth Modal -->
+<div id="telegramAuthModal" class="auth-modal-overlay">
+    <div class="auth-modal-content">
+        <div class="auth-modal-header">
+            <span>AUTHORIZATION</span>
+            <button type="button" class="modal-close-btn" id="telegramAuthModalClose">✕</button>
+        </div>
+        <div class="auth-modal-body">
+            <p>Login with Telegram to publish your art to the global feed.</p>
+            <div class="telegram-widget-wrap">
+                <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-login="MORSTRIXBOT" data-size="large" data-radius="0" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="js/paint.js"></script>
 </body>

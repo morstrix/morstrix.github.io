@@ -768,14 +768,103 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         });
     }
 
-    // ===== АРХИВ (заглушка) =====
-    document.getElementById('archiveBtn')?.addEventListener('click', ()=> {
-        openModal('stubModal');
+    // ===== ART FEED (FIRESTORE) =====
+    let firebaseDbPromise = null;
+    async function getFirestoreDb() {
+        if (!firebaseDbPromise) {
+            firebaseDbPromise = (async () => {
+                const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+                const { getFirestore } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+                const firebaseConfig = {
+                    apiKey: 'AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU',
+                    authDomain: 'helper-e10b2.firebaseapp.com',
+                    projectId: 'helper-e10b2',
+                    storageBucket: 'helper-e10b2.firebasestorage.app',
+                    messagingSenderId: '131536876451',
+                    appId: '1:131536876451:web:eeaef494c83dfc4849e016'
+                };
+                const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+                return getFirestore(app);
+            })();
+        }
+        return firebaseDbPromise;
+    }
+
+    async function loadCurrentArt() {
+        const preview = document.getElementById('currentArtPreview');
+        if (!preview) return;
+        try {
+            const db = await getFirestoreDb();
+            const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            const currentSnap = await getDoc(doc(db, 'global_canvas', 'current'));
+            if (currentSnap.exists()) {
+                const data = currentSnap.data();
+                if (data?.imageBase64) {
+                    preview.src = data.imageBase64;
+                }
+            }
+        } catch (e) {
+            console.warn('loadCurrentArt failed', e);
+        }
+    }
+
+    function formatFeedTime(value) {
+        const date = value?.toDate ? value.toDate() : (value instanceof Date ? value : null);
+        if (!date) return 'unknown time';
+        return date.toLocaleString();
+    }
+
+    function openFeedPreview(imageBase64) {
+        const imageEl = document.getElementById('feedPreviewImage');
+        if (!imageEl) return;
+        imageEl.src = imageBase64;
+        openModal('feedPreviewModal');
+    }
+
+    async function loadFeed() {
+        const container = document.getElementById('feedContainer');
+        if (!container) return;
+        container.innerHTML = '<p class="text-secondary">Loading feed...</p>';
+        try {
+            const db = await getFirestoreDb();
+            const { collection, getDocs, query, orderBy, limit } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+            const historyRef = collection(db, 'global_canvas', 'current', 'history');
+            const feedQuery = query(historyRef, orderBy('timestamp', 'desc'), limit(20));
+            const snap = await getDocs(feedQuery);
+
+            if (snap.empty) {
+                container.innerHTML = '<p class="text-secondary">No feed entries yet.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            snap.forEach((entry) => {
+                const data = entry.data();
+                if (!data?.imageBase64) return;
+
+                const item = document.createElement('div');
+                item.className = 'feed-item';
+                item.innerHTML = `
+                    <img class="feed-thumb" src="${data.imageBase64}" alt="Feed item">
+                    <div class="feed-meta">${(data.authorName || 'ANON')}<br>${formatFeedTime(data.timestamp)}</div>
+                `;
+                item.addEventListener('click', () => openFeedPreview(data.imageBase64));
+                container.appendChild(item);
+            });
+        } catch (e) {
+            console.warn('loadFeed failed', e);
+            container.innerHTML = '<p class="text-secondary">Failed to load feed.</p>';
+        }
+    }
+
+    document.getElementById('archiveBtn')?.addEventListener('click', async ()=> {
         const titleEl = document.getElementById('stubModalTitle');
-        const textEl = document.getElementById('stubModalText');
-        if (titleEl) titleEl.textContent = 'АРХИВ';
-        if (textEl) textEl.textContent = 'Скоро здесь будут рисунки участников';
+        if (titleEl) titleEl.textContent = 'FEED';
+        openModal('stubModal');
+        await loadFeed();
     });
+
+    loadCurrentArt();
 
     // ===== TEXT SYNTH (TTS) =====
     const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');

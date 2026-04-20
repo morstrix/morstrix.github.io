@@ -379,6 +379,52 @@ body {
     background: var(--accent-pink);
 }
 
+/* === TELEGRAM AUTH MODAL === */
+.auth-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 4000;
+    padding: 16px;
+}
+.auth-modal-overlay.active {
+    display: flex;
+}
+.auth-modal-content {
+    width: min(520px, 100%);
+    background: #000;
+    border: 3px solid transparent;
+    border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+    box-shadow: 0 0 30px rgba(168, 77, 107, 0.18);
+}
+.auth-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 2px solid #1a1a1a;
+    color: var(--accent-pink);
+    font-size: 13px;
+}
+.auth-modal-body {
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.auth-modal-body p {
+    color: #c8c8c8;
+    font-size: 11px;
+    line-height: 1.5;
+}
+.telegram-widget-wrap {
+    display: flex;
+    justify-content: center;
+}
+
 /* === MOBILE RESPONSIVENESS === */
 @media (max-width: 768px) {
     .paint-title { font-size: 14px; }
@@ -449,6 +495,9 @@ body {
         right: 10px;
         left: 10px;
         max-width: none;
+    }
+    .auth-modal-body p {
+        font-size: 10px;
     }
 }
 

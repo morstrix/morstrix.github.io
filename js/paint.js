@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearBtn = document.getElementById('clearBtn');
     const loadBtn = document.getElementById('loadBtn');
     const fileInput = document.getElementById('imageLoader');
-    const saveBtn = document.getElementById('saveBtn');
+    const saveArtBtn = document.getElementById('saveArtBtn');
     const undoBtn = document.getElementById('undoBtn');
     const redoBtn = document.getElementById('redoBtn');
     const layersBtn = document.getElementById('layersBtn');
@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileModal = document.getElementById('fileModal');
     const fileModalClose = document.getElementById('fileModalClose');
     const modalLoadBtn = document.getElementById('modalLoadBtn');
-    const modalSaveBtn = document.getElementById('modalSaveBtn');
+    const telegramAuthModal = document.getElementById('telegramAuthModal');
+    const telegramAuthModalClose = document.getElementById('telegramAuthModalClose');
     
     // Tools modal
     const toolsBtn = document.getElementById('toolsBtn');
@@ -57,6 +58,154 @@ document.addEventListener('DOMContentLoaded', () => {
     const noiseInput = document.getElementById('noiseInput');
     const applyThresholdBtn = document.getElementById('applyThresholdBtn');
     const applyNoiseBtn = document.getElementById('applyNoiseBtn');
+
+    let savePendingAfterAuth = false;
+    let isPublishingArt = false;
+    let firebaseDbPromise = null;
+
+    async function getFirestoreDb() {
+        if (!firebaseDbPromise) {
+            firebaseDbPromise = (async () => {
+                const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+                const { getFirestore } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+                const firebaseConfig = {
+                    apiKey: 'AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU',
+                    authDomain: 'helper-e10b2.firebaseapp.com',
+                    projectId: 'helper-e10b2',
+                    storageBucket: 'helper-e10b2.firebasestorage.app',
+                    messagingSenderId: '131536876451',
+                    appId: '1:131536876451:web:eeaef494c83dfc4849e016'
+                };
+                const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+                return getFirestore(app);
+            })();
+        }
+        return firebaseDbPromise;
+    }
+
+    function openAuthModal() {
+        telegramAuthModal?.classList.add('active');
+    }
+
+    function closeAuthModal() {
+        telegramAuthModal?.classList.remove('active');
+    }
+
+    function canvasToBlob() {
+        return new Promise((resolve, reject) => {
+            canvas.toBlob((blob) => {
+                if (!blob) {
+                    reject(new Error('Canvas export failed'));
+                    return;
+                }
+                resolve(blob);
+            }, 'image/png');
+        });
+    }
+
+    async function saveCurrentArtToFirestore(base64Image, user) {
+        const db = await getFirestoreDb();
+        const { doc, getDoc, setDoc, collection, addDoc } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
+        const currentDocRef = doc(db, 'global_canvas', 'current');
+        const historyColRef = collection(db, 'global_canvas', 'current', 'history');
+        const currentSnap = await getDoc(currentDocRef);
+
+        if (currentSnap.exists()) {
+            const prev = currentSnap.data();
+            if (prev?.imageBase64) {
+                await addDoc(historyColRef, {
+                    imageBase64: prev.imageBase64,
+                    authorName: prev.authorName || 'ANON',
+                    authorId: Number(prev.authorId || 0),
+                    timestamp: prev.timestamp || new Date()
+                });
+            }
+        }
+
+        await setDoc(currentDocRef, {
+            imageBase64: base64Image,
+            authorName: user.first_name || 'ANON',
+            authorId: Number(user.id || 0),
+            timestamp: new Date()
+        });
+    }
+
+    function blobToDataURL(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+
+    async function publishArt(user) {
+        if (!user || isPublishingArt) return;
+        isPublishingArt = true;
+
+        try {
+            const blob = await canvasToBlob();
+            const fileName = `morstrix-art-${Date.now()}.png`;
+            const formData = new FormData();
+            formData.append('photo', blob, fileName);
+            formData.append('user_name', user.first_name || 'ANON');
+
+            const sendResponse = await fetch('/api/send-art', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!sendResponse.ok) {
+                throw new Error(`Art send failed: ${sendResponse.status}`);
+            }
+
+            const base64 = await blobToDataURL(blob);
+            await saveCurrentArtToFirestore(base64, user);
+
+            localStorage.setItem('morstrix_current_art', base64);
+            alert('✓ Art published to MORSTRIX FEED!');
+        } catch (error) {
+            console.error(error);
+            alert('Failed to publish art. Please try again.');
+        } finally {
+            isPublishingArt = false;
+            fileModal.classList.remove('active');
+        }
+    }
+
+    function handleSaveClick() {
+        const user = JSON.parse(localStorage.getItem('telegram_user') || 'null');
+        if (!user) {
+            savePendingAfterAuth = true;
+            openAuthModal();
+            return;
+        }
+        savePendingAfterAuth = false;
+        publishArt(user);
+    }
+
+    window.onTelegramAuth = async (user) => {
+        if (!user) return;
+        localStorage.setItem('telegram_user', JSON.stringify(user));
+
+        try {
+            await fetch('/api/notify-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ first_name: user.first_name, id: user.id })
+            });
+        } catch (error) {
+            console.error('notify-auth failed', error);
+        }
+
+        closeAuthModal();
+        if (savePendingAfterAuth) {
+            savePendingAfterAuth = false;
+            publishArt(user);
+        } else {
+            alert('Authorization complete. You can save your art now.');
+        }
+    };
 
     // Multi-layer system
     let layers = [];
@@ -547,17 +696,19 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.click();
         fileModal.classList.remove('active');
     });
-    modalSaveBtn.addEventListener('click', () => {
-        const dataURL = canvas.toDataURL('image/png');
-        localStorage.setItem('morstrix_current_art', dataURL);
-        alert('✓ Image saved!');
-        fileModal.classList.remove('active');
-    });
+    saveArtBtn?.addEventListener('click', handleSaveClick);
     
     // Close file modal when clicking outside
     document.addEventListener('click', (e) => {
         if (!fileModal.contains(e.target) && e.target !== folderBtn) {
             fileModal.classList.remove('active');
+        }
+    });
+
+    telegramAuthModalClose?.addEventListener('click', closeAuthModal);
+    telegramAuthModal?.addEventListener('click', (e) => {
+        if (e.target === telegramAuthModal) {
+            closeAuthModal();
         }
     });
     
