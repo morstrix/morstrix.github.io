@@ -71,23 +71,6 @@
             if (this.twinkle) {
                 this.brightness = 0.5 + Math.sin(Date.now() * 0.005 + this.twinkleOffset) * 0.5;
             }
-
-            // Отталкивание от курсора
-            const perspective = 600; // увеличенное фокусное расстояние для глубины
-            const sx = (this.x / this.z) * perspective + centerX;
-            const sy = (this.y / this.z) * perspective + centerY;
-
-            const dx = sx - mouse.x;
-            const dy = sy - mouse.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < CONFIG.repelRadius) {
-                const force = (CONFIG.repelRadius - distance) / CONFIG.repelRadius;
-                const angle = Math.atan2(dy, dx);
-                // Влияем на "мировые" координаты звезды
-                this.x += Math.cos(angle) * force * 50;
-                this.y += Math.sin(angle) * force * 50;
-            }
         }
 
         draw() {
@@ -167,24 +150,6 @@
 
     // ===== EVENT LISTENERS =====
     window.addEventListener('resize', resize);
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-    });
-
-    // Touch support
-    window.addEventListener('touchmove', (e) => {
-        if (e.touches[0]) {
-            mouse.x = e.touches[0].clientX;
-            mouse.y = e.touches[0].clientY;
-        }
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-        mouse.x = -1000;
-        mouse.y = -1000;
-    });
 
     // ===== START =====
     init();
