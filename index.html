@@ -10,25 +10,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { height: 100%; overflow: hidden; }
         
-        /* === ЭКРАННАЯ СЕТКА (ПОВЕРХ ВСЕГО) === */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99999;
-    pointer-events: none;
-    
-    /* Сетка из линий */
-    background-image: 
-        linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.2) 1px, transparent 1px);
-    
-    background-size: 4px 4px;
-    opacity: 0.4;
-}
 
         body {
             background: #000000;
@@ -109,12 +90,21 @@ body::after {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
         .donate-line {
-            width: min(80%, 500px);
+            width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(74, 21, 21, 0.3) 15%,
+                rgba(139, 58, 58, 0.6) 30%,
+                #a84d6b 50%,
+                rgba(139, 58, 58, 0.6) 70%,
+                rgba(74, 21, 21, 0.3) 85%,
+                transparent 100%
+            );
+            margin-bottom: 8px;
         }
         .donate-label {
             font-size: clamp(10px, 3vw, 14px);
@@ -203,21 +193,27 @@ body::after {
         .linkedin-container { margin: 15px 0; min-height: 200px; }
         .behance-embed { margin: 15px 0; }
         .instagram-widget { margin: 20px 0; }
+
+        /* Cosmic Canvas Background */
+        #cosmicCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+<canvas id="cosmicCanvas"></canvas>
 
 <div class="top-row">
     <a href="journal.html" class="index-card">
-        <video src="assets/journal.mp4" 
-               autoplay 
-               loop 
-               muted 
-               playsinline 
-               disablepictureinpicture 
-               disableremoteplayback
-               style="width: 120px; height: 120px; object-fit: cover; image-rendering: pixelated; pointer-events: none;">
-        </video>
+        <img src="assets/journal.gif"
+             style="width:120px;height:120px;image-rendering:pixelated;"
+             draggable="false">
         <span>JOURNAL</span>
     </a>
     <a href="store.html" class="index-card">
@@ -276,33 +272,24 @@ body::after {
     </div>
 </div>
 
-<div id="donateModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title-text">✦ DONATE ✦</span>
-            <button class="modal-close-btn" data-modal="donateModal">✜</button>
-        </div>
-        <div class="modal-inner">
-            <p style="font-size:10px; color:#000; margin-bottom:20px;">monobank</p>
-            <p id="cardNumber" style="font-size:8px; color:#fff; background:#000; padding:15px; word-break:break-all;">5375 4141 0000 0000</p>
-            <p id="copyHint" style="font-size:7px; color:#3d2a2f; margin-top:15px; cursor:pointer;">* тап для копіювання</p>
-        </div>
-    </div>
-</div>
 
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 <script type="module" src="https://w.behold.so/widget.js"></script>
 <script>
     (function() {
-        const teamModal = document.getElementById('teamModal');
-        const adaModal = document.getElementById('adaModal');
-        const exModal = document.getElementById('exModal');
-        const donateModal = document.getElementById('donateModal');
-        
         function openModal(id) { document.getElementById(id)?.classList.add('active'); }
         function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
         
-        document.getElementById('donateBtn').addEventListener('click', () => openModal('donateModal'));
+        document.getElementById('donateBtn').addEventListener('click', () => {
+            const cardNumber = '5375 4141 1023 8683';
+            navigator.clipboard.writeText(cardNumber).then(() => {
+                // Открываем монобанк
+                window.location.href = 'https://send.monobank.ua/jar/8q9Kk2hkDV';
+            }).catch(() => {
+                // Если не удалось скопировать, всё равно переходим
+                window.location.href = 'https://send.monobank.ua/jar/8q9Kk2hkDV';
+            });
+        });
         
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -310,17 +297,6 @@ body::after {
                 if (modalId) closeModal(modalId);
             });
         });
-        
-        const cardNumber = document.getElementById('cardNumber');
-        const copyHint = document.getElementById('copyHint');
-        if (cardNumber && copyHint) {
-            copyHint.addEventListener('click', () => {
-                navigator.clipboard.writeText(cardNumber.textContent.trim()).then(() => {
-                    copyHint.textContent = '✓ СКОПИРОВАНО!';
-                    setTimeout(() => copyHint.textContent = '* тап для копіювання', 1500);
-                });
-            });
-        }
         
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', (e) => {
@@ -335,5 +311,6 @@ body::after {
         });
     })();
 </script>
+<script src="js/cosmic-bg.js"></script>
 </body>
 </html>

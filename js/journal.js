@@ -257,8 +257,10 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   pages.forEach((page, i) => {
     ScrollTrigger.create({
       trigger: page,
+      scroller: wrapper,
       start: 'top center',
       end: 'bottom center',
+      invalidateOnRefresh: true,
       onEnter: () => updateActiveDot(i),
       onEnterBack: () => updateActiveDot(i),
     });
@@ -267,13 +269,15 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   // Global snap для всего wrapper
   ScrollTrigger.create({
     trigger: wrapper,
+    scroller: wrapper,
     start: 'top top',
     end: 'bottom bottom',
+    invalidateOnRefresh: true,
     snap: {
       snapTo: 1 / (totalPages - 1),
       duration: { min: 0.15, max: 0.35 },
       delay: 0,
-      ease: 'power2.out',
+      ease: 'power3.inOut',
     },
   });
 
@@ -596,8 +600,10 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         a.click();
     });
 
-    // ===== PAINT (НОВАЯ ЛОГИКА) =====
-    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> openModal('paintChoiceModal'));
+    // ===== PAINT (Прямой переход на paint.html) =====
+    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> {
+        window.location.href = 'paint.html';
+    });
 
     document.getElementById('paintAnonChoiceBtn')?.addEventListener('click', ()=> {
         closeModal('paintChoiceModal');

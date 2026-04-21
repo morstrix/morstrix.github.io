@@ -34,14 +34,14 @@ body {
     font-family: var(--font-secondary);
     color: var(--text-secondary);
 }
-#neuro-bg { 
+#cosmicCanvas { 
     position: fixed; 
     top: 0; 
     left: 0; 
     width: 100%; 
     height: 100%; 
     z-index: -1; 
-    pointer-events: none; /* ДОБАВЛЕНО: чтобы фон не «крал» касания пальцем */
+    pointer-events: none;
 }
 /* === TOP PANEL === */
 .top-panel {
@@ -267,7 +267,6 @@ body {
     flex: 0 0 clamp(140px, 18vw, 220px);
     width: clamp(140px, 18vw, 220px);
     aspect-ratio: 1/1;
-    background: #0a0a0a;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -657,12 +656,13 @@ body {
 /* ================= СТРАНИЦА 6: FORUM + SUPPORT ================= */
 .forum-support-layout {
     padding: 20px 15px;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 15px;
 }
 .forum-embedded {
     display: flex;
     width: 100%;
-    flex: 1;
+    flex: 0 0 auto;
 }
 .forum-tabs-panel-embedded {
     width: 55px;
@@ -689,7 +689,7 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     color: var(--text-secondary);
@@ -709,7 +709,7 @@ body {
     display: flex;
     gap: 20px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 /* ================= УНИВЕРСАЛЬНАЯ КНОПКА ================= */
@@ -981,7 +981,6 @@ body {
     .archive-block {
         flex: 0 0 18%;
         aspect-ratio: 1/1;
-        background: #0a0a0a;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1095,17 +1094,14 @@ body {
     }
 }
 
-/* Магия прилипания */
+/* GSAP ScrollTrigger scroller */
 .journal-wrapper {
     height: 100vh;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory; /* Жесткое прилипание по вертикали */
     scroll-behavior: smooth;
 }
 
 .journal-page {
-    scroll-snap-align: start; /* Секция всегда прыгает в начало */
-    scroll-snap-stop: always;  /* Не дает пролететь 3 страницы одним свайпом */
     height: 100vh;
     display: flex;
     flex-direction: column;
