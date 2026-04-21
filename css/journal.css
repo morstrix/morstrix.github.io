@@ -119,6 +119,7 @@ body {
 }
 html, body {
     overflow-y: auto;
+    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 .journal-vertical::-webkit-scrollbar { display: none; }
@@ -359,7 +360,7 @@ html, body {
         column-gap: clamp(12px, 2vw, 24px);
         justify-content: center;
         align-items: start;
-        width: max-content;
+        width: 100%;
         margin: 2px auto 0;
     }
     .page1-controls-row .paint-row,
