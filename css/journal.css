@@ -14,7 +14,6 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html {
     background: var(--bg-dark);
-    scroll-behavior: smooth; /* Нативная инерция вместо Lenis */
 }
 body {
     background: transparent; 
@@ -107,21 +106,20 @@ body {
     touch-action: pan-y;
 }
 
-/* === LENIS WRAPPER === */
+/* === WRAPPER (native scroll) === */
 .journal-wrapper {
-    height: calc(100vh - var(--top-panel-h));
-    height: calc(100dvh - var(--top-panel-h));
     width: 100%;
     margin-top: var(--top-panel-h);
-    overflow: hidden;
     position: relative;
     z-index: 10;
-    touch-action: none; /* ← Lenis имеет полный контроль над скроллом */
 }
 .journal-vertical {
     display: block;
     width: 100%;
-    will-change: transform;
+}
+html, body {
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 .journal-vertical::-webkit-scrollbar { display: none; }
 
@@ -130,7 +128,6 @@ body {
     display: flex;
     flex-direction: column;
     height: calc(100dvh - var(--top-panel-h));
-    overflow: hidden;
 }
 .page-content {
     flex: 1;

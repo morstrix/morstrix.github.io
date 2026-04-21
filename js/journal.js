@@ -253,11 +253,10 @@ if (dots.length) {
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Создаем ScrollTrigger для каждой страницы
+  // Создаем ScrollTrigger для каждой страницы (native scroll)
   pages.forEach((page, i) => {
     ScrollTrigger.create({
       trigger: page,
-      scroller: wrapper,
       start: 'top center',
       end: 'bottom center',
       invalidateOnRefresh: true,
@@ -266,10 +265,9 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     });
   });
 
-  // Global snap для всего wrapper
+  // Global snap для всего документа
   ScrollTrigger.create({
-    trigger: wrapper,
-    scroller: wrapper,
+    trigger: '.journal-vertical',
     start: 'top top',
     end: 'bottom bottom',
     invalidateOnRefresh: true,
@@ -284,17 +282,17 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   // Обработка ресайза
   window.addEventListener('resize', () => {
     ScrollTrigger.refresh();
-    const ph = wrapper?.clientHeight || window.innerHeight;
-    const scrollPos = wrapper?.scrollTop || 0;
-    updateActiveDot(Math.round(scrollPos / ph));
+    const pageHeight = window.innerHeight;
+    const scrollPos = window.scrollY || 0;
+    updateActiveDot(Math.round(scrollPos / pageHeight));
   });
 
   window.addEventListener('orientationchange', () => {
     setTimeout(() => {
       ScrollTrigger.refresh();
-      const ph = wrapper?.clientHeight || window.innerHeight;
-      const scrollPos = wrapper?.scrollTop || 0;
-      updateActiveDot(Math.round(scrollPos / ph));
+      const pageHeight = window.innerHeight;
+      const scrollPos = window.scrollY || 0;
+      updateActiveDot(Math.round(scrollPos / pageHeight));
     }, 100);
   });
 }
@@ -304,15 +302,10 @@ window.scrollToPage = (index) => {
   index = Math.max(0, Math.min(totalPages - 1, index));
   window.currentPage = index;
 
-  const ph = wrapper?.clientHeight || window.innerHeight;
-  const targetY = index * ph;
+  const pageHeight = window.innerHeight;
+  const targetY = index * pageHeight;
 
-  if (wrapper) {
-    wrapper.scrollTo({ top: targetY, behavior: 'smooth' });
-  } else {
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-  }
-
+  window.scrollTo({ top: targetY, behavior: 'smooth' });
   updateActiveDot(index);
 };
 
