@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MORSTRIX | GRIM EX FRAME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 16px;
+        }
+        .profile-name {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .profile-role {
+            font-family: 'Tiny5', monospace;
+            font-size: 18px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+        .profile-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 300px;
+            align-items: center;
+        }
+        .profile-btns .universal-btn { width: 100%; text-align: center; }
+        .profile-btns .btn-inner { text-align: center; }
+        .spotify-embed {
+            width: 100%;
+            max-width: 380px;
+            margin: 10px 0;
+        }
+        .text-synth-block {
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .tts-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="cosmicCanvas"></canvas>
+
+<div class="top-panel">
+    <div></div>
+    <span class="text-primary" style="font-size:10px;font-family:'Press Start 2P',monospace;letter-spacing:2px;">✦ GRIM EX FRAME ✦</span>
+    <a href="index.html" class="panel-close">
+        <img src="assets/close.png" alt="Close">
+        <span class="panel-close-label text-primary">back</span>
+    </a>
+</div>
+
+<div style="padding-top: 80px;">
+    <div class="profile-layout">
+        <div class="profile-name">GRIM EX FRAME</div>
+        <div class="profile-role">DEVELOPER / CREATIVE CODER</div>
+
+        <div class="profile-btns">
+            <a href="https://www.linkedin.com/in/grimexframe" target="_blank" class="universal-btn" style="text-decoration:none;">
+                <span class="btn-inner"><span>🔗 LINKEDIN</span></span>
+            </a>
+            <a href="https://github.com/grimexframe" target="_blank" class="universal-btn" style="text-decoration:none;">
+                <span class="btn-inner"><span>💻 GITHUB</span></span>
+            </a>
+            <button class="universal-btn" id="instaBtn">
+                <span class="btn-inner"><span>📷 INSTAGRAM</span></span>
+            </button>
+            <a href="https://www.threads.net/@grimexframe" target="_blank" class="universal-btn" style="text-decoration:none;">
+                <span class="btn-inner"><span>🧵 THREADS</span></span>
+            </a>
+            <a href="https://www.tiktok.com/@grimexframe" target="_blank" class="universal-btn" style="text-decoration:none;">
+                <span class="btn-inner"><span>🎵 TIKTOK</span></span>
+            </a>
+        </div>
+
+        <!-- Spotify -->
+        <div class="spotify-embed">
+            <iframe
+                style="border-radius:12px; width:100%; height:152px;"
+                src="https://open.spotify.com/embed/playlist/4OlXDv0Eohv6N2EzQ97Ngl?utm_source=generator&theme=0"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+        </div>
+
+        <!-- TTS Synth -->
+        <div class="text-synth-block">
+            <div class="tts-title">TEXT SYNTH</div>
+            <input type="text" id="ttsTextInput" class="styler-input" placeholder="TYPE TEXT">
+            <select id="ttsVoiceSelect" class="styler-input"></select>
+            <button class="universal-btn" id="ttsSpeakBtn">
+                <span class="btn-inner"><span>SPEAK</span></span>
+            </button>
+            <div id="ttsStatus" style="font-family:'Tiny5',monospace;color:var(--text-secondary);font-size:14px;min-height:18px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Instagram disclaimer -->
+<div id="instaModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">INSTAGRAM</span>
+            <button class="modal-close-btn" data-modal="instaModal">✜</button>
+        </div>
+        <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;">
+            <p class="text-secondary" style="margin-bottom:20px;">Переход на Instagram. Продолжить?</p>
+            <button class="universal-btn" data-href="https://www.instagram.com/grimexframe">
+                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="js/cosmic-bg.js"></script>
+<script>
+(function() {
+    function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+    function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+
+    document.getElementById('instaBtn')?.addEventListener('click', () => openModal('instaModal'));
+
+    document.querySelectorAll('[data-href]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            window.open(this.dataset.href, '_blank');
+        });
+    });
+
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.modal;
+            if (id) closeModal(id);
+        });
+    });
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+        o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+    });
+
+    // TTS
+    let voices = [];
+    const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
+    const ttsTextInput = document.getElementById('ttsTextInput');
+    const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
+    const ttsStatus = document.getElementById('ttsStatus');
+
+    function loadVoices() {
+        voices = speechSynthesis.getVoices();
+        if (ttsVoiceSelect) {
+            ttsVoiceSelect.innerHTML = '';
+            voices.forEach(voice => {
+                const opt = document.createElement('option');
+                opt.value = voice.name;
+                opt.textContent = `${voice.lang} - ${voice.name}`;
+                ttsVoiceSelect.appendChild(opt);
+            });
+            const ukr = voices.find(v => v.lang.startsWith('uk'));
+            const rus = voices.find(v => v.lang.startsWith('ru'));
+            if (ukr) ttsVoiceSelect.value = ukr.name;
+            else if (rus) ttsVoiceSelect.value = rus.name;
+        }
+    }
+    if (typeof speechSynthesis !== 'undefined') {
+        speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+    }
+
+    function speak(text) {
+        if (!text.trim()) { ttsStatus.textContent = 'Введите текст'; return; }
+        speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(text);
+        const sel = ttsVoiceSelect?.value;
+        if (sel) { const v = voices.find(v => v.name === sel); if (v) utt.voice = v; }
+        utt.onstart = () => ttsStatus.textContent = '▶ Воспроизведение';
+        utt.onend = () => ttsStatus.textContent = '';
+        utt.onerror = e => ttsStatus.textContent = 'Ошибка: ' + e.error;
+        speechSynthesis.speak(utt);
+    }
+
+    ttsSpeakBtn?.addEventListener('click', () => speak(ttsTextInput?.value || ''));
+    ttsTextInput?.addEventListener('keypress', e => { if (e.key === 'Enter') speak(ttsTextInput.value); });
+})();
+</script>
+</body>
+</html>

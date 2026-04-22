@@ -4,313 +4,535 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MORSTRIX | PORTAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { height: 100%; overflow: hidden; }
-        
+        .journal-wrapper { height: auto !important; overflow-y: visible !important; }
+        .journal-vertical { display: block; }
+        .journal-page {
+            height: auto !important;
+            min-height: auto !important;
+            border-bottom: none;
+            padding: 30px 0;
+        }
+        .page-content { justify-content: flex-start; gap: 20px; }
+        html, body { overflow-y: auto; overflow-x: hidden; }
+        .top-panel { display: flex; align-items: center; justify-content: center; }
 
-        body {
-            background: #000000;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* ===== AUTO CAROUSEL ===== */
+        #sec-carousel .page-content { align-items: center; }
+        .carousel { width: 100%; max-width: 480px; }
+        .carousel img { max-height: 42vh; width: 100%; object-fit: contain; }
+
+        /* ===== TWITTER ===== */
+        #sec-twitter .page-content { align-items: center; }
+        .twitter-section { flex-direction: column; align-items: center; }
+
+        /* ===== ART — градиентная рамка ===== */
+        #sec-art .page-content { align-items: center; }
+        .art-feed-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .art-block {
+            flex: 0 0 min(300px, 80vw);
+            width: min(300px, 80vw);
+            aspect-ratio: 1/1;
+            padding: 3px;
+            background: linear-gradient(135deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515);
+        }
+        .art-block img {
+            width: 100%; height: 100%;
+            object-fit: contain; image-rendering: pixelated;
+            display: block; background: #000;
+        }
+
+        /* ===== PAINT ===== */
+        #sec-paint .page-content { align-items: center; }
+
+        /* ===== BEHANCE + FONT ===== */
+        #sec-behance-font .page-content { align-items: center; gap: 16px; }
+        .behance-font-preview {
+            max-width: 80%; image-rendering: pixelated;
+            max-height: 200px; object-fit: contain;
+        }
+        .brandbook-desc {
+            font-family: 'Tiny5', monospace;
+            font-size: 16px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 320px;
+            line-height: 1.5;
+            padding: 0 12px;
+        }
+        .behance-font-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== STYLER ===== */
+        #sec-styler .page-content { align-items: center; }
+        .styler-embedded { max-width: 360px; width: 90%; }
+
+        /* ===== FORUM — убраны заголовки, текст по центру ===== */
+        #sec-forum .page-content { padding: 20px 12px; gap: 15px; }
+        .forum-content-embedded {
             justify-content: center;
-            font-family: 'Press Start 2P', monospace;
-            color: #fff;
-            overflow: hidden;
-            padding: 20px;
-        }
-        
-        .top-row {
-            display: flex;
-            gap: 100px;
-            justify-content: center;
             align-items: center;
-            flex: 1;
-            padding-top: 10vh;
         }
-        .index-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .index-card img {
-            width: min(140px, 25vw);
-            height: min(140px, 25vw);
-            image-rendering: pixelated;
-            margin-bottom: 0px;
-        }
-        .index-card video {
-            width: 140px;
-            height: 140px;
-            image-rendering: pixelated;
-            margin-bottom: 0px;
-            object-fit: cover;
-            pointer-events: none;
-        }
-        .index-card span {
-            font-size: clamp(10px, 3vw, 14px);
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-        
-        .bottom-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: max(15px, env(safe-area-inset-bottom));
-            gap: clamp(15px, 4vh, 30px);
-            flex-shrink: 0;
-        }
-        
-        .team-btn {
-            cursor: pointer;
+        /* скрываем h3 заголовок форума */
+        #forumTitleEmbedded { display: none; }
+        #forumTextEmbedded {
+            font-size: 18px !important;
             text-align: center;
         }
-        .team-btn span {
-            font-family: "Tiny5", sans-serif;
-            font-size: clamp(12px, 3.5vw, 16px);
-            color: #888888;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            text-shadow: 2px 2px 0 #3d2a2f;
-        }
-        .team-btn:hover span { color: #a84d6b; }
-        
-        .donate-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        .donate-line {
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(74, 21, 21, 0.3) 15%,
-                rgba(139, 58, 58, 0.6) 30%,
-                #a84d6b 50%,
-                rgba(139, 58, 58, 0.6) 70%,
-                rgba(74, 21, 21, 0.3) 85%,
-                transparent 100%
-            );
-            margin-bottom: 8px;
-        }
-        .donate-label {
-            font-size: clamp(10px, 3vw, 14px);
-            color: #a27791;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            cursor: pointer;
-        }
-        .donate-label:hover { color: #ffb7c7; }
-        .donate-sub {
-            font-size: clamp(7px, 2vw, 9px);
-            color: #a27791;
-        }
-        
-        @media (max-width: 700px) {
-            .top-row { gap: 50px; padding-top: 5vh; }
-            .index-card img { width: 100px; height: 100px; }
-            .index-card video { width: 100px; height: 100px; }
-            .index-card span { font-size: 11px; }
-        }
-        @media (max-width: 450px) {
-            .top-row { gap: 30px; padding-top: 0; }
-            .index-card img { width: 80px; height: 80px; }
-            .index-card video { width: 80px; height: 80px; }
-            .index-card span { font-size: 9px; letter-spacing: 2px; }
-            .team-btn span { letter-spacing: 4px; }
-            .donate-label { letter-spacing: 3px; }
-            .donate-section { gap: 5px; }
-        }
 
-        /* Модалки */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(3px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: #a27791; border: 4px solid #b97272;
-            box-shadow: inset 0 0 0 2px #000, 0 0 0 2px #000;
-            max-width: 500px; width: 95%; max-height: 85vh; overflow-y: auto;
-        }
-        .modal-header {
-            background: #79434a; padding: 12px; display: flex;
-            justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #000;
-        }
-        .modal-title-text {
-            font-size: 11px; color: #fff; text-shadow: 2px 2px 0 #000;
-        }
-        .modal-close-btn {
-            background: #000; color: #fff; border: 2px solid #b97272;
-            width: 32px; height: 32px; font-size: 20px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .modal-inner {
-            padding: 20px; background: #a27791; text-align: center;
-        }
+        /* ===== TOP ===== */
+        #sec-top .page-content { align-items: center; gap: 12px; }
 
-        .team-choice-container {
-            display: flex; gap: 30px; justify-content: center; padding: 10px 0;
-        }
-        .team-choice {
-            cursor: pointer; text-align: center;
-        }
+        /* ===== TETRIS ===== */
+        #sec-tetris .page-content { align-items: center; }
+
+        /* ===== TEAM ===== */
+        #sec-team .page-content { align-items: center; gap: 20px; }
+        .team-choice-container { display: flex; gap: 30px; justify-content: center; }
+        .team-choice { cursor: pointer; text-align: center; text-decoration: none; }
         .team-choice img {
             width: 100px; height: 100px; image-rendering: pixelated;
-            border: 2px solid #b97272; background: #000;
-            object-fit: cover;
+            border: 2px solid #2a2a2a; display: block; object-fit: cover; background: #050505;
         }
         .team-choice span {
-            display: block; margin-top: 8px; font-size: 9px; color: #000;
-            text-shadow: 1px 1px 0 #aaa;
+            display: block; margin-top: 8px;
+            font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--text-primary);
         }
 
-        .social-icons {
-            display: flex; justify-content: center; gap: 20px; margin: 15px 0;
+        /* ===== DONATE — полоска почти на всю ширину ===== */
+        #sec-donate .page-content { align-items: center; gap: 12px; }
+        .donate-line {
+            width: 94vw;
+            max-width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%, rgba(74,21,21,0.3) 5%, rgba(139,58,58,0.6) 15%,
+                #a84d6b 50%, rgba(139,58,58,0.6) 85%, rgba(74,21,21,0.3) 95%, transparent 100%);
         }
-        .social-icons a {
-            font-size: 28px; text-decoration: none; color: #000;
-            transition: transform 0.1s;
+        .donate-label {
+            font-family: 'Press Start 2P', monospace; font-size: 11px;
+            color: #a27791; text-transform: uppercase; letter-spacing: 4px; cursor: pointer;
         }
-        .social-icons a:hover { transform: scale(1.1); color: #fff; }
+        .donate-label:hover { color: #ffb7c7; }
+        .donate-sub { font-family: 'Tiny5', monospace; font-size: 16px; color: #a27791; }
 
-        .linkedin-container { margin: 15px 0; min-height: 200px; }
-        .behance-embed { margin: 15px 0; }
-        .instagram-widget { margin: 20px 0; }
-
-        /* Cosmic Canvas Background */
-        #cosmicCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        /* ===== NAVIGATION ITEMS с pixel-canvas анимацией ===== */
+        .contents-item {
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            padding: 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #79434a;
+            color: var(--text-secondary) !important;
+            font-family: 'Tiny5', monospace;
+        }
+        .contents-item pixel-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
             pointer-events: none;
+        }
+        .contents-item:hover pixel-canvas { opacity: 1; }
+        .contents-item .nav-label {
+            position: relative;
+            z-index: 1;
+        }
+        .contents-item:hover { background: #1a1a2a; color: #fff !important; }
+
+        @media (max-width: 480px) {
+            .team-choice img { width: 80px; height: 80px; }
         }
     </style>
 </head>
 <body>
 <canvas id="cosmicCanvas"></canvas>
 
-<div class="top-row">
-    <a href="journal.html" class="index-card">
-        <img src="assets/journal.gif"
-             style="width:120px;height:120px;image-rendering:pixelated;"
-             draggable="false">
-        <span>JOURNAL</span>
-    </a>
-    <a href="store.html" class="index-card">
-        <img src="assets/space.png" alt="Store">
-        <span>STORE</span>
-    </a>
+<div class="top-panel">
+    <button class="panel-btn text-primary" id="contentsBtn" style="font-size: 18px;"><span>NAVIGATION</span></button>
 </div>
 
-<div class="bottom-section">
-    <div class="donate-section">
-        <div class="donate-line"></div>
-        <div class="donate-label" id="donateBtn">DONATE</div>
-        <div class="donate-sub">monobank</div>
+<div class="journal-wrapper">
+  <div class="journal-vertical" id="journalVertical">
+
+    <!-- 1. RSS TICKER -->
+    <div class="journal-page" id="sec-ticker" data-page="1">
+        <div class="page-content">
+            <div class="ticker-wrapper">
+                <div class="ticker" id="rssTicker">✦ MORSTRIX ✦</div>
+            </div>
+        </div>
     </div>
+
+    <!-- 2. AUTO CAROUSEL -->
+    <div class="journal-page" id="sec-carousel" data-page="2">
+        <div class="page-content">
+            <div class="carousel-section">
+                <div class="carousel" id="mainCarousel">
+                    <img src="assets/mx1.jpg" class="active">
+                    <img src="assets/mx2.jpg">
+                </div>
+                <div class="hashtag-row"><span class="hashtag text-secondary">#layoutporn</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. TWITTER -->
+    <div class="journal-page" id="sec-twitter" data-page="3">
+        <div class="page-content">
+            <div class="twitter-section">
+                <img src="assets/twit.png" class="x-btn-img" id="twitterBtn">
+                <span class="twitter-label text-primary">twitter</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ART -->
+    <div class="journal-page" id="sec-art" data-page="4">
+        <div class="page-content">
+            <div class="art-feed-row">
+                <div class="art-block">
+                    <img id="currentArtPreview" src="assets/art.jpg" alt="Art">
+                </div>
+                <div class="archive-block text-primary" id="archiveBtn">
+                    <img src="assets/archive.png" alt="Archive" class="archive-img">
+                    <span class="archive-label">FEED</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. PAINT -->
+    <div class="journal-page" id="sec-paint" data-page="5">
+        <div class="page-content">
+            <div class="paint-cell">
+                <img src="assets/paint.png" alt="Paint" id="paintJournalBtn" class="paint-trigger-img">
+                <span class="control-label text-primary">paint</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. BEHANCE + FONT -->
+    <div class="journal-page" id="sec-behance-font" data-page="6">
+        <div class="page-content">
+            <img src="assets/f1.jpg" alt="Preview" class="behance-font-preview">
+            <p class="brandbook-desc">
+                MORSTRIX — DIY бренд с упором на raw-эстетику, pixel-art и уличную культуру.
+                Брендбук включает гайдлайны по типографике, цвету и айдентике.
+            </p>
+            <div class="behance-font-row">
+                <button id="behanceBtn" class="universal-btn">
+                    <span class="btn-inner"><span>BEHANCE</span></span>
+                </button>
+                <button id="fontModalBtn" class="universal-btn">
+                    <span class="btn-inner"><span>FONT</span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. STYLER -->
+    <div class="journal-page" id="sec-styler" data-page="7">
+        <div class="page-content">
+            <div class="styler-embedded">
+                <input type="text" id="fontInputEmbedded" class="styler-input" placeholder="TYPE TEXT">
+                <div class="styler-preview" id="stylerPreviewEmbedded"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. FORUM -->
+    <div class="journal-page" id="sec-forum" data-page="8">
+        <div class="page-content forum-support-layout">
+            <div class="forum-embedded">
+                <div class="forum-tabs-panel-embedded">
+                    <div class="forum-tab active text-primary" data-tab="wellness">WELL</div>
+                    <div class="forum-tab text-primary" data-tab="interior">HOME</div>
+                    <div class="forum-tab text-primary" data-tab="radio">RADIO</div>
+                    <div class="forum-tab text-primary" data-tab="itai">ITAI</div>
+                    <div class="forum-tab text-primary" data-tab="english">EN</div>
+                    <div class="forum-tab text-primary" data-tab="design">DSGN</div>
+                    <div class="forum-tab text-primary" data-tab="tattoo">TAT</div>
+                    <div class="forum-tab text-primary" data-tab="money">MNY</div>
+                    <div class="forum-tab text-primary" data-tab="barbering">BARB</div>
+                </div>
+                <div class="forum-content-embedded">
+                    <h3 id="forumTitleEmbedded" class="text-primary">🌿 ВЕЛНЕС</h3>
+                    <p id="forumTextEmbedded" class="text-secondary">Йога, медитации...</p>
+                </div>
+            </div>
+            <div class="forum-actions">
+                <button class="universal-btn" id="forumFullBtn"><span class="btn-inner"><span>FULL</span></span></button>
+                <button class="universal-btn" id="supportBtn"><span class="btn-inner"><span>SUPPORT</span></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. TOP -->
+    <div class="journal-page" id="sec-top" data-page="9">
+        <div class="page-content top-tetris-layout">
+            <h4 class="top-title text-primary">TOP</h4>
+            <div class="top-players-framed"><div class="top-players-list"></div></div>
+        </div>
+    </div>
+
+    <!-- 10. TETRIS -->
+    <div class="journal-page" id="sec-tetris" data-page="10">
+        <div class="page-content">
+            <a href="tetris.html" target="_blank" class="tetris-big">
+                <img src="assets/tetris.png" alt="TETRIS">
+                <span class="text-primary">PLAY TETRIS</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 11. TEAM -->
+    <div class="journal-page" id="sec-team" data-page="11">
+        <div class="page-content">
+            <div class="team-choice-container">
+                <a href="morsova.html" class="team-choice">
+                    <img src="assets/a.png" alt="DES">
+                    <span>DESIGNER</span>
+                </a>
+                <a href="ex.html" class="team-choice">
+                    <img src="assets/x.png" alt="DEV">
+                    <span>DEVELOPER</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. DONATE -->
+    <div class="journal-page" id="sec-donate" data-page="12">
+        <div class="page-content">
+            <div class="donate-line"></div>
+            <div class="donate-label" id="donateBtn">DONATE</div>
+            <div class="donate-sub">monobank</div>
+        </div>
+    </div>
+
+  </div>
 </div>
 
-
-
-<div id="adaModal" class="modal-overlay">
+<!-- ===== MODALS ===== -->
+<div id="contentsModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">✦ ADA MORSOVA ✦</span>
-            <button class="modal-close-btn" data-modal="adaModal">✜</button>
+            <span class="modal-title-text">NAVIGATION</span>
+            <button class="modal-close-btn" data-modal="contentsModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="morsova" data-version="v1"></div>
-            <div class="behance-embed">
-                <iframe src="https://www.behance.net/embed/project/246943027?ilo0=1" height="200" width="100%" style="border:none;"></iframe>
+        <div class="modal-inner" style="padding:0;">
+            <div class="contents-item" data-anchor="sec-ticker">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">1. TICKER</span>
             </div>
-            <div class="instagram-widget">
-                <behold-widget feed-id="UBHqIRXRQc286kYl07UN"></behold-widget>
+            <div class="contents-item" data-anchor="sec-carousel">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">2. CAROUSEL</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-twitter">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">3. TWITTER</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-art">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">4. ART</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-paint">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">5. PAINT</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-behance-font">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">6. BEHANCE / FONT</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-styler">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">7. STYLER</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-forum">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">8. FORUM</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-top">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">9. TOP</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-tetris">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">10. TETRIS</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-team">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">11. TEAM</span>
+            </div>
+            <div class="contents-item" data-anchor="sec-donate">
+                <pixel-canvas data-colors="#a27791,#8B3A3A,#a84d6b" data-gap="6" data-speed="70"></pixel-canvas>
+                <span class="nav-label">12. DONATE</span>
             </div>
         </div>
     </div>
 </div>
 
-<div id="exModal" class="modal-overlay">
+<div id="disclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">✦ GRIM EX FRAME ✦</span>
-            <button class="modal-close-btn" data-modal="exModal">✜</button>
+            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <div class="badge-base LI-profile-badge" data-locale="ru_RU" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="grimexframe" data-version="v1"></div>
-            <div class="social-icons">
-                <a href="https://github.com/grimexframe" target="_blank" title="GitHub">🐙</a>
-            </div>
-            <div class="instagram-widget">
-                <behold-widget feed-id="Ew8dq23tImFHuva5wjDT"></behold-widget>
-            </div>
-            <div class="social-icons">
-                <a href="https://www.threads.net/@grimexframe" target="_blank" title="Threads">🧵</a>
-                <a href="https://www.tiktok.com/@grimexframe" target="_blank" title="TikTok">🎵</a>
-            </div>
+        <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;">
+            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите на внешний ресурс Twitter/X. Продолжить?</p>
+            <button class="universal-btn" data-href="https://x.com">
+                <span class="btn-inner"><span>ENTER</span></span>
+            </button>
         </div>
     </div>
 </div>
 
+<div id="behanceDisclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <button class="modal-close-btn" data-modal="behanceDisclaimerModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите на Behance. Продолжить?</p>
+            <button class="universal-btn" data-href="https://www.behance.net/gallery/246943027/_" data-modal-close="behanceDisclaimerModal">
+                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+            </button>
+        </div>
+    </div>
+</div>
 
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-<script type="module" src="https://w.behold.so/widget.js"></script>
-<script>
-    (function() {
-        function openModal(id) { document.getElementById(id)?.classList.add('active'); }
-        function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
-        
-        document.getElementById('donateBtn').addEventListener('click', () => {
-            const cardNumber = '5375 4141 1023 8683';
-            navigator.clipboard.writeText(cardNumber).then(() => {
-                // Открываем монобанк
-                window.location.href = 'https://send.monobank.ua/jar/8q9Kk2hkDV';
-            }).catch(() => {
-                // Если не удалось скопировать, всё равно переходим
-                window.location.href = 'https://send.monobank.ua/jar/8q9Kk2hkDV';
-            });
-        });
-        
-        document.querySelectorAll('.modal-close-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const modalId = btn.dataset.modal;
-                if (modalId) closeModal(modalId);
-            });
-        });
-        
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) overlay.classList.remove('active');
-            });
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-            }
-        });
-    })();
-</script>
+<div id="fontInfoModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">MORSTRIX FONT</span>
+            <button class="modal-close-btn" data-modal="fontInfoModal">✜</button>
+        </div>
+        <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+            <p class="text-secondary" style="text-align:center;">Custom MORSTRIX font — pixel-perfect, free to use.</p>
+            <button class="universal-btn" id="downloadArchiveBtnEmbedded">
+                <span class="btn-inner"><span>DOWNLOAD</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="forumDisclaimerModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <button class="modal-close-btn" data-modal="forumDisclaimerModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите в Telegram-группу форума. Продолжить?</p>
+            <button class="universal-btn" data-href="https://t.me/+n5Qg8d2h9qliMmRi" data-modal-close="forumDisclaimerModal">
+                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="stubModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text" id="stubModalTitle">FEED</span>
+            <button class="modal-close-btn" data-modal="stubModal">✜</button>
+        </div>
+        <div class="modal-inner">
+            <div id="feedContainer" class="feed-container"></div>
+        </div>
+    </div>
+</div>
+
+<div id="feedPreviewModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">ART PREVIEW</span>
+            <button class="modal-close-btn" data-modal="feedPreviewModal">✜</button>
+        </div>
+        <div class="modal-inner feed-preview-inner">
+            <img id="feedPreviewImage" src="" alt="Feed art preview">
+        </div>
+    </div>
+</div>
+
+<div id="supportModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title-text">SUPPORT</span>
+            <button class="modal-close-btn" data-modal="supportModal">✜</button>
+        </div>
+        <div class="modal-inner support-modal-inner">
+            <script async src="https://telegram.org/js/telegram-widget.js?23" data-telegram-discussion="morstrix/71" data-comments-limit="20" data-width="100%"></script>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="js/script.js"></script>
 <script src="js/cosmic-bg.js"></script>
+
+<script>
+(function() {
+    // ===== NAVIGATION anchor scroll =====
+    document.querySelectorAll('.contents-item[data-anchor]').forEach(item => {
+        item.addEventListener('click', () => {
+            const target = document.getElementById(item.dataset.anchor);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('contentsModal')?.classList.remove('active');
+        });
+    });
+
+    // ===== DONATE =====
+    document.getElementById('donateBtn')?.addEventListener('click', () => {
+        navigator.clipboard.writeText('5375 4141 1023 8683').catch(() => {});
+        window.location.href = 'https://send.monobank.ua/jar/8q9Kk2hkDV';
+    });
+
+    // ===== FONT MODAL =====
+    document.getElementById('fontModalBtn')?.addEventListener('click', () => {
+        document.getElementById('fontInfoModal')?.classList.add('active');
+    });
+
+    // ===== STYLER TYPEWRITER =====
+    (function() {
+        const input = document.getElementById('fontInputEmbedded');
+        if (!input) return;
+        const placeholder = 'TYPE TEXT';
+        let timer = null, isTyping = true, charIndex = 0;
+        function animate() {
+            if (timer) clearTimeout(timer);
+            if (isTyping) {
+                if (charIndex < placeholder.length) {
+                    input.placeholder = placeholder.substring(0, charIndex + 1) + ' █';
+                    charIndex++;
+                    timer = setTimeout(animate, 120);
+                } else { isTyping = false; timer = setTimeout(animate, 1500); }
+            } else {
+                if (charIndex > 0) {
+                    charIndex--;
+                    input.placeholder = placeholder.substring(0, charIndex) + ' █';
+                    timer = setTimeout(animate, 80);
+                } else { isTyping = true; input.placeholder = ' █'; timer = setTimeout(animate, 300); }
+            }
+        }
+        function start() {
+            if (input.value === '') { isTyping = true; charIndex = 0; input.placeholder = ' █'; if (timer) clearTimeout(timer); timer = setTimeout(animate, 300); }
+        }
+        function stop() { if (timer) clearTimeout(timer); input.placeholder = ''; }
+        input.addEventListener('focus', stop);
+        input.addEventListener('blur', () => { if (input.value === '') start(); });
+        start();
+    })();
+
+})();
+</script>
 </body>
 </html>
