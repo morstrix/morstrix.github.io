@@ -1,0 +1,12 @@
+name = "api-proxy-morstrix"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+logs = { enabled = true, invocation_logs = true }
+traces = {}
+
+[[services]]
+binding = "MORSTRIXBOT_SERVICE"
+service = "morstrixbot"
