@@ -7,41 +7,170 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Tiny5&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        body { background: #000; }
+        #cosmicCanvas { display: none !important; }
+
+        .profile-shell {
+            padding: calc(var(--top-panel-h) + 20px) 16px 28px;
+        }
         .profile-layout {
+            width: min(100%, 860px);
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            padding: 20px 16px;
+            gap: 22px;
         }
-        .profile-name {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 11px;
-            color: var(--text-primary);
-            letter-spacing: 3px;
-            text-align: center;
-            margin-top: 8px;
+        .widget-stack {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
         }
-        .profile-role {
+        .linkedin-badge-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .badge-base {
+            min-width: min(100%, 320px);
+        }
+        .profile-links-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .pixel-action {
+            border: 0;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: none;
+            appearance: none;
+            -webkit-appearance: none;
+            font: inherit;
+        }
+        .pixel-action img {
+            width: 86px;
+            height: 86px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            display: block;
+        }
+        .pixel-action-label {
             font-family: 'Tiny5', monospace;
             font-size: 18px;
             color: var(--text-secondary);
-            letter-spacing: 2px;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+            line-height: 1;
         }
-        .profile-btns {
+        #moodModal .modal-content {
+            width: fit-content;
+            max-width: min(92vw, 430px);
+        }
+        #moodModal .modal-inner {
+            padding: 8px;
+        }
+        #moodModal .pinterest-widget-container {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .constructor-panel {
+            width: min(100%, 420px);
+            border: 2px solid transparent;
+            border-image: linear-gradient(90deg, #4a1515, #8B3A3A, #a84d6b, #8B3A3A, #4a1515) 1;
+            background: #000;
+            padding: 18px 16px 20px;
+        }
+        .constructor-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .merch-constructor {
+            text-align: center;
+        }
+        .tshirt-preview {
+            position: relative;
+            width: min(200px, 60vw);
+            margin: 0 auto 16px;
+        }
+        .tshirt-preview img {
+            width: 100%;
+            display: block;
+        }
+        #printCanvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+        }
+        .constructor-controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            max-width: 300px;
             align-items: center;
+            gap: 10px;
         }
-        .profile-btns .universal-btn { width: 100%; text-align: center; }
-        .profile-btns .btn-inner { text-align: center; }
-        /* Pinterest widget container */
-        .pinterest-widget-container {
-            max-width: 400px;
-            width: 100%;
+        .upload-label {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #000;
+            border: 2px dashed #888;
+            cursor: pointer;
+        }
+        .upload-label span {
+            font-family: 'Tiny5', monospace;
+            color: #888;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        .modal-inner-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            :root { --top-panel-h: 50px; }
+            .profile-shell {
+                padding-top: calc(var(--top-panel-h) + 16px);
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            .profile-layout {
+                gap: 18px;
+            }
+            .profile-links-row {
+                gap: 12px;
+            }
+            .pixel-action img {
+                width: 72px;
+                height: 72px;
+            }
+            .pixel-action-label {
+                font-size: 16px;
+            }
+            .constructor-panel {
+                padding: 16px 12px 18px;
+            }
         }
     </style>
 </head>
@@ -50,49 +179,71 @@
 
 <div class="top-panel">
     <div></div>
-    <span class="text-primary" style="font-size:12px;font-family:'Press Start 2P',monospace;letter-spacing:2px;">✦ ADA MORSOVA ✦</span>
     <a href="index.html" class="panel-close">
         <img src="assets/close.png" alt="Close">
         <span class="panel-close-label text-primary">back</span>
     </a>
 </div>
 
-<div style="padding-top: 80px;">
+<main class="profile-shell">
     <div class="profile-layout">
-        <div class="profile-name">ADA MORSOVA</div>
-        <div class="profile-role">DESIGNER / ART DIRECTOR</div>
+        <div class="widget-stack">
+            <div class="linkedin-badge-wrap">
+                <div class="badge-base LI-profile-badge"
+                     data-locale="en_US"
+                     data-size="large"
+                     data-theme="dark"
+                     data-type="VERTICAL"
+                     data-vanity="morsova"
+                     data-version="v1">
+                    <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/morsova/"></a>
+                </div>
+            </div>
 
-        <div class="profile-btns">
-            <a href="https://www.linkedin.com/in/morsova" target="_blank" class="universal-btn" style="text-decoration:none;">
-                <span class="btn-inner"><span>🔗 LINKEDIN</span></span>
-            </a>
+            <div class="profile-links-row">
+                <button class="pixel-action" id="moodBtn" type="button">
+                    <img src="assets/mood.png" alt="Mood board">
+                    <span class="pixel-action-label">mood</span>
+                </button>
 
-            <button class="universal-btn" id="moodBtn">
-                <span class="btn-inner"><span>🎨 MOOD BOARD</span></span>
-            </button>
+                <button class="pixel-action" id="instaBtn" type="button">
+                    <img src="assets/insta.png" alt="Instagram">
+                    <span class="pixel-action-label">insta</span>
+                </button>
+            </div>
 
-            <button class="universal-btn" id="instaBtn">
-                <span class="btn-inner"><span>📷 INSTAGRAM</span></span>
-            </button>
-
-            <button class="universal-btn" id="constructorBtn">
-                <span class="btn-inner"><span>👕 CONSTRUCTOR</span></span>
-            </button>
+            <section class="constructor-panel">
+                <h2 class="constructor-title">Constructor</h2>
+                <div class="merch-constructor">
+                    <div class="tshirt-preview">
+                        <img src="assets/tshirt.jpeg" alt="T-shirt">
+                        <canvas id="printCanvas"></canvas>
+                    </div>
+                    <div class="constructor-controls">
+                        <label for="imageUpload" class="upload-label">
+                            <span>choose file</span>
+                        </label>
+                        <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+                        <button class="universal-btn" id="resetPrint" type="button">
+                            <span class="btn-inner"><span>CLEAR</span></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
-</div>
+</main>
 
-<!-- Mood modal (Pinterest) -->
 <div id="moodModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">MOOD BOARD</span>
+            <span class="modal-title-text">MOOD</span>
             <button class="modal-close-btn" data-modal="moodModal">✜</button>
         </div>
         <div class="modal-inner" style="padding:10px;">
             <div class="pinterest-widget-container">
                 <a data-pin-do="embedBoard"
-                   href="https://www.pinterest.com/morstrix/re-f-erences/"
+                   href="https://ru.pinterest.com/morsovaada/reference/"
                    data-pin-scale-width="400"
                    data-pin-scale-height="400"
                    data-pin-board-width="400"></a>
@@ -101,50 +252,22 @@
     </div>
 </div>
 
-<!-- Instagram disclaimer -->
 <div id="instaModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
             <span class="modal-title-text">INSTAGRAM</span>
             <button class="modal-close-btn" data-modal="instaModal">✜</button>
         </div>
-        <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;">
-            <p class="text-secondary" style="margin-bottom:20px;">Переход на Instagram. Продолжить?</p>
+        <div class="modal-inner modal-inner-centered">
+            <p class="text-secondary" style="margin-bottom:20px;">open?</p>
             <button class="universal-btn" data-href="https://www.instagram.com/morstrix">
-                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+                <span class="btn-inner"><span>ENTER</span></span>
             </button>
         </div>
     </div>
 </div>
 
-<!-- Constructor modal -->
-<div id="constructorModal" class="modal-overlay">
-    <div class="modal-content" style="max-width:400px;">
-        <div class="modal-header">
-            <span class="modal-title-text">CONSTRUCTOR</span>
-            <button class="modal-close-btn" data-modal="constructorModal">✜</button>
-        </div>
-        <div class="modal-inner">
-            <div class="merch-constructor" style="text-align:center;">
-                <div class="tshirt-preview" style="position:relative;width:200px;margin:0 auto 15px;">
-                    <img src="assets/tshirt.jpeg" style="width:100%;display:block;" alt="T-shirt">
-                    <canvas id="printCanvas" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;"></canvas>
-                </div>
-                <div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:10px;">
-                    <label for="imageUpload" style="display:inline-block;padding:10px 18px;background:#000;border:2px dashed #888;cursor:pointer;">
-                        <span style="font-family:'Tiny5',monospace;color:#888;font-size:16px;text-transform:uppercase;">choose file</span>
-                    </label>
-                    <input type="file" id="imageUpload" accept="image/*" style="display:none;">
-                    <button class="universal-btn" id="resetPrint">
-                        <span class="btn-inner"><span>CLEAR</span></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="js/cosmic-bg.js"></script>
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
 <script>
 (function() {
@@ -155,17 +278,14 @@
         openModal('moodModal');
         if (window.PinUtils) window.PinUtils.build();
     });
+
     document.getElementById('instaBtn')?.addEventListener('click', () => openModal('instaModal'));
-    document.getElementById('constructorBtn')?.addEventListener('click', () => {
-        openModal('constructorModal');
-        initConstructor();
-    });
 
     document.querySelectorAll('[data-href]').forEach(btn => {
         btn.addEventListener('click', function() {
             window.open(this.dataset.href, '_blank');
-            const mc = this.dataset.modalClose;
-            if (mc) closeModal(mc);
+            const modalId = this.closest('.modal-overlay')?.id;
+            if (modalId) closeModal(modalId);
         });
     });
 
@@ -175,33 +295,46 @@
             if (id) closeModal(id);
         });
     });
-    document.querySelectorAll('.modal-overlay').forEach(o => {
-        o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
-    });
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', event => {
+            if (event.target === overlay) overlay.classList.remove('active');
+        });
     });
 
-    let constructorInited = false;
-    function initConstructor() {
-        if (constructorInited) return;
-        constructorInited = true;
-        const canvas = document.getElementById('printCanvas');
-        const upload = document.getElementById('imageUpload');
-        if (!canvas || !upload) return;
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(modal => modal.classList.remove('active'));
+        }
+    });
+
+    const canvas = document.getElementById('printCanvas');
+    const upload = document.getElementById('imageUpload');
+    const reset = document.getElementById('resetPrint');
+    if (canvas && upload) {
         const ctx = canvas.getContext('2d');
-        canvas.width = 80; canvas.height = 80;
-        upload.addEventListener('change', e => {
-            const file = e.target.files[0]; if (!file) return;
+        canvas.width = 80;
+        canvas.height = 80;
+
+        upload.addEventListener('change', event => {
+            const file = event.target.files?.[0];
+            if (!file) return;
             const reader = new FileReader();
-            reader.onload = ev => {
+            reader.onload = loadEvent => {
                 const img = new Image();
-                img.onload = () => { ctx.clearRect(0,0,80,80); ctx.drawImage(img,0,0,80,80); };
-                img.src = ev.target.result;
+                img.onload = () => {
+                    ctx.clearRect(0, 0, 80, 80);
+                    ctx.drawImage(img, 0, 0, 80, 80);
+                };
+                img.src = loadEvent.target?.result;
             };
             reader.readAsDataURL(file);
         });
-        document.getElementById('resetPrint')?.addEventListener('click', () => { ctx.clearRect(0,0,80,80); upload.value=''; });
+
+        reset?.addEventListener('click', () => {
+            ctx.clearRect(0, 0, 80, 80);
+            upload.value = '';
+        });
     }
 })();
 </script>
