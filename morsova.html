@@ -271,15 +271,47 @@
 <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
 <script>
 (function() {
-    function openModal(id) { document.getElementById(id)?.classList.add('active'); }
+    function openModal(id, withSound = true) {
+        document.getElementById(id)?.classList.add('active');
+        if (withSound) playDisclaimerBlip();
+    }
     function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
+    const uiBlipAudio = new Audio('assets/blip.mp3');
+    uiBlipAudio.preload = 'auto';
+    uiBlipAudio.playsInline = true;
+    uiBlipAudio.load();
+
+    function warmUpUiBlip() {
+        const playAttempt = uiBlipAudio.play();
+        if (playAttempt && typeof playAttempt.then === 'function') {
+            playAttempt.then(() => {
+                uiBlipAudio.pause();
+                uiBlipAudio.currentTime = 0;
+            }).catch(() => {});
+        }
+    }
+
+    document.addEventListener('pointerdown', warmUpUiBlip, { once: true });
+    document.addEventListener('touchstart', warmUpUiBlip, { once: true });
+    document.addEventListener('keydown', warmUpUiBlip, { once: true });
+
+    function playDisclaimerBlip() {
+        uiBlipAudio.pause();
+        uiBlipAudio.currentTime = 0;
+        const playAttempt = uiBlipAudio.play();
+        if (playAttempt && typeof playAttempt.catch === 'function') {
+            playAttempt.catch(error => console.warn('UI blip failed', error));
+        }
+    }
 
     document.getElementById('moodBtn')?.addEventListener('click', () => {
         openModal('moodModal');
         if (window.PinUtils) window.PinUtils.build();
     });
 
-    document.getElementById('instaBtn')?.addEventListener('click', () => openModal('instaModal'));
+    document.getElementById('instaBtn')?.addEventListener('click', () => {
+        openModal('instaModal');
+    });
 
     document.querySelectorAll('[data-href]').forEach(btn => {
         btn.addEventListener('click', function() {

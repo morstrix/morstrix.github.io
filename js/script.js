@@ -510,8 +510,41 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         carousel.addEventListener('click', () => clearInterval(carouselInterval));
     }
 
+    // ===== UI BLIP =====
+    const uiBlipAudio = new Audio('assets/blip.mp3');
+    uiBlipAudio.preload = 'auto';
+    uiBlipAudio.playsInline = true;
+    uiBlipAudio.load();
+
+    function warmUpUiBlip() {
+        const playAttempt = uiBlipAudio.play();
+        if (playAttempt && typeof playAttempt.then === 'function') {
+            playAttempt.then(() => {
+                uiBlipAudio.pause();
+                uiBlipAudio.currentTime = 0;
+            }).catch(() => {});
+        }
+    }
+
+    document.addEventListener('pointerdown', warmUpUiBlip, { once: true });
+    document.addEventListener('touchstart', warmUpUiBlip, { once: true });
+    document.addEventListener('keydown', warmUpUiBlip, { once: true });
+
+    function playUiMenuBlip() {
+        uiBlipAudio.pause();
+        uiBlipAudio.currentTime = 0;
+        const playAttempt = uiBlipAudio.play();
+        if (playAttempt && typeof playAttempt.catch === 'function') {
+            playAttempt.catch(error => console.warn('UI blip failed', error));
+        }
+    }
+    window.playUiMenuBlip = playUiMenuBlip;
+
     // ===== УТИЛИТЫ МОДАЛОК =====
-    function openModal(id){ document.getElementById(id)?.classList.add('active'); }
+    function openModal(id, withSound = true){
+        document.getElementById(id)?.classList.add('active');
+        if (withSound) playUiMenuBlip();
+    }
     function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
 
     // ===== TWITTER =====
