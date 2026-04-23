@@ -861,7 +861,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeBtn.addEventListener('click', () => {
-        window.location.href = 'journal.html';
+        window.location.href = 'index.html';
     });
 
     document.addEventListener('keydown', (e) => {

@@ -98,9 +98,10 @@ body {
 .control-bar {
     display: flex;
     justify-content: center;
-    gap: 35px;
+    gap: 48px;
     width: 100%;
-    padding: 20px 0 40px 0;
+    padding: 10px 0 26px 0;
+    margin-top: -4px;
 }
 .control-btn {
     background: transparent;
@@ -121,23 +122,23 @@ body {
 
 @media (min-width: 768px) {
     .control-btn { width: 80px; height: 80px; }
-    .control-bar { gap: 45px; }
+    .control-bar { gap: 64px; padding: 8px 0 24px 0; }
 }
 @media (max-width: 767px) {
     .control-btn { width: 70px; height: 70px; }
-    .control-bar { gap: 35px; }
+    .control-bar { gap: 54px; padding: 8px 0 22px 0; }
 }
 @media (max-width: 550px) {
     .control-btn { width: 65px; height: 65px; }
-    .control-bar { gap: 30px; }
+    .control-bar { gap: 42px; padding: 6px 0 20px 0; }
 }
 @media (max-width: 450px) {
     .control-btn { width: 60px; height: 60px; }
-    .control-bar { gap: 25px; }
+    .control-bar { gap: 34px; padding: 6px 0 18px 0; }
 }
 @media (max-width: 380px) {
     .control-btn { width: 55px; height: 55px; }
-    .control-bar { gap: 20px; }
+    .control-bar { gap: 24px; padding: 4px 0 16px 0; }
 }
 
 .modal-overlay {

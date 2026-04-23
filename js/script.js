@@ -916,15 +916,14 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
 
     // ===== ФОРУМ ВКЛАДКИ ==
     const contents = {
-        wellness: ['🌿 ВЕЛНЕС','Йога, медитации...'],
-        interior: ['🛋️ ИНТЕРЬЕР','Дизайн интерьеров...'],
-        radio:    ['📻 РАДИО','Музыка, подкасты...'],
-        itai:     ['🤖 IT / AI','Нейросети...'],
-        english:  ['📖 ENGLISH','Изучение английского...'],
-        design:   ['🎨 DESIGN','Графический дизайн...'],
-        tattoo:   ['💉 TATTOO','Тату-культура...'],
-        money:    ['💰 MONEY','Финансы...'],
-        barbering:['✂️ BARBER','Барберинг...']
+        wellness: ['WELLNESS','Йога, медитации, ментальне здоров\'я...'],
+        design:   ['DESIGN','Графічний дизайн, типографіка, UI...'],
+        diygear:  ['DIY / GEAR','Своїми руками, інструменти, майстерня...'],
+        itai:     ['IT / AI','Нейромережі, розробка, технології...'],
+        money:    ['MONEY','Фінанси, інвестиції, крипто...'],
+        radio:    ['RADIO','Музика, подкасти, плейлисти...'],
+        tattoo:   ['TATTOO','Тату-культура, ескізи, майстри...'],
+        travel:   ['TRAVEL','Подорожі, маршрути, лайфхаки...'],
     };
     document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(tab => {
         tab.addEventListener('click', ()=> {

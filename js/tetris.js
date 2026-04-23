@@ -1,4 +1,4 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
+import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
 import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -10,7 +10,7 @@ const firebaseConfig = {
     appId: "1:131536876451:web:eeaef494c83dfc4849e016"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,14 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationId = null;
     let gameActive = true;
     let lastTimestamp = 0;
+    const GAME_STATE_KEY = 'morstrix_tetris_state_v1';
 
     const COLS = 18;
     const ROWS = 22;
+    const BASE_FALL_SPEED = 0.002;
+    const MAX_FALL_SPEED = 0.0072;
 
-    // РџР›РђР’РќРћР• РџРђР”Р•РќРР•
-    let smoothY = 0;           // РїР»Р°РІРЅР°СЏ Y-РїРѕР·РёС†РёСЏ (РІ РєР»РµС‚РєР°С…, РјРѕР¶РµС‚ Р±С‹С‚СЊ РґСЂРѕР±РЅРѕР№)
-    let targetY = 0;           // С†РµР»РµРІР°СЏ РєР»РµС‚РєР° РїРѕ Y
-    let fallSpeed = 0.002;     // СЃРєРѕСЂРѕСЃС‚СЊ РїР°РґРµРЅРёСЏ (РєР»РµС‚РѕРє Р·Р° РјРёР»Р»РёСЃРµРєСѓРЅРґСѓ)
+    let smoothY = 0;
+    let targetY = 0;
+    let fallSpeed = BASE_FALL_SPEED;
     let lastFallTime = 0;
 
     const colors = [null, '#6b3a4d', '#c47a8a', '#5a2a3a', '#7a4a5a', '#c4a4a4', '#5a5a5a', '#8a5a6a'];
@@ -128,6 +130,79 @@ document.addEventListener('DOMContentLoaded', () => {
         score: 0
     };
 
+    function updateDifficulty() {
+        const levelBoost = Math.floor(player.score / 120) * 0.00028;
+        const curveBoost = Math.min(player.score * 0.0000035, 0.0024);
+        fallSpeed = Math.min(MAX_FALL_SPEED, BASE_FALL_SPEED + levelBoost + curveBoost);
+    }
+
+    function syncScore() {
+        scoreElement.innerText = player.score;
+        updateDifficulty();
+        persistGameState();
+    }
+
+    function persistGameState() {
+        if (!gameActive || !player.matrix || !player.next) return;
+        const state = {
+            arena,
+            player: {
+                pos: player.pos,
+                matrix: player.matrix,
+                next: player.next,
+                score: player.score
+            },
+            targetY,
+            smoothY,
+            fallSpeed
+        };
+        localStorage.setItem(GAME_STATE_KEY, JSON.stringify(state));
+    }
+
+    function clearSavedGame() {
+        localStorage.removeItem(GAME_STATE_KEY);
+    }
+
+    function restoreSavedGame() {
+        const raw = localStorage.getItem(GAME_STATE_KEY);
+        if (!raw) return false;
+        try {
+            const saved = JSON.parse(raw);
+            if (!saved || !Array.isArray(saved.arena) || !saved.player?.matrix || !saved.player?.next) return false;
+
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    arena[y][x] = saved.arena[y]?.[x] || 0;
+                }
+            }
+
+            player.pos = {
+                x: Number(saved.player.pos?.x ?? 0),
+                y: Number(saved.player.pos?.y ?? 0)
+            };
+            player.matrix = saved.player.matrix;
+            player.next = saved.player.next;
+            player.score = Number(saved.player.score || 0);
+            targetY = Number(saved.targetY || 0);
+            smoothY = Number(saved.smoothY || targetY);
+            fallSpeed = Number(saved.fallSpeed || BASE_FALL_SPEED);
+
+            if (collideArena(arena, player.matrix, player.pos.x, targetY)) {
+                clearSavedGame();
+                return false;
+            }
+
+            scoreElement.innerText = player.score;
+            updateDifficulty();
+            draw();
+            return true;
+        } catch (error) {
+            console.warn('Failed to restore saved tetris state', error);
+            clearSavedGame();
+            return false;
+        }
+    }
+
     function mergeToArena() {
         const intTargetY = Math.floor(targetY);
         for (let y = 0; y < player.matrix.length; y++) {
@@ -164,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rowsCleared > 0) {
             const points = [0, 10, 30, 60, 100];
             player.score += points[Math.min(rowsCleared, 4)];
-            scoreElement.innerText = player.score;
+            syncScore();
         }
     }
 
@@ -228,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gameOver();
         }
         draw();
+        persistGameState();
     }
 
     // РўР°Рї РїРѕ РїР°РґР°СЋС‰РµРјСѓ Р±Р»РѕРєСѓ
@@ -274,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         player.score += blockCount * 10;
-        scoreElement.innerText = player.score;
+        syncScore();
         
         player.matrix = player.next || getRandomPiece();
         player.next = getRandomPiece();
@@ -286,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gameOver();
         }
         draw();
+        persistGameState();
     }
 
     canvas.addEventListener('click', (e) => {
@@ -307,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function gameOver() {
         gameActive = false;
         if (animationId) cancelAnimationFrame(animationId);
+        clearSavedGame();
         const finalScore = player.score;
         showScoreModal(finalScore);
     }
@@ -385,9 +463,11 @@ function showScoreModal(score) {
             for (let x = 0; x < arena[y].length; x++) arena[y][x] = 0;
         }
         player.score = 0;
-        scoreElement.innerText = '0';
+        clearSavedGame();
         gameActive = true;
+        fallSpeed = BASE_FALL_SPEED;
         player.next = getRandomPiece();
+        syncScore();
         playerReset();
         startGameLoop();
     }
@@ -425,6 +505,7 @@ function showScoreModal(score) {
         if (!collideArena(arena, player.matrix, newX, targetY)) {
             player.pos.x = newX;
             draw();
+            persistGameState();
         }
     };
     document.getElementById('right-btn').onclick = () => {
@@ -433,6 +514,7 @@ function showScoreModal(score) {
         if (!collideArena(arena, player.matrix, newX, targetY)) {
             player.pos.x = newX;
             draw();
+            persistGameState();
         }
     };
     document.getElementById('rotate-btn').onclick = () => {
@@ -444,6 +526,7 @@ function showScoreModal(score) {
             player.matrix = old;
         }
         draw();
+        persistGameState();
     };
     document.getElementById('down-btn').onclick = (e) => {
         e.preventDefault();
@@ -462,9 +545,14 @@ function showScoreModal(score) {
         }
     });
 
+    window.addEventListener('pagehide', persistGameState);
+    window.addEventListener('beforeunload', persistGameState);
     window.addEventListener('resize', () => { resize(); draw(); });
     resize();
-    player.next = getRandomPiece();
-    playerReset();
+    if (!restoreSavedGame()) {
+        player.next = getRandomPiece();
+        syncScore();
+        playerReset();
+    }
     startGameLoop();
 });

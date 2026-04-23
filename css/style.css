@@ -696,6 +696,15 @@ html, body {
 }
 
 /* ================= СТРАНИЦА 6: FORUM + SUPPORT ================= */
+.forum-section-title {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    text-align: center;
+    flex-shrink: 0;
+}
 .forum-support-layout {
     padding: 20px 15px;
     justify-content: flex-start;
@@ -714,17 +723,33 @@ html, body {
     padding: 5px 0;
 }
 .forum-tab {
-    padding: 10px 0;
-    font-size: 14px;
+    padding: 8px 4px;
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid #3d2a2f;
-    font-family: var(--font-primary);
-    color: var(--text-primary);
+    border-left: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-left-color 0.15s, background 0.15s;
+}
+.forum-tab img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0.45) sepia(1) hue-rotate(300deg) saturate(1.5);
+    transition: filter 0.15s;
+    display: block;
+}
+.forum-tab:hover img {
+    filter: brightness(0.7) sepia(1) hue-rotate(300deg) saturate(2);
 }
 .forum-tab.active {
     border-left: 3px solid #a27791;
-    color: #fff;
+    background: rgba(162, 119, 145, 0.06);
+}
+.forum-tab.active img {
+    filter: brightness(1) sepia(0.2) hue-rotate(300deg) saturate(1.2) drop-shadow(0 0 4px #a27791);
 }
 .forum-content-embedded {
     flex: 1;
@@ -738,10 +763,11 @@ html, body {
     font-family: var(--font-secondary);
 }
 .forum-content-embedded h3 {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--text-primary);
     font-family: var(--font-primary);
     margin-bottom: 15px;
+    letter-spacing: 2px;
 }
 .forum-content-embedded p {
     font-size: 15px;
