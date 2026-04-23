@@ -1,157 +1,226 @@
-// ===== COSMIC BACKGROUND - Pure Deep Space Stars =====
 (function() {
     const canvas = document.getElementById('cosmicCanvas');
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d', { willReadFrequently: false });
-    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
 
-    // Оптимизация: на мобильных уменьшаем количество частиц
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.6);
+
     const CONFIG = {
-        starCount: isMobile ? 200 : 400, // больше звёзд
-        warpSpeed: 2,
-        starColors: ['#ffffff', '#e0f0ff', '#fff0f5'],
-        repelRadius: 100,
-        twinkleChance: 0.3,
-        maxDepth: 2000 // увеличенная глубина для чистого пространства
+        particleCount: prefersReducedMotion ? 90 : (isMobile ? 170 : 280),
+        farCount: prefersReducedMotion ? 35 : (isMobile ? 60 : 90),
+        maxDepth: 1800,
+        baseSpeed: prefersReducedMotion ? 90 : (isMobile ? 175 : 235),
+        focalLength: isMobile ? 430 : 520,
+        centerDrift: 0.038,
+        farTwinkle: 0.0018
     };
 
-    let width, height, centerX, centerY;
-    let mouse = { x: -1000, y: -1000 };
-    let animationId;
+    let width = 0;
+    let height = 0;
+    let cssWidth = 0;
+    let cssHeight = 0;
+    let centerX = 0;
+    let centerY = 0;
+    let animationId = 0;
+    let lastTime = 0;
 
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        centerX = width / 2;
-        centerY = height / 2;
-        canvas.width = width;
-        canvas.height = height;
-    }
+    const target = {
+        x: 0,
+        y: 0,
+        currentX: 0,
+        currentY: 0
+    };
 
-    // ===== STAR CLASS - Warp Speed Effect =====
-    class Star {
-        constructor() {
+    class WarpParticle {
+        constructor(layer = 'main') {
+            this.layer = layer;
             this.reset(true);
+            this.seed = Math.random() * Math.PI * 2;
         }
 
         reset(initial = false) {
-            // 3D координаты относительно центра
-            this.x = (Math.random() - 0.5) * width * 3; // шире разброс
-            this.y = (Math.random() - 0.5) * height * 3;
+            const spread = this.layer === 'far' ? 1.35 : 2.4;
+            this.x = (Math.random() - 0.5) * cssWidth * spread;
+            this.y = (Math.random() - 0.5) * cssHeight * spread;
             this.z = initial ? Math.random() * CONFIG.maxDepth : CONFIG.maxDepth;
-            this.pz = this.z;
-
-            // Размер звезды (ближе = больше)
-            this.baseSize = Math.random() * 3 + 1;
-
-            // Цвет звезды
-            this.color = CONFIG.starColors[Math.floor(Math.random() * CONFIG.starColors.length)];
-
-            // Мерцание
-            this.twinkle = Math.random() < CONFIG.twinkleChance;
-            this.twinkleOffset = Math.random() * Math.PI * 2;
-            this.brightness = 1;
+            this.prevZ = this.z;
+            this.radius = this.layer === 'far' ? Math.random() * 0.8 + 0.35 : Math.random() * 1.4 + 0.55;
+            this.hueShift = Math.random();
+            this.alpha = this.layer === 'far' ? Math.random() * 0.5 + 0.2 : Math.random() * 0.45 + 0.45;
         }
 
-        update() {
-            // Сохраняем предыдущую Z для шлейфа
-            this.pz = this.z;
+        update(delta, now) {
+            this.prevZ = this.z;
+            const depthBoost = 1 + (1 - this.z / CONFIG.maxDepth) * (this.layer === 'far' ? 0.6 : 1.75);
+            this.z -= CONFIG.baseSpeed * depthBoost * delta;
 
-            // Движение на камеру (warp speed) - чем ближе, тем быстрее
-            const speedFactor = 1 + (CONFIG.maxDepth - this.z) / CONFIG.maxDepth * 2;
-            this.z -= CONFIG.warpSpeed * speedFactor;
-
-            // Пересоздаём звезду если она "прошла" камеру
-            if (this.z < 1) {
-                this.reset();
+            if (this.layer === 'far') {
+                this.alpha = 0.28 + (Math.sin(now * CONFIG.farTwinkle + this.seed) + 1) * 0.12;
             }
 
-            // Мерцание
-            if (this.twinkle) {
-                this.brightness = 0.5 + Math.sin(Date.now() * 0.005 + this.twinkleOffset) * 0.5;
-            }
+            if (this.z <= 1) this.reset();
         }
 
         draw() {
-            // 3D -> 2D проекция с увеличенной перспективой
-            const perspective = 600;
-            const scale = perspective / this.z;
-            const sx = this.x * scale + centerX;
-            const sy = this.y * scale + centerY;
-            const px = this.x * (perspective / this.pz) + centerX;
-            const py = this.y * (perspective / this.pz) + centerY;
+            const scale = CONFIG.focalLength / this.z;
+            const prevScale = CONFIG.focalLength / this.prevZ;
+            const sx = (this.x + target.currentX * 28) * scale + centerX;
+            const sy = (this.y + target.currentY * 20) * scale + centerY;
+            const px = (this.x + target.currentX * 28) * prevScale + centerX;
+            const py = (this.y + target.currentY * 20) * prevScale + centerY;
 
-            // Размер и прозрачность зависят от глубины
-            const size = Math.max(0.3, this.baseSize * scale);
-            const alpha = Math.min(1, Math.max(0.05, (CONFIG.maxDepth - this.z) / CONFIG.maxDepth)) * this.brightness;
+            if (sx < -120 || sx > cssWidth + 120 || sy < -120 || sy > cssHeight + 120) {
+                return;
+            }
 
-            // Рисуем шлейф (линию от предыдущей позиции)
-            if (this.pz < 1000 && alpha > 0.3) {
-                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
-                ctx.lineWidth = size * 0.5;
+            const projectedRadius = Math.max(0.4, this.radius * scale * (this.layer === 'far' ? 0.8 : 1.2));
+            const depthAlpha = Math.min(1, Math.max(0.04, 1 - this.z / CONFIG.maxDepth));
+            const alpha = depthAlpha * this.alpha;
+            const tailAlpha = this.layer === 'far' ? alpha * 0.08 : alpha * 0.24;
+
+            if (this.layer !== 'far' && this.prevZ < CONFIG.maxDepth - 30) {
+                ctx.strokeStyle = `rgba(255, 236, 240, ${tailAlpha})`;
+                ctx.lineWidth = Math.max(0.45, projectedRadius * 0.75);
                 ctx.beginPath();
                 ctx.moveTo(px, py);
                 ctx.lineTo(sx, sy);
                 ctx.stroke();
             }
 
-            // Рисуем звезду как мягкое светящееся пятно (radial gradient)
-            const gradient = ctx.createRadialGradient(sx, sy, 0, sx, sy, size * 3);
-            gradient.addColorStop(0, this.color);
-            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${alpha * 0.5})`);
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            const glowRadius = projectedRadius * (this.layer === 'far' ? 3.5 : 5.5);
+            const gradient = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowRadius);
+            gradient.addColorStop(0, `rgba(255,255,255,${alpha})`);
+            gradient.addColorStop(0.22, this.layer === 'far'
+                ? `rgba(201, 215, 255, ${alpha * 0.55})`
+                : `rgba(255, 214, 224, ${alpha * 0.72})`);
+            gradient.addColorStop(1, 'rgba(0,0,0,0)');
 
             ctx.fillStyle = gradient;
-            ctx.globalAlpha = alpha * 0.8; // более прозрачное для мягкости
             ctx.beginPath();
-            // Неопределённая форма - немного искажённый круг
-            const irregularity = Math.sin(Date.now() * 0.001 + this.twinkleOffset) * 0.3;
-            for (let i = 0; i < 8; i++) {
-                const angle = (i / 8) * Math.PI * 2;
-                const r = size * (1 + irregularity * (i % 2 === 0 ? 1 : -1));
-                const px = sx + Math.cos(angle) * r;
-                const py = sy + Math.sin(angle) * r;
-                if (i === 0) ctx.moveTo(px, py);
-                else ctx.lineTo(px, py);
-            }
-            ctx.closePath();
+            ctx.arc(sx, sy, glowRadius, 0, Math.PI * 2);
             ctx.fill();
-            ctx.globalAlpha = 1;
+
+            ctx.fillStyle = this.layer === 'far'
+                ? `rgba(220, 232, 255, ${alpha * 0.95})`
+                : `rgba(255, 250, 252, ${Math.min(1, alpha + 0.08)})`;
+            ctx.beginPath();
+            ctx.arc(sx, sy, projectedRadius, 0, Math.PI * 2);
+            ctx.fill();
         }
     }
 
-    // ===== INITIALIZATION =====
-    const stars = [];
+    const farParticles = [];
+    const mainParticles = [];
 
-    function init() {
-        resize();
+    function buildParticles() {
+        farParticles.length = 0;
+        mainParticles.length = 0;
 
-        // Создаём звёзды
-        for (let i = 0; i < CONFIG.starCount; i++) {
-            stars.push(new Star());
-        }
+        for (let i = 0; i < CONFIG.farCount; i++) farParticles.push(new WarpParticle('far'));
+        for (let i = 0; i < CONFIG.particleCount; i++) mainParticles.push(new WarpParticle('main'));
     }
 
-    // ===== ANIMATION LOOP =====
-    function animate() {
-        // Полная очистка без trail эффекта
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, width, height);
+    function resize() {
+        cssWidth = window.innerWidth;
+        cssHeight = window.innerHeight;
+        width = Math.round(cssWidth * dpr);
+        height = Math.round(cssHeight * dpr);
+        centerX = width / 2;
+        centerY = height / 2;
 
-        // Обновляем и рисуем только звёзды - чистая глубина космоса
-        for (const star of stars) {
-            star.update();
-            star.draw();
-        }
+        canvas.width = width;
+        canvas.height = height;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        centerX = cssWidth / 2;
+        centerY = cssHeight / 2;
 
-        animationId = requestAnimationFrame(animate);
+        buildParticles();
     }
 
-    // ===== EVENT LISTENERS =====
-    window.addEventListener('resize', resize);
+    function drawBackground() {
+        const bg = ctx.createLinearGradient(0, 0, 0, cssHeight);
+        bg.addColorStop(0, '#020204');
+        bg.addColorStop(0.45, '#05060a');
+        bg.addColorStop(1, '#09070b');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-    // ===== START =====
-    init();
-    animate();
+        const nebula = ctx.createRadialGradient(
+            centerX + target.currentX * 120,
+            centerY + target.currentY * 80,
+            0,
+            centerX,
+            centerY,
+            Math.max(cssWidth, cssHeight) * 0.75
+        );
+        nebula.addColorStop(0, 'rgba(88, 24, 44, 0.15)');
+        nebula.addColorStop(0.35, 'rgba(50, 14, 24, 0.08)');
+        nebula.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = nebula;
+        ctx.fillRect(0, 0, cssWidth, cssHeight);
+    }
+
+    function drawVignette() {
+        const vignette = ctx.createRadialGradient(centerX, centerY, cssHeight * 0.18, centerX, centerY, cssHeight * 0.82);
+        vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        vignette.addColorStop(0.68, 'rgba(0, 0, 0, 0.1)');
+        vignette.addColorStop(1, 'rgba(0, 0, 0, 0.42)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, cssWidth, cssHeight);
+    }
+
+    function animate(timestamp) {
+        if (!lastTime) lastTime = timestamp;
+        const delta = Math.min(0.033, (timestamp - lastTime) / 1000 || 0.016);
+        lastTime = timestamp;
+
+        target.currentX += (target.x - target.currentX) * CONFIG.centerDrift;
+        target.currentY += (target.y - target.currentY) * CONFIG.centerDrift;
+
+        drawBackground();
+
+        for (let i = 0; i < farParticles.length; i++) {
+            farParticles[i].update(delta, timestamp);
+            farParticles[i].draw();
+        }
+
+        for (let i = 0; i < mainParticles.length; i++) {
+            mainParticles[i].update(delta, timestamp);
+            mainParticles[i].draw();
+        }
+
+        drawVignette();
+        animationId = window.requestAnimationFrame(animate);
+    }
+
+    function handlePointerMove(event) {
+        const x = 'touches' in event ? event.touches[0]?.clientX : event.clientX;
+        const y = 'touches' in event ? event.touches[0]?.clientY : event.clientY;
+        if (typeof x !== 'number' || typeof y !== 'number') return;
+
+        target.x = (x / cssWidth - 0.5) * 2;
+        target.y = (y / cssHeight - 0.5) * 2;
+    }
+
+    function handlePointerLeave() {
+        target.x = 0;
+        target.y = 0;
+    }
+
+    resize();
+    animate(0);
+
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    window.addEventListener('touchmove', handlePointerMove, { passive: true });
+    window.addEventListener('mouseleave', handlePointerLeave, { passive: true });
+    window.addEventListener('touchend', handlePointerLeave, { passive: true });
+    window.addEventListener('pagehide', () => window.cancelAnimationFrame(animationId), { once: true });
 })();
