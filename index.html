@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Tiny5&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        body { background: #000 !important; }
+        #cosmicCanvas { display: none !important; }
         .journal-wrapper { height: auto !important; overflow-y: visible !important; }
         .journal-vertical { display: block; }
         .journal-page {
@@ -67,6 +69,20 @@
         /* ===== STYLER ===== */
         #sec-styler .page-content { align-items: center; }
         .styler-embedded { max-width: 360px; width: 90%; }
+
+        .modal-inner-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .font-modal-preview {
+            width: min(100%, 640px);
+            height: auto;
+            object-fit: contain;
+            image-rendering: pixelated;
+            display: block;
+        }
 
         /* ===== FORUM — убраны заголовки, текст по центру ===== */
         #sec-forum .page-content { padding: 20px 12px; gap: 15px; }
@@ -145,6 +161,30 @@
         .contents-item:hover { background: #1a1a2a; color: #fff !important; }
 
         @media (max-width: 480px) {
+            .journal-page { padding: 16px 0; }
+            #sec-ticker { padding-top: 10px; padding-bottom: 6px; }
+            #sec-carousel { padding-top: 6px; }
+            #sec-carousel .page-content { gap: 8px; }
+            #sec-twitter { padding-top: 8px; }
+            .art-feed-row {
+                flex-wrap: nowrap;
+                gap: 12px;
+                align-items: center;
+            }
+            .art-block {
+                flex: 0 1 68vw;
+                width: 68vw;
+            }
+            .archive-block {
+                flex: 0 0 20vw;
+                width: 20vw;
+            }
+            .archive-img {
+                width: 100%;
+                height: auto;
+                max-width: 56px;
+                max-height: 56px;
+            }
             .team-choice img { width: 80px; height: 80px; }
         }
     </style>
@@ -163,7 +203,7 @@
     <div class="journal-page" id="sec-ticker" data-page="1">
         <div class="page-content">
             <div class="ticker-wrapper">
-                <div class="ticker" id="rssTicker">✦ MORSTRIX ✦</div>
+                <div class="ticker" id="rssTicker">MORSTRIX</div>
             </div>
         </div>
     </div>
@@ -200,7 +240,7 @@
                 </div>
                 <div class="archive-block text-primary" id="archiveBtn">
                     <img src="assets/archive.png" alt="Archive" class="archive-img">
-                    <span class="archive-label">FEED</span>
+                    <span class="archive-label">feed</span>
                 </div>
             </div>
         </div>
@@ -221,8 +261,7 @@
         <div class="page-content">
             <img src="assets/f1.jpg" alt="Preview" class="behance-font-preview">
             <p class="brandbook-desc">
-                MORSTRIX — DIY бренд с упором на raw-эстетику, pixel-art и уличную культуру.
-                Брендбук включает гайдлайны по типографике, цвету и айдентике.
+                поплава раннього вебу
             </p>
             <div class="behance-font-row">
                 <button id="behanceBtn" class="universal-btn">
@@ -381,11 +420,11 @@
 <div id="disclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <span class="modal-title-text">x.com</span>
             <button class="modal-close-btn" data-modal="disclaimerModal">✜</button>
         </div>
         <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;">
-            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите на внешний ресурс Twitter/X. Продолжить?</p>
+            <p class="text-secondary" style="margin-bottom:20px;">creative vision lab</p>
             <button class="universal-btn" data-href="https://x.com">
                 <span class="btn-inner"><span>ENTER</span></span>
             </button>
@@ -396,13 +435,13 @@
 <div id="behanceDisclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <span class="modal-title-text">Behance.net</span>
             <button class="modal-close-btn" data-modal="behanceDisclaimerModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите на Behance. Продолжить?</p>
+        <div class="modal-inner modal-inner-centered">
+            <p class="text-secondary" style="margin-bottom:20px;">Identity DNA</p>
             <button class="universal-btn" data-href="https://www.behance.net/gallery/246943027/_" data-modal-close="behanceDisclaimerModal">
-                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+                <span class="btn-inner"><span>ENTER</span></span>
             </button>
         </div>
     </div>
@@ -411,11 +450,12 @@
 <div id="fontInfoModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">MORSTRIX FONT</span>
+            <span class="modal-title-text">font.otf</span>
             <button class="modal-close-btn" data-modal="fontInfoModal">✜</button>
         </div>
-        <div class="modal-inner" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
-            <p class="text-secondary" style="text-align:center;">Custom MORSTRIX font — pixel-perfect, free to use.</p>
+        <div class="modal-inner modal-inner-centered" style="gap:16px;">
+            <img src="assets/font.jpg" alt="Font preview" class="font-modal-preview">
+            <p class="text-secondary" style="text-align:center;">free to use.</p>
             <button class="universal-btn" id="downloadArchiveBtnEmbedded">
                 <span class="btn-inner"><span>DOWNLOAD</span></span>
             </button>
@@ -426,13 +466,13 @@
 <div id="forumDisclaimerModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text">ВНИМАНИЕ</span>
+            <span class="modal-title-text">Telegram</span>
             <button class="modal-close-btn" data-modal="forumDisclaimerModal">✜</button>
         </div>
-        <div class="modal-inner">
-            <p class="text-secondary" style="margin-bottom:20px;">Вы переходите в Telegram-группу форума. Продолжить?</p>
+        <div class="modal-inner modal-inner-centered">
+            <p class="text-secondary" style="margin-bottom:20px;">архів структурованих матеріалів</p>
             <button class="universal-btn" data-href="https://t.me/+n5Qg8d2h9qliMmRi" data-modal-close="forumDisclaimerModal">
-                <span class="btn-inner"><span>ПЕРЕЙТИ</span></span>
+                <span class="btn-inner"><span>ENTER</span></span>
             </button>
         </div>
     </div>
@@ -441,7 +481,7 @@
 <div id="stubModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="modal-title-text" id="stubModalTitle">FEED</span>
+            <span class="modal-title-text" id="stubModalTitle">feed</span>
             <button class="modal-close-btn" data-modal="stubModal">✜</button>
         </div>
         <div class="modal-inner">

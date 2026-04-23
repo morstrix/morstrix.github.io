@@ -421,7 +421,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 8px;
+    padding-top: 2px;
     gap: 3px;
 }
 .x-btn-img {
@@ -719,6 +719,9 @@ html, body {
     display: inline-block;
     text-decoration: none;
     user-select: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 .universal-btn .btn-inner {
     display: block;
@@ -946,6 +949,7 @@ html, body {
 
 /* ================= АДАПТИВНОСТЬ (МОБИЛЬНЫЕ) ================= */
 @media (max-width: 768px) {
+    :root { --top-panel-h: 50px; }
     .top-panel { height: 50px; padding: 0 12px; }
     .panel-btn { font-size: 0.7rem; }
     .panel-close img { width: 28px; height: 28px; }
@@ -1045,6 +1049,17 @@ html, body {
     .ticker { animation-duration: 180s; }
     .hashtag { font-size: 20px; }
     .x-btn-img { width: 40px; }
+    .universal-btn {
+        background: #565656 !important;
+        color: inherit;
+    }
+    .universal-btn .btn-inner {
+        background: #fff !important;
+        border-color: #a0a0a0 !important;
+    }
+    .universal-btn .btn-inner span {
+        color: #000 !important;
+    }
     .sound-layout {
         justify-content: center;
         gap: 24px;
