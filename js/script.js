@@ -320,9 +320,9 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     // ===== RSS ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
     const fallbackTickerItems = [
-        { title: "✦ MORSTRIX V2.0 ✦", url: "https://t.me/morstrix" },
-        { title: "✦ NEW PRINTS ✦", url: "https://t.me/morstrix" },
-        { title: "✦ TELEGRAM ✦", url: "https://t.me/morstrix" }
+        { title: "MORSTRIX V2.0", url: "https://t.me/morstrix" },
+        { title: "NEW PRINTS", url: "https://t.me/morstrix" },
+        { title: "TELEGRAM", url: "https://t.me/morstrix" }
     ];
     const TICKER_CACHE_KEY = 'journalTickerCacheV2';
     const tickerWrapper = document.querySelector('.ticker-wrapper');
@@ -360,7 +360,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
 
         const line = safeItems.map(toAnchor).filter(Boolean).join('<span class="ticker-sep"> ☻ </span>');
         if (!line) {
-            ticker.textContent = "✦ MORSTRIX V2.0 ✦";
+            ticker.textContent = "MORSTRIX V2.0";
             return;
         }
         // Duplicate once for smoother endless marquee.
@@ -392,7 +392,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             }))
             .filter(item => item.title)
             .slice(0, limit)
-            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+            .map(item => ({ title: `${sourceName}: ${item.title}`, url: item.url }));
     }
 
     async function fetchHnTitles(query, sourceName, limit = 2) {
@@ -405,7 +405,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             }))
             .filter(item => item.title)
             .slice(0, limit)
-            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+            .map(item => ({ title: `${sourceName}: ${item.title}`, url: item.url }));
     }
 
     async function fetchRssViaRss2Json(feedUrl, sourceName, limit = 2) {
@@ -419,7 +419,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             }))
             .filter(item => item.title)
             .slice(0, limit)
-            .map(item => ({ title: `✦ ${sourceName}: ${item.title} ✦`, url: item.url }));
+            .map(item => ({ title: `${sourceName}: ${item.title}`, url: item.url }));
     }
 
     async function loadRssTicker() {
@@ -886,7 +886,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         const container = document.querySelector('.top-players-list');
         if(!container) return;
         try{
-            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
+            const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
             const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
             const firebaseConfig = {
                 apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
@@ -896,7 +896,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
                 messagingSenderId:"131536876451",
                 appId:"1:131536876451:web:eeaef494c83dfc4849e016"
             };
-            const app = initializeApp(firebaseConfig);
+            const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
             const db = getFirestore(app);
             const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
             const snap = await getDocs(q);
@@ -907,7 +907,10 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             } else {
                 container.innerHTML = '<div style="text-align:center;padding:10px;">— пусто —</div>';
             }
-        }catch(e){ container.innerHTML='⚠️ ERROR'; }
+        }catch(e){
+            console.warn('loadTopPlayers failed', e);
+            container.innerHTML='⚠️ ERROR';
+        }
     }
     if(document.querySelector('.top-players-list')) loadTopPlayers();
 

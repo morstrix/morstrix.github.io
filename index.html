@@ -19,7 +19,13 @@
         }
         .page-content { justify-content: flex-start; gap: 20px; }
         html, body { overflow-y: auto; overflow-x: hidden; }
-        .top-panel { display: flex; align-items: center; justify-content: center; }
+        .top-panel { align-items: center; }
+        .panel-views {
+            color: #7a454d;
+        }
+        .panel-views-value {
+            color: #8B3A3A;
+        }
 
         /* ===== AUTO CAROUSEL ===== */
         #sec-carousel .page-content { align-items: center; }
@@ -193,7 +199,15 @@
 <canvas id="cosmicCanvas"></canvas>
 
 <div class="top-panel">
-    <button class="panel-btn text-primary" id="contentsBtn" style="font-size: 18px;"><span>NAVIGATION</span></button>
+    <div class="panel-left">
+        <div class="panel-views">views: <span class="panel-views-value" id="viewsCount">...</span></div>
+    </div>
+    <div class="panel-center">
+        <button class="panel-btn text-primary" id="contentsBtn" style="font-size: 18px;"><span>NAVIGATION</span></button>
+    </div>
+    <div class="panel-right">
+        <div class="panel-spacer" aria-hidden="true"></div>
+    </div>
 </div>
 
 <div class="journal-wrapper">
@@ -517,6 +531,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="js/script.js"></script>
+<script src="js/views-counter.js"></script>
 <script src="js/cosmic-bg.js"></script>
 
 <script>

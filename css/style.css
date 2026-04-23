@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'CrtOverscan';
+    src: url('../assets/fonts/CrtOverscan-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Led Panel Station Off';
+    src: url('../assets/fonts/Led Panel Station Off.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Blocks';
+    src: url('../assets/fonts/blocks.ttf') format('truetype');
+    font-display: swap;
+}
+
 :root {
     --accent-pink: #a84d6b;
     --muted-pink: #b97272;
@@ -47,9 +63,36 @@ body {
     position: fixed; top:0; left:0; right:0;
     height: var(--top-panel-h);
     background: #050505;
-    display: flex; align-items: center; justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
     padding: 0 20px;
     z-index:200;
+}
+.panel-left,
+.panel-center,
+.panel-right {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+.panel-left { justify-content: flex-start; }
+.panel-center { justify-content: center; }
+.panel-right { justify-content: flex-end; }
+.panel-views {
+    font-family: 'CrtOverscan', monospace;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--text-secondary);
+    text-transform: lowercase;
+    white-space: nowrap;
+}
+.panel-views-value {
+    color: var(--text-primary);
+}
+.panel-spacer {
+    width: 48px;
+    height: 1px;
 }
 .top-panel::after {
     content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
@@ -214,7 +257,7 @@ html, body {
     display: inline-block;
     font-size: 20px;
     color: var(--text-secondary);
-    font-family: var(--font-secondary);
+    font-family: 'Led Panel Station Off', monospace;
     text-shadow: 1px 1px 0 #2e2e2e, 2px 2px 0 #3d2a2f !important;
     animation: scrollTicker 150s linear infinite;
     pointer-events: auto;
@@ -612,6 +655,7 @@ html, body {
     color: var(--text-primary);
     margin-bottom: 8px;
     text-align: center;
+    font-family: 'Blocks', monospace;
 }
 .top-players-framed {
     max-width: 400px;
@@ -647,7 +691,7 @@ html, body {
 .tetris-big span {
     font-size: 20px;
     color: var(--text-primary);
-    font-family: var(--font-primary);
+    font-family: 'Blocks', monospace;
     margin-top: 25px;
 }
 
@@ -951,6 +995,8 @@ html, body {
 @media (max-width: 768px) {
     :root { --top-panel-h: 50px; }
     .top-panel { height: 50px; padding: 0 12px; }
+    .panel-views { font-size: 14px; }
+    .panel-spacer { width: 40px; }
     .panel-btn { font-size: 0.7rem; }
     .panel-close img { width: 28px; height: 28px; }
     .bottom-panel { height: 35px; }

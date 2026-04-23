@@ -67,12 +67,12 @@
             display: block;
         }
         .pixel-action-label {
-            font-family: 'Tiny5', monospace;
-            font-size: 18px;
-            color: var(--text-secondary);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            color: var(--text-primary);
             text-transform: lowercase;
             letter-spacing: 1px;
-            line-height: 1;
+            line-height: 1.4;
         }
         #moodModal .modal-content {
             width: fit-content;
@@ -166,7 +166,7 @@
                 height: 72px;
             }
             .pixel-action-label {
-                font-size: 16px;
+                font-size: 8px;
             }
             .constructor-panel {
                 padding: 16px 12px 18px;
@@ -178,11 +178,18 @@
 <canvas id="cosmicCanvas"></canvas>
 
 <div class="top-panel">
-    <div></div>
-    <a href="index.html" class="panel-close">
-        <img src="assets/close.png" alt="Close">
-        <span class="panel-close-label text-primary">back</span>
-    </a>
+    <div class="panel-left">
+        <div class="panel-spacer" aria-hidden="true"></div>
+    </div>
+    <div class="panel-center">
+        <div class="panel-spacer" aria-hidden="true"></div>
+    </div>
+    <div class="panel-right">
+        <a href="index.html" class="panel-close">
+            <img src="assets/close.png" alt="Close">
+            <span class="panel-close-label text-primary">back</span>
+        </a>
+    </div>
 </div>
 
 <main class="profile-shell">
