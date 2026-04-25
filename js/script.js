@@ -214,108 +214,108 @@ function convertTextToFont(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
- // ===== GSAP SCROLLTRIGGER + SNAP =====
-const wrapper = document.querySelector('.journal-wrapper');
-const content = document.getElementById('journalVertical');
-const pages = document.querySelectorAll('.journal-page');
-const totalPages = pages.length;
+    // ===== GSAP SCROLLTRIGGER + SNAP =====
+    const wrapper = document.querySelector('.journal-wrapper');
+    const content = document.getElementById('journalVertical');
+    const pages = document.querySelectorAll('.journal-page');
+    const totalPages = pages.length;
 
-window.currentPage = 0;
+    window.currentPage = 0;
 
-// --- Точки ---
-const indicator = document.getElementById('pageIndicator');
-if (indicator) {
-  indicator.innerHTML = Array(totalPages).fill(0).map(() => '<span class="dot"></span>').join('');
-}
-const dots = document.querySelectorAll('.dot');
-
-let lastDotUpdate = -1;
-function updateActiveDot(index) {
-  if (index === lastDotUpdate) return;
-  lastDotUpdate = index;
-
-  index = Math.max(0, Math.min(totalPages - 1, index));
-  dots.forEach((dot, i) => {
-    const shouldBeActive = i === index;
-    if (dot.classList.contains('active') !== shouldBeActive) {
-      dot.classList.toggle('active', shouldBeActive);
-      dot.style.transitionDelay = `${Math.abs(i - index) * 0.05}s`;
+    // --- Точки ---
+    const indicator = document.getElementById('pageIndicator');
+    if (indicator) {
+        indicator.innerHTML = Array(totalPages).fill(0).map(() => '<span class="dot"></span>').join('');
     }
-  });
-}
+    const dots = document.querySelectorAll('.dot');
 
-if (dots.length) {
-  dots[0].classList.add('active');
-  dots.forEach((dot, i) => dot.addEventListener('click', () => window.scrollToPage(i)));
-}
+    let lastDotUpdate = -1;
+    function updateActiveDot(index) {
+        if (index === lastDotUpdate) return;
+        lastDotUpdate = index;
 
-// GSAP ScrollTrigger snap setup
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+        index = Math.max(0, Math.min(totalPages - 1, index));
+        dots.forEach((dot, i) => {
+            const shouldBeActive = i === index;
+            if (dot.classList.contains('active') !== shouldBeActive) {
+                dot.classList.toggle('active', shouldBeActive);
+                dot.style.transitionDelay = `${Math.abs(i - index) * 0.05}s`;
+            }
+        });
+    }
 
-  // Создаем ScrollTrigger для каждой страницы (native scroll)
-  pages.forEach((page, i) => {
-    ScrollTrigger.create({
-      trigger: page,
-      start: 'top center',
-      end: 'bottom center',
-      invalidateOnRefresh: true,
-      onEnter: () => updateActiveDot(i),
-      onEnterBack: () => updateActiveDot(i),
+    if (dots.length) {
+        dots[0].classList.add('active');
+        dots.forEach((dot, i) => dot.addEventListener('click', () => window.scrollToPage(i)));
+    }
+
+    // GSAP ScrollTrigger snap setup
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Создаем ScrollTrigger для каждой страницы (native scroll)
+        pages.forEach((page, i) => {
+            ScrollTrigger.create({
+                trigger: page,
+                start: 'top center',
+                end: 'bottom center',
+                invalidateOnRefresh: true,
+                onEnter: () => updateActiveDot(i),
+                onEnterBack: () => updateActiveDot(i),
+            });
+        });
+
+        // Global snap для всего документа
+        ScrollTrigger.create({
+            trigger: '.journal-vertical',
+            start: 'top top',
+            end: 'bottom bottom',
+            invalidateOnRefresh: true,
+            snap: {
+                snapTo: 1 / (totalPages - 1),
+                duration: { min: 0.15, max: 0.35 },
+                delay: 0,
+                ease: 'power3.inOut',
+            },
+        });
+
+        // Обработка ресайза
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+            const pageHeight = window.innerHeight;
+            const scrollPos = window.scrollY || 0;
+            updateActiveDot(Math.round(scrollPos / pageHeight));
+        });
+
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+                const pageHeight = window.innerHeight;
+                const scrollPos = window.scrollY || 0;
+                updateActiveDot(Math.round(scrollPos / pageHeight));
+            }, 100);
+        });
+    }
+
+    // Функция навигации
+    window.scrollToPage = (index) => {
+        index = Math.max(0, Math.min(totalPages - 1, index));
+        window.currentPage = index;
+
+        const pageHeight = window.innerHeight;
+        const targetY = index * pageHeight;
+
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        updateActiveDot(index);
+    };
+
+    // Стрелки Pinterest
+    document.getElementById('pinterestPrevBtn')?.addEventListener('click', () => {
+        window.scrollToPage?.(window.currentPage - 1);
     });
-  });
-
-  // Global snap для всего документа
-  ScrollTrigger.create({
-    trigger: '.journal-vertical',
-    start: 'top top',
-    end: 'bottom bottom',
-    invalidateOnRefresh: true,
-    snap: {
-      snapTo: 1 / (totalPages - 1),
-      duration: { min: 0.15, max: 0.35 },
-      delay: 0,
-      ease: 'power3.inOut',
-    },
-  });
-
-  // Обработка ресайза
-  window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
-    const pageHeight = window.innerHeight;
-    const scrollPos = window.scrollY || 0;
-    updateActiveDot(Math.round(scrollPos / pageHeight));
-  });
-
-  window.addEventListener('orientationchange', () => {
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-      const pageHeight = window.innerHeight;
-      const scrollPos = window.scrollY || 0;
-      updateActiveDot(Math.round(scrollPos / pageHeight));
-    }, 100);
-  });
-}
-
-// Функция навигации
-window.scrollToPage = (index) => {
-  index = Math.max(0, Math.min(totalPages - 1, index));
-  window.currentPage = index;
-
-  const pageHeight = window.innerHeight;
-  const targetY = index * pageHeight;
-
-  window.scrollTo({ top: targetY, behavior: 'smooth' });
-  updateActiveDot(index);
-};
-
-// Стрелки Pinterest
-document.getElementById('pinterestPrevBtn')?.addEventListener('click', () => {
-  window.scrollToPage?.(window.currentPage - 1);
-});
-document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
-  window.scrollToPage?.(window.currentPage + 1);
-});
+    document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
+        window.scrollToPage?.(window.currentPage + 1);
+    });
 
     // ===== RSS ТИКЕР =====
     const ticker = document.getElementById('rssTicker');
@@ -522,7 +522,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             playAttempt.then(() => {
                 uiBlipAudio.pause();
                 uiBlipAudio.currentTime = 0;
-            }).catch(() => {});
+            }).catch(() => { });
         }
     }
 
@@ -541,16 +541,16 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     window.playUiMenuBlip = playUiMenuBlip;
 
     // ===== УТИЛИТЫ МОДАЛОК =====
-    function openModal(id, withSound = true){
+    function openModal(id, withSound = true) {
         document.getElementById(id)?.classList.add('active');
         if (withSound) playUiMenuBlip();
     }
-    function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
+    function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
 
     // ===== TWITTER =====
-    document.getElementById('twitterBtn')?.addEventListener('click', ()=> openModal('disclaimerModal'));
+    document.getElementById('twitterBtn')?.addEventListener('click', () => openModal('disclaimerModal'));
     // ===== BEHANCE =====
-    document.getElementById('behanceBtn')?.addEventListener('click', ()=> openModal('behanceDisclaimerModal'));
+    document.getElementById('behanceBtn')?.addEventListener('click', () => openModal('behanceDisclaimerModal'));
 
     // ===== FONT STYLER =====
     const embeddedInput = document.getElementById('fontInputEmbedded');
@@ -619,7 +619,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     }
 
     // ===== СКАЧИВАНИЕ АРХИВА =====
-    document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', ()=> {
+    document.getElementById('downloadArchiveBtnEmbedded')?.addEventListener('click', () => {
         const a = document.createElement('a');
         a.href = 'assets/morstrix_archive.zip';
         a.download = 'MORSTRIX_FONT.zip';
@@ -627,21 +627,21 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     });
 
     // ===== PAINT (Прямой переход на paint.html) =====
-    document.getElementById('paintJournalBtn')?.addEventListener('click', ()=> {
+    document.getElementById('paintJournalBtn')?.addEventListener('click', () => {
         window.location.href = 'paint.html';
     });
 
-    document.getElementById('paintAnonChoiceBtn')?.addEventListener('click', ()=> {
+    document.getElementById('paintAnonChoiceBtn')?.addEventListener('click', () => {
         closeModal('paintChoiceModal');
         window.location.href = 'paint.html';
     });
 
-    document.getElementById('paintRegChoiceBtn')?.addEventListener('click', ()=> {
+    document.getElementById('paintRegChoiceBtn')?.addEventListener('click', () => {
         closeModal('paintChoiceModal');
         openModal('nicknameModal');
     });
 
-    document.getElementById('nicknameEnterBtn')?.addEventListener('click', ()=> {
+    document.getElementById('nicknameEnterBtn')?.addEventListener('click', () => {
         const nickname = document.getElementById('nicknameInput').value.trim();
         if (nickname) {
             localStorage.setItem('paintNickname', nickname);
@@ -694,7 +694,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         }
         nicknameInput.addEventListener('focus', stopNicknameAnimation);
         nicknameInput.addEventListener('blur', () => { if (nicknameInput.value === '') startNicknameAnimation(); });
-        
+
         // Start animation when modal opens
         const nicknameModal = document.getElementById('nicknameModal');
         const observer = new MutationObserver((mutations) => {
@@ -712,7 +712,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     // ===== MOOD (PINTEREST) =====
     const moodTrigger = document.getElementById('moodTrigger');
     if (moodTrigger) {
-        moodTrigger.addEventListener('click', ()=> {
+        moodTrigger.addEventListener('click', () => {
             openModal('moodModal');
             if (!window.pinterestScriptLoaded) {
                 const script = document.createElement('script');
@@ -828,7 +828,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         }
     }
 
-    document.getElementById('archiveBtn')?.addEventListener('click', async ()=> {
+    document.getElementById('archiveBtn')?.addEventListener('click', async () => {
         const titleEl = document.getElementById('stubModalTitle');
         if (titleEl) titleEl.textContent = 'FEED';
         openModal('stubModal');
@@ -878,60 +878,60 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         utterance.onerror = (e) => ttsStatus.textContent = 'Ошибка: ' + e.error;
         speechSynthesis.speak(utterance);
     }
-    if (ttsSpeakBtn) ttsSpeakBtn.addEventListener('click', ()=> speakWithSpeechSynthesis(ttsTextInput.value));
-    if (ttsTextInput) ttsTextInput.addEventListener('keypress', (e)=> { if (e.key === 'Enter') ttsSpeakBtn?.click(); });
+    if (ttsSpeakBtn) ttsSpeakBtn.addEventListener('click', () => speakWithSpeechSynthesis(ttsTextInput.value));
+    if (ttsTextInput) ttsTextInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') ttsSpeakBtn?.click(); });
 
     // ===== ТОП ИГРОКОВ (FIREBASE) =====
-    async function loadTopPlayers(){
+    async function loadTopPlayers() {
         const container = document.querySelector('.top-players-list');
-        if(!container) return;
-        try{
+        if (!container) return;
+        try {
             const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js');
             const { getFirestore, collection, query, orderBy, limit, getDocs } = await import('https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js');
             const firebaseConfig = {
-                apiKey:"AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
-                authDomain:"helper-e10b2.firebaseapp.com",
-                projectId:"helper-e10b2",
-                storageBucket:"helper-e10b2.firebasestorage.app",
-                messagingSenderId:"131536876451",
-                appId:"1:131536876451:web:eeaef494c83dfc4849e016"
+                apiKey: "AIzaSyD7HW4Ec9n3vl5l_WgTSwiK5NpyQYE6tlU",
+                authDomain: "helper-e10b2.firebaseapp.com",
+                projectId: "helper-e10b2",
+                storageBucket: "helper-e10b2.firebasestorage.app",
+                messagingSenderId: "131536876451",
+                appId: "1:131536876451:web:eeaef494c83dfc4849e016"
             };
             const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
             const db = getFirestore(app);
-            const q = query(collection(db,"top_players"), orderBy("score","desc"), limit(10));
+            const q = query(collection(db, "top_players"), orderBy("score", "desc"), limit(10));
             const snap = await getDocs(q);
-            if(!snap.empty){
-                let html=''; let rank=1;
-                snap.forEach(d=>{ const data=d.data(); html+=`<div class="top-row"><span>${rank}. ${(data.name||'ANON').slice(0,10)}</span><span>${data.score}</span></div>`; rank++; });
-                container.innerHTML=html;
+            if (!snap.empty) {
+                let html = ''; let rank = 1;
+                snap.forEach(d => { const data = d.data(); html += `<div class="top-row"><span>${rank}. ${(data.name || 'ANON').slice(0, 10)}</span><span>${data.score}</span></div>`; rank++; });
+                container.innerHTML = html;
             } else {
                 container.innerHTML = '<div style="text-align:center;padding:10px;">— пусто —</div>';
             }
-        }catch(e){
+        } catch (e) {
             console.warn('loadTopPlayers failed', e);
-            container.innerHTML='⚠️ ERROR';
+            container.innerHTML = '⚠️ ERROR';
         }
     }
-    if(document.querySelector('.top-players-list')) loadTopPlayers();
+    if (document.querySelector('.top-players-list')) loadTopPlayers();
 
     // ===== ФОРУМ ВКЛАДКИ ==
     const contents = {
-        wellness: ['WELLNESS',''],
-        design:   ['DESIGN','Графічний дизайн, типографіка, UI...'],
-        diygear:  ['DIY / GEAR','Своїми руками, інструменти, майстерня...'],
-        itai:     ['IT / AI','Нейромережі, розробка, технології...'],
-        money:    ['MONEY','Фінанси, інвестиції, крипто...'],
-        radio:    ['RADIO','Музика, подкасти, плейлисти...'],
-        tattoo:   ['TATTOO','Тату-культура, ескізи, майстри...'],
-        travel:   ['TRAVEL','Подорожі, маршрути, лайфхаки...'],
+        wellness: ['WELLNESS', ''],
+        design: ['DESIGN', 'Графічний дизайн, типографіка, UI...'],
+        diygear: ['DIY / GEAR', 'Своїми руками, інструменти, майстерня...'],
+        itai: ['IT / AI', 'Нейромережі, розробка, технології...'],
+        money: ['MONEY', 'Фінанси, інвестиції, крипто...'],
+        radio: ['RADIO', 'Музика, подкасти, плейлисти...'],
+        tattoo: ['TATTOO', 'Тату-культура, ескізи, майстри...'],
+        travel: ['TRAVEL', 'Подорожі, маршрути, лайфхаки...'],
     };
 
     document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(tab => {
-        tab.addEventListener('click', ()=> {
-            document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(t=>t.classList.remove('active'));
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             const id = tab.dataset.tab;
-            if(contents[id]) {
+            if (contents[id]) {
                 document.getElementById('forumTitleEmbedded').textContent = contents[id][0];
             }
             const drumWrap = document.getElementById('wellnessDrumWrap');
@@ -950,7 +950,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     });
 
     // ===== WELLNESS 3D DRUM =====
-    (function() {
+    (function () {
         const SLIDES = [
             {
                 img: 'assets/w1.jpg',
@@ -1114,11 +1114,11 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
 
         const N = SLIDES.length;
         const cylinder = document.getElementById('drumCylinder');
-        const captionEl = document.getElementById('drumCaption');
+        const captionEl = document.getElementById('drumCaption'); // может быть null
         const dotsEl = document.getElementById('drumDots');
         const readBtn = document.getElementById('drumReadBtn');
-        const prevBtn = document.getElementById('drumPrev');
-        const nextBtn = document.getElementById('drumNext');
+        const prevBtn = document.getElementById('drumPrev');       // может быть null
+        const nextBtn = document.getElementById('drumNext');       // может быть null
 
         if (!cylinder) return;
 
@@ -1173,11 +1173,13 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
                 : 'none';
             cylinder.style.transform = `rotateY(${rotationY}deg)`;
 
-            captionEl.style.opacity = '0';
-            setTimeout(() => {
-                captionEl.textContent = SLIDES[currentIndex].caption;
-                captionEl.style.opacity = '1';
-            }, animated ? 200 : 0);
+            if (captionEl) {
+                captionEl.style.opacity = '0';
+                setTimeout(() => {
+                    captionEl.textContent = SLIDES[currentIndex].caption;
+                    captionEl.style.opacity = '1';
+                }, animated ? 200 : 0);
+            }
 
             dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
         }
@@ -1189,9 +1191,6 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         positionFaces();
         rotateTo(0, false);
         window.addEventListener('resize', positionFaces);
-
-        prevBtn?.addEventListener('click', goPrev);
-        nextBtn?.addEventListener('click', goNext);
 
         readBtn?.addEventListener('click', () => {
             const slide = SLIDES[currentIndex];
@@ -1206,7 +1205,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
             if (!drumWrap || drumWrap.style.display === 'none') return;
             if (document.querySelector('.modal-overlay.active')) return;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { e.preventDefault(); goNext(); }
-            if (e.key === 'ArrowLeft'  || e.key === 'a' || e.key === 'A') { e.preventDefault(); goPrev(); }
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { e.preventDefault(); goPrev(); }
         });
 
         // Drag / swipe with inertia
@@ -1262,20 +1261,20 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     })();
 
     // ===== SUPPORT =====
-    document.getElementById('supportBtn')?.addEventListener('click', ()=> openModal('supportModal'));
-    document.getElementById('forumFullBtn')?.addEventListener('click', ()=> openModal('forumDisclaimerModal'));
+    document.getElementById('supportBtn')?.addEventListener('click', () => openModal('supportModal'));
+    document.getElementById('forumFullBtn')?.addEventListener('click', () => openModal('forumDisclaimerModal'));
 
     // ===== ЗАКРЫТИЕ МОДАЛОК =====
-    document.querySelectorAll('.modal-close-btn').forEach(b=>b.addEventListener('click', ()=>{
+    document.querySelectorAll('.modal-close-btn').forEach(b => b.addEventListener('click', () => {
         const id = b.dataset.modal;
-        if(id) closeModal(id);
+        if (id) closeModal(id);
     }));
-    document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
+    document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); }));
 
     // ===== МОДАЛКА "ЗМІСТ" =====
-    document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
+    document.getElementById('contentsBtn').addEventListener('click', () => openModal('contentsModal'));
     document.querySelectorAll('.contents-item').forEach(item => {
-        item.addEventListener('click', ()=> {
+        item.addEventListener('click', () => {
             const page = item.dataset.page;
             const pages = document.querySelectorAll('.journal-page');
             const targetPage = document.querySelector(`.journal-page[data-page="${page}"]`);
@@ -1290,11 +1289,11 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
     });
 
     // ===== ESCAPE =====
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); });
 
     // ===== DISCLAIMER BUTTONS =====
     document.querySelectorAll('[data-href]').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             window.open(this.dataset.href, '_blank');
             const modalToClose = this.dataset.modalClose;
             if (modalToClose) closeModal(modalToClose);
