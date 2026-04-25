@@ -916,7 +916,7 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
 
     // ===== ФОРУМ ВКЛАДКИ ==
     const contents = {
-        wellness: ['WELLNESS','Йога, медитации, ментальне здоров\'я...'],
+        wellness: ['WELLNESS',''],
         design:   ['DESIGN','Графічний дизайн, типографіка, UI...'],
         diygear:  ['DIY / GEAR','Своїми руками, інструменти, майстерня...'],
         itai:     ['IT / AI','Нейромережі, розробка, технології...'],
@@ -925,28 +925,352 @@ document.getElementById('pinterestNextBtn')?.addEventListener('click', () => {
         tattoo:   ['TATTOO','Тату-культура, ескізи, майстри...'],
         travel:   ['TRAVEL','Подорожі, маршрути, лайфхаки...'],
     };
+
     document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(tab => {
         tab.addEventListener('click', ()=> {
-            document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(t=> t.classList.remove('active'));
+            document.querySelectorAll('.forum-tabs-panel-embedded .forum-tab').forEach(t=>t.classList.remove('active'));
             tab.classList.add('active');
             const id = tab.dataset.tab;
             if(contents[id]) {
                 document.getElementById('forumTitleEmbedded').textContent = contents[id][0];
-                document.getElementById('forumTextEmbedded').textContent = contents[id][1];
+            }
+            const drumWrap = document.getElementById('wellnessDrumWrap');
+            const textEl = document.getElementById('forumTextEmbedded');
+            if (id === 'wellness') {
+                if (drumWrap) drumWrap.style.display = '';
+                if (textEl) textEl.style.display = 'none';
+            } else {
+                if (drumWrap) drumWrap.style.display = 'none';
+                if (textEl) {
+                    textEl.style.display = '';
+                    textEl.textContent = contents[id][1];
+                }
             }
         });
     });
+
+    // ===== WELLNESS 3D DRUM =====
+    (function() {
+        const SLIDES = [
+            {
+                img: 'assets/w1.jpg',
+                caption: 'ДІАФРАГМАЛЬНЕ ДИХАННЯ',
+                title: 'W1 — ДІАФРАГМАЛЬНЕ ДИХАННЯ',
+                body: `Стілець: жорсткий. Забудь про м'які крісла, в яких таз «тоне».
+Опора: спина щільно притиснута до рівної вертикальної поверхні (стіна або жорстка спинка стільця). Стопи щільно стоять на підлозі. Кут у колінах 90°.
+Руки: одну долоню на живіт (район пупка), другу — на груди.
+
+2. Фаза Вдиху (3–4 секунди)
+Вдихай носом. Повільно, беззвучно.
+Біомеханіка: уяви, що хочеш розштовхнути свої долоні в сторони не грудьми, а животом і нижніми ребрами.
+Контроль: верхня рука (на грудях) має залишатися нерухомою. Нижня — плавно йти вперед.
+Нюанс для профі: спробуй відчути, як при вдиху спина ще сильніше тисне в стіну/спинку стільця.
+
+3. Фаза Видиху (6–8 секунд)
+Видих через губи «трубочкою» (опір повітря). Видих має бути вдвічі довший за вдих. Це вмикає парасимпатичну нервову систему і знижує кортизол.
+Рух: живіт повільно опадає всередину. Не втягуй його силою, просто випускай повітря до кінця.`
+            },
+            {
+                img: 'assets/w2.jpg',
+                caption: 'КОРОТКА СТОПА',
+                title: 'W2 — КОРОТКА СТОПА',
+                body: `Вихідне положення: сядь на стілець, стопи щільно стоять на підлозі паралельно одна одній. Кут у колінах 90°.
+
+Рух: твоя ціль — зробити стопу коротшою і вищою, не згинаючи пальці в «кігті».
+
+Механіка: зосередься на подушечці під великим пальцем і п'ятці. Спробуй «підтягнути» їх одне до одного за рахунок скорочення м'язів склепіння.
+
+Візуальний контроль: внутрішнє склепіння стопи має підніматися над підлогою, утворюючи арку. Пальці залишаються розслабленими і довгими.
+
+Режим: утримуй напругу 5–8 секунд, потім розслаб. Повторюй 2 хвилини для кожної стопи.
+
+Навіщо? Амортизація: піднятий звід гасить ударне навантаження при ходьбі, не пропускаючи його в хребет.`
+            },
+            {
+                img: 'assets/w3.jpg',
+                caption: 'СТИСКАННЯ КОЛІНАМИ',
+                title: 'W3 — СТИСКАННЯ КОЛІНАМИ',
+                body: `Вихідне положення: лежачи на спині, ноги зігнуті в колінах, стопи стоять паралельно.
+
+Рух: на видиху починай плавно стискати подушку. Утримуй помірну напругу 5-10 секунд. 5 секунд розслаблення.
+
+Важливо: не затримуй дихання і не відривай поперек від підлоги. Працюють лише внутрішня поверхня стегон і низ живота.
+
+Навіщо?
+— Замок для таза: привідні м'язи безпосередньо пов'язані з м'язами тазового дна. Коли вони вмикаються, таз фіксується в правильному положенні.
+— Захист медіального меніска: рівновага тримає колінний суглоб у його природній колії.
+— Активація нижнього пресу: допомагає боротися з животом що вивалюється ефективніше за багато вправ на прес.`
+            },
+            {
+                img: 'assets/w4.jpg',
+                caption: 'ІЗОМЕТРИЧНИЙ ЯГІДНИЙ МІСТОК',
+                title: 'W4 — ІЗОМЕТРИЧНИЙ ЯГІДНИЙ МІСТОК',
+                body: `Вихідне положення: лежачи на спині, стопи на підлозі на ширині плечей. Відстань від п'яток до таза — 20–25 см.
+
+Підйом: на видиху штовхай підлогу п'ятками і підіймай таз на 2-3 см.
+
+Пікове скорочення: у верхній точці свідомо стисни сідниці.
+
+Ізометрія: 5 секунд не рухайся. Тримай корпус рівно.
+
+Дихання: не затримуй (це підніме тиск). Дихай коротко і рівно, зберігаючи напругу.
+
+Навіщо?
+— Ізометрія змушує нервову систему заново прокласти шлях до м'язів сідниць.
+— Стабілізація коліна: великий сідничний м'яз через фасції контролює положення стегна.
+— Розвантаження попереку: сідниці беруть на себе 80% навантаження при вставанні зі стільця.`
+            },
+            {
+                img: 'assets/w5.jpg',
+                caption: 'МЕРТВИЙ ЖУК',
+                title: 'W5 — МЕРТВИЙ ЖУК',
+                body: `Вихідне положення: ляж на підлогу. Якщо живіт заважає дихати лежачи — підклади подушку під голову і плечі.
+
+Точка контролю: притисни поперек до підлоги так, ніби намагаєшся роздавити там таргана.
+
+Підйом ніг: підніми 1 ногу (коліна зігнуті під 90°, гомілка паралельна підлозі). Якщо нога «тремтить» — підтягни коліно ближче до грудей.
+
+Рух: повільно, на видиху, опускай ногу вниз. Коліно залишається зігнутим! Ти рухаєш цілим стегном.
+
+Контакт: торкнись підлоги п'яткою і на вдиху міняй ногу.
+
+Навіщо?
+— Ізоляція поперечного м'яза: найглибший м'яз пресу, який оперізує органи як живий корсет.
+— Стабілізація таза: мозок вчиться розділяти рух ноги і рух хребта.
+— Безпечне навантаження без компресії на шийні та грудні хребці.`
+            },
+            {
+                img: 'assets/w6.jpg',
+                caption: 'МУШЛЯ',
+                title: 'W6 — МУШЛЯ',
+                body: `Лягти на бік. Голова на подушці — шия є продовженням хребта.
+Ноги зігнуті в колінах під ~90°.
+П'ятки притиснуті одна до одної і знаходяться на одній лінії зі сідницями і спиною.
+
+Рух:
+— П'ятки склеєні намертво — вони як дверна завіса.
+— Фаза зусилля (Видих): повільно підіймай верхнє коліно вгору, розкриваючи ноги як стулки мушлі. Лише до тієї точки, поки таз залишається нерухомим.
+— У верхній точці затримайся на 2–3 секунди. Відчуй печіння у верхній боковій частині сідниці.
+— Фаза повернення (Вдих): повільно опусти коліно, але не розслабляй м'яз повністю.`
+            },
+            {
+                img: 'assets/w7.jpg',
+                caption: 'ДЕКОМПРЕСІЯ «КНИЖКА»',
+                title: 'W7 — ДЕКОМПРЕСІЯ «КНИЖКА»',
+                body: `Лежачи на боку з подушкою під голову для прямої лінії хребта.
+Стегна суворо під 90° до корпусу.
+Нижня рука щільно притискає коліна до підлоги. Верхня рука витягнута вперед.
+
+На повільному видиху веди верхню руку вгору і по широкій дузі назад.
+Зупиняйся коли коліно під нижньою рукою намагається відірватися від підлоги.
+У точці максимального натягу — 3 глибоких цикли дихання. На вдиху роздуй ребра з боку спини.
+Розслабляй плече, дозволяючи опускатися під власною вагою.
+
+Навіщо?
+— Вага голови при нахилі до монітора збільшується в 3-4 рази. Вправа повертає плечовий пояс у робочий стан.
+— Розкриваючи грудну клітку, збільшуєш насичення крові киснем — мозок працює швидше.
+— Якщо груди «забетоновані», шия бере надлишкову рухливість і зношується.`
+            },
+            {
+                img: 'assets/w8.jpg',
+                caption: '«КІШКА-КОРОВА» БІЛЯ ОПОРИ',
+                title: 'W8 — «КІШКА-КОРОВА» БІЛЯ ОПОРИ',
+                body: `Вправа на сегментарну мобілізацію.
+
+Опора: позиція біля столу, руки трохи зігнуті в ліктях.
+
+Фаза «Кішка» (Видих):
+Максимально вигинай спину вгору дугою. Підборіддя — до грудей. Розштовхуй лопатки якомога ширше. Тягнись серединою спини в стелю.
+
+Фаза «Корова» (Вдих):
+М'яко прогинайся лише в грудному відділі. Не кидай поперек вниз (він і так перевантажений). Розправ плечі, подивись трохи вперед.
+
+Темп: повільно, як густа смола.
+
+Навіщо?
+— Декомпресія: розвантажує затиснуті фасеткові суглоби хребта.
+— Живлення дисків: міжхребцеві диски отримують живлення (дифузію) лише при русі. Ти буквально «годуєш» свій хребет.`
+            },
+            {
+                img: 'assets/w9.jpg',
+                caption: 'ІЗОМЕТРИЧНА СТАБІЛІЗАЦІЯ',
+                title: 'W9 — ІЗОМЕТРИЧНА СТАБІЛІЗАЦІЯ',
+                body: `Встань обличчям до стіни на відстані 50–60 см. Постав долоні трохи ширше плечей і трохи нижче рівня плечового пояса.
+
+Не згинаючи ліктів (руки завжди прямі!), починай штовхати стіну від себе. Лопатки мають розходитися в сторони, простір між ними — ставати плоским або вигинатися назовні.
+
+Ти маєш відчути напругу під пахвами і по боках ребер — це вмикається передній зубчастий м'яз.
+
+Завмри на 30–45 секунд. Плечі не мають «підстрибувати» до вух.
+
+Якщо лопатки починають провалюватися — це відмова. Відпочивай.
+
+Навіщо?
+— Єдиний жорсткий зв'язок плечового суглоба з корпусом — лопатка. Якщо зубчастий м'яз слабкий, будь-який рух рукою руйнує суглоб.
+— Коли зубчастий м'яз не тримає лопатку, це робить верхня трапеція — звідси вічна напруга в потилиці, спазми і головні болі.
+— Без стабільної лопатки ти ніколи не зможеш ефективно відтискатися або жати вагу.`
+            }
+        ];
+
+        const N = SLIDES.length;
+        const cylinder = document.getElementById('drumCylinder');
+        const captionEl = document.getElementById('drumCaption');
+        const dotsEl = document.getElementById('drumDots');
+        const readBtn = document.getElementById('drumReadBtn');
+        const prevBtn = document.getElementById('drumPrev');
+        const nextBtn = document.getElementById('drumNext');
+
+        if (!cylinder) return;
+
+        const angleStep = 360 / N;
+
+        function getRadius() {
+            const w = cylinder.offsetWidth || 220;
+            return Math.round((w / 2) / Math.tan(Math.PI / N));
+        }
+
+        let faces = [];
+        SLIDES.forEach((slide, i) => {
+            const face = document.createElement('div');
+            face.className = 'drum-face';
+            const img = document.createElement('img');
+            img.src = slide.img;
+            img.alt = slide.caption;
+            img.draggable = false;
+            face.appendChild(img);
+            cylinder.appendChild(face);
+            faces.push(face);
+        });
+
+        SLIDES.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'drum-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goTo(i));
+            dotsEl.appendChild(dot);
+        });
+        const dots = dotsEl.querySelectorAll('.drum-dot');
+
+        let currentIndex = 0;
+        let rotationY = 0;
+
+        function positionFaces() {
+            const r = getRadius();
+            faces.forEach((face, i) => {
+                const angle = angleStep * i;
+                face.style.transform = `rotateY(${angle}deg) translateZ(${r}px)`;
+            });
+        }
+
+        function rotateTo(index, animated = true) {
+            currentIndex = ((index % N) + N) % N;
+            const targetAngle = -currentIndex * angleStep;
+            const cur = rotationY % 360;
+            let diff = (targetAngle - cur + 540) % 360 - 180;
+            rotationY += diff;
+
+            cylinder.style.transition = animated
+                ? 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                : 'none';
+            cylinder.style.transform = `rotateY(${rotationY}deg)`;
+
+            captionEl.style.opacity = '0';
+            setTimeout(() => {
+                captionEl.textContent = SLIDES[currentIndex].caption;
+                captionEl.style.opacity = '1';
+            }, animated ? 200 : 0);
+
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        }
+
+        function goTo(index, animated = true) { rotateTo(index, animated); }
+        function goNext() { goTo(currentIndex + 1); }
+        function goPrev() { goTo(currentIndex - 1); }
+
+        positionFaces();
+        rotateTo(0, false);
+        window.addEventListener('resize', positionFaces);
+
+        prevBtn?.addEventListener('click', goPrev);
+        nextBtn?.addEventListener('click', goNext);
+
+        readBtn?.addEventListener('click', () => {
+            const slide = SLIDES[currentIndex];
+            document.getElementById('wellnessPopupTitle').textContent = slide.title;
+            document.getElementById('wellnessPopupBody').textContent = slide.body;
+            document.getElementById('wellnessPopup')?.classList.add('active');
+            window.playUiMenuBlip?.();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const drumWrap = document.getElementById('wellnessDrumWrap');
+            if (!drumWrap || drumWrap.style.display === 'none') return;
+            if (document.querySelector('.modal-overlay.active')) return;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { e.preventDefault(); goNext(); }
+            if (e.key === 'ArrowLeft'  || e.key === 'a' || e.key === 'A') { e.preventDefault(); goPrev(); }
+        });
+
+        // Drag / swipe with inertia
+        let isDragging = false;
+        let dragStartX = 0;
+        let lastDragX = 0;
+        let dragVelocity = 0;
+        let lastDragTime = 0;
+        let dragBaseAngle = 0;
+
+        function onDragStart(x) {
+            isDragging = true;
+            dragStartX = x;
+            lastDragX = x;
+            dragVelocity = 0;
+            dragBaseAngle = rotationY;
+            cylinder.style.transition = 'none';
+            lastDragTime = Date.now();
+        }
+
+        function onDragMove(x) {
+            if (!isDragging) return;
+            const now = Date.now();
+            const dt = now - lastDragTime || 1;
+            dragVelocity = (x - lastDragX) / dt;
+            lastDragX = x;
+            lastDragTime = now;
+            const r = getRadius();
+            const degPerPx = angleStep / (r * Math.tan(Math.PI / N) * 0.02);
+            rotationY = dragBaseAngle - (x - dragStartX) * 0.4;
+            cylinder.style.transform = `rotateY(${rotationY}deg)`;
+        }
+
+        function onDragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            const momentum = dragVelocity * 150;
+            const freeAngle = rotationY - momentum * 0.4;
+            const rawIndex = -freeAngle / angleStep;
+            const snapped = Math.round(rawIndex);
+            goTo(((snapped % N) + N) % N);
+        }
+
+        const scene = cylinder.parentElement;
+        scene.style.cursor = 'grab';
+        scene.addEventListener('mousedown', (e) => { e.preventDefault(); scene.style.cursor = 'grabbing'; onDragStart(e.clientX); });
+        window.addEventListener('mousemove', (e) => { if (isDragging) onDragMove(e.clientX); });
+        window.addEventListener('mouseup', () => { if (isDragging) { scene.style.cursor = 'grab'; onDragEnd(); } });
+        scene.addEventListener('touchstart', (e) => { if (e.touches.length === 1) onDragStart(e.touches[0].clientX); }, { passive: true });
+        scene.addEventListener('touchmove', (e) => { if (e.touches.length === 1) onDragMove(e.touches[0].clientX); }, { passive: true });
+        scene.addEventListener('touchend', onDragEnd);
+
+    })();
 
     // ===== SUPPORT =====
     document.getElementById('supportBtn')?.addEventListener('click', ()=> openModal('supportModal'));
     document.getElementById('forumFullBtn')?.addEventListener('click', ()=> openModal('forumDisclaimerModal'));
 
     // ===== ЗАКРЫТИЕ МОДАЛОК =====
-    document.querySelectorAll('.modal-close-btn').forEach(b=> b.addEventListener('click', ()=>{
+    document.querySelectorAll('.modal-close-btn').forEach(b=>b.addEventListener('click', ()=>{
         const id = b.dataset.modal;
         if(id) closeModal(id);
     }));
-    document.querySelectorAll('.modal-overlay').forEach(o=> o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
+    document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('active'); }));
 
     // ===== МОДАЛКА "ЗМІСТ" =====
     document.getElementById('contentsBtn').addEventListener('click', ()=> openModal('contentsModal'));
